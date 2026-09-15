@@ -21,13 +21,11 @@ class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 4,
               text: '标题可以折行展示，标题最右侧的widget 需要展示出来\n'
@@ -36,14 +34,14 @@ class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
                   'accessoryWidget的高度就是25，如果传入的widget过大会显示不全\n'
                   '上下的间距是16',
             ),
-            SizedBox(height: 50,),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
+            SizedBox(height: 50,)],
             ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoCommonCardTitle(
               title: '标题',
               accessoryText: '辅助文本',
@@ -51,14 +49,14 @@ class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
                 SantoToast.show('SantoPlainCardTitle is clicked', context);
               },
             ),
-            SizedBox(height: 50,),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
+            SizedBox(height: 50,)],
             ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoCommonCardTitle(
               title: '非箭头Title',
               subTitleWidget: SantoRatingStar(
@@ -71,14 +69,14 @@ class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
                 SantoToast.show('SantoPlainCardTitle is clicked', context);
               },
             ),
-            SizedBox(height: 50,),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
+            SizedBox(height: 50,)],
             ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoCommonCardTitle(
               title: '非箭头Title',
               //标题右侧widget
@@ -98,8 +96,10 @@ class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
               onTap: () {
                 SantoToast.show('SantoCommonCardTitle is clicked', context);
               },
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );

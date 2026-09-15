@@ -22,26 +22,24 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                '规则',
-                style: TextStyle(
-                    color: Color(0xFF222222),
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold),
-              ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoBubbleText(
                 maxLines: 4,
                 text: '数字信息是特殊字体，前后可携带正常字体\n'
                     '特殊字体的样式为28号字，正常字体为12号字\n'
                     '上下间距是8',
-              ),
-              Text(
-                '正常案例 只有一个Item',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '正常案例 只有一个Item',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 itemChildren: [
                   SantoNumberInfoItemModel(
@@ -49,14 +47,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                     number: '3',
                   ),
                 ],
-              ),
-              Text(
-                '正常案例',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 itemChildren: [
                   SantoNumberInfoItemModel(
@@ -67,14 +65,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                       numberInfoIcon: SantoNumberInfoIcon.arrow,
                       iconTapCallBack: (data) {}),
                 ],
-              ),
-              Text(
-                '正常案例',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 rowCount: 3,
                 itemChildren: [
@@ -112,14 +110,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                     lastDesc: '后',
                   ),
                 ],
-              ),
-              Text(
-                '正常案例',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 rowCount: 3,
                 itemChildren: [
@@ -142,14 +140,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                     lastDesc: '后',
                   ),
                 ],
-              ),
-              Text(
-                'Pad 案例',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: 'Pad 案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 rowCount: 3,
                 itemTextAlign: TextAlign.center,
@@ -250,14 +248,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                     lastDesc: '后',
                   ),
                 ],
-              ),
-              Text(
-                '异常案例 非数字',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '异常案例 非数字',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 itemChildren: [
                   SantoNumberInfoItemModel(
@@ -267,14 +265,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                     lastDesc: '后',
                   ),
                 ],
-              ),
-              Text(
-                '异常案例 非数字',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '异常案例 非数字',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 itemChildren: [
                   SantoNumberInfoItemModel(
@@ -284,14 +282,14 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                     lastDesc: '后',
                   ),
                 ],
-              ),
-              Text(
-                '异常案例',
-                style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                ),
-              ),
+              )],
+            ),
+          ),
+SantoPanel(
+            title: '异常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               SantoEnhanceNumberCard(
                 itemChildren: [
                   SantoNumberInfoItemModel(
@@ -309,6 +307,9 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
                 ],
               )
             ],
+            ),
+          ),
+],
           ),
         ),
       ),

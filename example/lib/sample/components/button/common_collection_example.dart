@@ -16,39 +16,37 @@ class SantoCommonBottomExample extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 3,
               text: '文字按钮最多两个：主按钮和次按钮，可以展示三种按钮的排列组合\n'
                   '主按钮和次按钮的宽度大小是 不固定的，随着icon按钮的多少而变化\n'
                   '上下padding：16，18。左右padding：20',
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮',
               mainButtonOnTap: () {
                 SantoToast.show('主按钮', context);
               },
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮',
               mainButtonOnTap: () {
@@ -59,14 +57,14 @@ class SantoCommonBottomExample extends StatelessWidget {
               secondaryButtonOnTap: () {
                 SantoToast.show('次按钮', context);
               },
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮',
               mainButtonOnTap: () {
@@ -82,14 +80,14 @@ class SantoCommonBottomExample extends StatelessWidget {
                   iconWidget: Icon(Icons.add),
                 ),
               ],
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮',
               mainButtonOnTap: () {
@@ -109,14 +107,14 @@ class SantoCommonBottomExample extends StatelessWidget {
                   iconWidget: Icon(Icons.functions),
                 ),
               ],
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮',
               mainButtonOnTap: () {
@@ -140,14 +138,14 @@ class SantoCommonBottomExample extends StatelessWidget {
                   iconWidget: Icon(Icons.input),
                 ),
               ],
+            )],
             ),
-            Text(
-              '正常案例 主按钮不可用',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例 主按钮不可用',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮',
               enableMainButton: false,
@@ -193,14 +191,14 @@ class SantoCommonBottomExample extends StatelessWidget {
               mainButtonOnTap: () {
                 SantoToast.show('主按钮', context);
               },
+            )],
             ),
-            Text(
-              '异常案例：按钮文本长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：按钮文本长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '主按钮主按钮主按钮主按钮主按钮主按钮主按钮主按钮主按钮主按钮主按钮',
               mainButtonOnTap: () {
@@ -250,14 +248,14 @@ class SantoCommonBottomExample extends StatelessWidget {
                   iconWidget: Icon(Icons.input),
                 ),
               ],
+            )],
             ),
-            Text(
-              '异常案例：按钮文本长为空串',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：按钮文本长为空串',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBottomButtonPanel(
               mainButtonName: '',
               secondaryButtonName: '',
@@ -267,8 +265,10 @@ class SantoCommonBottomExample extends StatelessWidget {
               secondaryButtonOnTap: () {
                 SantoToast.show('次按钮', context);
               },
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );

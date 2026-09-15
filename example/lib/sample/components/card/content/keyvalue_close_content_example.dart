@@ -21,24 +21,22 @@ class _KeyTextCloseContentExampleState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 4,
               text: '一行展示内容，key和value都不换行',
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -47,14 +45,14 @@ class _KeyTextCloseContentExampleState
                 SantoInfoModal(keyPart: "名称名称名：", valuePart: "内容内容内容内容内容"),
                 SantoInfoModal(keyPart: "名称名称名称：", valuePart: "内容内容内容内容内容"),
               ],
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             GestureDetector(
               onTap: () {
                 SantoToast.show("点击了卡片", context);
@@ -71,21 +69,14 @@ class _KeyTextCloseContentExampleState
                   }),
                 ],
               ),
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            Text(
-              '异常案例：key过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：key过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -99,14 +90,14 @@ class _KeyTextCloseContentExampleState
                     valuePart: "内容内容内容内容内容"),
                 SantoInfoModal(keyPart: "名称名称名：", valuePart: "内容内容内容内容内容"),
               ],
+            )],
             ),
-            Text(
-              '异常案例：内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -123,14 +114,14 @@ class _KeyTextCloseContentExampleState
                     valuePart:
                         "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内"),
               ],
+            )],
             ),
-            Text(
-              '异常案例：可点击内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：可点击内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               expandAtIndex: 2,
@@ -159,14 +150,14 @@ class _KeyTextCloseContentExampleState
                   SantoToast.show(text!, context);
                 }),
               ],
+            )],
             ),
-            Text(
-              '异常案例某个元素缺失',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例某个元素缺失',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -175,8 +166,10 @@ class _KeyTextCloseContentExampleState
                 SantoInfoModal(keyPart: "", valuePart: ""),
                 SantoInfoModal(keyPart: "上面的都缺失：", valuePart: "内容内容内容内容内容"),
               ],
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );

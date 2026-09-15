@@ -22,25 +22,23 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 4,
               text: '两组key-value内容平分屏幕，每一组key-value都是一行展示，'
                   'value紧挨着key，不考虑对齐',
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo("名称名称：", '内容内容内容内容'),
@@ -48,14 +46,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", '内容'),
               ],
+            )],
             ),
-            Text(
-              '异常案例：key过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：key过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo("名称名称名称名称名称名称名称名称：", '内容内容内容内容'),
@@ -63,14 +61,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", '内容'),
               ],
+            )],
             ),
-            Text(
-              '异常案例：内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo("名称名称：", '内容内容内容内容'),
@@ -78,14 +76,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", '内容'),
               ],
+            )],
             ),
-            Text(
-              '异常案例：Key和Value过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：Key和Value过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               rowSpace: 10,
               pairInfoList: <SantoRichGridInfo>[
@@ -95,14 +93,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", ''),
               ],
+            )],
             ),
-            Text(
-              '特殊案例：Padding中',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '特殊案例：Padding中',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             Padding(
               padding: const EdgeInsets.only(left: 40, right: 40),
               child: SantoRichInfoGrid(
@@ -115,14 +113,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                   SantoRichGridInfo("名称：", ''),
                 ],
               ),
+            )],
             ),
-            Text(
-              '特殊案例：Row中',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '特殊案例：Row中',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             Row(
               children: <Widget>[
                 Text("我是自定义"),
@@ -139,14 +137,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                   ),
                 ),
               ],
+            )],
             ),
-            Text(
-              '特殊案例：Column中',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '特殊案例：Column中',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             Column(
               children: <Widget>[
                 SantoRichInfoGrid(
@@ -163,14 +161,14 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
             ),
             SizedBox(
               height: 20,
+            )],
             ),
-            Text(
-              'Pad 案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: 'Pad 案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             Container(
               padding: EdgeInsets.all(20),
               color: Colors.grey[100],
@@ -233,8 +231,10 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
                   ],
                 ),
               ),
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );
