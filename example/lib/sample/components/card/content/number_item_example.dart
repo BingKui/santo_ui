@@ -12,7 +12,6 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '数字信息',
       ),

@@ -13,7 +13,6 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '两列复杂文本',
       ),

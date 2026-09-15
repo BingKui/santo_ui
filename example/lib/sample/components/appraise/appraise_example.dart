@@ -22,7 +22,6 @@ class _AppraiseExampleState extends State<AppraiseExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '评价组件',
       ),

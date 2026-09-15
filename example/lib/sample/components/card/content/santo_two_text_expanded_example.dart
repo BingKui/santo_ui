@@ -12,7 +12,6 @@ class _SantoTextExpandedContentExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '展开收起文本',
       ),

@@ -19,7 +19,6 @@ class _BacktopExampleState extends State<BacktopExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'BackTop 示例'),
       body: Stack(
         children: [

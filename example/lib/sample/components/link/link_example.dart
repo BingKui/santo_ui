@@ -6,7 +6,6 @@ class LinkExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Link 链接'),
       body: SingleChildScrollView(
         child: Column(

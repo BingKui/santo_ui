@@ -6,7 +6,6 @@ class CollapseExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Collapse 折叠面板'),
       body: SingleChildScrollView(
         child: Column(

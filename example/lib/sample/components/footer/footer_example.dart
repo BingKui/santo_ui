@@ -6,7 +6,6 @@ class FooterExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Footer 页脚'),
       body: SingleChildScrollView(
         child: Column(

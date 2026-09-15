@@ -5,7 +5,6 @@ class BigGhostButtonExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '大幽灵按钮',
       ),

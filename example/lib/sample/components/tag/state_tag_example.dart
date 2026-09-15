@@ -12,7 +12,6 @@ class _StateTagExampleState extends State<StateTagExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '状态角标签',
       ),

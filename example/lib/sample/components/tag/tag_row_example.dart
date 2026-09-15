@@ -12,7 +12,6 @@ class _RowTagExampleState extends State<RowTagExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '标签组合',
       ),

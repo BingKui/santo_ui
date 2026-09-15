@@ -12,7 +12,6 @@ class _DashedLineExampleState extends State<DashedLineExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '虚线分割线',
       ),

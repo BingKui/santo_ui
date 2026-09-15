@@ -11,7 +11,6 @@ class _TableExampleState extends State<TableExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Table 表格示例'),
       body: SingleChildScrollView(
         child: Column(

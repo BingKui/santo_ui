@@ -40,7 +40,6 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'DropdownMenu 下拉菜单示例'),
       body: SingleChildScrollView(
         child: Column(

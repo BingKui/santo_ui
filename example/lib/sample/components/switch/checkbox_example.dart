@@ -12,7 +12,6 @@ class _CheckboxExampleState extends State<CheckboxExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '多选示例',
       ),

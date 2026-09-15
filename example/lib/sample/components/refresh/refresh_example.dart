@@ -20,7 +20,6 @@ class _RefreshExampleState extends State<RefreshExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Refresh 下拉刷新示例'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

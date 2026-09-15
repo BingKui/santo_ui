@@ -11,7 +11,6 @@ class _CellExampleState extends State<CellExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Cell 示例'),
       body: SingleChildScrollView(
         child: Column(

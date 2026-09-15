@@ -19,7 +19,6 @@ class _StepperExampleState extends State<StepperExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Stepper 示例'),
       body: SingleChildScrollView(
         child: Column(

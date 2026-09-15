@@ -13,7 +13,6 @@ class _FabExampleState extends State<FabExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Fab 悬浮按钮示例'),
       body: Stack(
         children: [

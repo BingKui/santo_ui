@@ -62,7 +62,6 @@ class _SwiperExampleState extends State<SwiperExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Swiper 示例'),
       body: SingleChildScrollView(
         child: Column(
