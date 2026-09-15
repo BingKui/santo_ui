@@ -223,15 +223,18 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            if (_popoverPosition != null)
-              Positioned(
-                left: _popoverPosition!.dx,
-                top: _popoverPosition!.dy,
+            Positioned(
+              left: _popoverPosition?.dx ?? 0,
+              top: _popoverPosition?.dy ?? 0,
+              child: Opacity(
+                // 首帧先透明挂载用于测量尺寸，计算完位置后再显示
+                opacity: _popoverPosition == null ? 0 : 1,
                 child: GestureDetector(
                   onTap: () {}, // 阻止冒泡
                   child: _buildPopoverContent(),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -349,6 +352,11 @@ class _PopoverArrowPainter extends CustomPainter {
   bool shouldRepaint(covariant _PopoverArrowPainter oldDelegate) {
     return oldDelegate.direction != direction ||
         oldDelegate.showArrow != showArrow ||
-        oldDelegate.backgroundColor != backgroundColor;
+        oldDelegate.backgroundColor != backgroundColor ||
+        oldDelegate.arrowSize != arrowSize ||
+        oldDelegate.borderRadius != borderRadius ||
+        oldDelegate.targetOffset != targetOffset ||
+        oldDelegate.targetSize != targetSize ||
+        oldDelegate.popoverPosition != popoverPosition;
   }
 }
