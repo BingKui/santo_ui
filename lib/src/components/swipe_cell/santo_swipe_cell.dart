@@ -29,6 +29,9 @@ class SantoSwipeCellAction {
   /// 单个按钮宽度
   final double width;
 
+  /// 按钮圆角
+  final double borderRadius;
+
   const SantoSwipeCellAction({
     required this.label,
     this.onPressed,
@@ -36,6 +39,7 @@ class SantoSwipeCellAction {
     this.textColor,
     this.child,
     this.width = 72,
+    this.borderRadius = 12,
   });
 }
 
@@ -49,11 +53,8 @@ class SantoSwipeCellPanel {
   /// 操作区总宽占单元格宽度的比例
   final double extentRatio;
 
-  const SantoSwipeCellPanel({
-    required this.actions,
-    this.extentRatio = 0.25,
-  }) : assert(extentRatio > 0 && extentRatio <= 1,
-            'extentRatio 需在 (0, 1] 范围内');
+  const SantoSwipeCellPanel({required this.actions, this.extentRatio = 0.25})
+    : assert(extentRatio > 0 && extentRatio <= 1, 'extentRatio 需在 (0, 1] 范围内');
 }
 
 /// 滑动单元格组件(API 参考 TDesign Flutter 的 SwipeCell)
@@ -124,9 +125,8 @@ class SantoSwipeCell extends StatefulWidget {
     this.closeWhenTapped = true,
     this.duration = const Duration(milliseconds: 200),
     this.controller,
-  })  : assert(left != null || right != null,
-            '至少需要提供左侧或右侧操作面板'),
-        super(key: key);
+  }) : assert(left != null || right != null, '至少需要提供左侧或右侧操作面板'),
+       super(key: key);
 
   @override
   State<SantoSwipeCell> createState() => _SantoSwipeCellState();
@@ -193,8 +193,10 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
   }
 
   void _animateTo(double target) {
-    _offset = Tween<double>(begin: _dragOffset, end: target)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _offset = Tween<double>(
+      begin: _dragOffset,
+      end: target,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     _controller.forward(from: 0);
   }
 
@@ -269,24 +271,32 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
   }
 
   Widget _buildAction(
-      SantoSwipeCellAction action, SantoSwipeDirection direction) {
-    return SizedBox(
-      width: action.width,
-      child: Material(
-        color: action.backgroundColor ?? const Color(0xFFCCCCCC),
-        child: InkWell(
-          onTap: () {
-            action.onPressed?.call();
-          },
-          child: Center(
-            child: action.child ??
-                Text(
-                  action.label,
-                  style: TextStyle(
-                      color: action.textColor ?? Colors.white, fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+    SantoSwipeCellAction action,
+    SantoSwipeDirection direction,
+  ) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(action.borderRadius),
+      child: SizedBox(
+        width: action.width,
+        child: Material(
+          color: action.backgroundColor ?? const Color(0xFFCCCCCC),
+          child: InkWell(
+            onTap: () {
+              action.onPressed?.call();
+            },
+            child: Center(
+              child:
+                  action.child ??
+                  Text(
+                    action.label,
+                    style: TextStyle(
+                      color: action.textColor ?? Colors.white,
+                      fontSize: 14,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+            ),
           ),
         ),
       ),
@@ -294,76 +304,82 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      _cellWidth = constraints.maxWidth;
-      final leftPanel = widget.left;
-      final rightPanel = widget.right;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        _cellWidth = constraints.maxWidth;
+        final leftPanel = widget.left;
+        final rightPanel = widget.right;
 
-      final leftActions = leftPanel == null
-          ? null
-          : Row(
-              children: leftPanel.actions
-                  .map((a) => _buildAction(a, SantoSwipeDirection.left))
-                  .toList(),
-            );
+        final leftActions = leftPanel == null
+            ? null
+            : Row(
+                children: leftPanel.actions
+                    .map((a) => _buildAction(a, SantoSwipeDirection.left))
+                    .toList(),
+              );
 
-      final rightActions = rightPanel == null
-          ? null
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: rightPanel.actions
-                  .map((a) => _buildAction(a, SantoSwipeDirection.right))
-                  .toList(),
-            );
+        final rightActions = rightPanel == null
+            ? null
+            : Row(
+                children: rightPanel.actions
+                    .map((a) => _buildAction(a, SantoSwipeDirection.right))
+                    .toList(),
+              );
 
-      return GestureDetector(
-        onHorizontalDragStart: widget.disabled ? null : _onDragStart,
-        onHorizontalDragUpdate: widget.disabled ? null : _onDragUpdate,
-        onHorizontalDragEnd: widget.disabled ? null : _onDragEnd,
-        child: ClipRect(
-          child: Stack(
-            children: [
-              // 操作面板背景
-              Positioned.fill(
-                child: Stack(
-                  children: [
-                    if (leftActions != null)
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: leftActions,
-                      ),
-                    if (rightActions != null)
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: rightActions,
-                      ),
-                  ],
+        return GestureDetector(
+          onHorizontalDragStart: widget.disabled ? null : _onDragStart,
+          onHorizontalDragUpdate: widget.disabled ? null : _onDragUpdate,
+          onHorizontalDragEnd: widget.disabled ? null : _onDragEnd,
+          child: ClipRect(
+            child: Stack(
+              children: [
+                // 操作面板背景
+                Positioned.fill(
+                  child: Stack(
+                    children: [
+                      if (leftActions != null)
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: leftActions,
+                        ),
+                      if (rightActions != null)
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: rightActions,
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              // 前景内容
-              Transform.translate(
-                offset: Offset(_dragOffset, 0),
-                child: GestureDetector(
-                  onTap: () {
-                    if (_openDirection != null) {
-                      _close();
-                    } else if (widget.closeWhenTapped && widget.groupTag != null) {
-                      _closeGroup();
-                    }
-                  },
-                  child: widget.cell,
+                // 前景内容
+                Transform.translate(
+                  offset: Offset(_dragOffset, 0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_openDirection != null) {
+                          _close();
+                        } else if (widget.closeWhenTapped &&
+                            widget.groupTag != null) {
+                          _closeGroup();
+                        }
+                      },
+                      child: widget.cell,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 

@@ -169,7 +169,71 @@ class _ProgressExampleState extends State<ProgressExample> {
               title: '自定义环形样式',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [const SizedBox(height: 40)],
+                children: [
+                  const Text('不同尺寸（radius / strokeWidth）'),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 24,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      SantoCircularProgress(
+                        value: 0.6,
+                        radius: 20,
+                        strokeWidth: 4,
+                      ),
+                      SantoCircularProgress(value: 0.6),
+                      SantoCircularProgress(
+                        value: 0.6,
+                        radius: 44,
+                        strokeWidth: 10,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  const Text('自定义颜色（进度色 + 背景环色）'),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 24,
+                    children: [
+                      SantoCircularProgress(
+                        value: 0.45,
+                        color: const Color(0xFFFA3F3F),
+                        backgroundColor: const Color(0xFFFEEDED),
+                      ),
+                      SantoCircularProgress(
+                        value: 0.75,
+                        color: const Color(0xFF00AE66),
+                        backgroundColor: const Color(0xFFEBFFF7),
+                      ),
+                      SantoCircularProgress(
+                        value: 0.3,
+                        color: const Color(0xFFFAAD14),
+                        backgroundColor: const Color(0xFFFDFCEC),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  const Text('自定义百分比标签样式'),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 24,
+                    children: [
+                      SantoCircularProgress(
+                        value: 0.85,
+                        showLabel: true,
+                        labelStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF00AE66),
+                        ),
+                      ),
+                      SantoCircularProgress(
+                        value: 0.5,
+                        showLabel: false,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],

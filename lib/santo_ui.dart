@@ -259,6 +259,7 @@ export 'src/components/avatar/santo_avatar.dart';
 
 //单元格
 export 'src/components/cell/santo_cell.dart';
+export 'src/components/divider/santo_divider.dart';
 
 //页脚
 export 'src/components/footer/santo_footer.dart';
