@@ -33,16 +33,11 @@ class _StepLineExampleState extends State<StepLineExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: SantoThemeConfigurator.instance
-                      .getConfig()
-                      .commonConfig
-                      .colorTextBase,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             const SantoBubbleText(
                 maxLines: 2,
                 text: '头部icon需要显示主题相关的icon，线条需要时圆头\n,'
@@ -369,8 +364,10 @@ class _StepLineExampleState extends State<StepLineExample> {
                   ),
                 );
               },
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );

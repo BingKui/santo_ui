@@ -23,13 +23,11 @@ class _SantoSelectionBottomButtonExampleState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 3,
               text: '文字按钮最多两个：主按钮和次按钮，可以展示三种按钮的排列组合\n'
@@ -97,6 +95,9 @@ class _SantoSelectionBottomButtonExampleState
               ],
             )
           ],
+            ),
+          ),
+],
         ),
       ),
     );

@@ -22,25 +22,23 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 4,
               text: '两组key-value内容平分屏幕，每一组key-value都是一行展示，'
                   'value紧挨着key，不考虑对齐',
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo("名称：", '内容内容内容内容'),
@@ -67,14 +65,14 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
                   SantoToast.show(value, context);
                 }),
               ],
+            )],
             ),
-            Text(
-              '异常案例：key过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：key过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo.valueLastClickInfo(context,'名称名称名称名称名称名称名称', '内容内容',
@@ -85,14 +83,14 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", '内容'),
               ],
+            )],
             ),
-            Text(
-              '异常案例：内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo.valueLastClickInfo(context,
@@ -104,14 +102,14 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", '内容'),
               ],
+            )],
             ),
-            Text(
-              '异常案例：Key和Value过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：Key和Value过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo("名称名称：", '内容内容内容内容'),
@@ -120,14 +118,14 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
                 SantoRichGridInfo("名称：", '内容内容'),
                 SantoRichGridInfo("名称：", '内容'),
               ],
+            )],
             ),
-            Text(
-              '异常案例：可点击内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：可点击内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoRichInfoGrid(
               pairInfoList: <SantoRichGridInfo>[
                 SantoRichGridInfo("名称名称：", '内容内容内容内容'),
@@ -141,6 +139,9 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
               ],
             )
           ],
+            ),
+          ),
+],
         ),
       ),
     );

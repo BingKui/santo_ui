@@ -2,28 +2,21 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 /// Drawer 抽屉示例
-class DrawerExample extends StatefulWidget {
-  @override
-  _DrawerExampleState createState() => _DrawerExampleState();
-}
-
-class _DrawerExampleState extends State<DrawerExample> {
+class DrawerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Drawer 示例'),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SantoPanel(
-              title: '基础抽屉',
+              title: '基础方向',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 右侧抽屉
                   SantoNormalButton(
                     onTap: () {
                       SantoDrawer.show(
@@ -34,10 +27,7 @@ class _DrawerExampleState extends State<DrawerExample> {
                     },
                     text: '打开右侧抽屉',
                   ),
-
                   const SizedBox(height: 16),
-
-                  // 左侧抽屉
                   SantoNormalButton(
                     onTap: () {
                       SantoDrawer.show(
@@ -48,8 +38,37 @@ class _DrawerExampleState extends State<DrawerExample> {
                     },
                     text: '打开左侧抽屉',
                   ),
-
-                  const SizedBox(height: 32),
+                ],
+              ),
+            ),
+            SantoPanel(
+              title: '顶部 / 底部抽屉',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoDrawer.show(
+                        context: context,
+                        direction: SantoDrawerDirection.top,
+                        height: 300,
+                        child: _buildDrawerContent('顶部抽屉'),
+                      );
+                    },
+                    text: '打开顶部抽屉 (height: 300)',
+                  ),
+                  const SizedBox(height: 16),
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoDrawer.show(
+                        context: context,
+                        direction: SantoDrawerDirection.bottom,
+                        height: 400,
+                        child: _buildDrawerContent('底部抽屉'),
+                      );
+                    },
+                    text: '打开底部抽屉 (height: 400)',
+                  ),
                 ],
               ),
             ),
@@ -58,7 +77,6 @@ class _DrawerExampleState extends State<DrawerExample> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 自定义宽度
                   SantoNormalButton(
                     onTap: () {
                       SantoDrawer.show(
@@ -70,9 +88,7 @@ class _DrawerExampleState extends State<DrawerExample> {
                     },
                     text: '打开窄抽屉 (width: 200)',
                   ),
-
                   const SizedBox(height: 16),
-
                   SantoNormalButton(
                     onTap: () {
                       SantoDrawer.show(
@@ -84,7 +100,6 @@ class _DrawerExampleState extends State<DrawerExample> {
                     },
                     text: '打开宽抽屉 (width: 400)',
                   ),
-                  const SizedBox(height: 32),
                 ],
               ),
             ),
@@ -104,7 +119,6 @@ class _DrawerExampleState extends State<DrawerExample> {
                     },
                     text: '打开抽屉（浅色遮罩）',
                   ),
-                  const SizedBox(height: 32),
                 ],
               ),
             ),
@@ -117,12 +131,12 @@ class _DrawerExampleState extends State<DrawerExample> {
                     onTap: () {
                       SantoDrawer.show(
                         context: context,
-                        direction: SantoDrawerDirection.right,
-                        width: 320,
+                        direction: SantoDrawerDirection.bottom,
+                        height: 420,
                         child: _buildFilterContent(context),
                       );
                     },
-                    text: '打开筛选面板',
+                    text: '打开筛选面板（底部弹出）',
                   ),
                 ],
               ),
@@ -146,16 +160,20 @@ class _DrawerExampleState extends State<DrawerExample> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 24),
-          ...List.generate(
-            10,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                children: [
-                  Icon(Icons.circle, size: 8, color: Colors.grey[400]),
-                  const SizedBox(width: 12),
-                  Text('列表项 ${index + 1}', style: TextStyle(fontSize: 15)),
-                ],
+          Expanded(
+            child: ListView(
+              children: List.generate(
+                10,
+                (index) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    children: [
+                      Icon(Icons.circle, size: 8, color: Colors.grey[400]),
+                      const SizedBox(width: 12),
+                      Text('列表项 ${index + 1}', style: TextStyle(fontSize: 15)),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

@@ -23,24 +23,22 @@ class _TextValueArrowContentExampleState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 4,
               text: 'value带有操作箭头，箭头在最右侧，value单行展示',
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -80,14 +78,14 @@ class _TextValueArrowContentExampleState
                       SantoToast.show('内容内容内容内容', context);
                     }),
               ],
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: true,
               children: <SantoInfoModal>[
@@ -127,14 +125,14 @@ class _TextValueArrowContentExampleState
                       SantoToast.show('内容内容内容内容', context);
                     })
               ],
+            )],
             ),
-            Text(
-              '异常案例正常案例 key过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例正常案例 key过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -167,14 +165,14 @@ class _TextValueArrowContentExampleState
                       SantoToast.show('内容内容内容内容', context);
                     }),
               ],
+            )],
             ),
-            Text(
-              '异常案例正常案例 key过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例正常案例 key过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: true,
               children: <SantoInfoModal>[
@@ -207,14 +205,14 @@ class _TextValueArrowContentExampleState
                       SantoToast.show('内容内容内容内容', context);
                     }),
               ],
+            )],
             ),
-            Text(
-              '异常案例正常案例 内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例正常案例 内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: true,
               children: <SantoInfoModal>[
@@ -247,14 +245,14 @@ class _TextValueArrowContentExampleState
                       SantoToast.show('内容内容内容内容', context);
                     }),
               ],
+            )],
             ),
-            Text(
-              '异常案例正常案例 内容过长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例正常案例 内容过长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoPairInfoTable(
               isValueAlign: false,
               children: <SantoInfoModal>[
@@ -287,8 +285,10 @@ class _TextValueArrowContentExampleState
                       SantoToast.show('内容内容内容内容', context);
                     }),
               ],
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );

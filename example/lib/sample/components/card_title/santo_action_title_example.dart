@@ -21,26 +21,24 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
+SantoPanel(
+            title: '规则',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoBubbleText(
               maxLines: 4,
               text: '标题不可以折行，当辅助widget和subwidget过多时，标题...截断\n'
                   '展示出sub和ac\n'
                   '标题字体为18',
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '表头',
               onTap: () {
@@ -50,14 +48,14 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
             SantoLine(
               height: 2,
               color: Colors.black12,
+            )],
             ),
-            Text(
-              '正常案例（自定义副标题Widget）',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例（自定义副标题Widget）',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '非箭头',
               //标题右侧widget
@@ -79,14 +77,14 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
             SantoLine(
               height: 2,
               color: Colors.black12,
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '非箭头',
               //标题右侧widget
@@ -100,14 +98,14 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
             SantoLine(
               height: 2,
               color: Colors.black12,
+            )],
             ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '正常案例',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '标题特别长特别长特别长特别长特别长特别长特别长特别长',
               //标题右侧widget
@@ -121,14 +119,14 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
             SantoLine(
               height: 2,
               color: Colors.black12,
+            )],
             ),
-            Text(
-              '异常案例：title特别长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：title特别长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '标题特别长特别长特别长特别长特别长特别长特别长特别长',
               //标题右侧widget
@@ -142,14 +140,14 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
             SantoLine(
               height: 2,
               color: Colors.black12,
+            )],
             ),
-            Text(
-              '异常案例：副标题特别长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：副标题特别长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '标题特别',
               //标题右侧widget
@@ -163,14 +161,14 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
             SantoLine(
               height: 2,
               color: Colors.black12,
+            )],
             ),
-            Text(
-              '异常案例：跳转标题特别长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
+          ),
+SantoPanel(
+            title: '异常案例：跳转标题特别长',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             SantoActionCardTitle(
               title: '标题特别',
               //标题右侧widget
@@ -180,8 +178,10 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
               onTap: () {
                 SantoToast.show('SantoActionCardTitle is clicked', context);
               },
+            )],
             ),
-          ],
+          ),
+],
         ),
       ),
     );
