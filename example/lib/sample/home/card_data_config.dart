@@ -7,6 +7,7 @@ import 'package:example/sample/components/bottom_tabbar/bottom_tabbar_example.da
 import 'package:example/sample/components/button/bottom_button_entry_page.dart';
 import 'package:example/sample/components/panel/panel_example.dart';
 import 'package:example/sample/components/space/space_example.dart';
+import 'package:example/sample/components/masonry/masonry_example.dart';
 import 'package:example/sample/components/button/button_entry_page.dart';
 import 'package:example/sample/components/button/button_panel_entry_page.dart';
 import 'package:example/sample/components/button/icon_button_example.dart';
@@ -129,6 +130,7 @@ class CardDataConfig {
     List<GroupInfo> children = [
       _item("Divider 分割线", "实线分割", DashedLineExample()),
       _item("Space 间距", "元素间距 gap", SpaceExample()),
+      _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
     ];
     return GroupInfo(groupName: "布局", children: children);
   }

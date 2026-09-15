@@ -7,3 +7,4 @@
 * 新增 SantoPanel 面板组件(圆角容器 + Header 标题/操作区 + 可滚动内容区)及 SantoPanelConfig 主题配置
 * 修复 SantoNormalButton.outline 未传 lineColor 时的空断言崩溃
 * 新增 SantoSpace 间距组件(水平/垂直方向,三档预设间距 + 自定义间距 + 自动换行,参考 antd Space)
+* 新增 SantoMasonry 瀑布流组件(columns/gutter/verticalGutter/items,API 对齐 antd 6 Masonry)
