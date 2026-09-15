@@ -28,7 +28,7 @@ enum SantoResultStatus {
 ///   title: '操作成功',
 ///   description: '内容已提交',
 ///   actions: [
-///     SantoButton(text: '返回', onTap: () {}),
+///     SantoSmallMainButton(title: '返回', onTap: () {}),
 ///   ],
 /// )
 /// ```

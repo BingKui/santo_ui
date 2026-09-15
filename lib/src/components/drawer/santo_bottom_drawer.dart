@@ -1,0 +1,290 @@
+import 'package:flutter/material.dart';
+
+/// 底部 Drawer 标题对齐方式
+enum SantoBottomDrawerTitleAlign {
+  /// 左侧
+  left,
+
+  /// 居中
+  center,
+}
+
+/// 底部弹出的抽屉面板
+///
+/// 独立组件,带标题/描述 Header、右侧关闭按钮,支持配置标题对齐、
+/// 点击遮罩是否关闭、底部安全区域。
+/// 通过 [SantoBottomDrawer.show] 静态方法打开。
+///
+/// 高度模式:未设置 [height] 时自适应内容(最大为 [maxHeight],默认屏幕
+/// 高度的 85%),此时内容建议使用可滚动控件或内容高度可控;设置 [height]
+/// 后为固定高度,内容区通过 [Expanded] 撑满,可自由使用 [Expanded]/[Flexible]。
+///
+/// 使用示例：
+/// ```dart
+/// SantoBottomDrawer.show(
+///   context: context,
+///   title: '标题',
+///   desc: '描述文案',
+///   titleAlign: SantoBottomDrawerTitleAlign.center,
+///   child: Text('内容'),
+/// );
+/// ```
+class SantoBottomDrawer extends StatelessWidget {
+  /// 标题文案,优先级低于 [titleWidget]
+  final String? title;
+
+  /// 自定义标题控件,设置后 [title] 失效
+  final Widget? titleWidget;
+
+  /// 标题下方的描述文案
+  final String? desc;
+
+  /// 标题对齐方式,默认左侧
+  final SantoBottomDrawerTitleAlign titleAlign;
+
+  /// 是否显示右侧关闭按钮,默认 true
+  final bool showCloseButton;
+
+  /// 关闭按钮点击回调,触发后抽屉关闭
+  final VoidCallback? onClose;
+
+  /// 点击遮罩是否关闭,默认 true
+  final bool barrierDismissible;
+
+  /// 遮罩层颜色,默认半透明黑色
+  final Color? maskColor;
+
+  /// 抽屉固定高度,默认 null 自适应内容
+  final double? height;
+
+  /// 自适应内容时的最大高度,默认屏幕高度的 85%
+  final double? maxHeight;
+
+  /// 顶部圆角,默认 12
+  final double radius;
+
+  /// 抽屉背景色,默认白色
+  final Color? backgroundColor;
+
+  /// 内容区是否处理底部安全区域,默认 true
+  final bool bottomSafeArea;
+
+  /// 内容区内边距,默认四周 20(不含安全区)
+  final EdgeInsets contentPadding;
+
+  /// 内容区控件
+  final Widget child;
+
+  const SantoBottomDrawer({
+    Key? key,
+    this.title,
+    this.titleWidget,
+    this.desc,
+    this.titleAlign = SantoBottomDrawerTitleAlign.left,
+    this.showCloseButton = true,
+    this.onClose,
+    this.barrierDismissible = true,
+    this.maskColor,
+    this.height,
+    this.maxHeight,
+    this.radius = 12,
+    this.backgroundColor,
+    this.bottomSafeArea = true,
+    this.contentPadding = const EdgeInsets.all(20),
+    required this.child,
+  }) : super(key: key);
+
+  /// 显示底部抽屉
+  ///
+  /// * [barrierDismissible] 点击遮罩是否关闭,默认 true
+  /// * 其余参数见 [SantoBottomDrawer]
+  static Future<T?> show<T>({
+    required BuildContext context,
+    String? title,
+    Widget? titleWidget,
+    String? desc,
+    SantoBottomDrawerTitleAlign titleAlign = SantoBottomDrawerTitleAlign.left,
+    bool showCloseButton = true,
+    VoidCallback? onClose,
+    bool barrierDismissible = true,
+    Color? maskColor,
+    double? height,
+    double? maxHeight,
+    double radius = 12,
+    Color? backgroundColor,
+    bool bottomSafeArea = true,
+    EdgeInsets contentPadding = const EdgeInsets.all(20),
+    required Widget child,
+  }) {
+    return Navigator.of(context).push<T>(
+      PageRouteBuilder(
+        opaque: false,
+        barrierDismissible: barrierDismissible,
+        barrierColor: maskColor ?? Colors.black.withAlpha(0x66),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return SantoBottomDrawer(
+            title: title,
+            titleWidget: titleWidget,
+            desc: desc,
+            titleAlign: titleAlign,
+            showCloseButton: showCloseButton,
+            onClose: onClose,
+            barrierDismissible: barrierDismissible,
+            maskColor: maskColor,
+            height: height,
+            maxHeight: maxHeight,
+            radius: radius,
+            backgroundColor: backgroundColor,
+            bottomSafeArea: bottomSafeArea,
+            contentPadding: contentPadding,
+            child: child,
+          );
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutCubic,
+            )),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void _close(BuildContext context) {
+    onClose?.call();
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final effectiveMaxHeight =
+        maxHeight ?? MediaQuery.of(context).size.height * 0.85;
+    final bottomPadding = contentPadding.bottom +
+        (bottomSafeArea ? MediaQuery.of(context).padding.bottom : 0);
+    final content = Padding(
+      padding: EdgeInsets.fromLTRB(
+        contentPadding.left,
+        contentPadding.top,
+        contentPadding.right,
+        bottomPadding,
+      ),
+      child: child,
+    );
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: GestureDetector(
+        onTap: () {}, // 阻止事件穿透到遮罩
+        child: Material(
+          color: backgroundColor ?? Colors.white,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(radius),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: double.infinity,
+              constraints: BoxConstraints(
+                minHeight: height ?? 0,
+                maxHeight: height ?? effectiveMaxHeight,
+              ),
+              child: Column(
+                mainAxisSize:
+                    height != null ? MainAxisSize.max : MainAxisSize.min,
+                children: [
+                  _buildHeader(context),
+                  if (height != null)
+                    Expanded(child: content)
+                  else
+                    content,
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Header:标题/描述(左对齐或居中) + 右侧关闭按钮
+  Widget _buildHeader(BuildContext context) {
+    if (title == null && titleWidget == null && !showCloseButton) {
+      return const SizedBox.shrink();
+    }
+
+    Widget titleContent = titleWidget ?? Text(title!);
+    titleContent = Column(
+      crossAxisAlignment: titleAlign == SantoBottomDrawerTitleAlign.center
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DefaultTextStyle(
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF333333),
+          ),
+          child: titleContent,
+        ),
+        if (desc != null) ...[
+          const SizedBox(height: 4),
+          Text(
+            desc!,
+            style: const TextStyle(
+              fontSize: 13,
+              color: Color(0xFF999999),
+            ),
+          ),
+        ],
+      ],
+    );
+
+    final closeButton = showCloseButton
+        ? GestureDetector(
+            onTap: () => _close(context),
+            behavior: HitTestBehavior.opaque,
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(Icons.close, size: 20, color: Color(0xFF999999)),
+            ),
+          )
+        : null;
+
+    Widget header;
+    if (titleAlign == SantoBottomDrawerTitleAlign.center) {
+      header = Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Expanded(child: SizedBox()),
+          Flexible(child: titleContent),
+          Expanded(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: closeButton ?? const SizedBox(),
+            ),
+          ),
+        ],
+      );
+    } else {
+      header = Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: titleContent),
+          ?closeButton,
+        ],
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 16, 12, 0),
+      child: header,
+    );
+  }
+}

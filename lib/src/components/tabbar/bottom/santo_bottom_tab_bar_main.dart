@@ -38,6 +38,7 @@ class SantoBottomTabBar extends StatefulWidget {
     this.isAnimation = false,
     this.badgeColor,
     this.isInkResponse = false,
+    this.selectedBgColor,
   })  : assert(items.isNotEmpty),
         assert(
           items.every((SantoBottomTabBarItem item) => item.title != null) == true,
@@ -72,6 +73,10 @@ class SantoBottomTabBar extends StatefulWidget {
 
   /// Tab中图标的大小
   final double iconSize;
+
+  /// 选中项的圆角背景色（参考 TDesign TabBar filled 样式）
+  /// 为 null 时不展示背景
+  final Color? selectedBgColor;
 
   @override
   _BottomTabBarState createState() => _BottomTabBarState();
@@ -203,6 +208,12 @@ class _BottomTabBarState extends State<SantoBottomTabBar> with TickerProviderSta
     }
   }
 
+  /// 未读徽标兜底色：未指定时取主题错误色（参考 TDesign 徽标）
+  Color get _effectiveBadgeColor =>
+      widget.badgeColor ??
+      widget.fixedColor ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.brandError;
+
   /// 生成瓦片
   List<Widget> _createTiles() {
     final MaterialLocalizations localizations =
@@ -212,15 +223,9 @@ class _BottomTabBarState extends State<SantoBottomTabBar> with TickerProviderSta
       case SantoBottomTabBarDisplayType.fixed:
         final ThemeData themeData = Theme.of(context);
         final TextTheme textTheme = themeData.textTheme;
-        Color? themeColor;
-        switch (themeData.brightness) {
-          case Brightness.light:
-            themeColor = themeData.primaryColor;
-            break;
-          case Brightness.dark:
-            themeColor = themeData.colorScheme.secondary;
-            break;
-        }
+        // 选中色默认取 santo 主题品牌色，保持组件库整体一致性
+        final Color themeColor =
+            SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
         final ColorTween colorTween = ColorTween(
           begin: textTheme.bodySmall!.color,
           end: widget.fixedColor ?? themeColor,
@@ -241,7 +246,8 @@ class _BottomTabBarState extends State<SantoBottomTabBar> with TickerProviderSta
                   tabIndex: i + 1, tabCount: widget.items.length),
               isAnimation: widget.isAnimation,
               isInkResponse: widget.isInkResponse,
-              badgeColor: widget.badgeColor ?? widget.fixedColor,
+              badgeColor: _effectiveBadgeColor,
+              selectedBgColor: widget.selectedBgColor,
             ),
           );
         }
@@ -263,7 +269,8 @@ class _BottomTabBarState extends State<SantoBottomTabBar> with TickerProviderSta
                   tabIndex: i + 1, tabCount: widget.items.length),
               isAnimation: widget.isAnimation,
               isInkResponse: widget.isInkResponse,
-              badgeColor: widget.badgeColor ?? widget.fixedColor,
+              badgeColor: _effectiveBadgeColor,
+              selectedBgColor: widget.selectedBgColor,
             ),
           );
         }
@@ -365,6 +372,7 @@ class _BottomNavigationTile extends StatelessWidget {
         this.isAnimation = true,
         this.isInkResponse = true,
         this.badgeColor,
+        this.selectedBgColor,
       });
 
   final SantoBottomTabBarDisplayType type;
@@ -379,6 +387,9 @@ class _BottomNavigationTile extends StatelessWidget {
   final bool isAnimation;
   final bool isInkResponse;
   final Color? badgeColor;
+
+  /// 选中项圆角背景色，null 不展示
+  final Color? selectedBgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -407,6 +418,20 @@ class _BottomNavigationTile extends StatelessWidget {
         selected: selected,
         child: Stack(
           children: <Widget>[
+            // 选中项圆角背景（参考 TDesign TabBar filled 样式）
+            if (selectedBgColor != null)
+              Positioned.fill(
+                child: AnimatedContainer(
+                  duration: kThemeAnimationDuration,
+                  curve: Curves.easeOut,
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: selected ? selectedBgColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
             Positioned(right: 4, top: 4, child: _buildBadge()!),
             _buildInkWidget(label),
             Semantics(

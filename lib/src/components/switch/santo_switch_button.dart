@@ -14,6 +14,9 @@ class SantoSwitchButton extends StatefulWidget {
   ///是否可以交互
   final bool enabled;
 
+  ///是否处于加载状态：显示加载指示器并禁用交互（参考 TDesign）
+  final bool loading;
+
   ///点击事件
   final ValueChanged<bool> onChanged;
 
@@ -25,6 +28,7 @@ class SantoSwitchButton extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.enabled = true,
+    this.loading = false,
     this.size = const Size(42, 26),
     this.borderColor,
   }) : super(key: key);
@@ -40,24 +44,22 @@ class _SantoSwitchButtonState extends State<SantoSwitchButton> {
       borderColor: widget.borderColor ?? _getBorderColor(),
       value: widget.value,
       enabled: widget.enabled,
+      loading: widget.loading,
       size: widget.size,
       trackColor: _getTrackColor(),
-      thumbColor: widget.enabled ? Colors.white : Color(0xFFFDFDFD),
-      onChanged: widget.enabled ? widget.onChanged : null,
+      thumbColor: Colors.white,
+      onChanged: widget.onChanged,
     );
   }
 
   Color _getTrackColor() {
     if (widget.value) {
-      return widget.enabled
-          ? SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary
-          : SantoThemeConfigurator.instance
-              .getConfig()
-              .commonConfig
-              .brandPrimary
-              .withAlpha(20);
+      return SantoThemeConfigurator.instance
+          .getConfig()
+          .commonConfig
+          .brandPrimary;
     } else {
-      return widget.enabled ? Color(0xFFFAFAFA) : Color(0xFFeeeeee);
+      return const Color(0xFFFAFAFA);
     }
   }
 
@@ -65,11 +67,7 @@ class _SantoSwitchButtonState extends State<SantoSwitchButton> {
     if (widget.value) {
       return _getTrackColor();
     } else {
-      if (widget.enabled) {
-        return const Color(0xffeeeeee);
-      } else {
-        return const Color(0xffeeeeee);
-      }
+      return const Color(0xffeeeeee);
     }
   }
 }

@@ -1,6 +1,4 @@
 import 'package:santo_ui/src/components/radio/santo_radio_core.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 ///单选按钮
@@ -69,18 +67,12 @@ class SantoRadioButton extends StatelessWidget {
       radioIndex: radioIndex,
       disable: disable,
       isSelected: isSelected,
+      radioType: SantoRadioType.single,
       iconPadding: iconPadding,
       childOnRight: childOnRight,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
-      selectedImage: SantoTools.getAssetImageWithBandColor(
-          SantoAsset.iconRadioSingleSelected),
-      unselectedImage: SantoTools.getAssetImage(SantoAsset.iconRadioUnSelected),
-      disSelectedImage:
-          SantoTools.getAssetImage(SantoAsset.iconRadioDisableMultiSelected),
-      disUnselectedImage:
-          SantoTools.getAssetImage(SantoAsset.iconRadioDisableUnselected),
       child: child,
       onRadioItemClick: () {
         onValueChangedAtIndex(radioIndex, true);

@@ -1,47 +1,131 @@
 import 'package:flutter/material.dart';
 
-/// 滑动单元格组件
+/// 滑动方向:打开哪一侧的操作面板
+enum SantoSwipeDirection {
+  /// 左侧操作面板(内容右滑展开)
+  left,
+
+  /// 右侧操作面板(内容左滑展开)
+  right,
+}
+
+/// 滑动单元格操作按钮
+class SantoSwipeCellAction {
+  /// 按钮文案
+  final String label;
+
+  /// 点击回调
+  final VoidCallback? onPressed;
+
+  /// 按钮背景色,默认主题灰
+  final Color? backgroundColor;
+
+  /// 文字颜色,默认白色
+  final Color? textColor;
+
+  /// 自定义按钮内容,设置后 [label] 失效
+  final Widget? child;
+
+  /// 单个按钮宽度
+  final double width;
+
+  const SantoSwipeCellAction({
+    required this.label,
+    this.onPressed,
+    this.backgroundColor,
+    this.textColor,
+    this.child,
+    this.width = 72,
+  });
+}
+
+/// 操作面板
 ///
-/// 列表项左滑/右滑出操作按钮，支持左侧和右侧操作区，支持自动关闭。
+/// [extentRatio] 为操作区总宽占单元格宽度的比例,默认 0.25。
+class SantoSwipeCellPanel {
+  /// 操作按钮列表
+  final List<SantoSwipeCellAction> actions;
+
+  /// 操作区总宽占单元格宽度的比例
+  final double extentRatio;
+
+  const SantoSwipeCellPanel({
+    required this.actions,
+    this.extentRatio = 0.25,
+  }) : assert(extentRatio > 0 && extentRatio <= 1,
+            'extentRatio 需在 (0, 1] 范围内');
+}
+
+/// 滑动单元格组件(API 参考 TDesign Flutter 的 SwipeCell)
 ///
-/// 使用示例：
+/// 列表项左滑/右滑出操作面板,支持:
+/// * 左/右操作面板 [left] / [right]
+/// * 禁用滑动 [disabled]
+/// * 默认展开 [opened]
+/// * 组内互斥 [groupTag]:同一组中一个打开时自动关闭其他,点击内容关闭全组
+/// * 展开状态回调 [onChange]
+///
+/// 使用示例:
 /// ```dart
 /// SantoSwipeCell(
-///   rightActions: [
-///     Container(width: 80, color: Colors.red, child: Center(child: Text('删除'))),
-///   ],
-///   child: ListTile(title: Text('列表项')),
+///   groupTag: 'demo',
+///   right: SantoSwipeCellPanel(
+///     actions: [
+///       SantoSwipeCellAction(
+///         label: '删除',
+///         backgroundColor: Colors.red,
+///         onPressed: () {},
+///       ),
+///     ],
+///   ),
+///   cell: ListTile(title: Text('列表项')),
 /// )
 /// ```
 class SantoSwipeCell extends StatefulWidget {
-  /// 左侧操作按钮列表
-  final List<Widget>? leftActions;
+  /// 单元格内容
+  final Widget cell;
 
-  /// 右侧操作按钮列表
-  final List<Widget>? rightActions;
+  /// 左侧操作面板
+  final SantoSwipeCellPanel? left;
 
-  /// 子组件（列表项内容）
-  final Widget child;
+  /// 右侧操作面板
+  final SantoSwipeCellPanel? right;
 
-  /// 打开回调
-  final VoidCallback? onOpen;
+  /// 是否禁用滑动,默认 false
+  final bool disabled;
 
-  /// 关闭回调
-  final VoidCallback? onClose;
+  /// 默认展开状态,[左侧, 右侧],默认均收起
+  final List<bool> opened;
 
-  /// 关闭其他已打开的滑动单元格（由外部管理）
+  /// 展开/收起状态变化回调
+  final void Function(SantoSwipeDirection direction, bool open)? onChange;
+
+  /// 组标签:配置后同组单元格互斥展开,点击时关闭全组
+  final Object? groupTag;
+
+  /// 点击内容时是否关闭全组已打开的单元格,默认 true
+  final bool closeWhenTapped;
+
+  /// 打开/收起动画时长,默认 200ms
+  final Duration duration;
+
+  /// 控制器,用于外部关闭当前单元格
   final SantoSwipeCellController? controller;
 
   const SantoSwipeCell({
     Key? key,
-    this.leftActions,
-    this.rightActions,
-    required this.child,
-    this.onOpen,
-    this.onClose,
+    required this.cell,
+    this.left,
+    this.right,
+    this.disabled = false,
+    this.opened = const [false, false],
+    this.onChange,
+    this.groupTag,
+    this.closeWhenTapped = true,
+    this.duration = const Duration(milliseconds: 200),
     this.controller,
-  })  : assert(leftActions != null || rightActions != null,
-            '至少需要提供左侧或右侧操作按钮'),
+  })  : assert(left != null || right != null,
+            '至少需要提供左侧或右侧操作面板'),
         super(key: key);
 
   @override
@@ -50,207 +134,255 @@ class SantoSwipeCell extends StatefulWidget {
 
 class _SantoSwipeCellState extends State<SantoSwipeCell>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  late final AnimationController _controller;
+  Animation<double> _offset = const AlwaysStoppedAnimation(0);
   double _dragOffset = 0.0;
-  bool _isOpen = false;
+  SantoSwipeDirection? _openDirection;
 
-  /// 每个操作按钮的默认宽度
-  static const double _actionButtonWidth = 80.0;
+  /// 组注册表:groupTag -> 同组状态集合
+  static final Map<Object, Set<_SantoSwipeCellState>> _groups = {};
 
-  double get _leftActionsWidth =>
-      widget.leftActions != null
-          ? widget.leftActions!.length * _actionButtonWidth
-          : 0.0;
+  double get _leftExtent =>
+      widget.left != null ? widget.left!.extentRatio * _cellWidth : 0.0;
 
-  double get _rightActionsWidth =>
-      widget.rightActions != null
-          ? widget.rightActions!.length * _actionButtonWidth
-          : 0.0;
+  double get _rightExtent =>
+      widget.right != null ? widget.right!.extentRatio * _cellWidth : 0.0;
+
+  double _cellWidth = 0;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 250),
-    );
-    _animationController.addListener(_handleAnimationTick);
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _offset = Tween<double>(begin: 0, end: 0).animate(_controller)
+      ..addListener(() {
+        setState(() => _dragOffset = _offset.value);
+      });
+    widget.controller?._attach(this);
 
-    // 注册控制器回调，用于外部关闭
-    widget.controller?._register(this);
+    final group = widget.groupTag;
+    if (group != null) {
+      _groups.putIfAbsent(group, () => {}).add(this);
+    }
+
+    if (widget.opened.first && widget.left != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _openLeft());
+    } else if (widget.opened.last && widget.right != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _openRight());
+    }
   }
 
-  void _handleAnimationTick() {
-    setState(() {
-      _dragOffset = _animationController.value;
-    });
+  @override
+  void didUpdateWidget(covariant SantoSwipeCell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.duration != oldWidget.duration) {
+      _controller.duration = widget.duration;
+    }
   }
 
   @override
   void dispose() {
-    widget.controller?._unregister(this);
-    _animationController.dispose();
+    widget.controller?._detach(this);
+    final group = widget.groupTag;
+    if (group != null) {
+      _groups[group]?.remove(this);
+      if (_groups[group]?.isEmpty ?? false) _groups.remove(group);
+    }
+    _controller.dispose();
     super.dispose();
   }
 
-  void _close() {
-    if (!_isOpen && _dragOffset == 0) return;
-    _animateTo(0.0);
-    _isOpen = false;
-    widget.onClose?.call();
+  void _animateTo(double target) {
+    _offset = Tween<double>(begin: _dragOffset, end: target)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _controller.forward(from: 0);
+  }
+
+  void _close({bool notify = true}) {
+    if (_openDirection == null && _dragOffset == 0) return;
+    _animateTo(0);
+    if (notify && _openDirection != null) {
+      widget.onChange?.call(_openDirection!, false);
+    }
+    _openDirection = null;
   }
 
   void _openLeft() {
-    final width = _leftActionsWidth;
-    if (width <= 0) return;
-    _animateTo(width);
-    _isOpen = true;
-    widget.onOpen?.call();
+    if (_leftExtent <= 0) return;
+    _closeGroup();
+    _animateTo(_leftExtent);
+    _openDirection = SantoSwipeDirection.left;
+    widget.onChange?.call(SantoSwipeDirection.left, true);
   }
 
   void _openRight() {
-    final width = _rightActionsWidth;
-    if (width <= 0) return;
-    _animateTo(-width);
-    _isOpen = true;
-    widget.onOpen?.call();
+    if (_rightExtent <= 0) return;
+    _closeGroup();
+    _animateTo(-_rightExtent);
+    _openDirection = SantoSwipeDirection.right;
+    widget.onChange?.call(SantoSwipeDirection.right, true);
   }
 
-  void _animateTo(double target) {
-    // 将当前偏移量和目标偏移量映射到动画控制器的 0.0 ~ 1.0 范围
-    final double startValue = _dragOffset;
-    final double endValue = target;
-
-    // 使用 Tween 来驱动动画
-    _animationController.value = 0.0;
-    final Tween<double> tween = Tween<double>(begin: startValue, end: endValue);
-
-    // 监听动画并更新偏移量
-    void listener() {
-      setState(() {
-        _dragOffset = tween.transform(_animationController.value);
-      });
+  /// 关闭同组其他已展开的单元格
+  void _closeGroup() {
+    final group = widget.groupTag;
+    if (group == null) return;
+    for (final state in (_groups[group] ?? const {})) {
+      if (state != this) state._close(notify: false);
     }
-
-    // 移除旧监听器，添加新的
-    _animationController.removeListener(_handleAnimationTick);
-    _animationController.addListener(listener);
-    _animationController.forward(from: 0.0).then((_) {
-      _animationController.removeListener(listener);
-      _animationController.addListener(_handleAnimationTick);
-    });
   }
 
   void _onDragStart(DragStartDetails details) {
-    _animationController.stop();
+    _controller.stop();
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
-    final double delta = details.primaryDelta ?? 0;
+    final delta = details.primaryDelta ?? 0;
     setState(() {
       _dragOffset += delta;
-
-      final double maxLeft = _leftActionsWidth;
-      final double maxRight = _rightActionsWidth;
-
-      // 限制拖动范围，添加阻尼效果
-      if (_dragOffset > maxLeft) {
-        _dragOffset = maxLeft + (_dragOffset - maxLeft) * 0.3;
-      } else if (_dragOffset < -maxRight) {
-        _dragOffset = -maxRight + (_dragOffset + maxRight) * 0.3;
+      // 越界阻尼
+      if (_dragOffset > _leftExtent) {
+        _dragOffset = _leftExtent + (_dragOffset - _leftExtent) * 0.3;
+      } else if (_dragOffset < -_rightExtent) {
+        _dragOffset = -_rightExtent + (_dragOffset + _rightExtent) * 0.3;
       }
     });
   }
 
   void _onDragEnd(DragEndDetails details) {
-    final double velocity = details.primaryVelocity ?? 0;
-    final double offset = _dragOffset;
+    final velocity = details.primaryVelocity ?? 0;
+    final offset = _dragOffset;
 
-    // 根据速度和位置判断是否打开
-    if (velocity > 500) {
-      // 快速右滑 → 打开左侧
-      if (_leftActionsWidth > 0) {
-        _openLeft();
-      } else {
-        _animateTo(0.0);
-      }
-    } else if (velocity < -500) {
-      // 快速左滑 → 打开右侧
-      if (_rightActionsWidth > 0) {
-        _openRight();
-      } else {
-        _animateTo(0.0);
-      }
-    } else if (offset > _leftActionsWidth / 2) {
+    if (velocity > 500 && _leftExtent > 0) {
       _openLeft();
-    } else if (offset < -_rightActionsWidth / 2) {
+    } else if (velocity < -500 && _rightExtent > 0) {
       _openRight();
+    } else if (offset > _leftExtent / 2) {
+      _openLeft();
+    } else if (offset < -_rightExtent / 2) {
+      _openRight();
+    } else if (_openDirection != null) {
+      _close();
     } else {
-      _animateTo(0.0);
-      if (_isOpen) {
-        _isOpen = false;
-        widget.onClose?.call();
-      }
+      _animateTo(0);
     }
+  }
+
+  Widget _buildAction(
+      SantoSwipeCellAction action, SantoSwipeDirection direction) {
+    return SizedBox(
+      width: action.width,
+      child: Material(
+        color: action.backgroundColor ?? const Color(0xFFCCCCCC),
+        child: InkWell(
+          onTap: () {
+            action.onPressed?.call();
+          },
+          child: Center(
+            child: action.child ??
+                Text(
+                  action.label,
+                  style: TextStyle(
+                      color: action.textColor ?? Colors.white, fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragStart: _onDragStart,
-      onHorizontalDragUpdate: _onDragUpdate,
-      onHorizontalDragEnd: _onDragEnd,
-      child: Stack(
-        children: [
-          // 背景操作按钮
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return LayoutBuilder(builder: (context, constraints) {
+      _cellWidth = constraints.maxWidth;
+      final leftPanel = widget.left;
+      final rightPanel = widget.right;
+
+      final leftActions = leftPanel == null
+          ? null
+          : Row(
+              children: leftPanel.actions
+                  .map((a) => _buildAction(a, SantoSwipeDirection.left))
+                  .toList(),
+            );
+
+      final rightActions = rightPanel == null
+          ? null
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: rightPanel.actions
+                  .map((a) => _buildAction(a, SantoSwipeDirection.right))
+                  .toList(),
+            );
+
+      return GestureDetector(
+        onHorizontalDragStart: widget.disabled ? null : _onDragStart,
+        onHorizontalDragUpdate: widget.disabled ? null : _onDragUpdate,
+        onHorizontalDragEnd: widget.disabled ? null : _onDragEnd,
+        child: ClipRect(
+          child: Stack(
             children: [
-              // 左侧操作按钮
-              if (widget.leftActions != null)
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: widget.leftActions!,
-                )
-              else
-                const SizedBox.shrink(),
-              // 右侧操作按钮
-              if (widget.rightActions != null)
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: widget.rightActions!,
-                )
-              else
-                const SizedBox.shrink(),
+              // 操作面板背景
+              Positioned.fill(
+                child: Stack(
+                  children: [
+                    if (leftActions != null)
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: leftActions,
+                      ),
+                    if (rightActions != null)
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: rightActions,
+                      ),
+                  ],
+                ),
+              ),
+              // 前景内容
+              Transform.translate(
+                offset: Offset(_dragOffset, 0),
+                child: GestureDetector(
+                  onTap: () {
+                    if (_openDirection != null) {
+                      _close();
+                    } else if (widget.closeWhenTapped && widget.groupTag != null) {
+                      _closeGroup();
+                    }
+                  },
+                  child: widget.cell,
+                ),
+              ),
             ],
           ),
-          // 前景内容
-          Transform.translate(
-            offset: Offset(_dragOffset, 0),
-            child: widget.child,
-          ),
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }
 
-/// 滑动单元格控制器，用于外部管理关闭已打开的单元格
+/// 滑动单元格控制器,用于外部关闭当前单元格
 class SantoSwipeCellController {
-  _SantoSwipeCellState? _currentState;
+  final Set<_SantoSwipeCellState> _states = {};
 
-  void _register(_SantoSwipeCellState state) {
-    _currentState = state;
+  void _attach(_SantoSwipeCellState state) {
+    _states.add(state);
   }
 
-  void _unregister(_SantoSwipeCellState state) {
-    if (_currentState == state) {
-      _currentState = null;
-    }
+  void _detach(_SantoSwipeCellState state) {
+    _states.remove(state);
   }
 
-  /// 关闭当前打开的滑动单元格
+  /// 关闭已打开的单元格
   void close() {
-    _currentState?._close();
+    for (final state in _states) {
+      state._close(notify: false);
+    }
   }
 }

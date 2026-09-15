@@ -140,6 +140,89 @@ class DrawerExample extends StatelessWidget {
                 ],
               ),
             ),
+            SantoPanel(
+              title: '底部 Drawer (SantoBottomDrawer)',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoBottomDrawer.show(
+                        context: context,
+                        title: '标题左对齐',
+                        desc: '这是描述文案,标题和描述默认左对齐',
+                        child: const Text('底部 Drawer 内容'),
+                      );
+                    },
+                    text: '标题+描述(左对齐,自适应高度)',
+                  ),
+                  const SizedBox(height: 16),
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoBottomDrawer.show(
+                        context: context,
+                        title: '标题居中',
+                        desc: '标题和描述居中显示',
+                        titleAlign: SantoBottomDrawerTitleAlign.center,
+                        height: 300,
+                        child: const Center(child: Text('固定高度 300')),
+                      );
+                    },
+                    text: '标题+描述(居中,固定高度)',
+                  ),
+                  const SizedBox(height: 16),
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoBottomDrawer.show(
+                        context: context,
+                        title: '无关闭按钮',
+                        desc: 'showCloseButton: false',
+                        showCloseButton: false,
+                        child: const Text('只能通过遮罩或内容区操作关闭'),
+                      );
+                    },
+                    text: '隐藏右侧关闭按钮',
+                  ),
+                  const SizedBox(height: 16),
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoBottomDrawer.show(
+                        context: context,
+                        title: '点击遮罩不关闭',
+                        desc: 'barrierDismissible: false',
+                        barrierDismissible: false,
+                        child: SantoNormalButton(
+                          onTap: () => Navigator.of(context).pop(),
+                          text: '点我关闭',
+                        ),
+                      );
+                    },
+                    text: '点击遮罩不关闭',
+                  ),
+                  const SizedBox(height: 16),
+                  SantoNormalButton(
+                    onTap: () {
+                      SantoBottomDrawer.show(
+                        context: context,
+                        title: '长内容滚动',
+                        desc: '内容超过最大高度(屏幕 85%)时请使用可滚动控件',
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 30,
+                          itemBuilder: (context, index) =>
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8),
+                                child: Text('列表项 ${index + 1}'),
+                              ),
+                        ),
+                      );
+                    },
+                    text: '长内容 + 底部安全区域',
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
