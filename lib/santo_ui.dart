@@ -280,6 +280,7 @@ export 'src/components/collapse/santo_collapse.dart';
 
 //抽屉
 export 'src/components/drawer/santo_drawer.dart';
+export 'src/components/drawer/santo_bottom_drawer.dart';
 
 //进度条
 export 'src/components/progress/santo_progress.dart';

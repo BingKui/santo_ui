@@ -48,25 +48,40 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
               ],
             ),
           ),
+          // 组内互斥 (groupTag)
+          SantoPanel(
+            title: '组内互斥 (groupTag)',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSwipeCellWithRightOnly(groupTag: 'demo'),
+                _buildSwipeCellWithLeftOnly(groupTag: 'demo'),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSwipeCellWithRightOnly() {
+  Widget _buildSwipeCellWithRightOnly({Object? groupTag}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SantoSwipeCell(
-        rightActions: [
-          _buildActionButton(
-            color: const Color(0xFFFA3F3F),
+        groupTag: groupTag,
+        right: SantoSwipeCellPanel(
+        extentRatio: 0.3,
+        actions: [
+          SantoSwipeCellAction(
             label: '删除',
-            onTap: () {
+            backgroundColor: const Color(0xFFFA3F3F),
+            onPressed: () {
               SantoToast.show('点击删除', context);
             },
           ),
         ],
-        child: Container(
+      ),
+        cell: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -82,20 +97,24 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
     );
   }
 
-  Widget _buildSwipeCellWithLeftOnly() {
+  Widget _buildSwipeCellWithLeftOnly({Object? groupTag}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SantoSwipeCell(
-        leftActions: [
-          _buildActionButton(
-            color: const Color(0xFF0984F9),
+        groupTag: groupTag,
+        left: SantoSwipeCellPanel(
+        extentRatio: 0.3,
+        actions: [
+          SantoSwipeCellAction(
             label: '置顶',
-            onTap: () {
+            backgroundColor: const Color(0xFF0984F9),
+            onPressed: () {
               SantoToast.show('点击置顶', context);
             },
           ),
         ],
-        child: Container(
+      ),
+        cell: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -111,36 +130,43 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
     );
   }
 
-  Widget _buildSwipeCellWithBoth() {
+  Widget _buildSwipeCellWithBoth({Object? groupTag}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SantoSwipeCell(
-        leftActions: [
-          _buildActionButton(
-            color: const Color(0xFF0984F9),
+        groupTag: groupTag,
+        left: SantoSwipeCellPanel(
+        extentRatio: 0.3,
+        actions: [
+          SantoSwipeCellAction(
             label: '置顶',
-            onTap: () {
+            backgroundColor: const Color(0xFF0984F9),
+            onPressed: () {
               SantoToast.show('点击置顶', context);
             },
           ),
         ],
-        rightActions: [
-          _buildActionButton(
-            color: const Color(0xFFFAAD14),
+      ),
+        right: SantoSwipeCellPanel(
+        extentRatio: 0.3,
+        actions: [
+          SantoSwipeCellAction(
             label: '编辑',
-            onTap: () {
+            backgroundColor: const Color(0xFFFAAD14),
+            onPressed: () {
               SantoToast.show('点击编辑', context);
             },
           ),
-          _buildActionButton(
-            color: const Color(0xFFFA3F3F),
+          SantoSwipeCellAction(
             label: '删除',
-            onTap: () {
+            backgroundColor: const Color(0xFFFA3F3F),
+            onPressed: () {
               SantoToast.show('点击删除', context);
             },
           ),
         ],
-        child: Container(
+      ),
+        cell: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -150,30 +176,6 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           child: const Text(
             '左右滑动显示操作按钮',
             style: TextStyle(fontSize: 16, color: Color(0xFF222222)),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton({
-    required Color color,
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 80,
-        color: color,
-        child: Center(
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
           ),
         ),
       ),

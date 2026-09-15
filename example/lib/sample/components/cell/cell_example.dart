@@ -131,7 +131,57 @@ class _CellExampleState extends State<CellExample> {
               title: 'CellGroup 组合',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [SizedBox(height: 20)],
+                children: [
+                  SantoCellGroup(
+                    title: '账号设置',
+                    children: [
+                      SantoCell(
+                        title: '个人信息',
+                        description: '查看和编辑个人资料',
+                        leftIcon: Icons.person,
+                        onTap: () {
+                          SantoToast.show('点击了个人信息', context);
+                        },
+                      ),
+                      SantoCell(
+                        title: '通知设置',
+                        leftIcon: Icons.notifications,
+                        note: '已开启',
+                        onTap: () {
+                          SantoToast.show('点击了通知设置', context);
+                        },
+                      ),
+                      SantoCell(
+                        title: '隐私',
+                        leftIcon: Icons.lock_outline,
+                        bottomLine: false,
+                        onTap: () {
+                          SantoToast.show('点击了隐私', context);
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  SantoCellGroup(
+                    children: [
+                      SantoCell(
+                        title: '清除缓存',
+                        note: '23.5MB',
+                        onTap: () {
+                          SantoToast.show('点击了清除缓存', context);
+                        },
+                      ),
+                      SantoCell(
+                        title: '退出登录',
+                        showArrow: false,
+                        bottomLine: false,
+                        onTap: () {
+                          SantoToast.show('点击了退出登录', context);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],

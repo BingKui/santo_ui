@@ -8,3 +8,4 @@
 * 修复 SantoNormalButton.outline 未传 lineColor 时的空断言崩溃
 * 新增 SantoSpace 间距组件(水平/垂直方向,三档预设间距 + 自定义间距 + 自动换行,参考 antd Space)
 * 新增 SantoMasonry 瀑布流组件(columns/gutter/verticalGutter/items,API 对齐 antd 6 Masonry)
+* 重写 SantoSwipeCell 滑动单元格(API 参考 TDesign Flutter):cell/left/right Panel(extentRatio)、disabled、opened、groupTag 组内互斥、onChange、controller

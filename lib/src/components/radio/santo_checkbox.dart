@@ -1,6 +1,4 @@
 import 'package:santo_ui/src/components/radio/santo_radio_core.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 ///多选按钮
@@ -16,6 +14,10 @@ class SantoCheckbox extends StatefulWidget {
   /// 初始值，是否被选择
   /// 默认false
   final bool isSelected;
+
+  /// 是否处于半选状态
+  /// 默认false
+  final bool isIndeterminate;
 
   /// 是否禁用当前选项
   /// 默认false
@@ -55,6 +57,7 @@ class SantoCheckbox extends StatefulWidget {
       required this.onValueChangedAtIndex,
       this.disable = false,
       this.isSelected = false,
+      this.isIndeterminate = false,
       this.iconPadding,
       this.child,
       this.childOnRight = true,
@@ -93,18 +96,13 @@ class SantoCheckboxState extends State<SantoCheckbox> {
       radioIndex: widget.radioIndex,
       disable: widget.disable,
       isSelected: _isSelected,
+      isIndeterminate: widget.isIndeterminate,
+      radioType: SantoRadioType.multi,
       iconPadding: widget.iconPadding,
       childOnRight: widget.childOnRight,
       mainAxisAlignment: widget.mainAxisAlignment,
       crossAxisAlignment: widget.crossAxisAlignment,
       mainAxisSize: widget.mainAxisSize,
-      selectedImage: SantoTools.getAssetImageWithBandColor(
-          SantoAsset.iconRadioMultiSelected),
-      unselectedImage: SantoTools.getAssetImage(SantoAsset.iconRadioUnSelected),
-      disSelectedImage:
-          SantoTools.getAssetImage(SantoAsset.iconRadioDisableSingleSelected),
-      disUnselectedImage:
-          SantoTools.getAssetImage(SantoAsset.iconRadioDisableUnselected),
       child: widget.child,
       onRadioItemClick: () {
         setState(() {
