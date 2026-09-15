@@ -127,6 +127,9 @@ class SantoTable extends StatelessWidget {
   /// 表格总宽度，为 null 时自适应父容器
   final double? tableWidth;
 
+  /// 数据为空时展示的占位内容，为 null 时使用默认"暂无数据"
+  final Widget? empty;
+
   /// 创建表格组件
   const SantoTable({
     Key? key,
@@ -148,6 +151,7 @@ class SantoTable extends StatelessWidget {
     this.striped = false,
     this.pinnedHeader = false,
     this.tableWidth,
+    this.empty,
   }) : super(key: key);
 
   /// 获取对齐方式
@@ -230,6 +234,8 @@ class SantoTable extends StatelessWidget {
         children: [
           // 表头
           _buildHeaderRow(hColor, defaultHeaderStyle, bColor),
+          // 空数据占位
+          if (data.isEmpty) _buildEmptyPlaceholder(oColor),
           // 数据行
           for (int index = 0; index < data.length; index++)
             _buildDataRow(
@@ -282,6 +288,7 @@ class SantoTable extends StatelessWidget {
                       defaultCellStyle: defaultCellStyle,
                       bColor: bColor,
                     ),
+                  if (data.isEmpty) _buildEmptyPlaceholder(oColor),
                 ],
               ),
             ),
@@ -337,14 +344,14 @@ class SantoTable extends StatelessWidget {
   }) {
     return Container(
       height: rowHeight,
-      color: bgColor,
-      decoration: border
-          ? BoxDecoration(
-              border: Border(
+      decoration: BoxDecoration(
+        color: bgColor,
+        border: border
+            ? Border(
                 bottom: BorderSide(color: bColor, width: borderWidth),
-              ),
-            )
-          : null,
+              )
+            : null,
+      ),
       child: Row(
         children: List.generate(columns.length, (colIndex) {
           final col = columns[colIndex];
@@ -378,6 +385,22 @@ class SantoTable extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  /// 构建空数据占位
+  Widget _buildEmptyPlaceholder(Color bgColor) {
+    final hintColor =
+        SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextHint;
+    return Container(
+      height: 56,
+      color: bgColor,
+      alignment: Alignment.center,
+      child: empty ??
+          Text(
+            '暂无数据',
+            style: TextStyle(color: hintColor, fontSize: 13),
+          ),
     );
   }
 
