@@ -12,7 +12,6 @@ class _KeyTextCloseContentExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '单列展示紧随',
       ),

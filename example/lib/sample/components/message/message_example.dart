@@ -11,7 +11,6 @@ class _MessageExampleState extends State<MessageExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Message 消息通知示例'),
       body: SingleChildScrollView(
         child: Column(

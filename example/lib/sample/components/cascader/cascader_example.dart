@@ -130,7 +130,6 @@ class _CascaderExampleState extends State<CascaderExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Cascader 级联选择器示例'),
       body: SingleChildScrollView(
         child: Column(

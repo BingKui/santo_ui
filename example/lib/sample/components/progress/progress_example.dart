@@ -16,7 +16,6 @@ class _ProgressExampleState extends State<ProgressExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Progress 示例'),
       body: SingleChildScrollView(
         child: Column(

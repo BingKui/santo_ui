@@ -19,7 +19,6 @@ class _PopoverExampleState extends State<PopoverExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Popover 气泡弹出框示例'),
       body: SingleChildScrollView(
         child: Column(

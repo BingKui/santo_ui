@@ -7,7 +7,6 @@ class SantoCommonBottomExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '普通吸底按钮',
       ),

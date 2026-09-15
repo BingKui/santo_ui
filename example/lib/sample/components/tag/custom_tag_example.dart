@@ -12,7 +12,6 @@ class _CustomTagExampleState extends State<CustomTagExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '自定义标签',
       ),

@@ -143,7 +143,6 @@ class _TreeExampleState extends State<TreeExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Tree 树形控件示例'),
       body: SingleChildScrollView(
         child: Column(

@@ -14,7 +14,6 @@ class _TextValueArrowContentExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: 'value带有操作箭头',
       ),

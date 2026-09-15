@@ -37,7 +37,6 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'TimeCounter 计时器示例'),
       body: SingleChildScrollView(
         child: Column(

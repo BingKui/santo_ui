@@ -14,7 +14,6 @@ class _SantoSelectionBottomButtonExampleState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '多选吸底按钮',
       ),

@@ -18,7 +18,6 @@ class _SliderExampleState extends State<SliderExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Slider 示例'),
       body: SingleChildScrollView(
         child: Column(

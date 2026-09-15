@@ -12,7 +12,6 @@ class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '普通标题',
       ),

@@ -15,7 +15,6 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'SwipeCell 示例'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

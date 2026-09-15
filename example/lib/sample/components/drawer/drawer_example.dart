@@ -6,7 +6,6 @@ class DrawerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Drawer 示例'),
       body: SingleChildScrollView(
         child: Column(

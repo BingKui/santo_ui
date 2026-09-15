@@ -20,7 +20,6 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
         appBar: SantoAppBar(
           title: widget._title,
         ),
-        backgroundColor: Colors.white,
         body: Padding(
           padding: EdgeInsets.all(20),
           child: ListView(

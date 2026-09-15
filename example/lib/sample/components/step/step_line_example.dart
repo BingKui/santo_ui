@@ -24,7 +24,6 @@ class _StepLineExampleState extends State<StepLineExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '竖向步骤条',
       ),

@@ -20,7 +20,6 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '开关元件',
       ),

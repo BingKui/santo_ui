@@ -14,7 +14,6 @@ class _SantoShadowExampleState extends State<SantoShadowExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '阴影卡片',
       ),

@@ -11,7 +11,6 @@ class _ResultExampleState extends State<ResultExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Result 示例'),
       body: SingleChildScrollView(
         child: Column(

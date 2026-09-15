@@ -36,7 +36,6 @@ class _TextContentExampleState extends State<TextContentExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '单列展示左对齐',
       ),

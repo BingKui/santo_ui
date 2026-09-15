@@ -15,7 +15,6 @@ class _RadioExampleState extends State<RadioExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '单选示例',
       ),

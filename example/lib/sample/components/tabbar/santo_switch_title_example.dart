@@ -25,7 +25,6 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(
         title: '一级标题',
       ),
