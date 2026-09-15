@@ -26,6 +26,9 @@ class SantoPanelConfig extends SantoBaseConfig {
         _radius = radius,
         _headerHeight = headerHeight,
         _titleTextStyle = titleTextStyle,
+        _borderColor = borderColor,
+        _borderWidth = borderWidth,
+        _showHeaderDivider = showHeaderDivider,
         super(configId: configId);
 
   /// 面板外边距
