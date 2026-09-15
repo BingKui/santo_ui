@@ -74,7 +74,7 @@ class SantoNoticeBar extends StatelessWidget {
     NoticeStyle defaultStyle = NoticeStyles.runningWithArrow;
 
     Widget tempRightWidget =
-        rightWidget ?? (noticeStyle?.rightIcon ?? defaultStyle.leftIcon);
+        rightWidget ?? (noticeStyle?.rightIcon ?? defaultStyle.rightIcon);
     if (onRightIconTap != null) {
       tempRightWidget = GestureDetector(
         child: tempRightWidget,

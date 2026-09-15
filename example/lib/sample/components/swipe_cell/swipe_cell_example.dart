@@ -16,50 +16,52 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SantoAppBar(title: 'SwipeCell 示例'),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 提示
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-            child: Text(
-              '左滑或右滑列表项查看操作按钮',
-              style: TextStyle(
-                color: const Color(0xFF222222).withAlpha(150),
-                fontSize: 14,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 提示
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+              child: Text(
+                '左滑或右滑列表项查看操作按钮',
+                style: TextStyle(
+                  color: const Color(0xFF222222).withAlpha(150),
+                  fontSize: 14,
+                ),
               ),
             ),
-          ),
 
-          // 仅右侧操作
-          SantoPanel(title: '仅右侧操作', child: _buildSwipeCellWithRightOnly()),
-          // 仅左侧操作
-          SantoPanel(title: '仅左侧操作', child: _buildSwipeCellWithLeftOnly()),
-          // 左右都有操作
-          SantoPanel(title: '左右都有操作', child: _buildSwipeCellWithBoth()),
-          // 列表中使用
-          SantoPanel(
-            title: '列表中使用',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSwipeCellWithRightOnly(),
-                _buildSwipeCellWithLeftOnly(),
-              ],
+            // 仅右侧操作
+            SantoPanel(title: '仅右侧操作', child: _buildSwipeCellWithRightOnly()),
+            // 仅左侧操作
+            SantoPanel(title: '仅左侧操作', child: _buildSwipeCellWithLeftOnly()),
+            // 左右都有操作
+            SantoPanel(title: '左右都有操作', child: _buildSwipeCellWithBoth()),
+            // 列表中使用
+            SantoPanel(
+              title: '列表中使用',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSwipeCellWithRightOnly(),
+                  _buildSwipeCellWithLeftOnly(),
+                ],
+              ),
             ),
-          ),
-          // 组内互斥 (groupTag)
-          SantoPanel(
-            title: '组内互斥 (groupTag)',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSwipeCellWithRightOnly(groupTag: 'demo'),
-                _buildSwipeCellWithLeftOnly(groupTag: 'demo'),
-              ],
+            // 组内互斥 (groupTag)
+            SantoPanel(
+              title: '组内互斥 (groupTag)',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSwipeCellWithRightOnly(groupTag: 'demo'),
+                  _buildSwipeCellWithLeftOnly(groupTag: 'demo'),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -70,17 +72,17 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
       child: SantoSwipeCell(
         groupTag: groupTag,
         right: SantoSwipeCellPanel(
-        extentRatio: 0.3,
-        actions: [
-          SantoSwipeCellAction(
-            label: '删除',
-            backgroundColor: const Color(0xFFFA3F3F),
-            onPressed: () {
-              SantoToast.show('点击删除', context);
-            },
-          ),
-        ],
-      ),
+          extentRatio: 0.3,
+          actions: [
+            SantoSwipeCellAction(
+              label: '删除',
+              backgroundColor: const Color(0xFFFA3F3F),
+              onPressed: () {
+                SantoToast.show('点击删除', context);
+              },
+            ),
+          ],
+        ),
         cell: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
@@ -103,17 +105,17 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
       child: SantoSwipeCell(
         groupTag: groupTag,
         left: SantoSwipeCellPanel(
-        extentRatio: 0.3,
-        actions: [
-          SantoSwipeCellAction(
-            label: '置顶',
-            backgroundColor: const Color(0xFF0984F9),
-            onPressed: () {
-              SantoToast.show('点击置顶', context);
-            },
-          ),
-        ],
-      ),
+          extentRatio: 0.3,
+          actions: [
+            SantoSwipeCellAction(
+              label: '置顶',
+              backgroundColor: const Color(0xFF0984F9),
+              onPressed: () {
+                SantoToast.show('点击置顶', context);
+              },
+            ),
+          ],
+        ),
         cell: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
@@ -136,36 +138,36 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
       child: SantoSwipeCell(
         groupTag: groupTag,
         left: SantoSwipeCellPanel(
-        extentRatio: 0.3,
-        actions: [
-          SantoSwipeCellAction(
-            label: '置顶',
-            backgroundColor: const Color(0xFF0984F9),
-            onPressed: () {
-              SantoToast.show('点击置顶', context);
-            },
-          ),
-        ],
-      ),
+          extentRatio: 0.3,
+          actions: [
+            SantoSwipeCellAction(
+              label: '置顶',
+              backgroundColor: const Color(0xFF0984F9),
+              onPressed: () {
+                SantoToast.show('点击置顶', context);
+              },
+            ),
+          ],
+        ),
         right: SantoSwipeCellPanel(
-        extentRatio: 0.3,
-        actions: [
-          SantoSwipeCellAction(
-            label: '编辑',
-            backgroundColor: const Color(0xFFFAAD14),
-            onPressed: () {
-              SantoToast.show('点击编辑', context);
-            },
-          ),
-          SantoSwipeCellAction(
-            label: '删除',
-            backgroundColor: const Color(0xFFFA3F3F),
-            onPressed: () {
-              SantoToast.show('点击删除', context);
-            },
-          ),
-        ],
-      ),
+          extentRatio: 0.3,
+          actions: [
+            SantoSwipeCellAction(
+              label: '编辑',
+              backgroundColor: const Color(0xFFFAAD14),
+              onPressed: () {
+                SantoToast.show('点击编辑', context);
+              },
+            ),
+            SantoSwipeCellAction(
+              label: '删除',
+              backgroundColor: const Color(0xFFFA3F3F),
+              onPressed: () {
+                SantoToast.show('点击删除', context);
+              },
+            ),
+          ],
+        ),
         cell: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(

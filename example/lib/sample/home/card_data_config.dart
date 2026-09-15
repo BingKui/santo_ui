@@ -28,7 +28,7 @@ import 'package:example/sample/components/form/all_item_style_example.dart';
 import 'package:example/sample/components/gallery/gallery_example.dart';
 import 'package:example/sample/components/guide/guide_entry_page.dart';
 import 'package:example/sample/components/input/input_example.dart';
-import 'package:example/sample/components/line/dashed_line_example.dart';
+import 'package:example/sample/components/divider/divider_example.dart';
 import 'package:example/sample/components/loading/loading_widget_example.dart';
 import 'package:example/sample/components/navbar/appbar_entry_page.dart';
 import 'package:example/sample/components/noticebar/santo_notice_bar_example.dart';
@@ -128,7 +128,7 @@ class CardDataConfig {
   // ========== 布局 ==========
   static GroupInfo _getLayoutGroup() {
     List<GroupInfo> children = [
-      _item("Divider 分割线", "实线分割", DashedLineExample()),
+      _item("Divider 分割线", "实线分割", DividerExample()),
       _item("Space 间距", "元素间距 gap", SpaceExample()),
       _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
     ];
