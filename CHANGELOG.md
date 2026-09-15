@@ -1,0 +1,8 @@
+## 0.1.0
+
+* 参照 Bruno 完成组件库整体移植:主题系统(SantoThemeConfigurator 多 configId)+ 8 大类 58+ 组件
+* 包含:基础布局/按钮/文本标签/表单/弹窗浮层/选择器/信息展示与图表组件
+* 附带 example 示例 App(分类导航 + 主题演示)、doc/ 组件文档站源文件、tool/gen_doc.dart 参数表生成脚本
+* 全局圆角统一为 12px:主题令牌 radiusXs/Sm/Md/Lg 及各组件容器圆角;保留圆形元素(日历选中、徽标、光标)与图表数据标记的原始形状
+* 新增 SantoPanel 面板组件(圆角容器 + Header 标题/操作区 + 可滚动内容区)及 SantoPanelConfig 主题配置
+* 修复 SantoNormalButton.outline 未传 lineColor 时的空断言崩溃

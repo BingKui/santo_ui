@@ -1,0 +1,52 @@
+import 'package:santo_ui/santo_ui.dart';
+import 'sample/l10n/l10n.dart';
+import 'package:example/sample/home/home.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+void main() {
+  SantoIntl.add(ResourceDe.locale, ResourceDe());
+  // 全局导航栏使用炭灰深色背景
+  SantoThemeConfigurator.instance.register(
+    SantoAllThemeConfig(appBarConfig: SantoAppBarConfig.dark()),
+  );
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener<ChangeLocalEvent>(
+      onNotification: (_) {
+        setState(() {});
+        return true;
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        locale: ChangeLocalEvent.locale,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          SantoLocalizationDelegate.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', 'US'),
+          Locale('zh', 'CN'),
+          Locale('de', 'DE'),
+        ],
+        title: 'Flutter Example',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color(0xFFF5F6FA),
+        ),
+        home: HomePage(),
+      ),
+    );
+  }
+}

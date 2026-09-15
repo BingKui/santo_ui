@@ -1,0 +1,38 @@
+name: santo_ui
+description: 企业级 Flutter 组件库(参考 Bruno 构建)。
+version: 0.1.0
+repository: https://git.example.com/flutter/santo_ui
+
+environment:
+  sdk: ^3.13.3
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  xml: ^6.1.0
+  lpinyin: ^2.0.3
+  path_drawing: ^1.0.0
+  intl: ">=0.18.0 <2.0.0"
+  photo_view: ^0.15.0
+  bindings_compatible: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  analyzer: ^14.4.0
+
+flutter:
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/icons/radio/
+    - assets/images/no_data.png
+    - assets/images/two_line_bubble.png
+    - assets/json/
+    - assets/json/china.json
+  fonts:
+    - family: Bebas
+      fonts:
+        - asset: assets/fonts/Bebas-Regular.ttf
