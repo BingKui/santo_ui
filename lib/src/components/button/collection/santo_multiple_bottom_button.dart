@@ -1,5 +1,6 @@
 
 
+import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/components/radio/santo_checkbox.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
@@ -134,7 +135,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   padding: EdgeInsets.only(left: 4, right: 8),
                   child: Text(
                     SantoIntl.of(context).localizedResource.selectAll,
-                    style: TextStyle(color: Color(0XFF222222), fontSize: 16),
+                    style: TextStyle(color: Color(0XFF17233D), fontSize: 16),
                   ),
                 ),
               ],
@@ -178,7 +179,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
           children: <Widget>[
             Text(
               SantoIntl.of(context).localizedResource.selected,
-              style: TextStyle(color: Color(0XFF222222), fontSize: 16),
+              style: TextStyle(color: Color(0XFF17233D), fontSize: 16),
             ),
             ValueListenableBuilder<MultiSelectState>(
               valueListenable: _controller.valueNotifier,
@@ -266,14 +267,13 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
   Widget _mainButton() {
     return widget.mainButton != null
         ? Expanded(
-            child: GestureDetector(
-              onTap: () {
-                if (widget.onMainButtonTap != null) widget.onMainButtonTap!();
-              },
-              child: ValueListenableBuilder<MultiSelectState>(
-                valueListenable: _controller.valueNotifier,
-                builder: (context, value, _) {
-                  return Container(
+            child: ValueListenableBuilder<MultiSelectState>(
+              valueListenable: _controller.valueNotifier,
+              builder: (context, value, _) {
+                return SantoPressFeedback(
+                  enabled: value.mainButtonState,
+                  onTap: widget.onMainButtonTap,
+                  child: Container(
                     margin: EdgeInsets.only(left: 8),
                     padding: EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
@@ -298,9 +298,9 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                             maxLines: 1,
                           ))
                         : widget.mainButton,
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           )
         : Row();
@@ -309,14 +309,13 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
   Widget _subButton() {
     return widget.subButton != null
         ? Expanded(
-            child: GestureDetector(
-              onTap: () {
-                if (widget.onSubButtonTap != null) widget.onSubButtonTap!();
-              },
-              child: ValueListenableBuilder<MultiSelectState>(
-                valueListenable: _controller.valueNotifier,
-                builder: (context, value, _) {
-                  return Container(
+            child: ValueListenableBuilder<MultiSelectState>(
+              valueListenable: _controller.valueNotifier,
+              builder: (context, value, _) {
+                return SantoPressFeedback(
+                  enabled: value.subButtonState,
+                  onTap: widget.onSubButtonTap,
+                  child: Container(
                     margin: EdgeInsets.only(left: 8),
                     padding: EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
@@ -341,9 +340,9 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                             maxLines: 1,
                           ))
                         : widget.subButton,
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           )
         : Row();

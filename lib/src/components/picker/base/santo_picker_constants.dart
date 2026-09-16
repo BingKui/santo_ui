@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Default value of DatePicker's item [TextStyle].
 const TextStyle datetimePickerItemTextStyle = TextStyle(
-  color: Color(0xFF222222),
+  color: Color(0xFF17233D),
   fontSize: 18.0,
 );
 
@@ -23,6 +23,6 @@ const double pickerItemHeight = 48.0;
 
 /// Default value of DatePicker's item [TextStyle].
 const TextStyle pickerItemTextStyle = TextStyle(
-  color: Color(0xFF222222),
+  color: Color(0xFF17233D),
   fontSize: 18.0,
 );

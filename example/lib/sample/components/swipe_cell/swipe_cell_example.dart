@@ -26,7 +26,7 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
               child: Text(
                 '左滑或右滑列表项查看操作按钮',
                 style: TextStyle(
-                  color: const Color(0xFF222222).withAlpha(150),
+                  color: const Color(0xFF17233D).withAlpha(150),
                   fontSize: 14,
                 ),
               ),
@@ -76,7 +76,7 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           actions: [
             SantoSwipeCellAction(
               label: '删除',
-              backgroundColor: const Color(0xFFFA3F3F),
+              backgroundColor: const Color(0xFFFF4D4F),
               onPressed: () {
                 SantoToast.show('点击删除', context);
               },
@@ -87,12 +87,12 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: const Color(0xFFEEEEEE)),
+            border: Border.all(color: const Color(0xFFDCDEE2)),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Text(
             '左滑显示删除按钮',
-            style: TextStyle(fontSize: 16, color: Color(0xFF222222)),
+            style: TextStyle(fontSize: 16, color: Color(0xFF17233D)),
           ),
         ),
       ),
@@ -109,7 +109,7 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           actions: [
             SantoSwipeCellAction(
               label: '置顶',
-              backgroundColor: const Color(0xFF0984F9),
+              backgroundColor: const Color(0xFF1677FF),
               onPressed: () {
                 SantoToast.show('点击置顶', context);
               },
@@ -120,12 +120,12 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: const Color(0xFFEEEEEE)),
+            border: Border.all(color: const Color(0xFFDCDEE2)),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Text(
             '右滑显示置顶按钮',
-            style: TextStyle(fontSize: 16, color: Color(0xFF222222)),
+            style: TextStyle(fontSize: 16, color: Color(0xFF17233D)),
           ),
         ),
       ),
@@ -142,7 +142,7 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           actions: [
             SantoSwipeCellAction(
               label: '置顶',
-              backgroundColor: const Color(0xFF0984F9),
+              backgroundColor: const Color(0xFF1677FF),
               onPressed: () {
                 SantoToast.show('点击置顶', context);
               },
@@ -161,7 +161,7 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
             ),
             SantoSwipeCellAction(
               label: '删除',
-              backgroundColor: const Color(0xFFFA3F3F),
+              backgroundColor: const Color(0xFFFF4D4F),
               onPressed: () {
                 SantoToast.show('点击删除', context);
               },
@@ -172,12 +172,12 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: const Color(0xFFEEEEEE)),
+            border: Border.all(color: const Color(0xFFDCDEE2)),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Text(
             '左右滑动显示操作按钮',
-            style: TextStyle(fontSize: 16, color: Color(0xFF222222)),
+            style: TextStyle(fontSize: 16, color: Color(0xFF17233D)),
           ),
         ),
       ),

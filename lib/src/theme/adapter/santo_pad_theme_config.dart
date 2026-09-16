@@ -36,13 +36,13 @@ class SantoPadThemeConfig {
     brandImportant: const Color(0xFFFA5741),
     brandImportantValue: const Color(0xFFFA5741),
 
-    colorTextBase: const Color(0xFF222222),
+    colorTextBase: const Color(0xFF17233D),
 
-    colorTextImportant: const Color(0xFF222222),
+    colorTextImportant: const Color(0xFF17233D),
 
     colorTextBaseInverse: const Color(0xFFFFFFFF),
 
-    colorTextSecondary: const Color(0xFF999999),
+    colorTextSecondary: const Color(0xFF808695),
 
     colorTextDisabled: const Color(0xFFCCCCCC),
 
@@ -53,7 +53,7 @@ class SantoPadThemeConfig {
     dividerColorBase: const Color(0xFFCCCCCC),
 
     fillBase: const Color(0xFFFFFFFF),
-    fillBody: const Color(0xFFF8F8F8),
+    fillBody: const Color(0xFFF5F5F5),
     fillMask: const Color(0x99000000),
     fontSizeBebas: 18,
     fontSizeHeadLg: 28,

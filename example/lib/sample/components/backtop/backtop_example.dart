@@ -41,14 +41,14 @@ class _BacktopExampleState extends State<BacktopExample> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Color(0xFF0984F9).withAlpha(0x14),
+                        color: Color(0xFF1677FF).withAlpha(0x14),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
                         child: Text(
                           '${index + 1}',
                           style: TextStyle(
-                            color: Color(0xFF0984F9),
+                            color: Color(0xFF1677FF),
                             fontWeight: FontWeight.w600,
                           ),
                         ),

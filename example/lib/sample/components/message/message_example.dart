@@ -169,7 +169,7 @@ class _MessageExampleState extends State<MessageExample> {
                         context: context,
                         content: '深色文字消息',
                         backgroundColor: Color(0xFFE8F4FD),
-                        textColor: Color(0xFF0984F9),
+                        textColor: Color(0xFF1677FF),
                         icon: Icons.info_outline,
                       );
                     }),

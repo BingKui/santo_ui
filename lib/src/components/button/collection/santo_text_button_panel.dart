@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/components/popup/santo_popup_window.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
@@ -104,8 +105,7 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
           color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary),
     );
 
-    return GestureDetector(
-        behavior: HitTestBehavior.opaque,
+    return SantoPressFeedback(
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
@@ -143,8 +143,7 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
           ? SantoTools.getAssetImage(SantoAsset.iconUpArrow)
           : SantoTools.getAssetImage(SantoAsset.iconDownArrow);
 
-      return GestureDetector(
-          behavior:HitTestBehavior.opaque,
+      return SantoPressFeedback(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

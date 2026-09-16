@@ -286,11 +286,11 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
         desc: '辅助信息',
         titleStyle: TextStyle(
           fontSize: 16,
-          color: Color(0xFF999999),
+          color: Color(0xFF808695),
         ),
         descStyle: TextStyle(
           fontSize: 14,
-          color: Color(0xFF999999),
+          color: Color(0xFF808695),
         ),
       ),
     );

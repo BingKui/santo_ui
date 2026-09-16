@@ -62,7 +62,7 @@ const double _roundSpace = 4;
 ///              return SantoStepLineWidget(
 ///                     lineWidth: 1,
 ///                     lineColor: <Color>[
-///                       Color(0xFF0984F9),
+///                       Color(0xFF1677FF),
 ///                       Colors.red,
 ///                     ],
 ///                     contentWidget: Container(

@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/components/button/santo_small_main_button.dart';
 import 'package:santo_ui/src/components/button/santo_small_outline_button.dart';
 import 'package:santo_ui/src/components/popup/santo_popup_window.dart';
@@ -182,7 +183,7 @@ class _SantoButtonPanelState extends State<SantoButtonPanel> {
         list.add(_secondaryButtonList[i].name);
       }
 
-      return GestureDetector(
+      return SantoPressFeedback(
         child: Container(
           color: Colors.transparent,
           height: 32,

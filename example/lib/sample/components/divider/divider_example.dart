@@ -109,11 +109,11 @@ class _DividerExampleState extends State<DividerExample> {
               child: Column(
                 children: const [
                   SantoDivider(
-                    color: Color(0xFF0984F9),
+                    color: Color(0xFF1677FF),
                     thickness: 2,
                   ),
                   SantoDivider(
-                    color: Color(0xFF00AE66),
+                    color: Color(0xFF52C41A),
                     thickness: 2,
                     dashed: true,
                   ),

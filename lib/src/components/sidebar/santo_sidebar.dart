@@ -75,10 +75,10 @@ class SantoSidebar extends StatelessWidget {
       SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
 
   Color get _inactiveColor =>
-      inactiveColor ?? const Color(0xFF666666);
+      inactiveColor ?? const Color(0xFF515A6E);
 
   Color get _backgroundColor =>
-      backgroundColor ?? const Color(0xFFF8F8F8);
+      backgroundColor ?? const Color(0xFFF5F5F5);
 
   @override
   Widget build(BuildContext context) {

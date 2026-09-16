@@ -208,7 +208,7 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
     Color tagTitleColor = widget.tagPickerBean.tagTitleColor ??
         SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase;
     Color tagBackgroundColor =
-        widget.tagPickerBean.tagBackgroudColor ?? Color(0xFFF8F8F8);
+        widget.tagPickerBean.tagBackgroudColor ?? Color(0xFFF5F5F5);
     Color selectedTagBackgroundColor =
         widget.tagPickerBean.selectedTagBackgroudColor ??
             SantoThemeConfigurator.instance

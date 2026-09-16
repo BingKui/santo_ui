@@ -49,9 +49,9 @@ class OverlayWindowExamplePageState extends State<OverlayWindowExample> {
         hintText: "请输入小区名称",
         borderRadius: BorderRadius.all(Radius.circular(10)),
         normalBorder: Border.all(
-            color: Color(0xFF999999), width: 1, style: BorderStyle.solid),
+            color: Color(0xFF808695), width: 1, style: BorderStyle.solid),
         activeBorder: Border.all(
-            color: Color(0xFF0984F9), width: 1, style: BorderStyle.solid),
+            color: Color(0xFF1677FF), width: 1, style: BorderStyle.solid),
         focusNode: _focusNode,
         onTextClear: () {
           _focusNode.unfocus();
@@ -97,7 +97,7 @@ class OverlayWindowExamplePageState extends State<OverlayWindowExample> {
               style: const TextStyle(color: Colors.white))),
       decoration: BoxDecoration(
         color: Colors.blueGrey,
-        border: Border.all(color: Color(0xFFEEEEEE), width: 1),
+        border: Border.all(color: Color(0xFFDCDEE2), width: 1),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
     );

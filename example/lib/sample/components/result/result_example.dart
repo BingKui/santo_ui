@@ -83,7 +83,7 @@ class _ResultExampleState extends State<ResultExample> {
                 title: '等待支付',
                 description: '订单已锁定 30 分钟，请尽快完成支付',
                 icon: Icons.timelapse,
-                iconColor: Color(0xFF0984F9),
+                iconColor: Color(0xFF1677FF),
               ),
             ),
           ],

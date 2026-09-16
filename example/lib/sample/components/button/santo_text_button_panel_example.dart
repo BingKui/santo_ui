@@ -23,7 +23,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -36,7 +36,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -49,7 +49,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -62,7 +62,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -75,7 +75,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：操作文本长',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -88,7 +88,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：操作太多',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -104,7 +104,7 @@ class SantoTextButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：按钮字符串为0',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),

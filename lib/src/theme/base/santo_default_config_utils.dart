@@ -58,7 +58,7 @@ class SantoDefaultConfigUtils {
     backgroundColor: Colors.white,
     radius: 12,
     headerHeight: 48,
-    borderColor: const Color(0xFFEEEEEE),
+    borderColor: const Color(0xFFDCDEE2),
     borderWidth: 0.5,
     showHeaderDivider: true,
     titleTextStyle: SantoTextStyle(
@@ -573,7 +573,7 @@ class SantoDefaultConfigUtils {
     pickerHeight: pickerHeight,
     titleHeight: pickerTitleHeight,
     itemHeight: pickerItemHeight,
-    dividerColor: Color(0xFFF0F0F0),
+    dividerColor: Color(0xFFE8EAEC),
     itemTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeHead,
@@ -685,9 +685,9 @@ class SantoDefaultConfigUtils {
     lightSelectBgColor: Colors.white,
     lightNormalBgColor: Colors.white,
     middleSelectBgColor: Colors.white,
-    middleNormalBgColor: Color(0xFFF8F8F8),
-    deepSelectBgColor: Color(0xFFF8F8F8),
-    deepNormalBgColor: Color(0xFFF0F0F0),
+    middleNormalBgColor: Color(0xFFF5F5F5),
+    deepSelectBgColor: Color(0xFFF5F5F5),
+    deepNormalBgColor: Color(0xFFE8EAEC),
     resetTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextImportant,
       fontSize: defaultCommonConfig.fontSizeCaption,

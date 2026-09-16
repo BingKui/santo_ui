@@ -24,39 +24,39 @@ class TestConfigUtils {
     brandWarning: const Color(0xFFFA5741),
 
     /// 失败色
-    brandError: const Color(0xFFFA3F3F),
+    brandError: const Color(0xFFFF4D4F),
 
     /// 重要-多用于红点色
-    brandImportant: const Color(0xFFFA3F3F),
+    brandImportant: const Color(0xFFFF4D4F),
 
     /// 重要数值色
     brandImportantValue: const Color(0xFFFF5722),
 
     /// 辅助色
-    brandAuxiliary: const Color(0xFF44C2FF),
+    brandAuxiliary: const Color(0xFF2DB7F5),
 
     /// 文本色相关
     ///
     /// 基础文字纯黑色
-    colorTextBase: const Color(0xFF222222),
+    colorTextBase: const Color(0xFF17233D),
 
     /// 基础文字重要色
-    colorTextImportant: const Color(0xFF666666),
+    colorTextImportant: const Color(0xFF515A6E),
 
     /// 基础文字-反色
     colorTextBaseInverse: const Color(0xFFFFFFFF),
 
     /// 辅助文字色
-    colorTextSecondary: const Color(0xFF999999),
+    colorTextSecondary: const Color(0xFF808695),
 
     /// 失效或不可更改文字色
-    colorTextDisabled: const Color(0xFF999999),
+    colorTextDisabled: const Color(0xFF808695),
 
     /// 文本框提示暗文文字色
     colorTextHint: const Color(0xFFCCCCCC),
 
     /// 跟随主题色[brandPrimary]
-    colorLink: const Color(0xFF0984F9),
+    colorLink: const Color(0xFF1677FF),
 
     /// 背景色相关
     ///
@@ -64,16 +64,16 @@ class TestConfigUtils {
     fillBase: const Color(0xFFFFFFFF),
 
     /// 页面背景色
-    fillBody: const Color(0xFFF8F8F8),
+    fillBody: const Color(0xFFF5F5F5),
 
     /// 遮罩背景
     fillMask: const Color(0x99000000),
 
     /// 边框色
-    borderColorBase: const Color(0xFFF0F0F0),
+    borderColorBase: const Color(0xFFE8EAEC),
 
     /// 分割线色
-    dividerColorBase: const Color(0xFFF0F0F0),
+    dividerColorBase: const Color(0xFFE8EAEC),
 
     /// 文本字号
     ///

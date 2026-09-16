@@ -1,5 +1,6 @@
 
 
+import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/components/button/santo_vertical_icon_button.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -196,7 +197,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(left: _isEmptyIcon() ? 12 : 8),
-        child: GestureDetector(
+        child: SantoPressFeedback(
+          enabled: enableSecondaryButton,
           onTap: () {
             if (secondaryButtonOnTap != null && enableSecondaryButton) {
               secondaryButtonOnTap!();
@@ -237,7 +239,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
   }
 
   Widget _mainButtonWidget() {
-    Widget mainWidget = GestureDetector(
+    Widget mainWidget = SantoPressFeedback(
+      enabled: enableMainButton,
       onTap: () {
         if (enableMainButton) {
           mainButtonOnTap();

@@ -90,13 +90,13 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
                 leftTagBackgroundColor: Color(0xFFE0EDFF),
-                leftTagTextColor: Color(0xFF0984F9),
+                leftTagTextColor: Color(0xFF1677FF),
                 content: '这是通知内容这是通知内容这是通知内容这是通知内容这是通知内容',
                 backgroundColor: Color(0xFFEBFFF7),
-                contentTextColor: Color(0xFF00AE66),
+                contentTextColor: Color(0xFF52C41A),
                 rightButtonText: '去完成',
-                rightButtonBorderColor: Color(0xFF0984F9),
-                rightButtonTextColor: Color(0xFF0984F9),
+                rightButtonBorderColor: Color(0xFF1677FF),
+                rightButtonTextColor: Color(0xFF1677FF),
                 onRightButtonTap: () {
                   SantoToast.show('点击右侧按钮', context);
                 },

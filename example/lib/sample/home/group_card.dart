@@ -80,14 +80,14 @@ class GroupCardState extends State<GroupCard>
               _controller?.toggle();
             },
             child: Container(
-              color: Color(0xFFEEEEEE),
+              color: Color(0xFFDCDEE2),
               padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
               child: Row(
                 children: <Widget>[
                   Expanded(
                       child: Text(
                     widget.groupInfo!.groupName,
-                    style: TextStyle(color: Color(0xFF222222), fontSize: 18),
+                    style: TextStyle(color: Color(0xFF17233D), fontSize: 18),
                   )),
                   RotationTransition(
                     turns: _iconTurns,

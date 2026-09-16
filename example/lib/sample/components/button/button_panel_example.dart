@@ -22,7 +22,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -38,7 +38,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例,主按钮disable',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -56,7 +56,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -73,7 +73,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '正常案例，配置次按钮1 disable',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -93,7 +93,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：主按钮文字长',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -110,7 +110,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：次按钮文字长',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -127,7 +127,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：次按钮多',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -150,7 +150,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：主按钮文字长',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -171,7 +171,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：次按钮文字长',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),
@@ -196,7 +196,7 @@ class ButtonPanelExample extends StatelessWidget {
             Text(
               '异常案例：字符串长度为0',
               style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
               ),
             ),

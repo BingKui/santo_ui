@@ -33,7 +33,7 @@ class CustomPickerExamplePage extends StatelessWidget {
                           Text(
                             '键盘抬起，不遮挡picker',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontSize: 20,
                             ),
                           ),
@@ -62,7 +62,7 @@ class CustomPickerExamplePage extends StatelessWidget {
                         Text(
                           '通过属性支持确定和取消不关闭弹窗',
                           style: TextStyle(
-                            color: Color(0xFF222222),
+                            color: Color(0xFF17233D),
                             fontSize: 20,
                           ),
                         ),
@@ -85,14 +85,14 @@ class CustomPickerExamplePage extends StatelessWidget {
                           Text(
                             'showTitle 属性设置为 false，不显示顶部title区域，',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontSize: 20,
                             ),
                           ),
                           Text(
                             '其他区域可以完全自定义',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontSize: 20,
                             ),
                           ),
@@ -116,7 +116,7 @@ class CustomPickerExamplePage extends StatelessWidget {
                           Text(
                             '键盘抬起，不遮挡picker',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontSize: 20,
                             ),
                           ),

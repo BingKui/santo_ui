@@ -123,7 +123,7 @@ class SantoNormalFormGroupState extends State<SantoNormalFormGroup> {
                       child: Text(
                         widget.deleteLabel ?? "",
                         style: TextStyle(
-                          color: Color(0xFFFA3F3F),
+                          color: Color(0xFFFF4D4F),
                           fontSize: SantoFonts.f16,
                         ),
                       ),

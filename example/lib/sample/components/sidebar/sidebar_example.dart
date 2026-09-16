@@ -74,7 +74,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                               _foodCategories[_selectedIndex1],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Color(0xFF666666),
+                                color: Color(0xFF515A6E),
                               ),
                             ),
                             SizedBox(height: 4),
@@ -82,7 +82,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                               '右侧内容区域',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Color(0xFF999999),
+                                color: Color(0xFF808695),
                               ),
                             ),
                           ],
@@ -126,7 +126,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                           '当前分类: ${_foodCategories[_selectedIndex2]}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF666666),
+                            color: Color(0xFF515A6E),
                           ),
                         ),
                       ),
@@ -153,7 +153,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                   SantoSidebar(
                     items: _shortCategories,
                     selectedIndex: _selectedIndex3,
-                    activeColor: Color(0xFFFA3F3F),
+                    activeColor: Color(0xFFFF4D4F),
                     backgroundColor: Color(0xFFFFF0F0),
                     onItemSelected: (index, label) {
                       setState(() {
@@ -169,7 +169,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                           '当前分类: ${_shortCategories[_selectedIndex3]}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFFFA3F3F),
+                            color: Color(0xFFFF4D4F),
                           ),
                         ),
                       ),

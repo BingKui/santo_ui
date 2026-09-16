@@ -80,7 +80,7 @@ class _RatingExampleState extends State<RatingExample> {
         return SantoTools.getAssetSizeImage(SantoAsset.iconStarHalf, 16, 16);
       default:
         return SantoTools.getAssetSizeImage(SantoAsset.iconStar, 16, 16,
-            color: Color(0xFFF0F0F0));
+            color: Color(0xFFE8EAEC));
     }
   }
 }

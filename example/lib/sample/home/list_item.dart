@@ -31,7 +31,7 @@ class ListItem extends StatefulWidget {
     this.titleFontSize,
     this.titleColor,
     this.describe = "",
-    this.describeColor = const Color(0xFF999999),
+    this.describeColor = const Color(0xFF808695),
     this.rightWidget,
     this.imgPath,
     this.isSupportTheme = false,
@@ -62,7 +62,7 @@ class _ListItemState extends State<ListItem> with AutomaticKeepAliveClientMixin 
             children: [
               widget.isShowLine
                   ? SantoLine(
-                      color: Color(0xFFEEEEEE),
+                      color: Color(0xFFDCDEE2),
                       height: 1,
                     )
                   : Container(),
@@ -74,7 +74,7 @@ class _ListItemState extends State<ListItem> with AutomaticKeepAliveClientMixin 
                 Text(
                   widget.title,
                   style: TextStyle(
-                      color: widget.titleColor ?? Color(0xFF222222),
+                      color: widget.titleColor ?? Color(0xFF17233D),
                       fontSize: widget.titleFontSize ?? 14),
                 ),
                 Padding(

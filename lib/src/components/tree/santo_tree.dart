@@ -201,7 +201,7 @@ class _SantoTreeState extends State<SantoTree> {
                         child: Icon(
                           Icons.chevron_right,
                           size: 18,
-                          color: const Color(0xFF999999),
+                          color: const Color(0xFF808695),
                         ),
                       ),
                     ),
@@ -243,7 +243,7 @@ class _SantoTreeState extends State<SantoTree> {
               child: Icon(
                 node.icon,
                 size: 18,
-                color: isSelected ? _activeColor : const Color(0xFF666666),
+                color: isSelected ? _activeColor : const Color(0xFF515A6E),
               ),
             ),
           // 节点文本
@@ -257,7 +257,7 @@ class _SantoTreeState extends State<SantoTree> {
                   fontSize: 14,
                   color: isSelected
                       ? _activeColor
-                      : const Color(0xFF222222),
+                      : const Color(0xFF17233D),
                   fontWeight:
                       isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),

@@ -68,7 +68,7 @@ class BubbleTextExample extends StatelessWidget {
                 children: [
                   SantoBubbleText(
                     placement: SantoBubblePlacement.end,
-                    bgColor: Color(0xFF0984F9),
+                    bgColor: Color(0xFF1677FF),
                     textColor: Colors.white,
                     text: '蓝色气泡，白色文字',
                   ),

@@ -50,7 +50,7 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
   Color _getStepContentTextColor(int index) {
     return index > _currentIndex
         ? const Color(0xFFCCCCCC)
-        : const Color(0xFF222222);
+        : const Color(0xFF17233D);
   }
 
   void _handleStepStateListenerTick() {

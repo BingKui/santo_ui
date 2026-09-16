@@ -219,7 +219,7 @@ class ToastChild extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Container(
           decoration: BoxDecoration(
-            color: background ?? const Color(0xFF222222),
+            color: background ?? const Color(0xFF17233D),
             borderRadius: BorderRadius.circular(radius ?? 12),
           ),
           margin: const EdgeInsets.symmetric(horizontal: 20),

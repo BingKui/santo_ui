@@ -459,7 +459,7 @@ class _SantoActionSheetSelectedItemListState<T>
                       Divider(
                         height: 0.5,
                         indent: 0,
-                        color: Color(0xFFF0F0F0),
+                        color: Color(0xFFE8EAEC),
                       ),
                       Expanded(
                         child: ListView.builder(

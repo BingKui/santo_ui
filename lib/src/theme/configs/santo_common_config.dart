@@ -230,15 +230,15 @@ class SantoCommonConfig extends SantoBaseConfig {
 //////////////////////////////////// 品牌色 /////////////////////////////////////
 
   /// 品牌色
-  /// 默认为 Color(0xFF0984F9)
+  /// 默认为 Color(0xFF1677FF)
   Color? _brandPrimary;
 
   /// 主题色按下效果
-  /// 默认为 Color(0x190984F9)
+  /// 默认为 Color(0x191677FF)
   Color? _brandPrimaryTap;
 
   /// 成功色
-  /// 默认为 Color(0xFF00AE66)
+  /// 默认为 Color(0xFF52C41A)
   Color? _brandSuccess;
 
   /// 警告色
@@ -246,11 +246,11 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _brandWarning;
 
   /// 失败色
-  /// 默认为 Color(0xFFFA3F3F)
+  /// 默认为 Color(0xFFFF4D4F)
   Color? _brandError;
 
   /// 重要-多用于红点色
-  /// 默认为 Color(0xFFFA3F3F)
+  /// 默认为 Color(0xFFFF4D4F)
   Color? _brandImportant;
 
   /// 重要数值色
@@ -258,17 +258,17 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _brandImportantValue;
 
   /// 辅助色
-  /// 默认为 Color(0xFF44C2FF)
+  /// 默认为 Color(0xFF2DB7F5)
   Color? _brandAuxiliary;
 
   /// 文本色相关
   ///
   /// 基础文字纯黑色
-  /// 默认为 Color(0xFF222222)
+  /// 默认为 Color(0xFF17233D)
   Color? _colorTextBase;
 
   /// 基础文字重要色
-  /// 默认为 Color(0xFF666666)
+  /// 默认为 Color(0xFF515A6E)
   Color? _colorTextImportant;
 
   /// 基础文字-反色
@@ -276,11 +276,11 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _colorTextBaseInverse;
 
   /// 辅助文字色
-  /// 默认为 Color(0xFF999999)
+  /// 默认为 Color(0xFF808695)
   Color? _colorTextSecondary;
 
   /// 失效或不可更改文字色
-  /// 默认为 Color(0xFF999999)
+  /// 默认为 Color(0xFF808695)
   Color? _colorTextDisabled;
 
   /// 文本框提示暗文文字色
@@ -297,7 +297,7 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _fillBase;
 
   /// 页面背景色
-  /// 默认为 Color(0xFFF8F8F8)
+  /// 默认为 Color(0xFFF5F5F5)
   Color? _fillBody;
 
   /// 遮罩背景
@@ -305,11 +305,11 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _fillMask;
 
   /// 边框色
-  /// 默认为 Color(0xFFF0F0F0)
+  /// 默认为 Color(0xFFE8EAEC)
   Color? _borderColorBase;
 
   /// 分割线色
-  /// 默认为 Color(0xFFF0F0F0)
+  /// 默认为 Color(0xFFE8EAEC)
   Color? _dividerColorBase;
 
 ///////////////////////////////////////////////////////////////////////////////

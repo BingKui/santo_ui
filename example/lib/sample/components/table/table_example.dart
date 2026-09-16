@@ -139,7 +139,7 @@ class _TableExampleState extends State<TableExample> {
                   ['3', '后端开发', '王五', '60%'],
                   ['4', '测试验证', '赵六', '30%'],
                 ],
-                headerColor: Color(0xFF00AE66),
+                headerColor: Color(0xFF52C41A),
               ),
             ),
 
@@ -166,7 +166,7 @@ class _TableExampleState extends State<TableExample> {
                           IconData statusIcon;
                           switch (data.toString()) {
                             case '在职':
-                              statusColor = Color(0xFF00AE66);
+                              statusColor = Color(0xFF52C41A);
                               statusIcon = Icons.check_circle;
                               break;
                             case '休假':
@@ -174,7 +174,7 @@ class _TableExampleState extends State<TableExample> {
                               statusIcon = Icons.access_time;
                               break;
                             case '离职':
-                              statusColor = Color(0xFFFA3F3F);
+                              statusColor = Color(0xFFFF4D4F);
                               statusIcon = Icons.cancel;
                               break;
                             default:
@@ -209,7 +209,7 @@ class _TableExampleState extends State<TableExample> {
                                 child: Text(
                                   '编辑',
                                   style: TextStyle(
-                                    color: Color(0xFF0984F9),
+                                    color: Color(0xFF1677FF),
                                     fontSize: 13,
                                   ),
                                 ),
@@ -222,7 +222,7 @@ class _TableExampleState extends State<TableExample> {
                                 child: Text(
                                   '删除',
                                   style: TextStyle(
-                                    color: Color(0xFFFA3F3F),
+                                    color: Color(0xFFFF4D4F),
                                     fontSize: 13,
                                   ),
                                 ),
@@ -261,7 +261,7 @@ class _TableExampleState extends State<TableExample> {
                 ],
                 border: false,
                 headerColor: Color(0xFFF5F5F5),
-                headerTextColor: Color(0xFF222222),
+                headerTextColor: Color(0xFF17233D),
                 striped: true,
                 oddRowColor: Colors.white,
                 evenRowColor: Color(0xFFFAFAFA),

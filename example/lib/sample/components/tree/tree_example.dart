@@ -160,7 +160,7 @@ class _TreeExampleState extends State<TreeExample> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 '最近操作: $_lastAction',
-                style: TextStyle(fontSize: 13, color: Color(0xFF999999)),
+                style: TextStyle(fontSize: 13, color: Color(0xFF808695)),
               ),
             ),
             SantoTree(
@@ -191,7 +191,7 @@ class _TreeExampleState extends State<TreeExample> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 '已选择: ${_multiSelectedValues.isEmpty ? "无" : _multiSelectedValues.join(", ")}',
-                style: TextStyle(fontSize: 13, color: Color(0xFF999999)),
+                style: TextStyle(fontSize: 13, color: Color(0xFF808695)),
               ),
             ),
             SantoTree(
@@ -241,7 +241,7 @@ class _TreeExampleState extends State<TreeExample> {
             SantoTree(
               data: _multiSelectData,
               multiple: true,
-              activeColor: Color(0xFF00AE66),
+              activeColor: Color(0xFF52C41A),
               onSelectionChanged: (values) {},
               onNodeExpand: (node, expanded) {
                 setState(() {});

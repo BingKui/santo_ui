@@ -81,7 +81,7 @@ class _ProgressExampleState extends State<ProgressExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SantoProgress(
                       value: 0.4,
-                      color: const Color(0xFFFA3F3F),
+                      color: const Color(0xFFFF4D4F),
                       showLabel: true,
                     ),
                   ),
@@ -101,7 +101,7 @@ class _ProgressExampleState extends State<ProgressExample> {
                     child: SantoProgress(
                       value: 0.6,
                       strokeWidth: 12.0,
-                      color: const Color(0xFF0984F9),
+                      color: const Color(0xFF1677FF),
                     ),
                   ),
                 ],
@@ -140,7 +140,7 @@ class _ProgressExampleState extends State<ProgressExample> {
                   SantoCircularProgress(value: 0.6),
                   SantoCircularProgress(
                     value: 0.8,
-                    color: const Color(0xFF00AE66),
+                    color: const Color(0xFF52C41A),
                   ),
                   SantoCircularProgress(value: 1.0),
                 ],
@@ -197,12 +197,12 @@ class _ProgressExampleState extends State<ProgressExample> {
                     children: [
                       SantoCircularProgress(
                         value: 0.45,
-                        color: const Color(0xFFFA3F3F),
+                        color: const Color(0xFFFF4D4F),
                         backgroundColor: const Color(0xFFFEEDED),
                       ),
                       SantoCircularProgress(
                         value: 0.75,
-                        color: const Color(0xFF00AE66),
+                        color: const Color(0xFF52C41A),
                         backgroundColor: const Color(0xFFEBFFF7),
                       ),
                       SantoCircularProgress(
@@ -224,7 +224,7 @@ class _ProgressExampleState extends State<ProgressExample> {
                         labelStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF00AE66),
+                          color: Color(0xFF52C41A),
                         ),
                       ),
                       SantoCircularProgress(

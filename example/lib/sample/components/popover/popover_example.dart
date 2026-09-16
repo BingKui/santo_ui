@@ -180,7 +180,7 @@ class _PopoverExampleState extends State<PopoverExample> {
                     context: context,
                     target: _customKey,
                     direction: SantoPopoverDirection.bottom,
-                    backgroundColor: Color(0xFF0984F9),
+                    backgroundColor: Color(0xFF1677FF),
                     content: Text(
                       '蓝色背景的气泡',
                       style: TextStyle(color: Colors.white, fontSize: 14),

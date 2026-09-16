@@ -45,7 +45,7 @@ class _RefreshExampleState extends State<RefreshExample> {
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: Color(0xFFEEEEEE),
+                          color: Color(0xFFDCDEE2),
                           width: 0.5,
                         ),
                       ),
@@ -56,14 +56,14 @@ class _RefreshExampleState extends State<RefreshExample> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0984F9).withOpacity(0.1),
+                            color: Color(0xFF1677FF).withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             '${index + 1}',
                             style: TextStyle(
-                              color: Color(0xFF0984F9),
+                              color: Color(0xFF1677FF),
                               fontWeight: FontWeight.bold,
                             ),
                           ),

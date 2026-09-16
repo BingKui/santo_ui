@@ -43,7 +43,7 @@ class AvatarExample extends StatelessWidget {
                   SantoAvatar(
                     text: '王',
                     size: 40,
-                    backgroundColor: Color(0xFF0984F9),
+                    backgroundColor: Color(0xFF1677FF),
                   ),
                 ],
               ),
@@ -57,7 +57,7 @@ class AvatarExample extends StatelessWidget {
                   SantoAvatar(
                     icon: Icons.person,
                     size: 40,
-                    backgroundColor: Color(0xFF00AE66),
+                    backgroundColor: Color(0xFF52C41A),
                   ),
                 ],
               ),
@@ -84,13 +84,13 @@ class AvatarExample extends StatelessWidget {
                   SantoAvatar(
                     text: '边',
                     size: 40,
-                    borderColor: Color(0xFF0984F9),
+                    borderColor: Color(0xFF1677FF),
                   ),
                   SizedBox(width: 16),
                   SantoAvatar(
                     imageUrl: 'https://zos.alipayobjects.com/rmsportal/ODdgcjrvb81sCyJ.png',
                     size: 40,
-                    borderColor: Color(0xFF00AE66),
+                    borderColor: Color(0xFF52C41A),
                   ),
                 ],
               ),

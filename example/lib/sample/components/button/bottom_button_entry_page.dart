@@ -20,7 +20,7 @@ class BottomButtonEntryWidget extends StatelessWidget {
               title: '普通吸底按钮',
               describe: '主按钮、次按钮、icon按钮的集合',
               isShowLine: false,
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -31,7 +31,7 @@ class BottomButtonEntryWidget extends StatelessWidget {
             ListItem(
               title: '多选吸底按钮',
               describe: '全选、已选、主按钮、次按钮',
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {

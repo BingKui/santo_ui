@@ -70,7 +70,7 @@ SantoPanel(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                               ),
@@ -79,7 +79,7 @@ SantoPanel(
                           Text(
                             '2000元',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                             ),
@@ -96,7 +96,7 @@ SantoPanel(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                               ),
@@ -105,7 +105,7 @@ SantoPanel(
                           Text(
                             '2000元',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                             ),
@@ -122,7 +122,7 @@ SantoPanel(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                               ),
@@ -131,7 +131,7 @@ SantoPanel(
                           Text(
                             '2000元',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                             ),
@@ -148,7 +148,7 @@ SantoPanel(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                               ),
@@ -157,7 +157,7 @@ SantoPanel(
                           Text(
                             '2000元',
                             style: TextStyle(
-                              color: Color(0xFF222222),
+                              color: Color(0xFF17233D),
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                             ),
@@ -174,7 +174,7 @@ SantoPanel(
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                               ),
@@ -296,7 +296,7 @@ SantoPanel(
                                 '更多',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFF999999),
+                                  color: Color(0xFF808695),
                                 ),
                               ),
                             ),
@@ -352,7 +352,7 @@ SantoPanel(
                                 '收起',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFF999999),
+                                  color: Color(0xFF808695),
                                 ),
                               ),
                             ),

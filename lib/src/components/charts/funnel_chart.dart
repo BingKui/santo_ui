@@ -53,7 +53,7 @@ class SantoFunnelChart extends MultiChildRenderObjectWidget {
   ///Santo风格的每层layer预设的颜色值，按顺序使用颜色值。实际层数超过该数量需要自行定义。
   static const List<Color> defaultLayerColors = [
     Color(0xFF3575FC),
-    Color(0xFF0984F9),
+    Color(0xFF1677FF),
     Color(0xFF6BB7FF),
     Color(0xFF93CAFF),
     Color(0xFFB5DBFF),

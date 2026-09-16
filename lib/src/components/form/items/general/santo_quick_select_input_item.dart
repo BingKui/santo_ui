@@ -388,48 +388,48 @@ class QuickButtonsState extends State<QuickButtonsWidget> {
 
   Color getButtonColor(int index) {
     if (widget.btnsTxt != null && widget.btnsTxt!.isEmpty) {
-      return Color(0xFFF8F8F8);
+      return Color(0xFFF5F5F5);
     }
 
     /// 这个按钮不可点击
     if (widget.enableBtnList != null &&
         index < widget.enableBtnList!.length &&
         !widget.enableBtnList![index]) {
-      return Color(0xFFF8F8F8);
+      return Color(0xFFF5F5F5);
     }
 
     if (widget.selectBtnList != null &&
         index < widget.selectBtnList!.length &&
         widget.selectBtnList![index]) {
-      return Color(0x1F0984F9);
+      return Color(0x1F1677FF);
     } else {
-      return Color(0xFFF8F8F8);
+      return Color(0xFFF5F5F5);
     }
   }
 
   Color getBtnTextColor(int index) {
     if (widget.btnsTxt != null && widget.btnsTxt!.isEmpty) {
-      return Color(0xFF222222);
+      return Color(0xFF17233D);
     }
 
     /// 这个按钮不可点击
     if (widget.enableBtnList != null &&
         index < widget.enableBtnList!.length &&
         !widget.enableBtnList![index]) {
-      return Color(0xFF999999);
+      return Color(0xFF808695);
     }
 
     if (widget.selectBtnList == null ||
         widget.selectBtnList!.length != widget.btnsTxt!.length) {
-      return Color(0xFF222222);
+      return Color(0xFF17233D);
     }
 
     if (widget.selectBtnList != null &&
         index < widget.selectBtnList!.length &&
         widget.selectBtnList![index]) {
-      return Color(0xFF0984F9);
+      return Color(0xFF1677FF);
     } else {
-      return Color(0xFF222222);
+      return Color(0xFF17233D);
     }
   }
 }

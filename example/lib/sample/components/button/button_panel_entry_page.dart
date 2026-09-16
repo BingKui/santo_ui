@@ -20,7 +20,7 @@ class ButtonPanelEntryPage extends StatelessWidget {
               title: '普通按钮集合',
               describe: '主按钮、次按钮、icon按钮的集合',
               isShowLine: false,
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -31,7 +31,7 @@ class ButtonPanelEntryPage extends StatelessWidget {
             ListItem(
               title: '文本按钮集合',
               describe: '文本类型按钮集合',
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {

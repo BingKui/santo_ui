@@ -99,7 +99,7 @@ class SantoPhotoItemConfig extends SantoBasicItemConfig {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          border: Border.all(color: Color(0xFFF0F0F0), width: 0.5)),
+          border: Border.all(color: Color(0xFFE8EAEC), width: 0.5)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: FadeInImage.assetNetwork(

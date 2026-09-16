@@ -118,13 +118,13 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     for (int index = 0; index <= 10; index++) {
       _yDialValue.add(SantoDialItem(
         dialText: '${(min + index * dValue).ceil()}',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: (min + index * dValue).ceilToDouble(),
       ));
     }
     _yDialValue.add(SantoDialItem(
       dialText: '4.5',
-      dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+      dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
       value: 4.5,
     ));
     return _yDialValue;
@@ -152,7 +152,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     for (int index = 0; index < brokenData.length; index++) {
       _xDialValue.add(SantoDialItem(
         dialText: brokenData[index].name,
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: index.toDouble(),
       ));
     }
@@ -322,37 +322,37 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     return [
       SantoDialItem(
         dialText: '1月',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         selectedDialTextStyle: TextStyle(fontSize: 14.0, color: Colors.green),
         value: 1,
       ),
       SantoDialItem(
         dialText: '2月',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         selectedDialTextStyle: TextStyle(fontSize: 14.0, color: Colors.red),
         value: 2,
       ),
       SantoDialItem(
         dialText: '3月',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         selectedDialTextStyle: TextStyle(fontSize: 14.0, color: Colors.black),
         value: 3,
       ),
       SantoDialItem(
         dialText: '5月',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         selectedDialTextStyle: TextStyle(fontSize: 14.0, color: Colors.orange),
         value: 5,
       ),
       SantoDialItem(
         dialText: '6月',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         selectedDialTextStyle: TextStyle(fontSize: 14.0, color: Colors.yellow),
         value: 6,
       ),
       SantoDialItem(
         dialText: '7月',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         selectedDialTextStyle: TextStyle(fontSize: 14.0, color: Colors.amberAccent),
         value: 7,
       )
@@ -363,27 +363,27 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     return [
       SantoDialItem(
         dialText: '0',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 0,
       ),
       SantoDialItem(
         dialText: '33.3',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 33.3,
       ),
       SantoDialItem(
         dialText: '66.6',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 66.6,
       ),
       SantoDialItem(
         dialText: '100',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 100,
       ),
       SantoDialItem(
         dialText: '120',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 120,
       )
     ];
@@ -703,7 +703,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
       ),
       SantoDialItem(
         dialText: '20',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 20,
       ),
       SantoDialItem(
@@ -713,22 +713,22 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
       ),
       SantoDialItem(
         dialText: '60',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 60,
       ),
       SantoDialItem(
         dialText: '80',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 80,
       ),
       SantoDialItem(
         dialText: '100',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 100,
       ),
       SantoDialItem(
         dialText: '120',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 120,
       )
     ];
@@ -739,7 +739,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     for (int index = 0; index < lines[0].points.length; index++) {
       _xDialValue.add(SantoDialItem(
         dialText: '${lines[0].points[index].x}',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: lines[0].points[index].x,
       ));
     }
@@ -1054,27 +1054,27 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     return [
       SantoDialItem(
         dialText: '0',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 0,
       ),
       SantoDialItem(
         dialText: '33.3',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 33.3,
       ),
       SantoDialItem(
         dialText: '66.6',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 66.6,
       ),
       SantoDialItem(
         dialText: '100',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 100,
       ),
       SantoDialItem(
         dialText: '120',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 120,
       )
     ];
@@ -1085,7 +1085,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     for (int index = 0; index < lines[0].points.length; index++) {
       _xDialValue.add(SantoDialItem(
         dialText: '${lines[0].points[index].x}',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: lines[0].points[index].x,
       ));
     }
@@ -1129,27 +1129,27 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     return [
       SantoDialItem(
         dialText: '0',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 0,
       ),
       SantoDialItem(
         dialText: '33.3',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 33.3,
       ),
       SantoDialItem(
         dialText: '66.6',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 66.6,
       ),
       SantoDialItem(
         dialText: '100',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 100,
       ),
       SantoDialItem(
         dialText: '120',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: 120,
       )
     ];
@@ -1160,7 +1160,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     for (int index = 0; index < lines[0].points.length; index++) {
       _xDialValue.add(SantoDialItem(
         dialText: '${lines[0].points[index].x}',
-        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF999999)),
+        dialTextStyle: TextStyle(fontSize: 12.0, color: Color(0xFF808695)),
         value: lines[0].points[index].x,
       ));
     }
@@ -1460,7 +1460,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
               color: bean.lineColor,
               borderRadius: BorderRadius.all(Radius.circular(1.5))),
         ),
-        Text('图例', style: TextStyle(fontSize: 12, color: Color(0xFF999999))),
+        Text('图例', style: TextStyle(fontSize: 12, color: Color(0xFF808695))),
         SizedBox(width: 6),
       ]);
 

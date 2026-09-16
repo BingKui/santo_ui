@@ -40,7 +40,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 children: <Widget>[
                   SantoBubbleText(
                     maxLines: 4,
-                    text: "默认颜色文字颜色0XFF222222，选中文字颜色为主题色，没有下划线，"
+                    text: "默认颜色文字颜色0XFF17233D，选中文字颜色为主题色，没有下划线，"
                         "title之间水平间距为20，只有一个标题时，不显示选中态",
                   ),
                   SizedBox(height: 12),

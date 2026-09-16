@@ -124,7 +124,7 @@ class SantoProgressBarItem {
       this.showBarValueTextStyle = _showBarValueTextStyle});
 }
 
-const List<Color> _defaultColor = [Color(0xff1545FD), Color(0xff0984F9)];
+const List<Color> _defaultColor = [Color(0xff1545FD), Color(0xff1677FF)];
 const List<Color> _defaultHintColor = [Color(0xffEAF4FE), Color(0xffEAF4FE)];
 
 /// SantoProgressBarBundle 数据图表的数据集

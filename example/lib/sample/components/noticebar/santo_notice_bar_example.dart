@@ -88,14 +88,14 @@ class SantoNoticeBarExample extends StatelessWidget {
                   SantoNoticeBar(
                     content: '自定义左侧图标',
                     leftWidget: const Icon(Icons.info_outline,
-                        size: 16, color: Color(0xFF0984F9)),
+                        size: 16, color: Color(0xFF1677FF)),
                     noticeStyle: NoticeStyles.runningWithArrow,
                   ),
                   const SizedBox(height: 12),
                   SantoNoticeBar(
                     content: '自定义右侧图标',
                     rightWidget: const Icon(Icons.arrow_forward_ios,
-                        size: 12, color: Color(0xFF0984F9)),
+                        size: 12, color: Color(0xFF1677FF)),
                     noticeStyle: NoticeStyles.runningWithArrow,
                   ),
                 ],
@@ -108,7 +108,7 @@ class SantoNoticeBarExample extends StatelessWidget {
                   SantoNoticeBar(
                     content: '自定义背景色和文字颜色',
                     backgroundColor: const Color(0xFFEBFFF7),
-                    textColor: const Color(0xFF00AE66),
+                    textColor: const Color(0xFF52C41A),
                   ),
                   const SizedBox(height: 12),
                   SantoNoticeBar(
@@ -169,7 +169,7 @@ class SantoNoticeBarExample extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 12, color: Color(0xFF999999)),
+          style: const TextStyle(fontSize: 12, color: Color(0xFF808695)),
         ),
         const SizedBox(height: 8),
         SantoNoticeBar(

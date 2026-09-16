@@ -163,7 +163,7 @@ class _CascaderExampleState extends State<CascaderExample> {
                   height: 48,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFFEEEEEE)),
+                    border: Border.all(color: Color(0xFFDCDEE2)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -174,12 +174,12 @@ class _CascaderExampleState extends State<CascaderExample> {
                           style: TextStyle(
                             fontSize: 14,
                             color: _selectedRegion == '请选择地区'
-                                ? Color(0xFF999999)
-                                : Color(0xFF222222),
+                                ? Color(0xFF808695)
+                                : Color(0xFF17233D),
                           ),
                         ),
                       ),
-                      Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF999999)),
+                      Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
                     ],
                   ),
                 ),
@@ -216,7 +216,7 @@ class _CascaderExampleState extends State<CascaderExample> {
                   height: 48,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFFEEEEEE)),
+                    border: Border.all(color: Color(0xFFDCDEE2)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -227,12 +227,12 @@ class _CascaderExampleState extends State<CascaderExample> {
                           style: TextStyle(
                             fontSize: 14,
                             color: _selectedAddress == '请选择地址'
-                                ? Color(0xFF999999)
-                                : Color(0xFF222222),
+                                ? Color(0xFF808695)
+                                : Color(0xFF17233D),
                           ),
                         ),
                       ),
-                      Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF999999)),
+                      Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
                     ],
                   ),
                 ),
@@ -269,7 +269,7 @@ class _CascaderExampleState extends State<CascaderExample> {
                   height: 48,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFFEEEEEE)),
+                    border: Border.all(color: Color(0xFFDCDEE2)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -279,11 +279,11 @@ class _CascaderExampleState extends State<CascaderExample> {
                           '默认选中：广东省/深圳市/南山区',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF222222),
+                            color: Color(0xFF17233D),
                           ),
                         ),
                       ),
-                      Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF999999)),
+                      Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
                     ],
                   ),
                 ),

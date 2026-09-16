@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
@@ -207,11 +208,9 @@ class _SantoIconButtonState extends State<SantoIconButton> {
     }
 
     if (widget.onTap != null) {
-      return GestureDetector(
+      return SantoPressFeedback(
+        onTap: widget.onTap,
         child: ctn,
-        onTap: () {
-          widget.onTap!();
-        },
       );
     }
     return ctn;

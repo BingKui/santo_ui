@@ -88,7 +88,7 @@ class _SelectionViewExamplePageState
       children: <Widget>[
         Divider(
           height: 0.3,
-          color: Color(0xFFF0F0F0),
+          color: Color(0xFFE8EAEC),
         ),
         Container(
           color: Colors.white,
@@ -109,7 +109,7 @@ class _SelectionViewExamplePageState
                       Text(
                         "重置",
                         style:
-                            TextStyle(fontSize: 11, color: Color(0xFF999999)),
+                            TextStyle(fontSize: 11, color: Color(0xFF808695)),
                       )
                     ],
                   ),

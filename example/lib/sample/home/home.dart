@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                 border: Border(
                   left: BorderSide(
                     color: isSelected
-                        ? const Color(0xFF0984F9)
+                        ? const Color(0xFF1677FF)
                         : Colors.transparent,
                     width: 3,
                   ),
@@ -95,8 +95,8 @@ class _HomePageState extends State<HomePage> {
                 groups[index].groupName,
                 style: TextStyle(
                   color: isSelected
-                      ? const Color(0xFF0984F9)
-                      : const Color(0xFF666666),
+                      ? const Color(0xFF1677FF)
+                      : const Color(0xFF515A6E),
                   fontSize: 14,
                   fontWeight:
                       isSelected ? FontWeight.w600 : FontWeight.normal,

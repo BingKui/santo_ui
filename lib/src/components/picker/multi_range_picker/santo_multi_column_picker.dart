@@ -285,7 +285,7 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
     }
 
     return Container(
-      color: const Color(0xFFF0F0F0),
+      color: const Color(0xFFE8EAEC),
       height: widget.maxHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -505,7 +505,7 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
   }
 
   Color _getSelectBgColorByColumnIndex(int listIndex) {
-    Color deepSelectBgColor = Color(0xFFF8F8F8);
+    Color deepSelectBgColor = Color(0xFFF5F5F5);
     Color middleSelectBgColor = Colors.white;
     Color lightSelectBgColor = Colors.white;
     if (_columnCount == 1) {
@@ -529,8 +529,8 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
   }
 
   Color getBgColorByColumnIndex(int listIndex) {
-    Color deepNormalBgColor = Color(0xFFF0F0F0);
-    Color middleNormalBgColor = Color(0xFFF8F8F8);
+    Color deepNormalBgColor = Color(0xFFE8EAEC);
+    Color middleNormalBgColor = Color(0xFFF5F5F5);
     Color lightNormalBgColor = Colors.white;
     if (_columnCount == 1) {
       return lightNormalBgColor;

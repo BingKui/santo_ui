@@ -56,7 +56,7 @@ class ProgressBarChartExampleState extends State<ProgressBarChartExample> {
                   SantoProgressBarItem(text: '示例', value: 0, hintValue: 15),
                 ], colors: [
                   Color(0xff1545FD),
-                  Color(0xff0984F9)
+                  Color(0xff1677FF)
                 ]),
               ],
               barChartSelectCallback: (SantoProgressBarItem? barItem) {
@@ -95,7 +95,7 @@ class ProgressBarChartExampleState extends State<ProgressBarChartExample> {
                   SantoProgressBarItem(text: '示例110', value: 24),
                 ], colors: [
                   Color(0xff1545FD),
-                  Color(0xff0984F9)
+                  Color(0xff1677FF)
                 ]),
                 SantoProgressBarBundle(barList: [
                   SantoProgressBarItem(text: '示例21', value: 20, hintValue: 15),
