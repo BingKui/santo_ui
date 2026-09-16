@@ -73,8 +73,8 @@ void _floatingTests() {
     ));
     await tester.pumpAndSettle();
 
-    // 毛玻璃:外层 dock + 内层容器 共两层
-    expect(find.byType(BackdropFilter), findsNWidgets(2));
+    // 毛玻璃:仅外层 dock(内层不透明)
+    expect(find.byType(BackdropFilter), findsOneWidget);
 
     final barRight = tester.getTopRight(find.byType(ClipRRect)).dx;
     expect(800 - barRight, 12);

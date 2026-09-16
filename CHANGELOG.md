@@ -10,3 +10,6 @@
 * 新增 SantoMasonry 瀑布流组件(columns/gutter/verticalGutter/items,API 对齐 antd 6 Masonry)
 * 重写 SantoSwipeCell 滑动单元格(API 参考 TDesign Flutter):cell/left/right Panel(extentRatio)、disabled、opened、groupTag 组内互斥、onChange、controller
 * 新增 SantoSkeleton 骨架屏组件(text/avatar/image/grid 预设主题、fromRowCol 自定义行列、渐变扫光/闪烁动画、延迟显示,API 参考 TDesign Flutter Skeleton)
+* 新增 SantoHighlight 关键词高亮组件(sourceString/keywords/caseSensitive + 命中区间合并,高亮样式与自定义片段,参考 Vant Highlight)
+* 新增 SantoTextEllipsis 文本省略组件(rows/dots/expandText/collapseText、position 支持 start/middle/end、TextPainter 二分测量保证省略号与操作同行,参考 Vant TextEllipsis)
+* 新增 SantoActionBar 底部操作栏(SantoActionBarIcon 图标+角标、SantoActionBarButton 五种类型/自定义色/加载/禁用,按钮自动平分宽度与首尾圆角,安全区适配,参考 Vant ActionBar)

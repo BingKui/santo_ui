@@ -279,19 +279,16 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         widget.useSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
     Widget bar = ClipRRect(
       borderRadius: BorderRadius.circular(_containerRadius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          height: _barHeight,
-          color:
-              widget.backgroundColor ?? Colors.white.withAlpha(0xB3),
-          padding: const EdgeInsets.all(4),
-          child: Row(
-            children: [
-              for (int i = 0; i < widget.effectiveItems.length; i++)
-                Expanded(child: _buildFloatingItem(context, i)),
-            ],
-          ),
+      child: Container(
+        height: _barHeight,
+        // 内层不透明
+        color: widget.backgroundColor ?? Colors.white,
+        padding: const EdgeInsets.all(4),
+        child: Row(
+          children: [
+            for (int i = 0; i < widget.effectiveItems.length; i++)
+              Expanded(child: _buildFloatingItem(context, i)),
+          ],
         ),
       ),
     );
@@ -301,8 +298,8 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           color: widget.backgroundColor != null
-              ? widget.backgroundColor!.withAlpha(0x4D)
-              : Colors.white.withAlpha(0x4D),
+              ? widget.backgroundColor!.withAlpha(0x33)
+              : Colors.white.withAlpha(0x33),
           padding: EdgeInsets.fromLTRB(
               widget.gap, 0, widget.gap, widget.gap + bottomPadding),
           child: Material(
