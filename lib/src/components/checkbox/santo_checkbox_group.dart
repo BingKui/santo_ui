@@ -312,13 +312,12 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
             ),
           );
 
-    if (passThrough) {
+    // 非通栏样式仅用于纵向排列:整体裁切圆角并向左右留出外边距
+    if (passThrough && !isHorizontal) {
       container = Container(
-        clipBehavior: cardMode ? Clip.none : Clip.hardEdge,
-        decoration: cardMode
-            ? null
-            : BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        margin: cardMode ? null : const EdgeInsets.symmetric(horizontal: 16),
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: container,
       );
     }

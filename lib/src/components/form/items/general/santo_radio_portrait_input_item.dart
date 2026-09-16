@@ -2,7 +2,8 @@ import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
-import 'package:santo_ui/src/components/radio/santo_radio_button.dart';
+import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
+import 'package:santo_ui/src/components/radio/santo_radio.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -176,23 +177,18 @@ class SantoRadioPortraitInputFormItemState
       result.add(
         Container(
           padding: EdgeInsets.only(top: 14, bottom: 14),
-          child: SantoRadioButton(
-            child: Text(
+          child: SantoRadio(
+            customSpace: EdgeInsets.zero,
+            contentDirection: SantoContentDirection.left,
+            customContentBuilder: (context, checked, content) => Text(
               option!,
               style: getOptionTextStyle(option, index),
             ),
-            childOnRight: false,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            disable: getRadioEnableState(index),
-            radioIndex: index,
-            isSelected: index == widget.options!.indexOf(widget.value ?? ''),
-            onValueChangedAtIndex: (int position, bool isSelected) {
-              if (getRadioEnableState(position)) {
-                return;
-              }
+            enable: !getRadioEnableState(index),
+            checked: index == widget.options!.indexOf(widget.value ?? ''),
+            onChanged: (isSelected) {
               String? oldValue = widget.value;
-              widget.value = options[position];
+              widget.value = options[index];
               SantoFormUtil.notifyRadioStatusChanged(
                   widget.onChanged, context, oldValue, widget.value);
               setState(() {});

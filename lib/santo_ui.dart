@@ -19,7 +19,7 @@ export 'src/constants/santo_strings_constants.dart';
 
 //actionsheet
 export 'src/components/actionsheet/santo_common_action_sheet.dart';
-export 'src/components/actionsheet/santo_share_action_sheet.dart';
+export 'src/components/share/santo_share.dart';
 export 'src/components/panel/santo_panel.dart';
 export 'src/components/section/santo_section.dart';
 export 'src/components/pagination/santo_pagination.dart';
@@ -28,7 +28,7 @@ export 'src/components/space/santo_space.dart';
 export 'src/components/masonry/santo_masonry.dart';
 export 'src/components/skeleton/santo_skeleton.dart';
 export 'src/components/menu_bar/santo_menu_bar_more_menu.dart';
-export 'src/components/actionsheet/santo_share_action_sheet.dart';
+export 'src/components/share/santo_share.dart';
 export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 
 //底部导航
@@ -211,9 +211,10 @@ export 'src/components/card/content_card/santo_pair_info_rich_grid.dart';
 export 'src/components/line/santo_line.dart';
 
 //选择
-export 'src/components/radio/santo_radio_core.dart';
-export 'src/components/radio/santo_radio_button.dart';
-export 'src/components/radio/santo_checkbox.dart';
+export 'src/components/checkbox/santo_checkbox.dart';
+export 'src/components/checkbox/santo_checkbox_group.dart';
+export 'src/components/radio/santo_radio.dart';
+export 'src/components/radio/santo_radio_group.dart';
 
 //打分
 export 'src/components/rate/santo_rate.dart';

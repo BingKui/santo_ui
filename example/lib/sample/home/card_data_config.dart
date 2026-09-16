@@ -7,6 +7,7 @@ import 'package:example/sample/components/menu_bar/menu_bar_example.dart';
 import 'package:example/sample/components/panel/panel_example.dart';
 import 'package:example/sample/components/pagination/pagination_example.dart';
 import 'package:example/sample/components/section/section_example.dart';
+import 'package:example/sample/components/share/share_example.dart';
 import 'package:example/sample/components/safe_area/safe_area_example.dart';
 import 'package:example/sample/components/space/space_example.dart';
 import 'package:example/sample/components/masonry/masonry_example.dart';
@@ -46,8 +47,8 @@ import 'package:example/sample/components/selection/selection_entry_page.dart';
 import 'package:example/sample/components/step/step_example.dart';
 import 'package:example/sample/components/sugsearch/search_text_example.dart';
 import 'package:example/sample/components/switch/santo_switch_example.dart';
-import 'package:example/sample/components/switch/checkbox_example.dart';
-import 'package:example/sample/components/switch/radio_example.dart';
+import 'package:example/sample/components/checkbox/checkbox_example.dart';
+import 'package:example/sample/components/radio/radio_example.dart';
 import 'package:example/sample/components/tabbar/santo_tab_example.dart';
 import 'package:example/sample/components/tag/tag_example.dart';
 import 'package:example/sample/components/toast/toast_example.dart';
@@ -213,6 +214,7 @@ class CardDataConfig {
     List<GroupInfo> children = [
       _item("Dialog 对话框", "弹窗交互", DialogEntryPage("弹窗示例")),
       _item("ActionSheet 动作面板", "底部动作菜单", ActionSheetEntryPage("动作面板")),
+      _item("Share 分享", "分享面板", ShareExample()),
       _item("Toast 轻提示", "轻量反馈提示", ToastExample()),
       _item("Message 全局提示", "顶部消息通知", MessageExample()),
       _item("PopupWindow 弹出提示", "定位气泡提示", PopWindowExamplePage("Tips 提示示例")),

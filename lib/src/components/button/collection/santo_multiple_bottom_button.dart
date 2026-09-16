@@ -1,7 +1,7 @@
 
 
 import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
-import 'package:santo_ui/src/components/radio/santo_checkbox.dart';
+import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -116,17 +116,29 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                     valueListenable: _controller.valueNotifier,
                     builder: (context, value, _) {
                       return SantoCheckbox(
-                        isSelected: value.selectAllState,
-                        radioIndex: 0,
-                        iconPadding: EdgeInsets.all(0),
-                        onValueChangedAtIndex: (index, value) {
+                        key: Key(DateTime.now().toString()),
+                        checked: value.selectAllState,
+                        customIconBuilder: (context, checked) {
+                          final commonConfig = SantoThemeConfigurator.instance
+                              .getConfig()
+                              .commonConfig;
+                          return Icon(
+                            checked
+                                ? Icons.check_circle
+                                : Icons.radio_button_unchecked,
+                            size: 16,
+                            color: checked
+                                ? commonConfig.brandPrimary
+                                : commonConfig.borderColorBase,
+                          );
+                        },
+                        onChanged: (value) {
                           //同步到外界的当前的全选状态
                           _controller.setState(selectAllState: value);
                           if (widget.onSelectAll != null) {
                             widget.onSelectAll!(value);
                           }
                         },
-                        key: Key(DateTime.now().toString()),
                       );
                     },
                   ),
