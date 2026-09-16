@@ -277,24 +277,28 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
   Widget _buildFloating(BuildContext context) {
     final bottomPadding =
         widget.useSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
-    Widget bar = ClipRRect(
-      borderRadius: BorderRadius.circular(_containerRadius),
-      child: Container(
-        height: _barHeight,
-        decoration: BoxDecoration(
-          // 内层不透明 + 细边框
-          color: widget.backgroundColor ?? Colors.white,
-          border: Border.all(
-            color: _commonConfig.dividerColorBase,
-            width: 0.5,
-          ),
+    // 边框画在圆角形状上(而非被裁剪的矩形直边),保证左右两侧也可见
+    Widget bar = Container(
+      height: _barHeight,
+      decoration: BoxDecoration(
+        // 内层不透明 + 细边框
+        color: widget.backgroundColor ?? Colors.white,
+        borderRadius: BorderRadius.circular(_containerRadius),
+        border: Border.all(
+          color: _commonConfig.dividerColorBase,
+          width: 0.5,
         ),
-        padding: const EdgeInsets.all(4),
-        child: Row(
-          children: [
-            for (int i = 0; i < widget.effectiveItems.length; i++)
-              Expanded(child: _buildFloatingItem(context, i)),
-          ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(_containerRadius),
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Row(
+            children: [
+              for (int i = 0; i < widget.effectiveItems.length; i++)
+                Expanded(child: _buildFloatingItem(context, i)),
+            ],
+          ),
         ),
       ),
     );
