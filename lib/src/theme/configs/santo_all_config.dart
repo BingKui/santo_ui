@@ -15,6 +15,7 @@ import 'package:santo_ui/src/theme/configs/santo_picker_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_tabbar_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_panel_config.dart';
+import 'package:santo_ui/src/theme/configs/santo_section_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_tag_config.dart';
 
 /// 描述: 全局配置
@@ -43,6 +44,7 @@ class SantoAllThemeConfig {
     SantoSelectionConfig? selectionConfig,
     SantoGalleryDetailConfig? galleryDetailConfig,
     SantoPanelConfig? panelConfig,
+    SantoSectionConfig? sectionConfig,
     String configId = GLOBAL_CONFIG_ID,
   })  : _commonConfig = commonConfig,
         _appBarConfig = appBarConfig,
@@ -60,7 +62,8 @@ class SantoAllThemeConfig {
         _tabBarConfig = tabBarConfig,
         _selectionConfig = selectionConfig,
         _galleryDetailConfig = galleryDetailConfig,
-        _panelConfig = panelConfig;
+        _panelConfig = panelConfig,
+        _sectionConfig = sectionConfig;
 
   SantoCommonConfig? _commonConfig;
 
@@ -149,6 +152,11 @@ class SantoAllThemeConfig {
   SantoPanelConfig get panelConfig =>
       _panelConfig ?? SantoDefaultConfigUtils.defaultPanelConfig;
 
+  SantoSectionConfig? _sectionConfig;
+
+  SantoSectionConfig get sectionConfig =>
+      _sectionConfig ?? SantoDefaultConfigUtils.defaultSectionConfig;
+
   void initThemeConfig(String configId) {
     this._commonConfig ??= SantoCommonConfig();
     this._appBarConfig ??= SantoAppBarConfig();
@@ -168,6 +176,7 @@ class SantoAllThemeConfig {
     this._selectionConfig ??= SantoSelectionConfig();
     this._galleryDetailConfig ??= SantoGalleryDetailConfig();
     this._panelConfig ??= SantoPanelConfig();
+    this._sectionConfig ??= SantoSectionConfig();
 
     commonConfig.initThemeConfig(configId);
     appBarConfig.initThemeConfig(
@@ -231,6 +240,10 @@ class SantoAllThemeConfig {
       currentLevelCommonConfig: commonConfig,
     );
     panelConfig.initThemeConfig(
+      configId,
+      currentLevelCommonConfig: commonConfig,
+    );
+    sectionConfig.initThemeConfig(
       configId,
       currentLevelCommonConfig: commonConfig,
     );

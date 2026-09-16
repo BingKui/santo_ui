@@ -21,6 +21,7 @@ import 'package:santo_ui/src/theme/configs/santo_picker_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_tabbar_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_panel_config.dart';
+import 'package:santo_ui/src/theme/configs/santo_section_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_tag_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,6 +49,7 @@ class SantoDefaultConfigUtils {
     selectionConfig: defaultSelectionConfig,
     galleryDetailConfig: defaultGalleryDetailConfig,
     panelConfig: defaultPanelConfig,
+    sectionConfig: defaultSectionConfig,
   );
 
   /// 面板配置
@@ -61,6 +63,28 @@ class SantoDefaultConfigUtils {
     borderColor: const Color(0xFFDCDEE2),
     borderWidth: 0.5,
     showHeaderDivider: true,
+    titleTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextBase,
+      fontSize: defaultCommonConfig.fontSizeSubHead,
+      fontWeight: FontWeight.w500,
+    ),
+    descriptionTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextSecondary,
+      fontSize: defaultCommonConfig.fontSizeCaption,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+
+  /// 区块配置
+  static SantoSectionConfig defaultSectionConfig = SantoSectionConfig(
+    contentPadding: const EdgeInsets.all(10),
+    footerPadding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+    backgroundColor: Colors.white,
+    radius: 12,
+    borderColor: const Color(0xFFDCDEE2),
+    borderWidth: 0.5,
+    showDivider: true,
+    dividerColor: const Color(0xFFE8EAEC),
     titleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,

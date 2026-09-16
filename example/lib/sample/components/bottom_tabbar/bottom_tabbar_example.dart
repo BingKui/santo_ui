@@ -134,7 +134,7 @@ class _BottomTabbarExampleState extends State<BottomTabbarExample> {
                     activeIcon:
                         const Icon(Icons.home, size: 24, color: _brandColor),
                     title: const Text('首页'),
-                    backgroundColor: const Color(0xFFE0EDFF),
+                    backgroundColor: const Color(0xFFE6F4FF),
                     selectedTextStyle: const TextStyle(
                         fontSize: 12, fontWeight: FontWeight.w600),
                   ),
