@@ -195,8 +195,17 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
   void _select(int index) {
     final items = widget.effectiveItems;
     if (_moreEnabled && index == _moreIndex) {
-      // 更多标签:不切换选中,弹出菜单面板
-      SantoMenuBarMoreMenu.open(context, menu: widget.moreMenu!);
+      // 更多标签:不切换选中,弹出菜单面板,悬浮在 MenuBar(含底部毛玻璃区域)上方
+      final safeArea = widget.useSafeArea
+          ? MediaQuery.of(context).padding.bottom
+          : 0.0;
+      final bottomInset = widget.style == SantoMenuBarStyle.floating
+          ? _barHeight + widget.gap * 2 + safeArea
+          : _barHeight + safeArea;
+      SantoMenuBarMoreMenu.open(
+        context,
+        menu: widget.moreMenu!.copyWith(bottomInset: bottomInset),
+      );
       return;
     }
     if (index == _currentIndex) return;
@@ -258,7 +267,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     return Material(color: Colors.transparent, child: bar);
   }
 
-  /// 悬浮样式:毛玻璃圆角容器 + 圆角标签项
+  /// 悬浮样式:底部整块毛玻璃 + 圆角容器 + 圆角标签项
   Widget _buildFloating(BuildContext context) {
     final bottomPadding =
         widget.useSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
@@ -280,12 +289,21 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         ),
       ),
     );
-    return Padding(
-      padding: EdgeInsets.fromLTRB(widget.gap, 0, widget.gap,
-          widget.gap + bottomPadding),
-      child: Material(
-        color: Colors.transparent,
-        child: bar,
+    // 底部整块毛玻璃背景:覆盖 gap 边距与安全区域
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          color: widget.backgroundColor != null
+              ? widget.backgroundColor!.withAlpha(0x66)
+              : Colors.white.withAlpha(0x66),
+          padding: EdgeInsets.fromLTRB(widget.gap, widget.gap, widget.gap,
+              widget.gap + bottomPadding),
+          child: Material(
+            color: Colors.transparent,
+            child: bar,
+          ),
+        ),
       ),
     );
   }
