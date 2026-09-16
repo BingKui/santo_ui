@@ -297,9 +297,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
         child: Container(
-          color: widget.backgroundColor != null
-              ? widget.backgroundColor!.withAlpha(0x0D)
-              : Colors.white.withAlpha(0x0D),
+          color: Colors.transparent,
           padding: EdgeInsets.fromLTRB(
               widget.gap, 0, widget.gap, widget.gap + bottomPadding),
           child: Material(
