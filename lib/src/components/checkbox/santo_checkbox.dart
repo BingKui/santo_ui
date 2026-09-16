@@ -273,20 +273,19 @@ class SantoCheckboxState extends State<SantoCheckbox> {
       tile = _buildCardWrapper(tile);
     }
 
-    // 手势与按压态始终保留,保证组件结构稳定:结构随选中态变化会在手势识别器
-    // 被释放时于树锁定期间回调 onTapCancel,导致 setState 抛错、点击丢帧
-    Widget tappable = GestureDetector(
+    // 手势与按压态必须保持同一组件结构:按下时在 GestureDetector 外侧增删组件
+    // 会卸载手势识别器,本次点击随即作废(真机上表现为要点两次),因此 Opacity 常驻
+    tile = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTapDown: (_) => _pressState(true),
       onTapUp: (_) => _pressState(false),
       onTapCancel: () => _pressState(false),
       onTap: () => _handleTap(groupState),
-      child: tile,
+      child: Opacity(
+        opacity: _pressed ? 0.68 : 1,
+        child: tile,
+      ),
     );
-    if (_pressed) {
-      tappable = Opacity(opacity: 0.68, child: tappable);
-    }
-    tile = tappable;
 
     if (!widget.showDivider || widget.cardMode) {
       return Semantics(enabled: !_disabled, checked: checked, child: tile);
