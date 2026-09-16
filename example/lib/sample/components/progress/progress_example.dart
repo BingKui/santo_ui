@@ -198,17 +198,17 @@ class _ProgressExampleState extends State<ProgressExample> {
                       SantoCircularProgress(
                         value: 0.45,
                         color: const Color(0xFFFF4D4F),
-                        backgroundColor: const Color(0xFFFEEDED),
+                        backgroundColor: const Color(0xFFFFF2F0),
                       ),
                       SantoCircularProgress(
                         value: 0.75,
                         color: const Color(0xFF52C41A),
-                        backgroundColor: const Color(0xFFEBFFF7),
+                        backgroundColor: const Color(0xFFF6FFED),
                       ),
                       SantoCircularProgress(
                         value: 0.3,
                         color: const Color(0xFFFAAD14),
-                        backgroundColor: const Color(0xFFFDFCEC),
+                        backgroundColor: const Color(0xFFFFFBE6),
                       ),
                     ],
                   ),

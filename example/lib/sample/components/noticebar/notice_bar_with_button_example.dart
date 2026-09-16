@@ -89,10 +89,10 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
               title: '自定义文字和背景颜色',
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
-                leftTagBackgroundColor: Color(0xFFE0EDFF),
+                leftTagBackgroundColor: Color(0xFFE6F4FF),
                 leftTagTextColor: Color(0xFF1677FF),
                 content: '这是通知内容这是通知内容这是通知内容这是通知内容这是通知内容',
-                backgroundColor: Color(0xFFEBFFF7),
+                backgroundColor: Color(0xFFF6FFED),
                 contentTextColor: Color(0xFF52C41A),
                 rightButtonText: '去完成',
                 rightButtonBorderColor: Color(0xFF1677FF),

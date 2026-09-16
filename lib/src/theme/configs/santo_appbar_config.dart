@@ -68,13 +68,13 @@ class SantoAppBarConfig extends SantoBaseConfig {
         );
     _titleStyle = SantoTextStyle(
       fontSize: SantoAppBarTheme.titleFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: SantoAppBarTheme.darkTextColor,
     );
     _actionsStyle = SantoTextStyle(
       color: SantoAppBarTheme.darkTextColor,
       fontSize: SantoAppBarTheme.actionFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     );
     _systemOverlayStyle = SystemUiOverlayStyle.light;
   }
@@ -104,13 +104,13 @@ class SantoAppBarConfig extends SantoBaseConfig {
         );
     _titleStyle = SantoTextStyle(
       fontSize: SantoAppBarTheme.titleFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: SantoAppBarTheme.lightTextColor,
     );
     _actionsStyle = SantoTextStyle(
       color: SantoAppBarTheme.lightTextColor,
       fontSize: SantoAppBarTheme.actionFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     );
     _systemOverlayStyle = SystemUiOverlayStyle.dark;
   }
@@ -150,7 +150,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
   /// SantoTextStyle(
   ///   color: AppBarBrightness(brightness).textColor,
   ///   fontSize: SantoAppBarTheme.actionFontSize,
-  ///   fontWeight: FontWeight.w600,
+  ///   fontWeight: FontWeight.w500,
   /// )
   SantoTextStyle? _actionsStyle;
 

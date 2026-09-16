@@ -26,31 +26,34 @@ class SantoPadThemeConfig {
       tagConfig: tagConfig);
 
   /// 全局默认配置
+  /// 颜色对齐 DevOpsMobile lib/constants/constants.dart,仅字号/间距为 Pad 放大档位
   static SantoCommonConfig commonConfig = SantoCommonConfig(
     /// 主题色相关
-    brandPrimary: const Color(0xFF3072F6),
-    brandPrimaryTap: const Color(0x193072F6),
-    brandSuccess: const Color(0xFF3072F6),
-    brandWarning: const Color(0xFFFA5741),
-    brandError: const Color(0xFFFA5741),
-    brandImportant: const Color(0xFFFA5741),
-    brandImportantValue: const Color(0xFFFA5741),
+    brandPrimary: const Color(0xFF1677FF),
+    brandPrimaryTap: const Color(0x191677FF),
+    brandSuccess: const Color(0xFF52C41A),
+    brandWarning: const Color(0xFFFAAD14),
+    brandError: const Color(0xFFFF4D4F),
+    brandImportant: const Color(0xFFFF4D4F),
+    brandImportantValue: const Color(0xFFFF5722),
 
     colorTextBase: const Color(0xFF17233D),
 
-    colorTextImportant: const Color(0xFF17233D),
+    colorTextImportant: const Color(0xFF515A6E),
 
     colorTextBaseInverse: const Color(0xFFFFFFFF),
 
     colorTextSecondary: const Color(0xFF808695),
 
-    colorTextDisabled: const Color(0xFFCCCCCC),
+    colorTextDisabled: const Color(0xFFC5C8CE),
 
     colorTextHint: const Color(0xFFCCCCCC),
 
-    colorLink: const Color(0xFF0055FF),
+    colorLink: const Color(0xFF1677FF),
 
-    dividerColorBase: const Color(0xFFCCCCCC),
+    borderColorBase: const Color(0xFFDCDEE2),
+
+    dividerColorBase: const Color(0xFFE8EAEC),
 
     fillBase: const Color(0xFFFFFFFF),
     fillBody: const Color(0xFFF5F5F5),
@@ -98,7 +101,7 @@ class SantoPadThemeConfig {
   static SantoTagConfig tagConfig = SantoTagConfig(
       tagRadius: 12,
       tagMinWidth: 110,
-      tagTextStyle: SantoTextStyle(fontSize: 12, fontWeight: FontWeight.w600));
+      tagTextStyle: SantoTextStyle(fontSize: 12, fontWeight: FontWeight.w500));
 
   /// 数字信息展示默认配置
   static SantoEnhanceNumberCardConfig numberInfoConfig =
@@ -132,9 +135,9 @@ class SantoPadThemeConfig {
     itemSpacing: 24,
     titleMaxLength: 20,
     titleStyle: SantoTextStyle(
-        color: Color(0xff222222), fontWeight: FontWeight.w600, fontSize: 24),
+        color: Color(0xFF17233D), fontWeight: FontWeight.w500, fontSize: 24),
     actionsStyle: SantoTextStyle(
-        color: Color(0xFF3072F6), fontWeight: FontWeight.w600, fontSize: 18),
+        color: Color(0xFF1677FF), fontWeight: FontWeight.w500, fontSize: 18),
   );
 
   static SantoButtonConfig buttonConfig = SantoButtonConfig(
@@ -150,7 +153,7 @@ class SantoPadThemeConfig {
           rowSpacing: 6,
           itemSpacing: 8,
           valueTextStyle:
-              SantoTextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              SantoTextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           keyTextStyle: SantoTextStyle(fontSize: 16),
           linkTextStyle: SantoTextStyle(fontSize: 16));
 

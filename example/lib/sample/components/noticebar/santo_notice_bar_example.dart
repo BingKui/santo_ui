@@ -107,7 +107,7 @@ class SantoNoticeBarExample extends StatelessWidget {
                 children: [
                   SantoNoticeBar(
                     content: '自定义背景色和文字颜色',
-                    backgroundColor: const Color(0xFFEBFFF7),
+                    backgroundColor: const Color(0xFFF6FFED),
                     textColor: const Color(0xFF52C41A),
                   ),
                   const SizedBox(height: 12),

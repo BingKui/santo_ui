@@ -280,7 +280,7 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _colorTextSecondary;
 
   /// 失效或不可更改文字色
-  /// 默认为 Color(0xFF808695)
+  /// 默认为 Color(0xFFC5C8CE)
   Color? _colorTextDisabled;
 
   /// 文本框提示暗文文字色
@@ -305,7 +305,7 @@ class SantoCommonConfig extends SantoBaseConfig {
   Color? _fillMask;
 
   /// 边框色
-  /// 默认为 Color(0xFFE8EAEC)
+  /// 默认为 Color(0xFFDCDEE2)
   Color? _borderColorBase;
 
   /// 分割线色
