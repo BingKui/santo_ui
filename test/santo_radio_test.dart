@@ -5,10 +5,13 @@ import 'package:santo_ui/santo_ui.dart';
 Widget _wrap(Widget child) =>
     MaterialApp(home: Scaffold(body: Center(child: child)));
 
-/// 两次点击间隔需大于全局防连点时间
+/// 模拟真机点击:按下与抬起之间会渲染一帧
+/// (结构不稳定的组件会在此卸载手势识别器,导致本次点击作废)
 Future<void> _tap(WidgetTester tester, Finder finder) async {
   await tester.pump(const Duration(milliseconds: 600));
-  await tester.tap(finder);
+  final gesture = await tester.startGesture(tester.getCenter(finder));
+  await tester.pump(const Duration(milliseconds: 50));
+  await gesture.up();
   await tester.pumpAndSettle();
 }
 
