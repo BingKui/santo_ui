@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:santo_ui/src/components/empty/santo_empty_status.dart';
+import 'package:santo_ui/src/components/empty/santo_empty.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_common.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_listview.dart';

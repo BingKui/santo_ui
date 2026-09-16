@@ -72,6 +72,10 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
   /// 面板与屏幕左右/底部边缘的间距,默认 12
   final double edgeGap;
 
+  /// 底部避让高度(如 MenuBar 的高度);大于 0 时面板悬浮在该高度之上,
+  /// 且不再额外处理安全区域(由调用方,如 MenuBar 负责避让)
+  final double bottomInset;
+
   /// 面板背景色,默认白色
   final Color? backgroundColor;
 
@@ -88,7 +92,8 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     this.actionText,
     this.onActionTap,
     required this.items,
-    this.columns = 4,
+    this.bottomInset = 0,
+    this.columns = 5,
     this.radius = 28,
     this.edgeGap = 12,
     this.backgroundColor,
@@ -104,7 +109,8 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     String? actionText,
     VoidCallback? onActionTap,
     required List<SantoMenuBarMoreMenuItem> items,
-    int columns = 4,
+    double bottomInset = 0,
+    int columns = 5,
     double radius = 28,
     double edgeGap = 12,
     Color? backgroundColor,
@@ -126,6 +132,23 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
         itemColor: itemColor,
       ),
       barrierDismissible: barrierDismissible,
+    );
+  }
+
+  /// 复制并修改部分字段
+  SantoMenuBarMoreMenu copyWith({double? bottomInset}) {
+    return SantoMenuBarMoreMenu(
+      title: title,
+      titleWidget: titleWidget,
+      actionText: actionText,
+      onActionTap: onActionTap,
+      items: items,
+      columns: columns,
+      radius: radius,
+      edgeGap: edgeGap,
+      backgroundColor: backgroundColor,
+      itemColor: itemColor,
+      bottomInset: bottomInset ?? this.bottomInset,
     );
   }
 
@@ -165,14 +188,16 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    // 配置了底部避让高度(悬浮于 MenuBar 上方)时,由调用方负责安全区域
+    final usesBarInset = widget.bottomInset > 0;
+    final bottomPadding = usesBarInset
+        ? widget.edgeGap + widget.bottomInset
+        : widget.edgeGap + MediaQuery.of(context).padding.bottom;
     final itemColor = widget.itemColor ?? _commonConfig.colorTextBase;
 
-    return SafeArea(
-      top: false,
-      child: Padding(
+    return Padding(
         padding: EdgeInsets.fromLTRB(
-            widget.edgeGap, 0, widget.edgeGap, widget.edgeGap + bottomPadding),
+            widget.edgeGap, 0, widget.edgeGap, bottomPadding),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(widget.radius),
           child: BackdropFilter(
@@ -239,8 +264,7 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildItem(SantoMenuBarMoreMenuItem item, Color itemColor) {

@@ -108,10 +108,13 @@ class SantoNoticeBar extends StatelessWidget {
     }
 
     return Container(
-      color: backgroundColor ??
-          (noticeStyle != null
-              ? noticeStyle!.backgroundColor
-              : defaultStyle.backgroundColor),
+      decoration: BoxDecoration(
+        color: backgroundColor ??
+            (noticeStyle != null
+                ? noticeStyle!.backgroundColor
+                : defaultStyle.backgroundColor),
+        borderRadius: BorderRadius.circular(12),
+      ),
       padding: this.padding ?? EdgeInsets.symmetric(horizontal: 20),
       constraints: BoxConstraints(minHeight: this.minHeight),
       child: GestureDetector(

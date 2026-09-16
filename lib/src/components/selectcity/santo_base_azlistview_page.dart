@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:santo_ui/src/components/empty/santo_empty_status.dart';
+import 'package:santo_ui/src/components/empty/santo_empty.dart';
 import 'package:santo_ui/src/components/loading/santo_loading.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_common.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_listview.dart';

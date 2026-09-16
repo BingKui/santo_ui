@@ -1,6 +1,6 @@
 
 import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
-import 'package:santo_ui/src/components/calendar/santo_calendar_view.dart';
+import 'package:santo_ui/src/components/calendar/santo_calendar.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/picker/time_picker/santo_date_time_formatter.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
