@@ -17,8 +17,9 @@ class _MessageExampleState extends State<MessageExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础用法
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: '通过 type 切换 success、error 等四种类型与配色',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,8 +64,9 @@ class _MessageExampleState extends State<MessageExample> {
             ),
 
             // 快捷方法
-            SantoPanel(
+            SantoSection(
               title: '快捷方法',
+              description: 'success、error 等快捷方法内部调用 show，默认 2 秒消失',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -105,8 +107,9 @@ class _MessageExampleState extends State<MessageExample> {
             ),
 
             // 自定义时长
-            SantoPanel(
+            SantoSection(
               title: '自定义时长',
+              description: 'duration 控制消息停留时长，示例演示 1 秒与 5 秒',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -136,8 +139,9 @@ class _MessageExampleState extends State<MessageExample> {
             ),
 
             // 自定义样式
-            SantoPanel(
+            SantoSection(
               title: '自定义样式',
+              description: 'backgroundColor、textColor、icon 可覆盖默认样式',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -190,8 +194,9 @@ class _MessageExampleState extends State<MessageExample> {
             ),
 
             // 长文本
-            SantoPanel(
+            SantoSection(
               title: '长文本',
+              description: '超长 content 自动换行展示，验证多行文本的兼容性',
               child: _buildButtonRow([
                 _buildButton('长文本消息', () {
                   SantoMessage.show(

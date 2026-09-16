@@ -12,8 +12,9 @@ class SantoNoticeBarExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: '默认样式与 noticeStyle 指定样式，点击触发 onNoticeTap',
               child: Column(
                 children: [
                   SantoNoticeBar(content: '这是通知内容'),
@@ -31,8 +32,9 @@ class SantoNoticeBarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '十种默认样式',
+              description: '枚举十种 NoticeStyles 观察颜色与图标的差异',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -57,8 +59,9 @@ class SantoNoticeBarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '跑马灯',
+              description: 'marquee 为 true 时长文案滚动展示',
               child: Column(
                 children: [
                   SantoNoticeBar(
@@ -69,8 +72,9 @@ class SantoNoticeBarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义左右图标',
+              description: 'showLeftIcon、showRightIcon 控制显隐并支持替换图标',
               child: Column(
                 children: [
                   SantoNoticeBar(
@@ -101,8 +105,9 @@ class SantoNoticeBarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色和高度',
+              description: 'backgroundColor 与 minHeight 调整配色和最小高度',
               child: Column(
                 children: [
                   SantoNoticeBar(
@@ -119,8 +124,9 @@ class SantoNoticeBarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '带按钮通知栏 (SantoNoticeBarWithButton)',
+              description: '带标签与按钮的变体，可跳转查看完整示例',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

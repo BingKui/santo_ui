@@ -26,8 +26,9 @@ RulePanel(
             '两组key-value内容平分屏幕，每一组key-value都是一行展示，'
                   'value紧挨着key，不考虑对齐',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'SantoRichInfoGrid 两列平分宽度，key 与 value 紧挨同行展示',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -41,8 +42,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：key过长',
+            description: 'key 超过四分之一列宽后省略号截断，避免挤压 value',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,8 +58,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：内容过长',
+            description: 'value 超长时单行省略号截断，不会撑高或挤压相邻项',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -71,8 +74,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：Key和Value过长',
+            description: 'value 为 null 或空串时显示 -- 占位，rowSpace 调整行间距',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -88,8 +92,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '特殊案例：Padding中',
+            description: '外层 Padding 限制可用宽度后，网格仍能自适应排布',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -108,8 +113,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '特殊案例：Row中',
+            description: 'Row 中配合 Expanded 使用，验证网格宽度自适应',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -132,8 +138,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '特殊案例：Column中',
+            description: 'Column 中直接使用，验证竖向排布与宽度约束',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -156,8 +163,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: 'Pad 案例',
+            description: '宽屏下 themeData 自定义文本样式，与上方加粗文案形成对比',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

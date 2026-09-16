@@ -21,36 +21,39 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
           title: widget._title,
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(vertical: 20),
           child: ListView(
             children: <Widget>[
-              Text('单选-无控制-周视图'),
-              _calendarViewWeekNocontroll(context),
-              SantoLine(
-                height: 40.0,
+              SantoSection(
+                title: '单选-无控制-周视图',
+                description: 'showControllerBar 为 false，仅渲染一周日期区域',
+                child: _calendarViewWeekNocontroll(context),
               ),
-              Text('单选-无控制-周视图-自定义 WeekName'),
-              _calendarViewWeekNocontrollCustomWeekName(context),
-              SantoLine(
-                height: 40.0,
+              SantoSection(
+                title: '单选-无控制-周视图-自定义 WeekName',
+                description: 'weekNames 传入星期天、星期一等文案，覆盖默认星期显示',
+                child: _calendarViewWeekNocontrollCustomWeekName(context),
               ),
-              Text('单选-周视图'),
-              _calendarViewWeek(context),
-              SantoLine(
-                height: 40.0,
+              SantoSection(
+                title: '单选-周视图',
+                description: '带控制条，initDisplayDate 指定初始展示日期',
+                child: _calendarViewWeek(context),
               ),
-              Text('范围选-周视图'),
-              _calendarViewWeekRange(context),
-              SantoLine(
-                height: 40.0,
+              SantoSection(
+                title: '范围选-周视图',
+                description: 'rangeDateChange 回调返回起止日期 start 与 end',
+                child: _calendarViewWeekRange(context),
               ),
-              Text('单选-月视图'),
-              _calendarViewMonth(context),
-              SantoLine(
-                height: 40.0,
+              SantoSection(
+                title: '单选-月视图',
+                description: '按月网格展示，minDate 与 maxDate 限定 2020 至 2021 年',
+                child: _calendarViewMonth(context),
               ),
-              Text('范围选-月视图'),
-              _calendarViewMonthRange(context),
+              SantoSection(
+                title: '范围选-月视图',
+                description: 'range 模式下范围选择，可选区间为 2020 至 2023 年',
+                child: _calendarViewMonthRange(context),
+              ),
             ],
           ),
         ));

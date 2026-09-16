@@ -26,8 +26,9 @@ RulePanel(
                   '展示出sub和ac\n'
                   '标题字体为18',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'onTap 使整块区域可点击，右侧固定展示跳转箭头',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -43,8 +44,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例（自定义副标题Widget）',
+            description: 'subTitleWidget 支持自定义副标题，可组合 SantoStateTag 等组件',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,8 +74,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'subTitle 展示副标题，accessoryText 在右侧展示跳转文案',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -93,8 +96,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: '标题过长时省略号截断，副标题与跳转文案保持完整',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -114,8 +118,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：title特别长',
+            description: '省略 subTitle 时标题过长，只保留右侧跳转文案',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -135,8 +140,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：副标题特别长',
+            description: 'subTitle 超过 84 限宽后省略，标题不受挤压',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -156,8 +162,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：跳转标题特别长',
+            description: 'accessoryText 超长时按 84 限宽省略，箭头仍完整展示',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

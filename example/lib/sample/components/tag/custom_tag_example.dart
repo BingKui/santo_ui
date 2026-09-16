@@ -19,8 +19,9 @@ class _CustomTagExampleState extends State<CustomTagExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'SantoTagCustom 默认样式，支持自定义背景色和文字色',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -34,8 +35,9 @@ class _CustomTagExampleState extends State<CustomTagExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例：文案特别长',
+              description: '超长文案下标签的截断与换行表现',
               child: SantoTagCustom(
                 tagText:
                     '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',

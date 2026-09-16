@@ -25,8 +25,9 @@ class _StepperExampleState extends State<StepperExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础步进器
-            SantoPanel(
+            SantoSection(
               title: '基础步进器',
+              description: 'value 传入当前数值，onChanged 回调最新的增减结果',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -38,8 +39,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 自定义步长
-            SantoPanel(
+            SantoSection(
               title: '自定义步长 (step: 2)',
+              description: 'step 控制每次增减的幅度，此处每次变化 2',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,8 +53,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 禁用状态
-            SantoPanel(
+            SantoSection(
               title: '禁用状态',
+              description: 'enabled 传 false 后按钮置灰，数值不可再修改',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -68,8 +71,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 到达最小值
-            SantoPanel(
+            SantoSection(
               title: '到达最小值（减号禁用）',
+              description: 'value 等于 min 时减号自动禁用',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -81,8 +85,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 到达最大值
-            SantoPanel(
+            SantoSection(
               title: '到达最大值（加号禁用）',
+              description: 'value 等于 max 时加号自动禁用',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -94,8 +99,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 自定义尺寸
-            SantoPanel(
+            SantoSection(
               title: '自定义尺寸',
+              description: 'inputWidth 调整输入框宽度，两侧按钮尺寸保持不变',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -111,8 +117,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 带回调的步进器
-            SantoPanel(
+            SantoSection(
               title: '带回调的步进器',
+              description: 'onChanged 在每次增减后回调，可用于同步业务数据',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,8 +136,9 @@ class _StepperExampleState extends State<StepperExample> {
               ),
             ),
             // 实际场景：购物车数量
-            SantoPanel(
+            SantoSection(
               title: '实际场景：商品数量',
+              description: '购物车等场景的数量增减，可结合 min、max 限制范围',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [const SizedBox(height: 40)],

@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/components/actionsheet/actionsheet_entry_page.dart';
 import 'package:example/sample/components/appraise/appraise_example.dart';
-import 'package:example/sample/components/bottom_tabbar/bottom_tabbar_example.dart';
+import 'package:example/sample/components/menu_bar/menu_bar_example.dart';
 import 'package:example/sample/components/panel/panel_example.dart';
 import 'package:example/sample/components/section/section_example.dart';
+import 'package:example/sample/components/safe_area/safe_area_example.dart';
 import 'package:example/sample/components/space/space_example.dart';
 import 'package:example/sample/components/masonry/masonry_example.dart';
 import 'package:example/sample/components/skeleton/skeleton_example.dart';
+import 'package:example/sample/components/more_menu/more_menu_example.dart';
 import 'package:example/sample/components/button/button_entry_page.dart';
 import 'package:example/sample/components/calendar/calendarview_example.dart';
 import 'package:example/sample/components/card/santo_shadow_card_example.dart';
@@ -115,7 +117,8 @@ class CardDataConfig {
       _item("Link 链接", "文字链接", LinkExample()),
       _item("Panel 面板", "标题+操作+可滚动内容", PanelExample()),
       _item("Section 区块", "演示内容+标题描述", SectionExample()),
-      _item("Typography 排版", "文本展示与展开", TextContentEntryPage()),
+      _item("SafeArea 安全区域", "顶部与底部安全区域", SafeAreaExample()),
+      _item("CardContent 卡片内容", "文本展示与展开", TextContentEntryPage()),
     ];
     return GroupInfo(groupName: "通用", children: children, isExpand: true);
   }
@@ -127,6 +130,7 @@ class CardDataConfig {
       _item("Space 间距", "元素间距 gap", SpaceExample()),
       _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
       _item("Skeleton 骨架屏", "加载占位骨架", SkeletonExample()),
+      _item("MoreMenu 更多菜单", "底部弹出宫格菜单", MoreMenuExample()),
     ];
     return GroupInfo(groupName: "布局", children: children);
   }
@@ -136,10 +140,10 @@ class CardDataConfig {
     List<GroupInfo> children = [
       _item("AppBar 导航栏", "页面顶部导航", AppbarEntryPage()),
       _item("Tabs 标签页", "内容分类切换", SantoTabExample()),
-      _item("BottomTabBar 底部导航", "页面底部切换栏", BottomTabbarExample()),
-      _item("Menu 侧边栏", "侧边导航菜单", SidebarExample()),
+      _item("MenuBar 菜单栏", "默认/悬浮两种样式", MenuBarExample()),
+      _item("Sidebar 侧边栏", "侧边导航菜单", SidebarExample()),
       _item("Steps 步骤条", "流程进度引导", StepExample()),
-      _item("Anchor 锚点", "锚点定位导航", ScrollActorTabExample()),
+      _item("AnchorTab 锚点", "锚点定位导航", ScrollActorTabExample()),
       _item("BackTop 返回顶部", "长列表快速回顶", BacktopExample()),
       _item("Drawer 抽屉", "侧边滑出面板", DrawerExample()),
       _item("Guide 引导", "新手操作引导", GuideEntryPage()),
@@ -158,14 +162,14 @@ class CardDataConfig {
       _item("Rate 评分", "星级打分", RatingExample()),
       _item("Stepper 步进器", "数量增减", StepperExample()),
       _item("Slider 滑动输入条", "范围数值选择", SliderExample()),
-      _item("Search 搜索", "搜索输入", SearchTextExample()),
+      _item("SearchText 搜索框", "搜索输入", SearchTextExample()),
       _item("Picker 选择器", "底部弹出选择", PickerEntryPage("选择器")),
       _item("Cascader 级联选择", "多级联动选择", CascaderExample()),
       _item("DropdownMenu 下拉菜单", "列表筛选下拉", DropdownMenuExample()),
       _item("Selection 筛选", "复杂条件筛选", SelectionEntryPage()),
-      _item("TreeSelect 树选择", "树形结构选择", TreeExample()),
-      _item("DatePicker 日期选择", "日历日期选择", CalendarViewExample("日历组件")),
-      _item("CitySelection 城市选择", "城市列表选择", _buildSingleSelectCityPage()),
+      _item("Tree 树形控件", "树形结构选择", TreeExample()),
+      _item("CalendarView 日历", "日历日期选择", CalendarViewExample("日历组件")),
+      _item("SingleSelectCity 城市选择", "城市列表选择", _buildSingleSelectCityPage()),
     ];
     return GroupInfo(groupName: "数据录入", children: children, isExpand: false);
   }
@@ -177,19 +181,19 @@ class CardDataConfig {
       _item("Badge 徽标数", "红点/数字角标", BadgeExample()),
       _item("Cell 单元格", "列表标准行", CellExample()),
       _item("Card 卡片", "阴影卡片容器", SantoShadowCardExample()),
-      _item("Carousel 走马灯", "图片/内容轮播", SwiperExample()),
+      _item("Swiper 轮播", "图片/内容轮播", SwiperExample()),
       _item("Collapse 折叠面板", "可展开/收起内容", CollapseExample()),
       _item("Image 图片", "增强图片组件", ImageExample()),
       _item("Table 表格", "数据表格展示", TableExample()),
       _item("Tag 标签", "标记与分类", TagExample()),
       _item("BubbleText 气泡文本", "气泡文本", BubbleTextExample()),
       _item("Popover 气泡卡片", "锚点弹出气泡", PopoverExample()),
-      _item("Title 卡片标题", "卡片头部标题", TitleExample()),
+      _item("CardTitle 卡片标题", "卡片头部标题", TitleExample()),
       _item("SwipeCell 滑动单元格", "列表项滑动操作", SwipeCellExample()),
       _item("NoticeBar 通知栏", "滚动通知条", SantoNoticeBarExample()),
       _item("Progress 进度条", "线性/环形进度", ProgressExample()),
       _item("TimeCounter 计时器", "倒计时/正计时", TimeCounterExample()),
-      _item("Empty 空状态", "空数据提示", AbnormalStatesEntryPage("异常页面示例")),
+      _item("AbnormalState 异常状态", "空数据提示", AbnormalStatesEntryPage("异常页面示例")),
       _item("Footer 页脚", "页面底部信息", FooterExample()),
       _item("Gallery 图片浏览", "大图预览", GalleryExample()),
     ];
@@ -203,7 +207,7 @@ class CardDataConfig {
       _item("ActionSheet 动作面板", "底部动作菜单", ActionSheetEntryPage("动作面板")),
       _item("Toast 轻提示", "轻量反馈提示", ToastExample()),
       _item("Message 全局提示", "顶部消息通知", MessageExample()),
-      _item("Popup 弹出提示", "定位气泡提示", PopWindowExamplePage("Tips 提示示例")),
+      _item("PopupWindow 弹出提示", "定位气泡提示", PopWindowExamplePage("Tips 提示示例")),
       _item("OverlayWindow 悬浮窗", "搜索悬浮层", OverlayWindowExample("悬浮窗示例")),
       _item("Loading 加载", "加载状态动画", LoadingExample()),
       _item("Refresh 下拉刷新", "下拉刷新/上拉加载", RefreshExample()),

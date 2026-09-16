@@ -28,8 +28,9 @@ RulePanel(
                 'accessoryWidget的高度就是25，如果传入的widget过大会显示不全\n'
                 '上下的间距是16',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'title 搭配 accessoryText 展示辅助文案，onTap 响应整块点击',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -43,8 +44,9 @@ SantoPanel(
             SizedBox(height: 50,)],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: '副标题与最右侧支持自定义组件，detailTextString 展示详情文案',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -63,8 +65,9 @@ SantoPanel(
             SizedBox(height: 50,)],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'accessoryText 与 accessoryWidget 同时传入，右侧组合展示效果',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

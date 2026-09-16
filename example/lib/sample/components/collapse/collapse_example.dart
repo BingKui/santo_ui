@@ -27,8 +27,9 @@ class _CollapseExampleState extends State<CollapseExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '基础折叠面板',
+              description: '受控用法，value 绑定当前展开项，onChanged 回传最新选中集合',
               child: SantoCollapse<String>(
                 value: _basicValue,
                 onChanged: (value) => setState(() => _basicValue = value),
@@ -42,8 +43,9 @@ class _CollapseExampleState extends State<CollapseExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '带操作说明',
+              description: 'trailingBuilder 自定义标题右侧区域，文案随展开状态切换',
               child: SantoCollapse<String>(
                 value: _operationValue,
                 onChanged: (value) => setState(() => _operationValue = value),
@@ -59,8 +61,9 @@ class _CollapseExampleState extends State<CollapseExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '手风琴式',
+              description: 'mode 设为 accordion，同一时间只允许一个面板处于展开态',
               child: SantoCollapse<String>(
                 mode: SantoCollapseMode.accordion,
                 value: _accordionValue,
@@ -75,8 +78,9 @@ class _CollapseExampleState extends State<CollapseExample> {
                 }),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '卡片折叠面板',
+              description: 'variant 设为 card，面板之间以卡片样式分隔而非连排',
               child: SantoCollapse<String>(
                 variant: SantoCollapseVariant.card,
                 value: _cardValue,
@@ -91,8 +95,9 @@ class _CollapseExampleState extends State<CollapseExample> {
                 }),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '禁用状态',
+              description: 'disabled 为 true 的面板无法点击展开，与可展开项形成对比',
               child: SantoCollapse<String>(
                 value: _disabledValue,
                 onChanged: (value) => setState(() => _disabledValue = value),
@@ -113,8 +118,9 @@ class _CollapseExampleState extends State<CollapseExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义展开图标',
+              description: 'expandIconBuilder 自定义展开图标，返回 null 时不展示图标',
               child: SantoCollapse<String>(
                 value: _iconValue,
                 onChanged: (value) => setState(() => _iconValue = value),

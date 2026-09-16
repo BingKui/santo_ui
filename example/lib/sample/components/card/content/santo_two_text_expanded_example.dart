@@ -24,8 +24,9 @@ class _SantoTextExpandedContentExampleState
 RulePanel(
             '显示指定行数的文本，超过的收起，点击更多会显示全部',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'maxLines 限制显示行数，点击更多展开全部并回调 onExpanded',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

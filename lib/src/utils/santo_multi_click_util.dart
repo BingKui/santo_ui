@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 
 /// 防止多次点击工具类
 class SantoMultiClickUtils {
@@ -15,5 +16,13 @@ class SantoMultiClickUtils {
       return false;
     }
     return true;
+  }
+
+  /// 重置上次点击时间
+  ///
+  /// 记录的是静态状态,测试里连续点击会被当成多次点击,需要按用例重置
+  @visibleForTesting
+  static void reset() {
+    _lastClickTime = null;
   }
 }

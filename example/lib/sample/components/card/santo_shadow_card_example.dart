@@ -22,8 +22,9 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // 基础用法
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'SantoShadowCard 默认外观，浅灰背景、12 圆角、0.5 边框与柔和阴影',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,8 +45,9 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
             ),
 
             // 不同圆角
-            SantoPanel(
+            SantoSection(
               title: '不同圆角',
+              description: 'circular 依次为 4、12、24，对比不同圆角大小的视觉效果',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,8 +75,9 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
             ),
 
             // 自定义阴影
-            SantoPanel(
+            SantoSection(
               title: '自定义阴影',
+              description: '通过 shadowColor 与 blurRadius 等参数组合柔和、硬两种阴影',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -104,8 +107,9 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
             ),
 
             // 自定义背景色和边框
-            SantoPanel(
+            SantoSection(
               title: '自定义背景色和边框',
+              description: 'color 设置背景色，borderWidth 传 0 可去掉默认边框',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,8 +133,9 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
             ),
 
             // 组合内容
-            SantoPanel(
+            SantoSection(
               title: '组合内容',
+              description: '卡片内组合 SantoAvatar、SantoDivider 等组件搭建复杂内容',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

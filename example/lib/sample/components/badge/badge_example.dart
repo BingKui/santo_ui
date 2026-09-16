@@ -11,8 +11,9 @@ class BadgeExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '红点模式',
+              description: 'isDot 为 true 显示红点，color 可自定义颜色',
               child: Row(
                 children: [
                   SantoBadge(
@@ -33,8 +34,9 @@ class BadgeExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '数字模式',
+              description: 'count 展示数字，maxCount 限制最大值显示 99+',
               child: Row(
                 children: [
                   SantoBadge(count: 5, child: Icon(Icons.mail, size: 32)),
@@ -52,8 +54,9 @@ class BadgeExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色与文字',
+              description: 'color 换底色，badgeContent 替换为自定义文字',
               child: Row(
                 children: [
                   SantoBadge(
@@ -73,8 +76,9 @@ class BadgeExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '数字为 0 时的展示',
+              description: 'count 为 0 默认隐藏，showZero 为 true 时显示',
               child: Row(
                 children: [
                   SantoBadge(

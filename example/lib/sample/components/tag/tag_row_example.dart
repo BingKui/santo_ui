@@ -15,8 +15,9 @@ class _RowTagExampleState extends State<RowTagExample> {
       appBar: SantoAppBar(
         title: '标签组合',
       ),
-      body: SantoPanel(
+      body: SantoSection(
         title: '标签组',
+        description: 'Wrap 排列多个普通标签与描边标签，自动换行',
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           alignment: WrapAlignment.start,

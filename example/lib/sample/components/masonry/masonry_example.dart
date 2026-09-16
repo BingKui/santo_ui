@@ -36,8 +36,9 @@ class MasonryExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '两列瀑布流 (gutter: 8)',
+              description: '子项按最短列优先排布，高度不一时自动错落填充',
               child: SizedBox(
                 height: 340,
                 child: SingleChildScrollView(
@@ -49,8 +50,9 @@ class MasonryExample extends StatelessWidget {
                 ),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '三列瀑布流 (gutter: 16)',
+              description: '显式传入 verticalGutter，可与 gutter 使用不同间距',
               child: SizedBox(
                 height: 320,
                 child: SingleChildScrollView(
@@ -63,8 +65,9 @@ class MasonryExample extends StatelessWidget {
                 ),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '四列瀑布流 (gutter: 8)',
+              description: 'columns 设为 4 后列宽变窄，外层容器限定高度可滚动',
               child: SizedBox(
                 height: 260,
                 child: SingleChildScrollView(

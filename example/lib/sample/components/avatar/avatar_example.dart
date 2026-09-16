@@ -11,8 +11,9 @@ class AvatarExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '图片头像',
+              description: 'imageUrl 加载图片，size 分别取 48、64、80',
               child: Row(
                 children: [
                   SantoAvatar(
@@ -32,8 +33,9 @@ class AvatarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '文字头像',
+              description: 'text 展示文字头像，backgroundColor 自定义底色',
               child: Row(
                 children: [
                   SantoAvatar(text: '张', size: 40),
@@ -48,8 +50,9 @@ class AvatarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '图标头像',
+              description: 'icon 传入图标作为头像内容',
               child: Row(
                 children: [
                   SantoAvatar(icon: Icons.person, size: 40),
@@ -62,8 +65,9 @@ class AvatarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '不同形状',
+              description: 'shape 切换圆形或圆角方形，borderRadius 调圆角',
               child: Row(
                 children: [
                   SantoAvatar(text: '圆', size: 40),
@@ -77,8 +81,9 @@ class AvatarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '带边框',
+              description: 'borderColor 为文字或图片头像添加描边',
               child: Row(
                 children: [
                   SantoAvatar(
@@ -95,8 +100,9 @@ class AvatarExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '头像组',
+              description: 'SantoAvatarGroup 配合 maxCount 折叠多余头像',
               child: SantoAvatarGroup(
                 avatars: [
                   SantoAvatar(

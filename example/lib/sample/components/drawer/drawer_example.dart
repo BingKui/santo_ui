@@ -11,8 +11,9 @@ class DrawerExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '基础方向',
+              description: 'direction 设为 left 或 right，从对应侧滑出抽屉面板',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,8 +41,9 @@ class DrawerExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '顶部 / 底部抽屉',
+              description: 'direction 为 top 或 bottom 时，通过 height 指定抽屉高度',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,8 +73,9 @@ class DrawerExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义宽度',
+              description: 'width 分别设为 200 与 400，对比抽屉的宽窄表现',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -102,8 +105,9 @@ class DrawerExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义遮罩',
+              description: 'maskColor 传入半透明黑色，调整遮罩层的深浅',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -121,8 +125,9 @@ class DrawerExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '筛选面板场景',
+              description: '底部弹出 420 高度的抽屉，内部为筛选表单的组合场景',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -140,8 +145,9 @@ class DrawerExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '底部 Drawer (SantoBottomDrawer)',
+              description: 'SantoBottomDrawer 演示对齐方式、固定高度、关闭按钮与遮罩行为',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

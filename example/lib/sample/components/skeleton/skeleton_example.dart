@@ -25,8 +25,9 @@ class _SkeletonExampleState extends State<SkeletonExample> {
               '以及自定义行列结构和渐变扫光/闪烁动画。',
               maxLines: 3,
             ),
-            SantoPanel(
+            SantoSection(
               title: '预设主题',
+              description: 'theme 内置 text、avatar、image 与 grid 四种占位主题',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -48,8 +49,9 @@ class _SkeletonExampleState extends State<SkeletonExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义行列结构',
+              description: 'fromRowCol 可自由组合行列结构，rowSpacing 控制行距',
               child: const SantoSkeleton.fromRowCol(
                 rowCol: SantoSkeletonRowCol(objects: [
                   [SantoSkeletonRowColObj.circle(size: 48)],
@@ -61,29 +63,33 @@ class _SkeletonExampleState extends State<SkeletonExample> {
                 ], rowSpacing: 12),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '闪烁动画',
+              description: 'animation 设为 flashed 时使用闪烁动画替代渐变扫光',
               child: const SantoSkeleton(
                 theme: SantoSkeletonTheme.avatar,
                 animation: SantoSkeletonAnimation.flashed,
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '无动画',
+              description: 'animation 设为 none 时骨架保持静态，可减少性能开销',
               child: const SantoSkeleton(
                 theme: SantoSkeletonTheme.avatar,
                 animation: SantoSkeletonAnimation.none,
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '延迟显示 (500ms)',
+              description: 'delay 设置延迟毫秒数，避免加载过快时的骨架闪烁',
               child: const SantoSkeleton(
                 theme: SantoSkeletonTheme.text,
                 delay: 500,
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '加载完成切换内容',
+              description: '加载完成后用真实内容替换骨架，通过状态切换控制',
               child: Column(
                 children: [
                   _loading

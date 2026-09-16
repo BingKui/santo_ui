@@ -21,8 +21,9 @@ class _FabExampleState extends State<FabExample> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 基础用法
-                SantoPanel(
+                SantoSection(
                   title: '基础用法',
+                  description: '圆形悬浮按钮，通过 backgroundColor 自定义底色',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -64,8 +65,9 @@ class _FabExampleState extends State<FabExample> {
                 ),
 
                 // 不同大小
-                SantoPanel(
+                SantoSection(
                   title: '不同大小',
+                  description: 'size 分别设为 40、56、72，对比圆形按钮的直径',
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,8 +93,9 @@ class _FabExampleState extends State<FabExample> {
                 ),
 
                 // 扩展形按钮
-                SantoPanel(
+                SantoSection(
                   title: '扩展形按钮（带文字）',
+                  description: 'text 设置后自动变为扩展形，图标与文字水平排列',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -135,8 +138,9 @@ class _FabExampleState extends State<FabExample> {
                 ),
 
                 // 自定义图标颜色
-                SantoPanel(
+                SantoSection(
                   title: '自定义图标颜色',
+                  description: 'iconColor 自定义图标颜色，配合白色 backgroundColor 使用',
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -165,8 +169,9 @@ class _FabExampleState extends State<FabExample> {
                 ),
 
                 // 计数器示例
-                SantoPanel(
+                SantoSection(
                   title: '计数器示例',
+                  description: '点击右下角 positioned 悬浮按钮，联动更新当前计数',
                   child: Center(
                     child: Text(
                       '当前计数: $_counter',

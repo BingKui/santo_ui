@@ -11,8 +11,9 @@ class ToastExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'duration 可指定展示时长，不传时按文案长度自动计算',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -37,8 +38,9 @@ class ToastExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '带图标 Toast',
+              description: 'preIcon 传入图片作为前置图标，与文案同行展示',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -76,8 +78,9 @@ class ToastExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '不同弹出位置',
+              description: 'gravity 支持 top、bottom 与 center 三种弹出位置',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

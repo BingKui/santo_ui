@@ -68,34 +68,39 @@ class _SwiperExampleState extends State<SwiperExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础轮播（圆点指示器）
-            SantoPanel(
+            SantoSection(
               title: '基础轮播（圆点指示器）',
+              description: '不传指示器相关参数，圆点标记当前页并支持自动播放',
               child: SantoSwiper(children: _buildColorCards()),
             ),
             // 数字指示器
-            SantoPanel(
+            SantoSection(
               title: '数字指示器',
+              description: 'indicatorType 传入 number，改为显示当前页与总页数',
               child: SantoSwiper(
                 children: _buildColorCards(),
                 indicatorType: SantoSwiperIndicatorType.number,
               ),
             ),
             // 不显示指示器
-            SantoPanel(
+            SantoSection(
               title: '不显示指示器',
+              description: 'indicator 设为 false 隐藏指示器，仅展示图片内容',
               child: SantoSwiper(
                 children: _buildImageCards(),
                 indicator: false,
               ),
             ),
             // 非循环模式
-            SantoPanel(
+            SantoSection(
               title: '非循环模式',
+              description: 'loop 为 false 时滑到末页不再回绕，自动播放随之停止',
               child: SantoSwiper(children: _buildColorCards(), loop: false),
             ),
             // 自定义高度
-            SantoPanel(
+            SantoSection(
               title: '自定义高度',
+              description: 'height 设为 250，同时开启 autoPlay、indicator 与 loop',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -112,13 +117,15 @@ class _SwiperExampleState extends State<SwiperExample> {
               ),
             ),
             // 带间距
-            SantoPanel(
+            SantoSection(
               title: '带间距',
+              description: '图片卡片自带外边距形成间隔，用于展示相邻页的间隙',
               child: SantoSwiper(children: _buildImageCards()),
             ),
             // 受控轮播
-            SantoPanel(
+            SantoSection(
               title: '受控轮播（外部控制）',
+              description: '外部按钮修改页码状态，点击上一页、下一页查看联动',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -161,13 +168,15 @@ class _SwiperExampleState extends State<SwiperExample> {
               ),
             ),
             // 自定义自动播放间隔
-            SantoPanel(
+            SantoSection(
               title: '自定义自动播放间隔 (1秒)',
+              description: 'interval 设为 1000 毫秒，加快自动播放的切换节奏',
               child: SantoSwiper(children: _buildColorCards(), interval: 1000),
             ),
             // 禁用滑动
-            SantoPanel(
+            SantoSection(
               title: '禁用滑动（仅自动播放）',
+              description: 'enableSwipe 为 false 后无法手动滑动，仅保留自动播放',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [const SizedBox(height: 40)],

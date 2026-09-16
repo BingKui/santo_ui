@@ -30,8 +30,9 @@ class _AppraiseExampleState extends State<AppraiseExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'SantoAppraise 供页面内嵌，BottomPicker 从底部弹窗',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -42,8 +43,9 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '显示在页面内部',
+              description: '内嵌页面时用 config 关闭提交按钮并接管各类回调',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -85,8 +87,9 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '显示弹窗',
+              description: '通过 BottomPicker.show() 弹出面板并配置星级或表情',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

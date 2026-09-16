@@ -37,8 +37,9 @@ RulePanel(
             '头部icon需要显示主题相关的icon，线条需要时圆头\n,'
                 '线条的高度随着左侧内容变化而改变，线宽2',
             maxLines: 2),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'isGrey 控制灰/高亮状态，lineColor 支持单色与多色列表',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

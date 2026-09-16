@@ -19,8 +19,9 @@ class _StateTagExampleState extends State<StateTagExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '状态样式',
+              description: 'tagState 支持等待、运行、成功、失败等五种状态',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -34,8 +35,9 @@ class _StateTagExampleState extends State<StateTagExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色',
+              description: 'backgroundColor 与 textColor 覆盖预设状态配色',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,8 +54,9 @@ class _StateTagExampleState extends State<StateTagExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例：文案特别长',
+              description: '超长文案下状态标签的截断与溢出表现',
               child: SantoStateTag(
                 tagText:
                     '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',

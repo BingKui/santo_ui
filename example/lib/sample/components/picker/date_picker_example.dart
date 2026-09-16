@@ -1,5 +1,4 @@
 
-
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
@@ -17,55 +16,83 @@ class DatePickerExamplePage extends StatelessWidget {
         ),
         body: ListView(
           children: <Widget>[
-            ListItem(
-              title: "TimeStyle",
-              describe: '时间样式选择器',
-              onPressed: () {
-                _showPicker(context, SantoDateTimePickerMode.time);
-              },
+            SantoSection(
+              title: '基础模式',
+              description: 'pickerMode 支持 time、date 与 datetime 三种选择类型',
+              child: Column(
+                children: <Widget>[
+                  ListItem(
+                    title: "TimeStyle",
+                    describe: '时间样式选择器',
+                    onPressed: () {
+                      _showPicker(context, SantoDateTimePickerMode.time);
+                    },
+                  ),
+                  ListItem(
+                    title: "DateStyle",
+                    describe: '日期样式时间选择器',
+                    onPressed: () {
+                      _showPicker(context, SantoDateTimePickerMode.date);
+                    },
+                  ),
+                  ListItem(
+                    title: "DateAndTimeStyle",
+                    describe: '日期和时间样式选择器',
+                    onPressed: () {
+                      _showPicker(context, SantoDateTimePickerMode.datetime);
+                    },
+                  ),
+                ],
+              ),
             ),
-            ListItem(
-              title: "DateStyle",
-              describe: '日期样式时间选择器',
-              onPressed: () {
-                _showPicker(context, SantoDateTimePickerMode.date);
-              },
+            SantoSection(
+              title: '时间范围选择',
+              description:
+                  'isLimitTimeRange 传 false 时两端不受限，minuteDivider 控制间隔步长',
+              child: Column(
+                children: <Widget>[
+                  ListItem(
+                    title: "Time Range Style",
+                    describe: '时间范围选择器',
+                    onPressed: () {
+                      _showRangePicker(
+                          context, SantoDateTimeRangePickerMode.time);
+                    },
+                  ),
+                  ListItem(
+                    title: "Time Range Style",
+                    describe: '时间范围选择器-不限制选择的时间范围',
+                    onPressed: () {
+                      _showRangePickerNoLimited(
+                          context, SantoDateTimeRangePickerMode.time);
+                    },
+                  ),
+                ],
+              ),
             ),
-            ListItem(
-              title: "DateAndTimeStyle",
-              describe: '日期和时间样式选择器',
-              onPressed: () {
-                _showPicker(context, SantoDateTimePickerMode.datetime);
-              },
-            ),
-            ListItem(
-              title: "Time Range Style",
-              describe: '时间范围选择器',
-              onPressed: () {
-                _showRangePicker(context, SantoDateTimeRangePickerMode.time);
-              },
-            ),
-            ListItem(
-              title: "Time Range Style",
-              describe: '时间范围选择器-不限制选择的时间范围',
-              onPressed: () {
-                _showRangePickerNoLimited(
-                    context, SantoDateTimeRangePickerMode.time);
-              },
-            ),
-            ListItem(
-              title: "Date Range Style",
-              describe: '日期范围选择器',
-              onPressed: () {
-                _showRangePicker(context, SantoDateTimeRangePickerMode.date);
-              },
-            ),
-            ListItem(
-              title: "Date Range Style",
-              describe: '日期范围选择器(yyyy年MM月dd日)',
-              onPressed: () {
-                _showyyyyMMddRangePicker(context);
-              },
+            SantoSection(
+              title: '日期范围选择',
+              description:
+                  'dateFormat 可传 yyyy年-MM月-dd日 等格式，isDismissible 控制遮罩关闭',
+              child: Column(
+                children: <Widget>[
+                  ListItem(
+                    title: "Date Range Style",
+                    describe: '日期范围选择器',
+                    onPressed: () {
+                      _showRangePicker(
+                          context, SantoDateTimeRangePickerMode.date);
+                    },
+                  ),
+                  ListItem(
+                    title: "Date Range Style",
+                    describe: '日期范围选择器(yyyy年MM月dd日)',
+                    onPressed: () {
+                      _showyyyyMMddRangePicker(context);
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ));

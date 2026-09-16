@@ -24,8 +24,9 @@ class _KeyTextCloseContentExampleState
 RulePanel(
             '一行展示内容，key和value都不换行',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'isValueAlign 为 false 时 key 与 value 同行紧随展示，单行不换行',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,8 +41,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: '一行布局下 valueLastClickInfo 生成可点击文案并回调',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -64,8 +66,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：key过长',
+            description: 'key 超长时单行省略号截断，不会换行撑高卡片',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,8 +88,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：内容过长',
+            description: 'value 超长时单行省略号截断，验证右侧内容不被挤压',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -109,8 +113,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：可点击内容过长',
+            description: 'expandAtIndex 开启展开收起，clickTitle 超长时省略号截断',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -145,8 +150,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例某个元素缺失',
+            description: 'keyPart 与 valuePart 缺失或为空时仍保持单行布局',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
