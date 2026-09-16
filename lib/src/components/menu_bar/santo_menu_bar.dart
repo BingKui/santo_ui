@@ -281,8 +281,14 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       borderRadius: BorderRadius.circular(_containerRadius),
       child: Container(
         height: _barHeight,
-        // 内层不透明
-        color: widget.backgroundColor ?? Colors.white,
+        decoration: BoxDecoration(
+          // 内层不透明 + 细边框
+          color: widget.backgroundColor ?? Colors.white,
+          border: Border.all(
+            color: _commonConfig.dividerColorBase,
+            width: 0.5,
+          ),
+        ),
         padding: const EdgeInsets.all(4),
         child: Row(
           children: [
@@ -292,12 +298,21 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         ),
       ),
     );
-    // 底部整块毛玻璃背景:覆盖 gap 边距与安全区域
-    return ClipRect(
+    // 底部整块毛玻璃背景:覆盖 gap 边距与安全区域,顶部同样为胶囊圆角
+    final dockRadius = BorderRadius.vertical(
+      top: Radius.circular(_containerRadius),
+    );
+    return ClipRRect(
+      borderRadius: dockRadius,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
         child: Container(
-          color: Colors.transparent,
+          decoration: BoxDecoration(
+            color: widget.backgroundColor != null
+                ? widget.backgroundColor!.withAlpha(0x0D)
+                : Colors.white.withAlpha(0x0D),
+            borderRadius: dockRadius,
+          ),
           padding: EdgeInsets.fromLTRB(
               widget.gap, 0, widget.gap, widget.gap + bottomPadding),
           child: Material(

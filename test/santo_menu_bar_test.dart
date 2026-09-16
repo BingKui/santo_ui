@@ -76,7 +76,10 @@ void _floatingTests() {
     // 毛玻璃:仅外层 dock(内层不透明)
     expect(find.byType(BackdropFilter), findsOneWidget);
 
-    final barRight = tester.getTopRight(find.byType(ClipRRect)).dx;
+    // 与屏幕左右边缘保持 gap=12(取内层容器,外层 dock 为整宽)
+    final barRight = tester
+        .getTopRight(find.byType(ClipRRect).last)
+        .dx;
     expect(800 - barRight, 12);
   });
 }
