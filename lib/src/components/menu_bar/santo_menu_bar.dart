@@ -295,7 +295,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     // 底部整块毛玻璃背景:覆盖 gap 边距与安全区域
     return ClipRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
         child: Container(
           color: Colors.transparent,
           padding: EdgeInsets.fromLTRB(
