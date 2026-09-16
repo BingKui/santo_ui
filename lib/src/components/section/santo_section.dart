@@ -107,20 +107,21 @@ class SantoSection extends StatelessWidget {
 
   /// 下方标题 + 描述区域
   Widget? _buildFooter(SantoSectionConfig config) {
-    Widget? titleWidget = this.titleWidget;
-    titleWidget ??= title == null
+    Widget? titleWidget = this.titleWidget ?? (title == null ? null : Text(title!));
+    titleWidget = titleWidget == null
         ? null
         : DefaultTextStyle(
             style: config.titleTextStyle.generateTextStyle(),
-            child: Text(title!),
+            child: titleWidget,
           );
 
-    Widget? descriptionWidget = this.descriptionWidget;
-    descriptionWidget ??= description == null
+    Widget? descriptionWidget =
+        this.descriptionWidget ?? (description == null ? null : Text(description!));
+    descriptionWidget = descriptionWidget == null
         ? null
         : DefaultTextStyle(
             style: config.descriptionTextStyle.generateTextStyle(),
-            child: Text(description!),
+            child: descriptionWidget,
           );
 
     if (titleWidget == null && descriptionWidget == null) return null;
@@ -144,7 +145,7 @@ class SantoSection extends StatelessWidget {
             ),
           if (titleWidget != null && descriptionWidget != null)
             const SizedBox(height: 6),
-          if (descriptionWidget != null) descriptionWidget,
+          ?descriptionWidget,
         ],
       ),
     );

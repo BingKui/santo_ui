@@ -6,6 +6,7 @@ import 'package:example/sample/components/appraise/appraise_example.dart';
 import 'package:example/sample/components/bottom_tabbar/bottom_tabbar_example.dart';
 import 'package:example/sample/components/button/bottom_button_entry_page.dart';
 import 'package:example/sample/components/panel/panel_example.dart';
+import 'package:example/sample/components/section/section_example.dart';
 import 'package:example/sample/components/space/space_example.dart';
 import 'package:example/sample/components/masonry/masonry_example.dart';
 import 'package:example/sample/components/skeleton/skeleton_example.dart';
@@ -121,6 +122,7 @@ class CardDataConfig {
       _item("Fab 悬浮按钮", "页面悬浮操作入口", FabExample()),
       _item("Link 链接", "文字链接", LinkExample()),
       _item("Panel 面板", "标题+操作+可滚动内容", PanelExample()),
+      _item("Section 区块", "演示内容+标题描述", SectionExample()),
       _item("Typography 排版", "文本展示与展开", TextContentEntryPage()),
     ];
     return GroupInfo(groupName: "通用", children: children, isExpand: true);
