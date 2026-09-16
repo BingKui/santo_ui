@@ -76,11 +76,14 @@ void _floatingTests() {
     // 毛玻璃:仅外层 dock(内层不透明)
     expect(find.byType(BackdropFilter), findsOneWidget);
 
-    // 与屏幕左右边缘保持 gap=12(取内层容器,外层 dock 为整宽;含 1px 边框误差)
-    final barRight = tester
-        .getTopRight(find.byType(ClipRRect).last)
+    // 与屏幕左右边缘保持 gap=12(取内层胶囊内容区,含 1px 边框 + 2px 内边距)
+    final innerRight = tester
+        .getTopRight(find.descendant(
+          of: find.byType(SantoMenuBar),
+          matching: find.byType(LayoutBuilder),
+        ))
         .dx;
-    expect(800 - barRight, closeTo(12, 1));
+    expect(800 - innerRight, closeTo(15, 1));
   });
 }
 
@@ -147,6 +150,18 @@ void _moreMenuTests() {
 }
 
 void _badgeTests() {
+  const badgeKey = Key('test_badge');
+
+  Widget badge() => Container(
+        key: badgeKey,
+        width: 28,
+        height: 14,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFF4D4F),
+          borderRadius: BorderRadius.circular(7),
+        ),
+      );
+
   testWidgets('SantoMenuBar badge shows red dot', (tester) async {
     await tester.pumpWidget(_wrap(SantoMenuBar(
       items: const [
@@ -155,5 +170,49 @@ void _badgeTests() {
     )));
 
     expect(find.text('消息'), findsOneWidget);
+  });
+
+  testWidgets('SantoMenuBar badge sits on icon top-right corner',
+      (tester) async {
+    await tester.pumpWidget(_wrap(SantoMenuBar(
+      items: [
+        const SantoMenuBarItem(
+          text: '首页',
+          selectedIcon: Icon(Icons.home_filled),
+        ),
+        SantoMenuBarItem(
+          text: '我的',
+          selectedIcon: const Icon(Icons.person),
+          badge: badge(),
+        ),
+      ],
+    )));
+
+    final iconRect = tester.getRect(find.byIcon(Icons.person));
+    final badgeRect = tester.getRect(find.byKey(badgeKey));
+
+    // 徽标挂在图标右上角:不越到图标上方,仅以少量像素压住右上角
+    expect(badgeRect.top, lessThan(iconRect.top));
+    expect(badgeRect.bottom, lessThanOrEqualTo(iconRect.top + 8));
+    expect(badgeRect.left, greaterThanOrEqualTo(iconRect.right - 8));
+    expect(badgeRect.left, lessThanOrEqualTo(iconRect.right + 4));
+    // 徽标水平方向在图标之外展开
+    expect(badgeRect.right, greaterThan(iconRect.right));
+  });
+
+  testWidgets('SantoMenuBar badge falls back to label without icon',
+      (tester) async {
+    await tester.pumpWidget(_wrap(SantoMenuBar(
+      items: [
+        SantoMenuBarItem(text: '消息', badge: badge()),
+      ],
+    )));
+
+    final labelRect = tester.getRect(find.text('消息'));
+    final badgeRect = tester.getRect(find.byKey(badgeKey));
+
+    expect(badgeRect.top, lessThan(labelRect.top + labelRect.height));
+    expect(badgeRect.left, greaterThanOrEqualTo(labelRect.right - 8));
+    expect(badgeRect.right, greaterThan(labelRect.right));
   });
 }

@@ -29,10 +29,10 @@ class SantoMenuBarItem {
   /// 点击回调
   final GestureTapCallback? onTap;
 
-  /// 是否显示红点
+  /// 是否显示红点;未设置图标时红点挂在文字右上角
   final bool showBadge;
 
-  /// 自定义徽标(如数字角标),设置后替代红点
+  /// 自定义徽标(如数字角标),设置后替代红点;未设置图标时挂在文字右上角
   final Widget? badge;
 
   const SantoMenuBarItem({
@@ -288,43 +288,41 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           width: 1,
         ),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(_containerRadius),
-        child: Padding(
-          padding: const EdgeInsets.all(2),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final count = widget.effectiveItems.length;
-              final itemWidth = constraints.maxWidth / count;
-              final itemHeight = constraints.maxHeight;
-              return Stack(
-                children: [
-                  // 选中背景:滑动动画
-                  AnimatedPositioned(
-                    duration: widget.duration,
-                    curve: Curves.easeOutCubic,
-                    left: _currentIndex.clamp(0, count - 1) * itemWidth,
-                    top: 0,
-                    width: itemWidth,
-                    height: itemHeight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: widget.itemSelectedBgColor ??
-                            _commonConfig.brandPrimary,
-                        borderRadius: BorderRadius.circular(_itemRadius),
-                      ),
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final count = widget.effectiveItems.length;
+            final itemWidth = constraints.maxWidth / count;
+            final itemHeight = constraints.maxHeight;
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // 选中背景:滑动动画
+                AnimatedPositioned(
+                  duration: widget.duration,
+                  curve: Curves.easeOutCubic,
+                  left: _currentIndex.clamp(0, count - 1) * itemWidth,
+                  top: 0,
+                  width: itemWidth,
+                  height: itemHeight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:
+                          widget.itemSelectedBgColor ?? _commonConfig.brandPrimary,
+                      borderRadius: BorderRadius.circular(_itemRadius),
                     ),
                   ),
-                  Row(
-                    children: [
-                      for (int i = 0; i < count; i++)
-                        Expanded(child: _buildFloatingItem(context, i)),
-                    ],
-                  ),
-                ],
-              );
-            },
-          ),
+                ),
+                Row(
+                  children: [
+                    for (int i = 0; i < count; i++)
+                      Expanded(child: _buildFloatingItem(context, i)),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -371,20 +369,32 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         );
   }
 
-  /// 无图标时,把徽标挂在文字右上角
-  Widget _wrapBadgeOnLabel(Widget label, SantoMenuBarItem item) {
+  /// 把徽标挂到 [child] 右上角:只以 [overlap] 像素压住内容角落,
+  /// 其余部分溢到内容外侧,避免徽标盖住图标/文字主体
+  Widget _badgeOnCorner(Widget child, Widget badge, {double overlap = 6}) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        label,
+        child,
         Positioned(
-          right: -12,
-          top: -6,
-          child: _badgeWidget(item),
+          top: 0,
+          right: 0,
+          child: Transform.translate(
+            // 先按自身尺寸移到内容外侧,再回退一点形成角落压盖
+            offset: Offset(-overlap, overlap),
+            child: FractionalTranslation(
+              translation: const Offset(1, -1),
+              child: badge,
+            ),
+          ),
         ),
       ],
     );
   }
+
+  /// 有徽标时挂到 [child] 右上角,否则原样返回
+  Widget _attachBadge(Widget child, SantoMenuBarItem item) =>
+      _hasBadge(item) ? _badgeOnCorner(child, _badgeWidget(item)) : child;
 
   /// 图标文案区:图标优先带徽标,无图标时文字带徽标
   List<Widget> _buildItemChildren(
@@ -406,15 +416,13 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       return [
         Padding(
           padding: const EdgeInsets.only(bottom: 2),
-          child: _wrapBadge(icon, item, selected),
+          child: _attachBadge(icon, item),
         ),
         if (label != null) label,
       ];
     }
-    if (label != null && _hasBadge(item)) {
-      label = _wrapBadgeOnLabel(label, item);
-    }
-    return [if (label != null) label];
+    // 无图标时徽标挂在文字上
+    return [if (label != null) _attachBadge(label, item)];
   }
 
   Widget _buildItem(BuildContext context, int index) {
@@ -468,22 +476,6 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: _buildItemChildren(item, icon, selected, color),
       ),
-    );
-  }
-
-  /// 图标红点/徽标包装
-  Widget _wrapBadge(Widget icon, SantoMenuBarItem item, bool selected) {
-    if (!_hasBadge(item)) return icon;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        icon,
-        Positioned(
-          right: -6,
-          top: -4,
-          child: _badgeWidget(item),
-        ),
-      ],
     );
   }
 }
