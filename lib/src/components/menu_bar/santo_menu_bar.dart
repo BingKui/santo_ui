@@ -293,11 +293,38 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         borderRadius: BorderRadius.circular(_containerRadius),
         child: Padding(
           padding: const EdgeInsets.all(2),
-          child: Row(
-            children: [
-              for (int i = 0; i < widget.effectiveItems.length; i++)
-                Expanded(child: _buildFloatingItem(context, i)),
-            ],
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final count = widget.effectiveItems.length;
+              final itemWidth = constraints.maxWidth / count;
+              final itemHeight = constraints.maxHeight;
+              return Stack(
+                children: [
+                  // 选中背景:滑动动画
+                  AnimatedPositioned(
+                    duration: widget.duration,
+                    curve: Curves.easeOutCubic,
+                    left: _currentIndex.clamp(0, count - 1) * itemWidth,
+                    top: 0,
+                    width: itemWidth,
+                    height: itemHeight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: widget.itemSelectedBgColor ??
+                            _commonConfig.brandPrimary,
+                        borderRadius: BorderRadius.circular(_itemRadius),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      for (int i = 0; i < count; i++)
+                        Expanded(child: _buildFloatingItem(context, i)),
+                    ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -392,36 +419,26 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => _select(index),
-      child: AnimatedContainer(
-        duration: widget.duration,
-        margin: EdgeInsets.zero,
-        decoration: BoxDecoration(
-          color: selected
-              ? (widget.itemSelectedBgColor ?? _commonConfig.brandPrimary)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(_itemRadius),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: _wrapBadge(icon, item, selected),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: _wrapBadge(icon, item, selected),
+            ),
+          if (item.text != null)
+            Text(
+              item.text!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
+                color: color,
               ),
-            if (item.text != null)
-              Text(
-                item.text!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                  color: color,
-                ),
-              ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
