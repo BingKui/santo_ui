@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 /// SantoPanel(
 ///   title: '面板标题',
 ///   description: '面板描述信息',
-///   actions: [SantoNormalButton.outline(text: '更多', onTap: () {})],
+///   actions: [SantoSmallOutlineButton(title: '更多', onTap: () {})],
 ///   child: Text('面板内容'),
 /// )
 /// ```
@@ -71,25 +71,31 @@ class SantoPanel extends StatelessWidget {
         .panelConfig
         .merge(config);
 
+    final double panelRadius = radius ?? config.radius;
+
     return Container(
       margin: margin ?? config.margin,
       decoration: BoxDecoration(
         color: backgroundColor ?? config.backgroundColor,
-        borderRadius: BorderRadius.all(
-            Radius.circular(radius ?? config.radius)),
+        borderRadius: BorderRadius.all(Radius.circular(panelRadius)),
         border: Border.all(
           color: config.borderColor,
           width: config.borderWidth,
         ),
       ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeader(config),
-          _buildContent(config),
-        ],
+      // 内容按内圈圆角裁切(比外框少一个描边宽度),
+      // 否则 contentPadding:false 的整块内容会盖住四角描边
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(
+            Radius.circular(panelRadius - config.borderWidth)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(config),
+            _buildContent(config),
+          ],
+        ),
       ),
     );
   }

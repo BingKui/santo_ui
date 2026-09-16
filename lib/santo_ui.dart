@@ -80,6 +80,7 @@ export 'src/components/picker/santo_picker_cliprrect.dart';
 //悬浮窗
 export 'src/components/popup/santo_popup_window.dart';
 export 'src/components/popup/santo_overlay_window.dart';
+export 'src/components/floating_panel/santo_floating_panel.dart';
 
 //tabbar
 export 'src/components/tabbar/normal/santo_tab_bar.dart';
@@ -240,6 +241,10 @@ export 'src/components/card/bubble_card/santo_insert_info.dart';
 //文本
 export 'src/components/card/bubble_card/santo_bubble_text.dart';
 export 'src/components/text/santo_expandable_text.dart';
+export 'src/components/text/santo_text_ellipsis.dart';
+
+//关键词高亮
+export 'src/components/highlight/santo_highlight.dart';
 
 //通知栏
 export 'src/components/noticebar/santo_notice_bar.dart';
@@ -331,3 +336,8 @@ export 'src/components/time_counter/santo_time_counter.dart';
 
 //表格
 export 'src/components/table/santo_table.dart';
+
+//底部操作栏
+export 'src/components/action_bar/santo_action_bar.dart';
+export 'src/components/action_bar/santo_action_bar_icon.dart';
+export 'src/components/action_bar/santo_action_bar_button.dart';

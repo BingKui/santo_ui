@@ -207,27 +207,34 @@ void main() {
       ),
       findsOneWidget,
     );
+
+    // 水波纹按同样的圆角裁切(Material.clipBehavior + InkWell.borderRadius)
+    Material cellMaterialOf(String label) => tester.widget<Material>(
+          find
+              .ancestor(of: find.text(label), matching: find.byType(Material))
+              .first,
+        );
+    InkWell cellInkOf(String label) => tester.widget<InkWell>(
+          find
+              .ancestor(of: find.text(label), matching: find.byType(InkWell))
+              .first,
+        );
+
+    for (final String label in <String>['上一页', '下一页']) {
+      expect(cellMaterialOf(label).clipBehavior, Clip.antiAlias);
+      expect(cellInkOf(label).borderRadius, cellMaterialOf(label).borderRadius);
+    }
+
     // 上一页取左圆角、下一页取右圆角;外框不裁切子节点,否则四角 border 会被盖住
-    final Material prevMaterial = tester.widget<Material>(
-      find
-          .ancestor(of: find.text('上一页'), matching: find.byType(Material))
-          .first,
-    );
     expect(
-      prevMaterial.borderRadius,
+      cellMaterialOf('上一页').borderRadius,
       const BorderRadius.only(
         topLeft: Radius.circular(12),
         bottomLeft: Radius.circular(12),
       ),
     );
-
-    final Material nextMaterial = tester.widget<Material>(
-      find
-          .ancestor(of: find.text('下一页'), matching: find.byType(Material))
-          .first,
-    );
     expect(
-      nextMaterial.borderRadius,
+      cellMaterialOf('下一页').borderRadius,
       const BorderRadius.only(
         topRight: Radius.circular(12),
         bottomRight: Radius.circular(12),

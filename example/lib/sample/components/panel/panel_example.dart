@@ -21,17 +21,17 @@ class PanelExample extends StatelessWidget {
           SantoPanel(
             title: '带操作面板',
             actions: [
-              SantoNormalButton.outline(
-                text: '取消',
+              SantoSmallOutlineButton(
+                title: '取消',
                 onTap: () => SantoToast.show('点击了取消', context),
               ),
               SizedBox(width: 12),
-              SantoNormalButton(
-                text: '确定',
+              SantoSmallMainButton(
+                title: '确定',
                 onTap: () => SantoToast.show('点击了确定', context),
               ),
             ],
-            child: Text('Header 左侧为标题,右侧为操作按钮区。'),
+            child: Text('Header 左侧为标题,右侧为操作按钮区,按钮使用小号尺寸。'),
           ),
           SantoPanel(
             title: '可滚动面板',

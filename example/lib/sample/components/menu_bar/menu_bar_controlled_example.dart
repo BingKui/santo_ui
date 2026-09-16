@@ -70,8 +70,6 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
         showMoreMenu: true,
         moreMenu: SantoMenuBarMoreMenu(
           title: '更多',
-          actionText: '编辑',
-          onActionTap: () => SantoToast.show('点击了编辑', context),
           items: [
             SantoMenuBarMoreMenuItem(
               label: '文档',

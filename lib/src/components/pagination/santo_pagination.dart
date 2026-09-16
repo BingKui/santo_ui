@@ -208,7 +208,6 @@ class SantoPagination extends StatelessWidget {
         commonConfig,
         text: prevText ?? '上一页',
         disabled: page <= 1,
-        button: true,
         width: kSantoPaginationButtonWidth,
         borderRadius: takeEdgeRadius(),
         onTap: () => _select(page - 1, count),
@@ -245,7 +244,6 @@ class SantoPagination extends StatelessWidget {
         commonConfig,
         text: nextText ?? '下一页',
         disabled: page >= count,
-        button: true,
         width: kSantoPaginationButtonWidth,
         borderRadius: takeEdgeRadius(),
         onTap: () => _select(page + 1, count),
@@ -298,7 +296,6 @@ class SantoPagination extends StatelessWidget {
     required String text,
     double? width,
     bool active = false,
-    bool button = false,
     bool disabled = false,
     Color? textColor,
     BorderRadius? borderRadius,
@@ -317,7 +314,6 @@ class SantoPagination extends StatelessWidget {
               commonConfig,
               text,
               active: active,
-              button: button,
               disabled: disabled,
               textColor: textColor,
             ),
@@ -335,12 +331,17 @@ class SantoPagination extends StatelessWidget {
           );
 
     return Material(
-      color: active
-          ? commonConfig.brandPrimary
-          : (button ? commonConfig.fillBody : commonConfig.fillBase),
+      color: active ? commonConfig.brandPrimary : commonConfig.fillBase,
       borderRadius: borderRadius,
-      child:
-          onTap == null ? sized : InkWell(onTap: disabled ? null : onTap, child: sized),
+      // 不裁切的话水波纹不会被圆角裁圆(Material 默认 Clip.none)
+      clipBehavior: borderRadius == null ? Clip.none : Clip.antiAlias,
+      child: onTap == null
+          ? sized
+          : InkWell(
+              borderRadius: borderRadius,
+              onTap: disabled ? null : onTap,
+              child: sized,
+            ),
     );
   }
 
@@ -349,7 +350,6 @@ class SantoPagination extends StatelessWidget {
     SantoCommonConfig commonConfig,
     String text, {
     bool active = false,
-    bool button = false,
     bool disabled = false,
     Color? textColor,
   }) {
@@ -365,9 +365,7 @@ class SantoPagination extends StatelessWidget {
             : (textColor ??
                 (disabled
                     ? commonConfig.colorTextDisabled
-                    : (button
-                        ? commonConfig.colorTextBase
-                        : commonConfig.brandPrimary))),
+                    : commonConfig.brandPrimary)),
       ),
     );
   }
