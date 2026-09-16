@@ -73,7 +73,8 @@ void _floatingTests() {
     ));
     await tester.pumpAndSettle();
 
-    expect(find.byType(BackdropFilter), findsOneWidget);
+    // 毛玻璃:外层 dock + 内层容器 共两层
+    expect(find.byType(BackdropFilter), findsNWidgets(2));
 
     final barRight = tester.getTopRight(find.byType(ClipRRect)).dx;
     expect(800 - barRight, 12);
