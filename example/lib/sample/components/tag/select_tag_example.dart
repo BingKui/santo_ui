@@ -26,8 +26,9 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
         color: Colors.white,
         child: ListView(
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '单选功能',
+              description: '默认单选，initTagState 设初始选中，onSelect 返回下标',
               child: SantoSelectTag(
                   tags: tagList,
                   spacing: 12,
@@ -37,8 +38,9 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                     SantoToast.show(selectedIndexes.toString(), context);
                   }),
             ),
-            SantoPanel(
+            SantoSection(
               title: '多选功能',
+              description: 'isSingleSelect 为 false 支持多选并初始化多项选中',
               child: SantoSelectTag(
                   isSingleSelect: false,
                   tags: tagList,
@@ -49,8 +51,9 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                     SantoToast.show(selectedIndexes.toString(), context);
                   }),
             ),
-            SantoPanel(
+            SantoSection(
               title: '流式布局的自适应标签',
+              description: 'fixWidthMode 为 false 时标签宽度自适应并流式换行',
               child: SantoSelectTag(
                   tags: [
                     '标签',
@@ -67,8 +70,9 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                     SantoToast.show(selectedIndexes.toString(), context);
                   }),
             ),
-            SantoPanel(
+            SantoSection(
               title: '横向滑动，等宽标签',
+              description: 'tagWidth 固定等宽，softWrap 为 false 时横向滑动',
               child: SantoSelectTag(
                   tags: tagList,
                   tagWidth: _getTagWidth(context),
@@ -77,8 +81,9 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                     SantoToast.show("$index is selected", context);
                   }),
             ),
-            SantoPanel(
+            SantoSection(
               title: '横向滑动的自适应宽度标签(最小宽度75)',
+              description: '流式标签横向滑动，宽度受最小宽度配置约束',
               child: SantoSelectTag(
                   tags: tagList,
                   tagWidth: _getTagWidth(context),

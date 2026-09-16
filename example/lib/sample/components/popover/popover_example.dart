@@ -25,15 +25,9 @@ class _PopoverExampleState extends State<PopoverExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 场景1：向下弹出
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '向下弹出 (bottom)',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '向下弹出 (bottom)',
+              description: 'direction 设为 bottom，气泡从触发元素下方弹出',
               child: SantoNormalButton(
                 key: _bottomKey,
                 onTap: () {
@@ -51,18 +45,10 @@ class _PopoverExampleState extends State<PopoverExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景2：向上弹出
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '向上弹出 (top)',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '向上弹出 (top)',
+              description: 'direction 设为 top，气泡从触发元素上方弹出',
               child: SantoNormalButton(
                 key: _topKey,
                 onTap: () {
@@ -80,18 +66,10 @@ class _PopoverExampleState extends State<PopoverExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景3：向左弹出
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '向左/右弹出',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '向左/右弹出',
+              description: 'direction 传 left 或 right，气泡从按钮左右两侧展开',
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -131,18 +109,10 @@ class _PopoverExampleState extends State<PopoverExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景4：不显示箭头
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '不显示箭头',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '不显示箭头',
+              description: 'showArrow 传 false，气泡与触发元素间不绘制指示三角',
               child: SantoNormalButton(
                 key: _noArrowKey,
                 onTap: () {
@@ -161,18 +131,10 @@ class _PopoverExampleState extends State<PopoverExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景5：自定义背景色
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '自定义背景色',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '自定义背景色',
+              description: 'backgroundColor 传入自定义色值，替换气泡默认深色背景',
               child: SantoNormalButton(
                 key: _customKey,
                 onTap: () {
@@ -191,18 +153,10 @@ class _PopoverExampleState extends State<PopoverExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景6：富文本内容
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '富文本内容',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '富文本内容',
+              description: 'content 可传 Column 与 Row，在气泡内自定义多行分享面板',
               child: SantoNormalButton(
                 key: _richKey,
                 onTap: () {

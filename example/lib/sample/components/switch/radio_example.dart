@@ -23,8 +23,9 @@ class _RadioExampleState extends State<RadioExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'radioIndex 标识选项，isSelected 控制选中态并自行维护互斥',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -68,8 +69,9 @@ class _RadioExampleState extends State<RadioExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '禁用状态',
+              description: 'disable 为 true 时组件置灰且不响应点击',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

@@ -20,8 +20,9 @@ class _CheckboxExampleState extends State<CheckboxExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '控件在选择按钮左边',
+              description: 'childOnRight 为 false 时控件居左，第三项为禁用态',
               child: Container(
                 height: 130,
                 child: ListView.builder(
@@ -50,8 +51,9 @@ class _CheckboxExampleState extends State<CheckboxExample> {
                 ),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '居于屏幕两侧',
+              description: 'childOnRight 配合 mainAxisSize 使文字与控件分居两侧',
               child: SantoCheckbox(
                 radioIndex: 10,
                 isSelected: true,

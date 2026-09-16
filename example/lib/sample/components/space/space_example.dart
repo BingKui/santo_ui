@@ -22,8 +22,9 @@ class SpaceExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '水平排列',
+              description: 'size 提供 small、middle、large 三档间距',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -46,8 +47,9 @@ class SpaceExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '垂直排列',
+              description: 'direction 设为 vertical 后子元素自上而下排列',
               child: const SantoSpace(
                 direction: SantoSpaceDirection.vertical,
                 size: SantoSpaceSize.middle,
@@ -58,8 +60,9 @@ class SpaceExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义间距',
+              description: 'customSize 优先级高于 size，直接传入具体间距值',
               child: SantoSpace(
                 customSize: 32,
                 children: [
@@ -69,8 +72,9 @@ class SpaceExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自动换行 (wrap)',
+              description: 'wrap 开启后单行放不下自动换行，仅水平方向生效',
               child: SantoSpace(
                 wrap: true,
                 size: SantoSpaceSize.small,

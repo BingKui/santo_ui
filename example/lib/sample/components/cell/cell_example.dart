@@ -17,8 +17,9 @@ class _CellExampleState extends State<CellExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基本用法
-            SantoPanel(
+            SantoSection(
               title: '基本用法',
+              description: 'onTap 触发点击回调，bottomLine 控制末项是否保留分割线',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,8 +41,9 @@ class _CellExampleState extends State<CellExample> {
               ),
             ),
             // 带描述
-            SantoPanel(
+            SantoSection(
               title: '带描述',
+              description: 'description 在标题下方展示补充说明，字号更小颜色更浅',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -55,8 +57,9 @@ class _CellExampleState extends State<CellExample> {
               ),
             ),
             // 带左侧图标
-            SantoPanel(
+            SantoSection(
               title: '带左侧图标',
+              description: 'leftIcon 设置左侧图标，note 在右侧展示备注信息',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -77,8 +80,9 @@ class _CellExampleState extends State<CellExample> {
               ),
             ),
             // 带右侧备注
-            SantoPanel(
+            SantoSection(
               title: '带右侧备注',
+              description: 'note 展示版本号等右侧备注，数值类信息无需箭头引导',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -93,8 +97,9 @@ class _CellExampleState extends State<CellExample> {
               ),
             ),
             // 不显示箭头
-            SantoPanel(
+            SantoSection(
               title: '不显示箭头',
+              description: 'showArrow 设为 false 隐藏右箭头，仅保留 note 文字',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -108,8 +113,9 @@ class _CellExampleState extends State<CellExample> {
               ),
             ),
             // 自定义右侧内容
-            SantoPanel(
+            SantoSection(
               title: '自定义右侧内容',
+              description: 'rightWidget 传入 SantoAvatar，替换箭头位置展示头像',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -127,8 +133,9 @@ class _CellExampleState extends State<CellExample> {
               ),
             ),
             // CellGroup 组合
-            SantoPanel(
+            SantoSection(
               title: 'CellGroup 组合',
+              description: 'SantoCellGroup 组合多个 SantoCell，统一管理分割线并支持分组标题',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -12,8 +12,9 @@ class BubbleTextExample extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '左侧气泡（start）',
+              description: 'placement 为 start 时气泡居左，maxLines 限制最多展示 3 行',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -27,8 +28,9 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '右侧气泡（end）',
+              description: 'placement 为 end 时气泡居右，右上角收为小圆角',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -42,8 +44,9 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义圆角',
+              description: 'radius 分别设为 24 与 4，对比大小圆角的气泡外观',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -61,8 +64,9 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义背景色和文字颜色',
+              description: 'bgColor 与 textColor 分别控制气泡背景和文字颜色',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,8 +86,9 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '展开收起',
+              description: '超出 maxLines 2 时显示更多按钮，点击展开或收起并回调 onExpanded',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -99,8 +104,9 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '正常案例',
+              description: 'infoText 传入常规长度文案，气泡完整展示不出现省略号',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -110,8 +116,9 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例文案过长',
+              description: '文案过长超出 maxLines 2 行时截断，末尾以省略号收尾',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -121,15 +128,17 @@ class BubbleTextExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例文案过少',
+              description: 'infoText 仅传入 4 个字，检查文案过少时的边界表现',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [SantoInsertInfo(infoText: '推荐理由')],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例文案长度为0',
+              description: 'infoText 为空字符串时气泡容器仍渲染，用于空文案边界校验',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [SantoInsertInfo(infoText: '')],

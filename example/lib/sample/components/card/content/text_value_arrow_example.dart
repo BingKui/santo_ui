@@ -26,8 +26,9 @@ class _TextValueArrowContentExampleState
 RulePanel(
             'value带有操作箭头，箭头在最右侧，value单行展示',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: '紧随布局下 isArrow 展示右侧箭头，问号与超链接均可点',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -73,8 +74,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: '对齐布局下 isArrow 展示右侧箭头，value 对齐展示',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -120,8 +122,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例正常案例 key过长',
+            description: '紧随布局下 key 超长省略，箭头与问号仍可见',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -160,8 +163,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例正常案例 key过长',
+            description: '对齐布局下 key 超长，value 与箭头不被挤出',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -200,8 +204,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例正常案例 内容过长',
+            description: '对齐布局下 value 过长省略，箭头固定在行尾',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -240,8 +245,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例正常案例 内容过长',
+            description: '紧随布局下 value 过长省略，超链接与箭头仍可点击',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -136,15 +136,9 @@ class _CascaderExampleState extends State<CascaderExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 场景1：省/市/区三级选择
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '省/市/区 三级联动',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '省/市/区 三级联动',
+              description: 'columnCount 为 3，onConfirm 回传选中项并拼接展示',
               child: GestureDetector(
                 onTap: () {
                   SantoCascader.show(
@@ -186,18 +180,10 @@ class _CascaderExampleState extends State<CascaderExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景2：两级分类选择
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '大类/小类 两级联动',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '大类/小类 两级联动',
+              description: 'columnCount 为 2，确认后回写所选分类到输入框',
               child: GestureDetector(
                 onTap: () {
                   SantoCascader.show(
@@ -239,18 +225,10 @@ class _CascaderExampleState extends State<CascaderExample> {
               ),
             ),
 
-            SizedBox(height: 24),
-
             // 场景3：带初始值的选择
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '带初始值的选择',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            SantoSection(
+              title: '带初始值的选择',
+              description: 'initialValues 预置广东省、深圳市、南山区为默认选中',
               child: GestureDetector(
                 onTap: () {
                   SantoCascader.show(

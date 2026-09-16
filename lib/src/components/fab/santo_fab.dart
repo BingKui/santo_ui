@@ -81,7 +81,7 @@ class SantoFab extends StatelessWidget {
   /// 自定义子组件，设置后忽略icon和text
   final Widget? child;
 
-  /// 阴影高度，默认6
+  /// 阴影高度，默认2
   final double elevation;
 
   /// 创建 Fab 悬浮按钮
@@ -96,7 +96,7 @@ class SantoFab extends StatelessWidget {
     this.size = 56,
     this.shape,
     this.child,
-    this.elevation = 6,
+    this.elevation = 2,
   }) : super(key: key);
 
   /// 创建带定位的 Fab 悬浮按钮，用于 [Stack] 中
@@ -115,7 +115,7 @@ class SantoFab extends StatelessWidget {
     SantoFabPosition position = SantoFabPosition.bottomRight,
     SantoFabShape? shape,
     Widget? child,
-    double elevation = 6,
+    double elevation = 2,
     double edgeOffset = 16,
   }) {
     return Positioned(
@@ -164,6 +164,61 @@ class SantoFab extends StatelessWidget {
   bool get _isExtended =>
       shape == SantoFabShape.extended || (shape == null && text != null);
 
+  /// 构建无偏移阴影 + 背景色的圆形容器
+  Widget _buildCircleBody(Color bgColor, Widget child) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: bgColor,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x33000000),
+            blurRadius: elevation * 2,
+            offset: Offset.zero,
+          ),
+        ],
+      ),
+      child: Material(
+        elevation: 0,
+        type: MaterialType.transparency,
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: onPressed,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  /// 构建无偏移阴影 + 背景色的圆角矩形容器
+  Widget _buildRoundedBody(Color bgColor, Widget child) {
+    return Container(
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size / 2),
+        color: bgColor,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x33000000),
+            blurRadius: elevation * 2,
+            offset: Offset.zero,
+          ),
+        ],
+      ),
+      child: Material(
+        elevation: 0,
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(size / 2),
+          onTap: onPressed,
+          child: child,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bgColor = backgroundColor ?? _brandPrimary;
@@ -171,17 +226,9 @@ class SantoFab extends StatelessWidget {
     final tColor = textColor ?? _colorTextBaseInverse;
 
     if (child != null) {
-      return Material(
-        elevation: elevation,
-        borderRadius: BorderRadius.circular(size / 2),
-        color: bgColor,
-        child: InkWell(
-          customBorder:
-              _isExtended ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(size / 2)) : const CircleBorder(),
-          onTap: onPressed,
-          child: child,
-        ),
-      );
+      return _isExtended
+          ? _buildRoundedBody(bgColor, child!)
+          : _buildCircleBody(bgColor, child!);
     }
 
     if (_isExtended) {
@@ -192,56 +239,43 @@ class SantoFab extends StatelessWidget {
 
   /// 构建圆形按钮
   Widget _buildCircle(Color bgColor, Color iColor) {
-    return Material(
-      elevation: elevation,
-      shape: CircleBorder(),
-      color: bgColor,
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: onPressed,
-        child: Container(
-          width: size,
-          height: size,
-          alignment: Alignment.center,
-          child: icon != null
-              ? Icon(icon, color: iColor, size: size * 0.45)
-              : const SizedBox.shrink(),
-        ),
+    return _buildCircleBody(
+      bgColor,
+      Container(
+        width: size,
+        height: size,
+        alignment: Alignment.center,
+        child: icon != null
+            ? Icon(icon, color: iColor, size: size * 0.45)
+            : const SizedBox.shrink(),
       ),
     );
   }
 
   /// 构建扩展形按钮
   Widget _buildExtended(Color bgColor, Color iColor, Color tColor) {
-    return Material(
-      elevation: elevation,
-      borderRadius: BorderRadius.circular(size / 2),
-      color: bgColor,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(size / 2),
-        onTap: onPressed,
-        child: Container(
-          height: size,
-          padding: EdgeInsets.symmetric(horizontal: size * 0.4),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null)
-                Padding(
-                  padding: EdgeInsets.only(right: text != null ? 8 : 0),
-                  child: Icon(icon, color: iColor, size: size * 0.4),
+    return _buildRoundedBody(
+      bgColor,
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: size * 0.4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null)
+              Padding(
+                padding: EdgeInsets.only(right: text != null ? 8 : 0),
+                child: Icon(icon, color: iColor, size: size * 0.4),
+              ),
+            if (text != null)
+              Text(
+                text!,
+                style: TextStyle(
+                  color: tColor,
+                  fontSize: size * 0.28,
+                  fontWeight: FontWeight.w500,
                 ),
-              if (text != null)
-                Text(
-                  text!,
-                  style: TextStyle(
-                    color: tColor,
-                    fontSize: size * 0.28,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );

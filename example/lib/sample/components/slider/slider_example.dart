@@ -24,8 +24,9 @@ class _SliderExampleState extends State<SliderExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础单值滑块
-            SantoPanel(
+            SantoSection(
               title: '基础单值滑块',
+              description: '单值模式用 value 表示当前取值，默认区间为 0 到 100',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -37,8 +38,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 带刻度的单值滑块
-            SantoPanel(
+            SantoSection(
               title: '带刻度的单值滑块',
+              description: '通过 divisions 显示刻度，取值按刻度步长吸附',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,8 +52,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 自定义范围
-            SantoPanel(
+            SantoSection(
               title: '自定义范围 (0 - 200)',
+              description: 'min 与 max 扩大取值区间，divisions 划分刻度数量',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -69,8 +72,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 自定义颜色
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色',
+              description: 'activeColor 与 inactiveColor 分别设置滑块两侧颜色',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -89,8 +93,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 基础范围滑块
-            SantoPanel(
+            SantoSection(
               title: '基础范围滑块',
+              description: '范围模式用 rangeValue 传入起止值，当前区间为 20 到 80',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -104,8 +109,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 带标签的范围滑块
-            SantoPanel(
+            SantoSection(
               title: '带标签的范围滑块',
+              description: 'showLabel 为 true 时拖动过程中展示取值标签',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -119,8 +125,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 自定义颜色范围滑块
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色范围滑块',
+              description: 'activeColor 可自定义滑块激活色，范围模式同样适用',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -136,8 +143,9 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ),
             // 带回调的滑块
-            SantoPanel(
+            SantoSection(
               title: '带回调的滑块',
+              description: 'onChanged 拖动时持续回调，onChangeEnd 在松手后回调一次',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [const SizedBox(height: 40)],

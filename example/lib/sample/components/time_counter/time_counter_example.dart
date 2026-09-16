@@ -35,8 +35,9 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础倒计时
-            SantoPanel(
+            SantoSection(
               title: '基础倒计时',
+              description: 'countdown 模式倒计时 5 分钟，控制器支持暂停、继续与重置',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -101,8 +102,9 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
             ),
 
             // 正计时
-            SantoPanel(
+            SantoSection(
               title: '正计时',
+              description: 'stopwatch 模式正计时，format 指定 HH:mm:ss 输出格式',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -148,8 +150,9 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
             ),
 
             // 自定义格式
-            SantoPanel(
+            SantoSection(
               title: '自定义格式',
+              description: 'format 支持 mm:ss、HH:mm:ss 与 mm:ss:SS 等格式',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -168,8 +171,9 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
             ),
 
             // 自定义样式
-            SantoPanel(
+            SantoSection(
               title: '自定义样式',
+              description: 'textStyle 可自定义字号与颜色，演示中关闭了 autoStart',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -208,8 +212,9 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
             ),
 
             // 自定义构建器
-            SantoPanel(
+            SantoSection(
               title: '自定义构建器',
+              description: 'builder 接收剩余时长，可完全自定义显示结构',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

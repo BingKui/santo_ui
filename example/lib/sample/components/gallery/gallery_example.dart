@@ -92,28 +92,36 @@ class GalleryExample extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ListItem(
-            title: "图片选择控件",
-            isShowLine: false,
-            describe: "查看图片列表页",
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return SantoGallerySummaryPage(allConfig: allConfig);
-                },
-              ));
-            },
+          SantoSection(
+            title: '缩略图列表',
+            description: '进入 SantoGallerySummaryPage，按分组查看多张图片',
+            child: ListItem(
+              title: "图片选择控件",
+              isShowLine: false,
+              describe: "查看图片列表页",
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return SantoGallerySummaryPage(allConfig: allConfig);
+                  },
+                ));
+              },
+            ),
           ),
-          ListItem(
-            title: "图片详情查看",
-            describe: '跳转第一项的第五张图',
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return GalleryDetailPageThemeExample();
-                },
-              ));
-            },
+          SantoSection(
+            title: '大图详情',
+            description: '进入详情入口页，可选 light 或 dark 主题查看大图',
+            child: ListItem(
+              title: "图片详情查看",
+              describe: '跳转第一项的第五张图',
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return GalleryDetailPageThemeExample();
+                  },
+                ));
+              },
+            ),
           ),
         ],
       ),

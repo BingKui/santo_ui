@@ -25,8 +25,9 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'value 与 onChanged 双向绑定，点击切换开关状态',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -43,8 +44,9 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '禁用状态',
+              description: 'enabled 为 false 时组件置灰且不可切换',
               child: SantoSwitchButton(
                 enabled: false,
                 value: value2,
@@ -55,8 +57,9 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '未选中状态',
+              description: 'value 为 false 时展示未选中的灰色轨道',
               child: SantoSwitchButton(
                 value: value3,
                 onChanged: (value) {
@@ -66,8 +69,9 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '加载状态',
+              description: 'loading 为 true 时显示加载指示器并禁用交互',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -86,8 +90,9 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义大小',
+              description: 'size 传入 Size 自定义开关的宽高尺寸',
               child: SantoSwitchButton(
                 size: Size(80, 40),
                 value: value5,

@@ -18,8 +18,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: '最简用法，配置 hint 占位文字与 onTextChange 回调',
               child: SantoInputText(
                 minHeight: 40,
                 borderRadius: 8,
@@ -28,8 +29,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onTextChange: (text) {},
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '清除按钮',
+              description: '输入内容后自动显示内置清除按钮，needClear 可控制',
               child: SantoInputText(
                 minHeight: 40,
                 borderRadius: 8,
@@ -38,8 +40,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onTextChange: (text) {},
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '字数限制与计数',
+              description: 'maxLength 限制最大字数，showCounter 默认展示实时计数',
               child: SantoInputText(
                 minHeight: 40,
                 borderRadius: 8,
@@ -49,8 +52,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onTextChange: (text) {},
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '前后缀插槽',
+              description: 'prefix、suffix 插入自定义前后缀，传 suffix 时隐藏清除按钮',
               child: Column(
                 children: [
                   SantoInputText(
@@ -78,8 +82,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '密码输入(显隐切换)',
+              description: 'obscureText 开启密码模式，由内置按钮切换显隐',
               child: SantoInputText(
                 minHeight: 44,
                 borderRadius: 8,
@@ -91,8 +96,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onTextChange: (text) {},
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '只读 / 禁用',
+              description: 'readOnly 保留选中复制，enabled 传 false 后完全禁用',
               child: Column(
                 children: [
                   SantoInputText(
@@ -115,8 +121,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '聚焦边框高亮',
+              description: '聚焦时边框切换为 focusedBorderColor，失焦后还原',
               child: SantoInputText(
                 minHeight: 44,
                 borderRadius: 8,
@@ -127,8 +134,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onTextChange: (text) {},
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '多行自适应高度',
+              description: 'minLines 与 maxHeight 决定自适应范围，可输入多行文本',
               child: SantoInputText(
                 maxHeight: 200,
                 minHeight: 60,

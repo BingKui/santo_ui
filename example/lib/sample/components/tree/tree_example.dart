@@ -149,103 +149,95 @@ class _TreeExampleState extends State<TreeExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 场景1：基础单选树
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '基础单选树',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            SantoSection(
+              title: '基础单选树',
+              description: '单击节点触发 onNodeTap，展开/收起触发 onNodeExpand',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      '最近操作: $_lastAction',
+                      style: TextStyle(fontSize: 13, color: Color(0xFF808695)),
+                    ),
+                  ),
+                  SantoTree(
+                    data: _singleSelectData,
+                    onNodeTap: (node) {
+                      setState(() {
+                        _lastAction = '点击了: ${node.label}';
+                      });
+                    },
+                    onNodeExpand: (node, expanded) {
+                      setState(() {
+                        _lastAction = '${expanded ? "展开" : "收起"}了: ${node.label}';
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                '最近操作: $_lastAction',
-                style: TextStyle(fontSize: 13, color: Color(0xFF808695)),
-              ),
-            ),
-            SantoTree(
-              data: _singleSelectData,
-              onNodeTap: (node) {
-                setState(() {
-                  _lastAction = '点击了: ${node.label}';
-                });
-              },
-              onNodeExpand: (node, expanded) {
-                setState(() {
-                  _lastAction = '${expanded ? "展开" : "收起"}了: ${node.label}';
-                });
-              },
-            ),
-
-            Divider(height: 24),
 
             // 场景2：多选树
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '多选树',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            SantoSection(
+              title: '多选树',
+              description: '开启 multiple 后按节点勾选，选中项由 selectedValues 回显',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      '已选择: ${_multiSelectedValues.isEmpty ? "无" : _multiSelectedValues.join(", ")}',
+                      style: TextStyle(fontSize: 13, color: Color(0xFF808695)),
+                    ),
+                  ),
+                  SantoTree(
+                    data: _multiSelectData,
+                    multiple: true,
+                    selectedValues: _multiSelectedValues,
+                    onSelectionChanged: (values) {
+                      setState(() {
+                        _multiSelectedValues = values;
+                      });
+                    },
+                    onNodeExpand: (node, expanded) {
+                      setState(() {});
+                    },
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                '已选择: ${_multiSelectedValues.isEmpty ? "无" : _multiSelectedValues.join(", ")}',
-                style: TextStyle(fontSize: 13, color: Color(0xFF808695)),
-              ),
-            ),
-            SantoTree(
-              data: _multiSelectData,
-              multiple: true,
-              selectedValues: _multiSelectedValues,
-              onSelectionChanged: (values) {
-                setState(() {
-                  _multiSelectedValues = values;
-                });
-              },
-              onNodeExpand: (node, expanded) {
-                setState(() {});
-              },
-            ),
-
-            Divider(height: 24),
 
             // 场景3：默认展开的树
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '默认展开的树',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            SantoSection(
+              title: '默认展开的树',
+              description: 'expanded 为 true 的节点默认展开，点击触发 onNodeTap',
+              child: SantoTree(
+                data: _expandedData,
+                onNodeTap: (node) {
+                  SantoToast.show('点击了: ${node.label}', context);
+                },
+                onNodeExpand: (node, expanded) {
+                  setState(() {});
+                },
               ),
             ),
-            SantoTree(
-              data: _expandedData,
-              onNodeTap: (node) {
-                SantoToast.show('点击了: ${node.label}', context);
-              },
-              onNodeExpand: (node, expanded) {
-                setState(() {});
-              },
-            ),
-
-            Divider(height: 24),
 
             // 场景4：自定义主题色
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '自定义主题色（绿色）',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            SantoSection(
+              title: '自定义主题色',
+              description: 'activeColor 指定主题色，选中态与展开图标跟随变化',
+              child: SantoTree(
+                data: _multiSelectData,
+                multiple: true,
+                activeColor: Color(0xFF52C41A),
+                onSelectionChanged: (values) {},
+                onNodeExpand: (node, expanded) {
+                  setState(() {});
+                },
               ),
-            ),
-            SantoTree(
-              data: _multiSelectData,
-              multiple: true,
-              activeColor: Color(0xFF52C41A),
-              onSelectionChanged: (values) {},
-              onNodeExpand: (node, expanded) {
-                setState(() {});
-              },
             ),
 
             SizedBox(height: 40),

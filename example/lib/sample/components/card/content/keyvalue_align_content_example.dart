@@ -48,8 +48,9 @@ class _TextContentExampleState extends State<TextContentExample> {
 RulePanel(
             'key的宽度最多为92，value是左对齐的，key和value过长的时候可以换行',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'valuePart 左对齐展示，可组合 Row 追加尾部金额，点击整块区域弹出提示',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -195,8 +196,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'SantoAlignPairInfo 对齐两列展示，value 过长时自动换行不截断',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -212,8 +214,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'valueLastClickInfo 构造可点击文案，点击后弹出提示',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -238,8 +241,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'expandAtIndex 指定折叠起始行，isFolded 为 false 时默认展开',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -264,8 +268,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例：动态追加',
+            description: '点击更多动态追加数据，列表随 children 变化实时刷新',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -322,8 +327,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例：动态收起',
+            description: '点击收起移除最后一条数据，观察列表收缩后的表现',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -378,8 +384,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：key过长',
+            description: 'key 超长时 key 列按换行撑开宽度，value 仍保持左对齐',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -400,8 +407,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例：内容过长',
+            description: 'value 超长时自动换行，验证内容不会溢出或遮挡其它行',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -425,8 +433,9 @@ SantoPanel(
             )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例某个元素缺失',
+            description: 'keyPart 与 valuePart 缺失或为空时的兜底占位展示',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

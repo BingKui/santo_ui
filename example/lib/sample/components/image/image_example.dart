@@ -14,8 +14,9 @@ class ImageExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '基础网络图片',
+              description: '通过 imageUrl 加载网络图片，width、height 控制展示尺寸',
               child: Row(
                 children: [
                   SantoImage(imageUrl: _netImg, width: 96, height: 96),
@@ -24,8 +25,9 @@ class ImageExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '圆角图片',
+              description: 'borderRadius 传入半径值控制圆角，传入边长一半时呈圆形',
               child: Row(
                 children: [
                   SantoImage(
@@ -44,8 +46,9 @@ class ImageExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '不同 BoxFit',
+              description: '固定宽高下对比 cover、contain、fill 三种缩放模式',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,8 +82,9 @@ class ImageExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '加载失败态（默认）',
+              description: 'imageUrl 不可用时触发默认失败态，展示破图占位',
               child: SantoImage(
                 imageUrl: 'https://invalid.example.com/not_exist.png',
                 width: 96,
@@ -88,8 +92,9 @@ class ImageExample extends StatelessWidget {
                 borderRadius: 12,
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义失败态',
+              description: 'errorWidget 替换默认失败态为自定义占位样式',
               child: SantoImage(
                 imageUrl: 'https://invalid.example.com/not_exist.png',
                 width: 96,
@@ -114,8 +119,9 @@ class ImageExample extends StatelessWidget {
                 ),
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '本地图片',
+              description: 'isNetwork 传 false 并指定 assets 路径即可加载本地图片',
               child: SantoImage(
                 imageUrl: 'assets/image/empty_state.png',
                 width: 160,

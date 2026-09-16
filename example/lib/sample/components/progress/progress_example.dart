@@ -22,8 +22,9 @@ class _ProgressExampleState extends State<ProgressExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础进度条
-            SantoPanel(
+            SantoSection(
               title: '基础进度条',
+              description: 'value 取 0 到 1 的进度值，1.0 表示已全部完成',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,8 +45,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 显示百分比
-            SantoPanel(
+            SantoSection(
               title: '显示百分比',
+              description: 'showLabel 为 true 时在进度条右侧显示百分比数值',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,8 +61,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 自定义颜色
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色',
+              description: 'color 覆盖默认主题色，可按业务语义区分进度状态',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -89,8 +92,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 自定义高度
-            SantoPanel(
+            SantoSection(
               title: '自定义高度',
+              description: 'strokeWidth 控制进度条高度，加粗后更醒目',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -108,8 +112,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 动态进度条
-            SantoPanel(
+            SantoSection(
               title: '动态进度条（可拖动）',
+              description: '拖动下方 SantoSlider 时实时更新 value，进度条随动',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -132,8 +137,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 环形进度条
-            SantoPanel(
+            SantoSection(
               title: '环形进度条',
+              description: 'SantoCircularProgress 以 value 控制弧度与完成比例',
               child: Wrap(
                 spacing: 24,
                 children: [
@@ -147,8 +153,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 动态环形进度条
-            SantoPanel(
+            SantoSection(
               title: '动态环形进度条',
+              description: '拖动滑块实时改变 value，环形进度与百分比同步更新',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -165,8 +172,9 @@ class _ProgressExampleState extends State<ProgressExample> {
               ),
             ),
             // 不同样式的环形
-            SantoPanel(
+            SantoSection(
               title: '自定义环形样式',
+              description: '通过 radius、strokeWidth 与 color 定制环形进度外观',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -17,8 +17,9 @@ class _TableExampleState extends State<TableExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 基础用法
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'columns 定义表头，data 传入二维数组渲染数据行',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -45,8 +46,9 @@ class _TableExampleState extends State<TableExample> {
             ),
 
             // 自定义列宽和对齐
-            SantoPanel(
+            SantoSection(
               title: '自定义列宽和对齐',
+              description: 'SantoTableColumn 的 width 定宽，align 控制对齐方式',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,8 +92,9 @@ class _TableExampleState extends State<TableExample> {
             ),
 
             // 斑马纹样式
-            SantoPanel(
+            SantoSection(
               title: '斑马纹样式',
+              description: 'striped 为 true 时奇偶行交替底色，便于横向阅读',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -123,8 +126,9 @@ class _TableExampleState extends State<TableExample> {
             ),
 
             // 自定义表头颜色
-            SantoPanel(
+            SantoSection(
               title: '自定义表头颜色',
+              description: 'headerColor 单独设置表头背景色，文字颜色可另行指定',
               child: SantoTable(
                 columns: [
                   SantoTableColumn(title: '序号', width: 60),
@@ -144,8 +148,9 @@ class _TableExampleState extends State<TableExample> {
             ),
 
             // 自定义单元格内容
-            SantoPanel(
+            SantoSection(
               title: '自定义单元格内容',
+              description: 'cellBuilder 按行列索引自定义单元格，可插入图标与操作按钮',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -244,8 +249,9 @@ class _TableExampleState extends State<TableExample> {
             ),
 
             // 无边框表格
-            SantoPanel(
+            SantoSection(
               title: '无边框表格',
+              description: 'border 置 false 去掉网格线，表头与行底色仍可自定义',
               child: SantoTable(
                 columns: [
                   SantoTableColumn(title: '指标', width: 100),

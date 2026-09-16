@@ -17,8 +17,9 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: '仅传 content 时左侧标签与右侧按钮均不显示',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -34,8 +35,9 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '正常样式',
+              description: '通过 leftTagText 与 rightButtonText 补全左右两侧',
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
                 content: '这是通知内容',
@@ -45,8 +47,9 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '跑马灯',
+              description: 'marquee 为 true 时通知内容滚动播放',
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
                 content: '这是跑马灯的通知内容跑马灯的通知内容跑马灯的通知内容跑马灯的通知内容',
@@ -57,8 +60,9 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '隐藏左侧标签',
+              description: '不传 leftTagText 时左侧标签不渲染',
               child: SantoNoticeBarWithButton(
                 content: '这是通知内容',
                 rightButtonText: '去完成',
@@ -67,15 +71,17 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '隐藏右侧按钮',
+              description: '不传 rightButtonText 时右侧按钮不显示',
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
                 content: '这是通知内容',
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '通知文案长，不跑马灯',
+              description: 'content 超长且未开启 marquee 时的省略表现',
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
                 content: '这是通知内容这是通知内容这是通知内容这是通知内容这是通知内容',
@@ -85,8 +91,9 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义文字和背景颜色',
+              description: '标签、内容与按钮的文字色和背景色可独立配置',
               child: SantoNoticeBarWithButton(
                 leftTagText: '任务',
                 leftTagBackgroundColor: Color(0xFFE6F4FF),

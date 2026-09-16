@@ -34,48 +34,64 @@ class SantoHorizontalStepExamplePageState
       appBar: SantoAppBar(title: widget.title),
       body: Column(
         children: [
-          SliverSantoHorizontalStep(
-            controller: _controller,
-            valueNotifier: valueNotifier,
+          SantoSection(
+            title: '步骤个数调节',
+            description: '拖动 SantoSlider 调整步骤总数，最多 5 步，变化后回到第 1 步',
+            child: Column(
+              children: [
+                SliverSantoHorizontalStep(
+                  controller: _controller,
+                  valueNotifier: valueNotifier,
+                ),
+                const Text('步骤个数：'),
+                SliderWidget(
+                  initValue: sliderValue,
+                  valueNotifier: valueNotifier,
+                ),
+              ],
+            ),
           ),
-          const Text('步骤个数：'),
-          SliderWidget(
-            initValue: sliderValue,
-            valueNotifier: valueNotifier,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SantoNormalButton(
-                child: const Text('上一步'),
-                onTap: () {
-                  _controller.backStep();
-                },
-              ),
-              SantoNormalButton(
-                child: const Text('下一步'),
-                onTap: () {
-                  _controller.forwardStep();
-                },
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SantoNormalButton(
-                child: const Text('跳至第3步'),
-                onTap: () {
-                  _controller.setCurrentIndex(2);
-                },
-              ),
-              SantoNormalButton(
-                child: const Text('完成'),
-                onTap: () {
-                  _controller.setCompleted();
-                },
-              ),
-            ],
+          SantoSection(
+            title: '步骤切换控制',
+            description: '按钮分别调用 SantoStepsController 的前后步、跳转与完成方法',
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SantoNormalButton(
+                      child: const Text('上一步'),
+                      onTap: () {
+                        _controller.backStep();
+                      },
+                    ),
+                    SantoNormalButton(
+                      child: const Text('下一步'),
+                      onTap: () {
+                        _controller.forwardStep();
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SantoNormalButton(
+                      child: const Text('跳至第3步'),
+                      onTap: () {
+                        _controller.setCurrentIndex(2);
+                      },
+                    ),
+                    SantoNormalButton(
+                      child: const Text('完成'),
+                      onTap: () {
+                        _controller.setCompleted();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

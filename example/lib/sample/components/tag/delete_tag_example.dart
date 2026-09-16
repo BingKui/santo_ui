@@ -44,8 +44,9 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(height: 20),
-        SantoPanel(
+        SantoSection(
           title: '基础用法',
+          description: 'controller 用 initTags 初始化，点击删除图标移除标签',
           child: SantoDeleteTag(
             controller: controller,
             onTagDelete: (tags, tag, index) {
@@ -55,8 +56,9 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
             },
           ),
         ),
-        SantoPanel(
+        SantoSection(
           title: '自定义文字样式',
+          description: 'tagTextStyle 与 deleteIconSize 调整文字与图标样式',
           child: SantoDeleteTag(
             controller: controller,
             tagTextStyle: TextStyle(color: Colors.blue, fontSize: 20),
@@ -68,8 +70,9 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
             },
           ),
         ),
-        SantoPanel(
+        SantoSection(
           title: '横向滑动',
+          description: 'softWrap 为 false 时横向滑动，可动态增删标签',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

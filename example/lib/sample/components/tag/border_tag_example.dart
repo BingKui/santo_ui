@@ -19,8 +19,9 @@ class _BorderTagExampleState extends State<BorderTagExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'buildBorderTag 生成描边标签，默认字号 11、内边距 3',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -32,8 +33,9 @@ class _BorderTagExampleState extends State<BorderTagExample> {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '自定义颜色和字号',
+              description: 'textColor 与 borderColor 等参数覆盖默认颜色和边框',
               child: SantoTagCustom.buildBorderTag(
                 tagText: '认证通过',
                 textColor: Colors.red,

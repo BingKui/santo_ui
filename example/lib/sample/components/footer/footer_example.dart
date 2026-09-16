@@ -11,12 +11,14 @@ class FooterExample extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoPanel(
+            SantoSection(
               title: '纯文字页脚',
+              description: '仅传入 text，展示最简的纯文字页脚',
               child: SantoFooter(text: 'Santo UI 组件库'),
             ),
-            SantoPanel(
+            SantoSection(
               title: '带链接页脚',
+              description: 'links 传入 SantoFooterLink 列表，点击触发各自 onTap',
               child: SantoFooter(
                 text: '© 2026 Santo UI',
                 links: [
@@ -26,8 +28,9 @@ class FooterExample extends StatelessWidget {
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '带 Logo 页脚',
+              description: 'logo 传入图标组件，与文字一起展示品牌标识',
               child: SantoFooter(
                 text: 'Powered by Santo UI',
                 logo: Icon(

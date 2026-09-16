@@ -47,51 +47,22 @@ class _SearchTextExampleState extends State<SearchTextExample> {
           Container(
             height: 40,
           ),
-          SantoSearchText(
-            focusNode: focusNode,
-            controller: textController,
-            searchController: scontroller..isActionShow = true,
-            onTextClear: () {
-              debugPrint('sss');
-              return false;
-            },
-            autoFocus: true,
-            onActionTap: () {
-              scontroller.isClearShow = false;
-              scontroller.isActionShow = false;
-              focusNode.unfocus();
-              SantoToast.show('取消', context);
-            },
-            onTextCommit: (text) {
-              SantoToast.show('提交内容 : $text', context);
-            },
-            onTextChange: (text) {
-              SantoToast.show('输入内容 : $text', context);
-            },
-          ),
-          Container(
-            height: 20,
-          ),
-          Container(
-            width: 200,
+          SantoSection(
+            title: '基础用法',
+            description: '默认样式配合 focusNode 与 controller，提交、输入回调返回文本',
             child: SantoSearchText(
-              innerPadding:
-                  EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-              maxHeight: 60,
-              innerColor: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              normalBorder: Border.all(
-                  color: Color(0xFFE8EAEC), width: 1, style: BorderStyle.solid),
-              activeBorder: Border.all(
-                  color: Color(0xFF1677FF), width: 1, style: BorderStyle.solid),
+              focusNode: focusNode,
+              controller: textController,
+              searchController: scontroller..isActionShow = true,
               onTextClear: () {
                 debugPrint('sss');
-                focusNode.unfocus();
                 return false;
               },
               autoFocus: true,
-              action: Container(),
               onActionTap: () {
+                scontroller.isClearShow = false;
+                scontroller.isActionShow = false;
+                focusNode.unfocus();
                 SantoToast.show('取消', context);
               },
               onTextCommit: (text) {
@@ -100,6 +71,44 @@ class _SearchTextExampleState extends State<SearchTextExample> {
               onTextChange: (text) {
                 SantoToast.show('输入内容 : $text', context);
               },
+            ),
+          ),
+          SantoSection(
+            title: '自定义样式',
+            description: 'innerColor、borderRadius 与 normalBorder 重定义外观，action 替换右侧按钮',
+            child: Container(
+              width: 200,
+              child: SantoSearchText(
+                innerPadding:
+                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                maxHeight: 60,
+                innerColor: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                normalBorder: Border.all(
+                    color: Color(0xFFE8EAEC),
+                    width: 1,
+                    style: BorderStyle.solid),
+                activeBorder: Border.all(
+                    color: Color(0xFF1677FF),
+                    width: 1,
+                    style: BorderStyle.solid),
+                onTextClear: () {
+                  debugPrint('sss');
+                  focusNode.unfocus();
+                  return false;
+                },
+                autoFocus: true,
+                action: Container(),
+                onActionTap: () {
+                  SantoToast.show('取消', context);
+                },
+                onTextCommit: (text) {
+                  SantoToast.show('提交内容 : $text', context);
+                },
+                onTextChange: (text) {
+                  SantoToast.show('输入内容 : $text', context);
+                },
+              ),
             ),
           )
         ],

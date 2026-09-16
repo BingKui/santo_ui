@@ -17,8 +17,9 @@ class _ResultExampleState extends State<ResultExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 成功状态
-            SantoPanel(
+            SantoSection(
               title: '成功状态',
+              description: 'status 为 success 时展示成功图标与主题色标题',
               child: SantoResult(
                 status: SantoResultStatus.success,
                 title: '操作成功',
@@ -26,8 +27,9 @@ class _ResultExampleState extends State<ResultExample> {
               ),
             ),
             // 失败状态
-            SantoPanel(
+            SantoSection(
               title: '失败状态',
+              description: 'status 为 error 时图标与配色切换为失败态',
               child: SantoResult(
                 status: SantoResultStatus.error,
                 title: '提交失败',
@@ -35,8 +37,9 @@ class _ResultExampleState extends State<ResultExample> {
               ),
             ),
             // 警告状态
-            SantoPanel(
+            SantoSection(
               title: '警告状态',
+              description: 'status 为 warning 时展示警示图标与对应主题色',
               child: SantoResult(
                 status: SantoResultStatus.warning,
                 title: '存在风险',
@@ -44,8 +47,9 @@ class _ResultExampleState extends State<ResultExample> {
               ),
             ),
             // 信息状态
-            SantoPanel(
+            SantoSection(
               title: '信息状态',
+              description: 'status 为 info 时展示信息图标，适合审核中等中间态',
               child: SantoResult(
                 status: SantoResultStatus.info,
                 title: '审核中',
@@ -53,8 +57,9 @@ class _ResultExampleState extends State<ResultExample> {
               ),
             ),
             // 带操作按钮
-            SantoPanel(
+            SantoSection(
               title: '带操作按钮',
+              description: 'actions 传入按钮列表，点击回调里可做跳转或提示',
               child: SantoResult(
                 status: SantoResultStatus.success,
                 title: '支付成功',
@@ -76,8 +81,9 @@ class _ResultExampleState extends State<ResultExample> {
               ),
             ),
             // 自定义图标和颜色
-            SantoPanel(
+            SantoSection(
               title: '自定义图标和颜色',
+              description: 'icon 与 iconColor 可覆盖默认图标及配色',
               child: SantoResult(
                 status: SantoResultStatus.info,
                 title: '等待支付',

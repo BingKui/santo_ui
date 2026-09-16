@@ -27,8 +27,9 @@ RulePanel(
                     '特殊字体的样式为28号字，正常字体为12号字\n'
                     '上下间距是8',
             maxLines: 4),
-SantoPanel(
+SantoSection(
             title: '正常案例 只有一个Item',
+            description: '只有一个 item 时的基础展示，number 使用 Bebas 字体放大',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,8 +43,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'preDesc 与 lastDesc 在数字前后附加单位，numberInfoIcon 设为 arrow 展示箭头',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,8 +62,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'rowCount 为 3 时按三列平铺，title 最多两行且超出省略',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -105,8 +108,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '正常案例',
+            description: 'rowCount 控制每行列数，item 之间自动展示分割线',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -135,8 +139,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: 'Pad 案例',
+            description: 'itemTextAlign 控制文案对齐，topWidget 与 bottomWidget 完全自定义',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -243,8 +248,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例 非数字',
+            description: 'number 混入中文时字体回退异常，中文请改用 preDesc 或 lastDesc',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -260,8 +266,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例 非数字',
+            description: 'number 混入字母时整体按 Bebas 渲染，建议只传纯数字',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -277,8 +284,9 @@ SantoPanel(
               )],
             ),
           ),
-SantoPanel(
+SantoSection(
             title: '异常案例',
+            description: 'preDesc 与 lastDesc 为多字符时的间距与对齐表现',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

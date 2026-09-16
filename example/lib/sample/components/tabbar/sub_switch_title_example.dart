@@ -33,8 +33,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SantoPanel(
+            SantoSection(
               title: '基础用法',
+              description: 'nameList 传一个标题时无选中态，多个时选中项显示主题色',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -68,8 +69,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例：个数特别多',
+              description: '标题数量较多时横向滚动查看，选中项为主题色且无下划线',
               child: SantoSubSwitchTitle(
                 nameList: [
                   '二级标题1',
@@ -85,8 +87,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '外部调用tab切换',
+              description: '传入 controller 后可在外部修改 index 切换选中项',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -117,8 +120,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 ],
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例：文案过长',
+              description: '单个标题文案过长时按文字宽度撑开并保持可滑动',
               child: SantoSubSwitchTitle(
                 nameList: [
                   '二级标题1',
@@ -131,8 +135,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例：文案长度为1',
+              description: '标题文案仅一个字符时仍保持正常间距与点击响应',
               child: SantoSubSwitchTitle(
                 nameList: [
                   '1',
@@ -145,8 +150,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 },
               ),
             ),
-            SantoPanel(
+            SantoSection(
               title: '异常案例：文案长度为0',
+              description: 'nameList 含空字符串时该项无文字，点击仍可切换选中',
               child: Column(
                 children: <Widget>[
                   SantoSubSwitchTitle(

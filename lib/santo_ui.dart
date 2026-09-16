@@ -10,6 +10,7 @@ export 'src/l10n/santo_resources.dart';
 //工具类 和 资源
 export 'src/components/toast/santo_toast.dart';
 export 'src/utils/santo_tools.dart';
+export 'src/utils/santo_multi_click_util.dart';
 export 'src/constants/santo_constants.dart';
 export 'src/constants/santo_asset_constants.dart';
 export 'src/utils/css/santo_css_2_text.dart';
@@ -21,15 +22,16 @@ export 'src/components/actionsheet/santo_common_action_sheet.dart';
 export 'src/components/actionsheet/santo_share_action_sheet.dart';
 export 'src/components/panel/santo_panel.dart';
 export 'src/components/section/santo_section.dart';
+export 'src/components/safe_area/santo_safe_area.dart';
 export 'src/components/space/santo_space.dart';
 export 'src/components/masonry/santo_masonry.dart';
 export 'src/components/skeleton/santo_skeleton.dart';
+export 'src/components/more_menu/santo_more_menu.dart';
 export 'src/components/actionsheet/santo_share_action_sheet.dart';
 export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 
 //底部导航
-export 'src/components/tabbar/bottom/santo_bottom_tab_bar_main.dart';
-export 'src/components/tabbar/bottom/santo_bottom_tab_bar_item.dart';
+export 'src/components/menu_bar/santo_menu_bar.dart';
 
 //弹框
 export 'src/components/dialog/santo_safe_dialog.dart';
