@@ -21,7 +21,7 @@ class _MenuBarDefaultExampleState extends State<MenuBarDefaultExample> {
       appBar: SantoAppBar(title: 'MenuBar · 默认样式'),
       body: ListView(
         children: [
-          for (int i = 1; i <= 6; i++)
+          for (int i = 1; i <= 20; i++)
             Container(
               margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
               padding: const EdgeInsets.all(16),

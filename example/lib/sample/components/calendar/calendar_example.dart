@@ -4,16 +4,16 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 ///标签选择view
-class CalendarViewExample extends StatefulWidget {
+class CalendarExample extends StatefulWidget {
   final String _title;
 
-  CalendarViewExample(this._title);
+  CalendarExample(this._title);
 
   @override
   State<StatefulWidget> createState() => TagViewExamplePageState();
 }
 
-class TagViewExamplePageState extends State<CalendarViewExample> {
+class TagViewExamplePageState extends State<CalendarExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +60,7 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
   }
 
   Widget _calendarViewWeekNocontroll(context) {
-    return SantoCalendarView.single(
+    return SantoCalendar.single(
       displayMode: DisplayMode.week,
       showControllerBar: false,
       dateChange: (date) {
@@ -70,7 +70,7 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
   }
 
   Widget _calendarViewWeekNocontrollCustomWeekName(context) {
-    return SantoCalendarView.single(
+    return SantoCalendar.single(
       displayMode: DisplayMode.week,
       showControllerBar: false,
       weekNames: ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
@@ -81,7 +81,7 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
   }
 
   Widget _calendarViewWeek(context) {
-    return SantoCalendarView.single(
+    return SantoCalendar.single(
       displayMode: DisplayMode.week,
       initDisplayDate: DateTime.parse('2020-06-01'),
       minDate: DateTime(2020),
@@ -93,7 +93,7 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
   }
 
   Widget _calendarViewWeekRange(context) {
-    return SantoCalendarView.range(
+    return SantoCalendar.range(
       displayMode: DisplayMode.week,
       rangeDateChange: (rangeDate) {
         SantoToast.show(
@@ -103,7 +103,7 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
   }
 
   Widget _calendarViewMonth(context) {
-    return SantoCalendarView.single(
+    return SantoCalendar.single(
       initDisplayDate: DateTime.parse('2020-06-01'),
       minDate: DateTime(2020),
       maxDate: DateTime(2021),
@@ -114,7 +114,7 @@ class TagViewExamplePageState extends State<CalendarViewExample> {
   }
 
   Widget _calendarViewMonthRange(context) {
-    return SantoCalendarView.range(
+    return SantoCalendar.range(
       minDate: DateTime(2020),
       maxDate: DateTime(2023),
       rangeDateChange: (rangeDate) {

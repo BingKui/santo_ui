@@ -325,7 +325,7 @@ class _SantoRangeSelectionGroupWidgetState
             DateTimeFormatter.convertIntValueToDateTime(item.value);
         DateTime? initialEndDate =
             DateTimeFormatter.convertIntValueToDateTime(item.value);
-        content = SantoCalendarView.single(
+        content = SantoCalendar.single(
           key: GlobalKey(),
           initStartSelectedDate: initialStartDate,
           initEndSelectedDate: initialEndDate,
@@ -347,7 +347,7 @@ class _SantoRangeSelectionGroupWidgetState
             ? null
             : DateTimeFormatter.convertIntValueToDateTime(
                 item.customMap!['max']);
-        content = SantoCalendarView.range(
+        content = SantoCalendar.range(
           key: GlobalKey(),
           initStartSelectedDate: initialStartDate,
           initEndSelectedDate: initialEndDate,

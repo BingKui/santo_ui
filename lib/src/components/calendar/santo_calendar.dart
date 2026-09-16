@@ -20,8 +20,8 @@ enum SelectMode { single, range }
 /// 日历组件 包括月视图，周视图、日期单选、日期范围选等功能。
 /// 1、点击不同月份日期，自动切换到最新选中日期所在月份。
 /// 2、日历组件支持时间范围展示，仅展示范围内的日历视图，范围外日期置灰不可点击。日期范围边界后不可再翻页。
-class SantoCalendarView extends StatefulWidget {
-  SantoCalendarView(
+class SantoCalendar extends StatefulWidget {
+  SantoCalendar(
       {Key? key,
       this.selectMode = SelectMode.single,
       this.displayMode = DisplayMode.month,
@@ -39,7 +39,7 @@ class SantoCalendarView extends StatefulWidget {
         super(key: key);
 
   /// 选择时间-单选构造 仅能选择一个日期
-  SantoCalendarView.single(
+  SantoCalendar.single(
       {Key? key,
       this.displayMode = DisplayMode.month,
       this.weekNames,
@@ -55,7 +55,7 @@ class SantoCalendarView extends StatefulWidget {
         super(key: key);
 
   /// 选择时间-时间范围选择
-  SantoCalendarView.range(
+  SantoCalendar.range(
       {Key? key,
       this.displayMode = DisplayMode.month,
       this.weekNames,
@@ -110,10 +110,10 @@ class SantoCalendarView extends StatefulWidget {
   final CalendarRangeDateChange? rangeDateChange;
 
   @override
-  _CustomCalendarViewState createState() => _CustomCalendarViewState();
+  _CustomCalendarState createState() => _CustomCalendarState();
 }
 
-class _CustomCalendarViewState extends State<SantoCalendarView> {
+class _CustomCalendarState extends State<SantoCalendar> {
   List<DateTime> dateList = <DateTime>[];
   late DateTime _currentDate;
   late DisplayMode _displayMode;

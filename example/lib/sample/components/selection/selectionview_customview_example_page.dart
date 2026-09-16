@@ -130,7 +130,7 @@ class _SelectionViewExamplePageState
               ValueListenableBuilder(
                 valueListenable: _currentCalendarSelectedDate,
                 builder: (context, dynamic value, widget) {
-                  return SantoCalendarView.single(
+                  return SantoCalendar.single(
                       initStartSelectedDate: _currentCalendarSelectedDate.value,
                       initEndSelectedDate: _currentCalendarSelectedDate.value,
                       dateChange: (date) {

@@ -11,7 +11,7 @@ import 'package:example/sample/components/space/space_example.dart';
 import 'package:example/sample/components/masonry/masonry_example.dart';
 import 'package:example/sample/components/skeleton/skeleton_example.dart';
 import 'package:example/sample/components/button/button_entry_page.dart';
-import 'package:example/sample/components/calendar/calendarview_example.dart';
+import 'package:example/sample/components/calendar/calendar_example.dart';
 import 'package:example/sample/components/card/santo_shadow_card_example.dart';
 import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
 import 'package:example/sample/components/card/content/text_content_entry_page.dart';
@@ -23,7 +23,7 @@ import 'package:example/sample/components/charts/line/db_data_node_model.dart';
 import 'package:example/sample/components/charts/progress_bar_chart_example.dart';
 import 'package:example/sample/components/charts/progress_chart_entry_page.dart';
 import 'package:example/sample/components/dialog/dialog_entry_page.dart';
-import 'package:example/sample/components/empty/abnormal_entry_page.dart';
+import 'package:example/sample/components/empty/empty_entry_page.dart';
 import 'package:example/sample/components/form/all_item_style_example.dart';
 import 'package:example/sample/components/gallery/gallery_example.dart';
 import 'package:example/sample/components/guide/guide_entry_page.dart';
@@ -166,8 +166,8 @@ class CardDataConfig {
       _item("DropdownMenu 下拉菜单", "列表筛选下拉", DropdownMenuExample()),
       _item("Selection 筛选", "复杂条件筛选", SelectionEntryPage()),
       _item("Tree 树形控件", "树形结构选择", TreeExample()),
-      _item("CalendarView 日历", "日历日期选择", CalendarViewExample("日历组件")),
-      _item("SingleSelectCity 城市选择", "城市列表选择", _buildSingleSelectCityPage()),
+      _item("Calendar 日历", "日历日期选择", CalendarExample("日历组件")),
+      _item("CitySelection 城市选择", "城市列表选择", _buildCitySelectionPage()),
     ];
     return GroupInfo(groupName: "数据录入", children: children, isExpand: false);
   }
@@ -191,7 +191,7 @@ class CardDataConfig {
       _item("NoticeBar 通知栏", "滚动通知条", SantoNoticeBarExample()),
       _item("Progress 进度条", "线性/环形进度", ProgressExample()),
       _item("TimeCounter 计时器", "倒计时/正计时", TimeCounterExample()),
-      _item("AbnormalState 异常状态", "空数据提示", AbnormalStatesEntryPage("异常页面示例")),
+      _item("Empty 空状态", "空数据提示", EmptyEntryPage("异常页面示例")),
       _item("Footer 页脚", "页面底部信息", FooterExample()),
       _item("Gallery 图片浏览", "大图预览", GalleryExample()),
     ];
@@ -255,7 +255,7 @@ class CardDataConfig {
     );
   }
 
-  static Widget _buildSingleSelectCityPage() {
+  static Widget _buildCitySelectionPage() {
     List<SantoSelectCityModel> hotCityList = [
       SantoSelectCityModel(name: "北京市"),
       SantoSelectCityModel(name: "广州市"),
@@ -264,7 +264,7 @@ class CardDataConfig {
       SantoSelectCityModel(name: "杭州市"),
       SantoSelectCityModel(name: "武汉市"),
     ];
-    return SantoSingleSelectCityPage(
+    return SantoCitySelection(
       appBarTitle: '城市单选',
       hotCityTitle: '这里是推荐城市',
       hotCityList: hotCityList,

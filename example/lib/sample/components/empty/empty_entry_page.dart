@@ -1,14 +1,14 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/components/empty/abnormal_state_example.dart';
+import 'package:example/sample/components/empty/empty_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
-class AbnormalStatesEntryPage extends StatelessWidget {
+class EmptyEntryPage extends StatelessWidget {
   final _title;
 
-  AbnormalStatesEntryPage(this._title);
+  EmptyEntryPage(this._title);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 0,
                     );
                   },
@@ -38,7 +38,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 1,
                     );
                   },
@@ -51,7 +51,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 2,
                     );
                   },
@@ -64,7 +64,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 3,
                     );
                   },
@@ -77,7 +77,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 4,
                     );
                   },
@@ -90,7 +90,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 5,
                     );
                   },
@@ -103,7 +103,7 @@ class AbnormalStatesEntryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return AbnomalStateExample(
+                    return EmptyExample(
                       caseIndex: 6,
                     );
                   },

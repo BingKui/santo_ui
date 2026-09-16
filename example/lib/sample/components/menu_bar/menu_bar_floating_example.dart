@@ -21,7 +21,7 @@ class _MenuBarFloatingExampleState extends State<MenuBarFloatingExample> {
       appBar: SantoAppBar(title: 'MenuBar · 悬浮样式'),
       body: ListView(
         children: [
-          for (int i = 1; i <= 6; i++)
+          for (int i = 1; i <= 20; i++)
             Container(
               margin: EdgeInsets.fromLTRB(12, i == 1 ? 12 : 0, 12, 12),
               padding: const EdgeInsets.all(16),
