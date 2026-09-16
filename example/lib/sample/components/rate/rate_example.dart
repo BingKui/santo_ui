@@ -4,19 +4,19 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 /// 星级评分条
-class RatingExample extends StatefulWidget {
+class RateExample extends StatefulWidget {
   @override
-  _RatingExampleState createState() => _RatingExampleState();
+  _RateExampleState createState() => _RateExampleState();
 }
 
-class _RatingExampleState extends State<RatingExample> {
+class _RateExampleState extends State<RateExample> {
   var num = 3;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SantoAppBar(
-        title: '星级评分控件Example',
+        title: 'Rate 评分示例',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -30,14 +30,14 @@ class _RatingExampleState extends State<RatingExample> {
                 children: <Widget>[
                   // 只接受整数，外界
                   Text("支持半颗"),
-                  SantoRatingStar(),
-                  SantoRatingStar(
+                  SantoRate(),
+                  SantoRate(
                     selectedCount: 0.5,
                   ),
-                  SantoRatingStar(
+                  SantoRate(
                     selectedCount: 3.1,
                   ),
-                  SantoRatingStar(
+                  SantoRate(
                     selectedCount: 3.6,
                     count: 10,
                   ),
@@ -59,7 +59,7 @@ class _RatingExampleState extends State<RatingExample> {
                       });
                     },
                   ),
-                  SantoRatingStar(
+                  SantoRate(
                     selectedCount: num.toDouble(),
                     space: 5,
                     canRatingZero: true,
@@ -77,7 +77,7 @@ class _RatingExampleState extends State<RatingExample> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text("自定义图片，颜色，大小"),
-                  SantoRatingStar(
+                  SantoRate(
                     selectedCount: 3,
                     space: 1,
                     canRatingZero: true,

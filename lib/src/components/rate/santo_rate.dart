@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 /// 星星视图的自定义构造器
 /// state，[RatingState] 星星状态
-typedef SantoRatingStarBuilder = Widget Function(RatingState state);
+typedef SantoRateBuilder = Widget Function(RatingState state);
 
 /// 星星状态
 enum RatingState {
@@ -24,7 +24,7 @@ enum RatingState {
 /// * 支持点击选中
 /// * 支持是否限制评分最少一颗星，即第一颗星支持是否可反选
 /// * 支持半颗星（仅支持展示，不支持选择）
-class SantoRatingStar extends StatefulWidget {
+class SantoRate extends StatefulWidget {
   static const DEFAULT_COUNT = 5;
   static const DEFAULT_SPACE = 1.0;
 
@@ -41,12 +41,12 @@ class SantoRatingStar extends StatefulWidget {
   final bool canRatingZero;
 
   /// 单颗星星视图的自定义构造器
-  final SantoRatingStarBuilder? starBuilder;
+  final SantoRateBuilder? starBuilder;
 
   /// 如果设置了，就支持编辑
   final ValueChanged<int>? onSelected;
 
-  const SantoRatingStar({
+  const SantoRate({
     Key? key,
     this.count = DEFAULT_COUNT,
     this.selectedCount = 0,
@@ -57,10 +57,10 @@ class SantoRatingStar extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SantoRatingStarState createState() => _SantoRatingStarState();
+  _SantoRateState createState() => _SantoRateState();
 }
 
-class _SantoRatingStarState extends State<SantoRatingStar> {
+class _SantoRateState extends State<SantoRate> {
   late double currSelected;
 
   @override
@@ -70,7 +70,7 @@ class _SantoRatingStarState extends State<SantoRatingStar> {
   }
 
   @override
-  void didUpdateWidget(SantoRatingStar oldWidget) {
+  void didUpdateWidget(SantoRate oldWidget) {
     currSelected = widget.selectedCount;
     super.didUpdateWidget(oldWidget);
   }

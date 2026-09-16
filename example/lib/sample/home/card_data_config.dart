@@ -36,7 +36,7 @@ import 'package:example/sample/components/noticebar/santo_notice_bar_example.dar
 import 'package:example/sample/components/picker/picker_entry_page.dart';
 import 'package:example/sample/components/popup/popwindow_example.dart';
 import 'package:example/sample/components/popup/overlay_window_example.dart';
-import 'package:example/sample/components/rating/rating_example.dart';
+import 'package:example/sample/components/rate/rate_example.dart';
 import 'package:example/sample/components/scroll_anchor/scroll_actor_tab_example.dart';
 import 'package:example/sample/components/selection/selection_entry_page.dart';
 import 'package:example/sample/components/step/step_example.dart';
@@ -159,7 +159,7 @@ class CardDataConfig {
       _item("Radio 单选框", "单项选择", RadioExample()),
       _item("Checkbox 多选框", "多项选择", CheckboxExample()),
       _item("Switch 开关", "状态切换", SantoSwitchButtonExample()),
-      _item("Rate 评分", "星级打分", RatingExample()),
+      _item("Rate 评分", "星级打分", RateExample()),
       _item("Stepper 步进器", "数量增减", StepperExample()),
       _item("Slider 滑动输入条", "范围数值选择", SliderExample()),
       _item("SearchText 搜索框", "搜索输入", SearchTextExample()),

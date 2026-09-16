@@ -52,7 +52,7 @@ SantoSection(
               children: [
             SantoCommonCardTitle(
               title: '非箭头Title',
-              subTitleWidget: SantoRatingStar(
+              subTitleWidget: SantoRate(
                 count: 2,
                 selectedCount: 2,
               ),
