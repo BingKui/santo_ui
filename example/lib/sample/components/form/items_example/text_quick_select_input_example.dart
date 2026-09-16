@@ -4,26 +4,24 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 class TextQuickSelectInputExamplePage extends StatefulWidget {
-  final String _title;
 
-  TextQuickSelectInputExamplePage(this._title);
+  TextQuickSelectInputExamplePage();
 
   @override
   State<StatefulWidget> createState() {
-    return _TextQuickSelectInputExamplePageState(this._title);
+    return _TextQuickSelectInputExamplePageState();
   }
 }
 
 class _TextQuickSelectInputExamplePageState
     extends State<TextQuickSelectInputExamplePage> {
-  final String _title;
   String selectedStr = '';
   String selectedStrAllFunctionExample = '';
   List<String> options = ['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'];
   late List<bool> status;
   List<bool>? statusAllFunctionExample;
 
-  _TextQuickSelectInputExamplePageState(this._title);
+  _TextQuickSelectInputExamplePageState();
 
   @override
   void initState() {
@@ -35,12 +33,10 @@ class _TextQuickSelectInputExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: _title,
-        ),
-        body: ListView(
-          children: <Widget>[
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Text(
@@ -131,6 +127,6 @@ class _TextQuickSelectInputExamplePageState
               },
             ),
           ],
-        ));
+    );
   }
 }

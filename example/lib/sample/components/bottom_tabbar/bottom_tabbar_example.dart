@@ -37,7 +37,7 @@ class _BottomTabbarExampleState extends State<BottomTabbarExample> {
   List<SantoBottomTabBarItem> _buildItems({
     int count = 5,
     bool withAssetIcon = false,
-    String? badgeIndexNo,
+    int? badgeIndexNo,
   }) {
     return List.generate(count, (index) {
       Widget icon = Icon(_icons[index % _icons.length], size: 24);

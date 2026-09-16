@@ -124,7 +124,7 @@ class SantoPanelConfig extends SantoBaseConfig {
       SantoTextStyle(
         color: commonConfig.colorTextBase,
         fontSize: commonConfig.fontSizeSubHead,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
       ).merge(_titleTextStyle),
     );
 

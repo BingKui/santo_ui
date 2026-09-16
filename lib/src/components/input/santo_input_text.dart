@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/l10n/santo_intl.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -160,7 +161,7 @@ class _SantoInputTextState extends State<SantoInputText> {
   /// 密码显隐状态,初始由 [SantoInputText.obscureText] 决定
   late bool _obscure = widget.obscureText;
 
-  CommonConfig get _commonConfig =>
+  SantoCommonConfig get _commonConfig =>
       SantoThemeConfigurator.instance.getConfig().commonConfig;
 
   bool get _interactive => widget.enabled && !widget.readOnly;
