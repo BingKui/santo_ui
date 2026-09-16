@@ -286,7 +286,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         borderRadius: BorderRadius.circular(_containerRadius),
         border: Border.all(
           color: _commonConfig.dividerColorBase,
-          width: 0.5,
+          width: 1,
         ),
       ),
       child: ClipRRect(
