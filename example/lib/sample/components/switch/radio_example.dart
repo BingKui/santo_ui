@@ -23,114 +23,85 @@ class _RadioExampleState extends State<RadioExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
-            SantoBubbleText(maxLines: 2, text: '具备选中、未选中、以及禁用状态,支持设置左右widget'),
-            Text(
-              '正常案例：单选，控件在选择按钮右边',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+            SantoPanel(
+              title: '基础用法',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SantoBubbleText(
+                      maxLines: 2, text: '具备选中、未选中、以及禁用状态,支持设置左右widget'),
+                  SizedBox(height: 16),
+                  Row(
+                    children: <Widget>[
+                      Text("选项："),
+                      SantoRadioButton(
+                        radioIndex: 0,
+                        isSelected: _singleSelectedIndex == 0,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text("选项A"),
+                        ),
+                        onValueChangedAtIndex: (index, value) {
+                          setState(() {
+                            _singleSelectedIndex = index;
+                          });
+                          SantoToast.show("单选，选中第$index个", context);
+                        },
+                      ),
+                      SizedBox(width: 20),
+                      SantoRadioButton(
+                        radioIndex: 1,
+                        isSelected: _singleSelectedIndex == 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text("选项B"),
+                        ),
+                        onValueChangedAtIndex: (index, value) {
+                          setState(() {
+                            _singleSelectedIndex = index;
+                          });
+                          SantoToast.show("单选，选中第$index个", context);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 5,
-                ),
-                Text("选项："),
-                SantoRadioButton(
-                  radioIndex: 0,
-                  isSelected: _singleSelectedIndex == 0,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Text(
-                      "选项A",
-                    ),
+            SantoPanel(
+              title: '禁用状态',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      SantoRadioButton(
+                        disable: true,
+                        radioIndex: 0,
+                        isSelected: false,
+                        onValueChangedAtIndex: (index, value) {},
+                      ),
+                      SizedBox(width: 8),
+                      Text('未选中，禁用',
+                          style: TextStyle(fontSize: 13, color: Colors.grey)),
+                    ],
                   ),
-                  onValueChangedAtIndex: (index, value) {
-                    setState(() {
-                      _singleSelectedIndex = index;
-                      SantoToast.show("单选，选中第$index个", context);
-                    });
-                  },
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                SantoRadioButton(
-                  radioIndex: 1,
-                  isSelected: _singleSelectedIndex == 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Text(
-                      "选项B",
-                    ),
+                  SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      SantoRadioButton(
+                        disable: true,
+                        radioIndex: 0,
+                        isSelected: true,
+                        onValueChangedAtIndex: (index, value) {},
+                      ),
+                      SizedBox(width: 8),
+                      Text('已选中，禁用',
+                          style: TextStyle(fontSize: 13, color: Colors.grey)),
+                    ],
                   ),
-                  onValueChangedAtIndex: (index, value) {
-                    setState(() {
-                      _singleSelectedIndex = index;
-                      SantoToast.show("单选，选中第$index个", context);
-                    });
-                  },
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                SantoRadioButton(
-                  radioIndex: 1,
-                  disable: true,
-                  isSelected: _singleSelectedIndex == 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Text(
-                      "选项C",
-                    ),
-                  ),
-                  onValueChangedAtIndex: (index, value) {
-                    setState(() {
-                      _singleSelectedIndex = index;
-                      SantoToast.show("单选，选中第$index个", context);
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              '单选，未选中，禁用',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+                ],
               ),
-            ),
-            SantoRadioButton(
-              disable: true,
-              radioIndex: 0,
-              onValueChangedAtIndex: (index, value) {},
-            ),
-            Text(
-              '单选,已选中，禁用',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            SantoRadioButton(
-              disable: true,
-              radioIndex: 0,
-              isSelected: true,
-              onValueChangedAtIndex: (index, value) {},
             ),
           ],
         ),

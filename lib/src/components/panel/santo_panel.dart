@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 /// ```dart
 /// SantoPanel(
 ///   title: '面板标题',
+///   description: '面板描述信息',
 ///   actions: [SantoNormalButton.outline(text: '更多', onTap: () {})],
 ///   child: Text('面板内容'),
 /// )
@@ -19,6 +20,9 @@ class SantoPanel extends StatelessWidget {
 
   /// Header 左侧自定义标题控件,设置后 [title] 失效
   final Widget? titleWidget;
+
+  /// 标题下方的描述信息,字号较小、灰色
+  final String? description;
 
   /// Header 右侧操作区控件列表
   final List<Widget>? actions;
@@ -48,6 +52,7 @@ class SantoPanel extends StatelessWidget {
     Key? key,
     this.title,
     this.titleWidget,
+    this.description,
     this.actions,
     required this.child,
     this.contentPadding = true,
@@ -89,23 +94,47 @@ class SantoPanel extends StatelessWidget {
     );
   }
 
-  /// Header:左侧标题 + 右侧操作区,底部带分割线
+  /// Header:左侧标题(含可选描述) + 右侧操作区,底部带分割线
   Widget _buildHeader(SantoPanelConfig config) {
-    Widget? titleWidget = this.titleWidget;
-    titleWidget ??= title == null
+    Widget? headerTitle = titleWidget;
+    headerTitle ??= title == null
         ? null
         : DefaultTextStyle(
             style: config.titleTextStyle.generateTextStyle(),
             child: Text(title!),
           );
 
-    if (titleWidget == null && (actions == null || actions!.isEmpty)) {
+    if (headerTitle == null && (actions == null || actions!.isEmpty)) {
       return const SizedBox.shrink();
     }
 
+    final hasDescription = description != null && description!.isNotEmpty;
+
+    Widget? leftWidget = headerTitle;
+    if (hasDescription) {
+      leftWidget = Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          headerTitle!,
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: DefaultTextStyle(
+              style: config.descriptionTextStyle.generateTextStyle(),
+              child: Text(description!),
+            ),
+          ),
+        ],
+      );
+    }
+
     return Container(
-      height: config.headerHeight,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      constraints: BoxConstraints(minHeight: config.headerHeight),
+      padding: EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: hasDescription ? 10 : 0,
+      ),
+      alignment: hasDescription ? null : Alignment.centerLeft,
       decoration: BoxDecoration(
         border: config.showHeaderDivider
             ? Border(
@@ -118,7 +147,7 @@ class SantoPanel extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(child: titleWidget ?? const SizedBox.shrink()),
+          Expanded(child: leftWidget ?? const SizedBox.shrink()),
           if (actions != null && actions!.isNotEmpty)
             Row(mainAxisSize: MainAxisSize.min, children: actions!),
         ],

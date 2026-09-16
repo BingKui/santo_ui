@@ -14,6 +14,11 @@ class PanelExample extends StatelessWidget {
             child: Text('这是一个基础面板,内容自适应高度,圆角 12px。'),
           ),
           SantoPanel(
+            title: '带描述面板',
+            description: '这是标题下方的描述信息,字号更小,颜色为灰色',
+            child: Text('Header 标题下方展示描述信息。'),
+          ),
+          SantoPanel(
             title: '带操作面板',
             actions: [
               SantoNormalButton.outline(

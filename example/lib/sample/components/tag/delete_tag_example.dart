@@ -17,15 +17,10 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SantoAppBar(
-        title: 'SantoDeleteTag',
+        title: '删除标签',
       ),
       body: Container(
         color: Colors.white,
@@ -45,12 +40,13 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
       '标签信息标签信息标签信息标签信息'
     ]);
 
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          SantoDeleteTag(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 20),
+        SantoPanel(
+          title: '基础用法',
+          child: SantoDeleteTag(
             controller: controller,
             onTagDelete: (tags, tag, index) {
               SantoToast.show(
@@ -58,7 +54,10 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
                   context);
             },
           ),
-          SantoDeleteTag(
+        ),
+        SantoPanel(
+          title: '自定义文字样式',
+          child: SantoDeleteTag(
             controller: controller,
             tagTextStyle: TextStyle(color: Colors.blue, fontSize: 20),
             deleteIconSize: Size(16, 16),
@@ -68,39 +67,48 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
                   context);
             },
           ),
-          SantoDeleteTag(
-            controller: controller,
-            tagTextStyle: TextStyle(color: Colors.yellow),
-            backgroundColor: Colors.blue,
-            deleteIconColor: Colors.red,
-            softWrap: false,
-            onTagDelete: (tags, tag, index) {
-              SantoToast.show(
-                  '剩余的标签为：${tags.toString()},删除了的标签为：$tag  ,删除的标签index为$index',
-                  context);
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SantoIconButton(
-                name: '',
-                iconWidget: Icon(Icons.add),
-                widgetWidth: 48,
-                widgetHeight: 48,
-                onTap: () => controller.addTag('增加的tag'),
+        ),
+        SantoPanel(
+          title: '横向滑动',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SantoDeleteTag(
+                controller: controller,
+                tagTextStyle: TextStyle(color: Colors.yellow),
+                backgroundColor: Colors.blue,
+                deleteIconColor: Colors.red,
+                softWrap: false,
+                onTagDelete: (tags, tag, index) {
+                  SantoToast.show(
+                      '剩余的标签为：${tags.toString()},删除了的标签为：$tag  ,删除的标签index为$index',
+                      context);
+                },
               ),
-              SantoIconButton(
-                name: '',
-                iconWidget: Icon(Icons.delete_forever),
-                widgetWidth: 48,
-                widgetHeight: 48,
-                onTap: () => controller.deleteForIndex(0),
-              )
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SantoIconButton(
+                    name: '',
+                    iconWidget: Icon(Icons.add),
+                    widgetWidth: 48,
+                    widgetHeight: 48,
+                    onTap: () => controller.addTag('增加的tag'),
+                  ),
+                  SantoIconButton(
+                    name: '',
+                    iconWidget: Icon(Icons.delete_forever),
+                    widgetWidth: 48,
+                    widgetHeight: 48,
+                    onTap: () => controller.deleteForIndex(0),
+                  )
+                ],
+              ),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

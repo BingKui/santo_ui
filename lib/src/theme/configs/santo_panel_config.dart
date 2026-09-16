@@ -16,6 +16,7 @@ class SantoPanelConfig extends SantoBaseConfig {
     double? radius,
     double? headerHeight,
     SantoTextStyle? titleTextStyle,
+    SantoTextStyle? descriptionTextStyle,
     Color? borderColor,
     double? borderWidth,
     bool? showHeaderDivider,
@@ -26,6 +27,7 @@ class SantoPanelConfig extends SantoBaseConfig {
         _radius = radius,
         _headerHeight = headerHeight,
         _titleTextStyle = titleTextStyle,
+        _descriptionTextStyle = descriptionTextStyle,
         _borderColor = borderColor,
         _borderWidth = borderWidth,
         _showHeaderDivider = showHeaderDivider,
@@ -48,6 +50,9 @@ class SantoPanelConfig extends SantoBaseConfig {
 
   /// Header 左侧标题样式
   SantoTextStyle? _titleTextStyle;
+
+  /// Header 标题下方描述信息样式
+  SantoTextStyle? _descriptionTextStyle;
 
   /// 面板边框颜色
   Color? _borderColor;
@@ -78,6 +83,10 @@ class SantoPanelConfig extends SantoBaseConfig {
   SantoTextStyle get titleTextStyle =>
       _titleTextStyle ??
       SantoDefaultConfigUtils.defaultPanelConfig.titleTextStyle;
+
+  SantoTextStyle get descriptionTextStyle =>
+      _descriptionTextStyle ??
+      SantoDefaultConfigUtils.defaultPanelConfig.descriptionTextStyle;
 
   Color get borderColor =>
       _borderColor ?? SantoDefaultConfigUtils.defaultPanelConfig.borderColor;
@@ -118,6 +127,14 @@ class SantoPanelConfig extends SantoBaseConfig {
         fontWeight: FontWeight.w600,
       ).merge(_titleTextStyle),
     );
+
+    _descriptionTextStyle = panelConfig.descriptionTextStyle.merge(
+      SantoTextStyle(
+        color: commonConfig.colorTextSecondary,
+        fontSize: commonConfig.fontSizeCaption,
+        fontWeight: FontWeight.w400,
+      ).merge(_descriptionTextStyle),
+    );
   }
 
   /// 合并配置,[other] 中的非空字段优先
@@ -130,6 +147,7 @@ class SantoPanelConfig extends SantoBaseConfig {
       radius: other._radius,
       headerHeight: other._headerHeight,
       titleTextStyle: other._titleTextStyle,
+      descriptionTextStyle: other._descriptionTextStyle,
       borderColor: other._borderColor,
       borderWidth: other._borderWidth,
       showHeaderDivider: other._showHeaderDivider,
@@ -143,6 +161,7 @@ class SantoPanelConfig extends SantoBaseConfig {
     double? radius,
     double? headerHeight,
     SantoTextStyle? titleTextStyle,
+    SantoTextStyle? descriptionTextStyle,
     Color? borderColor,
     double? borderWidth,
     bool? showHeaderDivider,
@@ -154,6 +173,7 @@ class SantoPanelConfig extends SantoBaseConfig {
       radius: radius ?? _radius,
       headerHeight: headerHeight ?? _headerHeight,
       titleTextStyle: titleTextStyle ?? _titleTextStyle,
+      descriptionTextStyle: descriptionTextStyle ?? _descriptionTextStyle,
       borderColor: borderColor ?? _borderColor,
       borderWidth: borderWidth ?? _borderWidth,
       showHeaderDivider: showHeaderDivider ?? _showHeaderDivider,

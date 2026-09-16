@@ -52,8 +52,8 @@ class SantoDefaultConfigUtils {
 
   /// 面板配置
   static SantoPanelConfig defaultPanelConfig = SantoPanelConfig(
-    margin: const EdgeInsets.all(16),
-    contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+    margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+    contentPadding: const EdgeInsets.all(10),
     backgroundColor: Colors.white,
     radius: 12,
     headerHeight: 48,
@@ -64,6 +64,11 @@ class SantoDefaultConfigUtils {
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
       fontWeight: FontWeight.w600,
+    ),
+    descriptionTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextSecondary,
+      fontSize: defaultCommonConfig.fontSizeCaption,
+      fontWeight: FontWeight.w400,
     ),
   );
 

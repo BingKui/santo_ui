@@ -21,186 +21,157 @@ class _FabExampleState extends State<FabExample> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 基础用法
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '基础用法',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    '圆形悬浮按钮，支持自定义图标和颜色',
-                    style: TextStyle(fontSize: 13, color: Colors.grey),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                SantoPanel(
+                  title: '基础用法',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 默认蓝色
-                      SantoFab(
-                        icon: Icons.add,
-                        onPressed: () {
-                          _showSnackBar('点击了默认蓝色按钮');
-                        },
-                      ),
-                      // 绿色
-                      SantoFab(
-                        icon: Icons.check,
-                        backgroundColor: Color(0xFF00AE66),
-                        onPressed: () {
-                          _showSnackBar('点击了绿色按钮');
-                        },
-                      ),
-                      // 红色
-                      SantoFab(
-                        icon: Icons.close,
-                        backgroundColor: Color(0xFFFA3F3F),
-                        onPressed: () {
-                          _showSnackBar('点击了红色按钮');
-                        },
+                      Text('圆形悬浮按钮，支持自定义图标和颜色',
+                          style: TextStyle(fontSize: 13, color: Colors.grey)),
+                      SizedBox(height: 16),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // 默认蓝色
+                            SantoFab(
+                              icon: Icons.add,
+                              onPressed: () {
+                                _showSnackBar('点击了默认蓝色按钮');
+                              },
+                            ),
+                            // 绿色
+                            SantoFab(
+                              icon: Icons.check,
+                              backgroundColor: Color(0xFF00AE66),
+                              onPressed: () {
+                                _showSnackBar('点击了绿色按钮');
+                              },
+                            ),
+                            // 红色
+                            SantoFab(
+                              icon: Icons.close,
+                              backgroundColor: Color(0xFFFA3F3F),
+                              onPressed: () {
+                                _showSnackBar('点击了红色按钮');
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 32),
 
                 // 不同大小
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '不同大小',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                SantoPanel(
+                  title: '不同大小',
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SantoFab(
+                          icon: Icons.add,
+                          size: 40,
+                          onPressed: () {},
+                        ),
+                        SantoFab(
+                          icon: Icons.add,
+                          size: 56,
+                          onPressed: () {},
+                        ),
+                        SantoFab(
+                          icon: Icons.add,
+                          size: 72,
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SantoFab(
-                        icon: Icons.add,
-                        size: 40,
-                        onPressed: () {},
-                      ),
-                      SantoFab(
-                        icon: Icons.add,
-                        size: 56,
-                        onPressed: () {},
-                      ),
-                      SantoFab(
-                        icon: Icons.add,
-                        size: 72,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 32),
 
                 // 扩展形按钮
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '扩展形按钮（带文字）',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    '设置 text 属性后自动变为扩展形',
-                    style: TextStyle(fontSize: 13, color: Colors.grey),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Center(
+                SantoPanel(
+                  title: '扩展形按钮（带文字）',
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SantoFab(
-                        icon: Icons.add,
-                        text: '新建项目',
-                        onPressed: () {
-                          _showSnackBar('点击了新建项目');
-                        },
-                      ),
-                      SizedBox(height: 12),
-                      SantoFab(
-                        icon: Icons.edit,
-                        text: '编辑',
-                        backgroundColor: Color(0xFF00AE66),
-                        onPressed: () {
-                          _showSnackBar('点击了编辑');
-                        },
-                      ),
-                      SizedBox(height: 12),
-                      SantoFab(
-                        icon: Icons.share,
-                        text: '分享',
-                        backgroundColor: Color(0xFFFAAD14),
-                        onPressed: () {
-                          _showSnackBar('点击了分享');
-                        },
+                      Text('设置 text 属性后自动变为扩展形',
+                          style: TextStyle(fontSize: 13, color: Colors.grey)),
+                      SizedBox(height: 16),
+                      Center(
+                        child: Column(
+                          children: [
+                            SantoFab(
+                              icon: Icons.add,
+                              text: '新建项目',
+                              onPressed: () {
+                                _showSnackBar('点击了新建项目');
+                              },
+                            ),
+                            SizedBox(height: 12),
+                            SantoFab(
+                              icon: Icons.edit,
+                              text: '编辑',
+                              backgroundColor: Color(0xFF00AE66),
+                              onPressed: () {
+                                _showSnackBar('点击了编辑');
+                              },
+                            ),
+                            SizedBox(height: 12),
+                            SantoFab(
+                              icon: Icons.share,
+                              text: '分享',
+                              backgroundColor: Color(0xFFFAAD14),
+                              onPressed: () {
+                                _showSnackBar('点击了分享');
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 32),
 
                 // 自定义图标颜色
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '自定义图标颜色',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                SantoPanel(
+                  title: '自定义图标颜色',
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SantoFab(
+                          icon: Icons.favorite,
+                          backgroundColor: Colors.white,
+                          iconColor: Color(0xFFFA3F3F),
+                          onPressed: () {},
+                        ),
+                        SantoFab(
+                          icon: Icons.star,
+                          backgroundColor: Colors.white,
+                          iconColor: Color(0xFFFAAD14),
+                          onPressed: () {},
+                        ),
+                        SantoFab(
+                          icon: Icons.thumb_up,
+                          backgroundColor: Colors.white,
+                          iconColor: Color(0xFF0984F9),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SantoFab(
-                        icon: Icons.favorite,
-                        backgroundColor: Colors.white,
-                        iconColor: Color(0xFFFA3F3F),
-                        onPressed: () {},
-                      ),
-                      SantoFab(
-                        icon: Icons.star,
-                        backgroundColor: Colors.white,
-                        iconColor: Color(0xFFFAAD14),
-                        onPressed: () {},
-                      ),
-                      SantoFab(
-                        icon: Icons.thumb_up,
-                        backgroundColor: Colors.white,
-                        iconColor: Color(0xFF0984F9),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 32),
 
                 // 计数器示例
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '计数器示例',
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    '当前计数: $_counter',
-                    style: TextStyle(fontSize: 24),
+                SantoPanel(
+                  title: '计数器示例',
+                  child: Center(
+                    child: Text(
+                      '当前计数: $_counter',
+                      style: TextStyle(fontSize: 24),
+                    ),
                   ),
                 ),
                 SizedBox(height: 80),
