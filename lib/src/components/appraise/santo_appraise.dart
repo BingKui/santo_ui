@@ -210,6 +210,8 @@ class _SantoAppraiseState extends State<SantoAppraise> {
           ),
           child: SantoInputText(
             borderless: true,
+            maxLines: null,
+            minLines: 1,
             maxLength: widget.config.maxLength,
             hintText: widget.inputHintText,
             initialValue: (_inputText ?? widget.config.inputDefaultText) ?? '',

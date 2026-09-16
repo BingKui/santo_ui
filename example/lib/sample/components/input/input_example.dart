@@ -22,6 +22,8 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
 
   @override
   Widget build(BuildContext context) {
+    final brandPrimary =
+        SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
     return Scaffold(
       appBar: SantoAppBar(title: 'Input 输入框'),
       body: SingleChildScrollView(
@@ -33,6 +35,125 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
               child: SantoInputText(
                 hintText: '请输入文字',
                 onChanged: (text) {},
+              ),
+            ),
+            SantoPanel(
+              title: '左侧标签与必填标识',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    label: '标签文字',
+                    labelWidth: 80,
+                    hintText: '请输入文字',
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '手机号',
+                    labelWidth: 80,
+                    required: true,
+                    hintText: '请输入手机号',
+                    inputFormat: SantoInputFormat.phone,
+                    onChanged: (text) {},
+                  ),
+                ],
+              ),
+            ),
+            SantoPanel(
+              title: '右侧标识 / 图标 / 按钮',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    label: '金额',
+                    labelWidth: 80,
+                    hintText: '请输入金额',
+                    inputFormat: SantoInputFormat.number,
+                    suffixText: '元',
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '账号',
+                    labelWidth: 80,
+                    hintText: '请输入账号',
+                    suffixIcon: Icon(Icons.info_outline),
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '验证码',
+                    labelWidth: 80,
+                    hintText: '请输入验证码',
+                    inputFormat: SantoInputFormat.digit,
+                    maxLength: 6,
+                    suffixButton: SantoSmallOutlineButton(
+                      title: '获取',
+                      width: 56,
+                      fontSize: 12,
+                      lineColor: brandPrimary,
+                      textColor: brandPrimary,
+                      insertPadding:
+                          EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      onTap: () {},
+                    ),
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '状态',
+                    labelWidth: 80,
+                    initialValue: '已完成',
+                    readOnly: true,
+                    suffix: SantoTagCustom(
+                      tagText: '已验证',
+                      textColor: Color(0xFF07C160),
+                      backgroundColor: Color(0x2407C160),
+                    ),
+                    onChanged: (text) {},
+                  ),
+                ],
+              ),
+            ),
+            SantoPanel(
+              title: '输入类型限制',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    label: '纯数字',
+                    labelWidth: 80,
+                    hintText: '只能输入数字',
+                    inputFormat: SantoInputFormat.digit,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '数字',
+                    labelWidth: 80,
+                    hintText: '可输入小数和负号',
+                    inputFormat: SantoInputFormat.number,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '身份证',
+                    labelWidth: 80,
+                    hintText: '数字与 X',
+                    inputFormat: SantoInputFormat.idCard,
+                    maxLength: 18,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    label: '邮箱',
+                    labelWidth: 80,
+                    hintText: '请输入邮箱',
+                    inputFormat: SantoInputFormat.email,
+                    onChanged: (text) {},
+                  ),
+                ],
               ),
             ),
             SantoPanel(

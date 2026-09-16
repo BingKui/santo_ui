@@ -166,6 +166,43 @@ class _StepperExampleState extends State<StepperExample> {
                 ],
               ),
             ),
+            // 尺寸档位
+            SantoSection(
+              title: '尺寸档位',
+              description: 'size 提供 small/normal/large 三档,高度、字号与图标同步变化',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: SantoStepper(
+                      value: 1,
+                      size: SantoStepperSize.small,
+                      onChanged: (v) {},
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: SantoStepper(
+                      value: 5,
+                      size: SantoStepperSize.normal,
+                      onChanged: (v) {},
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: SantoStepper(
+                      value: 9,
+                      size: SantoStepperSize.large,
+                      onChanged: (v) {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
             // 实际场景：购物车数量
             SantoSection(
               title: '实际场景：商品数量',

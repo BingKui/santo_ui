@@ -189,6 +189,7 @@ export 'src/components/button/santo_big_outline_button.dart';
 export 'src/components/button/santo_big_ghost_button.dart';
 export 'src/components/button/santo_small_main_button.dart';
 export 'src/components/button/santo_small_outline_button.dart';
+export 'src/components/button/santo_small_ghost_button.dart';
 export 'src/components/button/santo_vertical_icon_button.dart';
 export 'src/components/button/santo_normal_button.dart';
 

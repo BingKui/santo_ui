@@ -30,8 +30,283 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
           _buildBottomButtonPanelSection(),
           _buildSelectionBottomButtonSection(),
           _buildIconButtonSection(),
+          _buildButtonTypeSection(),
         ],
       ),
+    );
+  }
+
+  /// 按钮类型(对标 antd Button type)
+  Widget _buildButtonTypeSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        RulePanel(
+          '通过 type 语法糖取预设样式：主按钮、默认按钮、虚线按钮、文本按钮、链接按钮。\n'
+          '推荐主按钮在同一个操作区域最多出现一次。',
+          maxLines: 3,
+        ),
+        SantoSection(
+          title: '五种类型',
+          description: '主按钮品牌色实心；默认按钮白底实线边框；虚线按钮白底虚线边框；'
+              '文本按钮无底无边框；链接按钮无底无边框、文字为主题色',
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              SantoNormalButton(
+                text: '主按钮',
+                type: SantoButtonType.primary,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {
+                  SantoToast.show('点击了主按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '默认按钮',
+                type: SantoButtonType.normal,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                textColor: const Color(0xFF17233D),
+                onTap: () {
+                  SantoToast.show('点击了默认按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '虚线按钮',
+                type: SantoButtonType.dashed,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了虚线按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '文本按钮',
+                type: SantoButtonType.text,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了文本按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '链接按钮',
+                type: SantoButtonType.link,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了链接按钮', context);
+                },
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '危险按钮',
+          description: 'danger: true 时使用失败色,用于删除、授权等风险操作',
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              SantoNormalButton(
+                text: '危险主按钮',
+                type: SantoButtonType.primary,
+                danger: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {
+                  SantoToast.show('点击了危险主按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '危险默认按钮',
+                type: SantoButtonType.normal,
+                danger: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了危险默认按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '危险虚线按钮',
+                type: SantoButtonType.dashed,
+                danger: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了危险虚线按钮', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '危险链接按钮',
+                type: SantoButtonType.link,
+                danger: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了危险链接按钮', context);
+                },
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '加载中',
+          description: 'loading: true 时文案前展示 loading 图标,且不可点击,避免重复提交',
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              SantoNormalButton(
+                text: '提交',
+                type: SantoButtonType.primary,
+                loading: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {},
+              ),
+              SantoNormalButton(
+                text: '提交',
+                type: SantoButtonType.normal,
+                loading: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {},
+              ),
+              SantoNormalButton(
+                text: '提交',
+                type: SantoButtonType.dashed,
+                loading: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '图标位置',
+          description: 'iconPlacement 控制图标在文案前(start,默认)或文案后(end)',
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              SantoNormalButton(
+                text: '搜索',
+                type: SantoButtonType.primary,
+                icon: const Icon(Icons.search, size: 16, color: Colors.white),
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {
+                  SantoToast.show('点击了搜索', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '下一步',
+                type: SantoButtonType.primary,
+                iconPlacement: SantoButtonIconPlacement.end,
+                icon: const Icon(Icons.arrow_forward,
+                    size: 16, color: Colors.white),
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {
+                  SantoToast.show('点击了下一步', context);
+                },
+              ),
+              SantoNormalButton(
+                text: '下载',
+                type: SantoButtonType.normal,
+                icon: const Icon(Icons.download, size: 16),
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了下载', context);
+                },
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '占满宽度与自动空格',
+          description: 'block: true 时撑满父布局宽度;两个汉字的文案会自动在中间补空格(可关闭)',
+          child: Column(
+            children: [
+              SantoNormalButton(
+                text: '确定',
+                type: SantoButtonType.primary,
+                block: true,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {
+                  SantoToast.show('点击了确定', context);
+                },
+              ),
+              SizedBox(height: 12),
+              SantoNormalButton(
+                text: '取消',
+                type: SantoButtonType.normal,
+                block: true,
+                autoInsertSpace: false,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  SantoToast.show('点击了取消', context);
+                },
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '禁用',
+          description: 'isEnable: false 时不可点击;实心按钮置灰,描边/文本类按钮文字置灰',
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              SantoNormalButton(
+                text: '主按钮',
+                type: SantoButtonType.primary,
+                isEnable: false,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                onTap: () {},
+              ),
+              SantoNormalButton(
+                text: '默认按钮',
+                type: SantoButtonType.normal,
+                isEnable: false,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {},
+              ),
+              SantoNormalButton(
+                text: '链接按钮',
+                type: SantoButtonType.link,
+                isEnable: false,
+                insertPadding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 8),
+                fontWeight: FontWeight.w500,
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

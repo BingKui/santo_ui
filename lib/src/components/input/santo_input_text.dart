@@ -5,6 +5,9 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// 单行输入框的内容区高度，左右插槽在此高度内居中，不撑高输入框
+const double _singleLineHeight = 44;
+
 /// 输入框清除按钮的显示模式
 enum SantoInputClearButtonMode {
   /// 从不显示清除按钮
@@ -32,6 +35,27 @@ enum SantoInputStatus {
 
   /// 错误状态
   error,
+}
+
+/// 输入内容的类型限制，同时决定键盘类型与输入过滤
+enum SantoInputFormat {
+  /// 不限制
+  text,
+
+  /// 纯数字
+  digit,
+
+  /// 数字，可含小数点和负号
+  number,
+
+  /// 身份证号（数字与 X）
+  idCard,
+
+  /// 手机号（数字与 + - 空格）
+  phone,
+
+  /// 邮箱字符（字母、数字与常见符号）
+  email,
 }
 
 /// 基于 Flutter [TextField] 编辑内核的文本输入框
@@ -65,11 +89,36 @@ class SantoInputText extends StatefulWidget {
   /// 占位提示文案
   final String? hintText;
 
+  /// 输入框左侧标签文案
+  final String? label;
+
+  /// 是否必填，为 true 时在 [label] 前显示红色星号
+  final bool required;
+
+  /// 左侧标签宽度，为空时按内容自适应
+  final double? labelWidth;
+
   /// 前缀组件
   final Widget? prefix;
 
   /// 后缀组件；传入后不显示内置清除按钮
   final Widget? suffix;
+
+  /// 右侧标识文案，如单位"元"、"个"
+  final String? suffixText;
+
+  /// 右侧标识文案样式
+  final TextStyle? suffixTextStyle;
+
+  /// 右侧图标
+  final Widget? suffixIcon;
+
+  /// 右侧按钮，如"获取验证码"
+  final Widget? suffixButton;
+
+  /// 输入内容的类型限制，限制输入为纯数字等；与 [inputType] 同时使用时，
+  /// 非 [SantoInputFormat.text] 的键盘类型以本字段为准
+  final SantoInputFormat inputFormat;
 
   /// 清除按钮显示模式，默认 [SantoInputClearButtonMode.never]
   final SantoInputClearButtonMode? clearButtonMode;
@@ -142,8 +191,16 @@ class SantoInputText extends StatefulWidget {
     this.enabled = true,
     this.readOnly = false,
     this.hintText,
+    this.label,
+    this.required = false,
+    this.labelWidth,
     this.prefix,
     this.suffix,
+    this.suffixText,
+    this.suffixTextStyle,
+    this.suffixIcon,
+    this.suffixButton,
+    this.inputFormat = SantoInputFormat.text,
     this.clearButtonMode,
     this.status = SantoInputStatus.normal,
     this.borderless = false,
@@ -226,19 +283,15 @@ class _SantoInputTextState extends State<SantoInputText> {
         : commonConfig.colorTextBase;
     final tokenStyle = TextStyle(
       color: inputTextColor,
-      fontSize: commonConfig.fontSizeSubHead,
+      fontSize: commonConfig.fontSizeBase,
       height: 1.5,
     );
     final textStyle = tokenStyle.merge(widget.style).copyWith(
           color: widget.style?.color ?? inputTextColor,
         );
     final hintStyle = TextStyle(
-      color: disabled
-          ? commonConfig.colorTextDisabled
-          : commonConfig.colorTextHint,
-      fontSize: widget._multiline
-          ? commonConfig.fontSizeBase
-          : commonConfig.fontSizeSubHead,
+      color: commonConfig.colorTextDisabled,
+      fontSize: commonConfig.fontSizeBase,
       height: 1.5,
     );
     final editor = TextField(
@@ -253,7 +306,7 @@ class _SantoInputTextState extends State<SantoInputText> {
       minLines: _effectiveMinLines,
       maxLength: null,
       autofocus: widget.autofocus,
-      keyboardType: widget.inputType,
+      keyboardType: _effectiveKeyboardType,
       textInputAction: widget.inputAction,
       textAlign: widget.textAlign,
       obscureText:
@@ -278,12 +331,16 @@ class _SantoInputTextState extends State<SantoInputText> {
       ),
     );
 
-    return _SantoInputShell(
+    final shell = _SantoInputShell(
       controller: _controller,
       focusNode: _focusNode,
       editor: editor,
       prefix: widget.prefix,
       suffix: widget.suffix,
+      suffixText: widget.suffixText,
+      suffixTextStyle: widget.suffixTextStyle,
+      suffixIcon: widget.suffixIcon,
+      suffixButton: widget.suffixButton,
       clearButtonMode:
           widget.clearButtonMode ?? SantoInputClearButtonMode.never,
       onClear: _clear,
@@ -300,6 +357,62 @@ class _SantoInputTextState extends State<SantoInputText> {
       status: widget.status,
       borderless: widget.borderless,
     );
+
+    if (widget.label == null) {
+      return shell;
+    }
+    final label = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.required) ...[
+          Text(
+            '*',
+            style: TextStyle(
+              color: commonConfig.brandError,
+              fontSize: commonConfig.fontSizeBase,
+            ),
+          ),
+          const SizedBox(width: 2),
+        ],
+        Flexible(
+          child: Text(
+            widget.label!,
+            style: TextStyle(
+              color: commonConfig.colorTextBase,
+              fontSize: commonConfig.fontSizeBase,
+            ),
+          ),
+        ),
+      ],
+    );
+    return Row(
+      children: [
+        widget.labelWidth == null
+            ? label
+            : SizedBox(width: widget.labelWidth, child: label),
+        SizedBox(width: commonConfig.hSpacingXs),
+        Expanded(child: shell),
+      ],
+    );
+  }
+
+  /// [inputFormat] 决定键盘类型，[inputFormat] 为 text 时使用 [inputType]
+  TextInputType get _effectiveKeyboardType {
+    switch (widget.inputFormat) {
+      case SantoInputFormat.digit:
+        return TextInputType.number;
+      case SantoInputFormat.number:
+        return const TextInputType.numberWithOptions(
+            decimal: true, signed: true);
+      case SantoInputFormat.idCard:
+        return TextInputType.text;
+      case SantoInputFormat.phone:
+        return TextInputType.phone;
+      case SantoInputFormat.email:
+        return TextInputType.emailAddress;
+      case SantoInputFormat.text:
+        return widget.inputType;
+    }
   }
 
   int? get _effectiveMinLines {
@@ -313,7 +426,12 @@ class _SantoInputTextState extends State<SantoInputText> {
   }
 
   List<TextInputFormatter>? _effectiveFormatters() {
-    final formatters = <TextInputFormatter>[...?widget.inputFormatters];
+    final formatters = <TextInputFormatter>[];
+    final formatFormatter = _formatFormatter;
+    if (formatFormatter != null) {
+      formatters.add(formatFormatter);
+    }
+    formatters.addAll(widget.inputFormatters ?? const []);
     if (widget.maxLength != null) {
       formatters.add(LengthLimitingTextInputFormatter(widget.maxLength));
     }
@@ -323,6 +441,24 @@ class _SantoInputTextState extends State<SantoInputText> {
       );
     }
     return formatters.isEmpty ? null : formatters;
+  }
+
+  /// [inputFormat] 对应的输入过滤规则
+  TextInputFormatter? get _formatFormatter {
+    switch (widget.inputFormat) {
+      case SantoInputFormat.text:
+        return null;
+      case SantoInputFormat.digit:
+        return FilteringTextInputFormatter.digitsOnly;
+      case SantoInputFormat.number:
+        return FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$'));
+      case SantoInputFormat.idCard:
+        return FilteringTextInputFormatter.allow(RegExp(r'[0-9xX]'));
+      case SantoInputFormat.phone:
+        return FilteringTextInputFormatter.allow(RegExp(r'[0-9+\- ]'));
+      case SantoInputFormat.email:
+        return FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9@._\-+]'));
+    }
   }
 
   void _clear() {
@@ -345,6 +481,10 @@ class _SantoInputShell extends StatefulWidget {
   final Widget editor;
   final Widget? prefix;
   final Widget? suffix;
+  final String? suffixText;
+  final TextStyle? suffixTextStyle;
+  final Widget? suffixIcon;
+  final Widget? suffixButton;
   final SantoInputClearButtonMode clearButtonMode;
   final VoidCallback onClear;
   final bool enabled;
@@ -378,6 +518,10 @@ class _SantoInputShell extends StatefulWidget {
     required this.borderless,
     this.prefix,
     this.suffix,
+    this.suffixText,
+    this.suffixTextStyle,
+    this.suffixIcon,
+    this.suffixButton,
     this.maxCharacter,
   }) : super(key: key);
 
@@ -448,7 +592,11 @@ class _SantoInputShellState extends State<_SantoInputShell> {
     final hasText = widget.controller.text.isNotEmpty;
     final hasFocus = widget.focusNode.hasFocus;
     final interactive = widget.enabled && !widget.readOnly;
-    final showClearButton = widget.suffix == null &&
+    final hasSuffix = widget.suffix != null ||
+        widget.suffixText != null ||
+        widget.suffixIcon != null ||
+        widget.suffixButton != null;
+    final showClearButton = !hasSuffix &&
         !widget.showPasswordToggle &&
         widget.clearButtonMode != SantoInputClearButtonMode.never &&
         hasText &&
@@ -518,72 +666,119 @@ class _SantoInputShellState extends State<_SantoInputShell> {
     );
     final border = widget.borderless
         ? null
-        : widget.multiline
-            ? Border.fromBorderSide(
-                hasFocus
-                    ? borderSide.copyWith(color: _statusColor(commonConfig))
-                    : borderSide,
-              )
-            : Border(
-                bottom: hasFocus
-                    ? borderSide.copyWith(color: _statusColor(commonConfig))
-                    : borderSide,
-              );
+        : Border.fromBorderSide(
+            hasFocus
+                ? borderSide.copyWith(color: _statusColor(commonConfig))
+                : borderSide,
+          );
 
     return DecoratedBox(
       decoration: BoxDecoration(
         color: commonConfig.fillBase,
         border: border,
-        borderRadius: widget.multiline
-            ? BorderRadius.circular(commonConfig.radiusMd)
-            : null,
+        borderRadius: widget.borderless
+            ? null
+            : BorderRadius.circular(commonConfig.hSpacingSm),
       ),
-      child: Padding(
-        padding: EdgeInsets.all(commonConfig.hSpacingMd),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: widget.multiline
-                  ? CrossAxisAlignment.start
-                  : CrossAxisAlignment.center,
-              children: [
-                if (widget.prefix != null) ...[
-                  _SantoInputSlot(
-                    color: widget.enabled
-                        ? commonConfig.colorTextBase
-                        : commonConfig.colorTextDisabled,
-                    child: widget.prefix!,
-                  ),
-                  SizedBox(width: commonConfig.hSpacingMd),
-                ],
-                Expanded(child: widget.editor),
-                if (clearButton != null) ...[
-                  const SizedBox(width: 4),
-                  clearButton,
-                ],
-                if (passwordButton != null) ...[
-                  const SizedBox(width: 4),
-                  passwordButton,
-                ],
-                if (widget.suffix != null) ...[
-                  SizedBox(width: commonConfig.hSpacingXs),
-                  _SantoInputSlot(
-                    color: widget.enabled
-                        ? commonConfig.colorTextHint
-                        : commonConfig.colorTextDisabled,
-                    child: widget.suffix!,
-                  ),
-                ],
-              ],
+      child: widget.multiline
+          ? Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: commonConfig.hSpacingSm,
+                vertical: commonConfig.hSpacingSm,
+              ),
+              child: _buildContent(commonConfig, clearButton, passwordButton,
+                  counter),
+            )
+          : ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: _singleLineHeight),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: commonConfig.hSpacingSm,
+                ),
+                child: Center(
+                  child: _buildContent(commonConfig, clearButton,
+                      passwordButton, counter),
+                ),
+              ),
             ),
-            if (counter != null) ...[
-              SizedBox(height: widget.multiline ? commonConfig.vSpacingSm : 2),
-              counter,
+    );
+  }
+
+  /// 单行输入的内容区至少为 [_singleLineHeight]，左右插槽在这个高度内居中，
+  /// 不会把输入框撑高
+  Widget _buildContent(
+    SantoCommonConfig commonConfig,
+    Widget? clearButton,
+    Widget? passwordButton,
+    Widget? counter,
+  ) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          crossAxisAlignment: widget.multiline
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
+          children: [
+            if (widget.prefix != null) ...[
+              _SantoInputSlot(
+                color: widget.enabled
+                    ? commonConfig.colorTextBase
+                    : commonConfig.colorTextDisabled,
+                child: widget.prefix!,
+              ),
+              SizedBox(width: commonConfig.hSpacingMd),
+            ],
+            Expanded(child: widget.editor),
+            if (clearButton != null) ...[
+              const SizedBox(width: 4),
+              clearButton,
+            ],
+            if (passwordButton != null) ...[
+              const SizedBox(width: 4),
+              passwordButton,
+            ],
+            if (widget.suffixText != null) ...[
+              SizedBox(width: commonConfig.hSpacingXs),
+              Text(
+                widget.suffixText!,
+                style: widget.suffixTextStyle ??
+                    TextStyle(
+                      color: commonConfig.colorTextBase,
+                      fontSize: commonConfig.fontSizeBase,
+                    ),
+              ),
+            ],
+            if (widget.suffixIcon != null) ...[
+              SizedBox(width: commonConfig.hSpacingXs),
+              _SantoInputSlot(
+                color: widget.enabled
+                    ? commonConfig.colorTextHint
+                    : commonConfig.colorTextDisabled,
+                child: widget.suffixIcon!,
+              ),
+            ],
+            if (widget.suffixButton != null) ...[
+              SizedBox(width: commonConfig.hSpacingXs),
+              widget.suffixButton!,
+            ],
+            if (widget.suffix != null) ...[
+              SizedBox(width: commonConfig.hSpacingXs),
+              _SantoInputSlot(
+                color: widget.enabled
+                    ? commonConfig.colorTextHint
+                    : commonConfig.colorTextDisabled,
+                child: widget.suffix!,
+              ),
             ],
           ],
         ),
-      ),
+        if (counter != null) ...[
+          SizedBox(height: widget.multiline ? commonConfig.vSpacingSm : 2),
+          counter,
+        ],
+      ],
     );
   }
 }

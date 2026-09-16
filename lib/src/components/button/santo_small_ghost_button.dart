@@ -1,5 +1,3 @@
-
-
 import 'dart:math';
 
 import 'package:santo_ui/src/components/button/santo_normal_button.dart';
@@ -8,40 +6,32 @@ import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
-
-
 /// 默认最小宽度
 const double _BMinWidth = 84;
 
-/// 默认线宽
-const double _BBorderWith = 1;
-
-/// 边框 小、次按钮，小灰框，默认按钮确认,支持自定义边框、文字颜色
-
-/// 小的边框按钮
-/// 该按钮有一个最小的宽度84，在此基础上，宽度随着文本内容的多少变更
+/// 小号的幽灵按钮，背景为主题色 5% 透明度、文字为主题色
 ///
-/// 按钮是圆角矩形的形状，只支持设置圆角大小[radius],不支持改变形状。
+/// 和 [SantoSmallOutlineButton] 相比，该按钮没有边框，背景为浅主题色
 ///
-/// 按钮也存在可用和不可用两种状态，[isEnable]如果设置为false，那么按钮呈现灰色态，点击事件不响应
+/// 该按钮有一个最小的宽度84，在此基础上，宽度随着文本内容的多少变更；
+/// 自定义 [insertPadding] 后按钮宽高完全由内容决定
 ///
 /// 其他按钮如下：
+///  * [SantoBigGhostButton], 大幽灵按钮
 ///  * [SantoSmallMainButton], 小主色调按钮
-class SantoSmallOutlineButton extends StatelessWidget {
-  /// 按钮显示文案,默认'确认
+///  * [SantoSmallOutlineButton], 小边框按钮
+class SantoSmallGhostButton extends StatelessWidget {
+  /// 按钮显示文案，默认'确认'
   final String? title;
+
+  /// 文案颜色，默认主题色
+  final Color? titleColor;
+
+  /// 按钮背景颜色，默认主题色的 5% 透明度
+  final Color? bgColor;
 
   /// 点击的回调
   final VoidCallback? onTap;
-
-  /// 是否可用，默认为true。false为不可用：置灰、不可点击。
-  final bool isEnable;
-
-  /// 边框的颜色，边框颜色，
-  final Color? lineColor;
-
-  /// 文字颜色
-  final Color? textColor;
 
   /// 圆角
   final double? radius;
@@ -49,28 +39,27 @@ class SantoSmallOutlineButton extends StatelessWidget {
   /// 宽度
   final double? width;
 
-  /// 字体weigh
+  /// 字体weight
   final FontWeight fontWeight;
 
   /// 字体大小
   final double fontSize;
 
   /// 按钮内边距，默认水平6、垂直8；
-  /// 自定义后按钮宽高完全由内容决定（不再套用最小宽84、最小高[santo smallButtonHeight]），
+  /// 自定义后按钮宽高完全由内容决定（不再套用最小宽84、最小高 smallButtonHeight），
   /// 传更小的值即可得到更小的按钮
   final EdgeInsetsGeometry? insertPadding;
 
   /// 配置样式
   final SantoButtonConfig? themeData;
 
-  /// 传入属性优先级最高，未传入的走默认配置，更多请看[SantoSmallSecondaryOutlineButtonConfig.defaultConfig]
-  const SantoSmallOutlineButton({
+  /// create SantoSmallGhostButton
+  const SantoSmallGhostButton({
     Key? key,
     this.title,
     this.onTap,
-    this.isEnable = true,
-    this.lineColor,
-    this.textColor,
+    this.titleColor,
+    this.bgColor,
     this.radius,
     this.width,
     this.fontSize = 14,
@@ -89,7 +78,8 @@ class SantoSmallOutlineButton extends StatelessWidget {
     ));
     defaultThemeConfig = SantoThemeConfigurator.instance
         .getConfig(configId: defaultThemeConfig.configId)
-        .buttonConfig.merge(defaultThemeConfig);
+        .buttonConfig
+        .merge(defaultThemeConfig);
 
     TextPainter textPainter =
         TextPainter(textScaler: MediaQuery.textScalerOf(context));
@@ -107,18 +97,17 @@ class SantoSmallOutlineButton extends StatelessWidget {
         );
 
         textPainter.textDirection = TextDirection.ltr;
-        // 与实际渲染一致：Text 会合并环境 DefaultTextStyle，测量也必须合并，
-        // 否则字体族/行高不同会让测出的宽度偏小，文字被省略
+        // 与实际渲染一致：Text 会合并环境 DefaultTextStyle，测量也必须合并
         textPainter.text = TextSpan(
             text: title ?? SantoIntl.of(context).localizedResource.confirm,
             style: DefaultTextStyle.of(context).style.merge(style));
         textPainter.layout(maxWidth: con.maxWidth);
         double textWidth = textPainter.width;
         double _maxWidth =
-            (textWidth + effectivePadding.horizontal + 2 * _BBorderWith)
-                .ceilToDouble();
+            (textWidth + effectivePadding.horizontal).ceilToDouble();
 
-        double _minWidth = insertPadding == null ? min(_BMinWidth, con.maxWidth) : 0;
+        double _minWidth =
+            insertPadding == null ? min(_BMinWidth, con.maxWidth) : 0;
         if (_maxWidth <= _minWidth) {
           _maxWidth = _minWidth;
         }
@@ -126,7 +115,7 @@ class SantoSmallOutlineButton extends StatelessWidget {
           _maxWidth = con.maxWidth;
         }
 
-        return SantoNormalButton.outline(
+        return SantoNormalButton(
           constraints: BoxConstraints(
             minWidth: this.width ?? _minWidth,
             maxWidth: this.width ?? _maxWidth,
@@ -134,21 +123,18 @@ class SantoSmallOutlineButton extends StatelessWidget {
                 ? defaultThemeConfig.smallButtonHeight
                 : 0.0,
           ),
-          borderWith: _BBorderWith,
-          radius: defaultThemeConfig.smallButtonRadius,
+          borderRadius: BorderRadius.all(
+              Radius.circular(defaultThemeConfig.smallButtonRadius)),
           text: title ?? SantoIntl.of(context).localizedResource.confirm,
-          disableLineColor: defaultThemeConfig.commonConfig.borderColorBase,
-          lineColor: lineColor ?? defaultThemeConfig.commonConfig.borderColorBase,
-          textColor: textColor ?? defaultThemeConfig.commonConfig.colorTextBase,
-          disableTextColor: Color(0xFFCCCCCC),
-          isEnable: isEnable,
+          backgroundColor: bgColor ??
+              defaultThemeConfig.commonConfig.brandPrimary.withOpacity(0.05),
+          onTap: onTap,
           alignment: Alignment.center,
           fontWeight: fontWeight,
           fontSize: defaultThemeConfig.smallButtonFontSize,
           insertPadding: effectivePadding,
-          onTap: onTap,
-          backgroundColor: Colors.white,
-          disableBackgroundColor: Color(0xffcccccc).withOpacity(0.1),
+          textColor:
+              titleColor ?? defaultThemeConfig.commonConfig.brandPrimary,
         );
       },
     );

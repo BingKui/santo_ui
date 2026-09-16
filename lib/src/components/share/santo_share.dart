@@ -6,12 +6,12 @@ import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// section为所在行数（0或1），index是在第几位（从0开始记）, shareItem为渠道相关信息
-typedef SantoShareActionSheetItemClickCallBack = void Function(
+typedef SantoShareItemClickCallBack = void Function(
     int section, int index, SantoShareItem shareItem);
 
 /// 点击事件拦截回调（如果配置了此项，返回值为是否拦截，如果为true，则进行拦截，不进行默认回调）
 /// section为所在行数（0或1），index是在第几位（从0开始记）,shareItem为渠道相关信息
-typedef SantoShareActionSheetOnItemClickInterceptor = bool Function(
+typedef SantoShareItemClickInterceptor = bool Function(
     int section, int index, SantoShareItem shareItem);
 
 /// 分享元素
@@ -38,7 +38,7 @@ class SantoShareItem extends Object {
 
 /// 分享弹窗
 // ignore: must_be_immutable
-class SantoShareActionSheet extends StatelessWidget {
+class SantoShare extends StatelessWidget {
   /// 第一行渠道列表
   final List<SantoShareItem>? firstShareChannels;
 
@@ -51,34 +51,34 @@ class SantoShareActionSheet extends StatelessWidget {
   /// 取消按钮名称
   final String? cancelTitle;
 
-  /// 取消按钮的文本颜色，默认值为 Color(0xff222222)
+  /// 取消按钮的文本颜色，默认值为 Color(0xFF17233D)
   final Color textColor;
 
-  /// 分享文本颜色，默认值为 Color(0xff999999)
+  /// 分享文本颜色，默认值为 Color(0xFF808695)
   final Color shareTextColor;
 
   /// 点击事件回调
-  final SantoShareActionSheetItemClickCallBack? clickCallBack;
+  final SantoShareItemClickCallBack? clickCallBack;
 
   /// 点击事件拦截回调（如果配置了此项，返回值为是否拦截，如果为true，则进行拦截，不进行默认回调）
-  final SantoShareActionSheetOnItemClickInterceptor? clickInterceptor;
+  final SantoShareItemClickInterceptor? clickInterceptor;
 
-  SantoShareActionSheet({
+  SantoShare({
     this.firstShareChannels,
     this.secondShareChannels,
     this.mainTitle,
     this.clickCallBack,
     this.clickInterceptor,
     this.cancelTitle,
-    this.shareTextColor = const Color(0xff999999),
-    this.textColor = const Color(0xff222222),
+    this.shareTextColor = const Color(0xFF808695),
+    this.textColor = const Color(0xFF17233D),
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: ShapeDecoration(
-          color: Color(0xffffffff),
+          color: Color(0xFFFFFFFF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12.0),

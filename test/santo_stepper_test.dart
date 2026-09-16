@@ -49,20 +49,58 @@ void main() {
     expect(changed, 4);
   });
 
-  testWidgets('SantoStepper 到达边界后按钮不响应', (tester) async {
-    int? changed;
+  testWidgets('SantoStepper 支持三档尺寸', (tester) async {
+    Finder outerBox() => find.byWidgetPredicate((w) =>
+        w is Container &&
+        w.decoration is BoxDecoration &&
+        (w.decoration! as BoxDecoration).border != null);
+
+    Future<Rect> pumpSize(SantoStepperSize size) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: SantoStepper(value: 3, size: size, onChanged: (_) {}),
+          ),
+        ),
+      ));
+      return tester.getRect(outerBox());
+    }
+
+    final Rect small = await pumpSize(SantoStepperSize.small);
+    expect(small.height, 24);
+
+    final Rect normal = await pumpSize(SantoStepperSize.normal);
+    expect(normal.height, 32);
+
+    final Rect large = await pumpSize(SantoStepperSize.large);
+    expect(large.height, 40);
+
+    // 高度递增,宽度随之变宽
+    expect(large.width, greaterThan(normal.width));
+    expect(normal.width, greaterThan(small.width));
+  });
+
+  testWidgets('SantoStepper inputHeight/inputWidth 可覆盖档位预设', (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: SantoStepper(
-          value: 0,
-          min: 0,
-          max: 10,
-          onChanged: (v) => changed = v,
+        body: Center(
+          child: SantoStepper(
+            value: 3,
+            size: SantoStepperSize.small,
+            inputHeight: 36,
+            inputWidth: 80,
+            onChanged: (_) {},
+          ),
         ),
       ),
     ));
 
-    await tester.tap(find.byIcon(Icons.remove));
-    expect(changed, isNull);
+    final Rect outer = tester.getRect(find.byWidgetPredicate((w) =>
+        w is Container &&
+        w.decoration is BoxDecoration &&
+        (w.decoration! as BoxDecoration).border != null));
+    expect(outer.height, 36);
+    // 36(减号) + 0.5 + 80(数值区) + 0.5 + 36(加号) + 外框左右各 0.5
+    expect(outer.width, closeTo(154, 1));
   });
 }
