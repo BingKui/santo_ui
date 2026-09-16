@@ -59,7 +59,7 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
   /// 宫格列数,默认 4
   final int columns;
 
-  /// 面板圆角,默认 28
+  /// 面板圆角,默认 12
   final double radius;
 
   /// 面板与屏幕左右/底部边缘的间距,默认 12
@@ -85,7 +85,7 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     required this.items,
     this.bottomInset = 0,
     this.columns = 4,
-    this.radius = 28,
+    this.radius = 12,
     this.edgeGap = 12,
     this.backgroundColor,
     this.itemColor,
@@ -100,7 +100,7 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     required List<SantoMenuBarMoreMenuItem> items,
     double bottomInset = 0,
     int columns = 4,
-    double radius = 28,
+    double radius = 12,
     double edgeGap = 12,
     Color? backgroundColor,
     Color? itemColor,
