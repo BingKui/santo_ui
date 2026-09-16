@@ -134,9 +134,6 @@ class SantoRadio extends SantoCheckbox {
     );
   }
 
-  static SantoCommonConfig _commonConfigOf(BuildContext context) =>
-      SantoCheckbox._commonConfig();
-
   @override
   State<SantoCheckbox> createState() => SantoRadioState();
 }

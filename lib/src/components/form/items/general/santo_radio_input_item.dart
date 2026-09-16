@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/components/radio/santo_radio_button.dart';
+import 'package:santo_ui/src/components/radio/santo_radio.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +153,7 @@ class SantoRadioInputFormItem extends StatefulWidget {
 
 class SantoRadioInputFormItemState extends State<SantoRadioInputFormItem> {
   double _kRadioTitleLeftPadding = 6;
-  double _kRadioIconWidth = 16;
+  double _kRadioIconWidth = 24;
 
   @override
   Widget build(BuildContext context) {
@@ -360,23 +360,19 @@ class SantoRadioInputFormItemState extends State<SantoRadioInputFormItem> {
           padding: SantoFormUtil.optionsMiddlePadding(widget.themeData!),
           child: Row(
             children: <Widget>[
-              SantoRadioButton(
-                iconPadding: const EdgeInsets.all(0),
-                child: Container(
+              SantoRadio(
+                customSpace: EdgeInsets.zero,
+                // 图标与文案的间距由 title 左侧内边距提供,保持原有宽度
+                spacing: 0,
+                customContentBuilder: (context, checked, content) => Container(
                     padding: EdgeInsets.only(left: _kRadioTitleLeftPadding),
                     child: Text(
-                      option,
+                      option ?? '',
                       style: getOptionTextStyle(option, index),
                     )),
-                disable: getRadioEnableState(index),
-                radioIndex: index,
-                isSelected:
-                    index == widget.options!.indexOf(widget.value ?? ''),
-                onValueChangedAtIndex: (int position, bool selected) {
-                  if (getRadioEnableState(position)) {
-                    return;
-                  }
-
+                enable: !getRadioEnableState(index),
+                checked: index == widget.options!.indexOf(widget.value ?? ''),
+                onChanged: (selected) {
                   String? oldValue = widget.value;
                   widget.value = options[index];
                   SantoFormUtil.notifyRadioStatusChanged(

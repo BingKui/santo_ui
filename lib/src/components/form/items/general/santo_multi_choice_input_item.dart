@@ -1,7 +1,7 @@
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/components/radio/santo_checkbox.dart';
+import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
 import 'package:flutter/material.dart';
@@ -185,19 +185,19 @@ class SantoMultiChoiceInputFormItemState
             children: <Widget>[
               SantoCheckbox(
                 key: GlobalKey(),
-                child: Container(
+                customSpace: EdgeInsets.zero,
+                customContentBuilder: (context, checked, content) => Container(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Text(
                     options[index],
                     style: getOptionTextStyle(index),
                   ),
                 ),
-                radioIndex: index,
-                disable: getRadioEnableState(index),
-                isSelected:
+                enable: !getRadioEnableState(index),
+                checked:
                     (pos < _selectStatus.length) ? _selectStatus[pos] : false,
-                onValueChangedAtIndex: (position, value) {
-                  _selectStatus[position] = value;
+                onChanged: (value) {
+                  _selectStatus[pos] = value;
                   List<String> oldValue = <String>[]..addAll(widget.value);
 
                   setState(() {

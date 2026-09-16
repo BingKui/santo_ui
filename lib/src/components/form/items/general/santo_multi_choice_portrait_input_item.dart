@@ -2,7 +2,7 @@ import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
-import 'package:santo_ui/src/components/radio/santo_checkbox.dart';
+import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
 import 'package:flutter/material.dart';
@@ -184,16 +184,15 @@ class SantoMultiChoicePortraitInputFormItemState
         padding: EdgeInsets.only(top: 11, bottom: 11),
         child: SantoCheckbox(
           key: GlobalKey(),
-          child: Text(options[index], style: getOptionTextStyle(index)),
-          childOnRight: false,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          radioIndex: index,
-          disable: getRadioEnableState(index),
-          isSelected:
+          customSpace: EdgeInsets.zero,
+          contentDirection: SantoContentDirection.left,
+          customContentBuilder: (context, checked, content) =>
+              Text(options[index], style: getOptionTextStyle(index)),
+          enable: !getRadioEnableState(index),
+          checked:
               (index < _selectStatus.length) ? _selectStatus[index] : false,
-          onValueChangedAtIndex: (position, value) {
-            _selectStatus[position] = value;
+          onChanged: (value) {
+            _selectStatus[index] = value;
             List<String> oldValue = <String>[]..addAll(widget.value);
 
             setState(() {

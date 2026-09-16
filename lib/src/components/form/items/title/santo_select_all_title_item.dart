@@ -1,7 +1,7 @@
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/items/title/santo_base_title_item.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/components/radio/santo_checkbox.dart';
+import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/widgets.dart';
 
@@ -125,19 +125,16 @@ class SantoSelectAllTitleState extends State<SantoSelectAllTitle> {
       titleWidget: widget.titleWidget,
       subTitleWidget: widget.subTitleWidget,
       customActionWidget: SantoCheckbox(
-        child: getSelectTextWidget(),
-        radioIndex: 0,
-        disable: !widget.isEdit,
-        isSelected: _selectState,
-        onValueChangedAtIndex: (position, value) {
-          if (!widget.isEdit) {
-            return;
-          }
-
+        customSpace: EdgeInsets.zero,
+        customContentBuilder: (context, checked, content) =>
+            getSelectTextWidget() ?? const SizedBox.shrink(),
+        enable: widget.isEdit,
+        checked: _selectState,
+        onChanged: (value) {
           _selectState = value;
 
           if (widget.onSelectAll != null) {
-            widget.onSelectAll!(position, value);
+            widget.onSelectAll!(0, value);
           }
         },
       ),

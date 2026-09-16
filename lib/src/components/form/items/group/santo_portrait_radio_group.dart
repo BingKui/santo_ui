@@ -1,6 +1,7 @@
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
-import 'package:santo_ui/src/components/radio/santo_radio_button.dart';
+import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
+import 'package:santo_ui/src/components/radio/santo_radio.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
 import 'package:flutter/material.dart';
@@ -127,8 +128,10 @@ class SantoPortraitRadioGroupState extends State<SantoPortraitRadioGroup> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SantoRadioButton(
-                child: Flexible(
+              SantoRadio(
+                customSpace: EdgeInsets.zero,
+                contentDirection: SantoContentDirection.left,
+                customContentBuilder: (context, checked, content) => Flexible(
                   fit: FlexFit.tight,
                   child: Text(
                     option.title ?? '',
@@ -138,20 +141,13 @@ class SantoPortraitRadioGroupState extends State<SantoPortraitRadioGroup> {
                     style: getOptionTextStyle(option, index),
                   ),
                 ),
-                childOnRight: false,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                disable: getRadioEnableState(index),
-                radioIndex: index,
-                isSelected: index == getGroupValue(),
-                onValueChangedAtIndex: (int position, bool selected) {
-                  if (getRadioEnableState(position)) {
-                    return;
-                  }
+                enable: !getRadioEnableState(index),
+                checked: index == getGroupValue(),
+                onChanged: (selected) {
                   SantoPortraitRadioGroupOption? oldValue = _selectedOption;
-                  _selectedOption = options[position];
+                  _selectedOption = options[index];
                   if (widget.onChanged != null) {
-                    widget.onChanged!(oldValue, options[position]);
+                    widget.onChanged!(oldValue, options[index]);
                   }
                   setState(() {});
                 },

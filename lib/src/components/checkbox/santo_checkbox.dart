@@ -158,7 +158,7 @@ class SantoCheckbox extends StatefulWidget {
   /// 指示器额外左侧间距
   final double? checkBoxLeftSpace;
 
-  /// 自定义组件内边距
+  /// 自定义组件内边距;设置后不再施加默认行高与内边距
   final EdgeInsetsGeometry? customSpace;
 
   /// 默认指示器
@@ -304,7 +304,6 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   /// 点击切换勾选状态
   void _handleTap(SantoCheckboxGroupState? groupState) {
     if (_disabled) return;
-    if (widget.onChanged == null && groupState == null) return;
     final next = !checked;
     if (groupState != null && widget.id != null) {
       // 超出分组最大勾选数时分组会回调 onOverloadChecked,此处保持原状态
@@ -348,8 +347,9 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     final gap = widget.cardMode ? 0.0 : spacing;
 
     return Container(
-      constraints:
-          widget.cardMode ? null : BoxConstraints(minHeight: _contentMinHeight()),
+      constraints: widget.cardMode || widget.customSpace != null
+          ? null
+          : BoxConstraints(minHeight: _contentMinHeight()),
       padding: widget.customSpace ?? _contentPadding(insetSpacing),
       color: widget.cardMode
           ? null
@@ -413,7 +413,8 @@ class SantoCheckboxState extends State<SantoCheckbox> {
         color: widget.backgroundColor ?? _commonConfig.fillBase,
         border: Border.all(
           width: 1.5,
-          color: checked ? selectColor : Colors.transparent,
+          // 未选中用分割线色描边,保证白色页面上卡片可见
+          color: checked ? selectColor : _commonConfig.dividerColorBase,
         ),
         borderRadius: BorderRadius.circular(cardRadius),
       ),
