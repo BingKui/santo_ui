@@ -200,7 +200,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           ? MediaQuery.of(context).padding.bottom
           : 0.0;
       final bottomInset = widget.style == SantoMenuBarStyle.floating
-          ? _barHeight + widget.gap * 2 + safeArea
+          ? _barHeight + widget.gap + safeArea
           : _barHeight + safeArea;
       SantoMenuBarMoreMenu.open(
         context,
