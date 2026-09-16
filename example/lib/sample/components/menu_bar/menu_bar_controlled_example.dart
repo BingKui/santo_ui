@@ -30,44 +30,7 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
           selectedIcon: const Icon(Icons.chat_bubble),
           unselectedIcon: const Icon(Icons.chat_bubble_outline),
         ),
-        SantoMenuBarItem(
-          text: '更多',
-          selectedIcon: const Icon(Icons.apps),
-          unselectedIcon: const Icon(Icons.apps_outlined),
-          onTap: _showMoreMenu,
-        ),
       ];
-
-  void _showMoreMenu() {
-    SantoMoreMenu.show(
-      context,
-      title: '更多',
-      actionText: '编辑',
-      onActionTap: () => SantoToast.show('点击了编辑', context),
-      items: [
-        SantoMoreMenuItem(
-          label: '文档',
-          icon: Icons.description_outlined,
-          onTap: () => SantoToast.show('点击了文档', context),
-        ),
-        SantoMoreMenuItem(
-          label: '会议',
-          icon: Icons.videocam_outlined,
-          onTap: () => SantoToast.show('点击了会议', context),
-        ),
-        SantoMoreMenuItem(
-          label: '邮箱',
-          icon: Icons.mail_outline,
-          onTap: () => SantoToast.show('点击了邮箱', context),
-        ),
-        SantoMoreMenuItem(
-          label: 'AI 表格',
-          icon: Icons.grid_view_outlined,
-          onTap: () => SantoToast.show('点击了 AI 表格', context),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +57,36 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
         currentIndex: _index,
         onChange: (index) {
           setState(() => _index = index);
-          if (index != 3) SantoToast.show('选中第 ${index + 1} 个标签', context);
+          SantoToast.show('选中第 ${index + 1} 个标签', context);
         },
+        showMoreMenu: true,
+        moreMenu: SantoMenuBarMoreMenu(
+          title: '更多',
+          actionText: '编辑',
+          onActionTap: () => SantoToast.show('点击了编辑', context),
+          items: [
+            SantoMenuBarMoreMenuItem(
+              label: '文档',
+              icon: Icons.description_outlined,
+              onTap: () => SantoToast.show('点击了文档', context),
+            ),
+            SantoMenuBarMoreMenuItem(
+              label: '会议',
+              icon: Icons.videocam_outlined,
+              onTap: () => SantoToast.show('点击了会议', context),
+            ),
+            SantoMenuBarMoreMenuItem(
+              label: '邮箱',
+              icon: Icons.mail_outline,
+              onTap: () => SantoToast.show('点击了邮箱', context),
+            ),
+            SantoMenuBarMoreMenuItem(
+              label: 'AI 表格',
+              icon: Icons.grid_view_outlined,
+              onTap: () => SantoToast.show('点击了 AI 表格', context),
+            ),
+          ],
+        ),
         items: _items(),
       ),
     );

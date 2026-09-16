@@ -10,9 +10,20 @@ class MenuBarFloatingExample extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFD6E4FF),
       appBar: SantoAppBar(title: 'MenuBar · 悬浮样式'),
-      body: const Center(
-        child: Text('毛玻璃容器悬浮于页面之上',
-            style: TextStyle(fontSize: 14, color: Colors.grey)),
+      body: ListView(
+        children: [
+          for (int i = 1; i <= 6; i++)
+            Container(
+              margin: EdgeInsets.fromLTRB(12, i == 1 ? 12 : 0, 12, 12),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text('悬浮页面内容卡片 $i',
+                  style: const TextStyle(fontSize: 14)),
+            ),
+        ],
       ),
       bottomNavigationBar: SantoMenuBar(
         style: SantoMenuBarStyle.floating,

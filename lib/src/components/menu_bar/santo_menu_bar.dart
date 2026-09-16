@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
+import 'package:santo_ui/src/components/menu_bar/santo_menu_bar_more_menu.dart';
 
 /// 菜单栏样式
 enum SantoMenuBarStyle {
@@ -109,6 +110,12 @@ class SantoMenuBar extends StatefulWidget {
   /// 是否使用底部安全区域,默认 true
   final bool useSafeArea;
 
+  /// 是否开启"更多"标签:开启且 [moreMenu] 配置了菜单数据时才展示
+  final bool showMoreMenu;
+
+  /// "更多"菜单配置(标题/右上角操作/菜单项)
+  final SantoMenuBarMoreMenu? moreMenu;
+
   /// 切换动画时长
   final Duration duration;
 
@@ -130,8 +137,26 @@ class SantoMenuBar extends StatefulWidget {
     this.unselectedTextColor,
     this.useSafeArea = true,
     this.duration = const Duration(milliseconds: 200),
+    this.showMoreMenu = false,
+    this.moreMenu,
   })  : assert(items.length > 0, 'items 不能为空'),
         super(key: key);
+
+  /// 组合后的标签项:开启且配置了菜单数据时,末尾追加"更多"标签
+  List<SantoMenuBarItem> get effectiveItems {
+    final moreEnabled = showMoreMenu &&
+        moreMenu != null &&
+        moreMenu!.items.isNotEmpty;
+    if (!moreEnabled) return items;
+    return [
+      ...items,
+      SantoMenuBarItem(
+        text: '更多',
+        selectedIcon: const Icon(Icons.apps),
+        unselectedIcon: const Icon(Icons.apps_outlined),
+      ),
+    ];
+  }
 
   @override
   State<SantoMenuBar> createState() => _SantoMenuBarState();
@@ -159,11 +184,25 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     }
   }
 
+  bool get _moreEnabled =>
+      widget.showMoreMenu &&
+      widget.moreMenu != null &&
+      widget.moreMenu!.items.isNotEmpty;
+
+  /// 更多标签在 effectiveItems 中的索引
+  int get _moreIndex => widget.items.length;
+
   void _select(int index) {
+    final items = widget.effectiveItems;
+    if (_moreEnabled && index == _moreIndex) {
+      // 更多标签:不切换选中,弹出菜单面板
+      SantoMenuBarMoreMenu.open(context, menu: widget.moreMenu!);
+      return;
+    }
     if (index == _currentIndex) return;
     setState(() => _currentIndex = index);
     widget.onChange?.call(index);
-    widget.items[index].onTap?.call();
+    items[index].onTap?.call();
   }
 
   Color get _selectedColor =>
@@ -198,7 +237,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       ),
       child: Row(
         children: [
-          for (int i = 0; i < widget.items.length; i++)
+          for (int i = 0; i < widget.effectiveItems.length; i++)
             Expanded(child: _buildItem(context, i)),
         ],
       ),
@@ -234,7 +273,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           padding: const EdgeInsets.all(4),
           child: Row(
             children: [
-              for (int i = 0; i < widget.items.length; i++)
+              for (int i = 0; i < widget.effectiveItems.length; i++)
                 Expanded(child: _buildFloatingItem(context, i)),
             ],
           ),
@@ -252,7 +291,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
   }
 
   Widget _buildItem(BuildContext context, int index) {
-    final item = widget.items[index];
+    final item = widget.effectiveItems[index];
     final selected = index == _currentIndex;
     final color = selected ? _selectedColor : _unselectedColor;
 
@@ -293,7 +332,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
   }
 
   Widget _buildFloatingItem(BuildContext context, int index) {
-    final item = widget.items[index];
+    final item = widget.effectiveItems[index];
     final selected = index == _currentIndex;
     final color = selected ? _selectedColor : _unselectedColor;
 

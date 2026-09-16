@@ -10,9 +10,20 @@ class MenuBarBadgeExample extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'MenuBar · 红点与徽标'),
-      body: const Center(
-        child: Text('第二个标签展示红点,第三个展示数字角标',
-            style: TextStyle(fontSize: 14, color: Colors.grey)),
+      body: ListView(
+        children: [
+          for (int i = 1; i <= 5; i++)
+            Container(
+              margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF5F6FA),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text('消息通知 $i',
+                  style: const TextStyle(fontSize: 14)),
+            ),
+        ],
       ),
       bottomNavigationBar: SantoMenuBar(
         items: [

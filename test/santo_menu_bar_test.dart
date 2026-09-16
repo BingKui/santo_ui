@@ -6,7 +6,14 @@ Widget _wrap(Widget child) =>
     MaterialApp(home: Scaffold(body: Center(child: child)));
 
 void main() {
-  testWidgets('SantoMenuBar docked renders items and switches',
+  _dockedTests();
+  _floatingTests();
+  _moreMenuTests();
+  _badgeTests();
+}
+
+void _dockedTests() {
+  testWidgets('SantoBottomTabBar docked renders items and switches',
       (tester) async {
     var changed = -1;
     await tester.pumpWidget(_wrap(SantoMenuBar(
@@ -25,8 +32,7 @@ void main() {
     expect(changed, 1);
   });
 
-  testWidgets('SantoMenuBar docked has top rounded corners',
-      (tester) async {
+  testWidgets('SantoMenuBar docked has top rounded corners', (tester) async {
     await tester.pumpWidget(_wrap(SantoMenuBar(
       items: const [SantoMenuBarItem(text: '首页')],
     )));
@@ -39,7 +45,9 @@ void main() {
     expect(radius.topRight.x, 12);
     expect(radius.bottomLeft.x, 0);
   });
+}
 
+void _floatingTests() {
   testWidgets('SantoMenuBar floating uses frosted container with gap',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
@@ -65,14 +73,77 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    // 毛玻璃
     expect(find.byType(BackdropFilter), findsOneWidget);
 
-    // 与屏幕左右边缘保持 gap=12
     final barRight = tester.getTopRight(find.byType(ClipRRect)).dx;
     expect(800 - barRight, 12);
   });
+}
 
+void _moreMenuTests() {
+  testWidgets('SantoMenuBar showMoreMenu appends more tab and opens panel',
+      (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: const Center(child: Text('页面内容')),
+        bottomNavigationBar: SantoMenuBar(
+          showMoreMenu: true,
+          moreMenu: SantoMenuBarMoreMenu(
+            title: '更多',
+            actionText: '编辑',
+            items: const [
+              SantoMenuBarMoreMenuItem(
+                  label: '文档', icon: Icons.description_outlined),
+              SantoMenuBarMoreMenuItem(
+                  label: '会议', icon: Icons.videocam_outlined),
+            ],
+          ),
+          items: const [
+            SantoMenuBarItem(text: '首页'),
+            SantoMenuBarItem(text: '我的'),
+          ],
+        ),
+      ),
+    ));
+    await tester.pump();
+
+    expect(find.text('更多'), findsOneWidget);
+
+    await tester.tap(find.text('更多'));
+    await tester.pumpAndSettle();
+    expect(find.text('文档'), findsOneWidget);
+    expect(find.text('会议'), findsOneWidget);
+
+    await tester.tap(find.text('文档'));
+    await tester.pumpAndSettle();
+    expect(find.text('文档'), findsNothing);
+  });
+
+  testWidgets('SantoMenuBar hides more tab when showMoreMenu is false',
+      (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        bottomNavigationBar: SantoMenuBar(
+          moreMenu: SantoMenuBarMoreMenu(
+            title: '更多',
+            items: const [
+              SantoMenuBarMoreMenuItem(
+                  label: '文档', icon: Icons.description_outlined),
+            ],
+          ),
+          items: const [
+            SantoMenuBarItem(text: '首页'),
+          ],
+        ),
+      ),
+    ));
+    await tester.pump();
+
+    expect(find.text('更多'), findsNothing);
+  });
+}
+
+void _badgeTests() {
   testWidgets('SantoMenuBar badge shows red dot', (tester) async {
     await tester.pumpWidget(_wrap(SantoMenuBar(
       items: const [

@@ -26,7 +26,7 @@ export 'src/components/safe_area/santo_safe_area.dart';
 export 'src/components/space/santo_space.dart';
 export 'src/components/masonry/santo_masonry.dart';
 export 'src/components/skeleton/santo_skeleton.dart';
-export 'src/components/more_menu/santo_more_menu.dart';
+export 'src/components/menu_bar/santo_menu_bar_more_menu.dart';
 export 'src/components/actionsheet/santo_share_action_sheet.dart';
 export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 

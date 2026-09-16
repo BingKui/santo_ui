@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 
-/// 更多菜单项
-class SantoMoreMenuItem {
+/// 菜单栏"更多"面板的菜单项
+class SantoMenuBarMoreMenuItem {
   /// 菜单文案
   final String label;
 
@@ -19,7 +19,7 @@ class SantoMoreMenuItem {
   /// 点击回调
   final GestureTapCallback? onTap;
 
-  const SantoMoreMenuItem({
+  const SantoMenuBarMoreMenuItem({
     required this.label,
     this.icon,
     this.iconWidget,
@@ -27,24 +27,27 @@ class SantoMoreMenuItem {
   });
 }
 
-/// 更多菜单:底部弹出的大圆角面板,标题栏 + 图标宫格。
+/// MenuBar 的"更多"菜单:底部弹出的大圆角面板,标题栏 + 图标宫格。
 ///
-/// 通过 [SantoMoreMenu.show] 弹出。
+/// 通过 [SantoMenuBarMoreMenu.show] 弹出。
 ///
 /// 示例:
+/// 通过 [SantoMenuBarItem.moreMenu] 配置到"更多"标签上,点击标签时自动弹出。
+///
 /// ```dart
-/// SantoMoreMenu.show(
-///   context,
-///   title: '更多',
-///   actionText: '编辑',
-///   onActionTap: () {},
-///   items: [
-///     SantoMoreMenuItem(label: '文档', icon: Icons.description_outlined),
-///     SantoMoreMenuItem(label: '会议', icon: Icons.videocam_outlined),
-///   ],
+/// SantoMenuBarItem(
+///   text: '更多',
+///   moreMenu: SantoMenuBarMoreMenu(
+///     title: '更多',
+///     actionText: '编辑',
+///     items: [
+///       SantoMenuBarMoreMenuItem(label: '文档', icon: Icons.description_outlined),
+///       SantoMenuBarMoreMenuItem(label: '会议', icon: Icons.videocam_outlined),
+///     ],
+///   ),
 /// )
 /// ```
-class SantoMoreMenu extends StatefulWidget {
+class SantoMenuBarMoreMenu extends StatefulWidget {
   /// 标题
   final String? title;
 
@@ -58,7 +61,7 @@ class SantoMoreMenu extends StatefulWidget {
   final VoidCallback? onActionTap;
 
   /// 菜单项
-  final List<SantoMoreMenuItem> items;
+  final List<SantoMenuBarMoreMenuItem> items;
 
   /// 宫格列数,默认 4
   final int columns;
@@ -78,7 +81,7 @@ class SantoMoreMenu extends StatefulWidget {
   /// 点击遮罩是否可关闭,默认 true
   final bool barrierDismissible;
 
-  const SantoMoreMenu({
+  const SantoMenuBarMoreMenu({
     Key? key,
     this.title,
     this.titleWidget,
@@ -93,19 +96,43 @@ class SantoMoreMenu extends StatefulWidget {
     this.barrierDismissible = true,
   }) : super(key: key);
 
-  /// 弹出更多菜单
+  /// 弹出更多菜单(独立用法)
   static Future<T?> show<T>(
     BuildContext context, {
     String? title,
     Widget? titleWidget,
     String? actionText,
     VoidCallback? onActionTap,
-    required List<SantoMoreMenuItem> items,
+    required List<SantoMenuBarMoreMenuItem> items,
     int columns = 4,
     double radius = 28,
     double edgeGap = 12,
     Color? backgroundColor,
     Color? itemColor,
+    bool barrierDismissible = true,
+  }) {
+    return open(
+      context,
+      menu: SantoMenuBarMoreMenu(
+        title: title,
+        titleWidget: titleWidget,
+        actionText: actionText,
+        onActionTap: onActionTap,
+        items: items,
+        columns: columns,
+        radius: radius,
+        edgeGap: edgeGap,
+        backgroundColor: backgroundColor,
+        itemColor: itemColor,
+      ),
+      barrierDismissible: barrierDismissible,
+    );
+  }
+
+  /// 弹出配置实例对应的菜单面板(MenuBar 的更多标签使用)
+  static Future<T?> open<T>(
+    BuildContext context, {
+    required SantoMenuBarMoreMenu menu,
     bool barrierDismissible = true,
   }) {
     return Navigator.of(context).push<T>(
@@ -114,21 +141,7 @@ class SantoMoreMenu extends StatefulWidget {
         barrierDismissible: barrierDismissible,
         barrierColor: Colors.black.withAlpha(0x66),
         pageBuilder: (context, animation, secondaryAnimation) {
-          return FadeTransition(
-            opacity: animation,
-            child: SantoMoreMenu(
-              title: title,
-              titleWidget: titleWidget,
-              actionText: actionText,
-              onActionTap: onActionTap,
-              items: items,
-              columns: columns,
-              radius: radius,
-              edgeGap: edgeGap,
-              backgroundColor: backgroundColor,
-              itemColor: itemColor,
-            ),
-          );
+          return FadeTransition(opacity: animation, child: menu);
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final slide = Tween<Offset>(
@@ -143,10 +156,10 @@ class SantoMoreMenu extends StatefulWidget {
   }
 
   @override
-  State<SantoMoreMenu> createState() => _SantoMoreMenuState();
+  State<SantoMenuBarMoreMenu> createState() => _SantoMenuBarMoreMenuState();
 }
 
-class _SantoMoreMenuState extends State<SantoMoreMenu> {
+class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
   SantoCommonConfig get _commonConfig =>
       SantoThemeConfigurator.instance.getConfig().commonConfig;
 
@@ -230,7 +243,7 @@ class _SantoMoreMenuState extends State<SantoMoreMenu> {
     );
   }
 
-  Widget _buildItem(SantoMoreMenuItem item, Color itemColor) {
+  Widget _buildItem(SantoMenuBarMoreMenuItem item, Color itemColor) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
