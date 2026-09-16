@@ -16,7 +16,7 @@ const TextStyle cTitleTextStyle = const TextStyle(
     fontWeight: FontWeight.w600,
     inherit: true,
     fontSize: 18.0,
-    color: Color(0xFF222222));
+    color: Color(0xFF17233D));
 
 /// title的文字的对齐
 const int cTitleMaxLines = 3;
@@ -31,14 +31,14 @@ const TextAlign cContentTextAlign = TextAlign.center;
 const TextStyle cContentTextStyle = const TextStyle(
     inherit: true,
     fontSize: 14.0,
-    color: Color(0xFF666666),
+    color: Color(0xFF515A6E),
     decoration: TextDecoration.none);
 
 /// 警示文案样式
 const TextStyle cWarningTextStyle = TextStyle(
     inherit: true,
     fontSize: 14.0,
-    color: Color(0xFFFA3F3F),
+    color: Color(0xFFFF4D4F),
     decoration: TextDecoration.none);
 
 /// 警示文案的文字对齐
@@ -56,14 +56,14 @@ const Color cMainBackgroundColor = Colors.white;
 
 /// 主题按钮的文字样式---》主色调
 const TextStyle cMainTextStyle = const TextStyle(
-    color: Color(0xFF00AE66), fontWeight: FontWeight.w600, fontSize: 16);
+    color: Color(0xFF52C41A), fontWeight: FontWeight.w600, fontSize: 16);
 
 /// 灰色按钮的背景颜色---》白色
 const Color cGreyBackgroundColor = Colors.white;
 
 /// 非按钮的文字样式---》灰色
 const TextStyle cGreyActionsTextStyle = const TextStyle(
-    color: Color(0xFF222222), fontWeight: FontWeight.w600, fontSize: 16);
+    color: Color(0xFF17233D), fontWeight: FontWeight.w600, fontSize: 16);
 
 /// 底部按钮的高度
 const double cBottomHeight = 44.0;

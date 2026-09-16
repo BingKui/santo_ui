@@ -208,7 +208,7 @@ class SantoTipInfoWidget extends StatelessWidget {
               "${info.title}",
               style: TextStyle(
                   fontSize: 14,
-                  color: Color(0XFF222222),
+                  color: Color(0XFF17233D),
                   fontWeight: FontWeight.w600),
             ),
           ),
@@ -236,7 +236,7 @@ class SantoTipInfoWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 6),
       child: Text('${info.message}',
-          style: TextStyle(fontSize: 14, color: Color(0xFF999999), height: 1.3),
+          style: TextStyle(fontSize: 14, color: Color(0xFF808695), height: 1.3),
           maxLines: 3),
     );
   }
@@ -264,7 +264,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                         child: Text(
                           '${SantoIntl.of(context).localizedResource.skip} (${currentStepIndex + 1}/$stepCount)',
                           style:
-                              TextStyle(color: Color(0xFF999999), fontSize: 14),
+                              TextStyle(color: Color(0xFF808695), fontSize: 14),
                         ),
                       ),
                     ))
@@ -331,7 +331,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                         child: Text(
                           '${SantoIntl.of(context).localizedResource.skip} (${currentStepIndex + 1}/$stepCount)',
                           style:
-                              TextStyle(color: Color(0xFF999999), fontSize: 14),
+                              TextStyle(color: Color(0xFF808695), fontSize: 14),
                         ),
                       ),
                     ))

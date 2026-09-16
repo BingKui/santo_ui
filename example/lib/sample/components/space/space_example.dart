@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// SantoSpace 间距示例
 class SpaceExample extends StatelessWidget {
-  Widget _demoBox(String text, [Color color = const Color(0xFF0984F9)]) {
+  Widget _demoBox(String text, [Color color = const Color(0xFF1677FF)]) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class SpaceExample extends StatelessWidget {
                 customSize: 32,
                 children: [
                   _demoBox('32'),
-                  _demoBox('32', const Color(0xFF00AE66)),
+                  _demoBox('32', const Color(0xFF52C41A)),
                   _demoBox('32', const Color(0xFFFAAD14)),
                 ],
               ),

@@ -239,7 +239,7 @@ class SantoBottomDrawer extends StatelessWidget {
             desc!,
             style: const TextStyle(
               fontSize: 13,
-              color: Color(0xFF999999),
+              color: Color(0xFF808695),
             ),
           ),
         ],
@@ -252,7 +252,7 @@ class SantoBottomDrawer extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: const Padding(
               padding: EdgeInsets.all(8),
-              child: Icon(Icons.close, size: 20, color: Color(0xFF999999)),
+              child: Icon(Icons.close, size: 20, color: Color(0xFF808695)),
             ),
           )
         : null;

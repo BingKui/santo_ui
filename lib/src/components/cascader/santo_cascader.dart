@@ -259,7 +259,7 @@ class _SantoCascaderState extends State<SantoCascader> {
                 widget.cancelText,
                 style: const TextStyle(
                   fontSize: 15,
-                  color: Color(0xFF666666),
+                  color: Color(0xFF515A6E),
                 ),
               ),
             ),
@@ -271,7 +271,7 @@ class _SantoCascaderState extends State<SantoCascader> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF222222),
+                  color: Color(0xFF17233D),
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -305,7 +305,7 @@ class _SantoCascaderState extends State<SantoCascader> {
     return const Divider(
       height: 0.5,
       thickness: 0.5,
-      color: Color(0xFFF0F0F0),
+      color: Color(0xFFE8EAEC),
     );
   }
 
@@ -345,7 +345,7 @@ class _SantoCascaderState extends State<SantoCascader> {
               items[index].label,
               style: TextStyle(
                 fontSize: 15,
-                color: isSelected ? _activeColor : const Color(0xFF222222),
+                color: isSelected ? _activeColor : const Color(0xFF17233D),
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
               maxLines: 1,

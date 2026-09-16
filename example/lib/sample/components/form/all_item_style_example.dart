@@ -20,7 +20,6 @@ import 'package:example/sample/components/form/items_example/text_select_example
 import 'package:example/sample/components/form/items_example/title_example.dart';
 import 'package:example/sample/components/form/items_example/title_select_example.dart';
 import 'package:example/sample/components/form/items_example/general_item_example.dart';
-import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -46,287 +45,101 @@ class AllFormItemStyleExamplePage extends StatelessWidget {
     return ListView(
       children: <Widget>[
 
-        ListItem(
-          title: "基础类型 ",
-          titleFontSize: 22,
-          titleColor: Colors.red,
+        // 基础类型
+        SantoPanel(
+          title: '基础标题表单项',
+          child: BaseTitleExamplePage(),
         ),
-        ListItem(
-          title: "基础标题表单项",
-          describe: "基础类型",
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return BaseTitleExamplePage("标题表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '基础通用表单项',
+          child: GeneralFormExamplePage(),
         ),
-        ListItem(
-          title: "基础通用表单项",
-          describe: "自定义基础表单",
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return GeneralFormExamplePage("自定义基础表单");
-              },
-            ));
-          },
+
+        // 选择类型
+        SantoPanel(
+          title: '文本选择表单项',
+          child: TextSelectInputExamplePage(),
         ),
-        ListItem(
-          title: "选择类型",
-          titleFontSize: 22,
-          titleColor: Colors.red,
+        SantoPanel(
+          title: '快速选择输入表单项',
+          child: TextQuickSelectInputExamplePage(),
         ),
-        ListItem(
-          title: "文本选择表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TextSelectInputExamplePage("文本选择表单项");
-              },
-            ));
-          },
+
+        // 文本输入类型
+        SantoPanel(
+          title: '文本输入表单项',
+          child: TextInputExamplePage(),
         ),
-        ListItem(
-          title: "快速选择输入表单项",
-          isSupportTheme: true,
-          describe: "快速选择录入类型",
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TextQuickSelectInputExamplePage("快速选择输入表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '块文本输入表单项',
+          child: TextBlockInputExamplePage(),
         ),
-        ListItem(
-          title: "文本输入类型: 5种",
-          titleFontSize: 22,
-          titleColor: Colors.red,
+        SantoPanel(
+          title: '范围输入表单项',
+          child: RangeInputExamplePage(),
         ),
-        ListItem(
-          title: "文本输入表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TextInputExamplePage("文本输入表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '比例输入表单项',
+          child: RatioInputExamplePage(),
         ),
-        ListItem(
-          title: "块文本输入表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TextBlockInputExamplePage("块文本输入表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: 'Title选择输入表单项',
+          child: TitleSelectInputExamplePage(),
         ),
-        ListItem(
-          title: "范围输入表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return RangeInputExamplePage("范围表单项");
-              },
-            ));
-          },
+
+        // 单选&多选类型
+        SantoPanel(
+          title: '横向单选表单项',
+          child: RadioInputExamplePage(),
         ),
-        ListItem(
-          title: "比例输入表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return RatioInputExamplePage("比例输入表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '纵向单选表单项',
+          child: RadioPortraitInputExamplePage(),
         ),
-        ListItem(
-          title: "Title选择输入表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TitleSelectInputExamplePage("Title选择表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '横向多选表单项',
+          child: MultiChoiceInputExamplePage(),
         ),
-        ListItem(
-          title: "单选&多选类型: 4种",
-          titleFontSize: 22,
-          titleColor: Colors.red,
+        SantoPanel(
+          title: '纵向多选表单项',
+          child: MultiChoicePortraitInputExamplePage(),
         ),
-        ListItem(
-          title: "横向单选选表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return RadioInputExamplePage("横向单选选表单项");
-              },
-            ));
-          },
+
+        // 其他类型
+        SantoPanel(
+          title: '标题表单项（杂项）',
+          child: TitleExamplePage(),
         ),
-        ListItem(
-          title: "纵向单选选表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return RadioPortraitInputExamplePage("纵向单选表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '全选表单项',
+          child: SelectAllTitleExamplePage(),
         ),
-        ListItem(
-          title: "横向多选表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return MultiChoiceInputExamplePage("横向多选表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '评星表单项',
+          child: StarInputExamplePage(),
         ),
-        ListItem(
-          title: "纵向多选表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return MultiChoicePortraitInputExamplePage("纵向多选表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '递增表单项',
+          child: StepInputExamplePage(),
         ),
-        ListItem(
-          title: "其他类型: 6种",
-          titleFontSize: 22,
-          titleColor: Colors.red,
+        SantoPanel(
+          title: 'Switch表单项',
+          child: SwitchInputExamplePage(),
         ),
-        ListItem(
-          title: "标题表单项",
-          describe: "杂项类型",
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TitleExamplePage("标题表单项");
-              },
-            ));
-          },
+
+        // 组类型
+        SantoPanel(
+          title: '添加组表单项',
+          child: GroupAddExamplePage(),
         ),
-        ListItem(
-          title: "全选表单项",
-          describe: "杂项类型",
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return SelectAllTitleExamplePage("全选表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '普通分组表单项',
+          child: NormalGroupExample(),
         ),
-        ListItem(
-          title: "评星表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return StarInputExamplePage("评星表单项");
-              },
-            ));
-          },
+        SantoPanel(
+          title: '可展开收起分组表单项',
+          child: ExpansionGroupExample(),
         ),
-        ListItem(
-          title: "递增表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return StepInputExamplePage(title: "递增表单项");
-              },
-            ));
-          },
-        ),
-        ListItem(
-          title: "Switch表单项",
-          describe: '各种形态',
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return SwitchInputExamplePage("Switch表单项");
-              },
-            ));
-          },
-        ),
-        ListItem(
-          title: "组类型: 4种",
-          titleFontSize: 22,
-          titleColor: Colors.red,
-        ),
-        ListItem(
-          title: "添加组表单项" "",
-          describe: "组类型",
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return GroupAddExamplePage("添加组表单项" "");
-              },
-            ));
-          },
-        ),
-        ListItem(
-          title: "普通分组表单项" "",
-          describe: "组类型",
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return NormalGroupExample("普通分组表单项" "");
-              },
-            ));
-          },
-        ),
-        ListItem(
-          title: "可展开收起分组表单项" "",
-          describe: "组类型",
-          isSupportTheme: true,
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return ExpansionGroupExample("可展开收起分组表单项" "");
-              },
-            ));
-          },
-        )
       ],
     );
   }

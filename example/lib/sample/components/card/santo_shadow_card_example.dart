@@ -84,7 +84,7 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
                   SizedBox(height: 12),
                   SantoShadowCard(
                     padding: EdgeInsets.all(12),
-                    shadowColor: Color(0x330984F9),
+                    shadowColor: Color(0x331677FF),
                     blurRadius: 12,
                     child: Text('蓝色柔和阴影 blurRadius: 12',
                         style: TextStyle(fontSize: 14)),
@@ -146,7 +146,7 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
                             SantoAvatar(
                               text: 'S',
                               size: 40,
-                              backgroundColor: Color(0xFF0984F9),
+                              backgroundColor: Color(0xFF1677FF),
                             ),
                             SizedBox(width: 12),
                             Expanded(

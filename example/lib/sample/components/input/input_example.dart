@@ -10,8 +10,6 @@ class SantoInputTextExample extends StatefulWidget {
 }
 
 class _SantoInputTextExampleState extends State<SantoInputTextExample> {
-  String _text = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

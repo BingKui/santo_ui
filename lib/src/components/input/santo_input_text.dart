@@ -314,8 +314,7 @@ class _SantoInputTextState extends State<SantoInputText> {
 
   Widget _buildTextField(BuildContext context) {
     final disabled = !widget.enabled;
-    return Center(
-      child: TextField(
+    return TextField(
         controller: _controller,
         focusNode: _focusNode,
         keyboardType: widget.inputType,
@@ -391,9 +390,7 @@ class _SantoInputTextState extends State<SantoInputText> {
         },
         onChanged: (text) {
           widget.onTextChange?.call(text);
-        },
-      ),
-    );
+        });
   }
 
   /// 内置清除按钮

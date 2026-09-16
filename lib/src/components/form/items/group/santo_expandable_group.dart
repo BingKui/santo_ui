@@ -216,6 +216,7 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
           Container(
             child: ClipRect(
               child: Align(
+                alignment: Alignment.topCenter,
                 heightFactor: _heightFactor.value,
                 child: child,
               ),

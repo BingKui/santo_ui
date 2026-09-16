@@ -22,7 +22,7 @@ class BadgeExample extends StatelessWidget {
                   SizedBox(width: 40),
                   SantoBadge(
                     isDot: true,
-                    color: Color(0xFF00AE66),
+                    color: Color(0xFF52C41A),
                     child: Icon(Icons.message, size: 32),
                   ),
                   SizedBox(width: 40),
@@ -58,7 +58,7 @@ class BadgeExample extends StatelessWidget {
                 children: [
                   SantoBadge(
                     count: 8,
-                    color: Color(0xFF00AE66),
+                    color: Color(0xFF52C41A),
                     child: Icon(Icons.shopping_cart, size: 32),
                   ),
                   SizedBox(width: 40),

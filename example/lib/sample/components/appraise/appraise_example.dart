@@ -50,7 +50,7 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                   Text(
                     '说明：显示在页面里时，需要隐藏提交按钮，回调的话，调用config里面的inputChangeCallback，iconClickCallback和tagSelectCallback',
                     style: TextStyle(
-                      color: Color(0xFF999999),
+                      color: Color(0xFF808695),
                       fontSize: 14,
                     ),
                   ),
@@ -93,7 +93,7 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                   Text(
                     '默认样式',
                     style: TextStyle(
-                      color: Color(0xFF999999),
+                      color: Color(0xFF808695),
                       fontSize: 14,
                     ),
                   ),
@@ -130,7 +130,7 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                   Text(
                     '显示3个表情弹窗，tags传空隐藏标签',
                     style: TextStyle(
-                      color: Color(0xFF999999),
+                      color: Color(0xFF808695),
                       fontSize: 14,
                     ),
                   ),
@@ -159,7 +159,7 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                   Text(
                     '显示4颗星，隐藏输入框',
                     style: TextStyle(
-                      color: Color(0xFF999999),
+                      color: Color(0xFF808695),
                       fontSize: 14,
                     ),
                   ),

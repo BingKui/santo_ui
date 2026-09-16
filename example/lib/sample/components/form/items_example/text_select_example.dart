@@ -18,7 +18,7 @@ class TextSelectInputExamplePage extends StatelessWidget {
               child: Text(
                 "基本样式：",
                 style: TextStyle(
-                  color: Color(0xFF222222),
+                  color: Color(0xFF17233D),
                   fontSize: 22,
                 ),
               ),
@@ -43,7 +43,7 @@ class TextSelectInputExamplePage extends StatelessWidget {
               child: Text(
                 "全功能样式：",
                 style: TextStyle(
-                  color: Color(0xFF222222),
+                  color: Color(0xFF17233D),
                   fontSize: 22,
                 ),
               ),
@@ -73,7 +73,7 @@ class TextSelectInputExamplePage extends StatelessWidget {
               child: Text(
                 "no error：",
                 style: TextStyle(
-                  color: Color(0xFF222222),
+                  color: Color(0xFF17233D),
                   fontSize: 22,
                 ),
               ),
@@ -102,7 +102,7 @@ class TextSelectInputExamplePage extends StatelessWidget {
               child: Text(
                 "autoLayout：",
                 style: TextStyle(
-                  color: Color(0xFF222222),
+                  color: Color(0xFF17233D),
                   fontSize: 22,
                 ),
               ),

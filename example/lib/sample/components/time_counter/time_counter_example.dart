@@ -70,7 +70,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
                         child: Text(
                           '倒计时结束！',
                           style:
-                              TextStyle(color: Color(0xFFFA3F3F), fontSize: 14),
+                              TextStyle(color: Color(0xFFFF4D4F), fontSize: 14),
                         ),
                       ),
                     ),
@@ -186,7 +186,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
                           textStyle: TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF0984F9),
+                            color: Color(0xFF1677FF),
                           ),
                         ),
                         SizedBox(height: 16),
@@ -196,7 +196,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
                           autoStart: false,
                           textStyle: TextStyle(
                             fontSize: 20,
-                            color: Color(0xFF00AE66),
+                            color: Color(0xFF52C41A),
                             fontFamily: 'monospace',
                           ),
                         ),
@@ -284,7 +284,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
             textStyle: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF0984F9),
+              color: Color(0xFF1677FF),
             ),
           ),
         ),
@@ -297,7 +297,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Color(0xFF0984F9),
+        color: Color(0xFF1677FF),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(

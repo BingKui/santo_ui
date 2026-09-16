@@ -303,10 +303,10 @@ class DialogEntryPage extends StatelessWidget {
                     customWidget: TextField(
                       //光标颜色
                       maxLines: 2,
-                      cursorColor: Color(0xFF0984F9),
+                      cursorColor: Color(0xFF1677FF),
                       //光标圆角弧度
                       cursorRadius: Radius.circular(2.0),
-                      style: TextStyle(fontSize: 14, color: Color(0xFF222222)),
+                      style: TextStyle(fontSize: 14, color: Color(0xFF17233D)),
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       onChanged: (value) {},
                       decoration: InputDecoration(
@@ -395,10 +395,10 @@ class DialogEntryPage extends StatelessWidget {
                   customWidget: TextField(
                     //光标颜色
                     maxLines: 2,
-                    cursorColor: Color(0xFF0984F9),
+                    cursorColor: Color(0xFF1677FF),
                     //光标圆角弧度
                     cursorRadius: Radius.circular(2.0),
-                    style: TextStyle(fontSize: 14, color: Color(0xFF222222)),
+                    style: TextStyle(fontSize: 14, color: Color(0xFF17233D)),
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     onChanged: (value) {},
                     decoration: InputDecoration(

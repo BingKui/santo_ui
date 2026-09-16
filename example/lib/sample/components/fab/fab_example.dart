@@ -43,7 +43,7 @@ class _FabExampleState extends State<FabExample> {
                             // 绿色
                             SantoFab(
                               icon: Icons.check,
-                              backgroundColor: Color(0xFF00AE66),
+                              backgroundColor: Color(0xFF52C41A),
                               onPressed: () {
                                 _showSnackBar('点击了绿色按钮');
                               },
@@ -51,7 +51,7 @@ class _FabExampleState extends State<FabExample> {
                             // 红色
                             SantoFab(
                               icon: Icons.close,
-                              backgroundColor: Color(0xFFFA3F3F),
+                              backgroundColor: Color(0xFFFF4D4F),
                               onPressed: () {
                                 _showSnackBar('点击了红色按钮');
                               },
@@ -113,7 +113,7 @@ class _FabExampleState extends State<FabExample> {
                             SantoFab(
                               icon: Icons.edit,
                               text: '编辑',
-                              backgroundColor: Color(0xFF00AE66),
+                              backgroundColor: Color(0xFF52C41A),
                               onPressed: () {
                                 _showSnackBar('点击了编辑');
                               },
@@ -144,7 +144,7 @@ class _FabExampleState extends State<FabExample> {
                         SantoFab(
                           icon: Icons.favorite,
                           backgroundColor: Colors.white,
-                          iconColor: Color(0xFFFA3F3F),
+                          iconColor: Color(0xFFFF4D4F),
                           onPressed: () {},
                         ),
                         SantoFab(
@@ -156,7 +156,7 @@ class _FabExampleState extends State<FabExample> {
                         SantoFab(
                           icon: Icons.thumb_up,
                           backgroundColor: Colors.white,
-                          iconColor: Color(0xFF0984F9),
+                          iconColor: Color(0xFF1677FF),
                           onPressed: () {},
                         ),
                       ],

@@ -56,7 +56,7 @@ class LinkExample extends StatelessWidget {
               title: '自定义颜色',
               child: SantoLink(
                 text: '自定义颜色链接',
-                color: Color(0xFF00AE66),
+                color: Color(0xFF52C41A),
                 onTap: () {},
               ),
             ),

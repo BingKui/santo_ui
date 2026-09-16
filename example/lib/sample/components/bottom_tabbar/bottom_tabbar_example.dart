@@ -10,7 +10,7 @@ class BottomTabbarExample extends StatefulWidget {
 }
 
 class _BottomTabbarExampleState extends State<BottomTabbarExample> {
-  static const _brandColor = Color(0xFF0984F9);
+  static const _brandColor = Color(0xFF1677FF);
 
   /// 基础用法选中项
   int _basicIndex = 0;
@@ -24,6 +24,9 @@ class _BottomTabbarExampleState extends State<BottomTabbarExample> {
 
   /// 极限条件选中项
   int _stressIndex = 0;
+
+  /// 自定义样式面板选中项,item 数量与基础面板不同,需独立索引避免越界
+  int _customStyleIndex = 0;
 
   static const _titles = ['首页', '发现', '发布', '消息', '我的'];
   static const _icons = [
@@ -105,7 +108,7 @@ class _BottomTabbarExampleState extends State<BottomTabbarExample> {
                   const SizedBox(height: 12),
                   SantoBottomTabBar(
                     fixedColor: _brandColor,
-                    badgeColor: const Color(0xFFFA3F3F),
+                    badgeColor: const Color(0xFFFF4D4F),
                     currentIndex: _badgeIndex,
                     onTap: (index) {
                       setState(() {
@@ -122,8 +125,9 @@ class _BottomTabbarExampleState extends State<BottomTabbarExample> {
               title: '自定义文字样式和背景色',
               child: SantoBottomTabBar(
                 fixedColor: _brandColor,
-                currentIndex: _basicIndex,
-                onTap: (index) => setState(() => _basicIndex = index),
+                currentIndex: _customStyleIndex,
+                onTap: (index) =>
+                    setState(() => _customStyleIndex = index),
                 items: [
                   SantoBottomTabBarItem(
                     icon: const Icon(Icons.home, size: 24),

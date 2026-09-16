@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 /// Color of the 'magnifier' lens border.
-const Color _kHighlighterBorder = Color(0xFFF0F0F0);
+const Color _kHighlighterBorder = Color(0xFFE8EAEC);
 const Color _kDefaultBackground = Color(0xFFFFFFFF);
 // Eyeballed values comparing with a native picker to produce the right
 // curvatures and densities.

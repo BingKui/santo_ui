@@ -108,7 +108,7 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
           child: Text(
             '${groupConfig.title}(${groupConfig.configList?.length ?? 0})',
             style: TextStyle(
-                color: Color(0xFF222222),
+                color: Color(0xFF17233D),
                 fontSize: 18,
                 fontWeight: FontWeight.w600),
           ),

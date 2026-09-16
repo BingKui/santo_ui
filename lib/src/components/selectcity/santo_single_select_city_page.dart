@@ -159,20 +159,20 @@ class _SantoSingleSelectCityPageState extends State<SantoSingleSelectCityPage> {
               return OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.all(0),
-                  side: BorderSide(color: Color(0xFFF8F8F8), width: .5),
-                  backgroundColor: Color(0xFFF8F8F8),
+                  side: BorderSide(color: Color(0xFFF5F5F5), width: .5),
+                  backgroundColor: Color(0xFFF5F5F5),
                 ),
                 child: Container(
                   alignment: Alignment.center,
                   height: 36.0,
                   width: width,
                   padding: EdgeInsets.all(0),
-                  color: Color(0xFFF8F8F8),
+                  color: Color(0xFFF5F5F5),
                   child: Text(
                     e.name,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF222222),
+                      color: Color(0xFF17233D),
                       fontSize: SantoFonts.f12,
                       fontWeight: FontWeight.w400,
                     ),

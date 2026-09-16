@@ -275,7 +275,7 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
             RangeLimitedTextInputFormatter(minValue: widget.minLimit, maxValue: widget.maxLimit)
           ],
           style: TextStyle(
-            color: Color(0xFF222222),
+            color: Color(0xFF17233D),
             fontSize: SantoFonts.f16,
           ),
           decoration: InputDecoration(
@@ -297,7 +297,7 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
         child: Text(
           "$_value",
           style: TextStyle(
-            color: Color(0xFF222222),
+            color: Color(0xFF17233D),
             fontSize: SantoFonts.f16,
           ),
         ),

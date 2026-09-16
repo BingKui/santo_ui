@@ -225,7 +225,7 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
                       child: Text(
                         widget.deleteText ?? "",
                         style: TextStyle(
-                          color: Color(0xFFFA3F3F),
+                          color: Color(0xFFFF4D4F),
                           fontSize: SantoFonts.f16,
                         ),
                       ),
@@ -253,6 +253,7 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
           Container(
             child: ClipRect(
               child: Align(
+                alignment: Alignment.topCenter,
                 heightFactor: _heightFactor.value,
                 child: child,
               ),

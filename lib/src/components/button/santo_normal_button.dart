@@ -1,14 +1,15 @@
+import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/constants/santo_constants.dart';
 import 'package:santo_ui/src/utils/santo_multi_click_util.dart';
 import 'package:flutter/material.dart';
 
 const double _BFontSize = 16;
 const Color _BTextColor = Colors.white;
-const Color _BBackgroundColor = Color(0xFF0984F9);
+const Color _BBackgroundColor = Color(0xFF1677FF);
 const Color _BDisableBackgroundColor = Color(0xFFCCCCCC);
 const FontWeight _BFontWeight = FontWeight.bold;
 const double _BRadius = 12;
-const Color _BOutlineLineColor = Color(0xFFEEEEEE);
+const Color _BOutlineLineColor = Color(0xFFDCDEE2);
 const Color _BOutlineDisableLineColor = Color(0xFFCCCCCC);
 
 /// 通用按钮，支持用户设置背景色、是否可用等属性
@@ -179,15 +180,15 @@ class SantoNormalButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (SantoMultiClickUtils.isMultiClick()) {
-          return;
-        }
-        if (isEnable && onTap != null) {
-          onTap!();
-        }
-      },
+    return SantoPressFeedback(
+      onTap: (isEnable && onTap != null)
+          ? () {
+              if (SantoMultiClickUtils.isMultiClick()) {
+                return;
+              }
+              onTap!();
+            }
+          : null,
       child: Container(
         alignment: alignment,
         decoration: decoration ?? _getBoxDecoration(_getBackgroundColor()),

@@ -26,7 +26,7 @@ class ButtonEntryPage extends StatelessWidget {
               describe: '宽度为屏幕宽度，背景色为主题色',
               isShowLine: false,
               isSupportTheme: true,
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -38,7 +38,7 @@ class ButtonEntryPage extends StatelessWidget {
               title: '大边框按钮',
               isSupportTheme: true,
               describe: '宽度为屏幕宽度，背景色为白色，带有边框线',
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -49,7 +49,7 @@ class ButtonEntryPage extends StatelessWidget {
             ListItem(
               title: '大辅助色按钮',
               describe: '宽度为屏幕宽度，背景色为次级辅助色',
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -61,7 +61,7 @@ class ButtonEntryPage extends StatelessWidget {
               title: '大幽灵按钮',
               isSupportTheme: true,
               describe: '宽度为屏幕宽度，背景色为浅主题色',
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -73,7 +73,7 @@ class ButtonEntryPage extends StatelessWidget {
               title: '小主按钮',
               describe: '最小宽度为84，宽度自适应文字',
               isSupportTheme: true,
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -85,7 +85,7 @@ class ButtonEntryPage extends StatelessWidget {
               title: '小边框按钮',
               isSupportTheme: true,
               describe: '最小宽度为84，宽度自适应文字',
-              describeColor: Color(0xFF222222),
+              describeColor: Color(0xFF17233D),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {

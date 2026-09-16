@@ -80,8 +80,8 @@ class _SliderExampleState extends State<SliderExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SantoSlider(
                       value: 70,
-                      activeColor: const Color(0xFFFA3F3F),
-                      inactiveColor: Color(0xFFFA3F3F).withAlpha(40),
+                      activeColor: const Color(0xFFFF4D4F),
+                      inactiveColor: Color(0xFFFF4D4F).withAlpha(40),
                       onChanged: (v) {},
                     ),
                   ),
@@ -128,7 +128,7 @@ class _SliderExampleState extends State<SliderExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SantoSlider(
                       value: 40,
-                      activeColor: const Color(0xFF00AE66),
+                      activeColor: const Color(0xFF52C41A),
                       onChanged: (v) {},
                     ),
                   ),

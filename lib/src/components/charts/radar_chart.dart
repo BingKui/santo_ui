@@ -151,7 +151,7 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: Color(0xFF222222),
+                        color: Color(0xFF17233D),
                         fontSize: 12,
                         fontWeight: FontWeight.w600),
                   ),

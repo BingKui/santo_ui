@@ -25,7 +25,7 @@ class SantoAppBarTheme {
   static const double doubleLeadingSize = 80;
 
   /// [Brightness.light] 时使用的文字颜色
-  static const Color lightTextColor = Color(0xFF222222);
+  static const Color lightTextColor = Color(0xFF17233D);
 
   /// [Brightness.dark] 时使用的文字颜色
   static const Color darkTextColor = Colors.white;

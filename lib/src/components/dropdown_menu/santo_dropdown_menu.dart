@@ -113,7 +113,7 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
                 _displayText,
                 style: TextStyle(
                   fontSize: 14,
-                  color: _isActive ? _activeColor : const Color(0xFF222222),
+                  color: _isActive ? _activeColor : const Color(0xFF17233D),
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -126,7 +126,7 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
               child: Icon(
                 Icons.keyboard_arrow_down,
                 size: 18,
-                color: _isActive ? _activeColor : const Color(0xFF999999),
+                color: _isActive ? _activeColor : const Color(0xFF808695),
               ),
             ),
           ],
@@ -260,7 +260,7 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
           decoration: const BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Color(0xFFF0F0F0),
+                color: Color(0xFFE8EAEC),
                 width: 0.5,
               ),
             ),
@@ -330,7 +330,7 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
                         fontSize: 14,
                         color: isSelected
                             ? _activeColor
-                            : const Color(0xFF222222),
+                            : const Color(0xFF17233D),
                       ),
                     ),
                   ),

@@ -89,7 +89,7 @@ class SantoBaseSwitchButton extends StatelessWidget {
         child: CircularProgressIndicator(
           strokeWidth: 1.5,
           valueColor: AlwaysStoppedAnimation<Color>(
-            thumbColor == Colors.white ? const Color(0xFF999999) : Colors.white,
+            thumbColor == Colors.white ? const Color(0xFF808695) : Colors.white,
           ),
         ),
       );

@@ -175,7 +175,7 @@ SantoPanel(
                                 style: TextStyle(
                                   height: 1.0,
                                   textBaseline: TextBaseline.ideographic,
-                                  color: Color(0xFF222222),
+                                  color: Color(0xFF17233D),
                                   package: SantoStrings.flutterPackageName,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 28,
@@ -190,7 +190,7 @@ SantoPanel(
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 textBaseline: TextBaseline.ideographic,
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontSize: 12,
                               ),
                             ),
@@ -202,7 +202,7 @@ SantoPanel(
                                 style: TextStyle(
                                   height: 1.0,
                                   textBaseline: TextBaseline.ideographic,
-                                  color: Color(0xFF222222),
+                                  color: Color(0xFF17233D),
                                   package: SantoStrings.flutterPackageName,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 28,
@@ -217,7 +217,7 @@ SantoPanel(
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 textBaseline: TextBaseline.ideographic,
-                                color: Color(0xFF222222),
+                                color: Color(0xFF17233D),
                                 fontSize: 12,
                               ),
                             ),
@@ -230,7 +230,7 @@ SantoPanel(
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xFF999999)),
+                            color: Color(0xFF808695)),
                         overflow: TextOverflow.ellipsis,
                       )),
                   SantoNumberInfoItemModel(

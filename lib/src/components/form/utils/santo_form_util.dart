@@ -140,7 +140,7 @@ class SantoFormUtil {
           isRequire ? EdgeInsets.only(right: 2) : EdgeInsets.only(right: 0),
       child: isRequire
           ? SantoTools.getAssetSizeImage(SantoAsset.iconRequireRed, 8, 8,
-              color: Color(0xFFFA3F3F))
+              color: Color(0xFFFF4D4F))
           : null,
     );
   }

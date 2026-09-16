@@ -33,7 +33,7 @@ class FooterExample extends StatelessWidget {
                 logo: Icon(
                   Icons.flutter_dash,
                   size: 20,
-                  color: Color(0xFF0984F9),
+                  color: Color(0xFF1677FF),
                 ),
               ),
             ),

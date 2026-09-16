@@ -45,13 +45,13 @@ class SantoStateTag extends StatelessWidget {
   Color getTagColor(TagState state) {
     switch (state) {
       case TagState.invalidate:
-        return Color(0xFF999999);
+        return Color(0xFF808695);
       case TagState.running:
-        return Color(0xFF0984F9);
+        return Color(0xFF1677FF);
       case TagState.failed:
-        return Color(0xFFFA3F3F);
+        return Color(0xFFFF4D4F);
       case TagState.succeed:
-        return Color(0xFF00AE66);
+        return Color(0xFF52C41A);
       case TagState.waiting:
         return Color(0xFFFAAD14);
     }

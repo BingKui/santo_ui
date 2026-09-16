@@ -176,7 +176,7 @@ class SantoTable extends StatelessWidget {
     final hTextColor = headerTextColor ?? commonConfig.colorTextBaseInverse;
     final cTextColor = cellTextColor ?? commonConfig.colorTextBase;
     final oColor = oddRowColor ?? Colors.white;
-    final eColor = evenRowColor ?? const Color(0xFFF8F8F8);
+    final eColor = evenRowColor ?? const Color(0xFFF5F5F5);
 
     final defaultHeaderStyle = headerTextStyle ??
         TextStyle(

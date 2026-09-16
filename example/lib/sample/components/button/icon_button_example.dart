@@ -32,7 +32,7 @@ class _SantoIconBtnExampleState extends State<SantoIconBtnExample>
                 name: '文字在下',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Color(0xFF999999),
+                  color: Color(0xFF808695),
                 ),
                 direction: Direction.bottom,
                 padding: 4,

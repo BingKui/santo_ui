@@ -21,7 +21,7 @@ class DoughnutChartExampleState extends State<DoughnutChartExample> {
     Color(0xff26BB7D),
     Color(0xffFFDD00),
     Color(0xff6AA6FB),
-    Color(0xff0984F9),
+    Color(0xff1677FF),
   ];
   int count = 5;
 

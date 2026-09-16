@@ -165,15 +165,15 @@ class SantoSelectionConfig extends SantoBaseConfig {
   SantoTextStyle? _itemBoldTextStyle;
 
   /// 三级 item 背景色
-  /// 默认为 Color(0xFFF0F0F0)
+  /// 默认为 Color(0xFFE8EAEC)
   Color? _deepNormalBgColor;
 
   /// 三级 item 选中背景色
-  /// 默认为 Color(0xFFF8F8F8)
+  /// 默认为 Color(0xFFF5F5F5)
   Color? _deepSelectBgColor;
 
   /// 二级 item 背景色
-  /// 默认为 Color(0xFFF8F8F8)
+  /// 默认为 Color(0xFFF5F5F5)
   Color? _middleNormalBgColor;
 
   /// 二级 item 选中背景色

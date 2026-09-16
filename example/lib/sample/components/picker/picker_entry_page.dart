@@ -364,10 +364,10 @@ class PickerEntryPage extends StatelessWidget {
         tagItemSource: items,
         tagTitleFontSize: 12,
         chipPadding: EdgeInsets.only(left: 5, right: 5),
-        tagTitleColor: Color(0xFF666666),
+        tagTitleColor: Color(0xFF515A6E),
         tagBackgroudColor: Color(0xffF8F8F8),
-        selectedTagBackgroudColor: Color(0x140984F9),
-        selectedTagTitleColor: Color(0xFF0984F9),
+        selectedTagBackgroudColor: Color(0x141677FF),
+        selectedTagTitleColor: Color(0xFF1677FF),
       ),
       onConfirm: (value) {
         SantoToast.show(value.toString(), context);
@@ -416,8 +416,8 @@ class PickerEntryPage extends StatelessWidget {
                 tagTitleFontSize: 12,
                 tagTitleColor: Color(0xff222222),
                 tagBackgroundColor: Color(0xffF8F8F8),
-                selectedTagBackgroundColor: Color(0x140984F9),
-                selectedTagTitleColor: Color(0xFF0984F9),
+                selectedTagBackgroundColor: Color(0x141677FF),
+                selectedTagTitleColor: Color(0xFF1677FF),
               ),
               onTagValueGetter: (choice) {
                 return choice.name;

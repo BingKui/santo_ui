@@ -15,7 +15,7 @@ class SantoScrollableTextDialog extends Dialog {
   /// 中间富文本内容
   final String contentText;
 
-  /// 文字颜色 默认 Color(0xFF666666)
+  /// 文字颜色 默认 Color(0xFF515A6E)
   final Color textColor;
 
   /// 文字字体大小 默认 16
@@ -40,7 +40,7 @@ class SantoScrollableTextDialog extends Dialog {
       {this.title,
       this.isClose = true,
       required this.contentText,
-      this.textColor = const Color(0xFF666666),
+      this.textColor = const Color(0xFF515A6E),
       this.textFontSize = 16,
       this.submitText,
       this.onSubmitClick,

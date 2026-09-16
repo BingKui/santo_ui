@@ -40,17 +40,17 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
     selectedHeiStyle = TextStyle(
         fontSize: 18, color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600);
     selectedBaiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFF222222), fontWeight: FontWeight.w600);
+        fontSize: 18, color: Color(0xFF17233D), fontWeight: FontWeight.w600);
 
     unSelectedHeiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFF999999), fontWeight: FontWeight.w600);
+        fontSize: 18, color: Color(0xFF808695), fontWeight: FontWeight.w600);
     unSelectedBaiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFF999999), fontWeight: FontWeight.w600);
+        fontSize: 18, color: Color(0xFF808695), fontWeight: FontWeight.w600);
 
     commonHeiStyle = TextStyle(
         fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white);
     commonBaiStyle = TextStyle(
-        fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF222222));
+        fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF17233D));
 
     focusNode = FocusNode();
     focusNode!.addListener(() {
@@ -318,7 +318,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
                 fontSize: 18,
                 height: 1,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF222222)),
+                color: Color(0xFF17233D)),
           ),
           Container(
               height: 17,
@@ -334,7 +334,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
                   style: TextStyle(
                     fontSize: 11,
                     height: 1,
-                    color: Color(0xFF222222),
+                    color: Color(0xFF17233D),
                   ),
                 ),
               ))
@@ -494,7 +494,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
             Text(
               '类型1',
               style:
-                  TextStyle(color: Color(0xFF222222), height: 1, fontSize: 16),
+                  TextStyle(color: Color(0xFF17233D), height: 1, fontSize: 16),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5),

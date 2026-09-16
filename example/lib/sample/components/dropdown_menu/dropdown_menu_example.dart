@@ -90,7 +90,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
             // 模拟内容区域
             Container(
               height: 200,
-              color: Color(0xFFF8F8F8),
+              color: Color(0xFFF5F5F5),
               child: Center(
                 child: Text(
                   '筛选结果区域\n'
@@ -98,7 +98,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
                   '分类: ${_categoryValue ?? "无"}\n'
                   '价格: ${_priceValue ?? "无"}',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Color(0xFF999999), fontSize: 14),
+                  style: TextStyle(color: Color(0xFF808695), fontSize: 14),
                 ),
               ),
             ),
@@ -129,11 +129,11 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
             ),
             Container(
               height: 120,
-              color: Color(0xFFF8F8F8),
+              color: Color(0xFFF5F5F5),
               child: Center(
                 child: Text(
                   '当前排序: ${_sortValue ?? "无"}',
-                  style: TextStyle(color: Color(0xFF999999), fontSize: 14),
+                  style: TextStyle(color: Color(0xFF808695), fontSize: 14),
                 ),
               ),
             ),
@@ -149,7 +149,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
               ),
             ),
             SantoDropdownMenu(
-              activeColor: Color(0xFFFA3F3F),
+              activeColor: Color(0xFFFF4D4F),
               children: [
                 SantoDropdownMenuItem(
                   title: '排序',
@@ -160,7 +160,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
                       _sortValue = value;
                     });
                   },
-                  activeColor: Color(0xFFFA3F3F),
+                  activeColor: Color(0xFFFF4D4F),
                 ),
                 SantoDropdownMenuItem(
                   title: '分类',
@@ -171,17 +171,17 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
                       _categoryValue = value;
                     });
                   },
-                  activeColor: Color(0xFFFA3F3F),
+                  activeColor: Color(0xFFFF4D4F),
                 ),
               ],
             ),
             Container(
               height: 120,
-              color: Color(0xFFF8F8F8),
+              color: Color(0xFFF5F5F5),
               child: Center(
                 child: Text(
                   '使用红色主题的下拉菜单',
-                  style: TextStyle(color: Color(0xFF999999), fontSize: 14),
+                  style: TextStyle(color: Color(0xFF808695), fontSize: 14),
                 ),
               ),
             ),

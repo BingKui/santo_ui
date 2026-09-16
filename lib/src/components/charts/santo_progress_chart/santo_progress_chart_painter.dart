@@ -25,7 +25,7 @@ class SantoProgressChartPainter extends CustomPainter {
   SantoProgressChartPainter(
       {this.value = 0.2,
       this.animation,
-      this.colors = const [Color(0xFF1545FD), Color(0xFF0984F9)],
+      this.colors = const [Color(0xFF1545FD), Color(0xFF1677FF)],
       this.backgroundColor = const Color(0x7A90C9FF),
       this.radius = 4,
       this.alwaysShowRadius = true})

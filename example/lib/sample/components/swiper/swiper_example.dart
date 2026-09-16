@@ -15,10 +15,10 @@ class _SwiperExampleState extends State<SwiperExample> {
   /// 生成彩色占位卡片
   List<Widget> _buildColorCards() {
     final colors = [
-      const Color(0xFF0984F9),
-      const Color(0xFF00AE66),
+      const Color(0xFF1677FF),
+      const Color(0xFF52C41A),
       const Color(0xFFFAAD14),
-      const Color(0xFFFA3F3F),
+      const Color(0xFFFF4D4F),
       const Color(0xFF722ED1),
     ];
     return List.generate(colors.length, (index) {
@@ -136,7 +136,7 @@ class _SwiperExampleState extends State<SwiperExample> {
                               _currentPage = (_currentPage - 1 + 5) % 5;
                             });
                           },
-                          backgroundColor: const Color(0xFF0984F9),
+                          backgroundColor: const Color(0xFF1677FF),
                           text: '上一页',
                         ),
                         const SizedBox(width: 16),
@@ -146,7 +146,7 @@ class _SwiperExampleState extends State<SwiperExample> {
                               _currentPage = (_currentPage + 1) % 5;
                             });
                           },
-                          backgroundColor: const Color(0xFF0984F9),
+                          backgroundColor: const Color(0xFF1677FF),
                           text: '下一页',
                         ),
                       ],

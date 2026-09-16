@@ -186,7 +186,7 @@ class _SelectionViewExamplePageState
                   ),
                   Text(
                     '重置',
-                    style: TextStyle(fontSize: 11, color: Color(0xFF999999)),
+                    style: TextStyle(fontSize: 11, color: Color(0xFF808695)),
                   )
                 ],
               ),

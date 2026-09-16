@@ -5,7 +5,7 @@ import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// 气泡背景的文本
-/// 气泡：背景色为Color(0xFFF8F8F8)的灰色Container
+/// 气泡：背景色为Color(0xFFF5F5F5)的灰色Container
 ///      右上角为不规则小三角
 ///
 /// ```dart
@@ -52,7 +52,7 @@ class SantoInsertInfo extends StatelessWidget {
       ),
     );
 
-    Color color = const Color(0xFFF8F8F8);
+    Color color = const Color(0xFFF5F5F5);
     Image image = SantoTools.getAssetImage('icons/icon_right_top_pointer.png');
 
     Widget bubbleText = Row(

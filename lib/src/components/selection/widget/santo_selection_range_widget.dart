@@ -81,8 +81,14 @@ class _SantoRangeSelectionGroupWidgetState
   bool _isConfirmClick = false;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _screenWidth =
+        View.of(context).physicalSize.width / View.of(context).devicePixelRatio;
+  }
+
+  @override
   void initState() {
-    _screenWidth = View.of(context).physicalSize.width / View.of(context).devicePixelRatio;
     _initData();
     _tabController = TabController(vsync: this, length: _firstList.length);
     if (_firstIndex >= 0) {

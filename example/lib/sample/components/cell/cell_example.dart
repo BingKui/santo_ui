@@ -119,7 +119,7 @@ class _CellExampleState extends State<CellExample> {
                     rightWidget: SantoAvatar(
                       text: '张',
                       size: 36,
-                      backgroundColor: Color(0xFF0984F9),
+                      backgroundColor: Color(0xFF1677FF),
                     ),
                     bottomLine: false,
                   ),

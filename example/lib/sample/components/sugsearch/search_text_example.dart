@@ -81,9 +81,9 @@ class _SearchTextExampleState extends State<SearchTextExample> {
               innerColor: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10)),
               normalBorder: Border.all(
-                  color: Color(0xFFF0F0F0), width: 1, style: BorderStyle.solid),
+                  color: Color(0xFFE8EAEC), width: 1, style: BorderStyle.solid),
               activeBorder: Border.all(
-                  color: Color(0xFF0984F9), width: 1, style: BorderStyle.solid),
+                  color: Color(0xFF1677FF), width: 1, style: BorderStyle.solid),
               onTextClear: () {
                 debugPrint('sss');
                 focusNode.unfocus();

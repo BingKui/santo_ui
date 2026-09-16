@@ -6,8 +6,8 @@ class MasonryExample extends StatelessWidget {
   static const List<double> _heights = [120, 80, 160, 60, 100, 140, 90, 180, 70];
 
   static const List<Color> _colors = [
-    Color(0xFF0984F9),
-    Color(0xFF00AE66),
+    Color(0xFF1677FF),
+    Color(0xFF52C41A),
     Color(0xFFFAAD14),
     Color(0xFFFA541C),
     Color(0xFF722ED1),

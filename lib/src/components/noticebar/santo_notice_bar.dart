@@ -152,42 +152,42 @@ class NoticeStyles {
   ///红色+失败+箭头
   static NoticeStyle failWithArrow = NoticeStyle(
       SantoTools.getAssetImage(SantoAsset.iconNoticeFail),
-      Color(0xFFFA3F3F),
+      Color(0xFFFF4D4F),
       Color(0xFFFEEDED),
       SantoTools.getAssetImage(SantoAsset.iconNoticeArrowRed));
 
   ///红色+失败+关闭
   static NoticeStyle failWithClose = NoticeStyle(
       SantoTools.getAssetImage(SantoAsset.iconNoticeFail),
-      Color(0xFFFA3F3F),
+      Color(0xFFFF4D4F),
       Color(0xFFFEEDED),
       SantoTools.getAssetImage(SantoAsset.iconNoticeCloseRed));
 
   ///蓝色+进行中+箭头
   static NoticeStyle runningWithArrow = NoticeStyle(
       SantoTools.getAssetImage(SantoAsset.iconNoticeRunning),
-      Color(0xFF0984F9),
+      Color(0xFF1677FF),
       Color(0xFFE0EDFF),
       SantoTools.getAssetImage(SantoAsset.iconNoticeArrowBlue));
 
   ///蓝色+进行中+关闭
   static NoticeStyle runningWithClose = NoticeStyle(
       SantoTools.getAssetImage(SantoAsset.iconNoticeRunning),
-      Color(0xFF0984F9),
+      Color(0xFF1677FF),
       Color(0xFFE0EDFF),
       SantoTools.getAssetImage(SantoAsset.iconNoticeCloseBlue));
 
   ///绿色+完成+箭头
   static NoticeStyle succeedWithArrow = NoticeStyle(
       SantoTools.getAssetImage(SantoAsset.iconNoticeSucceed),
-      Color(0xFF00AE66),
+      Color(0xFF52C41A),
       Color(0xFFEBFFF7),
       SantoTools.getAssetImage(SantoAsset.iconNoticeArrowGreen));
 
   ///绿色+完成+关闭
   static NoticeStyle succeedWithClose = NoticeStyle(
       SantoTools.getAssetImage(SantoAsset.iconNoticeSucceed),
-      Color(0xFF00AE66),
+      Color(0xFF52C41A),
       Color(0xFFEBFFF7),
       SantoTools.getAssetImage(SantoAsset.iconNoticeCloseGreen));
 
