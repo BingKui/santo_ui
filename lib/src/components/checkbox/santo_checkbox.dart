@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:santo_ui/src/components/checkbox/santo_checkbox_group.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
@@ -272,20 +273,20 @@ class SantoCheckboxState extends State<SantoCheckbox> {
       tile = _buildCardWrapper(tile);
     }
 
-    if (!_disabled && !(canNotCancel && checked)) {
-      Widget tappable = GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTapDown: (_) => _pressState(true),
-        onTapUp: (_) => _pressState(false),
-        onTapCancel: () => _pressState(false),
-        onTap: () => _handleTap(groupState),
-        child: tile,
-      );
-      if (_pressed) {
-        tappable = Opacity(opacity: 0.68, child: tappable);
-      }
-      tile = tappable;
+    // 手势与按压态始终保留,保证组件结构稳定:结构随选中态变化会在手势识别器
+    // 被释放时于树锁定期间回调 onTapCancel,导致 setState 抛错、点击丢帧
+    Widget tappable = GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTapDown: (_) => _pressState(true),
+      onTapUp: (_) => _pressState(false),
+      onTapCancel: () => _pressState(false),
+      onTap: () => _handleTap(groupState),
+      child: tile,
+    );
+    if (_pressed) {
+      tappable = Opacity(opacity: 0.68, child: tappable);
     }
+    tile = tappable;
 
     if (!widget.showDivider || widget.cardMode) {
       return Semantics(enabled: !_disabled, checked: checked, child: tile);
@@ -304,6 +305,8 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   /// 点击切换勾选状态
   void _handleTap(SantoCheckboxGroupState? groupState) {
     if (_disabled) return;
+    // 严格模式(单选)下已选中项不可取消勾选
+    if (canNotCancel && checked) return;
     final next = !checked;
     if (groupState != null && widget.id != null) {
       // 超出分组最大勾选数时分组会回调 onOverloadChecked,此处保持原状态
@@ -314,7 +317,12 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   }
 
   void _pressState(bool pressed) {
-    if (_disabled) return;
+    if (_disabled || !mounted || _pressed == pressed) return;
+    // 组件在本帧内被移除时(手势识别器释放会回调 onTapCancel),树已锁定不能 setState
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      return;
+    }
     setState(() => _pressed = pressed);
   }
 

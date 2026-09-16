@@ -38,7 +38,7 @@ class _RadioExampleState extends State<RadioExample> {
               title: '横向单选框',
               description: 'SantoRadioGroup 设置 direction 为 horizontal 横向排列',
               child: SantoRadioGroup(
-                selectId: 'index:1',
+                selectId: '1',
                 direction: Axis.horizontal,
                 directionalRadios: const [
                   SantoRadio(id: '0', title: '单选标题', showDivider: false),

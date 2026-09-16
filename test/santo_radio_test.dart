@@ -32,6 +32,25 @@ void main() {
     expect(find.byIcon(Icons.check_circle), findsOneWidget);
   });
 
+  testWidgets('SantoRadioGroup 严格模式单击即选中且无异常', (tester) async {
+    var selected = '0';
+    await tester.pumpWidget(_wrap(SantoRadioGroup(
+      selectId: selected,
+      direction: Axis.horizontal,
+      onRadioGroupChange: (id) => selected = id ?? selected,
+      directionalRadios: const [
+        SantoRadio(id: '0', title: '选项一', showDivider: false),
+        SantoRadio(id: '1', title: '选项二', showDivider: false),
+      ],
+    )));
+
+    await _tap(tester, find.text('选项二'));
+    // 一次点击即切换,且不出现树锁定期间 setState 的异常
+    expect(selected, '1');
+    expect(find.byIcon(Icons.check_circle), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('SantoRadioGroup 严格模式不可取消勾选', (tester) async {
     await tester.pumpWidget(_wrap(SantoRadioGroup(
       selectId: '0',
