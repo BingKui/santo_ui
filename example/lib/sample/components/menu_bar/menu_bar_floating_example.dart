@@ -52,6 +52,42 @@ class _MenuBarFloatingExampleState extends State<MenuBarFloatingExample> {
               gap: 12,
               currentIndex: _index,
               onChange: (i) => setState(() => _index = i),
+              showMoreMenu: true,
+              moreMenu: SantoMenuBarMoreMenu(
+                title: '更多',
+                items: [
+                  SantoMenuBarMoreMenuItem(
+                    label: '文档',
+                    icon: Icons.description_outlined,
+                    onTap: () => SantoToast.show('点击了文档', context),
+                  ),
+                  SantoMenuBarMoreMenuItem(
+                    label: '会议',
+                    icon: Icons.videocam_outlined,
+                    onTap: () => SantoToast.show('点击了会议', context),
+                  ),
+                  SantoMenuBarMoreMenuItem(
+                    label: '邮箱',
+                    icon: Icons.mail_outline,
+                    onTap: () => SantoToast.show('点击了邮箱', context),
+                  ),
+                  SantoMenuBarMoreMenuItem(
+                    label: 'AI 表格',
+                    icon: Icons.grid_view_outlined,
+                    onTap: () => SantoToast.show('点击了 AI 表格', context),
+                  ),
+                  SantoMenuBarMoreMenuItem(
+                    label: 'AI 听记',
+                    icon: Icons.mic_none,
+                    onTap: () => SantoToast.show('点击了 AI 听记', context),
+                  ),
+                  SantoMenuBarMoreMenuItem(
+                    label: 'DING',
+                    icon: Icons.bolt_outlined,
+                    onTap: () => SantoToast.show('点击了 DING', context),
+                  ),
+                ],
+              ),
               items: [
                 SantoMenuBarItem(
                   text: '首页',
