@@ -2,8 +2,17 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 /// MenuBar 悬浮样式示例
-class MenuBarFloatingExample extends StatelessWidget {
+class MenuBarFloatingExample extends StatefulWidget {
   const MenuBarFloatingExample({Key? key}) : super(key: key);
+
+  @override
+  State<MenuBarFloatingExample> createState() => _MenuBarFloatingExampleState();
+}
+
+class _MenuBarFloatingExampleState extends State<MenuBarFloatingExample> {
+  int _index = 0;
+
+  static const _tabNames = ['首页', '发现', '我的'];
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +29,7 @@ class MenuBarFloatingExample extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text('悬浮页面内容卡片 $i',
+              child: Text('${_tabNames[_index]}内容卡片 $i',
                   style: const TextStyle(fontSize: 14)),
             ),
         ],
@@ -28,6 +37,8 @@ class MenuBarFloatingExample extends StatelessWidget {
       bottomNavigationBar: SantoMenuBar(
         style: SantoMenuBarStyle.floating,
         gap: 12,
+        currentIndex: _index,
+        onChange: (i) => setState(() => _index = i),
         items: [
           SantoMenuBarItem(
             text: '首页',

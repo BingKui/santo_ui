@@ -46,19 +46,20 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
             maxLines: 2,
           ),
           Expanded(
-            child: Center(
-              child: Text('当前选中索引: $_index',
-                  style: const TextStyle(fontSize: 14, color: Colors.grey)),
-            ),
+            child: _index == 0
+                ? const Center(child: Text('首页内容',
+                    style: TextStyle(fontSize: 14, color: Colors.grey)))
+                : _index == 1
+                    ? const Center(child: Text('发现内容',
+                        style: TextStyle(fontSize: 14, color: Colors.grey)))
+                    : const Center(child: Text('消息内容',
+                        style: TextStyle(fontSize: 14, color: Colors.grey))),
           ),
         ],
       ),
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
-        onChange: (index) {
-          setState(() => _index = index);
-          SantoToast.show('选中第 ${index + 1} 个标签', context);
-        },
+        onChange: (index) => setState(() => _index = index),
         showMoreMenu: true,
         moreMenu: SantoMenuBarMoreMenu(
           title: '更多',
