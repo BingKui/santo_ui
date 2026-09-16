@@ -388,28 +388,36 @@ class SantoDialog extends AlertDialog {
   /// 底部操作统一使用按钮组件渲染
   Widget _mapTextToGesWidget(BuildContext context, String label, int index,
       bool main, SantoDialogConfig dialogConfig) {
+    final textStyle = (main
+            ? dialogConfig.mainActionTextStyle
+            : dialogConfig.assistActionsTextStyle)
+        .generateTextStyle();
+    final onTap = () {
+      if (indexedActionCallback != null) {
+        //点击的监听
+        indexedActionCallback!(index);
+      } else {
+        Navigator.pop(context);
+      }
+    };
     return SizedBox(
       width: double.infinity,
-      child: SantoNormalButton(
-        text: label,
-        alignment: Alignment.center,
-        constraints: BoxConstraints.tightFor(height: cBottomHeight),
-        backgroundColor: main
-            ? dialogConfig.mainActionBackgroundColor
-            : dialogConfig.assistActionsBackgroundColor,
-        textStyle: (main
-                ? dialogConfig.mainActionTextStyle
-                : dialogConfig.assistActionsTextStyle)
-            .generateTextStyle(),
-        onTap: () {
-          if (indexedActionCallback != null) {
-            //点击的监听
-            indexedActionCallback!(index);
-          } else {
-            Navigator.pop(context);
-          }
-        },
-      ),
+      child: main
+          ? SantoNormalButton(
+              text: label,
+              alignment: Alignment.center,
+              constraints: BoxConstraints.tightFor(height: cBottomHeight),
+              backgroundColor: dialogConfig.mainActionBackgroundColor,
+              textStyle: textStyle,
+              onTap: onTap,
+            )
+          : SantoNormalButton.outline(
+              text: label,
+              alignment: Alignment.center,
+              constraints: BoxConstraints.tightFor(height: cBottomHeight),
+              textStyle: textStyle,
+              onTap: onTap,
+            ),
     );
   }
 
