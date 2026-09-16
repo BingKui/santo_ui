@@ -21,7 +21,7 @@ class _MenuBarBadgeExampleState extends State<MenuBarBadgeExample> {
       appBar: SantoAppBar(title: 'MenuBar · 红点与徽标'),
       body: ListView(
         children: [
-          for (int i = 1; i <= 5; i++)
+          for (int i = 1; i <= 20; i++)
             Container(
               margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
               padding: const EdgeInsets.all(16),

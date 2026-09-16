@@ -28,7 +28,7 @@ class SantoAbnormalStateUtils {
       BuildContext context, AbnormalState status,
       {Image? img, SantoEmptyStatusIndexedActionClickCallback? action}) {
     if (AbnormalState.getDataFailed == status) {
-      return SantoAbnormalStateWidget(
+      return SantoEmpty(
         img: img ?? SantoTools.getAssetImage(SantoAsset.noData),
         title: SantoIntl.of(context).localizedResource.fetchErrorAndRetry,
         operateTexts: <String>[
@@ -37,7 +37,7 @@ class SantoAbnormalStateUtils {
         action: action,
       );
     } else if (AbnormalState.networkConnectError == status) {
-      return SantoAbnormalStateWidget(
+      return SantoEmpty(
         img: img ?? SantoTools.getAssetImage(SantoAsset.networkError),
         title: SantoIntl.of(context).localizedResource.netErrorAndRetryLater,
         operateTexts: <String>[
@@ -46,7 +46,7 @@ class SantoAbnormalStateUtils {
         action: action,
       );
     } else if (AbnormalState.noData == status) {
-      return SantoAbnormalStateWidget(
+      return SantoEmpty(
           img: img ?? SantoTools.getAssetImage(SantoAsset.noData),
           title: SantoIntl.of(context).localizedResource.noDataTip);
     } else {
@@ -73,7 +73,7 @@ typedef SantoEmptyStatusIndexedActionClickCallback = void Function(int index);
 
 /// 异常页面展示一般用于网络错误、数据为空的提示和引导
 // ignore: must_be_immutable
-class SantoAbnormalStateWidget extends StatelessWidget {
+class SantoEmpty extends StatelessWidget {
   /// 图片
   final Image? img;
 
@@ -114,7 +114,7 @@ class SantoAbnormalStateWidget extends StatelessWidget {
 
   SantoAbnormalStateConfig? themeData;
 
-  SantoAbnormalStateWidget({
+  SantoEmpty({
     this.img,
     this.title,
     this.content,

@@ -3,10 +3,10 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
-class AbnomalStateExample extends StatelessWidget {
+class EmptyExample extends StatelessWidget {
   final int? caseIndex;
 
-  AbnomalStateExample({this.caseIndex});
+  EmptyExample({this.caseIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AbnomalStateExample extends StatelessWidget {
     Widget? widget;
     switch (index) {
       case 0:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           img: Image.asset(
             'assets/image/content_failed.png',
             scale: 3.0,
@@ -36,7 +36,7 @@ class AbnomalStateExample extends StatelessWidget {
         );
         break;
       case 1:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           isCenterVertical: true,
           img: Image.asset(
             'assets/image/no_data.png',
@@ -46,7 +46,7 @@ class AbnomalStateExample extends StatelessWidget {
         );
         break;
       case 2:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           img: Image.asset(
             'assets/image/network_error.png',
             scale: 3.0,
@@ -55,7 +55,7 @@ class AbnomalStateExample extends StatelessWidget {
         );
         break;
       case 3:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           img: Image.asset(
             'assets/image/no_data.png',
             scale: 3.0,
@@ -64,7 +64,7 @@ class AbnomalStateExample extends StatelessWidget {
         );
         break;
       case 4:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           img: Image.asset(
             'assets/image/no_data.png',
             scale: 3.0,
@@ -79,7 +79,7 @@ class AbnomalStateExample extends StatelessWidget {
         );
         break;
       case 5:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           img: Image.asset(
             'assets/image/no_data.png',
             scale: 3.0,
@@ -94,7 +94,7 @@ class AbnomalStateExample extends StatelessWidget {
         );
         break;
       case 6:
-        widget = SantoAbnormalStateWidget(
+        widget = SantoEmpty(
           content: '您的门店暂无用户',
         );
         break;

@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-/// 简述：[SantoSingleSelectCityPage]是用于城市选择的单选页面，
+/// 简述：[SantoCitySelection]是用于城市选择的单选页面，
 /// 功能：多可以自定制导航栏文案，搜索文案信息，定位信息，右侧可快速滑动查看城市
-class SantoSingleSelectCityPage extends StatefulWidget {
+class SantoCitySelection extends StatefulWidget {
   /// 页面标题，默认空
   final String? appBarTitle;
 
@@ -42,7 +42,7 @@ class SantoSingleSelectCityPage extends StatefulWidget {
   /// 空页面中间展位图展示
   final Image? emptyImage;
 
-  SantoSingleSelectCityPage({
+  SantoCitySelection({
     this.appBarTitle = '',
     this.hotCityTitle = '',
     required this.hotCityList,
@@ -55,11 +55,11 @@ class SantoSingleSelectCityPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _SantoSingleSelectCityPageState();
+    return _SantoCitySelectionState();
   }
 }
 
-class _SantoSingleSelectCityPageState extends State<SantoSingleSelectCityPage> {
+class _SantoCitySelectionState extends State<SantoCitySelection> {
   List<SantoSelectCityModel> _cityList = [];
 
   ///搜索框的高度
@@ -363,7 +363,7 @@ class _SantoSingleSelectCityPageState extends State<SantoSingleSelectCityPage> {
   ///没有数据的占位图
   Widget _noDataWidget() {
     return Container(
-      child: SantoAbnormalStateWidget(
+      child: SantoEmpty(
         img: SantoTools.getAssetImage(SantoAsset.noData),
         title: SantoIntl.of(context).localizedResource.noSearchData,
       ),

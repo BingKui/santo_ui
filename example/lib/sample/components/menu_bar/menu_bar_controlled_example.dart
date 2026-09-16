@@ -46,14 +46,21 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
             maxLines: 2,
           ),
           Expanded(
-            child: _index == 0
-                ? const Center(child: Text('首页内容',
-                    style: TextStyle(fontSize: 14, color: Colors.grey)))
-                : _index == 1
-                    ? const Center(child: Text('发现内容',
-                        style: TextStyle(fontSize: 14, color: Colors.grey)))
-                    : const Center(child: Text('消息内容',
-                        style: TextStyle(fontSize: 14, color: Colors.grey))),
+            child: ListView(
+              children: [
+                for (int i = 1; i <= 20; i++)
+                  Container(
+                    margin: EdgeInsets.fromLTRB(12, i == 1 ? 12 : 0, 12, 12),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF5F6FA),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text('标签${_index + 1}内容卡片 $i',
+                        style: const TextStyle(fontSize: 14)),
+                  ),
+              ],
+            ),
           ),
         ],
       ),
