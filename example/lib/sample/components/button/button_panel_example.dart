@@ -1,5 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class ButtonPanelExample extends StatelessWidget {
   @override
@@ -13,19 +14,11 @@ class ButtonPanelExample extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 18,
-              ),
-            ),
-            SantoBubbleText(
-              maxLines: 3,
-              text: '靠右的横排展示，每个按钮的间距是8，按钮的组的间距是16'
+            RulePanel(
+            '靠右的横排展示，每个按钮的间距是8，按钮的组的间距是16'
                   '，次按钮数目不超过两个时，优先展示主按钮，次按钮平分剩余空间，'
                   '次按钮超过两个时，显示更多，剩下的空间主次按钮平分',
-            ),
+            maxLines: 3),
             Text(
               '正常案例',
               style: TextStyle(

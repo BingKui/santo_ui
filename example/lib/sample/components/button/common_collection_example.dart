@@ -2,6 +2,7 @@
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class SantoCommonBottomExample extends StatelessWidget {
   @override
@@ -15,19 +16,11 @@ class SantoCommonBottomExample extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 3,
-              text: '文字按钮最多两个：主按钮和次按钮，可以展示三种按钮的排列组合\n'
+RulePanel(
+            '文字按钮最多两个：主按钮和次按钮，可以展示三种按钮的排列组合\n'
                   '主按钮和次按钮的宽度大小是 不固定的，随着icon按钮的多少而变化\n'
                   '上下padding：16，18。左右padding：20',
-            )],
-            ),
-          ),
+            maxLines: 3),
 SantoPanel(
             title: '正常案例',
             child: Column(

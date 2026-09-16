@@ -2,6 +2,7 @@
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class NumberItemRowExample extends StatefulWidget {
   @override
@@ -21,19 +22,11 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-              SantoBubbleText(
-                maxLines: 4,
-                text: '数字信息是特殊字体，前后可携带正常字体\n'
+RulePanel(
+            '数字信息是特殊字体，前后可携带正常字体\n'
                     '特殊字体的样式为28号字，正常字体为12号字\n'
                     '上下间距是8',
-              )],
-            ),
-          ),
+            maxLines: 4),
 SantoPanel(
             title: '正常案例 只有一个Item',
             child: Column(

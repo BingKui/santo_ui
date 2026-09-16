@@ -2,6 +2,7 @@
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class SantoActionTitleExample extends StatefulWidget {
   @override
@@ -20,19 +21,11 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 4,
-              text: '标题不可以折行，当辅助widget和subwidget过多时，标题...截断\n'
+RulePanel(
+            '标题不可以折行，当辅助widget和subwidget过多时，标题...截断\n'
                   '展示出sub和ac\n'
                   '标题字体为18',
-            )],
-            ),
-          ),
+            maxLines: 4),
 SantoPanel(
             title: '正常案例',
             child: Column(

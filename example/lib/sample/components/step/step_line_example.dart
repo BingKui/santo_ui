@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class StepLineExample extends StatefulWidget {
   const StepLineExample({Key? key}) : super(key: key);
@@ -32,15 +33,15 @@ class _StepLineExampleState extends State<StepLineExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+RulePanel(
+            '头部icon需要显示主题相关的icon，线条需要时圆头\n,'
+                '线条的高度随着左侧内容变化而改变，线宽2',
+            maxLines: 2),
 SantoPanel(
-            title: '规则',
+            title: '正常案例',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            const SantoBubbleText(
-                maxLines: 2,
-                text: '头部icon需要显示主题相关的icon，线条需要时圆头\n,'
-                    '线条的高度随着左侧内容变化而改变，线宽2'),
             Text(
               '第一个高亮',
               style: TextStyle(

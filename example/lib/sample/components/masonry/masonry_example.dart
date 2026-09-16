@@ -31,7 +31,6 @@ class MasonryExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Masonry 瀑布流'),
       body: SingleChildScrollView(
         child: Column(

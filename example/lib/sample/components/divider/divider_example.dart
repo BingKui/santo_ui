@@ -120,59 +120,6 @@ class _DividerExampleState extends State<DividerExample> {
                 ],
               ),
             ),
-
-            // ---------- SantoDashedLine（原有能力保留） ----------
-            SantoPanel(
-              title: 'SantoDashedLine：空间由内部内容撑开',
-              child: SantoDashedLine(
-                dashedLength: 20,
-                dashedThickness: 5,
-                axis: Axis.vertical,
-                color: Colors.red,
-                dashedOffset: 20,
-                position: SantoDashedLinePosition.leading,
-                contentWidget: Container(
-                  margin:
-                      EdgeInsets.only(left: 60, right: 20, top: 10, bottom: 10),
-                  child: Text(
-                      "穿插介绍、公司模式一句话C端服务承诺介绍、价值穿插介绍、公司模式一句话C端服务承诺介绍、价值穿插介绍、公司模式一句话C端服务承诺介绍、价值"),
-                ),
-              ),
-            ),
-            SantoPanel(
-              title: 'SantoDashedLine：空间由内部容器设定',
-              child: Center(
-                child: SantoDashedLine(
-                  dashedLength: 10,
-                  dashedThickness: 3,
-                  axis: Axis.horizontal,
-                  color: Colors.green,
-                  dashedOffset: 20,
-                  position: SantoDashedLinePosition.leading,
-                  contentWidget: Container(
-                    width: 200,
-                    height: 100,
-                  ),
-                ),
-              ),
-            ),
-            SantoPanel(
-              title: 'SantoDashedLine：空间由外部设定',
-              child: Container(
-                height: 50,
-                width: 300,
-                padding: EdgeInsets.all(5),
-                color: Colors.red,
-                child: SantoDashedLine(
-                  axis: Axis.horizontal,
-                  dashedOffset: 10,
-                  contentWidget: Container(
-                    width: 200,
-                    height: 100,
-                  ),
-                ),
-              ),
-            ),
             SizedBox(height: 24),
           ],
         ),

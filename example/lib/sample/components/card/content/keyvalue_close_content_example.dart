@@ -1,5 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class KeyTextCloseContentExample extends StatefulWidget {
   @override
@@ -20,17 +21,9 @@ class _KeyTextCloseContentExampleState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 4,
-              text: '一行展示内容，key和value都不换行',
-            )],
-            ),
-          ),
+RulePanel(
+            '一行展示内容，key和value都不换行',
+            maxLines: 4),
 SantoPanel(
             title: '正常案例',
             child: Column(

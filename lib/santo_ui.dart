@@ -203,7 +203,6 @@ export 'src/components/card/content_card/santo_pair_info_rich_grid.dart';
 
 //分割线
 export 'src/components/line/santo_line.dart';
-export 'src/components/line/santo_dashed_line.dart';
 
 //选择
 export 'src/components/radio/santo_radio_core.dart';
