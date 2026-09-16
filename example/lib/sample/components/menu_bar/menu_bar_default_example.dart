@@ -10,9 +10,20 @@ class MenuBarDefaultExample extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'MenuBar · 默认样式'),
-      body: const Center(
-        child: Text('页面内容',
-            style: TextStyle(fontSize: 14, color: Colors.grey)),
+      body: ListView(
+        children: [
+          for (int i = 1; i <= 6; i++)
+            Container(
+              margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF5F6FA),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text('首页内容卡片 $i',
+                  style: const TextStyle(fontSize: 14)),
+            ),
+        ],
       ),
       bottomNavigationBar: SantoMenuBar(
         items: [

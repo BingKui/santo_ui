@@ -10,7 +10,6 @@ import 'package:example/sample/components/safe_area/safe_area_example.dart';
 import 'package:example/sample/components/space/space_example.dart';
 import 'package:example/sample/components/masonry/masonry_example.dart';
 import 'package:example/sample/components/skeleton/skeleton_example.dart';
-import 'package:example/sample/components/more_menu/more_menu_example.dart';
 import 'package:example/sample/components/button/button_entry_page.dart';
 import 'package:example/sample/components/calendar/calendarview_example.dart';
 import 'package:example/sample/components/card/santo_shadow_card_example.dart';
@@ -130,7 +129,6 @@ class CardDataConfig {
       _item("Space 间距", "元素间距 gap", SpaceExample()),
       _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
       _item("Skeleton 骨架屏", "加载占位骨架", SkeletonExample()),
-      _item("MoreMenu 更多菜单", "底部弹出宫格菜单", MoreMenuExample()),
     ];
     return GroupInfo(groupName: "布局", children: children);
   }
