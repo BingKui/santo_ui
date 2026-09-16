@@ -278,7 +278,8 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         widget.useSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
     // 边框画在圆角形状上(而非被裁剪的矩形直边),保证左右两侧也可见
     Widget bar = Container(
-      height: _barHeight,
+      // 高度延伸到底部安全区,容器铺满到屏幕底部
+      height: _barHeight + bottomPadding,
       decoration: BoxDecoration(
         // 内层不透明 + 细边框
         color: widget.backgroundColor ?? Colors.white,
@@ -291,7 +292,8 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(_containerRadius),
         child: Padding(
-          padding: const EdgeInsets.all(2),
+          // 内容仍保持在栏高区域内,下方避开安全区
+          padding: EdgeInsets.fromLTRB(2, 2, 2, 2 + bottomPadding),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final count = widget.effectiveItems.length;
@@ -343,8 +345,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
                 : Colors.white.withAlpha(0x0D),
             borderRadius: dockRadius,
           ),
-          padding: EdgeInsets.fromLTRB(
-              widget.gap, 0, widget.gap, bottomPadding),
+          padding: EdgeInsets.fromLTRB(widget.gap, 0, widget.gap, 0),
           child: Material(
             color: Colors.transparent,
             child: bar,
