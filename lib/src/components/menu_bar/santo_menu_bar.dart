@@ -292,7 +292,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(_containerRadius),
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(2),
           child: Row(
             children: [
               for (int i = 0; i < widget.effectiveItems.length; i++)
@@ -394,7 +394,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       onTap: () => _select(index),
       child: AnimatedContainer(
         duration: widget.duration,
-        margin: const EdgeInsets.symmetric(horizontal: 4),
+        margin: EdgeInsets.zero,
         decoration: BoxDecoration(
           color: selected
               ? (widget.itemSelectedBgColor ?? _commonConfig.brandPrimary)
