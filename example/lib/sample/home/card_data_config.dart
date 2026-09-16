@@ -5,6 +5,7 @@ import 'package:example/sample/components/actionsheet/actionsheet_entry_page.dar
 import 'package:example/sample/components/appraise/appraise_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_example.dart';
 import 'package:example/sample/components/panel/panel_example.dart';
+import 'package:example/sample/components/pagination/pagination_example.dart';
 import 'package:example/sample/components/section/section_example.dart';
 import 'package:example/sample/components/safe_area/safe_area_example.dart';
 import 'package:example/sample/components/space/space_example.dart';
@@ -183,6 +184,7 @@ class CardDataConfig {
       _item("Collapse 折叠面板", "可展开/收起内容", CollapseExample()),
       _item("Image 图片", "增强图片组件", ImageExample()),
       _item("Table 表格", "数据表格展示", TableExample()),
+      _item("Pagination 分页", "页码切换", PaginationExample()),
       _item("Tag 标签", "标记与分类", TagExample()),
       _item("BubbleText 气泡文本", "气泡文本", BubbleTextExample()),
       _item("Popover 气泡卡片", "锚点弹出气泡", PopoverExample()),
