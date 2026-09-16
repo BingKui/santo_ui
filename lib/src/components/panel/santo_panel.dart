@@ -163,14 +163,50 @@ class SantoPanel extends StatelessWidget {
     }
 
     if (maxHeight != null) {
-      content = ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: maxHeight!),
-        child: Scrollbar(
-          thumbVisibility: true,
-          child: SingleChildScrollView(child: content),
-        ),
+      content = _PanelScrollContent(
+        maxHeight: maxHeight!,
+        child: content,
       );
     }
     return content;
+  }
+}
+
+/// 面板可滚动内容:独立 ScrollController,供 Scrollbar thumbVisibility 使用
+class _PanelScrollContent extends StatefulWidget {
+  final double maxHeight;
+  final Widget child;
+
+  const _PanelScrollContent({
+    required this.maxHeight,
+    required this.child,
+  });
+
+  @override
+  State<_PanelScrollContent> createState() => _PanelScrollContentState();
+}
+
+class _PanelScrollContentState extends State<_PanelScrollContent> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: widget.maxHeight),
+      child: Scrollbar(
+        controller: _scrollController,
+        thumbVisibility: true,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: widget.child,
+        ),
+      ),
+    );
   }
 }
