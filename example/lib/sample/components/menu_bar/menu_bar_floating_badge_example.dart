@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// MenuBar 悬浮样式红点与徽标示例
 ///
-/// 悬浮样式下同样支持红点/徽标:图标带徽标、无图标时文字带徽标
+/// 悬浮样式下同样支持红点/徽标:图标 + 红点、图标 + 数字徽标
 class MenuBarFloatingBadgeExample extends StatefulWidget {
   const MenuBarFloatingBadgeExample({Key? key}) : super(key: key);
 
@@ -75,12 +75,14 @@ class _MenuBarFloatingBadgeExampleState
                   unselectedIcon: const Icon(Icons.explore_outlined),
                   showBadge: true,
                 ),
-                // 纯文字 + 数字徽标(无图标时徽标挂在文字上)
+                // 图标 + 数字徽标
                 SantoMenuBarItem(
                   text: '消息',
+                  selectedIcon: const Icon(Icons.chat_bubble),
+                  unselectedIcon: const Icon(Icons.chat_bubble_outline),
                   badge: _numberBadge('9'),
                 ),
-                // 图标 + 数字徽标
+                // 图标 + 超长数字徽标
                 SantoMenuBarItem(
                   text: '我的',
                   selectedIcon: const Icon(Icons.person),

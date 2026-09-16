@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// MenuBar 红点与徽标示例(停靠样式)
 ///
-/// 覆盖:图标 + 红点 / 无图标文字 + 红点 / 图标 + 数字徽标 / 无图标文字 + 数字徽标
+/// 覆盖:图标 + 红点 / 图标 + 数字徽标 / 图标 + 超长数字徽标
 class MenuBarBadgeExample extends StatefulWidget {
   const MenuBarBadgeExample({Key? key}) : super(key: key);
 
@@ -64,12 +64,14 @@ class _MenuBarBadgeExampleState extends State<MenuBarBadgeExample> {
             unselectedIcon: const Icon(Icons.explore_outlined),
             showBadge: true,
           ),
-          // 纯文字 + 红点(无图标时徽标挂在文字上)
-          const SantoMenuBarItem(
-            text: '消息',
-            showBadge: true,
-          ),
           // 图标 + 数字徽标
+          SantoMenuBarItem(
+            text: '消息',
+            selectedIcon: const Icon(Icons.chat_bubble),
+            unselectedIcon: const Icon(Icons.chat_bubble_outline),
+            badge: _numberBadge('9'),
+          ),
+          // 图标 + 超长数字徽标
           SantoMenuBarItem(
             text: '我的',
             selectedIcon: const Icon(Icons.person),
