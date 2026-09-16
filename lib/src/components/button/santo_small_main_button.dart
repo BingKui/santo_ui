@@ -87,7 +87,7 @@ class SantoSmallMainButton extends StatelessWidget {
         .buttonConfig
         .merge(defaultThemeConfig);
 
-    TextPainter textPainter = TextPainter(textScaleFactor: MediaQuery.of(context).textScaleFactor);
+    TextPainter textPainter = TextPainter(textScaler: MediaQuery.textScalerOf(context));
 
     return LayoutBuilder(
       builder: (_, con) {
@@ -97,11 +97,16 @@ class SantoSmallMainButton extends StatelessWidget {
           color: textColor,
         );
         textPainter.textDirection = TextDirection.ltr;
-        textPainter.text = TextSpan(text: title ?? SantoIntl.of(context).localizedResource.confirm, style: style);
+        // 与实际渲染一致：Text 会合并环境 DefaultTextStyle，测量也必须合并
+        textPainter.text = TextSpan(
+            text: title ?? SantoIntl.of(context).localizedResource.confirm,
+            style: DefaultTextStyle.of(context).style.merge(style));
         textPainter.layout(maxWidth: con.maxWidth);
         double textWidth = textPainter.width;
         //按钮本身大小
-        double _maxWidth = textWidth + SantoButtonConstant.horizontalPadding * 2;
+        double _maxWidth =
+            (textWidth + SantoButtonConstant.horizontalPadding * 2)
+                .ceilToDouble();
         double _minWidth = min(_BMinWidth, con.maxWidth);
 
         //保证最小宽度是 （84、可用空间）的最小值
@@ -125,6 +130,7 @@ class SantoSmallMainButton extends StatelessWidget {
           constraints: BoxConstraints(
             minWidth: this.width ?? _minWidth,
             maxWidth: this.width ?? _maxWidth,
+            minHeight: defaultThemeConfig.smallButtonHeight,
           ),
           alignment: Alignment.center,
           text: title ?? SantoIntl.of(context).localizedResource.confirm,
