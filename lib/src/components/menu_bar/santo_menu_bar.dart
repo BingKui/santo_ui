@@ -199,9 +199,8 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       final safeArea = widget.useSafeArea
           ? MediaQuery.of(context).padding.bottom
           : 0.0;
-      final bottomInset = widget.style == SantoMenuBarStyle.floating
-          ? _barHeight + widget.gap + safeArea
-          : _barHeight + safeArea;
+      // 菜单栏紧贴底部安全区,面板与其间距由 edgeGap(gap) 保证
+      final bottomInset = _barHeight + safeArea;
       SantoMenuBarMoreMenu.open(
         context,
         menu: widget.moreMenu!.copyWith(bottomInset: bottomInset),
@@ -345,7 +344,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
             borderRadius: dockRadius,
           ),
           padding: EdgeInsets.fromLTRB(
-              widget.gap, 0, widget.gap, widget.gap + bottomPadding),
+              widget.gap, 0, widget.gap, bottomPadding),
           child: Material(
             color: Colors.transparent,
             child: bar,
