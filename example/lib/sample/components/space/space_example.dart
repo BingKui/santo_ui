@@ -17,7 +17,6 @@ class SpaceExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: SantoAppBar(title: 'Space 间距'),
       body: SingleChildScrollView(
         child: Column(

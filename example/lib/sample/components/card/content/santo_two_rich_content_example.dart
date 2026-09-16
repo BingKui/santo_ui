@@ -2,6 +2,7 @@
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class SantoTwoRichContentExample extends StatefulWidget {
   @override
@@ -21,18 +22,10 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 4,
-              text: '两组key-value内容平分屏幕，每一组key-value都是一行展示，'
+RulePanel(
+            '两组key-value内容平分屏幕，每一组key-value都是一行展示，'
                   'value紧挨着key，不考虑对齐',
-            )],
-            ),
-          ),
+            maxLines: 4),
 SantoPanel(
             title: '正常案例',
             child: Column(

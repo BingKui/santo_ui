@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class TextContentExample extends StatefulWidget {
   @override
@@ -44,17 +45,9 @@ class _TextContentExampleState extends State<TextContentExample> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 4,
-              text: 'key的宽度最多为92，value是左对齐的，key和value过长的时候可以换行',
-            )],
-            ),
-          ),
+RulePanel(
+            'key的宽度最多为92，value是左对齐的，key和value过长的时候可以换行',
+            maxLines: 4),
 SantoPanel(
             title: '正常案例',
             child: Column(

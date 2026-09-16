@@ -2,6 +2,7 @@
 
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class TextValueArrowContentExample extends StatefulWidget {
   @override
@@ -22,17 +23,9 @@ class _TextValueArrowContentExampleState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 4,
-              text: 'value带有操作箭头，箭头在最右侧，value单行展示',
-            )],
-            ),
-          ),
+RulePanel(
+            'value带有操作箭头，箭头在最右侧，value单行展示',
+            maxLines: 4),
 SantoPanel(
             title: '正常案例',
             child: Column(

@@ -1,5 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class SantoTextButtonPanelExample extends StatelessWidget {
   @override
@@ -13,17 +14,9 @@ class SantoTextButtonPanelExample extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 18,
-              ),
-            ),
-            SantoBubbleText(
-              maxLines: 3,
-              text: '平分屏幕展示,不超过4个时全部展示，超过4个了，则只展示3个，剩余的放在更多里面',
-            ),
+            RulePanel(
+            '平分屏幕展示,不超过4个时全部展示，超过4个了，则只展示3个，剩余的放在更多里面',
+            maxLines: 3),
             Text(
               '正常案例AAA',
               textAlign: TextAlign.center,

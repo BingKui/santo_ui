@@ -1,5 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:example/sample/home/rule_panel.dart';
 
 class SantoTextExpandedContentExample extends StatefulWidget {
   @override
@@ -20,17 +21,9 @@ class _SantoTextExpandedContentExampleState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-SantoPanel(
-            title: '规则',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            SantoBubbleText(
-              maxLines: 4,
-              text: '显示指定行数的文本，超过的收起，点击更多会显示全部',
-            )],
-            ),
-          ),
+RulePanel(
+            '显示指定行数的文本，超过的收起，点击更多会显示全部',
+            maxLines: 4),
 SantoPanel(
             title: '正常案例',
             child: Column(
