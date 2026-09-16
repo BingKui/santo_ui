@@ -298,9 +298,9 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         ),
       ),
     );
-    // 底部整块毛玻璃背景:覆盖 gap 边距与安全区域,顶部同样为胶囊圆角
+    // 底部整块毛玻璃背景:覆盖 gap 边距与安全区域,顶部 12 圆角
     final dockRadius = BorderRadius.vertical(
-      top: Radius.circular(_containerRadius),
+      top: Radius.circular(widget.topRadius),
     );
     return ClipRRect(
       borderRadius: dockRadius,
