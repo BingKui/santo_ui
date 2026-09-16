@@ -20,6 +20,7 @@ export 'src/constants/santo_strings_constants.dart';
 export 'src/components/actionsheet/santo_common_action_sheet.dart';
 export 'src/components/actionsheet/santo_share_action_sheet.dart';
 export 'src/components/panel/santo_panel.dart';
+export 'src/components/section/santo_section.dart';
 export 'src/components/space/santo_space.dart';
 export 'src/components/masonry/santo_masonry.dart';
 export 'src/components/skeleton/santo_skeleton.dart';
