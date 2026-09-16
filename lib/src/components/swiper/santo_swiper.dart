@@ -2,9 +2,13 @@ import 'dart:async';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
+/// 轮播圆角
+const double kSantoSwiperRadius = 12;
+
 /// 轮播图组件
 ///
 /// 支持自动播放、指示器（圆点/数字）、无限循环、自定义高度和间距。
+/// 圆角由外层容器统一裁切(12px),内容整页铺满即可。
 ///
 /// 使用示例：
 /// ```dart
@@ -109,8 +113,10 @@ class _SantoSwiperState extends State<SantoSwiper> {
         _stopAutoPlay();
       }
     }
+    // 外部改了 currentIndex 且与内部当前页不一致时才翻页;
+    // 内部滑动触发的变更(父级同步同一个值)不再重复动画
     if (oldWidget.currentIndex != widget.currentIndex &&
-        oldWidget.currentIndex != _currentPage) {
+        widget.currentIndex != _currentPage) {
       _currentPage = widget.currentIndex;
       if (widget.loop) {
         final int targetPage =
@@ -203,42 +209,46 @@ class _SantoSwiperState extends State<SantoSwiper> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: widget.height,
-      child: Stack(
-        children: [
-          // 轮播内容
-          PageView.builder(
-            controller: _pageController,
-            itemCount: widget.loop ? null : _realPageCount,
-            onPageChanged: _onPageChanged,
-            physics: widget.enableSwipe
-                ? const ClampingScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final int realIndex;
-              if (widget.loop) {
-                realIndex = index % _realPageCount;
-              } else {
-                realIndex = index;
-              }
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: widget.spacing / 2),
-                child: widget.children[realIndex],
-              );
-            },
-          ),
-          // 指示器
-          if (widget.indicator && _realPageCount > 1)
-            Positioned(
-              bottom: 12,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: widget.indicatorType == SantoSwiperIndicatorType.dot
-                    ? _buildDotIndicator()
-                    : _buildNumberIndicator(),
-              ),
+      // 圆角由外层容器裁切,内容整页铺满
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(kSantoSwiperRadius)),
+        child: Stack(
+          children: [
+            // 轮播内容
+            PageView.builder(
+              controller: _pageController,
+              itemCount: widget.loop ? null : _realPageCount,
+              onPageChanged: _onPageChanged,
+              physics: widget.enableSwipe
+                  ? const ClampingScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final int realIndex;
+                if (widget.loop) {
+                  realIndex = index % _realPageCount;
+                } else {
+                  realIndex = index;
+                }
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: widget.spacing / 2),
+                  child: widget.children[realIndex],
+                );
+              },
             ),
-        ],
+            // 指示器
+            if (widget.indicator && _realPageCount > 1)
+              Positioned(
+                bottom: 12,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: widget.indicatorType == SantoSwiperIndicatorType.dot
+                      ? _buildDotIndicator()
+                      : _buildNumberIndicator(),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

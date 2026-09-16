@@ -39,7 +39,6 @@ class SantoMenuBarMoreMenuItem {
 ///   text: '更多',
 ///   moreMenu: SantoMenuBarMoreMenu(
 ///     title: '更多',
-///     actionText: '编辑',
 ///     items: [
 ///       SantoMenuBarMoreMenuItem(label: '文档', icon: Icons.description_outlined),
 ///       SantoMenuBarMoreMenuItem(label: '会议', icon: Icons.videocam_outlined),
@@ -53,12 +52,6 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
 
   /// 自定义标题控件
   final Widget? titleWidget;
-
-  /// 右上角操作文案(如"编辑")
-  final String? actionText;
-
-  /// 右上角操作点击回调
-  final VoidCallback? onActionTap;
 
   /// 菜单项
   final List<SantoMenuBarMoreMenuItem> items;
@@ -89,8 +82,6 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     Key? key,
     this.title,
     this.titleWidget,
-    this.actionText,
-    this.onActionTap,
     required this.items,
     this.bottomInset = 0,
     this.columns = 5,
@@ -106,8 +97,6 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     BuildContext context, {
     String? title,
     Widget? titleWidget,
-    String? actionText,
-    VoidCallback? onActionTap,
     required List<SantoMenuBarMoreMenuItem> items,
     double bottomInset = 0,
     int columns = 5,
@@ -122,8 +111,6 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
       menu: SantoMenuBarMoreMenu(
         title: title,
         titleWidget: titleWidget,
-        actionText: actionText,
-        onActionTap: onActionTap,
         items: items,
         columns: columns,
         radius: radius,
@@ -140,8 +127,6 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
     return SantoMenuBarMoreMenu(
       title: title,
       titleWidget: titleWidget,
-      actionText: actionText,
-      onActionTap: onActionTap,
       items: items,
       columns: columns,
       radius: radius,
@@ -162,9 +147,16 @@ class SantoMenuBarMoreMenu extends StatefulWidget {
       PageRouteBuilder(
         opaque: false,
         barrierDismissible: barrierDismissible,
-        barrierColor: Colors.black.withAlpha(0x66),
+        barrierColor: Colors.transparent,
         pageBuilder: (context, animation, secondaryAnimation) {
-          return FadeTransition(opacity: animation, child: menu);
+          return FadeTransition(
+            opacity: animation,
+            // 底部对齐并让面板按内容自适应高度,避免被整屏约束拉伸
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: menu,
+            ),
+          );
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final slide = Tween<Offset>(
@@ -198,7 +190,18 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
     return Padding(
         padding: EdgeInsets.fromLTRB(
             widget.edgeGap, 0, widget.edgeGap, bottomPadding),
-        child: ClipRRect(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(widget.radius),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(0x1F),
+                blurRadius: 24,
+                offset: const Offset(0, -4),
+              ),
+            ],
+          ),
+          child: ClipRRect(
           borderRadius: BorderRadius.circular(widget.radius),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -207,7 +210,11 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
               child: Material(
                 color: Colors.transparent,
-                child: Column(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.6,
+                  ),
+                  child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -219,50 +226,35 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
                               Text(
                                 widget.title ?? '',
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: _commonConfig.fontSizeSubHead,
                                   fontWeight: FontWeight.w500,
                                   color: _commonConfig.colorTextBase,
                                 ),
                               ),
                         ),
-                        if (widget.actionText != null)
-                          GestureDetector(
-                            onTap: () {
-                              widget.onActionTap?.call();
-                              Navigator.of(context).pop();
-                            },
-                            behavior: HitTestBehavior.opaque,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4),
-                              child: Text(
-                                widget.actionText!,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: _commonConfig.brandPrimary,
-                                ),
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                     const SizedBox(height: 8),
-                    // 图标宫格
-                    GridView.count(
-                      crossAxisCount: widget.columns,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      childAspectRatio: 0.85,
-                      children: [
-                        for (final item in widget.items)
-                          _buildItem(item, itemColor),
-                      ],
+                    // 图标宫格(内容超出最大高度时可滚动)
+                    Flexible(
+                      child: GridView.count(
+                        crossAxisCount: widget.columns,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        childAspectRatio: 0.85,
+                        children: [
+                          for (final item in widget.items)
+                            _buildItem(item, itemColor),
+                        ],
+                      ),
                     ),
                   ],
+                  ),
                 ),
               ),
             ),
           ),
+        ),
         ),
       );
   }

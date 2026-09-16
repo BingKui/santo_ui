@@ -91,7 +91,6 @@ void _moreMenuTests() {
           showMoreMenu: true,
           moreMenu: SantoMenuBarMoreMenu(
             title: '更多',
-            actionText: '编辑',
             items: const [
               SantoMenuBarMoreMenuItem(
                   label: '文档', icon: Icons.description_outlined),

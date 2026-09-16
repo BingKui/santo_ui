@@ -35,6 +35,13 @@ class _StepperExampleState extends State<StepperExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('当前值: $_value1'),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoStepper(
+                      value: _value1,
+                      onChanged: (v) => setState(() => _value1 = v),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -48,6 +55,14 @@ class _StepperExampleState extends State<StepperExample> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('当前值: $_value2（步长为 2）'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoStepper(
+                      value: _value2,
+                      step: 2,
+                      onChanged: (v) => setState(() => _value2 = v),
+                    ),
                   ),
                 ],
               ),
@@ -81,6 +96,14 @@ class _StepperExampleState extends State<StepperExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('当前值: $_value3（最小值为 0）'),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoStepper(
+                      value: _value3,
+                      min: 0,
+                      onChanged: (v) => setState(() => _value3 = v),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -94,6 +117,14 @@ class _StepperExampleState extends State<StepperExample> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('当前值: $_value4（最大值为 10）'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoStepper(
+                      value: _value4,
+                      max: 10,
+                      onChanged: (v) => setState(() => _value4 = v),
+                    ),
                   ),
                 ],
               ),
@@ -139,9 +170,19 @@ class _StepperExampleState extends State<StepperExample> {
             SantoSection(
               title: '实际场景：商品数量',
               description: '购物车等场景的数量增减，可结合 min、max 限制范围',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [const SizedBox(height: 40)],
+              child: Row(
+                children: [
+                  const SizedBox(width: 20),
+                  const Text('商品数量'),
+                  const Spacer(),
+                  SantoStepper(
+                    value: _value5,
+                    min: 1,
+                    max: 10,
+                    onChanged: (v) => setState(() => _value5 = v),
+                  ),
+                  const SizedBox(width: 20),
+                ],
               ),
             ),
           ],

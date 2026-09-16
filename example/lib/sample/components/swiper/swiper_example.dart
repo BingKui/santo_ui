@@ -23,11 +23,7 @@ class _SwiperExampleState extends State<SwiperExample> {
     ];
     return List.generate(colors.length, (index) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-          color: colors[index],
-          borderRadius: BorderRadius.circular(12),
-        ),
+        decoration: BoxDecoration(color: colors[index]),
         child: Center(
           child: Text(
             'Page ${index + 1}',
@@ -49,7 +45,6 @@ class _SwiperExampleState extends State<SwiperExample> {
         margin: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
           color: const Color(0xFFE8E8E8),
-          borderRadius: BorderRadius.circular(8),
           image: DecorationImage(
             image: NetworkImage('https://picsum.photos/400/200?random=$index'),
             fit: BoxFit.cover,
@@ -129,6 +124,14 @@ class _SwiperExampleState extends State<SwiperExample> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SantoSwiper(
+                    children: _buildColorCards(),
+                    currentIndex: _currentPage,
+                    autoPlay: false,
+                    onPageChanged: (index) {
+                      setState(() => _currentPage = index);
+                    },
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
@@ -177,9 +180,9 @@ class _SwiperExampleState extends State<SwiperExample> {
             SantoSection(
               title: '禁用滑动（仅自动播放）',
               description: 'enableSwipe 为 false 后无法手动滑动，仅保留自动播放',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [const SizedBox(height: 40)],
+              child: SantoSwiper(
+                children: _buildColorCards(),
+                enableSwipe: false,
               ),
             ),
           ],

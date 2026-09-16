@@ -30,6 +30,10 @@ import 'package:example/sample/components/gallery/gallery_example.dart';
 import 'package:example/sample/components/guide/guide_entry_page.dart';
 import 'package:example/sample/components/input/input_example.dart';
 import 'package:example/sample/components/divider/divider_example.dart';
+import 'package:example/sample/components/floating_panel/floating_panel_example.dart';
+import 'package:example/sample/components/highlight/highlight_example.dart';
+import 'package:example/sample/components/text_ellipsis/text_ellipsis_example.dart';
+import 'package:example/sample/components/action_bar/action_bar_example.dart';
 import 'package:example/sample/components/loading/loading_widget_example.dart';
 import 'package:example/sample/components/navbar/appbar_entry_page.dart';
 import 'package:example/sample/components/noticebar/santo_notice_bar_example.dart';
@@ -130,6 +134,7 @@ class CardDataConfig {
       _item("Space 间距", "元素间距 gap", SpaceExample()),
       _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
       _item("Skeleton 骨架屏", "加载占位骨架", SkeletonExample()),
+      _item("FloatingPanel 浮层面板", "拖动吸附的底部面板", FloatingPanelExample()),
     ];
     return GroupInfo(groupName: "布局", children: children);
   }
@@ -146,6 +151,7 @@ class CardDataConfig {
       _item("BackTop 返回顶部", "长列表快速回顶", BacktopExample()),
       _item("Drawer 抽屉", "侧边滑出面板", DrawerExample()),
       _item("Guide 引导", "新手操作引导", GuideEntryPage()),
+      _item("ActionBar 操作栏", "底部操作栏", ActionBarExample()),
     ];
     return GroupInfo(groupName: "导航", children: children);
   }
@@ -187,6 +193,8 @@ class CardDataConfig {
       _item("Pagination 分页", "页码切换", PaginationExample()),
       _item("Tag 标签", "标记与分类", TagExample()),
       _item("BubbleText 气泡文本", "气泡文本", BubbleTextExample()),
+      _item("Highlight 关键词高亮", "关键词高亮文本", HighlightExample()),
+      _item("TextEllipsis 文本省略", "多行省略与展开收起", TextEllipsisExample()),
       _item("Popover 气泡卡片", "锚点弹出气泡", PopoverExample()),
       _item("CardTitle 卡片标题", "卡片头部标题", TitleExample()),
       _item("SwipeCell 滑动单元格", "列表项滑动操作", SwipeCellExample()),

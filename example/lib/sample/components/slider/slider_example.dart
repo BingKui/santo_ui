@@ -11,6 +11,8 @@ class SliderExample extends StatefulWidget {
 
 class _SliderExampleState extends State<SliderExample> {
   double _singleValue = 30;
+  double _callbackValue = 50;
+  String _callbackTip = '';
   double _singleValue2 = 60;
   List<double> _rangeValue = [20, 80];
   List<double> _rangeValue2 = [40, 60];
@@ -34,6 +36,13 @@ class _SliderExampleState extends State<SliderExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('当前值: ${_singleValue.round()}'),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoSlider(
+                      value: _singleValue,
+                      onChanged: (v) => setState(() => _singleValue = v as double),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -47,6 +56,14 @@ class _SliderExampleState extends State<SliderExample> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('当前值: ${_singleValue2.round()}'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoSlider(
+                      value: _singleValue2,
+                      divisions: 10,
+                      onChanged: (v) => setState(() => _singleValue2 = v as double),
+                    ),
                   ),
                 ],
               ),
@@ -105,6 +122,14 @@ class _SliderExampleState extends State<SliderExample> {
                       '范围: ${_rangeValue[0].round()} - ${_rangeValue[1].round()}',
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoSlider(
+                      rangeValue: _rangeValue,
+                      onChanged: (v) => setState(
+                          () => _rangeValue = (v as List).cast<double>()),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -119,6 +144,15 @@ class _SliderExampleState extends State<SliderExample> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       '范围: ${_rangeValue2[0].round()} - ${_rangeValue2[1].round()}',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoSlider(
+                      rangeValue: _rangeValue2,
+                      showLabel: true,
+                      onChanged: (v) => setState(
+                          () => _rangeValue2 = (v as List).cast<double>()),
                     ),
                   ),
                 ],
@@ -148,7 +182,27 @@ class _SliderExampleState extends State<SliderExample> {
               description: 'onChanged 拖动时持续回调，onChangeEnd 在松手后回调一次',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [const SizedBox(height: 40)],
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                        '当前值: ${_callbackValue.round()}，状态: $_callbackTip'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SantoSlider(
+                      value: _callbackValue,
+                      onChanged: (v) => setState(() {
+                        _callbackValue = v as double;
+                        _callbackTip = '拖动中';
+                      }),
+                      onChangeEnd: (v) => setState(() {
+                        _callbackValue = v as double;
+                        _callbackTip = '松手结束';
+                      }),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -27,6 +27,23 @@ void main() {
     expect(tapped, isTrue);
   });
 
+  testWidgets('SantoPanel 内容按内圈圆角裁切,四角描边完整', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: SantoPanel(
+          title: '无边距',
+          contentPadding: false,
+          child: const SizedBox(height: 40, width: double.infinity),
+        ),
+      ),
+    ));
+
+    // 外框 12 圆角,内容按 12 - 0.5 描边裁切
+    final ClipRRect clip =
+        tester.widget<ClipRRect>(find.byType(ClipRRect).first);
+    expect(clip.borderRadius, BorderRadius.circular(11.5));
+  });
+
   testWidgets('SantoPanel hides content padding when disabled', (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
