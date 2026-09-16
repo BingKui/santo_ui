@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:santo_ui/src/components/input/santo_input_text.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_interface.dart';
 
 class SantoAppraiseConfig {
@@ -36,9 +35,6 @@ class SantoAppraiseConfig {
   ///输入框允许输入的最大长度，默认为 100
   final int maxLength;
 
-  ///提示文案的最大行数，默认为1
-  final int maxHintLines;
-
   /// 输入框默认输入文案
   final String? inputDefaultText;
 
@@ -58,7 +54,7 @@ class SantoAppraiseConfig {
   final SantoAppraiseIconClick? iconClickCallback;
 
   /// 输入框改变的回调
-  final SantoInputTextChangeCallback? inputTextChangeCallback;
+  final ValueChanged<String>? inputTextChangeCallback;
 
   /// 选择标签的回调
   final SantoAppraiseTagClick? tagSelectCallback;
@@ -76,7 +72,6 @@ class SantoAppraiseConfig {
     this.tagCountEachRow = 2,
     this.showTextInput = true,
     this.maxLength = 100,
-    this.maxHintLines = 1,
     this.inputDefaultText,
     this.inputMaxHeight = 120,
     this.showConfirmButton = true,

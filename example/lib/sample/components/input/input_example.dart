@@ -10,143 +10,215 @@ class SantoInputTextExample extends StatefulWidget {
 }
 
 class _SantoInputTextExampleState extends State<SantoInputTextExample> {
+  final TextEditingController _clearController = TextEditingController();
+  final TextEditingController _counterController = TextEditingController();
+
+  @override
+  void dispose() {
+    _clearController.dispose();
+    _counterController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SantoAppBar(title: 'Input 输入框示例'),
+      appBar: SantoAppBar(title: 'Input 输入框'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SantoSection(
-              title: '基础用法',
-              description: '最简用法，配置 hint 占位文字与 onTextChange 回调',
+            SantoPanel(
+              title: '基础输入框',
               child: SantoInputText(
-                minHeight: 40,
-                borderRadius: 8,
-                bgColor: const Color(0xFFF5F6FA),
-                hint: '请输入内容',
-                onTextChange: (text) {},
+                hintText: '请输入文字',
+                onChanged: (text) {},
               ),
             ),
-            SantoSection(
-              title: '清除按钮',
-              description: '输入内容后自动显示内置清除按钮，needClear 可控制',
-              child: SantoInputText(
-                minHeight: 40,
-                borderRadius: 8,
-                bgColor: const Color(0xFFF5F6FA),
-                hint: '输入内容后展示清除按钮',
-                onTextChange: (text) {},
-              ),
-            ),
-            SantoSection(
-              title: '字数限制与计数',
-              description: 'maxLength 限制最大字数，showCounter 默认展示实时计数',
-              child: SantoInputText(
-                minHeight: 40,
-                borderRadius: 8,
-                bgColor: const Color(0xFFF5F6FA),
-                maxLength: 10,
-                hint: '最多输入 10 个字',
-                onTextChange: (text) {},
-              ),
-            ),
-            SantoSection(
-              title: '前后缀插槽',
-              description: 'prefix、suffix 插入自定义前后缀，传 suffix 时隐藏清除按钮',
+            SantoPanel(
+              title: '带字数限制输入框',
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SantoInputText(
-                    minHeight: 44,
-                    borderRadius: 8,
-                    bgColor: const Color(0xFFF5F6FA),
-                    prefix: const Icon(Icons.search,
-                        size: 18, color: Color(0xFF999999)),
-                    hint: '搜索',
-                    onTextChange: (text) {},
+                    hintText: '最大 10 个字符（indicator 展示计数）',
+                    maxLength: 10,
+                    indicator: true,
+                    onChanged: (text) {},
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 16),
                   SantoInputText(
-                    minHeight: 44,
-                    borderRadius: 8,
-                    bgColor: const Color(0xFFF5F6FA),
-                    suffix: const Text(
-                      '发送',
-                      style: TextStyle(
-                          fontSize: 14, color: Color(0xFF0984F9)),
-                    ),
-                    hint: '带后缀按钮',
-                    onTextChange: (text) {},
+                    hintText: '最大 20 字符权重（中文算 2）',
+                    maxCharacter: 20,
+                    indicator: true,
+                    onChanged: (text) {},
                   ),
                 ],
               ),
             ),
-            SantoSection(
-              title: '密码输入(显隐切换)',
-              description: 'obscureText 开启密码模式，由内置按钮切换显隐',
+            SantoPanel(
+              title: '带操作输入框',
               child: SantoInputText(
-                minHeight: 44,
-                borderRadius: 8,
-                bgColor: const Color(0xFFF5F6FA),
-                obscureText: true,
-                showPasswordToggle: true,
-                inputType: TextInputType.text,
-                hint: '请输入密码',
-                onTextChange: (text) {},
+                controller: _clearController,
+                hintText: '输入内容后展示清除按钮',
+                clearButtonMode: SantoInputClearButtonMode.always,
+                onChanged: (text) {},
               ),
             ),
-            SantoSection(
-              title: '只读 / 禁用',
-              description: 'readOnly 保留选中复制，enabled 传 false 后完全禁用',
+            SantoPanel(
+              title: '带图标输入框',
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SantoInputText(
-                    minHeight: 40,
-                    borderRadius: 8,
-                    bgColor: const Color(0xFFF5F6FA),
-                    textString: '只读状态,可选择复制但不可编辑',
-                    readOnly: true,
-                    onTextChange: (text) {},
+                    hintText: '搜索',
+                    prefix: Icon(Icons.search),
+                    clearButtonMode: SantoInputClearButtonMode.always,
+                    onChanged: (text) {},
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 16),
                   SantoInputText(
-                    minHeight: 40,
-                    borderRadius: 8,
-                    bgColor: const Color(0xFFF5F6FA),
-                    textString: '禁用状态,不可交互',
-                    enabled: false,
-                    onTextChange: (text) {},
+                    hintText: '带后缀',
+                    suffix: Icon(Icons.apps),
+                    onChanged: (text) {},
                   ),
                 ],
               ),
             ),
-            SantoSection(
-              title: '聚焦边框高亮',
-              description: '聚焦时边框切换为 focusedBorderColor，失焦后还原',
-              child: SantoInputText(
-                minHeight: 44,
-                borderRadius: 8,
-                bgColor: Colors.white,
-                borderColor: const Color(0xFFE5E5E5),
-                focusedBorderColor: const Color(0xFF0984F9),
-                hint: '聚焦时边框高亮',
-                onTextChange: (text) {},
+            SantoPanel(
+              title: '特定类型输入框',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    hintText: '请输入密码',
+                    obscureText: true,
+                    showPasswordToggle: true,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    hintText: '请输入数字',
+                    inputType: TextInputType.number,
+                    onChanged: (text) {},
+                  ),
+                ],
               ),
             ),
-            SantoSection(
-              title: '多行自适应高度',
-              description: 'minLines 与 maxHeight 决定自适应范围，可输入多行文本',
+            SantoPanel(
+              title: '输入框状态',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    hintText: '成功状态',
+                    initialValue: '成功状态',
+                    status: SantoInputStatus.success,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    hintText: '警告状态',
+                    initialValue: '警告状态',
+                    status: SantoInputStatus.warning,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    hintText: '错误状态',
+                    initialValue: '错误状态',
+                    status: SantoInputStatus.error,
+                    indicator: true,
+                    maxLength: 20,
+                    onChanged: (text) {},
+                  ),
+                ],
+              ),
+            ),
+            SantoPanel(
+              title: '信息超长状态',
               child: SantoInputText(
-                maxHeight: 200,
-                minHeight: 60,
+                initialValue:
+                    '这是一段很长的信息这是一段很长的信息这是一段很长的信息这是一段很长的信息',
+                maxLength: 20,
+                indicator: true,
+                status: SantoInputStatus.error,
+                onChanged: (text) {},
+              ),
+            ),
+            SantoPanel(
+              title: '内容位置',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    hintText: '文字居中对齐',
+                    textAlign: TextAlign.center,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    hintText: '文字右对齐',
+                    textAlign: TextAlign.right,
+                    onChanged: (text) {},
+                  ),
+                ],
+              ),
+            ),
+            SantoPanel(
+              title: '竖排样式（多行）',
+              child: SantoInputText(
+                hintText: '请输入多行文字',
+                maxLines: null,
                 minLines: 3,
-                borderRadius: 8,
-                bgColor: const Color(0xFFF5F6FA),
                 maxLength: 100,
-                hint: 'input动态算高input动态算高input动态算高input动态算高',
-                textInputAction: TextInputAction.newline,
-                onTextChange: (text) {},
+                indicator: true,
+                onChanged: (text) {},
+              ),
+            ),
+            SantoPanel(
+              title: '非通栏样式（无边框）',
+              child: Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F6FA),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SantoInputText(
+                  borderless: true,
+                  hintText: '无边框输入框',
+                  onChanged: (text) {},
+                ),
+              ),
+            ),
+            SantoPanel(
+              title: '只读 / 禁用',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoInputText(
+                    initialValue: '只读模式，可选择复制但不可编辑',
+                    readOnly: true,
+                    onChanged: (text) {},
+                  ),
+                  SizedBox(height: 16),
+                  SantoInputText(
+                    initialValue: '禁用状态，不可交互',
+                    enabled: false,
+                    onChanged: (text) {},
+                  ),
+                ],
+              ),
+            ),
+            SantoPanel(
+              title: '自定义样式输入框',
+              child: SantoInputText(
+                hintText: '自定义文字样式与光标颜色',
+                style: TextStyle(fontSize: 18, color: Color(0xFF0984F9)),
+                cursorColor: Color(0xFF0984F9),
+                indicator: true,
+                maxLength: 30,
+                onChanged: (text) {},
               ),
             ),
           ],

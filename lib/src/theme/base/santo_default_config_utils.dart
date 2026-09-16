@@ -349,19 +349,6 @@ class SantoDefaultConfigUtils {
       decoration: TextDecoration.none,
     ),
     dividerPadding: EdgeInsets.only(top: 28.0),
-    mainActionTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextBaseInverse,
-      fontWeight: FontWeight.w500,
-      fontSize: defaultCommonConfig.fontSizeSubHead,
-    ),
-    assistActionsTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextBase,
-      fontWeight: FontWeight.w500,
-      fontSize: defaultCommonConfig.fontSizeSubHead,
-    ),
-    mainActionBackgroundColor: defaultCommonConfig.brandPrimary,
-    assistActionsBackgroundColor: defaultCommonConfig.fillBody,
-    bottomHeight: 44.0,
     backgroundColor: defaultCommonConfig.fillBase,
   );
 

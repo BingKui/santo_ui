@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'santo_switch_button_base.dart';
 
-
 /// 描述: 开关按钮
+
+/// 受控组件:[value] 由父级持有,点击通过 [onChanged] 回传,父级改 [value] 即可从外部驱动开关
 class SantoSwitchButton extends StatefulWidget {
   final Size size;
 
@@ -23,6 +24,21 @@ class SantoSwitchButton extends StatefulWidget {
   ///未选中时边框的颜色
   final Color? borderColor;
 
+  ///选中时轨道颜色,默认主题 brandPrimary
+  final Color? activeColor;
+
+  ///未选中时轨道颜色,默认 #FAFAFA
+  final Color? inactiveColor;
+
+  ///滑块颜色,默认白色
+  final Color? thumbColor;
+
+  ///开启文案,与 [closeText] 任一传入即展示文案(轨道自动加宽)
+  final String? openText;
+
+  ///关闭文案,与 [openText] 任一传入即展示文案(轨道自动加宽)
+  final String? closeText;
+
   SantoSwitchButton({
     Key? key,
     required this.value,
@@ -31,6 +47,11 @@ class SantoSwitchButton extends StatefulWidget {
     this.loading = false,
     this.size = const Size(42, 26),
     this.borderColor,
+    this.activeColor,
+    this.inactiveColor,
+    this.thumbColor,
+    this.openText,
+    this.closeText,
   }) : super(key: key);
 
   @override
@@ -38,36 +59,25 @@ class SantoSwitchButton extends StatefulWidget {
 }
 
 class _SantoSwitchButtonState extends State<SantoSwitchButton> {
+  SantoCommonConfig get _commonConfig =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig;
+
   @override
   Widget build(BuildContext context) {
     return SantoBaseSwitchButton(
-      borderColor: widget.borderColor ?? _getBorderColor(),
+      borderColor: widget.borderColor ?? const Color(0xffeeeeee),
       value: widget.value,
       enabled: widget.enabled,
       loading: widget.loading,
       size: widget.size,
-      trackColor: _getTrackColor(),
-      thumbColor: Colors.white,
+      trackOnColor: widget.activeColor ?? _commonConfig.brandPrimary,
+      trackOffColor: widget.inactiveColor ?? const Color(0xFFFAFAFA),
+      thumbColor: widget.thumbColor ?? Colors.white,
+      openText: widget.openText,
+      closeText: widget.closeText,
+      openTextColor: Colors.white,
+      closeTextColor: _commonConfig.colorTextSecondary,
       onChanged: widget.onChanged,
     );
-  }
-
-  Color _getTrackColor() {
-    if (widget.value) {
-      return SantoThemeConfigurator.instance
-          .getConfig()
-          .commonConfig
-          .brandPrimary;
-    } else {
-      return const Color(0xFFFAFAFA);
-    }
-  }
-
-  Color _getBorderColor() {
-    if (widget.value) {
-      return _getTrackColor();
-    } else {
-      return const Color(0xffeeeeee);
-    }
   }
 }

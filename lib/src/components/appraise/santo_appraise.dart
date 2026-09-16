@@ -200,21 +200,26 @@ class _SantoAppraiseState extends State<SantoAppraise> {
     if (widget.config.showTextInput) {
       return Padding(
         padding: EdgeInsets.only(top: 24),
-        child: SantoInputText(
-          maxLength: widget.config.maxLength,
-          bgColor: Color(0xfff8f8f8),
-          hint: widget.inputHintText,
-          textString: (_inputText ?? widget.config.inputDefaultText) ?? '',
-          maxHeight: widget.config.inputMaxHeight,
-          minHeight: 40,
-          maxHintLines: widget.config.maxHintLines,
+        child: Container(
+          constraints: BoxConstraints(
+              maxHeight: widget.config.inputMaxHeight, minHeight: 40),
           padding: EdgeInsets.all(12),
-          onTextChange: (input) {
-            _inputText = input;
-            if (widget.config.inputTextChangeCallback != null) {
-              widget.config.inputTextChangeCallback!(input);
-            }
-          },
+          decoration: BoxDecoration(
+            color: Color(0xfff8f8f8),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: SantoInputText(
+            borderless: true,
+            maxLength: widget.config.maxLength,
+            hintText: widget.inputHintText,
+            initialValue: (_inputText ?? widget.config.inputDefaultText) ?? '',
+            onChanged: (input) {
+              _inputText = input;
+              if (widget.config.inputTextChangeCallback != null) {
+                widget.config.inputTextChangeCallback!(input);
+              }
+            },
+          ),
         ),
       );
     }
