@@ -22,6 +22,7 @@ export 'src/components/actionsheet/santo_share_action_sheet.dart';
 export 'src/components/panel/santo_panel.dart';
 export 'src/components/space/santo_space.dart';
 export 'src/components/masonry/santo_masonry.dart';
+export 'src/components/skeleton/santo_skeleton.dart';
 export 'src/components/actionsheet/santo_share_action_sheet.dart';
 export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 

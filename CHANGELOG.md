@@ -9,3 +9,4 @@
 * 新增 SantoSpace 间距组件(水平/垂直方向,三档预设间距 + 自定义间距 + 自动换行,参考 antd Space)
 * 新增 SantoMasonry 瀑布流组件(columns/gutter/verticalGutter/items,API 对齐 antd 6 Masonry)
 * 重写 SantoSwipeCell 滑动单元格(API 参考 TDesign Flutter):cell/left/right Panel(extentRatio)、disabled、opened、groupTag 组内互斥、onChange、controller
+* 新增 SantoSkeleton 骨架屏组件(text/avatar/image/grid 预设主题、fromRowCol 自定义行列、渐变扫光/闪烁动画、延迟显示,API 参考 TDesign Flutter Skeleton)
