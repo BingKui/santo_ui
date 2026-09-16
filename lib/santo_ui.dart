@@ -214,7 +214,7 @@ export 'src/components/radio/santo_radio_button.dart';
 export 'src/components/radio/santo_checkbox.dart';
 
 //打分
-export 'src/components/rating/santo_rating_star.dart';
+export 'src/components/rate/santo_rate.dart';
 
 //二级切换标题
 export 'src/components/tabbar/normal/santo_sub_switch_title.dart';

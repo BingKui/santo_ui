@@ -76,6 +76,8 @@ void main() {
       ),
     ));
 
+    // 跨过全局防连点的 500ms 窗口(上一测试的点击时间戳仍在生效)
+    await tester.pump(const Duration(milliseconds: 600));
     await tester.tap(find.text('打开'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('编辑'));
