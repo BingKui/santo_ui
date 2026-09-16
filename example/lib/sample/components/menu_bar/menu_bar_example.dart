@@ -3,6 +3,7 @@ import 'package:example/sample/components/menu_bar/menu_bar_default_example.dart
 import 'package:example/sample/components/menu_bar/menu_bar_floating_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_badge_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_controlled_example.dart';
+import 'package:example/sample/components/menu_bar/menu_bar_floating_badge_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -27,8 +28,14 @@ class MenuBarExample extends StatelessWidget {
           ),
           ListItem(
             title: '红点与徽标',
-            describe: '标签图标上展示红点或自定义角标',
+            describe: '图标/文字展示红点或自定义数字角标',
             onPressed: () => _push(context, const MenuBarBadgeExample()),
+          ),
+          ListItem(
+            title: '悬浮红点与徽标',
+            describe: '悬浮样式下图标与文字同样支持红点/角标',
+            onPressed: () =>
+                _push(context, const MenuBarFloatingBadgeExample()),
           ),
           ListItem(
             title: '受控选中与更多菜单',

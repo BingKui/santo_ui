@@ -1,7 +1,9 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
-/// MenuBar 红点与徽标示例
+/// MenuBar 红点与徽标示例(停靠样式)
+///
+/// 覆盖:图标 + 红点 / 无图标文字 + 红点 / 图标 + 数字徽标 / 无图标文字 + 数字徽标
 class MenuBarBadgeExample extends StatefulWidget {
   const MenuBarBadgeExample({Key? key}) : super(key: key);
 
@@ -13,6 +15,18 @@ class _MenuBarBadgeExampleState extends State<MenuBarBadgeExample> {
   int _index = 0;
 
   static const _tabNames = ['首页', '发现', '消息', '我的'];
+
+  Widget _numberBadge(String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFF4D4F),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(text,
+          style: const TextStyle(color: Colors.white, fontSize: 10)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,26 +57,24 @@ class _MenuBarBadgeExampleState extends State<MenuBarBadgeExample> {
             selectedIcon: const Icon(Icons.home_filled),
             unselectedIcon: const Icon(Icons.home_outlined),
           ),
-          const SantoMenuBarItem(
+          // 图标 + 红点
+          SantoMenuBarItem(
             text: '发现',
+            selectedIcon: const Icon(Icons.explore),
+            unselectedIcon: const Icon(Icons.explore_outlined),
             showBadge: true,
           ),
-          SantoMenuBarItem(
+          // 纯文字 + 红点(无图标时徽标挂在文字上)
+          const SantoMenuBarItem(
             text: '消息',
-            badge: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFF4D4F),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Text('99+',
-                  style: TextStyle(color: Colors.white, fontSize: 10)),
-            ),
+            showBadge: true,
           ),
+          // 图标 + 数字徽标
           SantoMenuBarItem(
             text: '我的',
             selectedIcon: const Icon(Icons.person),
             unselectedIcon: const Icon(Icons.person_outline),
+            badge: _numberBadge('99+'),
           ),
         ],
       ),
