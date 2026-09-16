@@ -20,49 +20,50 @@ void main() {
     expect(find.text('通过 type 语法糖使用预设的按钮样式'), findsOneWidget);
   });
 
-  testWidgets('SantoSection hides divider when disabled', (tester) async {
+  testWidgets('SantoSection draws divider on both sides of title',
+      (tester) async {
     Finder dividerFinder() => find.byWidgetPredicate((w) =>
         w is Container && w.color == const Color(0xFFE8EAEC));
 
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: SantoSection(
-          title: '有分割线',
+          title: '标题',
           child: const Text('演示内容'),
         ),
       ),
     ));
-    expect(dividerFinder(), findsOneWidget);
-    expect(find.text('有分割线'), findsOneWidget);
-
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(
-        body: SantoSection(
-          title: '无分割线',
-          showDivider: false,
-          child: const Text('演示内容'),
-        ),
-      ),
-    ));
-    expect(dividerFinder(), findsNothing);
-    expect(find.text('无分割线'), findsOneWidget);
+    // 标题两侧各一条延伸线
+    expect(dividerFinder(), findsNWidgets(2));
+    expect(find.text('标题'), findsOneWidget);
   });
 
-  testWidgets('SantoSection supports description only and custom radius',
+  testWidgets('SantoSection draws full width divider without title',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: SantoSection(
           description: '只有描述',
-          radius: 24,
+          child: const Text('演示内容'),
+        ),
+      ),
+    ));
+
+    final divider = find.byWidgetPredicate(
+        (w) => w is Container && w.color == const Color(0xFFE8EAEC));
+    expect(divider, findsOneWidget);
+    expect(find.text('只有描述'), findsOneWidget);
+  });
+
+  testWidgets('SantoSection supports description only', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: SantoSection(
+          description: '只有描述',
         ),
       ),
     ));
 
     expect(find.text('只有描述'), findsOneWidget);
-
-    final container = tester.widget<Container>(find.byType(Container).first);
-    final decoration = container.decoration as BoxDecoration;
-    expect(decoration.borderRadius, BorderRadius.circular(24));
   });
 }

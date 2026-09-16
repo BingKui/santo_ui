@@ -22,7 +22,6 @@ class TagExample extends StatelessWidget {
           ListItem(
             title: "选择标签",
             isShowLine: false,
-            isSupportTheme: true,
             describe: '可单选、多选标签',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -34,7 +33,6 @@ class TagExample extends StatelessWidget {
           ),
           ListItem(
             title: "删除标签",
-            isSupportTheme: true,
             describe: '可删除的标签',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(

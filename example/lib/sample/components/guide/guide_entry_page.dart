@@ -29,7 +29,6 @@ class GuideEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "弱引导组件",
-            isSupportTheme: true,
             describe: '弱引导组件example',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(

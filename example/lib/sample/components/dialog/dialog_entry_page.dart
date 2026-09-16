@@ -19,7 +19,6 @@ class DialogEntryPage extends StatelessWidget {
             ListItem(
               title: "富文本弹窗",
               isShowLine: false,
-              isSupportTheme: true,
               describe: '富文本弹窗',
               onPressed: () {
                 _showRichTextDialog(context);
@@ -27,7 +26,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "无标题+无按钮",
-              isSupportTheme: true,
               describe: '无标题、无按钮',
               onPressed: () {
                 _showStyle0Dialog(context);
@@ -35,7 +33,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "无标题+单按钮",
-              isSupportTheme: true,
               describe: '无标题、辅助信息、单按钮',
               onPressed: () {
                 _showStyle1Dialog(context);
@@ -43,7 +40,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "无标题+单按钮，单行内容",
-              isSupportTheme: true,
               describe: '无标题、辅助信息、单按钮',
               onPressed: () {
                 _showStyle1Dialog0(context);
@@ -51,7 +47,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+信息+双按钮",
-              isSupportTheme: true,
               describe: '有标题、双底部按钮、辅助信息为文案',
               onPressed: () {
                 _showStyle4Dialog(context);
@@ -59,7 +54,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+信息+单按钮",
-              isSupportTheme: true,
               describe: '有标题、单按钮、有辅助文案',
               onPressed: () {
                 _showStyle2Dialog(context);
@@ -74,7 +68,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+信息+警示",
-              isSupportTheme: true,
               describe: '有标题、单按钮、有辅助文案',
               onPressed: () {
                 _showStyle9Dialog(context);
@@ -82,7 +75,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+信息+自定义警示UI",
-              isSupportTheme: true,
               describe: '有标题、单按钮、有辅助文案',
               onPressed: () {
                 _showStyle9_1Dialog(context);
@@ -90,7 +82,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+按钮",
-              isSupportTheme: true,
               describe: '双个按钮、换行标题',
               onPressed: () {
                 _showStyle8Dialog(context);
@@ -98,7 +89,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "Icon+标题+信息+双按钮",
-              isSupportTheme: true,
               describe: '双按钮、有头部Icon、辅助信息',
               onPressed: () {
                 _showStyle71Dialog(context);
@@ -106,7 +96,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "Icon+标题+单按钮",
-              isSupportTheme: true,
               describe: '单按钮、有头部Icon',
               onPressed: () {
                 _showStyle7Dialog(context);
@@ -114,7 +103,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "多按钮 + 标题+信息",
-              isSupportTheme: true,
               describe: '有标题、多按钮、辅助信息为文案',
               onPressed: () {
                 _showStyle6Dialog(context);
@@ -122,7 +110,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "多按钮 + 标题",
-              isSupportTheme: true,
               describe: '标题、多按钮',
               onPressed: () {
                 _showStyle5_1Dialog(context);
@@ -130,7 +117,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "多按钮 + 信息",
-              isSupportTheme: true,
               describe: '无标题、多按钮、辅助信息为文案',
               onPressed: () {
                 _showStyle5Dialog(context);
@@ -138,7 +124,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+信息+输入+按钮",
-              isSupportTheme: true,
               describe: '中间有输入框弹框',
               onPressed: () {
                 _showMiddleInputDialog(context);
@@ -146,7 +131,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+输入+按钮",
-              isSupportTheme: true,
               describe: '中间有输入框弹框',
               onPressed: () {
                 _showMiddleInputDialog2(context);
@@ -154,7 +138,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+输入+按钮",
-              isSupportTheme: true,
               describe: '中间有输入框弹框, 设置最大高度',
               onPressed: () {
                 _showMiddleInputDialog3(context);
@@ -162,7 +145,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+单选选项+按钮",
-              isSupportTheme: true,
               describe: '中间单选弹框（SingleSelectDialogWidget）',
               onPressed: () {
                 _showMiddleSingleSelectPicker(context);
@@ -170,7 +152,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+多选选项+按钮",
-              isSupportTheme: true,
               describe: '中间多选弹框（MultiSelectDialog）',
               onPressed: () {
                 _showMiddleMultiSelectDialog(context);
@@ -178,7 +159,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+提示信息文本+多选选项+按钮",
-              isSupportTheme: true,
               describe: '中间多选弹框（MultiSelectDialog）',
               onPressed: () {
                 _showMiddleMultiSelectWithMessageDialog(context);
@@ -186,7 +166,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "标题+提示信息Widget+多选选项+按钮",
-              isSupportTheme: true,
               describe: '中间多选弹框（MultiSelectDialog）',
               onPressed: () {
                 _showMiddleMultiSelectWithMessageWidgetDialog(context);
@@ -208,7 +187,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "Share Dialog",
-              isSupportTheme: true,
               describe: '分享Dialog（五个 icon）',
               onPressed: () {
                 _showSantoShareDialog5(context);
@@ -216,7 +194,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "Share Dialog",
-              isSupportTheme: true,
               describe: '分享Dialog（3个 icon）',
               onPressed: () {
                 _showSantoShareDialog3(context);
@@ -224,7 +201,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "Two Vertical Button Dialog（单按钮）",
-              isSupportTheme: true,
               describe: '主次要按钮Dialog',
               onPressed: () {
                 _showSantoOneVerticalButtonDialogDialog(context);
@@ -233,14 +209,12 @@ class DialogEntryPage extends StatelessWidget {
             ListItem(
               title: "Two Vertical Button Dialog（双按钮）",
               describe: '主次要按钮Dialog',
-              isSupportTheme: true,
               onPressed: () {
                 _showSantoTwoVerticalButtonDialogDialog(context);
               },
             ),
             ListItem(
               title: "纯文本弹框",
-              isSupportTheme: true,
               describe: '标题+纯本文内容+按钮',
               onPressed: () {
                 _showStyle81Dialog(context);
@@ -248,7 +222,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "纯文本弹框含富文本",
-              isSupportTheme: true,
               describe: '标题+纯本文内容含富文本+按钮',
               onPressed: () {
                 _showStyle82Dialog(context);
@@ -256,7 +229,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "纯文本弹框无标题",
-              isSupportTheme: true,
               describe: '纯本文内容+按钮',
               onPressed: () {
                 _showStyle83Dialog(context);
@@ -264,7 +236,6 @@ class DialogEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "纯文本弹框无操作按钮",
-              isSupportTheme: true,
               describe: '标题+纯本文内容',
               onPressed: () {
                 _showStyle84Dialog(context);

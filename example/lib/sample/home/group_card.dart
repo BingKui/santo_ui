@@ -115,8 +115,6 @@ class GroupCardState extends State<GroupCard>
         return Container(
           color: Colors.white,
           child: ListItem(
-            isSupportTheme:
-                widget.groupInfo?.children![index].isSupportTheme ?? false,
             isShowLine: !(index == 0),
             title: widget.groupInfo?.children![index].groupName ?? '',
             describe: widget.groupInfo?.children![index].desc ?? '',

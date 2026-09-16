@@ -163,51 +163,54 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              _handleTap();
-            },
-            child: Container(
-              padding:
-                  EdgeInsets.only(left: 20, top: 14, bottom: 14, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          padding: EdgeInsets.only(right: 6),
-                          child: Text(
-                            widget.title,
-                            style: SantoFormUtil.getHeadTitleTextStyle(
-                                widget.themeData!,
-                                isBold: true),
-                          )),
-                      // 副标题
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(top: 4),
-                        child: Offstage(
-                          // ignore: deprecated_member_use_from_same_package
-                          offstage: (widget.subtitle == null ||
-                              widget.subtitle!.isEmpty),
-                          child: Text(
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                _handleTap();
+              },
+              child: Container(
+                padding:
+                    EdgeInsets.only(left: 20, top: 14, bottom: 14, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(right: 6),
+                            child: Text(
+                              widget.title,
+                              style: SantoFormUtil.getHeadTitleTextStyle(
+                                  widget.themeData!,
+                                  isBold: true),
+                            )),
+                        // 副标题
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(top: 4),
+                          child: Offstage(
                             // ignore: deprecated_member_use_from_same_package
-                            widget.subtitle ?? "",
-                            style: SantoFormUtil.getSubTitleTextStyle(
-                                widget.themeData!),
+                            offstage: (widget.subtitle == null ||
+                                widget.subtitle!.isEmpty),
+                            child: Text(
+                              // ignore: deprecated_member_use_from_same_package
+                              widget.subtitle ?? "",
+                              style: SantoFormUtil.getSubTitleTextStyle(
+                                  widget.themeData!),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  RotationTransition(
-                    turns: _iconTurns,
-                    child: _arrowIcon,
-                  )
-                ],
+                      ],
+                    ),
+                    RotationTransition(
+                      turns: _iconTurns,
+                      child: _arrowIcon,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

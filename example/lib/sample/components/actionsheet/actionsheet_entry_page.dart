@@ -28,7 +28,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
           children: <Widget>[
             ListItem(
               title: "CommonActionSheet",
-              isSupportTheme: true,
               isShowLine: false,
               describe: '通用样式ActionSheet，无独立辅助信息',
               onPressed: () {
@@ -37,7 +36,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
             ),
             ListItem(
               title: "CommonActionSheet",
-              isSupportTheme: true,
               isShowLine: false,
               describe: '通用样式ActionSheet，包含描述信息',
               onPressed: () {
@@ -46,7 +44,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
             ),
             ListItem(
               title: "CommonActionSheet",
-              isSupportTheme: true,
               describe: '通用样式ActionSheet，不包含描述信息',
               onPressed: () {
                 _showCommonStyle1(context);
@@ -54,7 +51,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
             ),
             ListItem(
               title: "CommonActionSheet",
-              isSupportTheme: true,
               describe: '蓝色样式ActionSheet，不包含描述信息',
               onPressed: () {
                 _showCommonStyle2(context);
@@ -62,7 +58,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
             ),
             ListItem(
               title: "CommonActionSheet",
-              isSupportTheme: true,
               describe: '通用样式ActionSheet，自定义textstyle',
               onPressed: () {
                 _showCommonCustomStyle(context);
@@ -70,7 +65,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
             ),
             ListItem(
               title: "CommonActionSheet",
-              isSupportTheme: true,
               describe: '通用样式ActionSheet，选项名动态变化',
               onPressed: () {
                 _showChangeableStyle(context);

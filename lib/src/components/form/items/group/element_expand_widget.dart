@@ -188,45 +188,51 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    _handleTap();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 20, top: 14),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.only(right: 6),
-                            child: Text(
-                              widget.title,
-                              style: SantoFormUtil.getHeadTitleTextStyle(
-                                  widget.themeData!,
-                                  isBold: true),
-                            )),
-                        RotationTransition(
-                          turns: _iconTurns,
-                          child: arrowIcon,
-                        ),
-                      ],
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      _handleTap();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20, top: 14),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.only(right: 6),
+                              child: Text(
+                                widget.title,
+                                style: SantoFormUtil.getHeadTitleTextStyle(
+                                    widget.themeData!,
+                                    isBold: true),
+                              )),
+                          RotationTransition(
+                            turns: _iconTurns,
+                            child: arrowIcon,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Offstage(
                   offstage: widget.deleteText == null,
-                  child: GestureDetector(
-                    onTap: () {
-                      if (widget.callback != null) {
-                        widget.callback!();
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(top: 14, right: 20),
-                      child: Text(
-                        widget.deleteText ?? "",
-                        style: TextStyle(
-                          color: Color(0xFFFF4D4F),
-                          fontSize: SantoFonts.f16,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        if (widget.callback != null) {
+                          widget.callback!();
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(top: 14, right: 20),
+                        child: Text(
+                          widget.deleteText ?? "",
+                          style: TextStyle(
+                            color: Color(0xFFFF4D4F),
+                            fontSize: SantoFonts.f16,
+                          ),
                         ),
                       ),
                     ),

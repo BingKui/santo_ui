@@ -33,20 +33,17 @@ class SantoSection extends StatelessWidget {
   /// 自定义描述控件,用于富文本/内联代码等场景
   final Widget? descriptionWidget;
 
+  /// 区块外边距,默认使用主题配置
+  final EdgeInsets? margin;
+
   /// 展示区内边距,默认使用主题配置
   final EdgeInsets? contentPadding;
 
   /// 标题/描述区域内边距,默认使用主题配置
   final EdgeInsets? footerPadding;
 
-  /// 是否显示展示区与标题之间的分割线,默认使用主题配置
-  final bool? showDivider;
-
   /// 背景色,默认使用主题配置
   final Color? backgroundColor;
-
-  /// 圆角,默认 12
-  final double? radius;
 
   /// 区块主题配置
   final SantoSectionConfig? themeData;
@@ -59,11 +56,10 @@ class SantoSection extends StatelessWidget {
     this.titleSuffix,
     this.description,
     this.descriptionWidget,
+    this.margin,
     this.contentPadding,
     this.footerPadding,
-    this.showDivider,
     this.backgroundColor,
-    this.radius,
     this.themeData,
   }) : super(key: key);
 
@@ -77,11 +73,14 @@ class SantoSection extends StatelessWidget {
 
     final footer = _buildFooter(config);
     final hasFooter = footer != null;
+    final hasTitle = titleWidget != null || title != null;
 
     return Container(
+      margin: margin ?? config.margin,
       decoration: BoxDecoration(
         color: backgroundColor ?? config.backgroundColor,
-        borderRadius: BorderRadius.all(Radius.circular(radius ?? config.radius)),
+        // 圆角固定 12
+        borderRadius: BorderRadius.all(Radius.circular(kSantoSectionRadius)),
         border: Border.all(
           color: config.borderColor,
           width: config.borderWidth,
@@ -97,7 +96,8 @@ class SantoSection extends StatelessWidget {
               padding: contentPadding ?? config.contentPadding,
               child: child,
             ),
-          if (child != null && hasFooter && (showDivider ?? config.showDivider))
+          // 有标题时分割线由标题行两侧延伸线承担,避免重复画线
+          if (child != null && hasFooter && !hasTitle)
             Container(height: config.borderWidth, color: config.dividerColor),
           if (hasFooter) footer,
         ],
@@ -106,6 +106,8 @@ class SantoSection extends StatelessWidget {
   }
 
   /// 下方标题 + 描述区域
+  ///
+  /// 标题行参照分割线样式:标题居左,右侧延伸一条分割线
   Widget? _buildFooter(SantoSectionConfig config) {
     Widget? titleWidget = this.titleWidget ?? (title == null ? null : Text(title!));
     titleWidget = titleWidget == null
@@ -126,28 +128,58 @@ class SantoSection extends StatelessWidget {
 
     if (titleWidget == null && descriptionWidget == null) return null;
 
-    return Padding(
-      padding: footerPadding ?? config.footerPadding,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (titleWidget != null)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(child: titleWidget),
-                if (titleSuffix != null) ...[
-                  const SizedBox(width: 6),
-                  titleSuffix!,
-                ],
-              ],
+    final EdgeInsets padding = footerPadding ?? config.footerPadding;
+    final bool hasTitle = titleWidget != null;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // 标题两侧延伸分割线:左侧约 5% 贴着卡片边框,右侧撑满到卡片边缘
+        if (hasTitle)
+          Padding(
+            padding: EdgeInsets.only(top: padding.top),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: constraints.maxWidth * 0.05,
+                      child: Container(
+                        height: config.borderWidth,
+                        color: config.dividerColor,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ?titleWidget,
+                    if (titleSuffix != null) ...[
+                      const SizedBox(width: 6),
+                      titleSuffix!,
+                    ],
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Container(
+                        height: config.borderWidth,
+                        color: config.dividerColor,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          if (titleWidget != null && descriptionWidget != null)
-            const SizedBox(height: 6),
-          ?descriptionWidget,
-        ],
-      ),
+          ),
+        if (descriptionWidget != null)
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              padding.left,
+              hasTitle ? 8 : padding.top,
+              padding.right,
+              padding.bottom,
+            ),
+            child: descriptionWidget,
+          ),
+      ],
     );
   }
 }
