@@ -24,11 +24,6 @@ class SantoDialogConfig extends SantoBaseConfig {
     SantoTextStyle? warningTextStyle,
     TextAlign? warningTextAlign,
     EdgeInsets? dividerPadding,
-    SantoTextStyle? mainActionTextStyle,
-    SantoTextStyle? assistActionsTextStyle,
-    Color? mainActionBackgroundColor,
-    Color? assistActionsBackgroundColor,
-    double? bottomHeight,
     Color? backgroundColor,
     String configId = GLOBAL_CONFIG_ID,
   })  : _dialogWidth = dialogWidth,
@@ -47,11 +42,6 @@ class SantoDialogConfig extends SantoBaseConfig {
         _warningTextStyle = warningTextStyle,
         _warningTextAlign = warningTextAlign,
         _dividerPadding = dividerPadding,
-        _mainActionTextStyle = mainActionTextStyle,
-        _assistActionsTextStyle = assistActionsTextStyle,
-        _mainActionBackgroundColor = mainActionBackgroundColor,
-        _assistActionsBackgroundColor = assistActionsBackgroundColor,
-        _bottomHeight = bottomHeight,
         _backgroundColor = backgroundColor,
         super(configId: configId);
 
@@ -225,54 +215,6 @@ class SantoDialogConfig extends SantoBaseConfig {
       _dividerPadding ??
       SantoDefaultConfigUtils.defaultDialogConfig.dividerPadding;
 
-  /// 主色调按钮样式
-  ///
-  /// SantoTextStyle(
-  ///   color: [SantoCommonConfig.brandPrimary],
-  ///   fontSize: [SantoCommonConfig.fontSizeSubHead],
-  ///   fontWeight: FontWeight.w600,
-  /// )
-  SantoTextStyle? _mainActionTextStyle;
-
-  SantoTextStyle get mainActionTextStyle =>
-      _mainActionTextStyle ??
-      SantoDefaultConfigUtils.defaultDialogConfig.mainActionTextStyle;
-
-  /// 主色调按钮的背景
-  /// 默认为 [SantoCommonConfig.fillBase]
-  Color? _mainActionBackgroundColor;
-
-  Color get mainActionBackgroundColor =>
-      _mainActionBackgroundColor ??
-      SantoDefaultConfigUtils.defaultDialogConfig.mainActionBackgroundColor;
-
-  /// 其他按钮的样式(超2个时按钮样式)
-  /// SantoTextStyle(
-  ///   color: [SantoCommonConfig.colorTextBase],
-  ///   fontSize: [SantoCommonConfig.fontSizeSubHead],
-  ///   fontWeight: FontWeight.w600,
-  /// )
-  SantoTextStyle? _assistActionsTextStyle;
-
-  SantoTextStyle get assistActionsTextStyle =>
-      _assistActionsTextStyle ??
-      SantoDefaultConfigUtils.defaultDialogConfig.assistActionsTextStyle;
-
-  /// 其他按钮的背景
-  /// 默认为 [SantoCommonConfig.fillBase]
-  Color? _assistActionsBackgroundColor;
-
-  Color get assistActionsBackgroundColor =>
-      _assistActionsBackgroundColor ??
-      SantoDefaultConfigUtils.defaultDialogConfig.assistActionsBackgroundColor;
-
-  /// 底部按钮高度
-  /// 默认为 44.0
-  double? _bottomHeight;
-
-  double get bottomHeight =>
-      _bottomHeight ?? SantoDefaultConfigUtils.defaultDialogConfig.bottomHeight;
-
   /// Dialog背景
   /// 默认为 [SantoCommonConfig.fillBase]
   Color? _backgroundColor;
@@ -341,18 +283,6 @@ class SantoDialogConfig extends SantoBaseConfig {
         fontSize: commonConfig.fontSizeBase,
       ).merge(_warningTextStyle),
     );
-    _mainActionTextStyle = dialogConfig.mainActionTextStyle.merge(
-      SantoTextStyle(
-        color: commonConfig.brandPrimary,
-        fontSize: commonConfig.fontSizeSubHead,
-      ).merge(_mainActionTextStyle),
-    );
-    _assistActionsTextStyle = dialogConfig.assistActionsTextStyle.merge(
-      SantoTextStyle(
-        color: commonConfig.colorTextBase,
-        fontSize: commonConfig.fontSizeSubHead,
-      ).merge(_assistActionsTextStyle),
-    );
     _contentPaddingSm ??= EdgeInsets.only(
       left: commonConfig.hSpacingXl,
       right: commonConfig.hSpacingXl,
@@ -380,9 +310,6 @@ class SantoDialogConfig extends SantoBaseConfig {
     _titleTextAlign ??= dialogConfig.titleTextAlign;
     _contentTextAlign ??= dialogConfig.contentTextAlign;
     _warningTextAlign ??= dialogConfig.warningTextAlign;
-    _mainActionBackgroundColor ??= commonConfig.fillBase;
-    _assistActionsBackgroundColor ??= commonConfig.fillBase;
-    _bottomHeight ??= dialogConfig.bottomHeight;
     _dividerPadding ??= dialogConfig.dividerPadding;
     _backgroundColor ??= commonConfig.fillBase;
   }
@@ -404,11 +331,6 @@ class SantoDialogConfig extends SantoBaseConfig {
     SantoTextStyle? warningTextStyle,
     TextAlign? warningTextAlign,
     EdgeInsets? dividerPadding,
-    SantoTextStyle? mainActionTextStyle,
-    SantoTextStyle? assistActionsTextStyle,
-    Color? mainActionBackgroundColor,
-    Color? assistActionsBackgroundColor,
-    double? bottomHeight,
     Color? backgroundColor,
   }) {
     return SantoDialogConfig(
@@ -428,13 +350,6 @@ class SantoDialogConfig extends SantoBaseConfig {
       warningTextStyle: warningTextStyle ?? _warningTextStyle,
       warningTextAlign: warningTextAlign ?? _warningTextAlign,
       dividerPadding: dividerPadding ?? _dividerPadding,
-      mainActionTextStyle: mainActionTextStyle ?? _mainActionTextStyle,
-      assistActionsTextStyle: assistActionsTextStyle ?? _assistActionsTextStyle,
-      mainActionBackgroundColor:
-          mainActionBackgroundColor ?? _mainActionBackgroundColor,
-      assistActionsBackgroundColor:
-          assistActionsBackgroundColor ?? _assistActionsBackgroundColor,
-      bottomHeight: bottomHeight ?? _bottomHeight,
       backgroundColor: backgroundColor ?? _backgroundColor,
     );
   }
@@ -458,13 +373,6 @@ class SantoDialogConfig extends SantoBaseConfig {
       warningTextStyle: warningTextStyle.merge(other._warningTextStyle),
       warningTextAlign: other._warningTextAlign,
       dividerPadding: other._dividerPadding,
-      mainActionTextStyle:
-          mainActionTextStyle.merge(other._mainActionTextStyle),
-      assistActionsTextStyle:
-          assistActionsTextStyle.merge(other._assistActionsTextStyle),
-      mainActionBackgroundColor: other._mainActionBackgroundColor,
-      assistActionsBackgroundColor: other._assistActionsBackgroundColor,
-      bottomHeight: other._bottomHeight,
       backgroundColor: other._backgroundColor,
     );
   }

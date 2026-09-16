@@ -1,5 +1,6 @@
 import 'package:santo_ui/src/components/dialog/santo_dialog_utils.dart';
-import 'package:santo_ui/src/components/button/santo_normal_button.dart';
+import 'package:santo_ui/src/components/button/santo_big_ghost_button.dart';
+import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
@@ -64,9 +65,6 @@ const Color cGreyBackgroundColor = Colors.white;
 /// 非按钮的文字样式---》灰色
 const TextStyle cGreyActionsTextStyle = const TextStyle(
     color: Color(0xFF17233D), fontWeight: FontWeight.w600, fontSize: 16);
-
-/// 底部按钮的高度
-const double cBottomHeight = 44.0;
 
 /// 水平分割线 内容与按钮
 const VerticalDivider cVerticalDivider =
@@ -341,8 +339,7 @@ class SantoDialog extends AlertDialog {
       return Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
         child: showTextActions
-            ? _mapTextToGesWidget(
-                context, actionsText![0], 0, true, defaultConfig)
+            ? _mapTextToGesWidget(context, actionsText![0], 0, true)
             : actionsWidget![0],
       );
     } else if (length == 2) {
@@ -352,15 +349,13 @@ class SantoDialog extends AlertDialog {
           children: [
             Expanded(
               child: showTextActions
-                  ? _mapTextToGesWidget(
-                      context, actionsText![0], 0, false, defaultConfig)
+                  ? _mapTextToGesWidget(context, actionsText![0], 0, false)
                   : actionsWidget![0],
             ),
             const SizedBox(width: 12.0),
             Expanded(
               child: showTextActions
-                  ? _mapTextToGesWidget(
-                      context, actionsText![1], 1, true, defaultConfig)
+                  ? _mapTextToGesWidget(context, actionsText![1], 1, true)
                   : actionsWidget![1],
             )
           ],
@@ -375,8 +370,7 @@ class SantoDialog extends AlertDialog {
             for (int i = 0; i < length; i++) ...[
               if (i > 0) const SizedBox(height: 12.0),
               showTextActions
-                  ? _mapTextToGesWidget(
-                      context, actionsText![i], i, true, defaultConfig)
+                  ? _mapTextToGesWidget(context, actionsText![i], i, true)
                   : actionsWidget![i],
             ]
           ],
@@ -385,40 +379,27 @@ class SantoDialog extends AlertDialog {
     }
   }
 
-  /// 底部操作统一使用按钮组件渲染
-  Widget _mapTextToGesWidget(BuildContext context, String label, int index,
-      bool main, SantoDialogConfig dialogConfig) {
-    final textStyle = (main
-            ? dialogConfig.mainActionTextStyle
-            : dialogConfig.assistActionsTextStyle)
-        .generateTextStyle();
-    final onTap = () {
+  /// 底部操作统一使用按钮组件渲染:
+  /// 主操作 = 大主色按钮(品牌色实心),辅助操作 = 大辅助色按钮(品牌色低透明度填充)
+  Widget _mapTextToGesWidget(
+      BuildContext context, String label, int index, bool main) {
+    void handleTap() {
       if (indexedActionCallback != null) {
-        //点击的监听
         indexedActionCallback!(index);
       } else {
         Navigator.pop(context);
       }
-    };
-    return SizedBox(
-      width: double.infinity,
-      child: main
-          ? SantoNormalButton(
-              text: label,
-              alignment: Alignment.center,
-              constraints: BoxConstraints.tightFor(height: cBottomHeight),
-              backgroundColor: dialogConfig.mainActionBackgroundColor,
-              textStyle: textStyle,
-              onTap: onTap,
-            )
-          : SantoNormalButton.outline(
-              text: label,
-              alignment: Alignment.center,
-              constraints: BoxConstraints.tightFor(height: cBottomHeight),
-              textStyle: textStyle,
-              onTap: onTap,
-            ),
-    );
+    }
+
+    return main
+        ? SantoBigMainButton(
+            title: label,
+            onTap: handleTap,
+          )
+        : SantoBigGhostButton(
+            title: label,
+            onTap: handleTap,
+          );
   }
 
   bool _isEmptyAction() {

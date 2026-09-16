@@ -8,18 +8,21 @@ class SantoSwitchButtonExample extends StatefulWidget {
 }
 
 class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
-  bool value1 = true;
-  bool value2 = true;
-  bool value3 = false;
-  bool value5 = true;
+  bool basicValue = true;
+  bool disabledValue = true;
+  bool offValue = false;
   bool loadingValue = true;
+  bool textValue = true;
+  bool longTextValue = true;
+  bool colorValue = true;
+  bool colorValue2 = false;
+  bool externalValue = false;
+  bool sizeValue = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SantoAppBar(
-        title: '开关元件',
-      ),
+      appBar: SantoAppBar(title: '开关元件'),
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -34,12 +37,121 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                   SantoBubbleText(maxLines: 2, text: '具备选中、未选中、以及禁用状态'),
                   SizedBox(height: 12),
                   SantoSwitchButton(
-                    value: value1,
+                    value: basicValue,
                     onChanged: (value) {
                       setState(() {
-                        value1 = value;
+                        basicValue = value;
                       });
                     },
+                  ),
+                ],
+              ),
+            ),
+            SantoSection(
+              title: '开/关文案',
+              description: 'openText 与 closeText 传入文案，轨道按文案加宽，文案始终在滑块对侧',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoSwitchButton(
+                    value: textValue,
+                    openText: '开',
+                    closeText: '关',
+                    onChanged: (value) {
+                      setState(() {
+                        textValue = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  SantoSwitchButton(
+                    value: longTextValue,
+                    openText: '启用',
+                    closeText: '停用',
+                    onChanged: (value) {
+                      setState(() {
+                        longTextValue = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SantoSection(
+              title: '自定义颜色',
+              description:
+                  'activeColor、inactiveColor、thumbColor 分别控制选中轨道、未选中轨道与滑块颜色',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoSwitchButton(
+                    value: colorValue,
+                    activeColor: Color(0xFF52C41A),
+                    inactiveColor: Color(0xFFF6FFED),
+                    openText: '开',
+                    closeText: '关',
+                    onChanged: (value) {
+                      setState(() {
+                        colorValue = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  SantoSwitchButton(
+                    value: colorValue2,
+                    activeColor: Color(0xFFFF4D4F),
+                    inactiveColor: Color(0xFFFFF2F0),
+                    thumbColor: Color(0xFFFFFBE6),
+                    openText: '开',
+                    closeText: '关',
+                    onChanged: (value) {
+                      setState(() {
+                        colorValue2 = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SantoSection(
+              title: '外部控制状态',
+              description: 'value 受控，onChanged 回传；父级直接改 value 即可从外部驱动开关',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoSwitchButton(
+                    value: externalValue,
+                    openText: '开',
+                    closeText: '关',
+                    onChanged: (value) {
+                      setState(() {
+                        externalValue = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  Wrap(
+                    spacing: 10,
+                    children: [
+                      SantoNormalButton.outline(
+                        text: '外部开启',
+                        fontSize: 12,
+                        insertPadding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 12,
+                        ),
+                        onTap: () => setState(() => externalValue = true),
+                      ),
+                      SantoNormalButton.outline(
+                        text: '外部关闭',
+                        fontSize: 12,
+                        insertPadding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 12,
+                        ),
+                        onTap: () => setState(() => externalValue = false),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -49,10 +161,12 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
               description: 'enabled 为 false 时组件置灰且不可切换',
               child: SantoSwitchButton(
                 enabled: false,
-                value: value2,
+                value: disabledValue,
+                openText: '开',
+                closeText: '关',
                 onChanged: (value) {
                   setState(() {
-                    value2 = value;
+                    disabledValue = value;
                   });
                 },
               ),
@@ -61,10 +175,10 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
               title: '未选中状态',
               description: 'value 为 false 时展示未选中的灰色轨道',
               child: SantoSwitchButton(
-                value: value3,
+                value: offValue,
                 onChanged: (value) {
                   setState(() {
-                    value3 = value;
+                    offValue = value;
                   });
                 },
               ),
@@ -85,20 +199,24 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                     },
                   ),
                   SizedBox(height: 8),
-                  Text('loading 时显示加载指示器并禁用交互',
-                      style: TextStyle(fontSize: 13, color: Colors.grey)),
+                  Text(
+                    'loading 时显示加载指示器并禁用交互',
+                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
                 ],
               ),
             ),
             SantoSection(
               title: '自定义大小',
-              description: 'size 传入 Size 自定义开关的宽高尺寸',
+              description: 'size 传入 Size 自定义开关宽高，文案与滑块按尺寸等比缩放',
               child: SantoSwitchButton(
                 size: Size(80, 40),
-                value: value5,
+                value: sizeValue,
+                openText: '开',
+                closeText: '关',
                 onChanged: (value) {
                   setState(() {
-                    value5 = value;
+                    sizeValue = value;
                   });
                 },
               ),
