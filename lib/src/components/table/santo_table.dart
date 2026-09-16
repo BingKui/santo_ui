@@ -29,7 +29,10 @@ class SantoTableColumn {
   /// 列标题
   final String title;
 
-  /// 列宽度，为 null 时自动均分剩余空间
+  /// 列宽度
+  ///
+  /// 为 null 时与其他未定宽列均分剩余空间；全部列都定宽时，
+  /// 按各列定宽值等比例分摊表格宽度
   final double? width;
 
   /// 列对齐方式，默认居中
@@ -223,11 +226,11 @@ class SantoTable extends StatelessWidget {
   }) {
     return Container(
       width: tableWidth,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        border: border ? Border.all(color: bColor, width: borderWidth) : null,
         borderRadius: BorderRadius.circular(12),
       ),
-      clipBehavior: Clip.antiAlias,
+      foregroundDecoration: _tableBorder(bColor),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -261,11 +264,11 @@ class SantoTable extends StatelessWidget {
   }) {
     return Container(
       width: tableWidth,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        border: border ? Border.all(color: bColor, width: borderWidth) : null,
         borderRadius: BorderRadius.circular(12),
       ),
-      clipBehavior: Clip.antiAlias,
+      foregroundDecoration: _tableBorder(bColor),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -298,38 +301,55 @@ class SantoTable extends StatelessWidget {
     );
   }
 
+  /// 表格外框
+  ///
+  /// 用 foregroundDecoration 在前景绘制：单元格背景是直角矩形，
+  /// 若边框画在背景下层，圆角处的边线会被背景盖住
+  BoxDecoration? _tableBorder(Color bColor) {
+    if (!border) {
+      return null;
+    }
+    return BoxDecoration(
+      border: Border.all(color: bColor, width: borderWidth),
+      borderRadius: BorderRadius.circular(12),
+    );
+  }
+
   /// 构建表头行
   Widget _buildHeaderRow(
       Color hColor, TextStyle headerStyle, Color bColor) {
+    final hasAutoColumns = columns.any((col) => col.width == null);
     return Container(
       height: headerHeight,
       color: hColor,
       child: Row(
-        children: columns.map((col) {
-          return Expanded(
-            flex: _getColumnFlex(col),
-            child: Container(
-              padding: cellPadding,
-              alignment: _getAlignment(col.align),
-              decoration: border
-                  ? BoxDecoration(
-                      border: Border(
-                        right: BorderSide(color: bColor, width: borderWidth),
+        children: [
+          for (int colIndex = 0; colIndex < columns.length; colIndex += 1)
+            _wrapColumnWidth(
+              columns[colIndex],
+              Container(
+                padding: cellPadding,
+                alignment: _getAlignment(columns[colIndex].align),
+                decoration: border
+                    ? BoxDecoration(
+                        border: Border(
+                          right: BorderSide(color: bColor, width: borderWidth),
+                        ),
+                      )
+                    : null,
+                child: columns[colIndex].headerBuilder != null
+                    ? columns[colIndex].headerBuilder!(columns[colIndex].title)
+                    : Text(
+                        columns[colIndex].title,
+                        style: headerStyle,
+                        textAlign: _getTextAlign(columns[colIndex].align),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    )
-                  : null,
-              child: col.headerBuilder != null
-                  ? col.headerBuilder!(col.title)
-                  : Text(
-                      col.title,
-                      style: headerStyle,
-                      textAlign: _getTextAlign(col.align),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+              ),
+              hasAutoColumns: hasAutoColumns,
             ),
-          );
-        }).toList(),
+        ],
       ),
     );
   }
@@ -342,6 +362,7 @@ class SantoTable extends StatelessWidget {
     required TextStyle defaultCellStyle,
     required Color bColor,
   }) {
+    final hasAutoColumns = columns.any((col) => col.width == null);
     return Container(
       height: rowHeight,
       decoration: BoxDecoration(
@@ -358,9 +379,9 @@ class SantoTable extends StatelessWidget {
           final cellData =
               colIndex < rowData.length ? rowData[colIndex] : '';
 
-          return Expanded(
-            flex: _getColumnFlex(col),
-            child: Container(
+          return _wrapColumnWidth(
+            col,
+            Container(
               padding: cellPadding,
               alignment: _getAlignment(col.align),
               decoration: border
@@ -382,6 +403,7 @@ class SantoTable extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
             ),
+            hasAutoColumns: hasAutoColumns,
           );
         }),
       ),
@@ -404,12 +426,17 @@ class SantoTable extends StatelessWidget {
     );
   }
 
-  /// 获取列的弹性比例
-  int _getColumnFlex(SantoTableColumn col) {
+  /// 定宽列按 [SantoTableColumn.width] 固定宽度，未定宽列均分剩余空间；
+  /// 全部列都定宽时，按定宽值等比例分摊表格宽度，避免溢出或留白
+  Widget _wrapColumnWidth(SantoTableColumn col, Widget child,
+      {required bool hasAutoColumns}) {
     if (col.width != null) {
-      return (col.width! * 10).round();
+      if (hasAutoColumns) {
+        return SizedBox(width: col.width, child: child);
+      }
+      return Expanded(flex: col.width!.round(), child: child);
     }
-    return 100; // 默认均分
+    return Expanded(child: child);
   }
 
   /// 获取对齐方式

@@ -283,21 +283,17 @@ class _SantoCollapseState<T extends Object> extends State<SantoCollapse<T>> {
       height: 0.5,
       color: commonConfig.dividerColorBase,
     );
-    return AnimatedCrossFade(
-      firstChild: const SizedBox.shrink(),
-      secondChild: Column(
+    return _CollapseBody(
+      isExpanded: isExpanded,
+      duration: animationDuration,
+      placement: child.placement,
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: child.placement == SantoCollapsePlacement.top
             ? [content, divider]
             : [divider, content],
       ),
-      firstCurve: const Interval(0, 0.6, curve: Curves.fastOutSlowIn),
-      secondCurve: const Interval(0.4, 1, curve: Curves.fastOutSlowIn),
-      sizeCurve: Curves.fastOutSlowIn,
-      crossFadeState:
-          isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-      duration: animationDuration,
     );
   }
 
@@ -395,6 +391,89 @@ class _SantoCollapseState<T extends Object> extends State<SantoCollapse<T>> {
     assert(
       !_isAccordion || widget.value.length <= 1,
       'SantoCollapseMode.accordion allows at most one expanded value.',
+    );
+  }
+}
+
+/// 内容区域的折叠动画
+///
+/// 用 [ClipRect] + [Align] 的 heightFactor 做高度裁剪：内容全程保持不透明，
+/// 展开时从标题一侧逐渐显露，收起时逐渐裁掉，不产生交叉淡化
+class _CollapseBody extends StatefulWidget {
+  const _CollapseBody({
+    required this.isExpanded,
+    required this.duration,
+    required this.placement,
+    required this.child,
+  });
+
+  final bool isExpanded;
+  final Duration duration;
+  final SantoCollapsePlacement placement;
+  final Widget child;
+
+  @override
+  State<_CollapseBody> createState() => _CollapseBodyState();
+}
+
+class _CollapseBodyState extends State<_CollapseBody>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final CurvedAnimation _sizeCurve;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.duration,
+      value: widget.isExpanded ? 1.0 : 0.0,
+    );
+    _sizeCurve =
+        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
+  }
+
+  @override
+  void didUpdateWidget(_CollapseBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.duration != oldWidget.duration) {
+      _controller.duration = widget.duration;
+    }
+    if (widget.isExpanded != oldWidget.isExpanded) {
+      widget.isExpanded ? _controller.forward() : _controller.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    _sizeCurve.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final closed = !widget.isExpanded && _controller.isDismissed;
+    return Offstage(
+      offstage: closed,
+      child: TickerMode(
+        enabled: !closed,
+        child: AnimatedBuilder(
+          animation: _controller.view,
+          builder: (BuildContext context, Widget? child) {
+            return ClipRect(
+              child: Align(
+                alignment: widget.placement == SantoCollapsePlacement.bottom
+                    ? Alignment.topCenter
+                    : Alignment.bottomCenter,
+                heightFactor: _sizeCurve.value,
+                child: child,
+              ),
+            );
+          },
+          child: widget.child,
+        ),
+      ),
     );
   }
 }
