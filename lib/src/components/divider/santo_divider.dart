@@ -139,6 +139,7 @@ class SantoDivider extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: _verticalSpacing),
         child: SizedBox(
           height: thickness,
+          width: double.infinity,
           child: _buildLine(lineColor),
         ),
       );
@@ -164,14 +165,18 @@ class SantoDivider extends StatelessWidget {
             SizedBox(width: margin),
             title,
             SizedBox(width: _titleHorizontalPadding),
-            Expanded(child: _buildLine(lineColor)),
+            Expanded(
+              child: SizedBox(height: thickness, child: _buildLine(lineColor)),
+            ),
           ],
         );
         break;
       case SantoDividerTitlePlacement.end:
         result = Row(
           children: [
-            Expanded(child: _buildLine(lineColor)),
+            Expanded(
+              child: SizedBox(height: thickness, child: _buildLine(lineColor)),
+            ),
             SizedBox(width: _titleHorizontalPadding),
             title,
             SizedBox(width: margin),
@@ -181,13 +186,17 @@ class SantoDivider extends StatelessWidget {
       case SantoDividerTitlePlacement.center:
         result = Row(
           children: [
-            Expanded(child: _buildLine(lineColor)),
+            Expanded(
+              child: SizedBox(height: thickness, child: _buildLine(lineColor)),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: _titleHorizontalPadding),
               child: title,
             ),
-            Expanded(child: _buildLine(lineColor)),
+            Expanded(
+              child: SizedBox(height: thickness, child: _buildLine(lineColor)),
+            ),
           ],
         );
         break;

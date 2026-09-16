@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// 气泡弹出框方向
@@ -55,6 +57,7 @@ class SantoPopover {
   /// [offset] 与锚点的偏移距离
   /// [onDismiss] 关闭回调
   /// [barrierColor] 遮罩颜色
+  /// [contentPadding] 内容区域内边距，默认 EdgeInsets.symmetric(horizontal: 12, vertical: 8)
   static void show({
     required BuildContext context,
     required GlobalKey target,
@@ -67,6 +70,8 @@ class SantoPopover {
     double offset = 4,
     SantoPopoverDismissCallback? onDismiss,
     Color barrierColor = Colors.transparent,
+    EdgeInsets contentPadding = const EdgeInsets.symmetric(
+        horizontal: 12, vertical: 8),
   }) {
     // 获取目标组件的位置
     final renderObject = target.currentContext?.findRenderObject();
@@ -94,6 +99,7 @@ class SantoPopover {
             arrowSize: arrowSize,
             offset: offset,
             onDismiss: onDismiss,
+            contentPadding: contentPadding,
           );
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -120,6 +126,7 @@ class _SantoPopoverOverlay extends StatefulWidget {
   final double arrowSize;
   final double offset;
   final SantoPopoverDismissCallback? onDismiss;
+  final EdgeInsets contentPadding;
 
   const _SantoPopoverOverlay({
     required this.targetOffset,
@@ -132,6 +139,7 @@ class _SantoPopoverOverlay extends StatefulWidget {
     required this.arrowSize,
     required this.offset,
     required this.onDismiss,
+    required this.contentPadding,
   });
 
   @override
@@ -168,7 +176,6 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
   /// 根据方向计算气泡位置
   Offset _computePosition(Size popoverSize) {
     final screenSize = MediaQuery.of(context).size;
-    final arrowExtra = widget.showArrow ? widget.arrowSize : 0;
     double dx, dy;
 
     switch (widget.direction) {
@@ -176,7 +183,7 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
         dx = widget.targetOffset.dx +
             widget.targetSize.width / 2 -
             popoverSize.width / 2;
-        dy = widget.targetOffset.dy - popoverSize.height - arrowExtra - widget.offset;
+        dy = widget.targetOffset.dy - popoverSize.height - widget.offset;
         break;
       case SantoPopoverDirection.bottom:
         dx = widget.targetOffset.dx +
@@ -184,11 +191,10 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
             popoverSize.width / 2;
         dy = widget.targetOffset.dy +
             widget.targetSize.height +
-            arrowExtra +
             widget.offset;
         break;
       case SantoPopoverDirection.left:
-        dx = widget.targetOffset.dx - popoverSize.width - arrowExtra - widget.offset;
+        dx = widget.targetOffset.dx - popoverSize.width - widget.offset;
         dy = widget.targetOffset.dy +
             widget.targetSize.height / 2 -
             popoverSize.height / 2;
@@ -196,7 +202,6 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
       case SantoPopoverDirection.right:
         dx = widget.targetOffset.dx +
             widget.targetSize.width +
-            arrowExtra +
             widget.offset;
         dy = widget.targetOffset.dy +
             widget.targetSize.height / 2 -
@@ -204,35 +209,34 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
         break;
     }
 
-    // 边界约束
-    dx = dx.clamp(8.0, screenSize.width - popoverSize.width - 8.0);
-    dy = dy.clamp(8.0, screenSize.height - popoverSize.height - 8.0);
+    // 边界检测，确保不超出屏幕
+    final maxDx = (screenSize.width - popoverSize.width - 8.0).clamp(8.0, double.infinity);
+    final maxDy = (screenSize.height - popoverSize.height - 8.0).clamp(8.0, double.infinity);
+    dx = dx.clamp(8.0, maxDx);
+    dy = dy.clamp(8.0, maxDy);
 
     return Offset(dx, dy);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onDismiss?.call();
-        Navigator.of(context).pop();
-      },
-      behavior: HitTestBehavior.translucent,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          Navigator.of(context).pop();
+          widget.onDismiss?.call();
+        },
+        child: Stack(
           children: [
             Positioned(
-              left: _popoverPosition?.dx ?? 0,
-              top: _popoverPosition?.dy ?? 0,
-              child: Opacity(
-                // 首帧先透明挂载用于测量尺寸，计算完位置后再显示
-                opacity: _popoverPosition == null ? 0 : 1,
-                child: GestureDetector(
-                  onTap: () {}, // 阻止冒泡
-                  child: _buildPopoverContent(),
-                ),
+              left: _popoverPosition?.dx,
+              top: _popoverPosition?.dy,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {}, // 阻止冒泡
+                child: _buildPopoverContent(),
               ),
             ),
           ],
@@ -243,6 +247,25 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
 
   /// 构建气泡内容（含箭头）
   Widget _buildPopoverContent() {
+    // 计算箭头方向需要的额外空间
+    final arrowExtra = widget.showArrow ? widget.arrowSize : 0.0;
+    
+    // 根据箭头方向计算 padding，只在箭头方向留出空间
+    EdgeInsets arrowPadding;
+    switch (widget.direction) {
+      case SantoPopoverDirection.top:
+        arrowPadding = EdgeInsets.only(bottom: arrowExtra);
+        break;
+      case SantoPopoverDirection.bottom:
+        arrowPadding = EdgeInsets.only(top: arrowExtra);
+        break;
+      case SantoPopoverDirection.left:
+        arrowPadding = EdgeInsets.only(right: arrowExtra);
+        break;
+      case SantoPopoverDirection.right:
+        arrowPadding = EdgeInsets.only(left: arrowExtra);
+        break;
+    }
 
     return CustomPaint(
       key: _popoverKey,
@@ -257,10 +280,11 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
         popoverPosition: _popoverPosition ?? Offset.zero,
       ),
       child: Padding(
-        padding: EdgeInsets.all(
-          widget.showArrow ? widget.arrowSize + 4 : 0,
+        padding: arrowPadding,
+        child: Padding(
+          padding: widget.contentPadding,
+          child: widget.content,
         ),
-        child: widget.content,
       ),
     );
   }
@@ -288,18 +312,48 @@ class _PopoverArrowPainter extends CustomPainter {
     required this.popoverPosition,
   });
 
+  /// 箭头锚点钳制：气泡尺寸不足以留出 arrowSize + borderRadius 时，
+  /// 退化为在整个范围内钳制，避免 clamp 下限大于上限抛异常
+  double _clampArrowCenter(double value, double total) {
+    final double min = arrowSize + borderRadius;
+    final double max = total - min;
+    if (max < min) {
+      return value.clamp(0.0, math.max(0.0, total));
+    }
+    return value.clamp(min, max);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = backgroundColor
       ..style = PaintingStyle.fill;
 
-    final rect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-      Radius.circular(borderRadius),
-    );
+    // 矩形沿箭头方向收进 arrowSize，让箭头露在气泡外部
+    final Rect rect;
+    switch (direction) {
+      case SantoPopoverDirection.bottom:
+        rect = Rect.fromLTWH(0, showArrow ? arrowSize : 0, size.width,
+            size.height - (showArrow ? arrowSize : 0));
+        break;
+      case SantoPopoverDirection.top:
+        rect = Rect.fromLTWH(0, 0, size.width,
+            size.height - (showArrow ? arrowSize : 0));
+        break;
+      case SantoPopoverDirection.right:
+        rect = Rect.fromLTWH(showArrow ? arrowSize : 0, 0,
+            size.width - (showArrow ? arrowSize : 0), size.height);
+        break;
+      case SantoPopoverDirection.left:
+        rect = Rect.fromLTWH(0, 0,
+            size.width - (showArrow ? arrowSize : 0), size.height);
+        break;
+    }
 
-    canvas.drawRRect(rect, paint);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, Radius.circular(borderRadius)),
+      paint,
+    );
 
     if (!showArrow) return;
 
@@ -312,32 +366,32 @@ class _PopoverArrowPainter extends CustomPainter {
 
     switch (direction) {
       case SantoPopoverDirection.bottom:
-        // 箭头朝上
-        final ax = targetCenterX.clamp(arrowSize + borderRadius, size.width - arrowSize - borderRadius);
+        // 箭头朝上，tip 在 y=0
+        final ax = _clampArrowCenter(targetCenterX, size.width);
         arrowPath.moveTo(ax - arrowSize, arrowSize);
         arrowPath.lineTo(ax, 0);
         arrowPath.lineTo(ax + arrowSize, arrowSize);
         arrowPath.close();
         break;
       case SantoPopoverDirection.top:
-        // 箭头朝下
-        final ax = targetCenterX.clamp(arrowSize + borderRadius, size.width - arrowSize - borderRadius);
+        // 箭头朝下，tip 在 y=size.height
+        final ax = _clampArrowCenter(targetCenterX, size.width);
         arrowPath.moveTo(ax - arrowSize, size.height - arrowSize);
         arrowPath.lineTo(ax, size.height);
         arrowPath.lineTo(ax + arrowSize, size.height - arrowSize);
         arrowPath.close();
         break;
       case SantoPopoverDirection.right:
-        // 箭头朝左
-        final ay = targetCenterY.clamp(arrowSize + borderRadius, size.height - arrowSize - borderRadius);
+        // 箭头朝左，tip 在 x=0
+        final ay = _clampArrowCenter(targetCenterY, size.height);
         arrowPath.moveTo(arrowSize, ay - arrowSize);
         arrowPath.lineTo(0, ay);
         arrowPath.lineTo(arrowSize, ay + arrowSize);
         arrowPath.close();
         break;
       case SantoPopoverDirection.left:
-        // 箭头朝右
-        final ay = targetCenterY.clamp(arrowSize + borderRadius, size.height - arrowSize - borderRadius);
+        // 箭头朝右，tip 在 x=size.width
+        final ay = _clampArrowCenter(targetCenterY, size.height);
         arrowPath.moveTo(size.width - arrowSize, ay - arrowSize);
         arrowPath.lineTo(size.width, ay);
         arrowPath.lineTo(size.width - arrowSize, ay + arrowSize);

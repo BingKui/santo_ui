@@ -1,7 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/components/card/bubble/common_bubble_example.dart';
+import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
 import 'package:flutter/material.dart';
 
 class SelectionViewMoreCustomFloatLayerExamplePage extends StatefulWidget {
@@ -65,7 +65,7 @@ class _SelectionViewExamplePageState
                 SantoSetCustomFloatingLayerSelectionParams resultCallBack) {
               Navigator.push(context, MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return BubbleExample();
+                  return BubbleTextExample();
                 },
               )).then((data) {
                 Map<String, String> result = Map();

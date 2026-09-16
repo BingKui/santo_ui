@@ -13,7 +13,7 @@ import 'package:example/sample/components/button/button_panel_entry_page.dart';
 import 'package:example/sample/components/button/icon_button_example.dart';
 import 'package:example/sample/components/calendar/calendarview_example.dart';
 import 'package:example/sample/components/card/santo_shadow_card_example.dart';
-import 'package:example/sample/components/card/bubble/bubble_entry_page.dart';
+import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
 import 'package:example/sample/components/card/content/text_content_entry_page.dart';
 import 'package:example/sample/components/card_title/title_example.dart';
 import 'package:example/sample/components/charts/chart_entry_example.dart';
@@ -186,7 +186,7 @@ class CardDataConfig {
       _item("Image 图片", "增强图片组件", ImageExample()),
       _item("Table 表格", "数据表格展示", TableExample()),
       _item("Tag 标签", "标记与分类", TagExample(), isSupportTheme: true),
-      _item("Tooltip 文字提示", "气泡文本", BubbleEntryPage(), isSupportTheme: true),
+      _item("BubbleText 气泡文本", "气泡文本", BubbleTextExample(), isSupportTheme: true),
       _item("Popover 气泡卡片", "锚点弹出气泡", PopoverExample()),
       _item("Title 卡片标题", "卡片头部标题", TitleExample(), isSupportTheme: true),
       _item("SwipeCell 滑动单元格", "列表项滑动操作", SwipeCellExample()),

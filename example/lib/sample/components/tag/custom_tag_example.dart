@@ -17,45 +17,29 @@ class _CustomTagExampleState extends State<CustomTagExample> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
-            SantoBubbleText(
-                maxLines: 4, text: '标签的文字11号字，上下左右的边距是3，圆角是2，支持自定义的背景色和文字颜色'),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+            SantoPanel(
+              title: '基础用法',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoBubbleText(
+                      maxLines: 4,
+                      text: '标签的文字11号字，上下左右的边距是3，圆角是2，支持自定义的背景色和文字颜色'),
+                  SizedBox(height: 12),
+                  SantoTagCustom(
+                    tagText: '自定义标签',
+                  ),
+                ],
               ),
             ),
-            SantoTagCustom(
-              tagText: '自定义标签',
-            ),
-            Text(
-              '正常案例',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+            SantoPanel(
+              title: '异常案例：文案特别长',
+              child: SantoTagCustom(
+                tagText:
+                    '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',
               ),
-            ),
-            Text(
-              '异常案例：文案特别长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            SantoTagCustom(
-              tagText:
-                  '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',
             ),
           ],
         ),

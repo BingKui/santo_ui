@@ -17,104 +17,63 @@ class _StateTagExampleState extends State<StateTagExample> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '规则',
-              style: TextStyle(
-                  color: Color(0xFF222222),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-            ),
-            SantoBubbleText(maxLines: 4, text: '同自定义标签'),
-            Text(
-              '等待状态',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+            SantoPanel(
+              title: '状态样式',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoBubbleText(maxLines: 4, text: '同自定义标签'),
+                  SizedBox(height: 12),
+                  _stateItem('等待状态', TagState.waiting, '待进行'),
+                  _stateItem('失效状态', TagState.invalidate, '失效态'),
+                  _stateItem('运行状态', TagState.running, '进行中'),
+                  _stateItem('失败状态', TagState.failed, '失败态'),
+                  _stateItem('成功状态', TagState.succeed, '成功态'),
+                ],
               ),
             ),
-            SantoStateTag(
-              tagText: '待进行',
-              tagState: TagState.waiting,
-            ),
-            Text(
-              '失效状态',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+            SantoPanel(
+              title: '自定义颜色',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SantoStateTag(
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    tagText:
+                        '自定义标签自定义标签自定义标签自定义标签自定义标签自定义标签自定义标签自定义标签',
+                  ),
+                  SizedBox(height: 20),
+                  SantoStateTag(
+                    tagText: '自定义标签自定义标签自定义标标别长特别签自定义标签自定义标签',
+                  ),
+                ],
               ),
             ),
-            SantoStateTag(
-              tagText: '失效态',
-              tagState: TagState.invalidate,
-            ),
-            Text(
-              '运行状态',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
+            SantoPanel(
+              title: '异常案例：文案特别长',
+              child: SantoStateTag(
+                tagText:
+                    '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',
               ),
-            ),
-            SantoStateTag(
-              tagText: '进行中',
-              tagState: TagState.running,
-            ),
-            Text(
-              '失败状态',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            SantoStateTag(
-              tagText: '失败态',
-              tagState: TagState.failed,
-            ),
-            Text(
-              '成功状态',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            SantoStateTag(
-              tagText: '成功态',
-              tagState: TagState.succeed,
-            ),
-            Text(
-              '自定义',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            SantoStateTag(
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              tagText: '自定义标签自定义标签自定义标签自定义标签自定义标签自定义标签自定义标签自定义标签',
-            ),
-            Container(
-              height: 20,
-            ),
-            SantoStateTag(
-              tagText: '自定义标签自定义标签自定义标标别长特别签自定义标签自定义标签',
-            ),
-            Text(
-              '异常案例：文案特别长',
-              style: TextStyle(
-                color: Color(0xFF222222),
-                fontSize: 28,
-              ),
-            ),
-            SantoStateTag(
-              tagText:
-                  '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _stateItem(String label, TagState state, String text) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: TextStyle(fontSize: 13, color: Colors.grey)),
+        SizedBox(height: 8),
+        SantoStateTag(tagText: text, tagState: state),
+        SizedBox(height: 12),
+      ],
     );
   }
 }
