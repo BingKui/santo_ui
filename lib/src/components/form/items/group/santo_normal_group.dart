@@ -110,21 +110,24 @@ class SantoNormalFormGroupState extends State<SantoNormalFormGroup> {
                 ),
                 Offstage(
                   offstage: widget.deleteLabel == null,
-                  child: GestureDetector(
-                    onTap: () {
-                      if (!SantoFormUtil.isEdit(widget.isEdit)) {
-                        return;
-                      }
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        if (!SantoFormUtil.isEdit(widget.isEdit)) {
+                          return;
+                        }
 
-                      SantoFormUtil.notifyRemoveTap(context, widget.onRemoveTap);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Text(
-                        widget.deleteLabel ?? "",
-                        style: TextStyle(
-                          color: Color(0xFFFF4D4F),
-                          fontSize: SantoFonts.f16,
+                        SantoFormUtil.notifyRemoveTap(context, widget.onRemoveTap);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(
+                          widget.deleteLabel ?? "",
+                          style: TextStyle(
+                            color: Color(0xFFFF4D4F),
+                            fontSize: SantoFonts.f16,
+                          ),
                         ),
                       ),
                     ),

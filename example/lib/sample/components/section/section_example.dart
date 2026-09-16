@@ -71,21 +71,8 @@ class SectionExample extends StatelessWidget {
               child: Text('这里展示具体内容'),
             ),
             SantoSection(
-              title: '无分割线',
-              description: 'showDivider: false 时展示区与标题之间不显示分割线。',
-              showDivider: false,
-              child: Text('这里展示具体内容'),
-            ),
-            SantoSection(
-              title: '自定义圆角',
-              description: 'radius: 24 的圆角效果。',
-              radius: 24,
-              child: Text('这里展示具体内容'),
-            ),
-            SantoSection(
               description: '只有描述,没有标题与演示内容。',
             ),
-            SizedBox(height: 12),
           ],
         ),
       ),

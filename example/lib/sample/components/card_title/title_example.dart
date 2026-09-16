@@ -20,7 +20,6 @@ class TitleExample extends StatelessWidget {
           ListItem(
             title: "普通标题",
             isShowLine: false,
-            isSupportTheme: true,
             describe: '标题+辅助widget+底部详细信息',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -32,7 +31,6 @@ class TitleExample extends StatelessWidget {
           ),
           ListItem(
             title: "箭头标题",
-            isSupportTheme: true,
             describe: '带有箭头的标题',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(

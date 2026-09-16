@@ -20,7 +20,6 @@ class ListItem extends StatefulWidget {
 
   /// 右侧控件
   final Widget? rightWidget;
-  final bool isSupportTheme;
   final bool isShowLine;
 
   /// 构造函数
@@ -34,7 +33,6 @@ class ListItem extends StatefulWidget {
     this.describeColor = const Color(0xFF808695),
     this.rightWidget,
     this.imgPath,
-    this.isSupportTheme = false,
     this.isShowLine = true,
   }) : super(key: key);
 
@@ -77,18 +75,6 @@ class _ListItemState extends State<ListItem> with AutomaticKeepAliveClientMixin 
                       color: widget.titleColor ?? Color(0xFF17233D),
                       fontSize: widget.titleFontSize ?? 14),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 4),
-                ),
-                widget.isSupportTheme
-                    ? SantoTagCustom(
-                        tagText: "可定制",
-                        textPadding: EdgeInsets.only(
-                            bottom: 0, left: 4, right: 4, top: 0),
-                        textColor: Color(0xFFFF5722),
-                        backgroundColor: Color(0x24FF5722),
-                      )
-                    : Container()
               ]),
               Padding(padding: EdgeInsets.all(2)),
               Text(

@@ -132,7 +132,6 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               child: ListItem(
-                isSupportTheme: child.isSupportTheme,
                 isShowLine: false,
                 title: child.groupName,
                 describe: child.desc,

@@ -20,7 +20,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
           children: <Widget>[
             ListItem(
               title: "异常信息+操作",
-              isSupportTheme: true,
               isShowLine: false,
               describe: '异常信息+操作',
               onPressed: () {
@@ -35,7 +34,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "异常信息居中展示",
-              isSupportTheme: true,
               describe: '异常信息居中展示',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -49,7 +47,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "异常信息默认展示",
-              isSupportTheme: true,
               describe: '异常信息默认展示',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -63,7 +60,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "大模块空态",
-              isSupportTheme: true,
               describe: '大模块空态',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -77,7 +73,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "单按钮效果",
-              isSupportTheme: true,
               describe: '单按钮效果',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -91,7 +86,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "双按钮效果",
-              isSupportTheme: true,
               describe: '双按钮效果',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
@@ -105,7 +99,6 @@ class AbnormalStatesEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "小模块空态",
-              isSupportTheme: true,
               describe: '小模块空态',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(

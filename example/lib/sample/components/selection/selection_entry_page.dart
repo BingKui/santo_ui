@@ -83,7 +83,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "一列、两列、三列情况",
-              isSupportTheme: true,
               isShowLine: false,
               describe: "筛选项",
               onPressed: () {
@@ -105,7 +104,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "一个 Range, 两个 Range 时 Tag 样式展示情",
-              isSupportTheme: true,
               describe: "筛选项",
               onPressed: () {
                 rootBundle
@@ -125,7 +123,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "更多筛选",
-              isSupportTheme: true,
               describe: "筛选项",
               onPressed: () {
                 rootBundle.loadString('assets/more_filter.json').then((data) {
@@ -143,7 +140,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "日期、日期范围选择",
-              isSupportTheme: true,
               describe: "筛选项",
               onPressed: () {
                 rootBundle
@@ -164,7 +160,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "customHandle 类型筛选，自定义拦截，设置参数",
-              isSupportTheme: true,
               describe: "筛选项",
               onPressed: () {
                 rootBundle
@@ -202,7 +197,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "手动关闭弹窗、拦截弹出的情况",
-              isSupportTheme: true,
               describe: "筛选项",
               onPressed: () {
                 rootBundle
@@ -222,7 +216,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "限制选择最大数量",
-              isSupportTheme: true,
               describe: "限制选择最大数量",
               onPressed: () {
                 rootBundle
@@ -256,7 +249,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "更多筛选-跳转自定义二级页面",
-              isSupportTheme: true,
               onPressed: () {
                 rootBundle
                     .loadString('assets/more_custom_floating_layer_filter.json')
@@ -277,7 +269,6 @@ class SelectionEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "新筛选示例(更多里面抽出平级筛选)",
-              isSupportTheme: true,
               describe: "筛选项",
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(

@@ -28,7 +28,6 @@ class PickerEntryPage extends StatelessWidget {
           children: <Widget>[
             ListItem(
               title: "MultiDataPicker",
-              isSupportTheme: true,
               isShowLine: false,
               describe: '底部多级选择',
               onPressed: () {
@@ -37,7 +36,6 @@ class PickerEntryPage extends StatelessWidget {
             ),
             ListItem(
               title: "DatePicker",
-              isSupportTheme: true,
               describe: '日期选择控件',
               onPressed: () {
                 _showDatePicker(context);
@@ -126,7 +124,6 @@ class PickerEntryPage extends StatelessWidget {
             ListItem(
               title: "自定义底部弹窗Picker",
               describe: "支持自定义内容",
-              isSupportTheme: true,
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (BuildContext context) {

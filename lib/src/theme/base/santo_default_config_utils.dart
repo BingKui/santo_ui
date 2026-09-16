@@ -77,14 +77,13 @@ class SantoDefaultConfigUtils {
 
   /// 区块配置
   static SantoSectionConfig defaultSectionConfig = SantoSectionConfig(
-    contentPadding: const EdgeInsets.all(10),
-    footerPadding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+    margin: kSantoSectionMargin,
+    contentPadding: kSantoSectionContentPadding,
+    footerPadding: kSantoSectionFooterPadding,
     backgroundColor: Colors.white,
-    radius: 12,
-    borderColor: const Color(0xFFDCDEE2),
-    borderWidth: 0.5,
-    showDivider: true,
-    dividerColor: const Color(0xFFE8EAEC),
+    borderColor: kSantoSectionBorderColor,
+    borderWidth: kSantoSectionBorderWidth,
+    dividerColor: kSantoSectionDividerColor,
     titleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
