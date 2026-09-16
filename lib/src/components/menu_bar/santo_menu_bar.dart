@@ -92,11 +92,11 @@ class SantoMenuBar extends StatefulWidget {
   /// floating 样式容器与屏幕边缘(左/右/下)的距离,默认 12
   final double gap;
 
-  /// floating 样式容器大圆角,默认 28
-  final double containerRadius;
+  /// floating 样式容器圆角,默认等于栏高度(胶囊形)
+  final double? containerRadius;
 
-  /// floating 样式每个标签项的大圆角,默认 20
-  final double itemRadius;
+  /// floating 样式每个标签项的圆角,默认与容器圆角一致
+  final double? itemRadius;
 
   /// floating 样式选中项背景色,默认主色
   final Color? itemSelectedBgColor;
@@ -130,8 +130,8 @@ class SantoMenuBar extends StatefulWidget {
     this.topRadius = 12,
     this.showTopDivider = true,
     this.gap = 12,
-    this.containerRadius = 28,
-    this.itemRadius = 20,
+    this.containerRadius,
+    this.itemRadius,
     this.itemSelectedBgColor,
     this.selectedTextColor,
     this.unselectedTextColor,
@@ -227,6 +227,12 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       widget.barHeight ??
       (widget.style == SantoMenuBarStyle.floating ? 64 : 56);
 
+  /// 悬浮容器圆角:默认等于栏高度,形成胶囊
+  double get _containerRadius => widget.containerRadius ?? _barHeight;
+
+  /// 悬浮标签项圆角:默认与容器一致
+  double get _itemRadius => widget.itemRadius ?? _containerRadius;
+
   @override
   Widget build(BuildContext context) {
     return widget.style == SantoMenuBarStyle.floating
@@ -272,13 +278,13 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     final bottomPadding =
         widget.useSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
     Widget bar = ClipRRect(
-      borderRadius: BorderRadius.circular(widget.containerRadius),
+      borderRadius: BorderRadius.circular(_containerRadius),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           height: _barHeight,
           color:
-              widget.backgroundColor ?? Colors.white.withAlpha(0xCC),
+              widget.backgroundColor ?? Colors.white.withAlpha(0xB3),
           padding: const EdgeInsets.all(4),
           child: Row(
             children: [
@@ -295,10 +301,10 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           color: widget.backgroundColor != null
-              ? widget.backgroundColor!.withAlpha(0x66)
-              : Colors.white.withAlpha(0x66),
-          padding: EdgeInsets.fromLTRB(widget.gap, widget.gap, widget.gap,
-              widget.gap + bottomPadding),
+              ? widget.backgroundColor!.withAlpha(0x4D)
+              : Colors.white.withAlpha(0x4D),
+          padding: EdgeInsets.fromLTRB(
+              widget.gap, 0, widget.gap, widget.gap + bottomPadding),
           child: Material(
             color: Colors.transparent,
             child: bar,
@@ -379,7 +385,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           color: selected
               ? (widget.itemSelectedBgColor ?? _commonConfig.brandPrimary)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(widget.itemRadius),
+          borderRadius: BorderRadius.circular(_itemRadius),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

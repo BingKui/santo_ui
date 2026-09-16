@@ -6,8 +6,8 @@ const String _content =
     '慢慢来，比较快。这是一段用于演示文本省略的长文本，超出指定行数后会自动折叠，'
     '并在省略号之后紧跟展开操作，点击即可展开全部内容，再次点击即可收起。';
 
-const String _expand = '展开';
-const String _collapse = '收起';
+const String _expand = '展开全文';
+const String _collapse = '收起全文';
 
 Future<void> _pump(WidgetTester tester, Widget child) async {
   await tester.pumpWidget(
