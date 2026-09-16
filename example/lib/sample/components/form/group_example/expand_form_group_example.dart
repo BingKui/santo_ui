@@ -4,18 +4,15 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 class ExpendFormGroupExample extends StatelessWidget {
-  final String _title;
 
-  ExpendFormGroupExample(this._title);
+  ExpendFormGroupExample();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: _title,
-        ),
-        body: ListView(
-          children: <Widget>[
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Text(
@@ -55,6 +52,6 @@ class ExpendFormGroupExample extends StatelessWidget {
               ],
             ),
           ],
-        ));
+    );
   }
 }

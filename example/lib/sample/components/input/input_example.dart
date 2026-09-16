@@ -140,10 +140,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 maxLength: 100,
                 hint: 'input动态算高input动态算高input动态算高input动态算高',
                 textInputAction: TextInputAction.newline,
-                onTextChange: (text) {
-                  _text = text;
-                  setState(() {});
-                },
+                onTextChange: (text) {},
               ),
             ),
           ],

@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TitleSelectInputExamplePage extends StatefulWidget {
-  final String _title;
 
-  TitleSelectInputExamplePage(this._title);
+  TitleSelectInputExamplePage();
 
   @override
   State<StatefulWidget> createState() {
@@ -29,12 +28,10 @@ class TitleSelectInputState extends State<TitleSelectInputExamplePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: widget._title,
-        ),
-        body: ListView(
-          children: <Widget>[
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Text(
@@ -225,6 +222,6 @@ class TitleSelectInputState extends State<TitleSelectInputExamplePage> {
               },
             ),
           ],
-        ));
+    );
   }
 }

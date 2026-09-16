@@ -2,9 +2,8 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
 class SwitchInputExamplePage extends StatefulWidget {
-  final String _title;
 
-  SwitchInputExamplePage(this._title);
+  SwitchInputExamplePage();
 
   @override
   State<StatefulWidget> createState() {
@@ -20,12 +19,10 @@ class SwitchInputExampleState extends State<SwitchInputExamplePage>{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: widget._title,
-        ),
-        body: ListView(
-          children: <Widget>[
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Text(
@@ -128,7 +125,7 @@ class SwitchInputExampleState extends State<SwitchInputExamplePage>{
               },
             ),
           ],
-        ));
+    );
   }
 
 }

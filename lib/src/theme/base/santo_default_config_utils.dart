@@ -51,8 +51,9 @@ class SantoDefaultConfigUtils {
   );
 
   /// 面板配置
+  /// margin 参照 DevOpsMobile constants.dart: iPageGap = 12
   static SantoPanelConfig defaultPanelConfig = SantoPanelConfig(
-    margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+    margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
     contentPadding: const EdgeInsets.all(10),
     backgroundColor: Colors.white,
     radius: 12,
@@ -63,7 +64,7 @@ class SantoDefaultConfigUtils {
     titleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     descriptionTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextSecondary,
@@ -73,72 +74,73 @@ class SantoDefaultConfigUtils {
   );
 
   /// 全局默认配置
+  /// 颜色/字号/间距对齐 DevOpsMobile lib/constants/constants.dart
   static SantoCommonConfig defaultCommonConfig = SantoCommonConfig(
     /// 主题色相关
     ///
-    /// 主题色
-    brandPrimary: const Color(0xFF0984F9),
+    /// 主题色 iPrimary
+    brandPrimary: const Color(0xFF1677FF),
 
     /// 主题色按下效果
-    brandPrimaryTap: const Color(0x190984F9),
+    brandPrimaryTap: const Color(0x191677FF),
 
-    /// 成功色
-    brandSuccess: const Color(0xFF00AE66),
+    /// 成功色 iSuccess
+    brandSuccess: const Color(0xFF52C41A),
 
-    /// 警告色
+    /// 警告色 iWarn
     brandWarning: const Color(0xFFFAAD14),
 
-    /// 失败色
-    brandError: const Color(0xFFFA3F3F),
+    /// 失败色 iError
+    brandError: const Color(0xFFFF4D4F),
 
-    /// 重要-多用于红点色
-    brandImportant: const Color(0xFFFA3F3F),
+    /// 重要-多用于红点色 iError
+    brandImportant: const Color(0xFFFF4D4F),
 
     /// 重要数值色
     brandImportantValue: const Color(0xFFFF5722),
 
-    /// 辅助色
-    brandAuxiliary: const Color(0xFF44C2FF),
+    /// 辅助色 iInfo
+    brandAuxiliary: const Color(0xFF2DB7F5),
 
     /// 文本色相关
     ///
-    /// 基础文字纯黑色
-    colorTextBase: const Color(0xFF222222),
+    /// 基础文字纯黑色 iTitleColor
+    colorTextBase: const Color(0xFF17233D),
 
-    /// 基础文字重要色
-    colorTextImportant: const Color(0xFF666666),
+    /// 基础文字重要色 iContentColor
+    colorTextImportant: const Color(0xFF515A6E),
 
     /// 基础文字-反色
     colorTextBaseInverse: const Color(0xFFFFFFFF),
 
-    /// 辅助文字色
-    colorTextSecondary: const Color(0xFF999999),
+    /// 辅助文字色 iSubTitleColor
+    colorTextSecondary: const Color(0xFF808695),
 
-    /// 失效或不可更改文字色
-    colorTextDisabled: const Color(0xFF999999),
+    /// 失效或不可更改文字色 iDisableColor
+    colorTextDisabled: const Color(0xFFC5C8CE),
 
-    /// 文本框提示暗文文字色
+    /// 文本框提示暗文文字色 iGray
     colorTextHint: const Color(0xFFCCCCCC),
 
-    /// 跟随主题色[brandPrimary]
-    colorLink: const Color(0xFF0984F9),
+    /// 跟随主题色[brandPrimary] iPrimary
+    colorLink: const Color(0xFF1677FF),
 
     /// 背景色相关
     ///
     /// 组件背景色
     fillBase: const Color(0xFFFFFFFF),
 
-    /// 页面背景色
-    fillBody: const Color(0xFFF8F8F8),
+    /// 页面背景色 iBackgroundColor
+    fillBody: const Color(0xFFF5F5F5),
 
     /// 遮罩背景
     fillMask: const Color(0x99000000),
 
-    /// 边框色
-    borderColorBase: const Color(0xFFF0F0F0),
+    /// 边框色 iBorderColor
+    borderColorBase: const Color(0xFFDCDEE2),
 
-    /// 分割线色
-    dividerColorBase: const Color(0xFFF0F0F0),
+    /// 分割线色 iDividerColor
+    dividerColorBase: const Color(0xFFE8EAEC),
 
     /// 文本字号
     ///
@@ -150,24 +152,24 @@ class SantoDefaultConfigUtils {
     fontSizeHeadLg: 22.0,
 
     /// 标题字体
-    /// 内容模块标题/一级标题
+    /// 内容模块标题/一级标题 iFontSizeLarger
     fontSizeHead: 18.0,
 
     /// 子标题字体
-    /// 标题/录入文字/大按钮文字/二级标题
+    /// 标题/录入文字/大按钮文字/二级标题 iFontSizeMiddle
     fontSizeSubHead: 16.0,
 
     /// 基础字体
-    /// 内容副文本/普通说明文字
+    /// 内容副文本/普通说明文字 iFontSize
     fontSizeBase: 14.0,
 
-    /// 辅助字体-普通
+    /// 辅助字体-普通 iFontSizeSmall
     fontSizeCaption: 12.0,
 
-    ///辅助字体-小
-    fontSizeCaptionSm: 11.0,
+    ///辅助字体-小 iFontSizeMini
+    fontSizeCaptionSm: 10.0,
 
-    /// 圆角尺寸
+    /// 圆角尺寸 iRadius，统一 12
     radiusXs: 12.0,
     radiusSm: 12.0,
     radiusMd: 12.0,
@@ -178,21 +180,21 @@ class SantoDefaultConfigUtils {
     borderWidthMd: 1.0,
     borderWidthLg: 2.0,
 
-    /// 水平间距
-    hSpacingXs: 8.0,
-    hSpacingSm: 12.0,
-    hSpacingMd: 16.0,
+    /// 水平间距 iDefaultGap 梯度 5/10/15/20/40
+    hSpacingXs: 5.0,
+    hSpacingSm: 10.0,
+    hSpacingMd: 15.0,
     hSpacingLg: 20.0,
-    hSpacingXl: 24.0,
-    hSpacingXxl: 42.0,
+    hSpacingXl: 20.0,
+    hSpacingXxl: 40.0,
 
-    /// 垂直间距
-    vSpacingXs: 4.0,
-    vSpacingSm: 8.0,
-    vSpacingMd: 12.0,
-    vSpacingLg: 14.0,
-    vSpacingXl: 16.0,
-    vSpacingXxl: 28.0,
+    /// 垂直间距 iDefaultGap 梯度 5/10/15/20/40
+    vSpacingXs: 5.0,
+    vSpacingSm: 10.0,
+    vSpacingMd: 15.0,
+    vSpacingLg: 20.0,
+    vSpacingXl: 20.0,
+    vSpacingXxl: 40.0,
 
     /// 图标大小
     iconSizeXxs: 8.0,
@@ -286,7 +288,7 @@ class SantoDefaultConfigUtils {
       right: defaultCommonConfig.hSpacingXxl,
     ),
     titleTextStyle: SantoTextStyle(
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       fontSize: defaultCommonConfig.fontSizeHead,
       color: defaultCommonConfig.colorTextBase,
     ),
@@ -326,12 +328,12 @@ class SantoDefaultConfigUtils {
     dividerPadding: EdgeInsets.only(top: 28.0),
     mainActionTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBaseInverse,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       fontSize: defaultCommonConfig.fontSizeSubHead,
     ),
     assistActionsTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       fontSize: defaultCommonConfig.fontSizeSubHead,
     ),
     mainActionBackgroundColor: defaultCommonConfig.brandPrimary,
@@ -346,12 +348,12 @@ class SantoDefaultConfigUtils {
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeHead,
       height: 25.0 / 18.0,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     titleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     subtitleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextSecondary,
@@ -379,7 +381,7 @@ class SantoDefaultConfigUtils {
     titleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     contentTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextHint,
@@ -409,7 +411,7 @@ class SantoDefaultConfigUtils {
       fontSize: defaultCommonConfig.fontSizeCaption,
     ),
     selectTagTextStyle: SantoTextStyle(
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: defaultCommonConfig.brandPrimary,
       fontSize: defaultCommonConfig.fontSizeCaption,
     ),
@@ -434,13 +436,13 @@ class SantoDefaultConfigUtils {
     ),
     titleStyle: SantoTextStyle(
       fontSize: SantoAppBarTheme.titleFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: SantoAppBarTheme.lightTextColor,
     ),
     actionsStyle: SantoTextStyle(
       color: SantoAppBarTheme.lightTextColor,
       fontSize: SantoAppBarTheme.actionFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     titleMaxLength: SantoAppBarTheme.maxLength,
     leftAndRightPadding: 20.0,
@@ -516,37 +518,37 @@ class SantoDefaultConfigUtils {
     itemTitleStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     itemTitleStyleLink: SantoTextStyle(
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: defaultCommonConfig.colorLink,
     ),
     itemTitleStyleAlert: SantoTextStyle(
       color: defaultCommonConfig.brandError,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     itemDescStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeCaption,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     itemDescStyleLink: SantoTextStyle(
       color: defaultCommonConfig.colorLink,
       fontSize: defaultCommonConfig.fontSizeCaption,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     itemDescStyleAlert: SantoTextStyle(
       color: defaultCommonConfig.brandError,
       fontSize: defaultCommonConfig.fontSizeCaption,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     cancelStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     titlePadding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 16.0),
     contentPadding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 12.0),
@@ -565,7 +567,7 @@ class SantoDefaultConfigUtils {
     titleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       decoration: TextDecoration.none,
     ),
     pickerHeight: pickerHeight,
@@ -579,7 +581,7 @@ class SantoDefaultConfigUtils {
     itemTextSelectedStyle: SantoTextStyle(
       color: defaultCommonConfig.brandPrimary,
       fontSize: defaultCommonConfig.fontSizeHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     cornerRadius: 8,
   );
@@ -606,7 +608,7 @@ class SantoDefaultConfigUtils {
     labelStyle: SantoTextStyle(
       color: defaultCommonConfig.brandPrimary,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     unselectedLabelStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
@@ -636,7 +638,7 @@ class SantoDefaultConfigUtils {
       fontSize: defaultCommonConfig.fontSizeBase,
     ),
     menuSelectedTextStyle: SantoTextStyle(
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       fontSize: defaultCommonConfig.fontSizeBase,
       color: defaultCommonConfig.brandPrimary,
     ),
@@ -647,7 +649,7 @@ class SantoDefaultConfigUtils {
     tagSelectedTextStyle: SantoTextStyle(
       color: defaultCommonConfig.brandPrimary,
       fontSize: defaultCommonConfig.fontSizeCaption,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     tagRadius: defaultCommonConfig.radiusSm,
     tagNormalBackgroundColor: defaultCommonConfig.fillBody,
@@ -656,7 +658,7 @@ class SantoDefaultConfigUtils {
     rangeTitleTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     hintTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextHint,
@@ -673,12 +675,12 @@ class SantoDefaultConfigUtils {
     itemSelectedTextStyle: SantoTextStyle(
       color: defaultCommonConfig.brandPrimary,
       fontSize: defaultCommonConfig.fontSizeBase,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     itemBoldTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeBase,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     lightSelectBgColor: Colors.white,
     lightNormalBgColor: Colors.white,
@@ -693,7 +695,7 @@ class SantoDefaultConfigUtils {
     titleForMoreTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeBase,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     optionTextStyle: SantoTextStyle(
       color: defaultCommonConfig.brandPrimary,
@@ -710,12 +712,12 @@ class SantoDefaultConfigUtils {
     flayerSelectedTextStyle: SantoTextStyle(
       color: defaultCommonConfig.brandPrimary,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     flayerBoldTextStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBase,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
   );
 
@@ -725,12 +727,12 @@ class SantoDefaultConfigUtils {
     appbarTitleStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBaseInverse,
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     appbarActionStyle: SantoTextStyle(
       color: SantoAppBarTheme.lightTextColor,
       fontSize: SantoAppBarTheme.actionFontSize,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     appbarBackgroundColor: Colors.black,
     appbarConfig: SantoAppBarConfig.dark(),
@@ -740,7 +742,7 @@ class SantoDefaultConfigUtils {
     ),
     tabBarLabelStyle: SantoTextStyle(
       fontSize: defaultCommonConfig.fontSizeSubHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: defaultCommonConfig.colorTextBaseInverse,
     ),
     tabBarBackgroundColor: Colors.black,
@@ -749,7 +751,7 @@ class SantoDefaultConfigUtils {
     titleStyle: SantoTextStyle(
       color: defaultCommonConfig.colorTextBaseInverse,
       fontSize: defaultCommonConfig.fontSizeHead,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     contentStyle: SantoTextStyle(
       color: Color(0xFFCCCCCC),
