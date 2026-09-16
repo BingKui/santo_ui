@@ -354,6 +354,69 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     );
   }
 
+
+  bool _hasBadge(SantoMenuBarItem item) =>
+      item.showBadge || item.badge != null;
+
+  /// 徽标控件:自定义徽标优先,否则红点
+  Widget _badgeWidget(SantoMenuBarItem item) {
+    return item.badge ??
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: _commonConfig.brandError,
+            shape: BoxShape.circle,
+          ),
+        );
+  }
+
+  /// 无图标时,把徽标挂在文字右上角
+  Widget _wrapBadgeOnLabel(Widget label, SantoMenuBarItem item) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        label,
+        Positioned(
+          right: -12,
+          top: -6,
+          child: _badgeWidget(item),
+        ),
+      ],
+    );
+  }
+
+  /// 图标文案区:图标优先带徽标,无图标时文字带徽标
+  List<Widget> _buildItemChildren(
+      SantoMenuBarItem item, Widget? icon, bool selected, Color color) {
+    Widget? label = item.text == null
+        ? null
+        : Text(
+            item.text!,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
+              color: color,
+            ),
+          );
+
+    if (icon != null) {
+      return [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 2),
+          child: _wrapBadge(icon, item, selected),
+        ),
+        if (label != null) label,
+      ];
+    }
+    if (label != null && _hasBadge(item)) {
+      label = _wrapBadgeOnLabel(label, item);
+    }
+    return [if (label != null) label];
+  }
+
   Widget _buildItem(BuildContext context, int index) {
     final item = widget.effectiveItems[index];
     final selected = index == _currentIndex;
@@ -373,24 +436,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       onTap: () => _select(index),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (icon != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 2),
-              child: _wrapBadge(icon, item, selected),
-            ),
-          if (item.text != null)
-            Text(
-              item.text!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                color: color,
-              ),
-            ),
-        ],
+        children: _buildItemChildren(item, icon, selected, color),
       ),
     );
   }
@@ -420,31 +466,14 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       onTap: () => _select(index),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (icon != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 2),
-              child: _wrapBadge(icon, item, selected),
-            ),
-          if (item.text != null)
-            Text(
-              item.text!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-                color: color,
-              ),
-            ),
-        ],
+        children: _buildItemChildren(item, icon, selected, color),
       ),
     );
   }
 
   /// 图标红点/徽标包装
   Widget _wrapBadge(Widget icon, SantoMenuBarItem item, bool selected) {
-    if (!item.showBadge && item.badge == null) return icon;
+    if (!_hasBadge(item)) return icon;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -452,15 +481,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
         Positioned(
           right: -6,
           top: -4,
-          child: item.badge ??
-              Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: _commonConfig.brandError,
-                  shape: BoxShape.circle,
-                ),
-              ),
+          child: _badgeWidget(item),
         ),
       ],
     );
