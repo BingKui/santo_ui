@@ -51,7 +51,7 @@ class _MenuBarFloatingExampleState extends State<MenuBarFloatingExample> {
               style: SantoMenuBarStyle.floating,
               gap: 12,
               currentIndex: _index,
-              onChange: (i) => setState(() => _index = i),
+              onChanged: (i) => setState(() => _index = i),
               showMoreMenu: true,
               moreMenu: SantoMenuBarMoreMenu(
                 title: '更多',

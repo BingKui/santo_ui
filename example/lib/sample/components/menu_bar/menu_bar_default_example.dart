@@ -36,7 +36,7 @@ class _MenuBarDefaultExampleState extends State<MenuBarDefaultExample> {
       ),
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
-        onChange: (i) => setState(() => _index = i),
+        onChanged: (i) => setState(() => _index = i),
         items: [
           SantoMenuBarItem(
             text: '首页',

@@ -17,7 +17,7 @@ void _dockedTests() {
       (tester) async {
     var changed = -1;
     await tester.pumpWidget(_wrap(SantoMenuBar(
-      onChange: (i) => changed = i,
+      onChanged: (i) => changed = i,
       items: const [
         SantoMenuBarItem(text: '首页'),
         SantoMenuBarItem(text: '我的'),

@@ -36,8 +36,6 @@ class _CheckboxExampleState extends State<CheckboxExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(
       backgroundColor: Colors.white,
-      title: 'Checkbox 多选框',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

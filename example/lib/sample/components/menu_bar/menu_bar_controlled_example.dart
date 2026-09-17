@@ -66,7 +66,7 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
       ),
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
-        onChange: (index) => setState(() => _index = index),
+        onChanged: (index) => setState(() => _index = index),
         showMoreMenu: true,
         moreMenu: SantoMenuBarMoreMenu(
           title: '更多',

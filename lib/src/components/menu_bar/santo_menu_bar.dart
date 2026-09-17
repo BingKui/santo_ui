@@ -75,7 +75,7 @@ class SantoMenuBar extends StatefulWidget {
   final int? currentIndex;
 
   /// 选中索引变化回调
-  final ValueChanged<int>? onChange;
+  final ValueChanged<int>? onChanged;
 
   /// 栏高度,默认 docked 56 / floating 64
   final double? barHeight;
@@ -124,7 +124,7 @@ class SantoMenuBar extends StatefulWidget {
     this.style = SantoMenuBarStyle.docked,
     required this.items,
     this.currentIndex,
-    this.onChange,
+    this.onChanged,
     this.barHeight,
     this.backgroundColor,
     this.topRadius = 12,
@@ -209,7 +209,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     }
     if (index == _currentIndex) return;
     setState(() => _currentIndex = index);
-    widget.onChange?.call(index);
+    widget.onChanged?.call(index);
     items[index].onTap?.call();
   }
 

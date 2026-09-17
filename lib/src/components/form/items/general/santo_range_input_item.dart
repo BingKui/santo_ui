@@ -235,7 +235,7 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                         child: Text(
                           widget.minUnit ?? "",
                           style: TextStyle(
-                            color: Color(0xFF101010),
+                            color: Color(0xFF17233D),
                             fontSize: SantoFonts.f16,
                           ),
                         )),
@@ -244,7 +244,7 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                         child: Text(
                           "—",
                           style: TextStyle(
-                            color: Color(0xFF101010),
+                            color: Color(0xFF17233D),
                             fontSize: SantoFonts.f16,
                           ),
                         )),
@@ -291,7 +291,7 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                         child: Text(
                           widget.maxUnit ?? "",
                           style: TextStyle(
-                            color: Color(0xFF101010),
+                            color: Color(0xFF17233D),
                             fontSize: SantoFonts.f16,
                           ),
                         )),

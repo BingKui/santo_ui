@@ -113,7 +113,7 @@ class SantoAppLayout extends StatefulWidget {
   final int? currentIndex;
 
   /// 菜单切换回调
-  final ValueChanged<int>? onChange;
+  final ValueChanged<int>? onChanged;
 
   /// 菜单栏样式,默认悬浮
   final SantoMenuBarStyle style;
@@ -150,7 +150,7 @@ class SantoAppLayout extends StatefulWidget {
     required this.items,
     this.moreMenu,
     this.currentIndex,
-    this.onChange,
+    this.onChanged,
     this.style = SantoMenuBarStyle.floating,
     this.barHeight,
     this.gap = 12,
@@ -198,7 +198,7 @@ class _SantoAppLayoutState extends State<SantoAppLayout> {
   void _handleChange(int index) {
     if (index == _currentIndex) return;
     setState(() => _currentIndex = index);
-    widget.onChange?.call(index);
+    widget.onChanged?.call(index);
   }
 
   /// 把"页面地址"配置转成 MenuBar 的更多菜单:点击后跳转命名路由
@@ -242,7 +242,7 @@ class _SantoAppLayoutState extends State<SantoAppLayout> {
           ),
       ],
       currentIndex: _currentIndex,
-      onChange: _handleChange,
+      onChanged: _handleChange,
       barHeight: widget.barHeight,
       gap: widget.gap,
       backgroundColor: widget.barBackgroundColor,

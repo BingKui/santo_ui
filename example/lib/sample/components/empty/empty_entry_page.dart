@@ -16,7 +16,6 @@ class EmptyEntryPage extends StatelessWidget {
       appBar: SantoAppBar(
           title: _title,
         ),
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
           children: <Widget>[

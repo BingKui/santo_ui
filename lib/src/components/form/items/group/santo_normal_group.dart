@@ -82,7 +82,7 @@ class SantoNormalFormGroupState extends State<SantoNormalFormGroup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 14),
+      padding: EdgeInsets.only(top: 15),
       color: widget.themeData!.backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,

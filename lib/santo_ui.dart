@@ -37,6 +37,7 @@ export 'src/components/menu_bar/santo_menu_bar.dart';
 //布局
 export 'src/components/layout/santo_app_layout.dart';
 export 'src/components/layout/santo_app_layout_scope.dart';
+export 'src/components/layout/santo_bottom_safe_area.dart';
 export 'src/components/layout/santo_page_layout.dart';
 
 //弹框

@@ -20,8 +20,6 @@ class _SliderExampleState extends State<SliderExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Slider 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

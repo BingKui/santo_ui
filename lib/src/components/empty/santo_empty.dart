@@ -103,7 +103,7 @@ class SantoEmpty extends StatelessWidget {
 
   /// 背景色设置
   /// 默认Colors.white
-  final Color bgColor;
+  final Color backgroundColor;
 
   /// 距顶部高度百分比
   final double topPercent;
@@ -123,7 +123,7 @@ class SantoEmpty extends StatelessWidget {
     this.action,
     this.enablePageTap = false,
     this.topOffset,
-    this.bgColor = Colors.white,
+    this.backgroundColor = Colors.white,
     this.isCenterVertical = false,
     this.topPercent = 0.08,
     this.themeData,
@@ -144,7 +144,7 @@ class SantoEmpty extends StatelessWidget {
           }
         },
         child: Container(
-          color: bgColor,
+          color: backgroundColor,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: isCenterVertical

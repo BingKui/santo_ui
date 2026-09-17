@@ -9,8 +9,6 @@ class ImageExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Image 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,21 +25,21 @@ class ImageExample extends StatelessWidget {
           ),
           SantoSection(
             title: '圆角图片',
-            description: 'borderRadius 传入半径值控制圆角，传入边长一半时呈圆形',
+            description: 'radius 传入半径值控制圆角，传入边长一半时呈圆形',
             child: Row(
               children: [
                 SantoImage(
                   imageUrl: _netImg,
                   width: 96,
                   height: 96,
-                  borderRadius: 12,
+                  radius: 12,
                 ),
                 SizedBox(width: 16),
                 SantoImage(
                   imageUrl: _netImg,
                   width: 96,
                   height: 96,
-                  borderRadius: 48,
+                  radius: 48,
                 ),
               ],
             ),
@@ -89,7 +87,7 @@ class ImageExample extends StatelessWidget {
               imageUrl: 'https://invalid.example.com/not_exist.png',
               width: 96,
               height: 96,
-              borderRadius: 12,
+              radius: 12,
             ),
           ),
           SantoSection(
@@ -99,7 +97,7 @@ class ImageExample extends StatelessWidget {
               imageUrl: 'https://invalid.example.com/not_exist.png',
               width: 96,
               height: 96,
-              borderRadius: 12,
+              radius: 12,
               errorWidget: Container(
                 width: 96,
                 height: 96,
@@ -127,7 +125,7 @@ class ImageExample extends StatelessWidget {
               width: 160,
               height: 120,
               isNetwork: false,
-              borderRadius: 12,
+              radius: 12,
             ),
           ),
         ],

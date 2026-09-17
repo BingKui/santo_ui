@@ -6,8 +6,6 @@ class PanelExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Panel 面板',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [
@@ -63,7 +61,7 @@ class PanelExample extends StatelessWidget {
               defaultValue: 'day',
               shape: SantoSegmentedShape.round,
               size: SantoSegmentedSize.small,
-              onChange: (value) => SantoToast.show('切换到 $value', context),
+              onChanged: (value) => SantoToast.show('切换到 $value', context),
             ),
             child: Text('titleExtra 可放 Segmented 等其他控件,位于标题与右侧操作区之间。'),
           ),

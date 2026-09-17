@@ -37,8 +37,6 @@ class _TextContentExampleState extends State<TextContentExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '单列展示左对齐',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,8 +25,6 @@ class _SantoTabExampleState extends State<SantoTabExample>
   Widget build(BuildContext context) {
     return WillPopScope(
         child: SantoPageLayout(
-          title: 'SantoTab示例',
-          padding: EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

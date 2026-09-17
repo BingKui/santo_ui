@@ -19,8 +19,6 @@ class _StepperExampleState extends State<StepperExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Stepper 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

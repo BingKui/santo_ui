@@ -13,8 +13,6 @@ class _KeyTextCloseContentExampleState
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '单列展示紧随',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

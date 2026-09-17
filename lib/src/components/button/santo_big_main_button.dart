@@ -41,7 +41,7 @@ class SantoBigMainButton extends StatelessWidget {
   final double? width;
 
   ///背景颜色
-  final Color? bgColor;
+  final Color? backgroundColor;
 
   /// button theme config
   final SantoButtonConfig? themeData;
@@ -54,7 +54,7 @@ class SantoBigMainButton extends StatelessWidget {
     this.isEnable = true,
     this.onTap,
     this.themeData,
-    this.bgColor,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -74,7 +74,7 @@ class SantoBigMainButton extends StatelessWidget {
       text: title ?? SantoIntl.of(context).localizedResource.confirm,
       borderRadius: BorderRadius.all(Radius.circular(defaultThemeConfig.bigButtonRadius)),
       fontSize: defaultThemeConfig.bigButtonFontSize,
-      backgroundColor: bgColor ?? defaultThemeConfig.commonConfig.brandPrimary,
+      backgroundColor: backgroundColor ?? defaultThemeConfig.commonConfig.brandPrimary,
       disableBackgroundColor: Color(0xFFCCCCCC),
       onTap: onTap,
       textColor: Colors.white,

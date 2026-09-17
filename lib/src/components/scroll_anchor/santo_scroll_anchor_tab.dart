@@ -161,7 +161,7 @@ class _SantoScrollAnchorTabWidgetState extends State<SantoAnchorTab>
         Widget itemWidget =
             Container(key: _bodyKeyList[i], child: widget.widgetIndexedBuilder!(context, i));
         itemWidget = MeasureSize(
-          onChange: (size) {
+          onChanged: (size) {
             _updateOffset();
           },
           child: itemWidget,

@@ -15,8 +15,6 @@ class TextContentEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: "文本内容示例",
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [

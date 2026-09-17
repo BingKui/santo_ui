@@ -149,7 +149,7 @@ class SantoMiddleInputDialog {
       },
       inputFormatters: tmpInputFormatters,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(8.0),
+        contentPadding: EdgeInsets.all(12),
         hintText: hintText,
         hintStyle: TextStyle(
             fontSize: 14,

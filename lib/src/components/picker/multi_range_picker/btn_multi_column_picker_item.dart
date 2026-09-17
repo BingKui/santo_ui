@@ -71,7 +71,7 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: _getItemFontWeight(),
                       decoration: TextDecoration.none,
                       color: _getItemTextColor()),

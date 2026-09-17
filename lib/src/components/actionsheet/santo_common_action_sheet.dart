@@ -62,10 +62,10 @@ class SantoCommonActionSheet extends StatelessWidget {
   /// title区域widget, 与 title 字段互斥，当 titleWidget 不为 null 时优先使用 titleWidget。
   final Widget? titleWidget;
 
-  /// Action 之间分割线颜色，默认值 Color(0xfff0f0f0)
+  /// Action 之间分割线颜色，默认值 Color(0xFFE8EAEC)
   final Color? separatorLineColor;
 
-  /// 取消按钮与 Action 之间的分割线的颜色，默认值 Color(0xfff8f8f8)
+  /// 取消按钮与 Action 之间的分割线的颜色，默认值 Color(0xFFF5F5F5)
   final Color spaceColor;
 
   /// 取消按钮文本
@@ -94,7 +94,7 @@ class SantoCommonActionSheet extends StatelessWidget {
     this.cancelTitle,
     this.clickCallBack,
     this.separatorLineColor,
-    this.spaceColor = const Color(0xfff8f8f8),
+    this.spaceColor = const Color(0xFFF5F5F5),
     this.maxTitleLines = 2,
     this.maxSheetHeight = 0,
     this.onItemClickInterceptor,

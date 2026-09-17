@@ -89,7 +89,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
     return Container(
       height: 82,
       color: Colors.white,
-      padding: EdgeInsets.only(top: 16, bottom: 16, left: 20, right: 20),
+      padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
       child: Row(
         children: rowChildren,
       ),
@@ -205,7 +205,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                               .getConfig()
                               .commonConfig
                               .brandPrimary
-                          : Color(0x99999999),
+                          : Color(0x99808695),
                       fontSize: 16),
                 ));
                 if (value.selectedCount == 0) _unfoldState = false;

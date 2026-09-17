@@ -33,9 +33,6 @@ class SantoSection extends StatelessWidget {
   /// 自定义描述控件,用于富文本/内联代码等场景
   final Widget? descriptionWidget;
 
-  /// 区块外边距,默认使用主题配置
-  final EdgeInsets? margin;
-
   /// 展示区内边距,默认使用主题配置
   final EdgeInsets? contentPadding;
 
@@ -56,7 +53,6 @@ class SantoSection extends StatelessWidget {
     this.titleSuffix,
     this.description,
     this.descriptionWidget,
-    this.margin,
     this.contentPadding,
     this.footerPadding,
     this.backgroundColor,
@@ -76,7 +72,6 @@ class SantoSection extends StatelessWidget {
     final hasTitle = titleWidget != null || title != null;
 
     return Container(
-      margin: margin ?? config.margin,
       decoration: BoxDecoration(
         color: backgroundColor ?? config.backgroundColor,
         // 圆角固定 12

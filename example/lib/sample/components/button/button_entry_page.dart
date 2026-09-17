@@ -14,8 +14,6 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '按钮',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: <Widget>[
@@ -388,13 +386,13 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
         ),
         SantoSection(
           title: '自定义颜色、圆角、字号',
-          description: '通过 bgColor 和 themeData 定制背景色、圆角、高度与字号等外观参数',
+          description: '通过 backgroundColor 和 themeData 定制背景色、圆角、高度与字号等外观参数',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SantoBigMainButton(
                 title: '登录',
-                bgColor: Colors.red,
+                backgroundColor: Colors.red,
                 themeData: SantoButtonConfig(
                   bigButtonRadius: 255,
                   bigButtonHeight: 50,
@@ -598,13 +596,13 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
         ),
         SantoSection(
           title: '正常案例 自定义颜色',
-          description: '通过 bgColor 传入 Colors.amber 替换默认背景色，其余样式保持不变',
+          description: '通过 backgroundColor 传入 Colors.amber 替换默认背景色，其余样式保持不变',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SantoSmallMainButton(
                 title: '提交',
-                bgColor: Colors.amber,
+                backgroundColor: Colors.amber,
               )
             ],
           ),

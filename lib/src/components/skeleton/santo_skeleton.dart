@@ -53,38 +53,38 @@ class SantoSkeletonObjStyle {
   final SantoSkeletonObjType type;
 
   /// 背景色,默认使用主题 fillBody
-  final Color? background;
+  final Color? backgroundColor;
 
   /// 圆角;null 时按形状取默认值(text 4 / circle 全圆 / rect 12)
-  final double? borderRadius;
+  final double? radius;
 
   const SantoSkeletonObjStyle({
     this.type = SantoSkeletonObjType.text,
-    this.background,
-    this.borderRadius,
+    this.backgroundColor,
+    this.radius,
   });
 
   /// 圆形占位
-  const SantoSkeletonObjStyle.circle({Color? background})
-      : this(type: SantoSkeletonObjType.circle, background: background);
+  const SantoSkeletonObjStyle.circle({Color? backgroundColor})
+      : this(type: SantoSkeletonObjType.circle, backgroundColor: backgroundColor);
 
   /// 矩形占位
-  const SantoSkeletonObjStyle.rect({Color? background, double? borderRadius})
+  const SantoSkeletonObjStyle.rect({Color? backgroundColor, double? radius})
       : this(
             type: SantoSkeletonObjType.rect,
-            background: background,
-            borderRadius: borderRadius);
+            backgroundColor: backgroundColor,
+            radius: radius);
 
   /// 空白占位
   const SantoSkeletonObjStyle.spacer()
       : this(type: SantoSkeletonObjType.spacer);
 
   /// 文本条占位
-  const SantoSkeletonObjStyle.text({Color? background, double? borderRadius})
+  const SantoSkeletonObjStyle.text({Color? backgroundColor, double? radius})
       : this(
             type: SantoSkeletonObjType.text,
-            background: background,
-            borderRadius: borderRadius);
+            backgroundColor: backgroundColor,
+            radius: radius);
 }
 
 /// 行列占位对象
@@ -316,13 +316,13 @@ class _SantoSkeletonState extends State<SantoSkeleton>
     double radius;
     switch (obj.style.type) {
       case SantoSkeletonObjType.circle:
-        radius = obj.style.borderRadius ?? 999;
+        radius = obj.style.radius ?? 999;
         break;
       case SantoSkeletonObjType.rect:
-        radius = obj.style.borderRadius ?? 12;
+        radius = obj.style.radius ?? 12;
         break;
       default:
-        radius = obj.style.borderRadius ?? 4;
+        radius = obj.style.radius ?? 4;
         break;
     }
     Widget block = Container(
@@ -330,7 +330,7 @@ class _SantoSkeletonState extends State<SantoSkeleton>
       height: obj.height,
       margin: obj.margin,
       decoration: BoxDecoration(
-        color: obj.style.background ?? _baseColor,
+        color: obj.style.backgroundColor ?? _baseColor,
         borderRadius: BorderRadius.circular(radius),
       ),
     );

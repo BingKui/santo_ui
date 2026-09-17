@@ -71,7 +71,7 @@ class _SantoSwitchButtonState extends State<SantoSwitchButton> {
       loading: widget.loading,
       size: widget.size,
       trackOnColor: widget.activeColor ?? _commonConfig.brandPrimary,
-      trackOffColor: widget.inactiveColor ?? const Color(0xFFFAFAFA),
+      trackOffColor: widget.inactiveColor ?? const Color(0xFFF5F5F5),
       thumbColor: widget.thumbColor ?? Colors.white,
       openText: widget.openText,
       closeText: widget.closeText,

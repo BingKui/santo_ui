@@ -5,8 +5,6 @@ class BubbleTextExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '气泡信息',
-      padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,20 +63,20 @@ class BubbleTextExample extends StatelessWidget {
           ),
           SantoSection(
             title: '自定义背景色和文字颜色',
-            description: 'bgColor 与 textColor 分别控制气泡背景和文字颜色',
+            description: 'backgroundColor 与 textColor 分别控制气泡背景和文字颜色',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SantoBubbleText(
                   placement: SantoBubblePlacement.end,
-                  bgColor: Color(0xFF1677FF),
+                  backgroundColor: Color(0xFF1677FF),
                   textColor: Colors.white,
                   text: '蓝色气泡，白色文字',
                 ),
                 SizedBox(height: 12),
                 SantoBubbleText(
                   placement: SantoBubblePlacement.start,
-                  bgColor: Color(0xFFE8F8EE),
+                  backgroundColor: Color(0xFFE8F8EE),
                   textColor: Color(0xFF07C160),
                   text: '绿色气泡，绿色文字',
                 ),

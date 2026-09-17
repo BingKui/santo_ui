@@ -35,15 +35,13 @@ class _SidebarExampleState extends State<SidebarExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Sidebar 侧边栏示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 场景1：基础侧边栏 + 右侧内容
           SantoSection(
             title: '基础侧边栏',
-            description: 'items 传入分类列表，onItemSelected 回调选中的下标与文本',
+            description: 'items 传入分类列表，onChanged 回调选中的下标与文本',
             child: Container(
               height: 300,
               child: Row(
@@ -51,7 +49,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                   SantoSidebar(
                     items: _foodCategories,
                     selectedIndex: _selectedIndex1,
-                    onItemSelected: (index, label) {
+                    onChanged: (index, label) {
                       setState(() {
                         _selectedIndex1 = index;
                       });
@@ -104,7 +102,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                     items: _foodCategories,
                     selectedIndex: _selectedIndex2,
                     width: 120,
-                    onItemSelected: (index, label) {
+                    onChanged: (index, label) {
                       setState(() {
                         _selectedIndex2 = index;
                       });
@@ -142,7 +140,7 @@ class _SidebarExampleState extends State<SidebarExample> {
                     selectedIndex: _selectedIndex3,
                     activeColor: Color(0xFFFF4D4F),
                     backgroundColor: Color(0xFFFFF0F0),
-                    onItemSelected: (index, label) {
+                    onChanged: (index, label) {
                       setState(() {
                         _selectedIndex3 = index;
                       });

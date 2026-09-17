@@ -135,7 +135,7 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           fontSize: 14,
-          color: Color(0xff999999),
+          color: Color(0xff808695),
         ),
       );
 

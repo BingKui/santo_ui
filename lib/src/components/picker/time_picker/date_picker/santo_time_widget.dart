@@ -24,7 +24,7 @@ class SantoTimeWidget extends StatefulWidget {
     this.pickerTitleConfig = SantoPickerTitleConfig.Default,
     this.minuteDivider = 1,
     this.onCancel,
-    this.onChange,
+    this.onChanged,
     this.onConfirm,
     this.themeData,
   }) : super(key: key) {
@@ -42,7 +42,7 @@ class SantoTimeWidget extends StatefulWidget {
   final String? dateFormat;
   final SantoPickerTitleConfig pickerTitleConfig;
   final DateVoidCallback? onCancel;
-  final DateValueCallback? onChange, onConfirm;
+  final DateValueCallback? onChanged, onConfirm;
   final int? minuteDivider;
 
   SantoPickerConfig? themeData;
@@ -168,11 +168,11 @@ class _SantoTimeWidgetState extends State<SantoTimeWidget> {
 
   /// notify selected time changed
   void _onSelectedChange() {
-    if (widget.onChange != null) {
+    if (widget.onChanged != null) {
       DateTime now = DateTime.now();
       DateTime dateTime = DateTime(
           now.year, now.month, now.day, _currHour, _currMinute, _currSecond);
-      widget.onChange!(dateTime, _calcSelectIndexList());
+      widget.onChanged!(dateTime, _calcSelectIndexList());
     }
   }
 

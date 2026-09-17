@@ -12,7 +12,6 @@ class FunnelChartExamplePage extends StatelessWidget {
       // Here we take the value from the MyHomePage object that was created by
       // the App.build method, and use it to set our appbar title.
       title: '漏斗图',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: FunnelChartExample(),
     );
@@ -443,7 +442,6 @@ class RadarChartExamplePage extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: '雷达图',
       ),
-      padding: EdgeInsets.zero,
       child: RadarChartExample(),
     );
   }

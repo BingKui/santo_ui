@@ -20,7 +20,7 @@ group:
 2. 内容较多的面板需要限制高度滚动展示。
 
 ### 使用规范
-- 一个页面中多个 Panel 建议间距一致(默认 margin 16)。
+- Panel 自身不带外边距,页面里的间距(左右留白、面板之间)由页面容器提供,例如 `SantoPageLayout` 的 padding(主题 `commonConfig.pageGap`)或 `SantoSpace`。
 - Header 不传 title/titleWidget/titleExtra/actions 时不渲染。
 - 标题后需要放其他控件(如 Segmented)时用 titleExtra,它会紧跟标题展示并优先保留完整宽度,标题空间不足时收缩让位。
 
@@ -35,7 +35,6 @@ group:
 | child | Widget | 内容区控件 | 是 | 无 |
 | contentPadding | bool | 内容区是否显示内边距 | 否 | true |
 | maxHeight | double? | 内容区最大高度,超出可滚动 | 否 | null(自适应) |
-| margin | EdgeInsets? | 面板外边距 | 否 | EdgeInsets.all(16) |
 | backgroundColor | Color? | 面板背景色 | 否 | 白色 |
 | radius | double? | 面板圆角 | 否 | 12 |
 | themeData | SantoPanelConfig? | 面板主题配置 | 否 | null |
@@ -59,4 +58,4 @@ SantoPanel(
 
 ## 五、主题定制
 
-通过 `SantoPanelConfig` 可定制:margin、contentPadding、backgroundColor、radius、headerHeight、titleTextStyle,注册方式见 [主题定制](../../theme)。
+通过 `SantoPanelConfig` 可定制:contentPadding、backgroundColor、radius、headerHeight、titleTextStyle,注册方式见 [主题定制](../../theme)。

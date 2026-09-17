@@ -404,7 +404,7 @@ class _SantoRefreshState extends State<SantoRefresh>
           '没有更多数据了',
           style: TextStyle(
             color: commonConfig.colorTextSecondary,
-            fontSize: 13,
+            fontSize: 12,
           ),
         ),
       );
@@ -432,7 +432,7 @@ class _SantoRefreshState extends State<SantoRefresh>
               '正在加载...',
               style: TextStyle(
                 color: commonConfig.colorTextSecondary,
-                fontSize: 13,
+                fontSize: 12,
               ),
             ),
           ],

@@ -19,8 +19,6 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '选择标签',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: Container(
         color: Colors.white,
@@ -28,13 +26,13 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
           children: <Widget>[
             SantoSection(
               title: '单选功能',
-              description: '默认单选，initTagState 设初始选中，onSelect 返回下标',
+              description: '默认单选，initTagState 设初始选中，onChanged 返回下标',
               child: SantoSelectTag(
                   tags: tagList,
                   spacing: 12,
                   tagWidth: _getTagWidth(context),
                   initTagState: [true],
-                  onSelect: (selectedIndexes) {
+                  onChanged: (selectedIndexes) {
                     SantoToast.show(selectedIndexes.toString(), context);
                   }),
             ),
@@ -47,7 +45,7 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                   spacing: 12,
                   tagWidth: _getTagWidth(context),
                   initTagState: [true, false, true],
-                  onSelect: (selectedIndexes) {
+                  onChanged: (selectedIndexes) {
                     SantoToast.show(selectedIndexes.toString(), context);
                   }),
             ),
@@ -66,7 +64,7 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                   isSingleSelect: false,
                   fixWidthMode: false,
                   spacing: 12,
-                  onSelect: (selectedIndexes) {
+                  onChanged: (selectedIndexes) {
                     SantoToast.show(selectedIndexes.toString(), context);
                   }),
             ),
@@ -77,7 +75,7 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                   tags: tagList,
                   tagWidth: _getTagWidth(context),
                   softWrap: false,
-                  onSelect: (index) {
+                  onChanged: (index) {
                     SantoToast.show("$index is selected", context);
                   }),
             ),
@@ -89,7 +87,7 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
                   tagWidth: _getTagWidth(context),
                   softWrap: false,
                   fixWidthMode: false,
-                  onSelect: (index) {
+                  onChanged: (index) {
                     SantoToast.show("$index is selected", context);
                   }),
             ),

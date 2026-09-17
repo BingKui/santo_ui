@@ -180,7 +180,7 @@ class SantoTextInputFormItemState extends State<SantoTextInputFormItem> {
                       Offstage(
                         offstage: (widget.prefixText == null),
                         child: Container(
-                            padding: EdgeInsets.only(left: 10, right: 10),
+                            padding: EdgeInsets.only(left: 20, right: 20),
                             child: Text(
                               widget.prefixText ?? "",
                               style: SantoFormUtil.getTitleTextStyle(
@@ -228,11 +228,11 @@ class SantoTextInputFormItemState extends State<SantoTextInputFormItem> {
                 Offstage(
                   offstage: (widget.unit == null),
                   child: Container(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(left: 20),
                       child: Text(
                         widget.unit ?? "",
                         style: TextStyle(
-                          color: Color(0xFF101010),
+                          color: Color(0xFF17233D),
                           fontSize: SantoFonts.f16,
                         ),
                       )),

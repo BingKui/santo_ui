@@ -16,7 +16,7 @@ typedef SantoSidebarItemSelectedCallback = void Function(int index, String label
 /// SantoSidebar(
 ///   items: ['推荐', '美食', '超市', '水果'],
 ///   selectedIndex: 0,
-///   onItemSelected: (index, label) {
+///   onChanged: (index, label) {
 ///     print('选中了: $label');
 ///   },
 /// )
@@ -29,7 +29,7 @@ class SantoSidebar extends StatelessWidget {
   final int selectedIndex;
 
   /// 选中回调
-  final SantoSidebarItemSelectedCallback? onItemSelected;
+  final SantoSidebarItemSelectedCallback? onChanged;
 
   /// 侧边栏宽度，默认 90
   final double width;
@@ -59,7 +59,7 @@ class SantoSidebar extends StatelessWidget {
     Key? key,
     required this.items,
     this.selectedIndex = 0,
-    this.onItemSelected,
+    this.onChanged,
     this.width = 90,
     this.activeColor,
     this.inactiveColor,
@@ -102,7 +102,7 @@ class SantoSidebar extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        onItemSelected?.call(index, label);
+        onChanged?.call(index, label);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(

@@ -114,7 +114,7 @@ void main() {
     var checkedIds = <String>[];
     await tester.pumpWidget(_wrap(SantoCheckboxGroup(
       checkedIds: const ['0'],
-      onChangeGroup: (ids) => checkedIds = ids,
+      onChanged: (ids) => checkedIds = ids,
       child: const Column(children: [
         SantoCheckbox(id: '0', title: '选项一'),
         SantoCheckbox(id: '1', title: '选项二'),

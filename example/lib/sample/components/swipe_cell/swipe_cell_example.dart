@@ -15,8 +15,6 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'SwipeCell 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

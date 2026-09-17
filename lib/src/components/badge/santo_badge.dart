@@ -111,7 +111,7 @@ class SantoBadge extends StatelessWidget {
           displayCount > maxCount ? '$maxCount+' : '$displayCount',
           style: TextStyle(
             color: txtColor,
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: FontWeight.w500,
             height: 1.2,
           ),

@@ -283,7 +283,7 @@ class SantoTextSelectFormItemState extends State<SantoTextSelectFormItem> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-                padding: EdgeInsets.only(left: 6, right: 7),
+                padding: EdgeInsets.only(left: 5, right: 5),
                 child: SantoFormUtil.getQuestionMarkIcon()),
             Container(
               constraints: BoxConstraints(

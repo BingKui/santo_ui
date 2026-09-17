@@ -27,7 +27,7 @@ class SantoDateWidget extends StatefulWidget {
     this.dateFormat = datetimePickerDateFormat,
     this.pickerTitleConfig = SantoPickerTitleConfig.Default,
     this.onCancel,
-    this.onChange,
+    this.onChanged,
     this.onConfirm,
     this.canPop = true,
     this.themeData,
@@ -47,7 +47,7 @@ class SantoDateWidget extends StatefulWidget {
   final SantoPickerTitleConfig pickerTitleConfig;
 
   final DateVoidCallback? onCancel;
-  final DateValueCallback? onChange, onConfirm;
+  final DateValueCallback? onChanged, onConfirm;
   final bool canPop;
   SantoPickerConfig? themeData;
 
@@ -155,9 +155,9 @@ class _SantoDateWidgetState extends State<SantoDateWidget> {
 
   /// notify selected date changed
   void _onSelectedChange() {
-    if (widget.onChange != null) {
+    if (widget.onChanged != null) {
       DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
-      widget.onChange!(dateTime, _calcSelectIndexList());
+      widget.onChanged!(dateTime, _calcSelectIndexList());
     }
   }
 

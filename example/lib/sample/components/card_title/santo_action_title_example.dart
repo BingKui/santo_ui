@@ -13,8 +13,6 @@ class _SantoActionTitleExampleState extends State<SantoActionTitleExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '箭头标题',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

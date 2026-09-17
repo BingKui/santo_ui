@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 ///
 /// 直接使用常量而非 [SantoDefaultConfigUtils.defaultSectionConfig] 回退,
 /// 避免 getter 在默认实例上自引用导致无限递归。
-const EdgeInsets kSantoSectionMargin = EdgeInsets.fromLTRB(12, 0, 12, 12);
 const EdgeInsets kSantoSectionContentPadding = EdgeInsets.all(10);
 const EdgeInsets kSantoSectionFooterPadding = EdgeInsets.fromLTRB(16, 12, 16, 16);
 const double kSantoSectionRadius = 12;
@@ -21,7 +20,6 @@ class SantoSectionConfig extends SantoBaseConfig {
   /// 遵循外部主题配置
   /// 默认值见 [SantoDefaultConfigUtils.defaultSectionConfig]
   SantoSectionConfig({
-    EdgeInsets? margin,
     EdgeInsets? contentPadding,
     EdgeInsets? footerPadding,
     Color? backgroundColor,
@@ -31,8 +29,7 @@ class SantoSectionConfig extends SantoBaseConfig {
     SantoTextStyle? titleTextStyle,
     SantoTextStyle? descriptionTextStyle,
     String configId = GLOBAL_CONFIG_ID,
-  })  : _margin = margin,
-        _contentPadding = contentPadding,
+  })  : _contentPadding = contentPadding,
         _footerPadding = footerPadding,
         _backgroundColor = backgroundColor,
         _borderColor = borderColor,
@@ -41,9 +38,6 @@ class SantoSectionConfig extends SantoBaseConfig {
         _titleTextStyle = titleTextStyle,
         _descriptionTextStyle = descriptionTextStyle,
         super(configId: configId);
-
-  /// 区块外边距
-  EdgeInsets? _margin;
 
   /// 展示区域内边距
   EdgeInsets? _contentPadding;
@@ -69,8 +63,6 @@ class SantoSectionConfig extends SantoBaseConfig {
 
   /// 描述信息样式
   SantoTextStyle? _descriptionTextStyle;
-
-  EdgeInsets get margin => _margin ?? kSantoSectionMargin;
 
   EdgeInsets get contentPadding =>
       _contentPadding ?? kSantoSectionContentPadding;
@@ -116,7 +108,6 @@ class SantoSectionConfig extends SantoBaseConfig {
         .getConfig(configId: configId)
         .sectionConfig;
 
-    _margin ??= sectionConfig._margin;
     _contentPadding ??= sectionConfig._contentPadding;
     _footerPadding ??= sectionConfig._footerPadding;
     _backgroundColor ??= sectionConfig._backgroundColor;
@@ -145,7 +136,6 @@ class SantoSectionConfig extends SantoBaseConfig {
   SantoSectionConfig merge(SantoSectionConfig? other) {
     if (other == null) return this;
     return copyWith(
-      margin: other._margin,
       contentPadding: other._contentPadding,
       footerPadding: other._footerPadding,
       backgroundColor: other._backgroundColor,
@@ -158,7 +148,6 @@ class SantoSectionConfig extends SantoBaseConfig {
   }
 
   SantoSectionConfig copyWith({
-    EdgeInsets? margin,
     EdgeInsets? contentPadding,
     EdgeInsets? footerPadding,
     Color? backgroundColor,
@@ -169,7 +158,6 @@ class SantoSectionConfig extends SantoBaseConfig {
     SantoTextStyle? descriptionTextStyle,
   }) {
     return SantoSectionConfig(
-      margin: margin ?? _margin,
       contentPadding: contentPadding ?? _contentPadding,
       footerPadding: footerPadding ?? _footerPadding,
       backgroundColor: backgroundColor ?? _backgroundColor,

@@ -154,7 +154,7 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
           runSpacing: 12,
           children: _sourceTags.map((choice) {
             return _getItem(choice,
-                EdgeInsets.only(left: 8, right: 8, top: 10.5, bottom: 11));
+                EdgeInsets.all(10));
           }).toList(),
         ));
   }

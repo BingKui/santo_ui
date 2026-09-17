@@ -52,7 +52,7 @@ class SantoRadioGroup extends SantoCheckboxGroup {
             showDivider: showDivider,
             divider: divider,
           ),
-          onChangeGroup: (ids) =>
+          onChanged: (ids) =>
               onRadioGroupChange?.call(ids.isEmpty ? null : ids.first),
           controller: controller,
           checkedIds: selectId != null ? [selectId] : null,
@@ -110,13 +110,17 @@ class SantoRadioGroup extends SantoCheckboxGroup {
       container = Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         alignment: Alignment.topLeft,
-        child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: directionalRadios
-              .map((e) => SizedBox(width: 106.3, height: 56, child: e))
-              .toList(),
-        ),
+        child: LayoutBuilder(builder: (context, constraints) {
+          // 三等分去掉两个列间距,避免按屏幕宽度硬编码卡片宽
+          final itemWidth = (constraints.maxWidth - 24) / 3;
+          return Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: directionalRadios
+                .map((e) => SizedBox(width: itemWidth, height: 56, child: e))
+                .toList(),
+          );
+        }),
       );
     } else {
       container = Container(

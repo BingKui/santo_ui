@@ -8,7 +8,7 @@ void main() {
   testWidgets('AppLayout 展示首个菜单对应页面并支持切换', (tester) async {
     var changed = -1;
     await tester.pumpWidget(_wrap(SantoAppLayout(
-      onChange: (i) => changed = i,
+      onChanged: (i) => changed = i,
       items: const <SantoAppLayoutItem>[
         SantoAppLayoutItem(text: '首页', page: Text('首页内容')),
         SantoAppLayoutItem(text: '发现', page: Text('发现内容')),

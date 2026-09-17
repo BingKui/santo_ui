@@ -49,7 +49,7 @@ class SantoAvatar extends StatelessWidget {
   final Color? borderColor;
 
   /// 圆角大小，仅在 [shape] 为 [SantoAvatarShape.round] 时生效，默认 4
-  final double borderRadius;
+  final double radius;
 
   /// 文字样式
   final TextStyle? textStyle;
@@ -67,7 +67,7 @@ class SantoAvatar extends StatelessWidget {
     this.shape = SantoAvatarShape.circle,
     this.backgroundColor,
     this.borderColor,
-    this.borderRadius = 12,
+    this.radius = 12,
     this.textStyle,
     this.iconColor,
   }) : super(key: key);
@@ -82,7 +82,7 @@ class SantoAvatar extends StatelessWidget {
     final ShapeBorder shapeBorder = shape == SantoAvatarShape.circle
         ? CircleBorder(side: BorderSide(color: borderColor ?? Colors.transparent))
         : RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(radius),
             side: BorderSide(color: borderColor ?? Colors.transparent),
           );
 
@@ -91,7 +91,7 @@ class SantoAvatar extends StatelessWidget {
       content = ClipPath(
         clipper: shape == SantoAvatarShape.circle
             ? _CircleClipper()
-            : _RoundRectClipper(borderRadius),
+            : _RoundRectClipper(radius),
         child: Image.network(
           imageUrl!,
           width: size,
@@ -145,7 +145,7 @@ class SantoAvatar extends StatelessWidget {
             ? BoxShape.circle
             : BoxShape.rectangle,
         borderRadius: shape == SantoAvatarShape.round
-            ? BorderRadius.circular(borderRadius)
+            ? BorderRadius.circular(radius)
             : null,
         border: borderColor != null
             ? Border.all(color: borderColor!)
@@ -178,16 +178,16 @@ class _CircleClipper extends CustomClipper<Path> {
 
 /// 圆角矩形裁剪器
 class _RoundRectClipper extends CustomClipper<Path> {
-  final double borderRadius;
+  final double radius;
 
-  _RoundRectClipper(this.borderRadius);
+  _RoundRectClipper(this.radius);
 
   @override
   Path getClip(Size size) {
     return Path()
       ..addRRect(RRect.fromRectAndRadius(
         Rect.fromLTWH(0, 0, size.width, size.height),
-        Radius.circular(borderRadius),
+        Radius.circular(radius),
       ));
   }
 

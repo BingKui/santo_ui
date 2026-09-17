@@ -20,8 +20,6 @@ class _RefreshExampleState extends State<RefreshExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Refresh 下拉刷新示例',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

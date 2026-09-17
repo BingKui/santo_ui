@@ -27,7 +27,7 @@ class SantoDateRangeSideWidget extends StatefulWidget {
   final String? dateFormat;
 
   /// 时间选择变化时回调
-  final DateRangeSideValueCallback? onChange;
+  final DateRangeSideValueCallback? onChanged;
 
   /// 当前默认选择的时间变化时对外部回调，外部监听该事件同步修改默认初始选中的时间
   final DateRangeSideValueCallback? onInitSelectChange;
@@ -42,7 +42,7 @@ class SantoDateRangeSideWidget extends StatefulWidget {
     this.initialStartDateTime,
     this.dateFormat = datetimeRangePickerDateFormat,
     this.onInitSelectChange,
-    this.onChange,
+    this.onChanged,
   }) : super(key: key) {
     DateTime minTime = minDateTime ?? DateTime.parse(datePickerMinDatetime);
     DateTime maxTime = maxDateTime ?? DateTime.parse(datePickerMaxDatetime);
@@ -147,9 +147,9 @@ class _DatePickerWidgetState extends State<SantoDateRangeSideWidget> {
 
   /// notify selected date changed
   void _onSelectedChange() {
-    if (widget.onChange != null) {
+    if (widget.onChanged != null) {
       DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
-      widget.onChange!(dateTime, _calcSelectIndexList());
+      widget.onChanged!(dateTime, _calcSelectIndexList());
     }
   }
 

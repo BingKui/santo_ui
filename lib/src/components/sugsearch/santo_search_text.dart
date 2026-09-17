@@ -241,7 +241,7 @@ class _SearchTextState extends State<SantoSearchText> {
                                   fontSize: 16,
                                   height: 1,
                                   textBaseline: TextBaseline.alphabetic,
-                                  color: Color(0xff999999),
+                                  color: Color(0xff808695),
                                 ),
                             hintText: widget.hintText ?? SantoIntl.of(context).localizedResource.inputSearchTip,
                             counterText: '',

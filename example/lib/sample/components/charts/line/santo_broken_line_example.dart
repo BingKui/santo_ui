@@ -22,8 +22,6 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '折线',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: SafeArea(
         child: SingleChildScrollView(

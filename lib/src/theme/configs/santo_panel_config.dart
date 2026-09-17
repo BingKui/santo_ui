@@ -10,7 +10,6 @@ class SantoPanelConfig extends SantoBaseConfig {
   /// 遵循外部主题配置
   /// 默认为 [SantoDefaultConfigUtils.defaultPanelConfig]
   SantoPanelConfig({
-    EdgeInsets? margin,
     EdgeInsets? contentPadding,
     Color? backgroundColor,
     double? radius,
@@ -21,8 +20,7 @@ class SantoPanelConfig extends SantoBaseConfig {
     double? borderWidth,
     bool? showHeaderDivider,
     String configId = GLOBAL_CONFIG_ID,
-  })  : _margin = margin,
-        _contentPadding = contentPadding,
+  })  : _contentPadding = contentPadding,
         _backgroundColor = backgroundColor,
         _radius = radius,
         _headerHeight = headerHeight,
@@ -32,9 +30,6 @@ class SantoPanelConfig extends SantoBaseConfig {
         _borderWidth = borderWidth,
         _showHeaderDivider = showHeaderDivider,
         super(configId: configId);
-
-  /// 面板外边距
-  EdgeInsets? _margin;
 
   /// 内容区域内边距,可在组件内通过 contentPadding 参数关闭
   EdgeInsets? _contentPadding;
@@ -62,9 +57,6 @@ class SantoPanelConfig extends SantoBaseConfig {
 
   /// 是否显示 Header 底部分割线
   bool? _showHeaderDivider;
-
-  EdgeInsets get margin =>
-      _margin ?? SantoDefaultConfigUtils.defaultPanelConfig.margin;
 
   EdgeInsets get contentPadding =>
       _contentPadding ??
@@ -112,7 +104,6 @@ class SantoPanelConfig extends SantoBaseConfig {
         .getConfig(configId: configId)
         .panelConfig;
 
-    _margin ??= panelConfig._margin;
     _contentPadding ??= panelConfig._contentPadding;
     _backgroundColor ??= panelConfig._backgroundColor;
     _radius ??= panelConfig._radius;
@@ -141,7 +132,6 @@ class SantoPanelConfig extends SantoBaseConfig {
   SantoPanelConfig merge(SantoPanelConfig? other) {
     if (other == null) return this;
     return copyWith(
-      margin: other._margin,
       contentPadding: other._contentPadding,
       backgroundColor: other._backgroundColor,
       radius: other._radius,
@@ -155,7 +145,6 @@ class SantoPanelConfig extends SantoBaseConfig {
   }
 
   SantoPanelConfig copyWith({
-    EdgeInsets? margin,
     EdgeInsets? contentPadding,
     Color? backgroundColor,
     double? radius,
@@ -167,7 +156,6 @@ class SantoPanelConfig extends SantoBaseConfig {
     bool? showHeaderDivider,
   }) {
     return SantoPanelConfig(
-      margin: margin ?? _margin,
       contentPadding: contentPadding ?? _contentPadding,
       backgroundColor: backgroundColor ?? _backgroundColor,
       radius: radius ?? _radius,

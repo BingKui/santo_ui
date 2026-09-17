@@ -12,8 +12,6 @@ class _BorderTagExampleState extends State<BorderTagExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: "带边框的标签",
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

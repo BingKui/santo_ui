@@ -11,8 +11,6 @@ class _ResultExampleState extends State<ResultExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Result 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

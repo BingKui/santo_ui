@@ -38,7 +38,6 @@ class AllFormItemStyleExamplePage extends StatelessWidget {
         appBar: SantoAppBar(
           title: _title,
         ),
-        padding: EdgeInsets.zero,
         scrollable: false,
         child: this.getBodyWidget(context));
   }

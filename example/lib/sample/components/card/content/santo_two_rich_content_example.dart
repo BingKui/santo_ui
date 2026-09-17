@@ -14,8 +14,6 @@ class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample>
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '两列复杂文本',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

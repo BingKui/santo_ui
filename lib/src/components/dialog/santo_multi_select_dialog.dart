@@ -47,7 +47,7 @@ class SantoMultiSelectDialog extends Dialog {
   final String? submitText;
 
   /// 点击操作按钮
-  final SantoMultiSelectDialogClickSubmitCallback? onSubmitClick;
+  final SantoMultiSelectDialogClickSubmitCallback? onSubmit;
 
   /// 点击选项操作 可供埋点需求用
   final SantoMultiSelectDialogOnItemClickCallback? onItemClick;
@@ -74,7 +74,7 @@ class SantoMultiSelectDialog extends Dialog {
     this.isCustomFollowScroll = true,
     this.submitText,
     this.submitBgColor,
-    this.onSubmitClick,
+    this.onSubmit,
     this.onItemClick,
     this.isShowOperateWidget = true,
   });
@@ -90,7 +90,7 @@ class SantoMultiSelectDialog extends Dialog {
         isCustomFollowScroll: isCustomFollowScroll,
         conditions: conditions,
         submitText: submitText ?? SantoIntl.of(context).localizedResource.submit,
-        onSubmitClick: onSubmitClick,
+        onSubmit: onSubmit,
         onItemClick: onItemClick,
         submitBgColor: submitBgColor ??
             SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary,
@@ -118,7 +118,7 @@ class MultiSelect extends StatefulWidget {
   final String? submitText;
 
   /// 点击操作按钮
-  final SantoMultiSelectDialogClickSubmitCallback? onSubmitClick;
+  final SantoMultiSelectDialogClickSubmitCallback? onSubmit;
 
   /// 点击选项操作
   final SantoMultiSelectDialogOnItemClickCallback? onItemClick;
@@ -145,7 +145,7 @@ class MultiSelect extends StatefulWidget {
     required this.conditions,
     this.submitText,
     this.submitBgColor,
-    this.onSubmitClick,
+    this.onSubmit,
     this.onItemClick,
     this.isShowOperateWidget = true,
   });
@@ -213,13 +213,13 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
       isShowOperateWidget: widget.isShowOperateWidget,
       onSubmit: () {
         List<MultiSelectItem> tempList = [];
-        if (widget.onSubmitClick != null) {
+        if (widget.onSubmit != null) {
           for (int i = 0; i < widget.conditions.length; i++) {
             if (widget.conditions[i].isChecked) {
               tempList.add(widget.conditions[i]);
             }
           }
-          if (widget.onSubmitClick!(tempList)) Navigator.of(context).pop();
+          if (widget.onSubmit!(tempList)) Navigator.of(context).pop();
         }
       },
     );

@@ -22,7 +22,7 @@ class SantoTimeRangeSideWidget extends StatefulWidget {
   final String? dateFormat;
 
   /// 时间选择变化时回调
-  final DateRangeSideValueCallback? onChange;
+  final DateRangeSideValueCallback? onChanged;
 
   /// 分钟的展示间隔
   final int? minuteDivider;
@@ -40,7 +40,7 @@ class SantoTimeRangeSideWidget extends StatefulWidget {
     this.initialStartDateTime,
     this.dateFormat = datetimeRangePickerTimeFormat,
     this.minuteDivider = 1,
-    this.onChange,
+    this.onChanged,
     this.onInitSelectChange,
   }) : super(key: key) {
     DateTime minTime = minDateTime ?? DateTime.parse(datePickerMinDatetime);
@@ -164,11 +164,11 @@ class _TimePickerWidgetState extends State<SantoTimeRangeSideWidget> {
 
   /// notify selected time changed
   void _onSelectedChange() {
-    if (widget.onChange != null) {
+    if (widget.onChanged != null) {
       DateTime now = DateTime.now();
       DateTime startDateTime = DateTime(
           now.year, now.month, now.day, _currStartHour, _currStartMinute);
-      widget.onChange!(startDateTime, _calcStartSelectIndexList());
+      widget.onChanged!(startDateTime, _calcStartSelectIndexList());
     }
   }
 

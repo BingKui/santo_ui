@@ -99,7 +99,7 @@ class SantoCell extends StatelessWidget {
           Container(
             constraints: BoxConstraints(minHeight: minHeight),
             padding: padding ??
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             child: Row(
               children: [
                 // 左侧图标
@@ -136,7 +136,7 @@ class SantoCell extends StatelessWidget {
                           description!,
                           style: descriptionStyle ??
                               TextStyle(
-                                fontSize: 13,
+                                fontSize: 12,
                                 color: commonConfig.colorTextSecondary,
                               ),
                         ),
@@ -234,7 +234,7 @@ class SantoCellGroup extends StatelessWidget {
           if (title != null)
             Padding(
               padding:
-                  const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  const EdgeInsets.fromLTRB(12, 16, 12, 8),
               child: Text(
                 title!,
                 style: titleStyle ??

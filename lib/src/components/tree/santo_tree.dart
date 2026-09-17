@@ -221,7 +221,7 @@ class _SantoTreeState extends State<SantoTree> {
                   border: Border.all(
                     color: isSelected
                         ? _activeColor
-                        : const Color(0xFFDDDDDD),
+                        : const Color(0xFFDCDEE2),
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(12),

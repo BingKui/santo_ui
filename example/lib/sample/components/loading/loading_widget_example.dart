@@ -5,8 +5,6 @@ class LoadingExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Loading案例',
-      padding: EdgeInsets.zero,
       child: Center(
           child: Column(children: [
         SantoSection(

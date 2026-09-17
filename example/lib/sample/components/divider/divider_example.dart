@@ -12,8 +12,6 @@ class _DividerExampleState extends State<DividerExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Divider 分割线',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

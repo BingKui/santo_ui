@@ -278,7 +278,7 @@ class _SantoRangeSelectionGroupWidgetState
                 tagFilterList: tagFilterList,
                 initFocusedIndex: _getInitFocusedIndex(subFilterList),
                 themeData: widget.themeData,
-                onSelect: (index, isSelected) {
+                onChanged: (index, isSelected) {
                   setState(() {
                     _setFirstIndex(_tabController.index);
                     _setSecondIndex(index);

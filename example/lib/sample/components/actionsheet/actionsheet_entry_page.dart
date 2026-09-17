@@ -24,7 +24,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
       appBar: SantoAppBar(
           title: widget.title,
         ),
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
           children: <Widget>[

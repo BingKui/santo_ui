@@ -171,7 +171,7 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
               },
               child: Container(
                 padding:
-                    EdgeInsets.only(left: 20, top: 14, bottom: 14, right: 20),
+                    EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,

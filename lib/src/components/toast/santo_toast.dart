@@ -54,7 +54,7 @@ class SantoToast {
     String text,
     BuildContext context, {
     Duration? duration,
-    Color? background,
+    Color? backgroundColor,
     TextStyle textStyle = const TextStyle(fontSize: 16, color: Colors.white),
     double? radius,
     Image? preIcon,
@@ -81,7 +81,7 @@ class SantoToast {
       builder: (context) {
         return _ToastWidget(
           widget: ToastChild(
-            background: background,
+            backgroundColor: backgroundColor,
             radius: radius,
             msg: text,
             leading: preIcon,
@@ -160,7 +160,7 @@ class ToastChild extends StatelessWidget {
     Key? key,
     required this.msg,
     required this.verticalOffset,
-    this.background,
+    this.backgroundColor,
     this.radius,
     this.leading,
     this.gravity,
@@ -193,7 +193,7 @@ class ToastChild extends StatelessWidget {
 
   final String msg;
   final double verticalOffset;
-  final Color? background;
+  final Color? backgroundColor;
   final double? radius;
   final Image? leading;
   final SantoToastGravity? gravity;
@@ -219,11 +219,11 @@ class ToastChild extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Container(
           decoration: BoxDecoration(
-            color: background ?? const Color(0xFF17233D),
+            color: backgroundColor ?? const Color(0xFF17233D),
             borderRadius: BorderRadius.circular(radius ?? 12),
           ),
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.fromLTRB(18, 10, 18, 10),
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           child: RichText(
             text: TextSpan(children: <InlineSpan>[
               leadingSpan,

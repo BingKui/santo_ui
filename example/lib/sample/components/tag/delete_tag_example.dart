@@ -19,8 +19,6 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '删除标签',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: Container(
         color: Colors.white,

@@ -14,7 +14,7 @@ class SantoSubSwitchTitle extends StatefulWidget {
   final int defaultSelectIndex;
 
   /// 选中回调
-  final void Function(int index)? onSelect;
+  final void Function(int index)? onChanged;
 
   /// 二级标题的padding
   /// 默认 EdgeInsets.only(right: 20)
@@ -27,7 +27,7 @@ class SantoSubSwitchTitle extends StatefulWidget {
     Key? key,
     required this.nameList,
     this.defaultSelectIndex = 0,
-    this.onSelect,
+    this.onChanged,
     this.padding,
     this.controller,
   }) : super(key: key);
@@ -113,8 +113,8 @@ class _SantoSubSwitchTitleState extends State<SantoSubSwitchTitle>
         fontSize: 14,
       ),
       onTap: (index) {
-        if (null != widget.onSelect) {
-          widget.onSelect!(index);
+        if (null != widget.onChanged) {
+          widget.onChanged!(index);
         }
       },
     );

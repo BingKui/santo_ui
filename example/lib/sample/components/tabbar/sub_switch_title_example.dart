@@ -25,8 +25,6 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '二级标题',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,14 +43,14 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 SizedBox(height: 12),
                 SantoSubSwitchTitle(
                   nameList: ['二级标题'],
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
                 SizedBox(height: 12),
                 SantoSubSwitchTitle(
                   nameList: ['二级标题1', '二级标题2'],
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -60,7 +58,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 SantoSubSwitchTitle(
                   nameList: ['二级标题1', '二级标题2', '二级标题3'],
                   defaultSelectIndex: 0,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -80,7 +78,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 '二级标题6'
               ],
               defaultSelectIndex: 0,
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -102,7 +100,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                   ],
                   defaultSelectIndex: 0,
                   controller: _controller,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -128,7 +126,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 '二级标题3',
               ],
               defaultSelectIndex: 0,
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -143,7 +141,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                 '3',
               ],
               defaultSelectIndex: 0,
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -160,7 +158,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                     '3',
                   ],
                   defaultSelectIndex: 0,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -172,7 +170,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
                     '3',
                   ],
                   defaultSelectIndex: 0,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),

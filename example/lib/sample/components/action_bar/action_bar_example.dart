@@ -9,8 +9,6 @@ class ActionBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'ActionBar 操作栏',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [

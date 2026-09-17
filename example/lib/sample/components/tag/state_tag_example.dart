@@ -12,8 +12,6 @@ class _StateTagExampleState extends State<StateTagExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '状态角标签',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

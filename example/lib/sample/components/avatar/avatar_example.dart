@@ -6,8 +6,6 @@ class AvatarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Avatar 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -67,7 +65,7 @@ class AvatarExample extends StatelessWidget {
           ),
           SantoSection(
             title: '不同形状',
-            description: 'shape 切换圆形或圆角方形，borderRadius 调圆角',
+            description: 'shape 切换圆形或圆角方形，radius 调圆角',
             child: Row(
               children: [
                 SantoAvatar(text: '圆', size: 40),
@@ -76,7 +74,7 @@ class AvatarExample extends StatelessWidget {
                   text: '方',
                   size: 40,
                   shape: SantoAvatarShape.round,
-                  borderRadius: 8,
+                  radius: 8,
                 ),
               ],
             ),

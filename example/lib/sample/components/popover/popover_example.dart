@@ -19,8 +19,6 @@ class _PopoverExampleState extends State<PopoverExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Popover 气泡弹出框示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

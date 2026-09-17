@@ -30,7 +30,7 @@ class SantoSwipeCellAction {
   final double width;
 
   /// 按钮圆角
-  final double borderRadius;
+  final double radius;
 
   const SantoSwipeCellAction({
     required this.label,
@@ -39,7 +39,7 @@ class SantoSwipeCellAction {
     this.textColor,
     this.child,
     this.width = 72,
-    this.borderRadius = 12,
+    this.radius = 12,
   });
 }
 
@@ -64,7 +64,7 @@ class SantoSwipeCellPanel {
 /// * 禁用滑动 [disabled]
 /// * 默认展开 [opened]
 /// * 组内互斥 [groupTag]:同一组中一个打开时自动关闭其他,点击内容关闭全组
-/// * 展开状态回调 [onChange]
+/// * 展开状态回调 [onChanged]
 ///
 /// 使用示例:
 /// ```dart
@@ -99,7 +99,7 @@ class SantoSwipeCell extends StatefulWidget {
   final List<bool> opened;
 
   /// 展开/收起状态变化回调
-  final void Function(SantoSwipeDirection direction, bool open)? onChange;
+  final void Function(SantoSwipeDirection direction, bool open)? onChanged;
 
   /// 组标签:配置后同组单元格互斥展开,点击时关闭全组
   final Object? groupTag;
@@ -120,7 +120,7 @@ class SantoSwipeCell extends StatefulWidget {
     this.right,
     this.disabled = false,
     this.opened = const [false, false],
-    this.onChange,
+    this.onChanged,
     this.groupTag,
     this.closeWhenTapped = true,
     this.duration = const Duration(milliseconds: 200),
@@ -204,7 +204,7 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
     if (_openDirection == null && _dragOffset == 0) return;
     _animateTo(0);
     if (notify && _openDirection != null) {
-      widget.onChange?.call(_openDirection!, false);
+      widget.onChanged?.call(_openDirection!, false);
     }
     _openDirection = null;
   }
@@ -214,7 +214,7 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
     _closeGroup();
     _animateTo(_leftExtent);
     _openDirection = SantoSwipeDirection.left;
-    widget.onChange?.call(SantoSwipeDirection.left, true);
+    widget.onChanged?.call(SantoSwipeDirection.left, true);
   }
 
   void _openRight() {
@@ -222,7 +222,7 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
     _closeGroup();
     _animateTo(-_rightExtent);
     _openDirection = SantoSwipeDirection.right;
-    widget.onChange?.call(SantoSwipeDirection.right, true);
+    widget.onChanged?.call(SantoSwipeDirection.right, true);
   }
 
   /// 关闭同组其他已展开的单元格
@@ -275,7 +275,7 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
     SantoSwipeDirection direction,
   ) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(action.borderRadius),
+      borderRadius: BorderRadius.circular(action.radius),
       child: SizedBox(
         width: action.width,
         child: Material(

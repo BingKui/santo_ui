@@ -153,7 +153,7 @@ class _SantoSelectTagsWithInputPickerWidgetState
     super.build(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color(0x33999999),
+      backgroundColor: Color(0x33808695),
       body: Container(
         alignment: Alignment.bottomCenter,
         child: SantoPickerClipRRect(
@@ -304,7 +304,7 @@ class _SantoSelectTagsWithInputPickerWidgetState
             .commonConfig
             .colorTextImportant;
     Color tagBackgroundColor =
-        widget.tagPickerBean?.tagBackgroundColor ?? Color(0xffF8F8F8);
+        widget.tagPickerBean?.tagBackgroundColor ?? Color(0xffF5F5F5);
     Color selectedTagBackgroundColor =
         widget.tagPickerBean?.selectedTagBackgroundColor ??
             SantoThemeConfigurator.instance
@@ -376,7 +376,7 @@ class _SantoSelectTagsWithInputPickerWidgetState
         margin: EdgeInsets.only(left: 20, right: 20),
         padding: EdgeInsets.only(left: 20, right: 20, bottom: 16),
         decoration: BoxDecoration(
-          color: Color(0xfff8f8f8),
+          color: Color(0xFFF5F5F5),
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextField(

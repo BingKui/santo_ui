@@ -10,8 +10,6 @@ class StepExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: "步骤条示例",
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [

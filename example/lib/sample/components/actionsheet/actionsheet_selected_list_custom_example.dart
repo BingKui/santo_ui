@@ -43,8 +43,6 @@ class SelectedListActionSheetCustomExamplePageState
         return true;
       },
       child: SantoPageLayout(
-        title: '已选菜单列表',
-        padding: EdgeInsets.zero,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[

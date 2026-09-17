@@ -53,9 +53,7 @@ class SantoDefaultConfigUtils {
   );
 
   /// 面板配置
-  /// margin 参照 DevOpsMobile constants.dart: iPageGap = 12
   static SantoPanelConfig defaultPanelConfig = SantoPanelConfig(
-    margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
     contentPadding: const EdgeInsets.all(10),
     backgroundColor: Colors.white,
     radius: 12,
@@ -77,7 +75,6 @@ class SantoDefaultConfigUtils {
 
   /// 区块配置
   static SantoSectionConfig defaultSectionConfig = SantoSectionConfig(
-    margin: kSantoSectionMargin,
     contentPadding: kSantoSectionContentPadding,
     footerPadding: kSantoSectionFooterPadding,
     backgroundColor: Colors.white,
@@ -309,7 +306,7 @@ class SantoDefaultConfigUtils {
       right: defaultCommonConfig.hSpacingXxl,
     ),
     titlePaddingLg: EdgeInsets.only(
-      top: 28.0,
+      top: 25.0,
       left: defaultCommonConfig.hSpacingXxl,
       right: defaultCommonConfig.hSpacingXxl,
     ),
@@ -325,7 +322,7 @@ class SantoDefaultConfigUtils {
       right: defaultCommonConfig.hSpacingXl,
     ),
     contentPaddingLg: EdgeInsets.only(
-      top: 28.0,
+      top: 25.0,
       left: defaultCommonConfig.hSpacingXl,
       right: defaultCommonConfig.hSpacingXl,
     ),
@@ -341,7 +338,7 @@ class SantoDefaultConfigUtils {
       right: defaultCommonConfig.hSpacingXl,
     ),
     warningPaddingLg: EdgeInsets.only(
-      top: 28.0,
+      top: 25.0,
       left: defaultCommonConfig.hSpacingXl,
       right: defaultCommonConfig.hSpacingXl,
     ),
@@ -351,7 +348,7 @@ class SantoDefaultConfigUtils {
       color: defaultCommonConfig.brandError,
       decoration: TextDecoration.none,
     ),
-    dividerPadding: EdgeInsets.only(top: 28.0),
+    dividerPadding: EdgeInsets.only(top: 25.0),
     backgroundColor: defaultCommonConfig.fillBase,
   );
 
@@ -563,7 +560,7 @@ class SantoDefaultConfigUtils {
       fontSize: defaultCommonConfig.fontSizeSubHead,
       fontWeight: FontWeight.w500,
     ),
-    titlePadding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 16.0),
+    titlePadding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 12.0),
     contentPadding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 12.0),
   );
 
