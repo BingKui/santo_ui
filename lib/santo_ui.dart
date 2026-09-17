@@ -339,6 +339,9 @@ export 'src/components/time_counter/santo_time_counter.dart';
 //表格
 export 'src/components/table/santo_table.dart';
 
+//分段选择器
+export 'src/components/segmented/santo_segmented.dart';
+
 //底部操作栏
 export 'src/components/action_bar/santo_action_bar.dart';
 export 'src/components/action_bar/santo_action_bar_icon.dart';
