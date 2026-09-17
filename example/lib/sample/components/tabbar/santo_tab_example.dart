@@ -25,80 +25,77 @@ class _SantoTabExampleState extends State<SantoTabExample>
   Widget build(BuildContext context) {
     return WillPopScope(
         child: SantoPageLayout(          title: 'SantoTab示例',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ListItem(
-                title: "SantoTabBarBadge实现",
-                isShowLine: false,
-              ),
-              SantoSection(
-                title: '吸顶 Tab',
-                description: '点击按钮进入独立页面，查看 Tab 点击后自动收起的吸顶效果',
-                child: Center(
-                  child: SantoNormalButton.outline(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(builder: (context) {
-                        return SantoTabbarStickyExample();
-                      }));
-                    },
-                    text: "Tabbar点击自动收起example",
-                  ),
+          children: <Widget>[
+            ListItem(
+              title: "SantoTabBarBadge实现",
+              isShowLine: false,
+            ),
+            SantoSection(
+              title: '吸顶 Tab',
+              description: '点击按钮进入独立页面，查看 Tab 点击后自动收起的吸顶效果',
+              child: Center(
+                child: SantoNormalButton.outline(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(new MaterialPageRoute(builder: (context) {
+                      return SantoTabbarStickyExample();
+                    }));
+                  },
+                  text: "Tabbar点击自动收起example",
                 ),
               ),
-              SantoSection(
-                title: '展开更多',
-                description: 'showMore 开启更多入口，moreWindowText 为弹窗标题',
-                child: _createExpandedMoreTabbarWidgets(),
-              ),
-              SantoSection(
-                title: '基础用法',
-                description: '4 个 Tab 均分宽度，每项带 12px 圆角底色，选中项底色加深',
-                child: _createStableTabbar4Widgets(),
-              ),
-              SantoSection(
-                title: '徽标样式',
-                description: 'badgeText、badgeNum、showRedBadge 对应三种徽标',
-                child: _createStableTabbarWidgets(),
-              ),
-              SantoSection(
-                title: '多 Tab 滚动',
-                description: 'Tab 数量超过 4 个时自动横向滚动，徽标类型可混合',
-                child: _createTabbarBadgeWidgets(),
-              ),
-              SantoSection(
-                title: '超长数字徽标',
-                description: 'badgeNum 超过 99 时统一展示为 99+',
-                child: _createStableTabbarBadgeWidgets(),
-              ),
-              SantoSection(
-                title: '序号与分割线',
-                description: 'hasIndex 在 Tab 上方显示序号，hasDivider 绘制分割线',
-                child: _createDividerTabbarWidgets(),
-              ),
-              SantoSection(
-                title: '自定义 Tab 宽度',
-                description: 'tabWidth 固定每个 Tab 宽度，总宽超出屏幕后横向滚动',
-                child: _createCustomTabbarWidgets(),
-              ),
-              SantoSection(
-                title: '顶部标签',
-                description: 'hasIndex 开启后 topText 显示在 Tab 上方，颜色可自定义',
-                child: _createTopTabbarWidgets(),
-              ),
-              SantoSection(
-                title: '顶部标签带数字',
-                description: 'topText 与 badgeNum 同时使用，徽标显示在 Tab 右上角',
-                child: _createTopTabbarCountWidgets(),
-              ),
-              SantoSection(
-                title: 'origin 模式',
-                description: 'mode 为 origin 时按原始 TabBar 方式布局，不等分宽度',
-                child: _createOriginWidgets(),
-              ),
-            ],
-          ),
+            ),
+            SantoSection(
+              title: '展开更多',
+              description: 'showMore 开启更多入口，moreWindowText 为弹窗标题',
+              child: _createExpandedMoreTabbarWidgets(),
+            ),
+            SantoSection(
+              title: '基础用法',
+              description: '4 个 Tab 均分宽度，每项带 12px 圆角底色，选中项底色加深',
+              child: _createStableTabbar4Widgets(),
+            ),
+            SantoSection(
+              title: '徽标样式',
+              description: 'badgeText、badgeNum、showRedBadge 对应三种徽标',
+              child: _createStableTabbarWidgets(),
+            ),
+            SantoSection(
+              title: '多 Tab 滚动',
+              description: 'Tab 数量超过 4 个时自动横向滚动，徽标类型可混合',
+              child: _createTabbarBadgeWidgets(),
+            ),
+            SantoSection(
+              title: '超长数字徽标',
+              description: 'badgeNum 超过 99 时统一展示为 99+',
+              child: _createStableTabbarBadgeWidgets(),
+            ),
+            SantoSection(
+              title: '序号与分割线',
+              description: 'hasIndex 在 Tab 上方显示序号，hasDivider 绘制分割线',
+              child: _createDividerTabbarWidgets(),
+            ),
+            SantoSection(
+              title: '自定义 Tab 宽度',
+              description: 'tabWidth 固定每个 Tab 宽度，总宽超出屏幕后横向滚动',
+              child: _createCustomTabbarWidgets(),
+            ),
+            SantoSection(
+              title: '顶部标签',
+              description: 'hasIndex 开启后 topText 显示在 Tab 上方，颜色可自定义',
+              child: _createTopTabbarWidgets(),
+            ),
+            SantoSection(
+              title: '顶部标签带数字',
+              description: 'topText 与 badgeNum 同时使用，徽标显示在 Tab 右上角',
+              child: _createTopTabbarCountWidgets(),
+            ),
+            SantoSection(
+              title: 'origin 模式',
+              description: 'mode 为 origin 时按原始 TabBar 方式布局，不等分宽度',
+              child: _createOriginWidgets(),
+            ),
+          ],
         ),
         onWillPop: () {
           if (closeWindowController!.isShow) {

@@ -25,29 +25,21 @@ class _FloatingPanelControlledExampleState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       backgroundColor: const Color(0xFFF5F6FA),
-      appBar: SantoAppBar(title: 'FloatingPanel · 受控与开关'),
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 12),
+      title: 'FloatingPanel · 受控与开关',
+      // 内容不滚动:说明与开关在上方,面板叠在底部
+      scrollable: false,
+      children: <Widget>[
               const RulePanel(
                 'height 受控由外部驱动,拖动结束 onHeightChange 回传吸附后高度;下方按钮与开关可直接对比三种拖拽配置',
                 maxLines: 3,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
-                child: Text(
-                  '当前高度 ${_height.toStringAsFixed(0)}px',
-                  style: const TextStyle(fontSize: 14),
-                ),
+              Text(
+                '当前高度 ${_height.toStringAsFixed(0)}px',
+                style: const TextStyle(fontSize: 14),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Wrap(
+              Wrap(
                   spacing: 10,
                   runSpacing: 10,
                   children: [
@@ -100,35 +92,31 @@ class _FloatingPanelControlledExampleState
                     ),
                   ],
                 ),
-              ),
+      ],
+      // 浮层面板:受控高度,叠在内容之上
+      overlay: SantoFloatingPanel(
+          anchors: _anchors,
+          height: _height,
+          magnetic: _magnetic,
+          draggable: _draggable,
+          contentDraggable: _contentDraggable,
+          onHeightChange: (height) => setState(() => _height = height),
+          child: ListView(
+                children: [
+              for (int i = 1; i <= 3; i++)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Text(
+                    '面板内容 $i:内容不足一屏时可直接拖拽内容区',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
             ],
           ),
-          SantoFloatingPanel(
-            anchors: _anchors,
-            height: _height,
-            magnetic: _magnetic,
-            draggable: _draggable,
-            contentDraggable: _contentDraggable,
-            onHeightChange: (height) => setState(() => _height = height),
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              children: [
-                for (int i = 1; i <= 3; i++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    child: Text(
-                      '面板内容 $i:内容不足一屏时可直接拖拽内容区',
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
     );
   }
 }

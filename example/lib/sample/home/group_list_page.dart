@@ -37,27 +37,27 @@ class GroupListPage extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const SizedBox(height: 8),
-          for (final child in children)
-            Container(
+      children: <Widget>[
+        for (final child in children)
+          Container(
+            // 裁切:否则 ListItem 的方块白底与波纹会盖住圆角
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
               color: Colors.white,
-              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              child: ListItem(
-                isShowLine: false,
-                title: child.groupName,
-                describe: child.desc,
-                onPressed: () {
-                  if (child.navigatorPage != null) {
-                    child.navigatorPage!(context);
-                  }
-                },
-              ),
+              borderRadius: BorderRadius.circular(12),
             ),
-        ],
-      ),
+            child: ListItem(
+              isShowLine: false,
+              title: child.groupName,
+              describe: child.desc,
+              onPressed: () {
+                if (child.navigatorPage != null) {
+                  child.navigatorPage!(context);
+                }
+              },
+            ),
+          ),
+      ],
     );
   }
 }

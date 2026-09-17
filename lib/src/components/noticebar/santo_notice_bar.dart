@@ -1,5 +1,6 @@
 import 'package:santo_ui/src/components/noticebar/santo_marquee_text.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -71,6 +72,8 @@ class SantoNoticeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     NoticeStyle defaultStyle = NoticeStyles.runningWithArrow;
 
     Widget tempRightWidget =
@@ -92,7 +95,7 @@ class SantoNoticeBar extends StatelessWidget {
         textStyle: TextStyle(
           color:
               textColor ?? (noticeStyle?.textColor ?? defaultStyle.textColor),
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
         ),
       );
     } else {
@@ -102,7 +105,7 @@ class SantoNoticeBar extends StatelessWidget {
         style: TextStyle(
           color:
               textColor ?? (noticeStyle?.textColor ?? defaultStyle.textColor),
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
         ),
       );
     }
@@ -113,9 +116,10 @@ class SantoNoticeBar extends StatelessWidget {
             (noticeStyle != null
                 ? noticeStyle!.backgroundColor
                 : defaultStyle.backgroundColor),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(commonConfig.radiusXs),
       ),
-      padding: this.padding ?? EdgeInsets.symmetric(horizontal: 20),
+      padding: this.padding ??
+          EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
       constraints: BoxConstraints(minHeight: this.minHeight),
       child: GestureDetector(
         onTap: () {
@@ -128,7 +132,7 @@ class SantoNoticeBar extends StatelessWidget {
             Offstage(
               offstage: !showLeftIcon,
               child: Padding(
-                padding: EdgeInsets.only(right: 8),
+                padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
                 child: leftWidget ??
                     (noticeStyle?.leftIcon ?? defaultStyle.leftIcon),
               ),
@@ -139,7 +143,7 @@ class SantoNoticeBar extends StatelessWidget {
             Offstage(
               offstage: !showRightIcon,
               child: Padding(
-                padding: EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: commonConfig.hSpacingSm),
                 child: tempRightWidget,
               ),
             ),

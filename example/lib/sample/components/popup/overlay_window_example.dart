@@ -28,16 +28,13 @@ class OverlayWindowExamplePageState extends State<OverlayWindowExample> {
       appBar: SantoAppBar(
           title: widget._title,
         ),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SantoSection(
-              title: '基础用法',
-              description: '输入关键字自动弹出悬浮层，清空或提交内容后自动关闭',
-              child: _searchBar(),
-            ),
-          ],
-        ),
+      children: <Widget>[
+          SantoSection(
+            title: '基础用法',
+            description: '输入关键字自动弹出悬浮层，清空或提交内容后自动关闭',
+            child: _searchBar(),
+          ),
+      ],
     );
   }
 

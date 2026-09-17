@@ -99,20 +99,22 @@ class SantoCell extends StatelessWidget {
           Container(
             constraints: BoxConstraints(minHeight: minHeight),
             padding: padding ??
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                EdgeInsets.symmetric(
+                    horizontal: commonConfig.pageGap,
+                    vertical: commonConfig.pageGap),
             child: Row(
               children: [
                 // 左侧图标
                 if (leftWidget != null) ...[
                   leftWidget!,
-                  const SizedBox(width: 12),
+                  SizedBox(width: commonConfig.pageGap),
                 ] else if (leftIcon != null) ...[
                   Icon(
                     leftIcon,
                     size: 22,
                     color: commonConfig.colorTextBase,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: commonConfig.pageGap),
                 ],
                 // 中间内容
                 Expanded(
@@ -125,18 +127,18 @@ class SantoCell extends StatelessWidget {
                           title!,
                           style: titleStyle ??
                               TextStyle(
-                                fontSize: 16,
+                                fontSize: commonConfig.fontSizeSubHead,
                                 color: commonConfig.colorTextBase,
                                 fontWeight: FontWeight.w500,
                               ),
                         ),
                       if (description != null) ...[
-                        const SizedBox(height: 4),
+                        SizedBox(height: commonConfig.vSpacingXs),
                         Text(
                           description!,
                           style: descriptionStyle ??
                               TextStyle(
-                                fontSize: 12,
+                                fontSize: commonConfig.fontSizeCaption,
                                 color: commonConfig.colorTextSecondary,
                               ),
                         ),
@@ -149,18 +151,18 @@ class SantoCell extends StatelessWidget {
                   rightWidget!
                 else if (note != null)
                   Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: EdgeInsets.only(right: commonConfig.hSpacingXs),
                     child: Text(
                       note!,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: commonConfig.fontSizeBase,
                         color: commonConfig.colorTextSecondary,
                       ),
                     ),
                   ),
                 if (showArrow)
                   Padding(
-                    padding: const EdgeInsets.only(left: 4),
+                    padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
                     child: Icon(
                       rightIcon ?? Icons.chevron_right,
                       size: 20,
@@ -172,7 +174,7 @@ class SantoCell extends StatelessWidget {
           ),
           if (bottomLine)
             Padding(
-              padding: const EdgeInsets.only(left: 16),
+              padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
               child: Divider(
                   height: 0.5, thickness: 0.5, color: dividerColor),
             ),
@@ -233,13 +235,16 @@ class SantoCellGroup extends StatelessWidget {
         children: [
           if (title != null)
             Padding(
-              padding:
-                  const EdgeInsets.fromLTRB(12, 16, 12, 8),
+              padding: EdgeInsets.fromLTRB(
+                  12,
+                  commonConfig.vSpacingMd,
+                  12,
+                  commonConfig.vSpacingSm),
               child: Text(
                 title!,
                 style: titleStyle ??
                     TextStyle(
-                      fontSize: 14,
+                      fontSize: commonConfig.fontSizeBase,
                       color: commonConfig.colorTextSecondary,
                     ),
               ),

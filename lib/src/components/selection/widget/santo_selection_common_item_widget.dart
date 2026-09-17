@@ -2,6 +2,7 @@ import 'package:santo_ui/src/components/selection/bean/santo_selection_common_en
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/utils/css/santo_css_2_text.dart';
 import 'package:flutter/material.dart';
@@ -47,11 +48,13 @@ class SantoSelectionCommonItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Container checkbox;
     if (!item.isUnLimit() && (item.children.isEmpty)) {
       if (item.isInLastLevel() && item.hasCheckBoxBrother()) {
         checkbox = Container(
-          padding: EdgeInsets.only(left: 6),
+          padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
           width: 21,
           child: (item.isSelected)
               ? SantoTools.getAssetImageWithBandColor(
@@ -72,7 +75,11 @@ class SantoSelectionCommonItemWidget extends StatelessWidget {
         }
       },
       child: Container(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg,
+            top: commonConfig.vSpacingSm,
+            bottom: commonConfig.vSpacingSm),
         color: getItemBGColor(),
         child: Align(
           alignment: Alignment.centerLeft,
@@ -103,7 +110,7 @@ class SantoSelectionCommonItemWidget extends StatelessWidget {
                       EdgeInsets.only(right: item.isInLastLevel() ? 21 : 0),
                   child: SantoCSS2Text.toTextView(item.subTitle ?? '',
                       defaultStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: commonConfig.fontSizeCaption,
                           fontWeight: FontWeight.normal,
                           decoration: TextDecoration.none,
                           color: themeData?.commonConfig.colorTextSecondary),

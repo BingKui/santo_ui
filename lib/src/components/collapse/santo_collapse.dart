@@ -123,7 +123,7 @@ class _SantoCollapseState<T extends Object> extends State<SantoCollapse<T>> {
     final animationDuration =
         widget.animationDuration ?? kThemeAnimationDuration;
     final elevation = widget.elevation ?? 0;
-    final cardBorderRadius = BorderRadius.circular(12);
+    final cardBorderRadius = BorderRadius.circular(commonConfig.radiusXs);
     final panels = <Widget>[];
 
     for (var index = 0; index < widget.children.length; index += 1) {
@@ -354,14 +354,14 @@ class _SantoCollapseState<T extends Object> extends State<SantoCollapse<T>> {
     required bool hasTrailing,
   }) {
     final builder = child.expandIconBuilder;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (builder == null) {
       if (!hasTrailing) {
         return null;
       }
-      return SizedBox(width: 16);
+      return SizedBox(width: commonConfig.hSpacingMd);
     }
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final iconColor =
         child.disabled ? commonConfig.colorTextDisabled : commonConfig.colorTextHint;
     return Padding(

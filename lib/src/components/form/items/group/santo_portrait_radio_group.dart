@@ -109,6 +109,8 @@ class SantoPortraitRadioGroupState extends State<SantoPortraitRadioGroup> {
   }
 
   List<Widget> getRadioList(List<SantoPortraitRadioGroupOption>? options) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> result = [];
     SantoPortraitRadioGroupOption option;
     if (options == null || options.isEmpty) {
@@ -124,7 +126,11 @@ class SantoPortraitRadioGroupState extends State<SantoPortraitRadioGroup> {
       option = options[index];
       result.add(
         Container(
-          padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+          padding: EdgeInsets.only(
+              top: commonConfig.vSpacingMd,
+              bottom: commonConfig.vSpacingMd,
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingLg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -155,7 +161,9 @@ class SantoPortraitRadioGroupState extends State<SantoPortraitRadioGroup> {
               Visibility(
                 visible: option.subTitle != null && option.subTitle!.isNotEmpty,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 4, right: 20),
+                  padding: EdgeInsets.only(
+                      top: commonConfig.vSpacingXs,
+                      right: commonConfig.hSpacingLg),
                   child: Text(
                     option.subTitle ?? '',
                     overflow:

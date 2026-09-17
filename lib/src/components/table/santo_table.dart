@@ -112,8 +112,8 @@ class SantoTable extends StatelessWidget {
   /// 表头高度，默认48
   final double headerHeight;
 
-  /// 单元格内边距，默认 EdgeInsets.symmetric(horizontal: 12)
-  final EdgeInsets cellPadding;
+  /// 单元格内边距,默认水平 pageGap
+  final EdgeInsets? cellPadding;
 
   /// 奇数行背景色，默认白色
   final Color? oddRowColor;
@@ -148,7 +148,7 @@ class SantoTable extends StatelessWidget {
     this.cellTextColor,
     this.rowHeight = 48,
     this.headerHeight = 48,
-    this.cellPadding = const EdgeInsets.symmetric(horizontal: 12),
+    this.cellPadding,
     this.oddRowColor,
     this.evenRowColor,
     this.striped = false,
@@ -184,14 +184,14 @@ class SantoTable extends StatelessWidget {
     final defaultHeaderStyle = headerTextStyle ??
         TextStyle(
           color: hTextColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
+          fontSize: commonConfig.fontSizeBase,
+          fontWeight: FontWeight.w500,
         );
 
     final defaultCellStyle = cellTextStyle ??
         TextStyle(
           color: cTextColor,
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
         );
 
     if (pinnedHeader) {
@@ -228,7 +228,8 @@ class SantoTable extends StatelessWidget {
       width: tableWidth,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+            SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs),
       ),
       foregroundDecoration: _tableBorder(bColor),
       child: Column(
@@ -266,7 +267,8 @@ class SantoTable extends StatelessWidget {
       width: tableWidth,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+            SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs),
       ),
       foregroundDecoration: _tableBorder(bColor),
       child: Column(
@@ -311,7 +313,8 @@ class SantoTable extends StatelessWidget {
     }
     return BoxDecoration(
       border: Border.all(color: bColor, width: borderWidth),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(
+          SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs),
     );
   }
 
@@ -328,7 +331,12 @@ class SantoTable extends StatelessWidget {
             _wrapColumnWidth(
               columns[colIndex],
               Container(
-                padding: cellPadding,
+                padding: cellPadding ??
+            EdgeInsets.symmetric(
+                horizontal: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .pageGap),
                 alignment: _getAlignment(columns[colIndex].align),
                 decoration: border
                     ? BoxDecoration(
@@ -382,7 +390,12 @@ class SantoTable extends StatelessWidget {
           return _wrapColumnWidth(
             col,
             Container(
-              padding: cellPadding,
+              padding: cellPadding ??
+            EdgeInsets.symmetric(
+                horizontal: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .pageGap),
               alignment: _getAlignment(col.align),
               decoration: border
                   ? BoxDecoration(
@@ -421,7 +434,12 @@ class SantoTable extends StatelessWidget {
       child: empty ??
           Text(
             '暂无数据',
-            style: TextStyle(color: hintColor, fontSize: 12),
+            style: TextStyle(
+              color: hintColor,
+              fontSize: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .fontSizeCaption),
           ),
     );
   }

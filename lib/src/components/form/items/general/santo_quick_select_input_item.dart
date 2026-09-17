@@ -130,6 +130,8 @@ class SantoTextQuickSelectFormItemState
     extends State<SantoTextQuickSelectFormItem> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -201,7 +203,8 @@ class SantoTextQuickSelectFormItemState
           /// 快捷按钮区
           Container(
               height: 40,
-              padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
+              padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg,
+                  commonConfig.vSpacingXs, commonConfig.hSpacingLg, 0),
               child: QuickButtonsWidget(
                 btnsTxt: widget.btnsTxt,
                 selectBtnList: widget.selectBtnList,
@@ -331,17 +334,21 @@ class QuickButtonsState extends State<QuickButtonsWidget> {
   }
 
   List<Widget> getBtnsByText() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> result = <Widget>[];
 
     for (int index = 0; index < widget.btnsTxt!.length; ++index) {
       String? str = widget.btnsTxt![index];
       result.add(Container(
-        padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+        padding: EdgeInsets.fromLTRB(
+            commonConfig.hSpacingXs, 0, commonConfig.hSpacingXs, 0),
         child: TextButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(getButtonColor(index)),
             overlayColor: MaterialStateProperty.all(Colors.transparent),
-            padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+            padding: MaterialStateProperty.all(
+                EdgeInsets.all(commonConfig.vSpacingSm)),
           ),
           child: Text(
             str,

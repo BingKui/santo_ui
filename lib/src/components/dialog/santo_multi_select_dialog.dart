@@ -159,6 +159,8 @@ class MultiSelect extends StatefulWidget {
 class MultiSelectPickerWidgetState extends State<MultiSelect> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoContentExportWidget(
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +182,9 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
                             ? Container(
                                 child: widget.customWidget,
                                 padding: EdgeInsets.only(
-                                    left: 20, right: 20, top: 12),
+                                    left: commonConfig.hSpacingLg,
+                                    right: commonConfig.hSpacingLg,
+                                    top: 12),
                               )
                             : const SizedBox.shrink(),
                       ],
@@ -197,8 +201,10 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
                       widget.customWidget != null
                           ? Container(
                               child: widget.customWidget,
-                              padding:
-                                  EdgeInsets.only(left: 20, right: 20, top: 12),
+                              padding: EdgeInsets.only(
+                                  left: commonConfig.hSpacingLg,
+                                  right: commonConfig.hSpacingLg,
+                                  top: 12),
                             )
                           : const SizedBox.shrink(),
                     ],
@@ -229,16 +235,24 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
   /// 若无则以 messageText 生成widget 填充，
   /// 都没设置则为空 Container
   Widget _generateContentWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.messageWidget != null) {
       return Padding(
-        padding: EdgeInsets.only(bottom: 8, left: 20, right: 20),
+        padding: EdgeInsets.only(
+            bottom: commonConfig.vSpacingSm,
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg),
         child: widget.messageWidget,
       );
     }
 
     if (!SantoTools.isEmpty(widget.messageText)) {
       return Padding(
-        padding: EdgeInsets.only(bottom: 8, left: 20, right: 20),
+        padding: EdgeInsets.only(
+            bottom: commonConfig.vSpacingSm,
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg),
         child: Text(
           widget.messageText!,
           style: SantoThemeConfigurator.instance
@@ -253,6 +267,8 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
   }
 
   Widget _buildItem(BuildContext context, int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -267,16 +283,17 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                  commonConfig.hSpacingLg, 0),
               child: Row(
                 children: <Widget>[
                   Expanded(
                       child: Text(widget.conditions[index].content,
                           style: TextStyle(
                               fontWeight: widget.conditions[index].isChecked
-                                  ? FontWeight.w600
+                                  ? FontWeight.w500
                                   : FontWeight.normal,
-                              fontSize: 16,
+                              fontSize: commonConfig.fontSizeSubHead,
                               color: widget.conditions[index].isChecked
                                   ? SantoThemeConfigurator.instance
                                       .getConfig()
@@ -298,7 +315,8 @@ class MultiSelectPickerWidgetState extends State<MultiSelect> {
             ),
             index != widget.conditions.length - 1
                 ? Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                        commonConfig.hSpacingLg, 0),
                     child: SantoLine())
                 : const SizedBox.shrink()
           ],

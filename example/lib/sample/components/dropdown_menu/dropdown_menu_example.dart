@@ -40,155 +40,152 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'DropdownMenu 下拉菜单示例',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 场景1：基础三列筛选
-          SantoSection(
-            title: '基础三列筛选菜单',
-            description: '三个菜单项并排展示，selectedValue 控制选中回显',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SantoDropdownMenu(
-                  children: [
-                    SantoDropdownMenuItem(
-                      title: '排序',
-                      options: _sortOptions,
-                      selectedValue: _sortValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _sortValue = value;
-                        });
-                      },
-                    ),
-                    SantoDropdownMenuItem(
-                      title: '分类',
-                      options: _categoryOptions,
-                      selectedValue: _categoryValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _categoryValue = value;
-                        });
-                      },
-                    ),
-                    SantoDropdownMenuItem(
-                      title: '价格',
-                      options: _priceOptions,
-                      selectedValue: _priceValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _priceValue = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                // 模拟内容区域
-                Container(
-                  height: 200,
-                  color: Color(0xFFF5F5F5),
-                  child: Center(
-                    child: Text(
-                      '筛选结果区域\n'
-                      '排序: ${_sortValue ?? "无"}\n'
-                      '分类: ${_categoryValue ?? "无"}\n'
-                      '价格: ${_priceValue ?? "无"}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xFF808695), fontSize: 14),
-                    ),
+      children: <Widget>[
+        // 场景1：基础三列筛选
+        SantoSection(
+          title: '基础三列筛选菜单',
+          description: '三个菜单项并排展示，selectedValue 控制选中回显',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SantoDropdownMenu(
+                children: [
+                  SantoDropdownMenuItem(
+                    title: '排序',
+                    options: _sortOptions,
+                    selectedValue: _sortValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _sortValue = value;
+                      });
+                    },
+                  ),
+                  SantoDropdownMenuItem(
+                    title: '分类',
+                    options: _categoryOptions,
+                    selectedValue: _categoryValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _categoryValue = value;
+                      });
+                    },
+                  ),
+                  SantoDropdownMenuItem(
+                    title: '价格',
+                    options: _priceOptions,
+                    selectedValue: _priceValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _priceValue = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              // 模拟内容区域
+              Container(
+                height: 200,
+                color: Color(0xFFF5F5F5),
+                child: Center(
+                  child: Text(
+                    '筛选结果区域\n'
+                    '排序: ${_sortValue ?? "无"}\n'
+                    '分类: ${_categoryValue ?? "无"}\n'
+                    '价格: ${_priceValue ?? "无"}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color(0xFF808695), fontSize: 14),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
 
-          // 场景2：单列筛选
-          SantoSection(
-            title: '单列筛选菜单',
-            description: '单个菜单项展开选项面板，onChanged 回调更新选中值',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SantoDropdownMenu(
-                  children: [
-                    SantoDropdownMenuItem(
-                      title: '综合排序',
-                      options: _sortOptions,
-                      selectedValue: _sortValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _sortValue = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 120,
-                  color: Color(0xFFF5F5F5),
-                  child: Center(
-                    child: Text(
-                      '当前排序: ${_sortValue ?? "无"}',
-                      style: TextStyle(color: Color(0xFF808695), fontSize: 14),
-                    ),
+        // 场景2：单列筛选
+        SantoSection(
+          title: '单列筛选菜单',
+          description: '单个菜单项展开选项面板，onChanged 回调更新选中值',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SantoDropdownMenu(
+                children: [
+                  SantoDropdownMenuItem(
+                    title: '综合排序',
+                    options: _sortOptions,
+                    selectedValue: _sortValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _sortValue = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Container(
+                height: 120,
+                color: Color(0xFFF5F5F5),
+                child: Center(
+                  child: Text(
+                    '当前排序: ${_sortValue ?? "无"}',
+                    style: TextStyle(color: Color(0xFF808695), fontSize: 14),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
 
-          // 场景3：自定义主题色
-          SantoSection(
-            title: '自定义主题色',
-            description: 'activeColor 设为红色，选中态文字与勾选图标同步变色',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SantoDropdownMenu(
-                  activeColor: Color(0xFFFF4D4F),
-                  children: [
-                    SantoDropdownMenuItem(
-                      title: '排序',
-                      options: _sortOptions,
-                      selectedValue: _sortValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _sortValue = value;
-                        });
-                      },
-                      activeColor: Color(0xFFFF4D4F),
-                    ),
-                    SantoDropdownMenuItem(
-                      title: '分类',
-                      options: _categoryOptions,
-                      selectedValue: _categoryValue,
-                      onChanged: (value) {
-                        setState(() {
-                          _categoryValue = value;
-                        });
-                      },
-                      activeColor: Color(0xFFFF4D4F),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 120,
-                  color: Color(0xFFF5F5F5),
-                  child: Center(
-                    child: Text(
-                      '使用红色主题的下拉菜单',
-                      style: TextStyle(color: Color(0xFF808695), fontSize: 14),
-                    ),
+        // 场景3：自定义主题色
+        SantoSection(
+          title: '自定义主题色',
+          description: 'activeColor 设为红色，选中态文字与勾选图标同步变色',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SantoDropdownMenu(
+                activeColor: Color(0xFFFF4D4F),
+                children: [
+                  SantoDropdownMenuItem(
+                    title: '排序',
+                    options: _sortOptions,
+                    selectedValue: _sortValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _sortValue = value;
+                      });
+                    },
+                    activeColor: Color(0xFFFF4D4F),
+                  ),
+                  SantoDropdownMenuItem(
+                    title: '分类',
+                    options: _categoryOptions,
+                    selectedValue: _categoryValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _categoryValue = value;
+                      });
+                    },
+                    activeColor: Color(0xFFFF4D4F),
+                  ),
+                ],
+              ),
+              Container(
+                height: 120,
+                color: Color(0xFFF5F5F5),
+                child: Center(
+                  child: Text(
+                    '使用红色主题的下拉菜单',
+                    style: TextStyle(color: Color(0xFF808695), fontSize: 14),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
 
-          SizedBox(height: 40),
-        ],
-      ),
+        SizedBox(height: 40),
+      ],
     );
   }
 }

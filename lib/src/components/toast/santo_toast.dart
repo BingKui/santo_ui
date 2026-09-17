@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// 位置枚举
@@ -203,14 +204,20 @@ class ToastChild extends StatelessWidget {
     if (leading == null) {
       return const TextSpan(text: "");
     }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return WidgetSpan(
       alignment: PlaceholderAlignment.middle,
-      child: Padding(padding: const EdgeInsets.only(right: 6), child: leading!),
+      child: Padding(
+          padding: EdgeInsets.only(right: commonConfig.hSpacingXs),
+          child: leading!),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Container(
@@ -220,10 +227,12 @@ class ToastChild extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor ?? const Color(0xFF17233D),
-            borderRadius: BorderRadius.circular(radius ?? 12),
+            borderRadius: BorderRadius.circular(radius ?? commonConfig.radiusXs),
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+          margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
+          padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg,
+              commonConfig.vSpacingSm, commonConfig.hSpacingLg,
+              commonConfig.vSpacingSm),
           child: RichText(
             text: TextSpan(children: <InlineSpan>[
               leadingSpan,

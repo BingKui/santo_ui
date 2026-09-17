@@ -38,13 +38,15 @@ class SantoInsertInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Text tx = Text(
       infoText,
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontWeight: FontWeight.w500,
-        fontSize: 14,
+        fontSize: commonConfig.fontSizeBase,
         color: SantoThemeConfigurator.instance
             .getConfig()
             .commonConfig
@@ -65,10 +67,14 @@ class SantoInsertInfo extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.only(
                     topLeft: const Radius.circular(0),
-                    topRight: const Radius.circular(12),
-                    bottomLeft: const Radius.circular(12),
-                    bottomRight: const Radius.circular(12))),
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 12),
+                    topRight: Radius.circular(commonConfig.radiusXs),
+                    bottomLeft: Radius.circular(commonConfig.radiusXs),
+                    bottomRight: Radius.circular(commonConfig.radiusXs))),
+            padding: EdgeInsets.only(
+                left: commonConfig.hSpacingLg,
+                right: commonConfig.hSpacingLg,
+                top: 12,
+                bottom: 12),
             child: tx,
           ),
         )

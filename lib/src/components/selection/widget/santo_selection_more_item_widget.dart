@@ -126,16 +126,20 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
       child: Stack(
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding:
-                    EdgeInsets.only(top: 20, right: _isVisibleMore() ? 40 : 0),
+                padding: EdgeInsets.only(
+                    top: commonConfig.vSpacingLg,
+                    right: _isVisibleMore() ? 40 : 0),
                 child: _buildTitleWidget(),
               ),
               //自定义输入框
@@ -145,7 +149,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
                 visible: widget.selectionEntity
                         .currentShowTagByExpanded(isExpanded).isNotEmpty,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 12),
+                  padding: EdgeInsets.only(top: commonConfig.pageGap),
                   child: _buildSelectionTag(),
                 ),
               )
@@ -204,13 +208,15 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
   /// 如果是单选： 先将选中的清空、再添加选中
   /// 如果是多选： 直接添加筛选项
   Widget _buildSelectionTag() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 3,
       addRepaintBoundaries: false,
       childAspectRatio: 2.4,
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
+      mainAxisSpacing: commonConfig.vSpacingSm,
+      crossAxisSpacing: commonConfig.hSpacingSm,
       physics: NeverScrollableScrollPhysics(),
       children: widget.selectionEntity
           .currentShowTagByExpanded(isExpanded)
@@ -332,6 +338,8 @@ class __MoreArrowState extends State<_MoreArrow> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     String asset = isExpanded ? SantoAsset.iconUpArrow : SantoAsset.iconDownArrow;
 
     return GestureDetector(
@@ -345,7 +353,8 @@ class __MoreArrowState extends State<_MoreArrow> {
         });
       },
       child: Container(
-        padding: EdgeInsets.only(top: 20, bottom: 20),
+        padding: EdgeInsets.only(
+            top: commonConfig.vSpacingLg, bottom: commonConfig.vSpacingLg),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -356,7 +365,7 @@ class __MoreArrowState extends State<_MoreArrow> {
             Container(
               height: 16,
               width: 16,
-              padding: EdgeInsets.only(left: 4),
+              padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
               child: SantoTools.getAssetImage(
                 asset,
               ),
@@ -597,18 +606,24 @@ class FilterLayerTypeWidget extends StatefulWidget {
 class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg, top: commonConfig.vSpacingLg),
           child: Text(
             widget.selectionEntity.title,
             style: widget.themeData.titleForMoreTextStyle.generateTextStyle(),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 6),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingLg,
+              top: commonConfig.vSpacingXs),
           child: GestureDetector(
             onTap: () {
               if (widget.selectionEntity.filterType ==
@@ -665,7 +680,9 @@ class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
             ),
           ),
         ),
-        Padding(padding: EdgeInsets.only(top: 15), child: SantoLine())
+        Padding(
+            padding: EdgeInsets.only(top: commonConfig.vSpacingMd),
+            child: SantoLine())
       ],
     );
   }

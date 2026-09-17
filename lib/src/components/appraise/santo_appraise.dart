@@ -136,8 +136,8 @@ class _SantoAppraiseState extends State<SantoAppraise> {
                 bottom: commonConfig.vSpacingLg)
             : EdgeInsets.only(
                 left: commonConfig.hSpacingLg,
-                top: 16,
-                right: 16,
+                top: commonConfig.vSpacingMd,
+                right: commonConfig.hSpacingMd,
                 bottom: commonConfig.vSpacingLg);
     return SantoAppraiseHeader(
       showHeader: widget.config.showHeader,
@@ -183,11 +183,13 @@ class _SantoAppraiseState extends State<SantoAppraise> {
 
   /// 标签
   Widget _getTags() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.tags?.isEmpty ?? true) {
       return const SizedBox.shrink();
     }
     return Padding(
-      padding: EdgeInsets.only(top: 24),
+      padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
       child: SantoMultiSelectTags(
         padding: EdgeInsets.all(0),
         physics: NeverScrollableScrollPhysics(),
@@ -212,13 +214,15 @@ class _SantoAppraiseState extends State<SantoAppraise> {
 
   /// 输入框
   Widget _inputArea() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.config.showTextInput) {
       return Padding(
-        padding: EdgeInsets.only(top: 24),
+        padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
         child: Container(
           constraints: BoxConstraints(
               maxHeight: widget.config.inputMaxHeight, minHeight: 40),
-          padding: EdgeInsets.all(12),
+          padding: EdgeInsets.all(commonConfig.pageGap),
           decoration: BoxDecoration(
             color: Color(0xfff8f8f8),
             borderRadius: BorderRadius.circular(8),
@@ -245,9 +249,11 @@ class _SantoAppraiseState extends State<SantoAppraise> {
 
   /// 提交按钮
   Widget _confirmButton() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.config.showConfirmButton) {
       return Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
         child: SantoBigMainButton(
           title: widget.config.confirmButtonText ?? SantoIntl.of(context).localizedResource.submit,
           isEnable: _enable ?? _appraiseIndex != -1,

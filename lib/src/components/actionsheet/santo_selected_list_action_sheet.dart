@@ -427,7 +427,7 @@ class _SantoActionSheetSelectedItemListState<T>
           height: 50,
           width: 45,
           padding: EdgeInsets.only(
-              left: commonConfig.hSpacingLg, right: 8),
+              left: commonConfig.hSpacingLg, right: commonConfig.hSpacingSm),
           child: widget.itemWidget.itemIconImage);
     } else {
       itemIcon = Container(color: Colors.white, width: 20);

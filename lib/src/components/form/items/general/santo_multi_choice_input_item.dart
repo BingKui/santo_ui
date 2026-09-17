@@ -170,6 +170,8 @@ class SantoMultiChoiceInputFormItemState
   }
 
   List<Widget> getCheckboxList(List<String>? options) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> result = [];
     if (options == null || options.isEmpty) {
       result.add(const SizedBox.shrink());
@@ -187,7 +189,8 @@ class SantoMultiChoiceInputFormItemState
                 key: GlobalKey(),
                 customSpace: EdgeInsets.zero,
                 customContentBuilder: (context, checked, content) => Container(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: EdgeInsets.symmetric(
+                      vertical: commonConfig.vSpacingSm),
                   child: Text(
                     options[index],
                     style: getOptionTextStyle(index),

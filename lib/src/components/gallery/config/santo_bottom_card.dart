@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
-import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_gallery_detail_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
@@ -79,7 +78,8 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(right: 4),
+                    padding:
+                        EdgeInsets.only(right: commonConfig.hSpacingXs),
                     child: Text(SantoIntl.of(context).localizedResource.expand,
                         style:
                             widget.themeData!.actionStyle.generateTextStyle()),
@@ -118,7 +118,8 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 4),
+                          padding:
+                              EdgeInsets.only(right: commonConfig.hSpacingXs),
                           child: Text(SantoIntl.of(context).localizedResource.collapse,
                               style: widget.themeData!.actionStyle
                                   .generateTextStyle()),
@@ -153,7 +154,7 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
           height: 53,
           child: Padding(
             padding: EdgeInsets.only(
-                top: 16,
+                top: commonConfig.vSpacingMd,
                 bottom: 12,
                 left: commonConfig.hSpacingLg,
                 right: commonConfig.hSpacingLg),

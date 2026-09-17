@@ -39,7 +39,9 @@ class AllFormItemStyleExamplePage extends StatelessWidget {
           title: _title,
         ),
         scrollable: false,
-        child: this.getBodyWidget(context));
+      children: <Widget>[
+        this.getBodyWidget(context),
+      ]);
   }
 
   Widget getBodyWidget(BuildContext context) {

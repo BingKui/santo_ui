@@ -110,6 +110,8 @@ class SantoRadioPortraitInputFormItemState
     extends State<SantoRadioPortraitInputFormItem> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -152,7 +154,8 @@ class SantoRadioPortraitInputFormItemState
           SantoFormUtil.buildErrorWidget(widget.error, widget.themeData!),
 
           Container(
-            padding: EdgeInsets.only(left: 20, top: 14),
+            padding: EdgeInsets.only(
+                left: commonConfig.hSpacingLg, top: commonConfig.vSpacingMd),
             child: Column(
               children: getRadioList(widget.options),
             ),
@@ -163,6 +166,8 @@ class SantoRadioPortraitInputFormItemState
   }
 
   List<Widget> getRadioList(List<String?>? options) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> result = [];
     String? option;
     if (options == null || options.isEmpty) {
@@ -176,7 +181,8 @@ class SantoRadioPortraitInputFormItemState
       option = options[index];
       result.add(
         Container(
-          padding: EdgeInsets.only(top: 14, bottom: 14),
+          padding: EdgeInsets.only(
+              top: commonConfig.vSpacingMd, bottom: commonConfig.vSpacingMd),
           child: SantoRadio(
             customSpace: EdgeInsets.zero,
             contentDirection: SantoContentDirection.left,

@@ -135,11 +135,13 @@ class SantoShareDialog extends StatelessWidget {
 
   /// 构建widgets框架
   List<Widget> _configDialogWidgets() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> widgets = [];
     widgets.add(_configDialogseparator());
     //分割
     widgets.add(Padding(
-      padding: EdgeInsets.only(top: 12),
+      padding: EdgeInsets.only(top: commonConfig.pageGap),
     ));
     widgets.add(_configDialogShareItems());
     return widgets;
@@ -147,12 +149,14 @@ class SantoShareDialog extends StatelessWidget {
 
   /// 构建头部部分
   Widget _configDialogTitle() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       child: Stack(
         children: <Widget>[
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.only(top: 25),
+            padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
             child: Text(
               titleText,
               style: SantoDialogUtils.getDialogTitleStyle(themeData!),
@@ -179,8 +183,11 @@ class SantoShareDialog extends StatelessWidget {
 
   /// 构建中间分割部分
   Widget _configDialogseparator() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -190,10 +197,13 @@ class SantoShareDialog extends StatelessWidget {
           ),
           Container(
             color: Color(0xffffffff),
-            padding: EdgeInsets.only(left: 6, right: 6),
+            padding: EdgeInsets.only(
+                left: commonConfig.hSpacingXs, right: commonConfig.hSpacingXs),
             child: Text(
               separatorText ?? SantoIntl.of(context).localizedResource.shareWayTip,
-              style: TextStyle(fontSize: 12, color: shareTextColor),
+              style: TextStyle(
+                  fontSize: commonConfig.fontSizeCaption,
+                  color: shareTextColor),
             ),
           ),
         ],
@@ -203,6 +213,8 @@ class SantoShareDialog extends StatelessWidget {
 
   /// 构建分享途径部分
   Widget _configDialogShareItems() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> shareItems = [];
     String? title; // 标题
     Widget? image; // 图片路径
@@ -244,13 +256,15 @@ class SantoShareDialog extends StatelessWidget {
               },
             ),
             Divider(
-              height: 5,
+              height: commonConfig.vSpacingXs,
               color: Colors.transparent,
             ),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, color: shareTextColor),
+              style: TextStyle(
+                  fontSize: commonConfig.fontSizeCaption,
+                  color: shareTextColor),
             )
           ],
         ),
@@ -260,7 +274,7 @@ class SantoShareDialog extends StatelessWidget {
         ? 14
         : (300 - 39 * shareItems.length) / (shareItems.length + 1);
     return Container(
-      padding: EdgeInsets.only(bottom: 25),
+      padding: EdgeInsets.only(bottom: commonConfig.vSpacingLg),
       alignment: Alignment.center,
       child: Wrap(
         spacing: space,

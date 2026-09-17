@@ -151,6 +151,8 @@ class SantoTextInputFormItemState extends State<SantoTextInputFormItem> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -180,7 +182,9 @@ class SantoTextInputFormItemState extends State<SantoTextInputFormItem> {
                       Offstage(
                         offstage: (widget.prefixText == null),
                         child: Container(
-                            padding: EdgeInsets.only(left: 20, right: 20),
+                            padding: EdgeInsets.only(
+                                left: commonConfig.hSpacingLg,
+                                right: commonConfig.hSpacingLg),
                             child: Text(
                               widget.prefixText ?? "",
                               style: SantoFormUtil.getTitleTextStyle(
@@ -228,7 +232,8 @@ class SantoTextInputFormItemState extends State<SantoTextInputFormItem> {
                 Offstage(
                   offstage: (widget.unit == null),
                   child: Container(
-                      padding: EdgeInsets.only(left: 20),
+                      padding:
+                          EdgeInsets.only(left: commonConfig.hSpacingLg),
                       child: Text(
                         widget.unit ?? "",
                         style: TextStyle(

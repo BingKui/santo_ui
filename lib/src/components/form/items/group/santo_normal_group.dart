@@ -81,8 +81,10 @@ class SantoNormalFormGroupState extends State<SantoNormalFormGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      padding: EdgeInsets.only(top: 15),
+      padding: EdgeInsets.only(top: commonConfig.vSpacingMd),
       color: widget.themeData!.backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -97,7 +99,9 @@ class SantoNormalFormGroupState extends State<SantoNormalFormGroup> {
                     child: Row(
                       children: <Widget>[
                         Container(
-                            padding: EdgeInsets.only(left: 20, right: 6),
+                            padding: EdgeInsets.only(
+                                left: commonConfig.hSpacingLg,
+                                right: commonConfig.hSpacingXs),
                             child: Text(
                               widget.title,
                               style: SantoFormUtil.getHeadTitleTextStyle(
@@ -121,7 +125,8 @@ class SantoNormalFormGroupState extends State<SantoNormalFormGroup> {
                         SantoFormUtil.notifyRemoveTap(context, widget.onRemoveTap);
                       },
                       child: Container(
-                        padding: EdgeInsets.only(right: 20),
+                        padding:
+                            EdgeInsets.only(right: commonConfig.hSpacingLg),
                         child: Text(
                           widget.deleteLabel ?? "",
                           style: TextStyle(

@@ -157,6 +157,8 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -231,7 +233,8 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.only(left: 5),
+                        padding:
+                            EdgeInsets.only(left: commonConfig.hSpacingXs),
                         child: Text(
                           widget.minUnit ?? "",
                           style: TextStyle(
@@ -240,7 +243,9 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                           ),
                         )),
                     Container(
-                        padding: EdgeInsets.only(left: 20, right: 6),
+                        padding: EdgeInsets.only(
+                            left: commonConfig.hSpacingLg,
+                            right: commonConfig.hSpacingXs),
                         child: Text(
                           "—",
                           style: TextStyle(
@@ -287,7 +292,8 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.only(left: 5),
+                        padding:
+                            EdgeInsets.only(left: commonConfig.hSpacingXs),
                         child: Text(
                           widget.maxUnit ?? "",
                           style: TextStyle(

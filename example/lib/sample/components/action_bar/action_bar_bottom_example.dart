@@ -10,32 +10,28 @@ class ActionBarBottomExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       backgroundColor: const Color(0xFFF5F6FA),
-      appBar: SantoAppBar(title: 'ActionBar · 吸底用法'),
-      body: ListView(
-        children: [
-          const SizedBox(height: 12),
-          const RulePanel(
-            '操作栏放在 Scaffold.bottomNavigationBar 上,固定在页面底部不随内容滚动;'
-            'safeAreaInsetBottom 默认 true,全面屏底部自动预留安全区高度',
-            maxLines: 3,
-          ),
-          for (int i = 1; i <= 10; i++)
-            Container(
-              margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '内容卡片 $i',
-                style: const TextStyle(fontSize: 14),
-              ),
+      title: 'ActionBar · 吸底用法',
+      children: <Widget>[
+        const RulePanel(
+          '操作栏放在 PageLayout.bottomNavigationBar 上,固定在页面底部不随内容滚动;'
+          'safeAreaInsetBottom 默认 true,全面屏底部自动预留安全区高度',
+          maxLines: 3,
+        ),
+        for (int i = 1; i <= 10; i++)
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
             ),
-        ],
-      ),
+            child: Text(
+              '内容卡片 $i',
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+      ],
       bottomNavigationBar: SantoActionBar(
         children: [
           SantoActionBarIcon(

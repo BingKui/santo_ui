@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+
 /// 气泡弹出框方向
 enum SantoPopoverDirection {
   /// 上方
@@ -70,8 +72,7 @@ class SantoPopover {
     double offset = 4,
     SantoPopoverDismissCallback? onDismiss,
     Color barrierColor = Colors.transparent,
-    EdgeInsets contentPadding = const EdgeInsets.symmetric(
-        horizontal: 12, vertical: 8),
+    EdgeInsets? contentPadding,
   }) {
     // 获取目标组件的位置
     final renderObject = target.currentContext?.findRenderObject();
@@ -99,7 +100,16 @@ class SantoPopover {
             arrowSize: arrowSize,
             offset: offset,
             onDismiss: onDismiss,
-            contentPadding: contentPadding,
+            contentPadding: contentPadding ??
+                EdgeInsets.symmetric(
+                    horizontal: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .pageGap,
+                    vertical: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .vSpacingSm),
           );
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {

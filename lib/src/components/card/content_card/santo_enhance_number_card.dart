@@ -142,7 +142,12 @@ class SantoEnhanceNumberCard extends StatelessWidget {
                       Expanded(
                           child: Padding(
                         padding: EdgeInsets.only(
-                            left: isFirst ? 0 : 20, right: condition1 ? 0 : 20),
+                            left: isFirst
+                                ? 0
+                                : defaultConfig.commonConfig.hSpacingLg,
+                            right: condition1
+                                ? 0
+                                : defaultConfig.commonConfig.hSpacingLg),
                         child: _buildItemWidget(data, defaultConfig,
                             width: singleWidth),
                       )),

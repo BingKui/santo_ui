@@ -225,7 +225,8 @@ class SantoRichGridInfo {
             }
           },
           child: Padding(
-            padding: EdgeInsets.only(left: isKey ? 0 : 4),
+            padding: EdgeInsets.only(
+                left: isKey ? 0 : themeData!.commonConfig.hSpacingXs),
             child: SantoTools.getAssetSizeImage(
                 SantoAsset.iconPairInfoQuestion, 14, 14),
           ));
@@ -239,7 +240,7 @@ class SantoRichGridInfo {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.only(left: 4),
+          padding: EdgeInsets.only(left: themeData.commonConfig.hSpacingXs),
           child: Container(
             constraints: BoxConstraints(maxWidth: 56),
             child: Text(clickTitle,

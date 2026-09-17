@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class LoadingExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: 'Loading案例',
-      child: Center(
-          child: Column(children: [
+    return SantoPageLayout(
+      title: 'Loading案例',
+      children: <Widget>[
         SantoSection(
           title: '默认文案 Loading',
           description: '不传 content 时展示本地化默认加载文案',
@@ -26,7 +26,7 @@ class LoadingExample extends StatelessWidget {
             content: "我是较长的我是较长的我是较长的Loading",
           ),
         )
-      ])),
+      ],
     );
   }
 }

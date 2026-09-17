@@ -7,162 +7,159 @@ class SantoNoticeBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'NoticeBar 示例',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SantoSection(
-            title: '基础用法',
-            description: '默认样式与 noticeStyle 指定样式，点击触发 onNoticeTap',
-            child: Column(
-              children: [
-                SantoNoticeBar(content: '这是通知内容'),
-                const SizedBox(height: 12),
-                SantoNoticeBar(
-                  content: '这是通知内容',
-                  noticeStyle: NoticeStyles.runningWithArrow,
-                  onNoticeTap: () {
-                    SantoToast.show('点击通知', context);
-                  },
-                  onRightIconTap: () {
-                    SantoToast.show('点击右侧图标', context);
-                  },
-                ),
-              ],
-            ),
+      children: <Widget>[
+        SantoSection(
+          title: '基础用法',
+          description: '默认样式与 noticeStyle 指定样式，点击触发 onNoticeTap',
+          child: Column(
+            children: [
+              SantoNoticeBar(content: '这是通知内容'),
+              const SizedBox(height: 12),
+              SantoNoticeBar(
+                content: '这是通知内容',
+                noticeStyle: NoticeStyles.runningWithArrow,
+                onNoticeTap: () {
+                  SantoToast.show('点击通知', context);
+                },
+                onRightIconTap: () {
+                  SantoToast.show('点击右侧图标', context);
+                },
+              ),
+            ],
           ),
-          SantoSection(
-            title: '十种默认样式',
-            description: '枚举十种 NoticeStyles 观察颜色与图标的差异',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildStyleItem('红色 + 失败 + 箭头', NoticeStyles.failWithArrow),
-                _buildStyleItem('红色 + 失败 + 关闭', NoticeStyles.failWithClose),
-                _buildStyleItem(
-                    '蓝色 + 进行中 + 箭头', NoticeStyles.runningWithArrow),
-                _buildStyleItem(
-                    '蓝色 + 进行中 + 关闭', NoticeStyles.runningWithClose),
-                _buildStyleItem(
-                    '绿色 + 完成 + 箭头', NoticeStyles.succeedWithArrow),
-                _buildStyleItem(
-                    '绿色 + 完成 + 关闭', NoticeStyles.succeedWithClose),
-                _buildStyleItem(
-                    '橘色 + 警告 + 箭头', NoticeStyles.warningWithArrow),
-                _buildStyleItem(
-                    '橘色 + 警告 + 关闭', NoticeStyles.warningWithClose),
-                _buildStyleItem(
-                    '橘色 + 通知 + 箭头', NoticeStyles.normalNoticeWithArrow),
-                _buildStyleItem(
-                    '橘色 + 通知 + 关闭', NoticeStyles.normalNoticeWithClose),
-              ],
-            ),
+        ),
+        SantoSection(
+          title: '十种默认样式',
+          description: '枚举十种 NoticeStyles 观察颜色与图标的差异',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildStyleItem('红色 + 失败 + 箭头', NoticeStyles.failWithArrow),
+              _buildStyleItem('红色 + 失败 + 关闭', NoticeStyles.failWithClose),
+              _buildStyleItem(
+                  '蓝色 + 进行中 + 箭头', NoticeStyles.runningWithArrow),
+              _buildStyleItem(
+                  '蓝色 + 进行中 + 关闭', NoticeStyles.runningWithClose),
+              _buildStyleItem(
+                  '绿色 + 完成 + 箭头', NoticeStyles.succeedWithArrow),
+              _buildStyleItem(
+                  '绿色 + 完成 + 关闭', NoticeStyles.succeedWithClose),
+              _buildStyleItem(
+                  '橘色 + 警告 + 箭头', NoticeStyles.warningWithArrow),
+              _buildStyleItem(
+                  '橘色 + 警告 + 关闭', NoticeStyles.warningWithClose),
+              _buildStyleItem(
+                  '橘色 + 通知 + 箭头', NoticeStyles.normalNoticeWithArrow),
+              _buildStyleItem(
+                  '橘色 + 通知 + 关闭', NoticeStyles.normalNoticeWithClose),
+            ],
           ),
-          SantoSection(
-            title: '跑马灯',
-            description: 'marquee 为 true 时长文案滚动展示',
-            child: Column(
-              children: [
-                SantoNoticeBar(
-                  content: '这是跑马灯的通知内容这是跑马灯的通知内容这是跑马灯的通知内容',
-                  noticeStyle: NoticeStyles.runningWithArrow,
-                  marquee: true,
-                ),
-              ],
-            ),
+        ),
+        SantoSection(
+          title: '跑马灯',
+          description: 'marquee 为 true 时长文案滚动展示',
+          child: Column(
+            children: [
+              SantoNoticeBar(
+                content: '这是跑马灯的通知内容这是跑马灯的通知内容这是跑马灯的通知内容',
+                noticeStyle: NoticeStyles.runningWithArrow,
+                marquee: true,
+              ),
+            ],
           ),
-          SantoSection(
-            title: '自定义左右图标',
-            description: 'showLeftIcon、showRightIcon 控制显隐并支持替换图标',
-            child: Column(
-              children: [
-                SantoNoticeBar(
-                  content: '隐藏左侧图标',
-                  showLeftIcon: false,
-                  noticeStyle: NoticeStyles.normalNoticeWithArrow,
-                ),
-                const SizedBox(height: 12),
-                SantoNoticeBar(
-                  content: '隐藏右侧图标',
-                  showRightIcon: false,
-                  noticeStyle: NoticeStyles.normalNoticeWithArrow,
-                ),
-                const SizedBox(height: 12),
-                SantoNoticeBar(
-                  content: '自定义左侧图标',
-                  leftWidget: const Icon(Icons.info_outline,
-                      size: 16, color: Color(0xFF1677FF)),
-                  noticeStyle: NoticeStyles.runningWithArrow,
-                ),
-                const SizedBox(height: 12),
-                SantoNoticeBar(
-                  content: '自定义右侧图标',
-                  rightWidget: const Icon(Icons.arrow_forward_ios,
-                      size: 12, color: Color(0xFF1677FF)),
-                  noticeStyle: NoticeStyles.runningWithArrow,
-                ),
-              ],
-            ),
+        ),
+        SantoSection(
+          title: '自定义左右图标',
+          description: 'showLeftIcon、showRightIcon 控制显隐并支持替换图标',
+          child: Column(
+            children: [
+              SantoNoticeBar(
+                content: '隐藏左侧图标',
+                showLeftIcon: false,
+                noticeStyle: NoticeStyles.normalNoticeWithArrow,
+              ),
+              const SizedBox(height: 12),
+              SantoNoticeBar(
+                content: '隐藏右侧图标',
+                showRightIcon: false,
+                noticeStyle: NoticeStyles.normalNoticeWithArrow,
+              ),
+              const SizedBox(height: 12),
+              SantoNoticeBar(
+                content: '自定义左侧图标',
+                leftWidget: const Icon(Icons.info_outline,
+                    size: 16, color: Color(0xFF1677FF)),
+                noticeStyle: NoticeStyles.runningWithArrow,
+              ),
+              const SizedBox(height: 12),
+              SantoNoticeBar(
+                content: '自定义右侧图标',
+                rightWidget: const Icon(Icons.arrow_forward_ios,
+                    size: 12, color: Color(0xFF1677FF)),
+                noticeStyle: NoticeStyles.runningWithArrow,
+              ),
+            ],
           ),
-          SantoSection(
-            title: '自定义颜色和高度',
-            description: 'backgroundColor 与 minHeight 调整配色和最小高度',
-            child: Column(
-              children: [
-                SantoNoticeBar(
-                  content: '自定义背景色和文字颜色',
-                  backgroundColor: const Color(0xFFF6FFED),
-                  textColor: const Color(0xFF52C41A),
-                ),
-                const SizedBox(height: 12),
-                SantoNoticeBar(
-                  content: '最小高度 56,内容自动垂直居中',
-                  minHeight: 56,
-                  noticeStyle: NoticeStyles.warningWithArrow,
-                ),
-              ],
-            ),
+        ),
+        SantoSection(
+          title: '自定义颜色和高度',
+          description: 'backgroundColor 与 minHeight 调整配色和最小高度',
+          child: Column(
+            children: [
+              SantoNoticeBar(
+                content: '自定义背景色和文字颜色',
+                backgroundColor: const Color(0xFFF6FFED),
+                textColor: const Color(0xFF52C41A),
+              ),
+              const SizedBox(height: 12),
+              SantoNoticeBar(
+                content: '最小高度 56,内容自动垂直居中',
+                minHeight: 56,
+                noticeStyle: NoticeStyles.warningWithArrow,
+              ),
+            ],
           ),
-          SantoSection(
-            title: '带按钮通知栏 (SantoNoticeBarWithButton)',
-            description: '带标签与按钮的变体，可跳转查看完整示例',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('高度 56,左侧标签 + 中间通知内容 + 右侧按钮'),
-                const SizedBox(height: 12),
-                SantoNoticeBarWithButton(
-                  leftTagText: '任务',
-                  content: '这是通知内容',
-                  rightButtonText: '去完成',
-                  onRightButtonTap: () {
-                    SantoToast.show('点击右侧按钮', context);
-                  },
-                ),
-                const SizedBox(height: 12),
-                SantoNoticeBarWithButton(
-                  leftTagText: '任务',
-                  content: '这是跑马灯的通知内容这是跑马灯的通知内容这是跑马灯的通知内容',
-                  rightButtonText: '去完成',
-                  marquee: true,
-                  onRightButtonTap: () {
-                    SantoToast.show('点击右侧按钮', context);
-                  },
-                ),
-                const SizedBox(height: 12),
-                SantoNormalButton.outline(
-                  text: '查看更多 WithButton 示例',
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return SantoNoticeBarWithButtonExample();
-                    }));
-                  },
-                ),
-              ],
-            ),
+        ),
+        SantoSection(
+          title: '带按钮通知栏 (SantoNoticeBarWithButton)',
+          description: '带标签与按钮的变体，可跳转查看完整示例',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('高度 56,左侧标签 + 中间通知内容 + 右侧按钮'),
+              const SizedBox(height: 12),
+              SantoNoticeBarWithButton(
+                leftTagText: '任务',
+                content: '这是通知内容',
+                rightButtonText: '去完成',
+                onRightButtonTap: () {
+                  SantoToast.show('点击右侧按钮', context);
+                },
+              ),
+              const SizedBox(height: 12),
+              SantoNoticeBarWithButton(
+                leftTagText: '任务',
+                content: '这是跑马灯的通知内容这是跑马灯的通知内容这是跑马灯的通知内容',
+                rightButtonText: '去完成',
+                marquee: true,
+                onRightButtonTap: () {
+                  SantoToast.show('点击右侧按钮', context);
+                },
+              ),
+              const SizedBox(height: 12),
+              SantoNormalButton.outline(
+                text: '查看更多 WithButton 示例',
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return SantoNoticeBarWithButtonExample();
+                  }));
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

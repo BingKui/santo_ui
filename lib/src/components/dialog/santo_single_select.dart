@@ -152,6 +152,8 @@ class SantoSingleSelectDialogWidgetState
     extends State<SantoSingleSelectDialogWidget> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Scaffold(
         backgroundColor: Color(0x33808695),
         body: Container(
@@ -172,7 +174,8 @@ class SantoSingleSelectDialogWidgetState
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 25, 20, 12),
+                        padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg,
+                            commonConfig.vSpacingLg, commonConfig.hSpacingLg, 12),
                         child: Text(
                           widget.title,
                           style: SantoDialogUtils.getDialogTitleStyle(
@@ -197,7 +200,9 @@ class SantoSingleSelectDialogWidgetState
                                         ? Container(
                                             child: widget.customWidget,
                                             padding: EdgeInsets.only(
-                                                left: 20, right: 20, top: 12),
+                                                left: commonConfig.hSpacingLg,
+                                                right: commonConfig.hSpacingLg,
+                                                top: 12),
                                           )
                                         : const SizedBox.shrink(),
                                   ],
@@ -216,14 +221,20 @@ class SantoSingleSelectDialogWidgetState
                                       ? Container(
                                           child: widget.customWidget,
                                           padding: EdgeInsets.only(
-                                              left: 20, right: 20, top: 12),
+                                              left: commonConfig.hSpacingLg,
+                                              right: commonConfig.hSpacingLg,
+                                              top: 12),
                                         )
                                       : const SizedBox.shrink(),
                                 ],
                               ),
                       ),
                       Padding(
-                          padding: EdgeInsets.fromLTRB(20, 12, 20, 20),
+                          padding: EdgeInsets.fromLTRB(
+                              commonConfig.hSpacingLg,
+                              12,
+                              commonConfig.hSpacingLg,
+                              commonConfig.vSpacingLg),
                           child: GestureDetector(
                             child: Container(
                                 decoration: BoxDecoration(
@@ -232,8 +243,8 @@ class SantoSingleSelectDialogWidgetState
                                       .getConfig()
                                       .commonConfig
                                       .brandPrimary,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(12.0)), //设置四周圆角 角度
+                                  borderRadius: BorderRadius.all(Radius.circular(
+                                      commonConfig.radiusXs)), //设置四周圆角 角度
                                 ),
                                 alignment: Alignment.center,
                                 height: 48,
@@ -241,9 +252,9 @@ class SantoSingleSelectDialogWidgetState
                                 child: Text(widget.submitText,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         color: Colors.white,
-                                        fontSize: 18))),
+                                        fontSize: commonConfig.fontSizeHead))),
                             onTap: () {
                               if (widget.canDismissOnConfirmClick) {
                                 Navigator.of(context).pop();
@@ -267,7 +278,8 @@ class SantoSingleSelectDialogWidgetState
                                 }
                               },
                               child: Padding(
-                                padding: EdgeInsets.all(15),
+                                padding:
+                                    EdgeInsets.all(commonConfig.vSpacingMd),
                                 child: SantoTools.getAssetImage(
                                     SantoAsset.iconPickerClose),
                               )))
@@ -281,16 +293,24 @@ class SantoSingleSelectDialogWidgetState
   /// 若无则以 messageText 生成widget 填充，
   /// 都没设置则为空 Container
   Widget _generateContentWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.messageWidget != null) {
       return Padding(
-        padding: EdgeInsets.only(bottom: 8, left: 20, right: 20),
+        padding: EdgeInsets.only(
+            bottom: commonConfig.vSpacingSm,
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg),
         child: widget.messageWidget,
       );
     }
 
     if (!SantoTools.isEmpty(widget.messageText)) {
       return Padding(
-        padding: EdgeInsets.only(bottom: 8, left: 20, right: 20),
+        padding: EdgeInsets.only(
+            bottom: commonConfig.vSpacingSm,
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg),
         child: Text(
           widget.messageText!,
           style: cContentTextStyle,
@@ -301,6 +321,8 @@ class SantoSingleSelectDialogWidgetState
   }
 
   Widget _buildItem(BuildContext context, int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.conditions == null) {
       return const SizedBox.shrink();
     } else {
@@ -308,7 +330,8 @@ class SantoSingleSelectDialogWidgetState
           child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                commonConfig.hSpacingLg, 0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -331,9 +354,9 @@ class SantoSingleSelectDialogWidgetState
                       style: TextStyle(
                           fontWeight:
                               widget.conditions![index] == widget.checkedItem
-                                  ? FontWeight.w600
+                                  ? FontWeight.w500
                                   : FontWeight.normal,
-                          fontSize: 16,
+                          fontSize: commonConfig.fontSizeSubHead,
                           color: widget.conditions![index] == widget.checkedItem
                               ? SantoThemeConfigurator.instance
                                   .getConfig()
@@ -367,7 +390,9 @@ class SantoSingleSelectDialogWidgetState
           ),
           index != widget.conditions!.length - 1
               ? Padding(
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0), child: SantoLine())
+                  padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                      commonConfig.hSpacingLg, 0),
+                  child: SantoLine())
               : const SizedBox.shrink()
         ],
       ));

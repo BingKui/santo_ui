@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+
 /// Default value of DatePicker's item [TextStyle].
-const TextStyle datetimePickerItemTextStyle = TextStyle(
+final TextStyle datetimePickerItemTextStyle = TextStyle(
   color: Color(0xFF17233D),
-  fontSize: 18.0,
+  fontSize:
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fontSizeHead,
 );
 
 /// Default value of DatePicker's background color.
@@ -22,7 +25,8 @@ const double pickerTitleHeight = 48.0;
 const double pickerItemHeight = 48.0;
 
 /// Default value of DatePicker's item [TextStyle].
-const TextStyle pickerItemTextStyle = TextStyle(
+final TextStyle pickerItemTextStyle = TextStyle(
   color: Color(0xFF17233D),
-  fontSize: 18.0,
+  fontSize:
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fontSizeHead,
 );

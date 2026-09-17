@@ -56,7 +56,7 @@ class _ForceGuideExampleState extends State<ForceGuideExample> {
 
   Widget build(BuildContext context) {
     return WillPopScope(
-      child: Scaffold(
+      child: SantoPageLayout(
         appBar: SantoAppBar(
           title: Text(
             '强引导组件example',
@@ -64,12 +64,11 @@ class _ForceGuideExampleState extends State<ForceGuideExample> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+        // 页面留白与滚动都由 PageLayout 提供
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
                 Text(
                   'SantoSelectTagWidget',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -133,10 +132,9 @@ class _ForceGuideExampleState extends State<ForceGuideExample> {
                 SizedBox(
                   height: 16,
                 ),
-              ],
-            ),
+            ],
           ),
-        ),
+        ],
         floatingActionButton: SantoFab(
           key: intro.keys[6],
 

@@ -127,6 +127,8 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
   ///等宽度的布局
   Widget _buildGridViewWidget(
       BuildContext context, VoidCallback? onUpdate, double maxWidth) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     int santoCrossAxisCount =
         (this.crossAxisCount == null || this.crossAxisCount == 0)
             ? 4
@@ -152,26 +154,33 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
                 .brandPrimary
                 .withAlpha(0x14);
     return Container(
-      padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0, bottom: 0.0),
+      padding: EdgeInsets.only(
+          top: 0.0,
+          left: commonConfig.hSpacingLg,
+          right: commonConfig.hSpacingLg,
+          bottom: 0.0),
       constraints: BoxConstraints(maxHeight: 322, minHeight: 120),
       child: GridView.count(
         shrinkWrap: true,
         crossAxisCount: santoCrossAxisCount,
         //水平子Widget之间间距
-        crossAxisSpacing: 6.0,
+        crossAxisSpacing: commonConfig.hSpacingXs,
         //垂直子Widget之间间距
         mainAxisSpacing: 12.0,
         //宽高比
         childAspectRatio: santoChildAspectRatio,
         //GridView内边距
-        padding:
-            EdgeInsets.only(top: 20.0, left: 0.0, right: 0.0, bottom: 20.0),
+        padding: EdgeInsets.only(
+            top: commonConfig.vSpacingLg,
+            left: 0.0,
+            right: 0.0,
+            bottom: commonConfig.vSpacingLg),
         primary: true,
         children: this._sourceTags.map((choice) {
           bool selected = choice.isSelect;
           Color titleColor = selected ? selectedTagTitleColor : tagTitleColor;
           EdgeInsets edgeInsets = this.tagPickerConfig.chipPadding ??
-              EdgeInsets.all(10);
+              EdgeInsets.all(commonConfig.vSpacingSm);
           return ChoiceChip(
             selected: selected,
             padding: edgeInsets,
@@ -179,7 +188,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
             backgroundColor: tagBackgroundColor,
             selectedColor: selectedTagBackgroundColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0)),
+                borderRadius: BorderRadius.circular(commonConfig.radiusXs)),
             label: Container(
               width: width,
               child: Text(
@@ -190,7 +199,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
                 style: TextStyle(
                     height: 1,
                     color: titleColor,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
                     fontSize: this.tagPickerConfig.tagTitleFontSize),
               ),
             ),
@@ -215,6 +224,8 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
 
   ///流式布局
   Widget _buildWrapViewWidget(BuildContext context, VoidCallback? onUpdate) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     SantoTagConfig tagConfig = SantoThemeConfigurator.instance
         .getConfig(configId: themeData!.configId)
         .tagConfig
@@ -224,7 +235,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
             height: 1,
             color: this.tagPickerConfig.selectedTagTitleColor,
             fontSize: this.tagPickerConfig.tagTitleFontSize,
-            fontWeight: FontWeight.w600),
+            fontWeight: FontWeight.w500),
         tagTextStyle: SantoTextStyle(
             height: 1,
             color: this.tagPickerConfig.tagTitleColor,
@@ -235,17 +246,19 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
             this.tagPickerConfig.selectedTagBackgroudColor));
 
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        padding: EdgeInsets.symmetric(
+            vertical: commonConfig.vSpacingMd,
+            horizontal: commonConfig.hSpacingMd),
         child: Wrap(
-          spacing: 15.0,
-          runSpacing: 15.0,
+          spacing: commonConfig.hSpacingMd,
+          runSpacing: commonConfig.vSpacingMd,
           children: this._sourceTags.map((choice) {
             bool selected = choice.isSelect;
             Color titleColor = selected
                 ? tagConfig.selectTagTextStyle.color!
                 : tagConfig.tagTextStyle.color!;
             EdgeInsets edgeInsets = this.tagPickerConfig.chipPadding ??
-                EdgeInsets.all(10);
+                EdgeInsets.all(commonConfig.vSpacingSm);
             return ChoiceChip(
               selected: selected,
               padding: edgeInsets,
@@ -253,7 +266,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
               backgroundColor: tagConfig.tagBackgroundColor,
               selectedColor: tagConfig.selectedTagBackgroundColor,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)),
+                  borderRadius: BorderRadius.circular(commonConfig.radiusXs)),
               label: Text(
                 onTagValueGetter(choice),
                 textAlign: TextAlign.center,
@@ -262,7 +275,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
                 style: TextStyle(
                     height: 1,
                     color: titleColor,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
                     fontSize: this.tagPickerConfig.tagTitleFontSize),
               ),
               onSelected: (bool value) {

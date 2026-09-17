@@ -8,6 +8,7 @@ import 'package:santo_ui/src/components/selection/widget/santo_selection_single_
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -246,6 +247,8 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
   }
 
   Widget _bottomWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Column(
       children: <Widget>[
         Divider(
@@ -254,12 +257,17 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
         ),
         Container(
           color: Colors.white,
-          padding: EdgeInsets.fromLTRB(8, 11, 20, 11),
+          padding: EdgeInsets.fromLTRB(
+              commonConfig.hSpacingSm,
+              commonConfig.vSpacingSm,
+              commonConfig.hSpacingLg,
+              commonConfig.vSpacingSm),
           child: Row(
             children: <Widget>[
               GestureDetector(
                 child: Container(
-                  padding: EdgeInsets.only(left: 12, right: 20),
+                  padding: EdgeInsets.only(
+                      left: 12, right: commonConfig.hSpacingLg),
                   child: Column(
                     children: <Widget>[
                       Container(

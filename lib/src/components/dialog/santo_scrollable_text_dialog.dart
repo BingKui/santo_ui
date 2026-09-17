@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/dialog/santo_content_export_dialog.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/css/santo_core_funtion.dart';
 import 'package:santo_ui/src/utils/css/santo_css_2_text.dart';
 import 'package:flutter/material.dart';
@@ -109,16 +110,19 @@ class SantoScrollableText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoContentExportWidget(
       Padding(
-        padding: EdgeInsets.fromLTRB(20, 0, 8, 0),
+        padding:
+            EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0, commonConfig.hSpacingSm, 0),
         child: Container(
           constraints: BoxConstraints(maxHeight: 220),
           child: Scrollbar(
             radius: Radius.circular(2.0),
             thickness: 4.0,
             child: Padding(
-              padding: EdgeInsets.only(right: 8),
+              padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
               child: SingleChildScrollView(
                 child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                   SantoCSS2Text.toTextView(contentText,

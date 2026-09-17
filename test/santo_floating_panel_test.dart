@@ -294,20 +294,29 @@ void _scrollOverscrollTests() {
 }
 
 void _safeAreaTests() {
-  testWidgets('useSafeArea 为 true 时内容区底部预留安全区', (tester) async {
+  testWidgets('内容区撑满面板,安全区并入内容的 MediaQuery', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: MediaQuery(
           data: const MediaQueryData(
             size: Size(800, 600),
-            padding: EdgeInsets.only(bottom: 34),
+            padding: EdgeInsets.only(top: 47, bottom: 34),
           ),
           child: Scaffold(
             body: Stack(
               children: [
                 SantoFloatingPanel(
                   anchors: const [200, 400],
-                  child: Container(key: _contentKey, color: Colors.white),
+                  child: Builder(
+                    builder: (innerContext) {
+                      final innerPad = MediaQuery.of(innerContext).padding;
+                      return Container(
+                        key: _contentKey,
+                        color: Colors.white,
+                        child: Text('${innerPad.top}-${innerPad.bottom}'),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -316,12 +325,16 @@ void _safeAreaTests() {
       ),
     );
 
+    // 面板铺到屏幕底部,内容撑满面板;面板内只保留底部安全区
     final panelRect = tester.getRect(find.byKey(_panelKey));
     final contentRect = tester.getRect(find.byKey(_contentKey));
-    expect(panelRect.bottom - contentRect.bottom, 34);
+    final scaffoldRect = tester.getRect(find.byType(Scaffold));
+    expect(panelRect.bottom, scaffoldRect.bottom);
+    expect(contentRect.bottom, panelRect.bottom);
+    expect(find.text('0.0-34.0'), findsOneWidget);
   });
 
-  testWidgets('useSafeArea 为 false 时内容区贴底', (tester) async {
+  testWidgets('滚动内容滚到底时最后一项在安全区之上', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: MediaQuery(
@@ -334,8 +347,12 @@ void _safeAreaTests() {
               children: [
                 SantoFloatingPanel(
                   anchors: const [200, 400],
-                  useSafeArea: false,
-                  child: Container(key: _contentKey, color: Colors.white),
+                  contentDraggable: false,
+                  child: ListView(
+                    key: const ValueKey<String>('list'),
+                    children: List.generate(
+                        30, (i) => SizedBox(height: 40, child: Text('item $i'))),
+                  ),
                 ),
               ],
             ),
@@ -344,8 +361,15 @@ void _safeAreaTests() {
       ),
     );
 
+    await tester.drag(
+      find.byKey(const ValueKey<String>('list')),
+      const Offset(0, -3000),
+    );
+    await tester.pump();
+
     final panelRect = tester.getRect(find.byKey(_panelKey));
-    final contentRect = tester.getRect(find.byKey(_contentKey));
-    expect(panelRect.bottom - contentRect.bottom, 0);
+    final lastItem = tester.getRect(find.text('item 29'));
+    debugPrint('最后一项底部 ${lastItem.bottom} 面板底部 ${panelRect.bottom}');
+    expect(lastItem.bottom, lessThanOrEqualTo(panelRect.bottom - 34));
   });
 }

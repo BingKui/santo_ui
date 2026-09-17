@@ -11,6 +11,7 @@ import 'package:santo_ui/src/components/selection/widget/santo_selection_menu_it
 import 'package:santo_ui/src/components/selection/widget/santo_selection_range_widget.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_event_bus.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
@@ -191,9 +192,11 @@ class _SantoSelectionMenuWidgetState extends State<SantoSelectionMenuWidget> {
   }
 
   List<Widget> _configMenuItems() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> itemViewList = [];
     itemViewList.add(Padding(
-      padding: EdgeInsets.only(left: 14),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
     ));
     for (int index = 0; index < titles.length; index++) {
       if (_needRefreshTitle) {
@@ -203,7 +206,7 @@ class _SantoSelectionMenuWidgetState extends State<SantoSelectionMenuWidget> {
         }
       }
       itemViewList.add(Padding(
-        padding: EdgeInsets.only(left: 6),
+        padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
       ));
       itemViewList.add(SantoSelectionMenuItemWidget(
         title: titles[index],
@@ -271,11 +274,11 @@ class _SantoSelectionMenuWidgetState extends State<SantoSelectionMenuWidget> {
         },
       ));
       itemViewList.add(Padding(
-        padding: EdgeInsets.only(left: 6),
+        padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
       ));
     }
     itemViewList.add(Padding(
-      padding: EdgeInsets.only(left: 14),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
     ));
     return itemViewList;
   }

@@ -52,7 +52,7 @@ class _SantoAppraiseStarListViewState extends State<SantoAppraiseStarListView> {
       }
       if (subTitle?.isNotEmpty ?? false) {
         subWidget = Padding(
-          padding: EdgeInsets.only(top: 8),
+          padding: EdgeInsets.only(top: commonConfig.vSpacingSm),
           child: Text(
             subTitle ?? '',
             style: TextStyle(
@@ -75,11 +75,17 @@ class _SantoAppraiseStarListViewState extends State<SantoAppraiseStarListView> {
   }
 
   Widget _buildStars() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> list = [];
     for (int i = 0; i < widget.count; i++) {
       Widget item = GestureDetector(
         child: Padding(
-          padding: EdgeInsets.only(left: 6, right: 6, top: 4),
+          padding: EdgeInsets.only(
+            left: commonConfig.hSpacingXs,
+            right: commonConfig.hSpacingXs,
+            top: commonConfig.vSpacingXs,
+          ),
           child: (i <= _selectedIndex) ? _selectedStar : _star,
         ),
         onTap: () {

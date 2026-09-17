@@ -14,10 +14,12 @@ class SantoFormUtil {
   /// 获取添加、删除图标
   static Widget buildPrefixIcon(String prefixIconType, bool isEdit,
       BuildContext context, VoidCallback? onAddTap, VoidCallback? onRemoveTap) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Offstage(
       offstage: prefixIconType == SantoPrefixIconType.normal,
       child: Container(
-        padding: EdgeInsets.only(right: 6),
+        padding: EdgeInsets.only(right: commonConfig.hSpacingXs),
         child: GestureDetector(
           onTap: () {
             if (!SantoFormUtil.isEdit(isEdit)) {
@@ -69,6 +71,8 @@ class SantoFormUtil {
   /// 获取问号
   static Widget buildTipLabelWidget(
       String? tipLabel, VoidCallback? onTip, SantoFormItemConfig themeData) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Offstage(
       offstage: (tipLabel == null),
       child: GestureDetector(
@@ -81,7 +85,9 @@ class SantoFormUtil {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-                padding: EdgeInsets.only(left: 6, right: 7),
+                padding: EdgeInsets.only(
+                    left: commonConfig.hSpacingXs,
+                    right: commonConfig.hSpacingXs),
                 child: SantoFormUtil.getQuestionMarkIcon()),
             Container(
               child: Text(
@@ -156,9 +162,11 @@ class SantoFormUtil {
   }
 
   static EdgeInsets computeErrorEdgeInsets(String type, bool isRequire) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return EdgeInsets.only(
-      left: 20,
-      top: 4,
+      left: commonConfig.hSpacingLg,
+      top: commonConfig.vSpacingXs,
     );
   }
 
@@ -378,7 +386,7 @@ class SantoFormUtil {
       {bool isBold = false}) {
     if (isBold) {
       return themeData.headTitleTextStyle
-          .merge(SantoTextStyle(fontWeight: FontWeight.w600))
+          .merge(SantoTextStyle(fontWeight: FontWeight.w500))
           .generateTextStyle();
     }
     return themeData.headTitleTextStyle.generateTextStyle();

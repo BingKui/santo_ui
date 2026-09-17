@@ -109,6 +109,8 @@ class _SantoDeleteTagState extends State<SantoDeleteTag> {
     if (tags.isEmpty) {
       return const SizedBox.shrink();
     }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
 
     List<Widget> itemList = [];
     for (int i = 0; i < tags.length; i++) {
@@ -127,7 +129,7 @@ class _SantoDeleteTagState extends State<SantoDeleteTag> {
     Widget result;
     if (widget.softWrap) {
       result = Wrap(
-        spacing: widget.horizontalSpacing ?? 10,
+        spacing: widget.horizontalSpacing ?? commonConfig.hSpacingSm,
         runSpacing:
             widget.verticalSpacing != null ? widget.verticalSpacing! - 16 : -6,
         alignment: WrapAlignment.start,
@@ -195,8 +197,10 @@ class DeleteTagItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Chip(
-      padding: EdgeInsets.fromLTRB(10, 0, -3, 0),
+      padding: EdgeInsets.fromLTRB(commonConfig.hSpacingSm, 0, -3, 0),
       labelPadding: EdgeInsets.fromLTRB(0, 0, -3, 0),
       backgroundColor: themeData!.tagBackgroundColor,
       label: Text(this.title,

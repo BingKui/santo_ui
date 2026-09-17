@@ -131,7 +131,7 @@ class SantoActionBarButton extends StatelessWidget {
             ],
             if (icon != null) ...[
               icon!,
-              const SizedBox(width: 4),
+              SizedBox(width: common.hSpacingXs),
             ],
             Flexible(
               child: Text(
@@ -165,7 +165,7 @@ class SantoActionBarButton extends StatelessWidget {
               opacity: disabled ? 0.4 : 1,
               child: Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.symmetric(horizontal: common.hSpacingSm),
                 decoration: BoxDecoration(
                   color: background,
                   border: hasCustomColor || type != SantoActionBarButtonType.normal

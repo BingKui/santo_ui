@@ -152,7 +152,9 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 4, right: 8),
+                  padding: EdgeInsets.only(
+                      left: commonConfig.hSpacingXs,
+                      right: commonConfig.hSpacingSm),
                   child: Text(
                     SantoIntl.of(context).localizedResource.selectAll,
                     style: TextStyle(
@@ -198,7 +200,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
         });
       },
       child: Container(
-        padding: EdgeInsets.only(right: 16),
+        padding: EdgeInsets.only(right: commonConfig.hSpacingMd),
         child: Row(
           children: <Widget>[
             Text(
@@ -302,7 +304,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   enabled: value.mainButtonState,
                   onTap: widget.onMainButtonTap,
                   child: Container(
-                    margin: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(left: commonConfig.hSpacingSm),
                     padding: EdgeInsets.only(
                         left: commonConfig.hSpacingSm,
                         right: commonConfig.hSpacingSm),
@@ -349,7 +351,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   enabled: value.subButtonState,
                   onTap: widget.onSubButtonTap,
                   child: Container(
-                    margin: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(left: commonConfig.hSpacingSm),
                     padding: EdgeInsets.only(
                         left: commonConfig.hSpacingSm,
                         right: commonConfig.hSpacingSm),

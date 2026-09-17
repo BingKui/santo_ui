@@ -14,6 +14,7 @@ import 'package:santo_ui/src/components/toast/santo_toast.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_event_bus.dart';
 import 'package:santo_ui/src/utils/santo_text_util.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
@@ -220,6 +221,8 @@ class _SantoRangeSelectionGroupWidgetState
   }
 
   List<Widget> _getOneTabContent(SantoSelectionEntity filterItem) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<SantoSelectionEntity> subFilterList = filterItem.children;
 
     /// TODO 还要添加 Date  DateRange 类型的判断。
@@ -272,7 +275,11 @@ class _SantoRangeSelectionGroupWidgetState
     var tagContainer = tagFilterList.isNotEmpty
         ? Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+            padding: EdgeInsets.only(
+                left: commonConfig.hSpacingLg,
+                right: commonConfig.hSpacingLg,
+                top: commonConfig.vSpacingLg,
+                bottom: commonConfig.vSpacingLg),
             child: SantoSelectionRangeTagWidget(
                 tagWidth: tagWidth,
                 tagFilterList: tagFilterList,
@@ -373,14 +380,21 @@ class _SantoRangeSelectionGroupWidgetState
   }
 
   Widget _bottomWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.fromLTRB(8, 11, 20, 11),
+      padding: EdgeInsets.fromLTRB(
+          commonConfig.hSpacingSm,
+          commonConfig.vSpacingSm,
+          commonConfig.hSpacingLg,
+          commonConfig.vSpacingSm),
       child: Row(
         children: <Widget>[
           GestureDetector(
             child: Container(
-              padding: EdgeInsets.only(left: 12, right: 20),
+              padding: EdgeInsets.only(
+                  left: 12, right: commonConfig.hSpacingLg),
               child: Column(
                 children: <Widget>[
                   Container(

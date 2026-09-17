@@ -8,46 +8,42 @@ class ShareExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Share 分享',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 12),
-          SantoSection(
-            title: '单行 7 项',
-            description: '预设渠道 + 自定义渠道混合,取消按钮文案可自定义',
-            child: _buildTrigger(
-              text: '分享（7 项）',
-              onTap: () => _showSevenStyle(context),
-            ),
+      children: <Widget>[
+        SantoSection(
+          title: '单行 7 项',
+          description: '预设渠道 + 自定义渠道混合,取消按钮文案可自定义',
+          child: _buildTrigger(
+            text: '分享（7 项）',
+            onTap: () => _showSevenStyle(context),
           ),
-          SantoSection(
-            title: '双行 8 项',
-            description:
-                '第一行为可点击渠道,第二行为不可点击渠道;配置 clickInterceptor 拦截不可点击项',
-            child: _buildTrigger(
-              text: '分享（双行 8 项）',
-              onTap: () => _showFourStyle(context),
-            ),
+        ),
+        SantoSection(
+          title: '双行 8 项',
+          description:
+              '第一行为可点击渠道,第二行为不可点击渠道;配置 clickInterceptor 拦截不可点击项',
+          child: _buildTrigger(
+            text: '分享（双行 8 项）',
+            onTap: () => _showFourStyle(context),
           ),
-          SantoSection(
-            title: '双行 3 项',
-            description: '预设渠道与自定义渠道分两行展示',
-            child: _buildTrigger(
-              text: '分享（双行 3 项）',
-              onTap: () => _showThreeStyle(context),
-            ),
+        ),
+        SantoSection(
+          title: '双行 3 项',
+          description: '预设渠道与自定义渠道分两行展示',
+          child: _buildTrigger(
+            text: '分享（双行 3 项）',
+            onTap: () => _showThreeStyle(context),
           ),
-          SantoSection(
-            title: '单行 2 项',
-            description: '仅两个渠道时面板高度自适应',
-            child: _buildTrigger(
-              text: '分享（2 项）',
-              onTap: () => _showTwoStyle(context),
-            ),
+        ),
+        SantoSection(
+          title: '单行 2 项',
+          description: '仅两个渠道时面板高度自适应',
+          child: _buildTrigger(
+            text: '分享（2 项）',
+            onTap: () => _showTwoStyle(context),
           ),
-          SizedBox(height: 12),
-        ],
-      ),
+        ),
+        SizedBox(height: 12),
+      ],
     );
   }
 

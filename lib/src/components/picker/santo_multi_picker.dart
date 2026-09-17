@@ -213,6 +213,8 @@ class _SantoMultiDataPickerState extends State<SantoMultiDataPicker> {
   }
 
   List<Widget> _pickersWithTitle() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> pickersWithTitle = [];
     for (int i = 0; i < widget.delegate.numberOfComponent(); i++) {
       int initRow = widget.delegate.initSelectedRowForComponent(i);
@@ -228,7 +230,7 @@ class _SantoMultiDataPickerState extends State<SantoMultiDataPicker> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 25),
+                  padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
                   child: Text(
                     widget.pickerTitles == null ? '' : widget.pickerTitles![i],
                     style: TextStyle(

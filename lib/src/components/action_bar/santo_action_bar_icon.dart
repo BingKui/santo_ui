@@ -103,7 +103,7 @@ class SantoActionBarIcon extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               iconWidget,
-              const SizedBox(height: 4),
+              SizedBox(height: common.vSpacingXs),
               label,
             ],
           ),

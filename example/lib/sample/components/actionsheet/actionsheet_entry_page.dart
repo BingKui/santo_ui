@@ -24,69 +24,66 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
       appBar: SantoAppBar(
           title: widget.title,
         ),
-      scrollable: false,
-      child: ListView(
-          children: <Widget>[
-            ListItem(
-              title: "CommonActionSheet",
-              isShowLine: false,
-              describe: '通用样式ActionSheet，无独立辅助信息',
-              onPressed: () {
-                _showCommonStylex();
-              },
-            ),
-            ListItem(
-              title: "CommonActionSheet",
-              isShowLine: false,
-              describe: '通用样式ActionSheet，包含描述信息',
-              onPressed: () {
-                _showCommonStyle(context);
-              },
-            ),
-            ListItem(
-              title: "CommonActionSheet",
-              describe: '通用样式ActionSheet，不包含描述信息',
-              onPressed: () {
-                _showCommonStyle1(context);
-              },
-            ),
-            ListItem(
-              title: "CommonActionSheet",
-              describe: '蓝色样式ActionSheet，不包含描述信息',
-              onPressed: () {
-                _showCommonStyle2(context);
-              },
-            ),
-            ListItem(
-              title: "CommonActionSheet",
-              describe: '通用样式ActionSheet，自定义textstyle',
-              onPressed: () {
-                _showCommonCustomStyle(context);
-              },
-            ),
-            ListItem(
-              title: "CommonActionSheet",
-              describe: '通用样式ActionSheet，选项名动态变化',
-              onPressed: () {
-                _showChangeableStyle(context);
-              },
-            ),
-            ListItem(
-              title: "已选菜单列表",
-              describe: '已选菜单列表',
-              onPressed: () {
-                _showSelectedListActionSheet(context);
-              },
-            ),
-            ListItem(
-              title: "已选菜单列表自定义视图",
-              describe: '已选菜单列表自定义视图',
-              onPressed: () {
-                _showCustomSelectedListActionSheet(context);
-              },
-            ),
-          ],
-        ),
+        children: <Widget>[
+          ListItem(
+            title: "CommonActionSheet",
+            isShowLine: false,
+            describe: '通用样式ActionSheet，无独立辅助信息',
+            onPressed: () {
+              _showCommonStylex();
+            },
+          ),
+          ListItem(
+            title: "CommonActionSheet",
+            isShowLine: false,
+            describe: '通用样式ActionSheet，包含描述信息',
+            onPressed: () {
+              _showCommonStyle(context);
+            },
+          ),
+          ListItem(
+            title: "CommonActionSheet",
+            describe: '通用样式ActionSheet，不包含描述信息',
+            onPressed: () {
+              _showCommonStyle1(context);
+            },
+          ),
+          ListItem(
+            title: "CommonActionSheet",
+            describe: '蓝色样式ActionSheet，不包含描述信息',
+            onPressed: () {
+              _showCommonStyle2(context);
+            },
+          ),
+          ListItem(
+            title: "CommonActionSheet",
+            describe: '通用样式ActionSheet，自定义textstyle',
+            onPressed: () {
+              _showCommonCustomStyle(context);
+            },
+          ),
+          ListItem(
+            title: "CommonActionSheet",
+            describe: '通用样式ActionSheet，选项名动态变化',
+            onPressed: () {
+              _showChangeableStyle(context);
+            },
+          ),
+          ListItem(
+            title: "已选菜单列表",
+            describe: '已选菜单列表',
+            onPressed: () {
+              _showSelectedListActionSheet(context);
+            },
+          ),
+          ListItem(
+            title: "已选菜单列表自定义视图",
+            describe: '已选菜单列表自定义视图',
+            onPressed: () {
+              _showCustomSelectedListActionSheet(context);
+            },
+          ),
+        ],
     );
   }
 

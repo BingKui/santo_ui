@@ -204,9 +204,11 @@ class SantoTitleSelectInputFormItemState
   }
 
   Widget _buildMenuWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
         key: _globalKey,
-        padding: EdgeInsets.only(right: 4),
+        padding: EdgeInsets.only(right: commonConfig.hSpacingXs),
         child: GestureDetector(
           onTap: () {
             if (!widget.isEdit) {
@@ -362,12 +364,15 @@ class TitleSelectPopWidget extends StatefulWidget {
 class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> showList = [];
     for (int i = 0, n = widget.selectList.length; i < n; ++i) {
       showList.add(selectItem(widget.selectList[i], i, i == n - 1));
     }
     return Container(
-      padding: EdgeInsets.only(left: 16, right: 16),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingMd, right: commonConfig.hSpacingMd),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -379,7 +384,7 @@ class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
         color: Colors.white,
         border: Border.all(
             color: widget.themeData!.commonConfig.dividerColorBase, width: 0.5),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(commonConfig.radiusXs)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -391,6 +396,8 @@ class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
 
   Widget selectItem(String item, int index, bool isLast) {
     bool isSelected = widget.selectedIndex == index;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
 
     if (index == 0 && widget.selectedIndex == -1) {
       isSelected = true;
@@ -405,9 +412,10 @@ class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
         Navigator.of(context).pop();
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 0, right: 0, top: 8),
+        padding: EdgeInsets.only(left: 0, right: 0, top: commonConfig.vSpacingSm),
         child: Container(
-          padding: EdgeInsets.only(left: 0, right: 0, bottom: 8),
+          padding:
+              EdgeInsets.only(left: 0, right: 0, bottom: commonConfig.vSpacingSm),
           decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
@@ -424,7 +432,7 @@ class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
                   ? widget.themeData!.commonConfig.brandPrimary
                   : widget.themeData!.commonConfig.colorTextBase,
               fontWeight: FontWeight.w500,
-              fontSize: 16,
+              fontSize: commonConfig.fontSizeSubHead,
             ),
           ),
         ),

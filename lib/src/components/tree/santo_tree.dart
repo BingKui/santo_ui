@@ -171,6 +171,8 @@ class _SantoTreeState extends State<SantoTree> {
   /// 构建单个节点
   Widget _buildNodeItem(SantoTreeNode node, int level) {
     final isSelected = _selectedValues.contains(node.value);
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
 
     // 如果提供了自定义构建器
     if (widget.nodeBuilder != null) {
@@ -183,7 +185,7 @@ class _SantoTreeState extends State<SantoTree> {
 
     return Container(
       height: widget.nodeHeight,
-      padding: EdgeInsets.only(left: level * widget.indentWidth + 12),
+      padding: EdgeInsets.only(left: level * widget.indentWidth + commonConfig.pageGap),
       child: Row(
         children: [
           // 展开/收起图标
@@ -216,7 +218,7 @@ class _SantoTreeState extends State<SantoTree> {
               child: Container(
                 width: 20,
                 height: 20,
-                margin: const EdgeInsets.only(right: 8),
+                margin: EdgeInsets.only(right: commonConfig.hSpacingSm),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: isSelected
@@ -224,7 +226,7 @@ class _SantoTreeState extends State<SantoTree> {
                         : const Color(0xFFDCDEE2),
                     width: 1.5,
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(commonConfig.radiusXs),
                   color: isSelected ? _activeColor : Colors.transparent,
                 ),
                 child: isSelected
@@ -239,7 +241,7 @@ class _SantoTreeState extends State<SantoTree> {
           // 自定义图标
           if (node.icon != null)
             Padding(
-              padding: const EdgeInsets.only(right: 6),
+              padding: EdgeInsets.only(right: commonConfig.hSpacingXs),
               child: Icon(
                 node.icon,
                 size: 18,
@@ -254,12 +256,12 @@ class _SantoTreeState extends State<SantoTree> {
               child: Text(
                 node.label,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: commonConfig.fontSizeBase,
                   color: isSelected
                       ? _activeColor
                       : const Color(0xFF17233D),
                   fontWeight:
-                      isSelected ? FontWeight.w600 : FontWeight.normal,
+                      isSelected ? FontWeight.w500 : FontWeight.normal,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

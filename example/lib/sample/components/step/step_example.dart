@@ -9,10 +9,9 @@ import 'package:flutter/material.dart';
 class StepExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: "步骤条示例",
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: "步骤条示例",
+        children: <Widget>[
           ListItem(
             title: "横向步骤条",
             isShowLine: false,
@@ -37,7 +36,6 @@ class StepExample extends StatelessWidget {
             },
           ),
         ],
-      ),
     );
   }
 }

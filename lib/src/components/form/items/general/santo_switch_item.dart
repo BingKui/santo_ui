@@ -95,6 +95,8 @@ class SantoSwitchFormItemState extends State<SantoSwitchFormItem> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -117,7 +119,8 @@ class SantoSwitchFormItemState extends State<SantoSwitchFormItem> {
                       Offstage(
                         offstage: (widget.prefixIconType == SantoPrefixIconType.normal),
                         child: Container(
-                          padding: EdgeInsets.only(right: 6),
+                          padding:
+                              EdgeInsets.only(right: commonConfig.hSpacingXs),
                           child: GestureDetector(
                             onTap: () {
 
@@ -153,7 +156,9 @@ class SantoSwitchFormItemState extends State<SantoSwitchFormItem> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                  padding: EdgeInsets.only(left:6, right: 7),
+                                  padding: EdgeInsets.only(
+                                      left: commonConfig.hSpacingXs,
+                                      right: commonConfig.hSpacingXs),
                                   child: SantoFormUtil.getQuestionMarkIcon()
                               ),
 

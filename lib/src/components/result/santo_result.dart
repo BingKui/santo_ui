@@ -117,19 +117,19 @@ class SantoResult extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                   color: commonConfig.colorTextBase,
                 ),
               ),
             ],
             // 描述
             if (description != null) ...[
-              const SizedBox(height: 12),
+              SizedBox(height: commonConfig.pageGap),
               Text(
                 description!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: commonConfig.fontSizeBase,
                   color: commonConfig.colorTextSecondary,
                 ),
               ),
@@ -141,7 +141,8 @@ class SantoResult extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: actions!.map((action) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: commonConfig.hSpacingSm),
                     child: action,
                   );
                 }).toList(),

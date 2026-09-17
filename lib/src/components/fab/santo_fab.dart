@@ -254,6 +254,8 @@ class SantoFab extends StatelessWidget {
 
   /// 构建扩展形按钮
   Widget _buildExtended(Color bgColor, Color iColor, Color tColor) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return _buildRoundedBody(
       bgColor,
       Padding(
@@ -263,7 +265,8 @@ class SantoFab extends StatelessWidget {
           children: [
             if (icon != null)
               Padding(
-                padding: EdgeInsets.only(right: text != null ? 8 : 0),
+                padding:
+                    EdgeInsets.only(right: text != null ? commonConfig.hSpacingSm : 0),
                 child: Icon(icon, color: iColor, size: size * 0.4),
               ),
             if (text != null)

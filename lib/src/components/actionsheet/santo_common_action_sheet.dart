@@ -137,6 +137,8 @@ class SantoCommonActionSheet extends StatelessWidget {
 
   /// 构建actionSheet的按钮
   Widget _configActionWidgets(BuildContext context, double _maxSheetHeight) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> widgets = [];
     // 构建整体标题
     if (titleWidget != null) {
@@ -150,8 +152,8 @@ class SantoCommonActionSheet extends StatelessWidget {
     // 添加间隔
     widgets.add(Divider(
       color: spaceColor,
-      thickness: 8,
-      height: 8,
+      thickness: commonConfig.vSpacingSm,
+      height: commonConfig.vSpacingSm,
     ));
     widgets.add(_configCancelAction(context));
 
@@ -277,6 +279,8 @@ class SantoCommonActionSheet extends StatelessWidget {
 
   /// 构建取消操作按钮
   Widget _configCancelAction(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -284,7 +288,8 @@ class SantoCommonActionSheet extends StatelessWidget {
       },
       child: Container(
         color: Color(0xffffffff),
-        padding: EdgeInsets.only(top: 12, bottom: 12),
+        padding: EdgeInsets.only(
+            top: commonConfig.pageGap, bottom: commonConfig.pageGap),
         child: Center(
           child: Text(
             cancelTitle ?? SantoIntl.of(context).localizedResource.cancel,

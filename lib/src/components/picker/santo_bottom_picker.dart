@@ -219,6 +219,8 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
   }
 
   Widget _buildDefaultConfirm(String string) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Text(
       string,
       style: TextStyle(
@@ -226,12 +228,14 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
               .getConfig()
               .commonConfig
               .brandPrimary,
-          fontSize: 16.0),
+          fontSize: commonConfig.fontSizeSubHead),
       textAlign: TextAlign.right,
     );
   }
 
   Widget _buildDefaultCancel(String? string) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Text(
       string ?? SantoIntl.of(context).localizedResource.cancel,
       style: TextStyle(
@@ -239,7 +243,7 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
               .getConfig()
               .commonConfig
               .colorTextBase,
-          fontSize: 16.0),
+          fontSize: commonConfig.fontSizeSubHead),
       textAlign: TextAlign.right,
     );
   }

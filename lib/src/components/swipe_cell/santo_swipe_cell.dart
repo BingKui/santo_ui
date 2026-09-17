@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 滑动方向:打开哪一侧的操作面板
 enum SantoSwipeDirection {
@@ -274,6 +275,8 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
     SantoSwipeCellAction action,
     SantoSwipeDirection direction,
   ) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return ClipRRect(
       borderRadius: BorderRadius.circular(action.radius),
       child: SizedBox(
@@ -291,7 +294,7 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
                     action.label,
                     style: TextStyle(
                       color: action.textColor ?? Colors.white,
-                      fontSize: 14,
+                      fontSize: commonConfig.fontSizeBase,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/tag/santo_tag_custom.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -31,9 +32,15 @@ class SantoStateTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoTagCustom(
       tagText: tagText,
-      textPadding: EdgeInsets.only(bottom: 0, left: 4, right: 4, top: 0),
+      textPadding: EdgeInsets.only(
+          bottom: 0,
+          left: commonConfig.hSpacingXs,
+          right: commonConfig.hSpacingXs,
+          top: 0),
       textColor: textColor ?? getTagColor(tagState),
       backgroundColor:
           backgroundColor ?? getTagColor(tagState).withOpacity(0.1),

@@ -99,6 +99,8 @@ class SantoSidebar extends StatelessWidget {
   Widget _buildItem(int index) {
     final isSelected = index == selectedIndex;
     final label = items[index];
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
 
     return GestureDetector(
       onTap: () {
@@ -130,13 +132,13 @@ class SantoSidebar extends StatelessWidget {
                   style: isSelected
                       ? (activeTextStyle ??
                           TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                            fontSize: commonConfig.fontSizeBase,
+                            fontWeight: FontWeight.w500,
                             color: _activeColor,
                           ))
                       : (textStyle ??
                           TextStyle(
-                            fontSize: 14,
+                            fontSize: commonConfig.fontSizeBase,
                             color: _inactiveColor,
                           )),
                   maxLines: 1,

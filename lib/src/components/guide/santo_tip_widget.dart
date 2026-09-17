@@ -66,6 +66,8 @@ class SantoTipInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Color borderColor =
         mode == GuideMode.force ? Colors.transparent : Color(0xFFCCCCCC);
     if (direction == GuideDirection.bottomLeft ||
@@ -79,8 +81,8 @@ class SantoTipInfoWidget extends StatelessWidget {
                 ? Alignment.bottomRight
                 : Alignment.bottomLeft,
             padding: direction == GuideDirection.bottomLeft
-                ? EdgeInsets.only(right: arrowPadding ?? 12)
-                : EdgeInsets.only(left: arrowPadding ?? 12),
+                ? EdgeInsets.only(right: arrowPadding ?? commonConfig.pageGap)
+                : EdgeInsets.only(left: arrowPadding ?? commonConfig.pageGap),
             child: CustomPaint(
               size: Size(14.0, 6.0),
               painter: CustomTrianglePainter(
@@ -102,8 +104,8 @@ class SantoTipInfoWidget extends StatelessWidget {
                 ? Alignment.topRight
                 : Alignment.topLeft,
             padding: direction == GuideDirection.topLeft
-                ? EdgeInsets.only(right: arrowPadding ?? 12)
-                : EdgeInsets.only(left: arrowPadding ?? 12),
+                ? EdgeInsets.only(right: arrowPadding ?? commonConfig.pageGap)
+                : EdgeInsets.only(left: arrowPadding ?? commonConfig.pageGap),
             child: CustomPaint(
               size: Size(14.0, 6.0),
               painter: CustomTrianglePainter(
@@ -121,7 +123,7 @@ class SantoTipInfoWidget extends StatelessWidget {
           _buildContent(context),
           Container(
             alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(top: 12),
+            padding: EdgeInsets.only(top: commonConfig.pageGap),
             child: CustomPaint(
               size: Size(6.0, 14.0),
               painter: CustomTrianglePainter(
@@ -140,7 +142,7 @@ class SantoTipInfoWidget extends StatelessWidget {
           _buildContent(context),
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(top: 12),
+            padding: EdgeInsets.only(top: commonConfig.pageGap),
             child: CustomPaint(
               size: Size(6, 14.0),
               painter: CustomTrianglePainter(
@@ -173,7 +175,10 @@ class SantoTipInfoWidget extends StatelessWidget {
             : Border.all(color: Color(0xFFCCCCCC), width: 0.5),
       ),
       width: width,
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: 14),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingMd,
+          right: commonConfig.hSpacingMd,
+          bottom: commonConfig.vSpacingMd),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -187,10 +192,12 @@ class SantoTipInfoWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (info.imgUrl.isEmpty) return Row();
     double imageSize = width - 16;
     return Padding(
-      padding: EdgeInsets.only(top: 14),
+      padding: EdgeInsets.only(top: commonConfig.vSpacingMd),
       child: Image.network(info.imgUrl,
           width: imageSize, height: imageSize, fit: BoxFit.cover),
     );
@@ -201,7 +208,7 @@ class SantoTipInfoWidget extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 18,
-      margin: EdgeInsets.only(top: 14),
+      margin: EdgeInsets.only(top: commonConfig.vSpacingMd),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -240,7 +247,7 @@ class SantoTipInfoWidget extends StatelessWidget {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
-      padding: EdgeInsets.only(top: 6),
+      padding: EdgeInsets.only(top: commonConfig.vSpacingXs),
       child: Text('${info.message}',
           style: TextStyle(
               fontSize: commonConfig.fontSizeBase,
@@ -256,7 +263,7 @@ class SantoTipInfoWidget extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 32,
-      margin: EdgeInsets.only(top: 12),
+      margin: EdgeInsets.only(top: commonConfig.pageGap),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -290,7 +297,9 @@ class SantoTipInfoWidget extends StatelessWidget {
                 ? GestureDetector(
                     onTap: () {},
                     child: Container(
-                      padding: EdgeInsets.only(left: 14, right: 14),
+                      padding: EdgeInsets.only(
+                          left: commonConfig.hSpacingMd,
+                          right: commonConfig.hSpacingMd),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         color: SantoThemeConfigurator.instance
@@ -329,7 +338,7 @@ class SantoTipInfoWidget extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 20,
-      margin: EdgeInsets.only(top: 12),
+      margin: EdgeInsets.only(top: commonConfig.pageGap),
       child: Stack(
         children: <Widget>[
           Positioned(

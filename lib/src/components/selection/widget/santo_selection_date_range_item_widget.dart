@@ -6,6 +6,7 @@ import 'package:santo_ui/src/components/selection/controller/santo_selection_vie
 import 'package:santo_ui/src/components/selection/widget/santo_selection_datepicker_animate_widget.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -88,14 +89,19 @@ class _SantoSelectionDateRangeItemWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg,
+            bottom: commonConfig.vSpacingLg),
         child: Column(
           children: <Widget>[
             widget.isNeedTitle
                 ? Container(
-                    margin: EdgeInsets.only(bottom: 5),
+                    margin: EdgeInsets.only(bottom: commonConfig.vSpacingXs),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.item.title.isEmpty ? SantoIntl.of(context).localizedResource.customRange : widget.item.title,

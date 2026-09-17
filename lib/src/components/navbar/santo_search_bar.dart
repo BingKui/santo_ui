@@ -263,7 +263,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
         Visibility(
           visible: widget.showDivider,
           child: Padding(
-            padding: const EdgeInsets.only(right: 12),
+            padding: EdgeInsets.only(right: commonConfig.pageGap),
             child: Container(
               height: 16,
               width: 1,
@@ -276,7 +276,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 8.0),
+                padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
                 child:
                     SantoTools.getAssetSizeImage(SantoAsset.iconSearch, 16, 16),
               ),
@@ -303,7 +303,8 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                     decoration: InputDecoration(
                       // 边框属性，装饰的容器周围绘制的形状。
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(right: 6),
+                      contentPadding:
+                          EdgeInsets.only(right: commonConfig.hSpacingXs),
                       // 填充颜色属性，填充装饰容器的颜色。
                       fillColor: Colors.transparent,
                       // 是密集属性，输入子项是否是密集形式的一部分（即使用较少的垂直空间）。
@@ -349,8 +350,8 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                   visible: _controller.text.isNotEmpty,
                   child: Padding(
                     padding: EdgeInsets.only(
-                        right: valueNotifier.value ? 24 : 20,
-                        left: valueNotifier.value ? 24 : 20),
+                        right: commonConfig.hSpacingLg,
+                        left: commonConfig.hSpacingLg),
                     child: Image.asset(
                       'assets/${SantoAsset.iconDeleteText}',
                       color: _defaultClearIconColor,
@@ -404,11 +405,16 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
 
   Widget _createLeading() {
     if (widget.leading is String) {
+      final commonConfig =
+          SantoThemeConfigurator.instance.getConfig().commonConfig;
       return Padding(
-        padding: EdgeInsets.only(right: 16),
+        padding: EdgeInsets.only(right: commonConfig.hSpacingMd),
         child: Text(
           widget.leading,
-          style: TextStyle(color: Colors.white, height: 1, fontSize: 16),
+          style: TextStyle(
+              color: Colors.white,
+              height: 1,
+              fontSize: commonConfig.fontSizeSubHead),
         ),
       );
     }

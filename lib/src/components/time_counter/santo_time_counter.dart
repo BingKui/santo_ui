@@ -294,7 +294,7 @@ class _SantoTimeCounterState extends State<SantoTimeCounter> {
     final defaultStyle = widget.textStyle ??
         TextStyle(
           fontSize: 24,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w500,
           color: SantoThemeConfigurator.instance
               .getConfig()
               .commonConfig

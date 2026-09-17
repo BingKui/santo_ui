@@ -79,8 +79,8 @@ class SantoFooter extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(
-          16, topPadding, 16, bottomPadding),
+      padding: EdgeInsets.fromLTRB(commonConfig.hSpacingMd, topPadding,
+          commonConfig.hSpacingMd, bottomPadding),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,7 +105,7 @@ class SantoFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: textStyle ??
                   TextStyle(
-                    fontSize: 12,
+                    fontSize: commonConfig.fontSizeCaption,
                     color: commonConfig.colorTextSecondary,
                   ),
             ),
@@ -119,7 +119,7 @@ class SantoFooter extends StatelessWidget {
     final List<Widget> items = [];
     final linkTextStyle = linkStyle ??
         TextStyle(
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
           color: commonConfig.colorLink ?? commonConfig.brandPrimary,
         );
     final dividerColor = commonConfig.dividerColorBase;
@@ -128,7 +128,7 @@ class SantoFooter extends StatelessWidget {
       if (i > 0) {
         items.add(
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: commonConfig.pageGap),
             child: Container(
               width: 1,
               height: 14,

@@ -78,16 +78,18 @@ class SantoSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final Color active = activeColor ?? _brandPrimary;
     final Color inactive = inactiveColor ?? const Color(0xFFE0E0E0);
 
     if (_isRange) {
-      return _buildRangeSlider(active, inactive);
+      return _buildRangeSlider(active, inactive, commonConfig.fontSizeCaption);
     }
-    return _buildSingleSlider(active, inactive);
+    return _buildSingleSlider(active, inactive, commonConfig.fontSizeCaption);
   }
 
-  Widget _buildSingleSlider(Color active, Color inactive) {
+  Widget _buildSingleSlider(Color active, Color inactive, double indicatorFontSize) {
     return SliderTheme(
       data: SliderThemeData(
         activeTrackColor: active,
@@ -102,9 +104,9 @@ class SantoSlider extends StatelessWidget {
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
         valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-        valueIndicatorTextStyle: const TextStyle(
+        valueIndicatorTextStyle: TextStyle(
           color: Colors.white,
-          fontSize: 12,
+          fontSize: indicatorFontSize,
         ),
       ),
       child: Slider(
@@ -125,7 +127,7 @@ class SantoSlider extends StatelessWidget {
     );
   }
 
-  Widget _buildRangeSlider(Color active, Color inactive) {
+  Widget _buildRangeSlider(Color active, Color inactive, double indicatorFontSize) {
     return SliderTheme(
       data: SliderThemeData(
         activeTrackColor: active,
@@ -140,9 +142,9 @@ class SantoSlider extends StatelessWidget {
         showValueIndicator: showLabel
             ? ShowValueIndicator.always
             : ShowValueIndicator.never,
-        valueIndicatorTextStyle: const TextStyle(
+        valueIndicatorTextStyle: TextStyle(
           color: Colors.white,
-          fontSize: 12,
+          fontSize: indicatorFontSize,
         ),
       ),
       child: RangeSlider(

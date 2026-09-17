@@ -85,6 +85,8 @@ class SantoTitleFormItem extends StatefulWidget {
 class SantoTitleFormItemState extends State<SantoTitleFormItem> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -131,7 +133,8 @@ class SantoTitleFormItemState extends State<SantoTitleFormItem> {
                       SantoFormUtil.notifyTap(context, widget.onTap);
                     },
                     child: Container(
-                        padding: EdgeInsets.only(right: 20),
+                        padding:
+                            EdgeInsets.only(right: commonConfig.hSpacingLg),
                         child: Text(
                           widget.operationLabel ?? "",
                           style: TextStyle(

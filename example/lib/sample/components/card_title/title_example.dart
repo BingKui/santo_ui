@@ -11,10 +11,9 @@ import 'package:flutter/material.dart';
 class TitleExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: "标题示例",
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: "标题示例",
+        children: <Widget>[
           ListItem(
             title: "普通标题",
             isShowLine: false,
@@ -61,7 +60,6 @@ class TitleExample extends StatelessWidget {
             },
           ),
         ],
-      ),
     );
   }
 }

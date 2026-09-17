@@ -12,6 +12,9 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 /// 使用方式:作为 [Stack] 的整屏子节点(或 `Positioned.fill`),面板占满父级、
 /// 自身贴底渲染,只有面板区域参与手势,其余区域的事件照常落到下层页面。
 ///
+/// 面板背景铺到屏幕底部(包含底部安全区域);内容区底部固定预留底部安全区,
+/// 最后一段内容展示在安全区之上,内容显式传入 `padding` 时同样生效
+///
 /// 示例:
 /// ```dart
 /// Stack(
@@ -59,9 +62,6 @@ class SantoFloatingPanel extends StatefulWidget {
   /// 内容为可滚动组件时,内容滚动到顶部/底部后继续拖拽才会接管为高度变化
   final bool contentDraggable;
 
-  /// 是否适配底部安全区(在内容区域底部预留安全区高度)
-  final bool useSafeArea;
-
   /// 拖动结束后的高度回调,回调值为吸附后的最终高度
   final ValueChanged<double>? onHeightChange;
 
@@ -81,7 +81,6 @@ class SantoFloatingPanel extends StatefulWidget {
     this.magnetic = true,
     this.draggable = true,
     this.contentDraggable = true,
-    this.useSafeArea = true,
     this.onHeightChange,
     this.backgroundColor,
     this.radius,
@@ -256,9 +255,9 @@ class _SantoFloatingPanelState extends State<SantoFloatingPanel>
   @override
   Widget build(BuildContext context) {
     final config = _commonConfig;
-    final double safeAreaBottom = widget.useSafeArea
-        ? MediaQuery.of(context).padding.bottom
-        : 0;
+    final double panelRadius = widget.radius ?? config.radiusLg;
+    // 底部安全区:固定预留,不可配置
+    final double safeAreaBottom = MediaQuery.of(context).padding.bottom;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -274,30 +273,49 @@ class _SantoFloatingPanelState extends State<SantoFloatingPanel>
 
         return Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: SizedBox(
             key: SantoFloatingPanel.panelKey,
             height: currentHeight,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: widget.backgroundColor ?? config.fillBase,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(widget.radius ?? config.radiusLg),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ?_buildDragArea(anchors, minHeight, maxHeight, currentHeight),
-                Expanded(
-                  child: _buildContentArea(
-                    anchors,
-                    minHeight,
-                    maxHeight,
-                    currentHeight,
-                    safeAreaBottom,
-                  ),
+            // 面板本体:外层只画顶部阴影,内层用 Material 承载背景色与圆角,
+            // 这样面板内的 ListTile 等控件能拿到 Material ancestor
+            // 面板背景包含底部安全区域,内容区在其上方避让
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(panelRadius),
                 ),
-              ],
+                boxShadow: const <BoxShadow>[
+                  BoxShadow(
+                    color: Color(0x14000000),
+                    blurRadius: 12,
+                    offset: Offset(0, -4),
+                  ),
+                ],
+              ),
+              child: Material(
+                color: widget.backgroundColor ?? config.fillBase,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(panelRadius),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ?_buildDragArea(
+                        anchors, minHeight, maxHeight, currentHeight),
+                    Expanded(
+                      child: _buildContentArea(
+                        anchors,
+                        minHeight,
+                        maxHeight,
+                        currentHeight,
+                        safeAreaBottom,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         );
@@ -356,10 +374,15 @@ class _SantoFloatingPanelState extends State<SantoFloatingPanel>
     double currentHeight,
     double safeAreaBottom,
   ) {
+    // 内容区撑满面板(内容一直展示到面板底部);
+    // 面板内只保留底部安全区:把内容的 MediaQuery padding 置为"仅底部安全区",
+    // 由内容自身的滚动避让——滚到底时最后一段内容展示在安全区之上
     Widget content = widget.child;
     if (safeAreaBottom > 0) {
-      content = Padding(
-        padding: EdgeInsets.only(bottom: safeAreaBottom),
+      content = MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          padding: EdgeInsets.only(bottom: safeAreaBottom),
+        ),
         child: content,
       );
     }

@@ -204,7 +204,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(left: _isEmptyIcon() ? 12 : 8),
+        padding: EdgeInsets.only(
+            left: _isEmptyIcon() ? 12 : commonConfig.hSpacingSm),
         child: SantoPressFeedback(
           enabled: enableSecondaryButton,
           onTap: () {
@@ -300,7 +301,9 @@ class SantoBottomButtonPanel extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(
-            left: (_isEmptyIcon() && _isEmptySecondary()) ? 12 : 8),
+            left: (_isEmptyIcon() && _isEmptySecondary())
+                ? 12
+                : commonConfig.hSpacingSm),
         child: mainWidget,
       ),
     );

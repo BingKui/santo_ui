@@ -15,59 +15,57 @@ class ProgressChartExampleState extends State<ProgressChartExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '数据展示',
       scrollable: false,
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 44,
-          ),
-          SantoProgressChart(
-            width: 300,
-            height: 20,
-            value: count,
-            duration: Duration(milliseconds: 500),
-            colors: [Colors.lightBlueAccent, Colors.blue],
-            backgroundColor: Colors.grey,
-            showAnimation: true,
-            isFromLastValue: true,
-            santoProgressIndicatorBuilder: (BuildContext context, double value) {
-              return Text(
-                '自定义：$value',
-                style: TextStyle(color: Colors.white),
-              );
-            },
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text('进度'),
-              ),
-              Expanded(
-                child: SantoSlider(
-                    value: count,
-                    divisions: 10,
-                    onChanged: (data) {
-                      if (!mounted) return;
-                      setState(() {
-                        count = data;
-                      });
-                    },
-                    onChangeStart: (data) {},
-                    onChangeEnd: (data) {},
-                    min: 0,
-                    max: 1,
-                    label: '$count',
-                    activeColor: Colors.green,
-                    inactiveColor: Colors.grey,
-                    semanticFormatterCallback: (double newValue) {
-                      return '$newValue';
-                    }),
-              ),
-            ],
-          ),
-        ],
-      ),
+      children: <Widget>[
+        SizedBox(
+          height: 44,
+        ),
+        SantoProgressChart(
+          width: 300,
+          height: 20,
+          value: count,
+          duration: Duration(milliseconds: 500),
+          colors: [Colors.lightBlueAccent, Colors.blue],
+          backgroundColor: Colors.grey,
+          showAnimation: true,
+          isFromLastValue: true,
+          santoProgressIndicatorBuilder: (BuildContext context, double value) {
+            return Text(
+              '自定义：$value',
+              style: TextStyle(color: Colors.white),
+            );
+          },
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text('进度'),
+            ),
+            Expanded(
+              child: SantoSlider(
+                  value: count,
+                  divisions: 10,
+                  onChanged: (data) {
+                    if (!mounted) return;
+                    setState(() {
+                      count = data;
+                    });
+                  },
+                  onChangeStart: (data) {},
+                  onChangeEnd: (data) {},
+                  min: 0,
+                  max: 1,
+                  label: '$count',
+                  activeColor: Colors.green,
+                  inactiveColor: Colors.grey,
+                  semanticFormatterCallback: (double newValue) {
+                    return '$newValue';
+                  }),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

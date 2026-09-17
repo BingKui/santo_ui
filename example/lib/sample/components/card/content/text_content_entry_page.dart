@@ -14,10 +14,9 @@ import 'package:flutter/material.dart';
 class TextContentEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: "文本内容示例",
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: "文本内容示例",
+        children: <Widget>[
           ListItem(
             title: "单列左对齐",
             isShowLine: false,
@@ -102,7 +101,6 @@ class TextContentEntryPage extends StatelessWidget {
             },
           ),
         ],
-      ),
     );
   }
 }

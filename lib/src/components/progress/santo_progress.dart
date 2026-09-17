@@ -97,6 +97,8 @@ class _SantoProgressState extends State<SantoProgress>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final Color activeColor = widget.color ?? _brandPrimary;
     final Color bgColor =
         widget.backgroundColor ?? _dividerColor.withAlpha(80);
@@ -121,7 +123,7 @@ class _SantoProgressState extends State<SantoProgress>
       return Row(
         children: [
           Expanded(child: bar),
-          const SizedBox(width: 8),
+          SizedBox(width: commonConfig.hSpacingSm),
           AnimatedBuilder(
             animation: widget.animated ? _animation : kAlwaysCompleteAnimation,
             builder: (context, child) {
@@ -132,7 +134,10 @@ class _SantoProgressState extends State<SantoProgress>
                 '$percent%',
                 style: widget.labelStyle ??
                     TextStyle(
-                      fontSize: 12,
+                      fontSize: SantoThemeConfigurator.instance
+                          .getConfig()
+                          .commonConfig
+                          .fontSizeCaption,
                       color: activeColor,
                       fontWeight: FontWeight.w500,
                     ),
@@ -291,7 +296,7 @@ class _SantoCircularProgressState extends State<SantoCircularProgress>
                   style: widget.labelStyle ??
                       TextStyle(
                         fontSize: widget.radius * 0.4,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: activeColor,
                       ),
                 ),

@@ -45,7 +45,7 @@ class SantoPageLoading extends StatelessWidget {
     double _loadingMaxWidth = MediaQuery.of(context).size.width * 2 / 3;
     double _iconSize = 19.0;
     double _textLeftPadding = 8.0;
-    double _outPadding = 10.0;
+    double _outPadding = commonConfig.vSpacingSm;
     String loadingText = content ?? SantoIntl.of(context).localizedResource.loading;
     // 获取实际文字长度
     TextPainter textPainter = TextPainter(

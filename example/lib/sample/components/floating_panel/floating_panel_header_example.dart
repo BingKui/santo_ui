@@ -12,15 +12,12 @@ class FloatingPanelHeaderExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
+    return SantoPageLayout(
       backgroundColor: const Color(0xFFF5F6FA),
-      appBar: SantoAppBar(title: 'FloatingPanel · 自定义标头'),
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 12),
+      title: 'FloatingPanel · 自定义标头',
+      // 内容自带滚动(Column + Expanded),由内层列表避让面板
+      scrollable: false,
+      children: <Widget>[
               const RulePanel(
                 'header 插槽与把手条同属拖拽区域整块可拖,anchors 传入三档高度(100px、35%、85%)在档位间吸附',
                 maxLines: 3,
@@ -31,7 +28,7 @@ class FloatingPanelHeaderExample extends StatelessWidget {
                   children: [
                     for (int i = 1; i <= 12; i++)
                       Container(
-                        margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                        margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -45,54 +42,51 @@ class FloatingPanelHeaderExample extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
-          SantoFloatingPanel(
-            anchors: [100, screenHeight * 0.35, screenHeight * 0.85],
-            header: Container(
-              padding: const EdgeInsets.fromLTRB(16, 0, 12, 8),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: Text(
-                      '订单详情',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SantoNormalButton.outline(
-                    text: '操作',
-                    fontSize: 12,
-                    insertPadding: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 12,
-                    ),
-                    onTap: () => SantoToast.show('点击了标头操作', context),
-                  ),
-                ],
-              ),
-            ),
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+      ],
+      // 浮层面板:自定义标头,叠在内容之上
+      overlay: SantoFloatingPanel(
+          anchors: [100, screenHeight * 0.35, screenHeight * 0.85],
+          header: Container(
+            padding: const EdgeInsets.fromLTRB(16, 0, 12, 8),
+            child: Row(
               children: [
-                for (int i = 1; i <= 16; i++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 10,
-                    ),
-                    child: Text(
-                      '订单明细 $i',
-                      style: const TextStyle(fontSize: 14),
+                const Expanded(
+                  child: Text(
+                    '订单详情',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
+                ),
+                SantoNormalButton.outline(
+                  text: '操作',
+                  fontSize: 12,
+                  insertPadding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 12,
+                  ),
+                  onTap: () => SantoToast.show('点击了标头操作', context),
+                ),
               ],
             ),
           ),
-        ],
-      ),
+          child: ListView(
+                children: [
+              for (int i = 1; i <= 16; i++)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
+                  child: Text(
+                    '订单明细 $i',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+            ],
+          ),
+        ),
     );
   }
 }

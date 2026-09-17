@@ -53,6 +53,8 @@ class SantoContentExportWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Scaffold(
         backgroundColor: Color(0x33808695),
         body: Container(
@@ -61,7 +63,8 @@ class SantoContentExportWidget extends StatelessWidget {
             child: Container(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
                   child: Container(
                     constraints: BoxConstraints(maxWidth: 300),
                     decoration: BoxDecoration(
@@ -101,7 +104,11 @@ class SantoContentExportWidget extends StatelessWidget {
               },
               behavior: HitTestBehavior.opaque,
               child: Padding(
-                padding: EdgeInsets.all(15),
+                padding:
+                    EdgeInsets.all(SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .vSpacingMd),
                 child: SantoTools.getAssetImage(SantoAsset.iconPickerClose),
               )));
     }
@@ -110,10 +117,13 @@ class SantoContentExportWidget extends StatelessWidget {
 
   /// 构建Dialog标题
   Widget _generateTitleWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
       padding: null != title && title!.isNotEmpty
-          ? EdgeInsets.fromLTRB(20, 25, 20, 12)
-          : EdgeInsets.only(top: 20),
+          ? EdgeInsets.fromLTRB(commonConfig.hSpacingLg,
+              commonConfig.vSpacingLg, commonConfig.hSpacingLg, 12)
+          : EdgeInsets.only(top: commonConfig.vSpacingLg),
       child: null != title && title!.isNotEmpty
           ? Text(
               title!,
@@ -125,10 +135,13 @@ class SantoContentExportWidget extends StatelessWidget {
 
   /// 构建底部操作按钮
   Widget _generateBottomWidget(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
         padding: isShowOperateWidget
-            ? EdgeInsets.fromLTRB(20, 12, 20, 20)
-            : EdgeInsets.only(top: 20),
+            ? EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 12,
+                commonConfig.hSpacingLg, commonConfig.vSpacingLg)
+            : EdgeInsets.only(top: commonConfig.vSpacingLg),
         child: isShowOperateWidget
             ? SizedBox(
                 width: double.infinity,
@@ -138,10 +151,10 @@ class SantoContentExportWidget extends StatelessWidget {
                   constraints: const BoxConstraints.tightFor(height: 48),
                   backgroundColor:
                       submitBgColor ?? themeData!.commonConfig.brandPrimary,
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.w500,
                       color: Colors.white,
-                      fontSize: 18),
+                      fontSize: commonConfig.fontSizeHead),
                   onTap: () {
                     if (onSubmit != null) onSubmit!();
                   },

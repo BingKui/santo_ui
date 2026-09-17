@@ -130,13 +130,18 @@ class _BottomWritePickerState extends State<SantoBottomWritePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoBottomPickerWidget(
       contentWidget: Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg,
+            bottom: commonConfig.vSpacingSm),
         color: Colors.white,
         child: TextField(
             style: TextStyle(
-                fontSize: 16,
+                fontSize: commonConfig.fontSizeSubHead,
                 color: SantoThemeConfigurator.instance
                     .getConfig()
                     .commonConfig
@@ -149,13 +154,13 @@ class _BottomWritePickerState extends State<SantoBottomWritePicker> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: commonConfig.fontSizeSubHead,
                   color: SantoThemeConfigurator.instance
                       .getConfig()
                       .commonConfig
                       .colorTextHint),
               counterStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: commonConfig.fontSizeSubHead,
                   color: SantoThemeConfigurator.instance
                       .getConfig()
                       .commonConfig
@@ -185,10 +190,12 @@ class _BottomWritePickerState extends State<SantoBottomWritePicker> {
   //此处返回类型为dynamic，在build的时候，会判读具体类型
   dynamic _buildRightTag(BuildContext context) {
     if (widget.rightTextColor != null) {
+      final commonConfig =
+          SantoThemeConfigurator.instance.getConfig().commonConfig;
       return Text(
         widget.rightTag ?? SantoIntl.of(context).localizedResource.ok,
         style: TextStyle(
-          fontSize: 16.0,
+          fontSize: commonConfig.fontSizeSubHead,
           color: widget.rightTextColor,
         ),
       );

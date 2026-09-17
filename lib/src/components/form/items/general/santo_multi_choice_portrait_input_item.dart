@@ -118,6 +118,8 @@ class SantoMultiChoicePortraitInputFormItemState
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -160,7 +162,8 @@ class SantoMultiChoicePortraitInputFormItemState
           SantoFormUtil.buildErrorWidget(widget.error, widget.themeData!),
 
           Container(
-            padding: EdgeInsets.only(left: 20, top: 14),
+            padding: EdgeInsets.only(
+                left: commonConfig.hSpacingLg, top: commonConfig.vSpacingMd),
             child: Column(
               children: getCheckboxList(widget.options),
             ),
@@ -171,6 +174,8 @@ class SantoMultiChoicePortraitInputFormItemState
   }
 
   List<Widget> getCheckboxList(List<String>? options) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> result = [];
     if (options == null || options.isEmpty) {
       result.add(Container());
@@ -181,7 +186,8 @@ class SantoMultiChoicePortraitInputFormItemState
 
     for (int index = 0; index < options.length; ++index) {
       result.add(Container(
-        padding: EdgeInsets.only(top: 11, bottom: 11),
+        padding: EdgeInsets.only(
+            top: commonConfig.vSpacingSm, bottom: commonConfig.vSpacingSm),
         child: SantoCheckbox(
           key: GlobalKey(),
           customSpace: EdgeInsets.zero,

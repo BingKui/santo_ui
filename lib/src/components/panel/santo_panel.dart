@@ -102,6 +102,8 @@ class SantoPanel extends StatelessWidget {
 
   /// Header:左侧标题(含可选描述) + 右侧操作区,底部带分割线
   Widget _buildHeader(SantoPanelConfig config) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Widget? headerTitle = titleWidget;
     headerTitle ??= title == null
         ? null
@@ -139,8 +141,8 @@ class SantoPanel extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(minHeight: config.headerHeight),
       padding: EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: hasDescription ? 10 : 0,
+        horizontal: commonConfig.hSpacingMd,
+        vertical: hasDescription ? commonConfig.vSpacingSm : 0,
       ),
       alignment: hasDescription ? null : Alignment.centerLeft,
       decoration: BoxDecoration(
@@ -164,7 +166,7 @@ class SantoPanel extends StatelessWidget {
                 children: [
                   Flexible(child: leftWidget ?? const SizedBox.shrink()),
                   Padding(
-                    padding: const EdgeInsets.only(left: 12),
+                    padding: EdgeInsets.only(left: commonConfig.pageGap),
                     child: titleExtra!,
                   ),
                 ],

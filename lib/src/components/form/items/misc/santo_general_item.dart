@@ -95,6 +95,8 @@ class SantoGeneralFormItem extends StatefulWidget {
 class SantoGeneralFormItemState extends State<SantoGeneralFormItem> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -113,7 +115,7 @@ class SantoGeneralFormItemState extends State<SantoGeneralFormItem> {
                       offstage:
                           widget.prefixIconType == SantoPrefixIconType.normal,
                       child: Container(
-                        padding: EdgeInsets.only(right: 6),
+                        padding: EdgeInsets.only(right: commonConfig.hSpacingXs),
                         child: GestureDetector(
                           onTap: () {
                             if (!widget.isEdit) {
@@ -160,7 +162,9 @@ class SantoGeneralFormItemState extends State<SantoGeneralFormItem> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                                padding: EdgeInsets.only(left: 6, right: 7),
+                                padding: EdgeInsets.only(
+                                    left: commonConfig.hSpacingXs,
+                                    right: commonConfig.hSpacingXs),
                                 child: SantoFormUtil.getQuestionMarkIcon()),
                             Container(
                               child: Text(

@@ -217,15 +217,19 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
     if (stepContent != null) {
       return stepContent;
     }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      margin: const EdgeInsets.only(
-          top: 6, left: _kItemSidePadding, right: _kItemSidePadding),
+      margin: EdgeInsets.only(
+          top: commonConfig.vSpacingXs,
+          left: _kItemSidePadding,
+          right: _kItemSidePadding),
       child: Text(
         step.stepContentText ?? '',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
           color: _getStepContentTextColor(index),
         ),
       ),

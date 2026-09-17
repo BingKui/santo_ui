@@ -81,8 +81,8 @@ class SantoAppraiseHeader extends StatelessWidget {
         padding: headPadding ??
             EdgeInsets.only(
                 left: commonConfig.hSpacingLg,
-                top: 16,
-                right: 16,
+                top: commonConfig.vSpacingMd,
+                right: commonConfig.hSpacingMd,
                 bottom: commonConfig.vSpacingLg),
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -90,7 +90,9 @@ class SantoAppraiseHeader extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(top: 4, right: 12),
+                padding: EdgeInsets.only(
+                    top: commonConfig.vSpacingXs,
+                    right: commonConfig.pageGap),
                 child: Text(
                   title,
                   maxLines: maxLines,

@@ -106,7 +106,7 @@ class _SantoAppraiseEmojiItemState extends State<SantoAppraiseEmojiItem>
           children: <Widget>[
             _getIcon(),
             Padding(
-              padding: EdgeInsets.only(top: 6),
+              padding: EdgeInsets.only(top: commonConfig.vSpacingXs),
               child: Text(
                 widget.title ?? '',
                 style: TextStyle(

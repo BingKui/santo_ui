@@ -4,6 +4,7 @@ import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
 import 'package:santo_ui/src/components/checkbox/santo_checkbox_group.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/radio/santo_radio.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 单选状态变化监听:返回选中的 id,未选中任何项时为 null
 typedef SantoRadioGroupChange = void Function(String? selectedId);
@@ -91,6 +92,8 @@ class SantoRadioGroup extends SantoCheckboxGroup {
   }) {
     if (direction == null) return child!;
     final isHorizontal = direction == Axis.horizontal;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Widget container;
     if (!isHorizontal) {
       container = ListView.separated(
@@ -98,24 +101,37 @@ class SantoRadioGroup extends SantoCheckboxGroup {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: directionalRadios.length,
-        separatorBuilder: (context, index) =>
-            cardMode ? const SizedBox(height: 12) : const SizedBox.shrink(),
+        separatorBuilder: (context, index) => cardMode
+            ? SizedBox(
+                height: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .pageGap)
+            : const SizedBox.shrink(),
         itemBuilder: (context, index) => Container(
-          margin: cardMode ? const EdgeInsets.symmetric(horizontal: 16) : null,
+          margin: cardMode
+              ? EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd)
+              : null,
           height: cardMode ? 82 : null,
           child: directionalRadios[index],
         ),
       );
     } else if (cardMode) {
       container = Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
         alignment: Alignment.topLeft,
         child: LayoutBuilder(builder: (context, constraints) {
           // 三等分去掉两个列间距,避免按屏幕宽度硬编码卡片宽
           final itemWidth = (constraints.maxWidth - 24) / 3;
           return Wrap(
-            spacing: 12,
-            runSpacing: 12,
+            spacing: SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .pageGap,
+            runSpacing: SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .pageGap,
             children: directionalRadios
                 .map((e) => SizedBox(width: itemWidth, height: 56, child: e))
                 .toList(),
@@ -124,7 +140,7 @@ class SantoRadioGroup extends SantoCheckboxGroup {
       );
     } else {
       container = Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -132,7 +148,7 @@ class SantoRadioGroup extends SantoCheckboxGroup {
             if (showDivider)
               divider ??
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: EdgeInsets.only(top: commonConfig.vSpacingSm),
                     child: SantoLine(),
                   ),
           ],
@@ -144,8 +160,9 @@ class SantoRadioGroup extends SantoCheckboxGroup {
     if (passThrough && !isHorizontal) {
       container = Container(
         clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(commonConfig.radiusXs)),
+        margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
         child: container,
       );
     }

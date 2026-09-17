@@ -219,14 +219,16 @@ class _SantoCascaderState extends State<SantoCascader> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     EdgeInsets padding = MediaQueryData.fromView(View.of(context)).padding;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
+          topLeft: Radius.circular(commonConfig.radiusXs),
+          topRight: Radius.circular(commonConfig.radiusXs),
         ),
       ),
       child: Column(
@@ -243,6 +245,8 @@ class _SantoCascaderState extends State<SantoCascader> {
 
   /// 构建头部（取消、标题、确认）
   Widget _buildHeader() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SizedBox(
       height: 48,
       child: Row(
@@ -254,11 +258,12 @@ class _SantoCascaderState extends State<SantoCascader> {
             },
             behavior: HitTestBehavior.opaque,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:
+                  EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
               child: Text(
                 widget.cancelText,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: commonConfig.fontSizeBase,
                   color: Color(0xFF515A6E),
                 ),
               ),
@@ -268,9 +273,9 @@ class _SantoCascaderState extends State<SantoCascader> {
             child: Center(
               child: Text(
                 widget.title ?? '',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: TextStyle(
+                  fontSize: commonConfig.fontSizeSubHead,
+                  fontWeight: FontWeight.w500,
                   color: Color(0xFF17233D),
                 ),
                 maxLines: 1,
@@ -284,11 +289,12 @@ class _SantoCascaderState extends State<SantoCascader> {
             },
             behavior: HitTestBehavior.opaque,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:
+                  EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
               child: Text(
                 widget.confirmText,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: commonConfig.fontSizeBase,
                   color: _activeColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -325,6 +331,8 @@ class _SantoCascaderState extends State<SantoCascader> {
 
   /// 构建单列
   Widget _buildSingleColumn(int colIndex) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final items = _columns[colIndex];
     final selectedIndex = _selectedIndices[colIndex];
 
@@ -344,9 +352,9 @@ class _SantoCascaderState extends State<SantoCascader> {
             child: Text(
               items[index].label,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: commonConfig.fontSizeBase,
                 color: isSelected ? _activeColor : const Color(0xFF17233D),
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

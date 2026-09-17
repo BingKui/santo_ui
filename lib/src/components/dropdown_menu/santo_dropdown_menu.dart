@@ -96,6 +96,8 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
       onTap: () {
         _toggle();
@@ -103,7 +105,7 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 48,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingSm),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -112,14 +114,14 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
               child: Text(
                 _displayText,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: commonConfig.fontSizeBase,
                   color: _isActive ? _activeColor : const Color(0xFF17233D),
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: commonConfig.hSpacingXs),
             AnimatedRotation(
               turns: _isExpanded ? 0.5 : 0,
               duration: const Duration(milliseconds: 200),
@@ -293,6 +295,8 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
 
   /// 构建下拉内容
   Widget _buildDropdownContent() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (_expandedItem == null) {
       return const SizedBox.shrink();
     }
@@ -320,14 +324,15 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
             },
             child: Container(
               height: 48,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:
+                  EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
               child: Row(
                 children: [
                   Expanded(
                     child: Text(
                       option.label,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: commonConfig.fontSizeBase,
                         color: isSelected
                             ? _activeColor
                             : const Color(0xFF17233D),
