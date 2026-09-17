@@ -1,5 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'sample/l10n/l10n.dart';
+import 'package:example/sample/components/layout/app_layout_example.dart';
 import 'package:example/sample/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -41,6 +42,15 @@ class _MyAppState extends State<MyApp> {
           Locale('de', 'DE'),
         ],
         title: 'Flutter Example',
+        // AppLayout 示例「更多」菜单的页面地址
+        routes: {
+          AppLayoutDemoRoutes.notice: (_) =>
+              const AppLayoutDemoRoutePage(title: '通知'),
+          AppLayoutDemoRoutes.schedule: (_) =>
+              const AppLayoutDemoRoutePage(title: '日程'),
+          AppLayoutDemoRoutes.report: (_) =>
+              const AppLayoutDemoRoutePage(title: '报表'),
+        },
         theme: ThemeData(
           primarySwatch: Colors.blue,
           scaffoldBackgroundColor: const Color(0xFFF5F6FA),

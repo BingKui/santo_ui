@@ -7,7 +7,7 @@ import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// popup window 位于 targetView 的方向
+/// 弹出层位于 targetView 的方向
 enum SantoPopupDirection {
   /// 箭头朝上
   top,
@@ -16,8 +16,8 @@ enum SantoPopupDirection {
   bottom
 }
 
-/// 通用 Popup Window 提示，带三角号
-class SantoPopupWindow extends StatefulWidget {
+/// 通用 Tooltip 文字提示，带三角号
+class SantoTooltip extends StatefulWidget {
   /// 依附的组件的 Context
   final BuildContext context;
 
@@ -27,16 +27,16 @@ class SantoPopupWindow extends StatefulWidget {
   /// 要显示的文本
   final String? text;
 
-  /// 依附的组件和 SantoPopUpWindow 组件共同持有的 GlobalKey
+  /// 依附的组件和 Tooltip 组件共同持有的 GlobalKey
   final GlobalKey popKey;
 
   /// 要显示文本的样式
   final TextStyle? textStyle;
 
-  /// popUpWindow 的背景颜色，使用 [showPopWindow] 方法时，默认值为 Color(0xFF1A1A1A)
+  /// Tooltip 的背景颜色，使用 [show] 方法时，默认值为 Color(0xFF1A1A1A)
   final Color? backgroundColor;
 
-  /// 边框颜色，[showPopWindow] 方法时，默认值为 Colors.transparent
+  /// 边框颜色，[show] 方法时，默认值为 Colors.transparent
   final Color? borderColor;
 
   /// 是否有关闭图标，默认为 false，不显示
@@ -45,7 +45,7 @@ class SantoPopupWindow extends StatefulWidget {
   /// 距离 targetView 偏移量，默认为 0
   final double offset;
 
-  /// popUpWindow 位于 targetView 的方向，默认为 [SantoPopupDirection.bottom]
+  /// Tooltip 位于 targetView 的方向，默认为 [SantoPopupDirection.bottom]
   final SantoPopupDirection popDirection;
 
   /// 自定义 widget
@@ -66,11 +66,11 @@ class SantoPopupWindow extends StatefulWidget {
   /// 箭头图标水平方向的绝对偏移量，为 null 时则自动计算
   final double? arrowOffset;
 
-  /// popWindow 距离底部的距离小于此值的时候，
-  /// 自动将 popWindow 在 targetView 上面弹出
+  /// Tooltip 距离底部的距离小于此值的时候，
+  /// 自动将 Tooltip 在 targetView 上面弹出
   final double turnOverFromBottom;
 
-  SantoPopupWindow(this.context,
+  SantoTooltip(this.context,
       {Key? key,
       this.text,
       required this.popKey,
@@ -91,13 +91,13 @@ class SantoPopupWindow extends StatefulWidget {
       this.turnOverFromBottom = 50.0})
       : super(key: key);
 
-  /// 显示 popUpWindow
+  /// 显示 Tooltip
   /// [text] 显示的文本内容
-  /// [popKey] 依附的组件和 SantoPopUpWindow 组件共同持有的 GlobalKey
+  /// [popKey] 依附的组件和 Tooltip 组件共同持有的 GlobalKey
   /// [popDirection] 箭头的方向
   /// [arrowHeight] 箭头的高度，默认 6
   /// [textStyle] 文本样式
-  /// [backgroundColor] popUpWindow 的背景颜色，默认 Color(0xFF1A1A1A)
+  /// [backgroundColor] Tooltip 的背景颜色，默认 Color(0xFF1A1A1A)
   /// [hasCloseIcon] 是否显示关闭图标，默认为 false，不显示
   /// [offset] 距离 targetView 垂直方向的偏移量
   /// [widget] 自定义 pop 视图
@@ -108,9 +108,9 @@ class SantoPopupWindow extends StatefulWidget {
   /// [canWrap] 是否能多行显，默认 false，单行显示
   /// [spaceMargin] 距离 targetView 边线的距离,默认 20
   /// [arrowOffset] 箭头图标水平方向的绝对偏移量，为 null 时则自动计算
-  /// [dismissCallback] popUpWindow 消失回调，此回调会在 pop 之后执行
-  /// [turnOverFromBottom] popWindow 小于此值的时候，自动将 popWindow 在 targetView 上面弹出，默认 50
-  static void showPopWindow(context, String? text, GlobalKey popKey,
+  /// [dismissCallback] Tooltip 消失回调，此回调会在 pop 之后执行
+  /// [turnOverFromBottom] Tooltip 小于此值的时候，自动将 Tooltip 在 targetView 上面弹出，默认 50
+  static void show(context, String? text, GlobalKey popKey,
       {SantoPopupDirection popDirection = SantoPopupDirection.bottom,
       double arrowHeight = 6.0,
       TextStyle? textStyle =
@@ -136,7 +136,7 @@ class SantoPopupWindow extends StatefulWidget {
     Navigator.push(
         context,
         SantoPopupRoute(
-            child: SantoPopupWindow(
+            child: SantoTooltip(
           context,
           arrowHeight: arrowHeight,
           text: text,
@@ -158,10 +158,10 @@ class SantoPopupWindow extends StatefulWidget {
   }
 
   @override
-  _SantoPopupWindowState createState() => _SantoPopupWindowState();
+  _SantoTooltipState createState() => _SantoTooltipState();
 }
 
-class _SantoPopupWindowState extends State<SantoPopupWindow> {
+class _SantoTooltipState extends State<SantoTooltip> {
   /// targetView的位置
   Rect _showRect = Rect.zero;
 
@@ -174,7 +174,7 @@ class _SantoPopupWindowState extends State<SantoPopupWindow> {
   /// 是否向右侧延伸，true：向右侧延伸，false：向左侧延伸
   bool _expandedRight = true;
 
-  /// popUpWindow在中线两侧的具体位置
+  /// Tooltip在中线两侧的具体位置
   double _left = 0;
   double _right = 0;
   double _top = 0;
@@ -216,14 +216,14 @@ class _SantoPopupWindowState extends State<SantoPopupWindow> {
     }
   }
 
-  // 计算popUpWindow显示的位置
+  // 计算Tooltip显示的位置
   void _calculateOffset() {
     if (_showRect.center.dx < _screenSize.width / 2) {
-      // popUpWindow向右侧延伸
+      // Tooltip向右侧延伸
       _expandedRight = true;
       _left = _showRect.left;
     } else {
-      // popUpWindow向左侧延伸
+      // Tooltip向左侧延伸
       _expandedRight = false;
       _right = _screenSize.width - _showRect.right + widget.spaceMargin;
     }
@@ -310,7 +310,7 @@ class _SantoPopupWindowState extends State<SantoPopupWindow> {
           );
   }
 
-  // popWindow的弹出样式
+  // Tooltip的弹出样式
   Widget _buildPopWidget(BuildContext context) {
     // 状态栏高度
     double statusBarHeight = MediaQueryData.fromView(View.of(context)).padding.top;
@@ -465,16 +465,16 @@ typedef SantoPopupListItemClick = bool Function(int index, String item);
 /// [item] Item 内容
 typedef SantoPopupListItemBuilder = Widget? Function(int index, String item);
 
-/// 基于 PopUpWindow 的 弹窗列表工具类
+/// 基于 Tooltip 的 弹窗列表工具类
 class SantoPopupListWindow {
   /// 带 itemBuilder 的 Popup List Window
-  /// [popKey] 依附的组件和SantoPopUpWindow组件共同持有的GlobalKey
+  /// [popKey] 依附的组件和Tooltip组件共同持有的GlobalKey
   /// [data] 要显示的文本数据列表
   /// [popDirection] 箭头的方向
   /// [itemBuilder] 自定义 item 构造方法
   /// [onItemClick] item 点击回调
   /// [onItemClickInterceptor] item 点击拦截回调
-  /// [onDismiss] popUpWindow消失回调
+  /// [onDismiss] Tooltip消失回调
   static void showButtonPanelPopList(
     context,
     GlobalKey popKey, {
@@ -501,7 +501,7 @@ class SantoPopupListWindow {
     Navigator.push(
         context,
         SantoPopupRoute(
-            child: SantoPopupWindow(
+            child: SantoTooltip(
           context,
           arrowHeight: arrowHeight,
           popKey: popKey,
@@ -544,13 +544,13 @@ class SantoPopupListWindow {
   }
 
   /// 显示Popup List Window
-  /// [popKey] 依附的组件和SantoPopUpWindow组件共同持有的GlobalKey
+  /// [popKey] 依附的组件和Tooltip组件共同持有的GlobalKey
   /// [data] 要显示的文本数据列表
   /// [popDirection] 箭头的方向
   /// [offset] 距离targetView偏移量
   /// [onItemClick] item 点击回调
   /// [onItemClickInterceptor] item 点击拦截回调
-  /// [onDismiss] popUpWindow消失回调
+  /// [onDismiss] Tooltip消失回调
   static void showPopListWindow(context, GlobalKey popKey,
       {List<String>? data,
       SantoPopupDirection popDirection = SantoPopupDirection.bottom,
@@ -576,7 +576,7 @@ class SantoPopupListWindow {
     Navigator.push(
       context,
       SantoPopupRoute(
-        child: SantoPopupWindow(
+        child: SantoTooltip(
           context,
           arrowHeight: arrowHeight,
           popKey: popKey,

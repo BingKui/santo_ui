@@ -34,6 +34,11 @@ export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 //底部导航
 export 'src/components/menu_bar/santo_menu_bar.dart';
 
+//布局
+export 'src/components/layout/santo_app_layout.dart';
+export 'src/components/layout/santo_app_layout_scope.dart';
+export 'src/components/layout/santo_page_layout.dart';
+
 //弹框
 export 'src/components/dialog/santo_safe_dialog.dart';
 export 'src/components/dialog/santo_share_dialog.dart';
@@ -78,7 +83,7 @@ export 'src/components/picker/santo_bottom_write_picker.dart';
 export 'src/components/picker/santo_picker_cliprrect.dart';
 
 //悬浮窗
-export 'src/components/popup/santo_popup_window.dart';
+export 'src/components/tooltip/santo_tooltip.dart';
 export 'src/components/popup/santo_overlay_window.dart';
 export 'src/components/floating_panel/santo_floating_panel.dart';
 
@@ -341,6 +346,9 @@ export 'src/components/table/santo_table.dart';
 
 //分段选择器
 export 'src/components/segmented/santo_segmented.dart';
+
+//统计数值
+export 'src/components/statistic/santo_statistic.dart';
 
 //底部操作栏
 export 'src/components/action_bar/santo_action_bar.dart';

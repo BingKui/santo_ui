@@ -1,7 +1,7 @@
 import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
 import 'package:santo_ui/src/components/button/santo_small_main_button.dart';
 import 'package:santo_ui/src/components/button/santo_small_outline_button.dart';
-import 'package:santo_ui/src/components/popup/santo_popup_window.dart';
+import 'package:santo_ui/src/components/tooltip/santo_tooltip.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
