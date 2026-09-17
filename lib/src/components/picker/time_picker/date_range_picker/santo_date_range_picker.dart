@@ -30,7 +30,7 @@ class SantoDateRangePicker {
   /// pickerMode: [SantoDateTimeRangePickerMode] 展示的 mode: date(DatePicker)、time(TimePicker)
   /// onCancel: [DateVoidCallback] 取消回调
   /// onClose: [DateVoidCallback] 关闭回调
-  /// onChange: [DateValueCallback] 时间变化回调
+  /// onChanged: [DateValueCallback] 时间变化回调
   /// onConfirm: [DateValueCallback] 点击确认的回调
   /// pickerTitleConfig: [SantoPickerTitleConfig] Picker title 配置
   /// themeData: [SantoPickerConfig] 主题配置
@@ -49,7 +49,7 @@ class SantoDateRangePicker {
     SantoPickerTitleConfig pickerTitleConfig = SantoPickerTitleConfig.Default,
     DateVoidCallback? onCancel,
     DateVoidCallback? onClose,
-    DateRangeValueCallback? onChange,
+    DateRangeValueCallback? onChanged,
     DateRangeValueCallback? onConfirm,
     SantoPickerConfig? themeData,
   }) {
@@ -83,7 +83,7 @@ class SantoDateRangePicker {
         pickerMode: pickerMode,
         pickerTitleConfig: pickerTitleConfig,
         onCancel: onCancel,
-        onChange: onChange,
+        onChanged: onChanged,
         onConfirm: onConfirm,
         isDismissible: isDismissible,
         barrierLabel:
@@ -104,7 +104,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final SantoDateTimeRangePickerMode pickerMode;
   final SantoPickerTitleConfig pickerTitleConfig;
   final VoidCallback? onCancel;
-  final DateRangeValueCallback? onChange;
+  final DateRangeValueCallback? onChanged;
   final DateRangeValueCallback? onConfirm;
   final int minuteDivider;
   final ThemeData? theme;
@@ -122,7 +122,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.pickerMode = SantoDateTimeRangePickerMode.date,
     this.pickerTitleConfig = SantoPickerTitleConfig.Default,
     this.onCancel,
-    this.onChange,
+    this.onChanged,
     this.onConfirm,
     this.theme,
     this.barrierLabel,
@@ -203,7 +203,7 @@ class _DatePickerComponent extends StatelessWidget {
           dateFormat: route.dateFormat,
           pickerTitleConfig: route.pickerTitleConfig,
           onCancel: route.onCancel,
-          onChange: route.onChange,
+          onChanged: route.onChanged,
           onConfirm: route.onConfirm,
           themeData: route.themeData,
         );
@@ -219,7 +219,7 @@ class _DatePickerComponent extends StatelessWidget {
           dateFormat: route.dateFormat,
           pickerTitleConfig: route.pickerTitleConfig,
           onCancel: route.onCancel,
-          onChange: route.onChange,
+          onChanged: route.onChanged,
           onConfirm: route.onConfirm,
           themeData: route.themeData,
         );

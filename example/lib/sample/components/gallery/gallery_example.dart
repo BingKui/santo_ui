@@ -87,8 +87,6 @@ class GalleryExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: "Gallery 图片",
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [

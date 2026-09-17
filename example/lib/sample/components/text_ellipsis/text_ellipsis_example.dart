@@ -17,8 +17,6 @@ class _TextEllipsisExampleState extends State<TextEllipsisExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'TextEllipsis 文本省略',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

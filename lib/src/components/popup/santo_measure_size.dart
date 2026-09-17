@@ -7,9 +7,9 @@ typedef OnWidgetSizeChange = void Function(Size size);
 /// 监听 Widget 宽高的工具类。
 class MeasureSizeRenderObject extends RenderProxyBox {
   Size? oldSize;
-  final OnWidgetSizeChange onChange;
+  final OnWidgetSizeChange onChanged;
 
-  MeasureSizeRenderObject(this.onChange);
+  MeasureSizeRenderObject(this.onChanged);
 
   @override
   void performLayout() {
@@ -24,22 +24,22 @@ class MeasureSizeRenderObject extends RenderProxyBox {
     oldSize = newSize;
 
     useWidgetsBinding().addPostFrameCallback((item) {
-      onChange(newSize);
+      onChanged(newSize);
     });
   }
 }
 
 /// 监听 Widget 宽高变化的工具类
 class MeasureSize extends SingleChildRenderObjectWidget {
-  final OnWidgetSizeChange onChange;
+  final OnWidgetSizeChange onChanged;
 
   const MeasureSize({
     Key? key,
-    required this.onChange,
+    required this.onChanged,
     required Widget child,
   }) : super(key: key, child: child);
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return MeasureSizeRenderObject(onChange);
+    return MeasureSizeRenderObject(onChanged);
   }
 }

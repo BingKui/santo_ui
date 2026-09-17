@@ -174,8 +174,8 @@ class SantoStarsFormItemState extends State<SantoStarsFormItem> {
         },
         child: Container(
           padding: (index == sum - 1)
-              ? EdgeInsets.only(left: 8, top: 5, bottom: 5)
-              : EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              ? EdgeInsets.only(left: 20, top: 5, bottom: 5)
+              : EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
           child: getStar(index, widget.value, sum),
         ),
       ));

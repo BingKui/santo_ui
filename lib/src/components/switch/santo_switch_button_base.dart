@@ -53,7 +53,7 @@ class SantoBaseSwitchButton extends StatelessWidget {
     required this.size,
     this.thumbColor = Colors.white,
     this.trackOnColor = const Color(0xFF1677FF),
-    this.trackOffColor = const Color(0xFFFAFAFA),
+    this.trackOffColor = const Color(0xFFF5F5F5),
     this.borderColor = const Color(0xffeeeeee),
     this.enabled = false,
     this.loading = false,

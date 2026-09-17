@@ -14,8 +14,6 @@ class FlatSelectionEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Selection 示例',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
           children: <Widget>[

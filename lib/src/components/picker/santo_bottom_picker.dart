@@ -121,7 +121,7 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
         return true;
       },
       child: Scaffold(
-        backgroundColor: Color(0x33999999),
+        backgroundColor: Color(0x33808695),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -252,7 +252,7 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
         }
       },
       child: Container(
-        color: Color(0x33999999),
+        color: Color(0x33808695),
       ),
     );
   }

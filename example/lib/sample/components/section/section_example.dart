@@ -8,8 +8,6 @@ class SectionExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Section 区块',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

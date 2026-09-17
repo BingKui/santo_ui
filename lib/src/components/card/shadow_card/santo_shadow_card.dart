@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 ///和系统的[Card]组件相似，是对Container组件的封装
 ///
 class SantoShadowCard extends StatelessWidget {
-  ///背景色 默认Color(0xfffafafa)
+  ///背景色 默认Color(0xFFF5F5F5)
   final Color color;
 
-  ///阴影颜色 默认Color(0xffeeeeee)
+  ///阴影颜色 默认Color(0xFFE8EAEC)
   final Color shadowColor;
 
   ///阴影偏移量 默认是0
@@ -38,8 +38,8 @@ class SantoShadowCard extends StatelessWidget {
   /// create SantoShadowCard
   SantoShadowCard(
       {required this.child,
-      this.color = const Color(0xfffafafa),
-      this.shadowColor = const Color(0xffeeeeee),
+      this.color = const Color(0xFFF5F5F5),
+      this.shadowColor = const Color(0xFFE8EAEC),
       this.padding = const EdgeInsets.all(0),
       this.circular = 12.0,
       this.blurRadius = 5.0,

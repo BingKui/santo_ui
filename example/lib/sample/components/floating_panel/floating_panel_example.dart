@@ -10,8 +10,6 @@ class FloatingPanelExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'FloatingPanel 浮层面板',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [

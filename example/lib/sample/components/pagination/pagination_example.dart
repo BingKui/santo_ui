@@ -21,8 +21,6 @@ class _PaginationExampleState extends State<PaginationExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Pagination 分页',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -34,7 +32,7 @@ class _PaginationExampleState extends State<PaginationExample> {
               current: _basicPage,
               totalItems: 50,
               itemsPerPage: 10,
-              onChange: (page) => setState(() => _basicPage = page),
+              onChanged: (page) => setState(() => _basicPage = page),
             )),
           ),
           SantoSection(
@@ -45,7 +43,7 @@ class _PaginationExampleState extends State<PaginationExample> {
               current: _simplePage,
               totalItems: 50,
               itemsPerPage: 10,
-              onChange: (page) => setState(() => _simplePage = page),
+              onChanged: (page) => setState(() => _simplePage = page),
             )),
           ),
           SantoSection(
@@ -56,7 +54,7 @@ class _PaginationExampleState extends State<PaginationExample> {
               totalItems: 200,
               itemsPerPage: 10,
               forceEllipses: true,
-              onChange: (page) => setState(() => _ellipsesPage = page),
+              onChanged: (page) => setState(() => _ellipsesPage = page),
             )),
           ),
           SantoSection(
@@ -68,7 +66,7 @@ class _PaginationExampleState extends State<PaginationExample> {
               itemsPerPage: 10,
               showPageSize: 3,
               forceEllipses: true,
-              onChange: (page) => setState(() => _pageSizePage = page),
+              onChanged: (page) => setState(() => _pageSizePage = page),
             )),
           ),
           SantoSection(
@@ -80,7 +78,7 @@ class _PaginationExampleState extends State<PaginationExample> {
               itemsPerPage: 10,
               showPrevButton: false,
               showNextButton: false,
-              onChange: (page) => setState(() => _noButtonPage = page),
+              onChanged: (page) => setState(() => _noButtonPage = page),
             )),
           ),
           SantoSection(
@@ -92,7 +90,7 @@ class _PaginationExampleState extends State<PaginationExample> {
               itemsPerPage: 10,
               prevText: '上一步',
               nextText: '下一步',
-              onChange: (page) => setState(() => _customTextPage = page),
+              onChanged: (page) => setState(() => _customTextPage = page),
             )),
           ),
           SantoSection(
@@ -101,7 +99,7 @@ class _PaginationExampleState extends State<PaginationExample> {
             child: _center(SantoPagination(
               current: _byCountPage,
               pageCount: 8,
-              onChange: (page) => setState(() => _byCountPage = page),
+              onChanged: (page) => setState(() => _byCountPage = page),
             )),
           ),
           const SizedBox(height: 12),

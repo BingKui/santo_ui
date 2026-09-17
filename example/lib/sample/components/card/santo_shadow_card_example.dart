@@ -13,8 +13,6 @@ class _SantoShadowCardExampleState extends State<SantoShadowCardExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Card 卡片',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

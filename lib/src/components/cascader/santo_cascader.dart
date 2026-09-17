@@ -258,7 +258,7 @@ class _SantoCascaderState extends State<SantoCascader> {
               child: Text(
                 widget.cancelText,
                 style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   color: Color(0xFF515A6E),
                 ),
               ),
@@ -288,7 +288,7 @@ class _SantoCascaderState extends State<SantoCascader> {
               child: Text(
                 widget.confirmText,
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   color: _activeColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -344,7 +344,7 @@ class _SantoCascaderState extends State<SantoCascader> {
             child: Text(
               items[index].label,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 14,
                 color: isSelected ? _activeColor : const Color(0xFF17233D),
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),

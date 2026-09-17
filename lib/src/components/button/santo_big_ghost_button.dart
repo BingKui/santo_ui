@@ -28,7 +28,7 @@ class SantoBigGhostButton extends StatelessWidget {
   final Color? titleColor;
 
   /// 按钮背景颜色
-  final Color? bgColor;
+  final Color? backgroundColor;
 
   /// 点击回调
   final VoidCallback? onTap;
@@ -44,7 +44,7 @@ class SantoBigGhostButton extends StatelessWidget {
     Key? key,
     this.title,
     this.titleColor,
-    this.bgColor,
+    this.backgroundColor,
     this.onTap,
     this.width,
     this.themeData,
@@ -62,7 +62,7 @@ class SantoBigGhostButton extends StatelessWidget {
       constraints: BoxConstraints.tightFor(
           width: width ?? double.infinity,
           height: defaultThemeConfig.bigButtonHeight),
-      backgroundColor: bgColor ??
+      backgroundColor: backgroundColor ??
           defaultThemeConfig.commonConfig.brandPrimary.withOpacity(0.05),
       onTap: onTap,
       alignment: Alignment.center,

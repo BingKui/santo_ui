@@ -26,7 +26,7 @@ class SantoImage extends StatelessWidget {
   final double? height;
 
   /// 圆角半径，默认 0
-  final double borderRadius;
+  final double radius;
 
   /// 图片缩放模式
   final BoxFit fit;
@@ -45,7 +45,7 @@ class SantoImage extends StatelessWidget {
     required this.imageUrl,
     this.width,
     this.height,
-    this.borderRadius = 0,
+    this.radius = 0,
     this.fit = BoxFit.cover,
     this.placeholder,
     this.errorWidget,
@@ -57,7 +57,7 @@ class SantoImage extends StatelessWidget {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
+      borderRadius: BorderRadius.circular(radius),
       child: SizedBox(
         width: width,
         height: height,

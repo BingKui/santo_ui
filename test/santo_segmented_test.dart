@@ -61,7 +61,7 @@ void main() {
     await tester.pumpWidget(_host(
       SantoSegmented<String>(
         options: _options(),
-        onChange: (value) => changed = value,
+        onChanged: (value) => changed = value,
       ),
     ));
     await tester.pumpAndSettle();
@@ -78,7 +78,7 @@ void main() {
       SantoSegmented<String>(
         value: 'a',
         options: _options(),
-        onChange: (_) {},
+        onChanged: (_) {},
       ),
     ));
     await tester.pumpAndSettle();
@@ -88,7 +88,7 @@ void main() {
       SantoSegmented<String>(
         value: 'c',
         options: _options(),
-        onChange: (_) {},
+        onChanged: (_) {},
       ),
     ));
     await tester.pumpAndSettle();
@@ -101,7 +101,7 @@ void main() {
     await tester.pumpWidget(_host(
       SantoSegmented<String>(
         options: _options(secondDisabled: true),
-        onChange: (value) => changed = value,
+        onChanged: (value) => changed = value,
       ),
     ));
     await tester.pumpAndSettle();
@@ -119,7 +119,7 @@ void main() {
       SantoSegmented<String>(
         disabled: true,
         options: _options(),
-        onChange: (_) => called = true,
+        onChanged: (_) => called = true,
       ),
     ));
     await tester.pumpAndSettle();
@@ -201,7 +201,7 @@ void main() {
     await tester.pumpWidget(_host(
       SantoSegmented<String>(
         options: _options(),
-        onChange: (_) {},
+        onChanged: (_) {},
       ),
     ));
     await tester.pumpAndSettle();
@@ -217,7 +217,7 @@ void main() {
           SantoSegmentedOption(value: 'a', label: '选项A'),
           SantoSegmentedOption(value: 'c', label: '选项C'),
         ],
-        onChange: (_) {},
+        onChanged: (_) {},
       ),
     ));
     await tester.pumpAndSettle();
@@ -229,7 +229,7 @@ void main() {
         options: const [
           SantoSegmentedOption(value: 'a', label: '选项A'),
         ],
-        onChange: (_) {},
+        onChanged: (_) {},
       ),
     ));
     await tester.pumpAndSettle();

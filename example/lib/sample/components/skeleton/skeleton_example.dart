@@ -15,8 +15,6 @@ class _SkeletonExampleState extends State<SkeletonExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(
       backgroundColor: Colors.white,
-      title: 'Skeleton 骨架屏',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

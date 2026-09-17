@@ -12,8 +12,6 @@ class _RowTagExampleState extends State<RowTagExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '标签组合',
-      padding: EdgeInsets.zero,
       child: SantoSection(
         title: '标签组',
         description: 'Wrap 排列多个普通标签与描边标签，自动换行',

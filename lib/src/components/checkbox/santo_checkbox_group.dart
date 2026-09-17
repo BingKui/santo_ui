@@ -53,7 +53,7 @@ class SantoCheckboxGroup extends StatefulWidget {
   const SantoCheckboxGroup({
     Key? key,
     required this.child,
-    this.onChangeGroup,
+    this.onChanged,
     this.controller,
     this.checkedIds,
     this.maxChecked,
@@ -70,7 +70,7 @@ class SantoCheckboxGroup extends StatefulWidget {
   final Widget child;
 
   /// 勾选状态变化监听
-  final SantoCheckboxGroupChange? onChangeGroup;
+  final SantoCheckboxGroupChange? onChanged;
 
   /// 分组控制器
   final SantoCheckboxGroupController? controller;
@@ -182,7 +182,7 @@ class SantoCheckboxGroupState extends State<SantoCheckboxGroup> {
   }
 
   void _notifyChange() {
-    widget.onChangeGroup?.call(allCheckedIds);
+    widget.onChanged?.call(allCheckedIds);
   }
 
   @override
@@ -254,7 +254,7 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
             passThrough: passThrough ?? false,
             rowCount: rowCount,
           ),
-          onChangeGroup: (ids) => onCheckBoxGroupChange?.call(ids),
+          onChanged: (ids) => onCheckBoxGroupChange?.call(ids),
           onOverloadChecked: onOverloadChecked,
           controller: controller,
           checkedIds: selectIds,
@@ -283,13 +283,18 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
             ? Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 alignment: Alignment.topLeft,
-                child: Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: directionalCheckboxes
-                      .map((e) => SizedBox(width: 106.3, height: 56, child: e))
-                      .toList(),
-                ),
+                child: LayoutBuilder(builder: (context, constraints) {
+                  // 三等分去掉两个列间距,避免按屏幕宽度硬编码卡片宽
+                  final itemWidth = (constraints.maxWidth - 24) / 3;
+                  return Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: directionalCheckboxes
+                        .map((e) =>
+                            SizedBox(width: itemWidth, height: 56, child: e))
+                        .toList(),
+                  );
+                }),
               )
             : Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),

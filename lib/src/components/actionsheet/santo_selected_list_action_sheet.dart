@@ -81,7 +81,7 @@ class SantoSelectedListActionSheet<T> {
   /// ``` dart
   /// TextStyle(
   ///   fontSize: 18,
-  ///   color: Color(0xff222222),
+  ///   color: Color(0xff17233D),
   ///   fontWeight: FontWeight.w600,
   ///   decoration: TextDecoration.none)
   /// ```
@@ -381,7 +381,7 @@ class _SantoActionSheetSelectedItemListState<T>
             : SantoIntl.of(context).localizedResource.selectedList;
     TextStyle titleStyle = const TextStyle(
         fontSize: 18,
-        color: Color(0xff222222),
+        color: Color(0xff17233D),
         fontWeight: FontWeight.w600,
         decoration: TextDecoration.none);
     Widget topTitle = Expanded(
@@ -406,7 +406,7 @@ class _SantoActionSheetSelectedItemListState<T>
                 textAlign: TextAlign.right,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff999999),
+                    color: Color(0xff808695),
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.none))),
       );
@@ -478,7 +478,7 @@ class _SantoActionSheetSelectedItemListState<T>
                                   item,
                                   style: const TextStyle(
                                       fontSize: 16,
-                                      color: Color(0xff222222),
+                                      color: Color(0xff17233D),
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.none),
                                 );

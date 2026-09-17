@@ -6,8 +6,6 @@ class LinkExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Link 链接',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

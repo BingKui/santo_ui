@@ -109,7 +109,7 @@ class _SantoOverlayWindowState extends State<SantoOverlayWindow> {
     var contentPart = Material(
         color: Colors.transparent,
         child: MeasureSize(
-            onChange: (size) {
+            onChanged: (size) {
               setState(() {
                 _targetViewSize = size;
               });

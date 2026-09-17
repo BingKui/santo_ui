@@ -19,7 +19,7 @@ class SantoSelectionRangeTagWidget extends StatefulWidget {
   final List<bool>? initSelectStatus;
 
   /// 选择tag的回调
-  final void Function(int, bool)? onSelect;
+  final void Function(int, bool)? onChanged;
 
   /// tag 之间的间距
   final double spacing;
@@ -43,7 +43,7 @@ class SantoSelectionRangeTagWidget extends StatefulWidget {
       {Key? key,
       required this.tagFilterList,
       this.initSelectStatus,
-      this.onSelect,
+      this.onChanged,
       this.spacing = 12,
       this.verticalSpacing = 10,
       this.tagWidth = 75,
@@ -86,8 +86,8 @@ class _SantoSelectionRangeTagWidgetState
               }
             }
             SantoSelectionUtil.processBrotherItemSelectStatus(selectedEntity);
-            if (null != widget.onSelect) {
-              widget.onSelect!(nameIndex, selectedEntity.isSelected);
+            if (null != widget.onChanged) {
+              widget.onChanged!(nameIndex, selectedEntity.isSelected);
             }
             setState(() {});
           });

@@ -29,8 +29,6 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'TimeCounter 计时器示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

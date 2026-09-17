@@ -143,7 +143,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
             .commonConfig
             .colorTextImportant;
     Color tagBackgroundColor =
-        this.tagPickerConfig.tagBackgroudColor ?? Color(0xffF8F8F8);
+        this.tagPickerConfig.tagBackgroudColor ?? Color(0xffF5F5F5);
     Color selectedTagBackgroundColor =
         this.tagPickerConfig.selectedTagBackgroudColor ??
             SantoThemeConfigurator.instance
@@ -171,7 +171,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
           bool selected = choice.isSelect;
           Color titleColor = selected ? selectedTagTitleColor : tagTitleColor;
           EdgeInsets edgeInsets = this.tagPickerConfig.chipPadding ??
-              EdgeInsets.only(top: 9.0, left: 10.0, right: 10, bottom: 11.0);
+              EdgeInsets.all(10);
           return ChoiceChip(
             selected: selected,
             padding: edgeInsets,
@@ -245,7 +245,7 @@ class SantoMultiSelectTagsPicker extends CommonTagsPicker {
                 ? tagConfig.selectTagTextStyle.color!
                 : tagConfig.tagTextStyle.color!;
             EdgeInsets edgeInsets = this.tagPickerConfig.chipPadding ??
-                EdgeInsets.only(top: 9.0, left: 10.0, right: 10, bottom: 11.0);
+                EdgeInsets.all(10);
             return ChoiceChip(
               selected: selected,
               padding: edgeInsets,

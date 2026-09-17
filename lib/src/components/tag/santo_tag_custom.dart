@@ -51,7 +51,7 @@ class SantoTagCustom extends StatelessWidget {
     this.backgroundColor,
     this.tagBorderRadius = const BorderRadius.all(Radius.circular(12)),
     this.textPadding =
-        const EdgeInsets.only(bottom: 0.5, left: 3, right: 3, top: 0),
+        const EdgeInsets.only(bottom: 0.5, left: 4, right: 4, top: 0),
     this.border,
     this.fontSize = 11,
     this.fontWeight = FontWeight.normal,
@@ -64,7 +64,7 @@ class SantoTagCustom extends StatelessWidget {
     required this.tagText,
     this.backgroundColor = Colors.transparent,
     this.textPadding =
-        const EdgeInsets.only(bottom: 3, left: 3, right: 3, top: 0),
+        const EdgeInsets.only(bottom: 3, left: 4, right: 4, top: 0),
     this.fontSize = 11,
     this.fontWeight = FontWeight.normal,
     this.tagBorderRadius = const BorderRadius.all(Radius.circular(12)),

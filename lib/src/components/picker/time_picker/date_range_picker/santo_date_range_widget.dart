@@ -34,7 +34,7 @@ class SantoDateRangeWidget extends StatefulWidget {
   final DateVoidCallback? onCancel;
 
   /// 选中时间变化时的回调，返回选中的开始、结束时间
-  final DateRangeValueCallback? onChange;
+  final DateRangeValueCallback? onChanged;
 
   /// 确定回调，返回选中的开始、结束时间
   final DateRangeValueCallback? onConfirm;
@@ -54,7 +54,7 @@ class SantoDateRangeWidget extends StatefulWidget {
     this.dateFormat = datetimeRangePickerDateFormat,
     this.pickerTitleConfig = SantoPickerTitleConfig.Default,
     this.onCancel,
-    this.onChange,
+    this.onChanged,
     this.onConfirm,
     this.themeData,
   }) : super(key: key) {
@@ -215,7 +215,7 @@ class _DatePickerWidgetState extends State<SantoDateRangeWidget> {
                 _startSelectedDateTime = selectedDateTime;
                 _startSelectedIndex = selected;
               },
-              onChange: (DateTime selectedDateTime, List<int> selectedIndex) {
+              onChanged: (DateTime selectedDateTime, List<int> selectedIndex) {
                 setState(() {
                   _startSelectedDateTime = selectedDateTime;
                   _startSelectedIndex = selectedIndex;
@@ -243,7 +243,7 @@ class _DatePickerWidgetState extends State<SantoDateRangeWidget> {
                 _endSelectedDateTime = selectedDateTime;
                 _endSelectedIndex = selectedIndex;
               },
-              onChange: (DateTime selectedDateTime, List<int> selectedIndex) {
+              onChanged: (DateTime selectedDateTime, List<int> selectedIndex) {
                 setState(() {
                   _endSelectedDateTime = selectedDateTime;
                   _endSelectedIndex = selectedIndex;

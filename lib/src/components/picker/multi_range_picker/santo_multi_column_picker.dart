@@ -103,7 +103,7 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
   /// 未选中状态颜色，默认 Color(0Xff4a4e59)
   late Color _normalColor;
 
-  /// 选中状态颜色，默认 Color(0xff41bc6a)
+  /// 选中状态颜色，默认 Color(0xFF52C41A)
   late Color _selectedColor;
 
   @override

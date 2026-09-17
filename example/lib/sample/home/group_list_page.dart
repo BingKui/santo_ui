@@ -16,8 +16,6 @@ class GroupListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final children = group.children ?? <GroupInfo>[];
     return SantoPageLayout(
-      // 列表项自带左右边距,页面不再叠加内边距
-      padding: EdgeInsets.zero,
       appBar: SantoAppBar(
         title: group.groupName,
         automaticallyImplyLeading: false,

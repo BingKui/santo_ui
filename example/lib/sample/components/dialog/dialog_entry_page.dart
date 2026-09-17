@@ -14,7 +14,6 @@ class DialogEntryPage extends StatelessWidget {
       appBar: SantoAppBar(
           title: _title,
         ),
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
           children: <Widget>[
@@ -306,7 +305,7 @@ class DialogEntryPage extends StatelessWidget {
                       selectedIndex = index;
                       state(() {});
                     },
-                    onSubmitClick: (data) {
+                    onSubmit: (data) {
                       SantoToast.show(data!, context);
                     });
               },
@@ -330,7 +329,7 @@ class DialogEntryPage extends StatelessWidget {
             title: "请您评价该条线索",
             isClose: true,
             conditions: data,
-            onSubmitClick: (List<MultiSelectItem> data) {
+            onSubmit: (List<MultiSelectItem> data) {
               var str = "";
               data.forEach((item) {
                 str = str + item.content + "  ";
@@ -397,7 +396,7 @@ class DialogEntryPage extends StatelessWidget {
                     hintText = data[index].content;
                     state(() {});
                   },
-                  onSubmitClick: (List<MultiSelectItem> data) {
+                  onSubmit: (List<MultiSelectItem> data) {
                     var str = "";
                     data.forEach((item) {
                       str = str + item.content + "  ";
@@ -426,7 +425,7 @@ class DialogEntryPage extends StatelessWidget {
             messageText: '请您评价该条线索请您评价该条线索请您评价该条线索请您评价该条线索请您评价该条线索',
             isClose: true,
             conditions: data,
-            onSubmitClick: (List<MultiSelectItem> data) {
+            onSubmit: (List<MultiSelectItem> data) {
               var str = "";
               data.forEach((item) {
                 str = str + item.content + "  ";
@@ -885,7 +884,7 @@ class DialogEntryPage extends StatelessWidget {
             linksCallback: (String? text, String? url) {
               SantoToast.show(text!, context);
             },
-            onSubmitClick: () {
+            onSubmit: () {
               SantoToast.show("点击了纯文本弹框", context);
             }));
   }
@@ -904,7 +903,7 @@ class DialogEntryPage extends StatelessWidget {
                 "表纯本文呢表纯本文呢呢表纯本文呢表纯本文呢表纯本文呢表纯本文呢呢表纯"
                 "本文呢表纯本文呢表纯本文呢表纯本文呢呢表纯本文呢表纯本文呢表纯本文呢",
             submitText: "提交",
-            onSubmitClick: () {
+            onSubmit: () {
               SantoToast.show("点击了纯文本弹框", context);
             }));
   }
@@ -924,7 +923,7 @@ class DialogEntryPage extends StatelessWidget {
                 "表纯本文呢表纯本文呢呢表纯本文呢表纯本文呢表纯本文呢表纯本文呢呢表纯"
                 "本文呢表纯本文呢表纯本文呢表纯本文呢呢表纯本文呢表纯本文呢表纯本文呢",
             submitText: "提交",
-            onSubmitClick: () {
+            onSubmit: () {
               SantoToast.show("点击了纯文本弹框", context);
               Navigator.of(context).pop();
             }));

@@ -51,11 +51,11 @@ class SantoTooltip extends StatefulWidget {
   /// 自定义 widget
   final Widget? widget;
 
-  /// 容器内边距，默认为 EdgeInsets.only(left: 18, top: 14, right: 18, bottom: 14)
+  /// 容器内边距，默认为 EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15)
   final EdgeInsets paddingInsets;
 
   /// 容器圆角，默认为 4
-  final double borderRadius;
+  final double radius;
 
   /// 是否能多行显，默认 false，单行显示
   final bool canWrap;
@@ -82,8 +82,8 @@ class SantoTooltip extends StatefulWidget {
       this.popDirection = SantoPopupDirection.bottom,
       this.widget,
       this.paddingInsets =
-          const EdgeInsets.only(left: 18, top: 14, right: 18, bottom: 14),
-      this.borderRadius = 12,
+          const EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15),
+      this.radius = 12,
       this.borderColor,
       this.canWrap = false,
       this.spaceMargin = 20,
@@ -101,8 +101,8 @@ class SantoTooltip extends StatefulWidget {
   /// [hasCloseIcon] 是否显示关闭图标，默认为 false，不显示
   /// [offset] 距离 targetView 垂直方向的偏移量
   /// [widget] 自定义 pop 视图
-  /// [paddingInsets] 容器内边距，默认为 EdgeInsets.only(left: 18, top: 14, right: 18, bottom: 14)
-  /// [borderRadius] 容器圆角，默认为 4
+  /// [paddingInsets] 容器内边距，默认为 EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15)
+  /// [radius] 容器圆角，默认为 4
   /// [borderColor] 边框颜色，默认为 Colors.transparent
   /// [borderWidth] 边框宽度，默认为 1
   /// [canWrap] 是否能多行显，默认 false，单行显示
@@ -120,8 +120,8 @@ class SantoTooltip extends StatefulWidget {
       double offset = 0,
       Widget? widget,
       EdgeInsets paddingInsets =
-          const EdgeInsets.only(left: 18, top: 14, right: 18, bottom: 14),
-      double borderRadius = 12,
+          const EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15),
+      double radius = 12,
       Color? borderColor = Colors.transparent,
       double borderWidth = 1,
       bool canWrap = false,
@@ -148,7 +148,7 @@ class SantoTooltip extends StatefulWidget {
           popDirection: popDirection,
           widget: widget,
           paddingInsets: paddingInsets,
-          borderRadius: borderRadius,
+          radius: radius,
           borderColor: borderColor ?? Colors.transparent,
           canWrap: canWrap,
           spaceMargin: spaceMargin,
@@ -324,7 +324,7 @@ class _SantoTooltipState extends State<SantoTooltip> {
             decoration: BoxDecoration(
                 color: _backgroundColor,
                 border: Border.all(color: _borderColor, width: 0.5),
-                borderRadius: BorderRadius.circular(widget.borderRadius)),
+                borderRadius: BorderRadius.circular(widget.radius)),
             constraints: BoxConstraints(
                 maxWidth: _expandedRight
                     ? _screenSize.width - _left
@@ -494,7 +494,7 @@ class SantoPopupListWindow {
     double minWidth = 100;
     double maxWidth = 150;
     double maxHeight = 200;
-    double borderRadius = 12;
+    double radius = 12;
     bool hasCloseIcon = true;
     assert(popKey.currentContext != null && popKey.currentContext!.findRenderObject() != null);
     if (popKey.currentContext == null || popKey.currentContext!.findRenderObject() == null) return;
@@ -533,7 +533,7 @@ class SantoPopupListWindow {
                   ),
                 ),
           popDirection: popDirection,
-          borderRadius: borderRadius,
+          radius: radius,
           borderColor: borderColor,
           spaceMargin: spaceMargin,
         ))).then((result) {
@@ -562,7 +562,7 @@ class SantoPopupListWindow {
     if (popKey.currentContext == null || popKey.currentContext!.findRenderObject() == null) return;
 
     double arrowHeight = 6.0;
-    double borderRadius = 12;
+    double radius = 12;
     double spaceMargin = 0;
     double minWidth = 100;
     double maxWidth = 150;
@@ -608,7 +608,7 @@ class SantoPopupListWindow {
                   ),
                 ),
           popDirection: popDirection,
-          borderRadius: borderRadius,
+          radius: radius,
           borderColor: borderColor,
           spaceMargin: spaceMargin,
         ),

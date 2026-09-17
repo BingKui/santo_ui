@@ -421,7 +421,7 @@ class SantoTable extends StatelessWidget {
       child: empty ??
           Text(
             '暂无数据',
-            style: TextStyle(color: hintColor, fontSize: 13),
+            style: TextStyle(color: hintColor, fontSize: 12),
           ),
     );
   }

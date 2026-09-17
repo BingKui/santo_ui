@@ -16,7 +16,7 @@ class SantoSelectTag extends StatefulWidget {
   final List<String> tags;
 
   /// 选择tag的回调,返回选中 tag 的位置
-  final void Function(List<int>)? onSelect;
+  final void Function(List<int>)? onChanged;
 
   /// 水平间距，默认 12
   final double spacing;
@@ -62,7 +62,7 @@ class SantoSelectTag extends StatefulWidget {
   SantoSelectTag({
     Key? key,
     required this.tags,
-    this.onSelect,
+    this.onChanged,
     this.spacing = 12,
     this.verticalSpacing = 10,
     this.tagTextStyle,
@@ -176,12 +176,12 @@ class _SantoSelectTagState extends State<SantoSelectTag> {
               });
             }
 
-            if (null != widget.onSelect) {
+            if (null != widget.onChanged) {
               List<int> _selectedIndexes = [];
               for (int index = 0; index < _tagState.length; index++) {
                 if (_tagState[index]) _selectedIndexes.add(index);
               }
-              widget.onSelect!(_selectedIndexes);
+              widget.onChanged!(_selectedIndexes);
             }
           });
       list.add(gdt);

@@ -51,7 +51,7 @@ class SantoPageLoading extends StatelessWidget {
       text: TextSpan(
           text: loadingText,
           style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: FontWeight.w600,
               color: Colors.white,
               decoration: TextDecoration.none)),
@@ -66,7 +66,7 @@ class SantoPageLoading extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: maxWidth, minWidth: _iconSize + _textLeftPadding),
         height: 50,
         width: _loadingMaxWidth,
-        decoration: BoxDecoration(color: Color(0xff222222), borderRadius: BorderRadius.circular(12)),
+        decoration: BoxDecoration(color: Color(0xff1A1A1A), borderRadius: BorderRadius.circular(12)),
         child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -86,7 +86,7 @@ class SantoPageLoading extends StatelessWidget {
                     loadingText,
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                         decoration: TextDecoration.none),

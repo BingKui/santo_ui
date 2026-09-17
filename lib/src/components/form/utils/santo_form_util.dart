@@ -260,10 +260,10 @@ class SantoFormUtil {
   }
 
   /// 处理 数字值 变化
-  static void notifyValueChanged(OnSantoFormValueChanged? onValueChanged,
+  static void notifyValueChanged(OnSantoFormValueChanged? onChanged,
       BuildContext context, int oldVal, int newVal) {
-    if (onValueChanged != null) {
-      onValueChanged(oldVal, newVal);
+    if (onChanged != null) {
+      onChanged(oldVal, newVal);
     }
   }
 

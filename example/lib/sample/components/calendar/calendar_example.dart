@@ -20,7 +20,6 @@ class TagViewExamplePageState extends State<CalendarExample> {
       appBar: SantoAppBar(
           title: widget._title,
         ),
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20),

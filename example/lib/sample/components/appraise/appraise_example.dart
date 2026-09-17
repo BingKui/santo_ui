@@ -22,8 +22,6 @@ class _AppraiseExampleState extends State<AppraiseExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '评价组件',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -21,8 +21,6 @@ class _CollapseExampleState extends State<CollapseExample> {
         '此处可自定义内容此处可自定义内容此处可自定义内容此处可自定义内容此处可自定义内容此处可自定义内容此处可自定义内容此处可自定义内容';
 
     return SantoPageLayout(
-      title: 'Collapse 折叠面板',
-      padding: EdgeInsets.only(top: 16, bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

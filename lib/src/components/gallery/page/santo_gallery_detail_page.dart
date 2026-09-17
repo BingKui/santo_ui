@@ -191,7 +191,7 @@ class _SantoGalleryDetailPageState extends State<SantoGalleryDetailPage>
         BadgeTab(text: '${item.title ?? ""}(${item.configList!.length})')));
     if (_allConfig.length > 1) {
       _columnViews.add(SantoTabBar(
-        backgroundcolor: _tabBarConfig.backgroundColor,
+        backgroundColor: _tabBarConfig.backgroundColor,
         unselectedLabelStyle:
             _tabBarConfig.unselectedLabelStyle.generateTextStyle(),
         unselectedLabelColor: _tabBarConfig.unselectedLabelStyle.color,

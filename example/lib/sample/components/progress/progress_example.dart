@@ -16,8 +16,6 @@ class _ProgressExampleState extends State<ProgressExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Progress 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

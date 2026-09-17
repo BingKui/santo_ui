@@ -37,7 +37,7 @@ class SantoCitySelection extends StatefulWidget {
   final List<SantoSelectCityModel> hotCityList;
 
   /// 单选项 点击的回调
-  final ValueChanged<SantoSelectCityModel>? onValueChanged;
+  final ValueChanged<SantoSelectCityModel>? onChanged;
 
   /// 空页面中间展位图展示
   final Image? emptyImage;
@@ -49,7 +49,7 @@ class SantoCitySelection extends StatefulWidget {
     this.cityList,
     this.showSearchBar = true,
     this.locationText = '',
-    this.onValueChanged,
+    this.onChanged,
     this.emptyImage,
   });
 
@@ -180,8 +180,8 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
                 ),
                 onPressed: () {
                   debugPrint("OnItemClick: $e");
-                  if (widget.onValueChanged != null) {
-                    widget.onValueChanged!(e);
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(e);
                   }
                   Navigator.pop(context, e);
                 },
@@ -204,7 +204,7 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
         softWrap: false,
         style: TextStyle(
           fontSize: 14.0,
-          color: Color(0xff999999),
+          color: Color(0xff808695),
         ),
       ),
     );
@@ -224,8 +224,8 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
             title: Text(model.name),
             onTap: () {
               debugPrint("OnItemClick: $model");
-              if (widget.onValueChanged != null) {
-                widget.onValueChanged!(model);
+              if (widget.onChanged != null) {
+                widget.onChanged!(model);
               }
               Navigator.pop(context, model);
             },
@@ -335,7 +335,7 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
               width: 40.0,
               height: 40.0,
               decoration: BoxDecoration(
-                  color: Color(0x22222222),
+                  color: Color(0x2217233D),
                   borderRadius: BorderRadius.circular(12.0)),
               child: Text(hint,
                   style: TextStyle(color: Colors.white, fontSize: 20.0)),

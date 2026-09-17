@@ -52,7 +52,7 @@ class SantoTabBar extends StatefulWidget {
   final TabController? controller;
 
   /// TabBar背景颜色
-  final Color backgroundcolor;
+  final Color backgroundColor;
 
   /// 指示器的颜色
   final Color? indicatorColor;
@@ -125,7 +125,7 @@ class SantoTabBar extends StatefulWidget {
     this.tabHeight,
     this.padding = EdgeInsets.zero,
     this.controller,
-    this.backgroundcolor = const Color(0xffffffff),
+    this.backgroundColor = const Color(0xffffffff),
     this.indicatorColor,
     this.indicatorWeight,
     this.indicatorWidth,
@@ -155,7 +155,7 @@ class SantoTabBar extends StatefulWidget {
         .tabBarConfig
         .merge(this.themeData);
     this.themeData = this.themeData!.merge(SantoTabBarConfig(
-          backgroundColor: backgroundcolor,
+          backgroundColor: backgroundColor,
           tabHeight: tabHeight,
           indicatorHeight: indicatorWeight,
           indicatorWidth: indicatorWidth,
@@ -699,7 +699,7 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
   /// 展开更多弹框样式
   Widget createMoreWindowView() {
     return MeasureSize(
-      onChange: (size) {
+      onChanged: (size) {
         setState(() {
           _parentWidth = size.width;
         });
@@ -729,7 +729,7 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
                             widget.moreWindowText ?? "",
                             style: TextStyle(
                                 fontSize: 16,
-                                color: Color(0xff222222),
+                                color: Color(0xff17233D),
                                 fontWeight: FontWeight.w700),
                           ),
                         )),

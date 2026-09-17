@@ -27,8 +27,6 @@ class _SelectionViewExamplePageState
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      appBar: SantoAppBar(title: widget._title),
-      padding: EdgeInsets.zero,
       child: Column(
           children: <Widget>[
             SantoSimpleSelection.radio(

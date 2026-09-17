@@ -37,7 +37,7 @@ void main() {
         current: 3,
         totalItems: 50,
         itemsPerPage: 10,
-        onChange: (page) => tapped = page,
+        onChanged: (page) => tapped = page,
       ),
     ));
 
@@ -63,7 +63,7 @@ void main() {
         current: 1,
         totalItems: 50,
         itemsPerPage: 10,
-        onChange: (page) => tapped = page,
+        onChanged: (page) => tapped = page,
       ),
     ));
     await tester.tap(find.text('上一页'));
@@ -74,7 +74,7 @@ void main() {
         current: 5,
         totalItems: 50,
         itemsPerPage: 10,
-        onChange: (page) => tapped = page,
+        onChanged: (page) => tapped = page,
       ),
     ));
     await tester.tap(find.text('下一页'));
@@ -103,7 +103,7 @@ void main() {
         totalItems: 200,
         itemsPerPage: 10,
         forceEllipses: true,
-        onChange: (page) => tapped = page,
+        onChanged: (page) => tapped = page,
       ),
     ));
 

@@ -349,7 +349,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
           data.value = dateTime.millisecondsSinceEpoch.toString();
         });
       }
-    }, onChange: (dateTime, list) {}, onCancel: () {}, onClose: () {});
+    }, onChanged: (dateTime, list) {}, onCancel: () {}, onClose: () {});
   }
 }
 
@@ -564,7 +564,7 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
           padding: EdgeInsets.only(left: 2),
         ),
         Container(
-          color: Color(0xffDDDDDD),
+          color: Color(0xffDCDEE2),
           height: 1,
           width: 8,
         ),

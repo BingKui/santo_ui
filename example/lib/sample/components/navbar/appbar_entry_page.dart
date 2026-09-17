@@ -9,8 +9,6 @@ class AppbarEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'NavBar示例',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
           children: <Widget>[

@@ -28,7 +28,7 @@ class SantoSmallGhostButton extends StatelessWidget {
   final Color? titleColor;
 
   /// 按钮背景颜色，默认主题色的 5% 透明度
-  final Color? bgColor;
+  final Color? backgroundColor;
 
   /// 点击的回调
   final VoidCallback? onTap;
@@ -59,7 +59,7 @@ class SantoSmallGhostButton extends StatelessWidget {
     this.title,
     this.onTap,
     this.titleColor,
-    this.bgColor,
+    this.backgroundColor,
     this.radius,
     this.width,
     this.fontSize = 14,
@@ -126,7 +126,7 @@ class SantoSmallGhostButton extends StatelessWidget {
           borderRadius: BorderRadius.all(
               Radius.circular(defaultThemeConfig.smallButtonRadius)),
           text: title ?? SantoIntl.of(context).localizedResource.confirm,
-          backgroundColor: bgColor ??
+          backgroundColor: backgroundColor ??
               defaultThemeConfig.commonConfig.brandPrimary.withOpacity(0.05),
           onTap: onTap,
           alignment: Alignment.center,

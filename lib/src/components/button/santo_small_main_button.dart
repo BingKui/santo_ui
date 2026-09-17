@@ -37,7 +37,7 @@ class SantoSmallMainButton extends StatelessWidget {
   final bool isEnable;
 
   /// background color
-  final Color? bgColor;
+  final Color? backgroundColor;
 
   /// text color
   final Color textColor;
@@ -66,7 +66,7 @@ class SantoSmallMainButton extends StatelessWidget {
     this.title,
     this.onTap,
     this.isEnable = true,
-    this.bgColor,
+    this.backgroundColor,
     this.textColor = Colors.white,
     this.fontWeight = FontWeight.w600,
     this.fontSize,
@@ -135,7 +135,7 @@ class SantoSmallMainButton extends StatelessWidget {
           alignment: Alignment.center,
           text: title ?? SantoIntl.of(context).localizedResource.confirm,
           backgroundColor:
-              bgColor ?? defaultThemeConfig.commonConfig.brandPrimary,
+              backgroundColor ?? defaultThemeConfig.commonConfig.brandPrimary,
           disableBackgroundColor: Color(0xFFCCCCCC),
           borderRadius: BorderRadius.all(Radius.circular(defaultThemeConfig.smallButtonRadius)),
           onTap: onTap,

@@ -87,7 +87,7 @@ const double kSantoSegmentedIconGap = 4;
 ///     SantoSegmentedOption(value: 'day', label: '日'),
 ///     SantoSegmentedOption(value: 'week', label: '周'),
 ///   ],
-///   onChange: (value) => setState(() => _value = value),
+///   onChanged: (value) => setState(() => _value = value),
 /// )
 /// ```
 class SantoSegmented<T> extends StatefulWidget {
@@ -101,7 +101,7 @@ class SantoSegmented<T> extends StatefulWidget {
   final T? defaultValue;
 
   /// 选中值变更回调;为 null 时不可交互
-  final ValueChanged<T>? onChange;
+  final ValueChanged<T>? onChanged;
 
   /// 是否撑满父容器宽度
   final bool block;
@@ -126,7 +126,7 @@ class SantoSegmented<T> extends StatefulWidget {
     required this.options,
     this.value,
     this.defaultValue,
-    this.onChange,
+    this.onChanged,
     this.block = false,
     this.disabled = false,
     this.size = SantoSegmentedSize.medium,
@@ -186,7 +186,7 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
     if (!_isControlled) {
       setState(() => _innerValue = option.value);
     }
-    widget.onChange?.call(option.value);
+    widget.onChanged?.call(option.value);
   }
 
   double _trackHeight() {
@@ -368,7 +368,7 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
     final option = widget.options[index];
     final isSelected = option.value == selectedValue;
     final isDisabled = widget.disabled || option.disabled;
-    final isInteractive = !isDisabled && widget.onChange != null;
+    final isInteractive = !isDisabled && widget.onChanged != null;
 
     final textColor = isDisabled
         ? commonConfig.colorTextDisabled

@@ -28,7 +28,6 @@ class OverlayWindowExamplePageState extends State<OverlayWindowExample> {
       appBar: SantoAppBar(
           title: widget._title,
         ),
-      padding: EdgeInsets.zero,
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

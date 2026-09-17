@@ -40,9 +40,6 @@ class SantoPanel extends StatelessWidget {
   /// 内容区最大高度,默认 null 自适应内容;设置后超出可滚动
   final double? maxHeight;
 
-  /// 面板外边距,默认使用主题配置
-  final EdgeInsets? margin;
-
   /// 面板背景色,默认使用主题配置
   final Color? backgroundColor;
 
@@ -62,7 +59,6 @@ class SantoPanel extends StatelessWidget {
     required this.child,
     this.contentPadding = true,
     this.maxHeight,
-    this.margin,
     this.backgroundColor,
     this.radius,
     this.themeData,
@@ -79,7 +75,6 @@ class SantoPanel extends StatelessWidget {
     final double panelRadius = radius ?? config.radius;
 
     return Container(
-      margin: margin ?? config.margin,
       decoration: BoxDecoration(
         color: backgroundColor ?? config.backgroundColor,
         borderRadius: BorderRadius.all(Radius.circular(panelRadius)),

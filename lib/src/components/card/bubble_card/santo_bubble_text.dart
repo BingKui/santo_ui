@@ -35,7 +35,7 @@ enum SantoBubblePlacement {
 ///   SantoBubbleText(
 ///      text: '自定义背景色和文字颜色',
 ///      placement: SantoBubblePlacement.end,
-///      bgColor: Color(0xFF1677FF),
+///      backgroundColor: Color(0xFF1677FF),
 ///      textColor: Colors.white,
 ///   )
 /// ```
@@ -66,7 +66,7 @@ class SantoBubbleText extends StatelessWidget {
   final SantoBubblePlacement placement;
 
   /// 气泡背景色  默认是 Color(0xFFF5F5F5)
-  final Color bgColor;
+  final Color backgroundColor;
 
   /// 内容文字颜色，优先级低于[textStyle]
   final Color? textColor;
@@ -83,7 +83,7 @@ class SantoBubbleText extends StatelessWidget {
       this.radius = 12,
       this.cornerRadius = 2,
       this.placement = SantoBubblePlacement.start,
-      this.bgColor = const Color(0xFFF5F5F5),
+      this.backgroundColor = const Color(0xFFF5F5F5),
       this.textColor,
       this.textStyle})
       : super(key: key);
@@ -99,7 +99,7 @@ class SantoBubbleText extends StatelessWidget {
       alignment: isStart ? Alignment.centerLeft : Alignment.centerRight,
       child: Container(
         decoration: BoxDecoration(
-            color: bgColor,
+            color: backgroundColor,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(isStart ? cornerRadius : radius),
@@ -110,7 +110,7 @@ class SantoBubbleText extends StatelessWidget {
         child: SantoExpandableText(
           text: text,
           maxLines: maxLines,
-          color: bgColor,
+          color: backgroundColor,
           onExpanded: onExpanded,
           textStyle: textStyle ??
               TextStyle(

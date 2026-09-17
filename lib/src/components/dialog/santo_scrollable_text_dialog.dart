@@ -28,7 +28,7 @@ class SantoScrollableTextDialog extends Dialog {
   final Color? submitBgColor;
 
   /// 提交操作
-  final VoidCallback? onSubmitClick;
+  final VoidCallback? onSubmit;
 
   /// 富文本超链接点击回调
   final SantoHyperLinkCallback? linksCallback;
@@ -43,7 +43,7 @@ class SantoScrollableTextDialog extends Dialog {
       this.textColor = const Color(0xFF515A6E),
       this.textFontSize = 16,
       this.submitText,
-      this.onSubmitClick,
+      this.onSubmit,
       this.submitBgColor,
       this.linksCallback,
       this.isShowOperateWidget = true});
@@ -57,7 +57,7 @@ class SantoScrollableTextDialog extends Dialog {
         textColor: textColor,
         textFontSize: textFontSize,
         submitText: submitText,
-        onSubmitClick: onSubmitClick,
+        onSubmit: onSubmit,
         submitBgColor: submitBgColor,
         linksCallback: linksCallback,
         isShowOperateWidget: isShowOperateWidget);
@@ -84,7 +84,7 @@ class SantoScrollableText extends StatelessWidget {
   final String? submitText;
 
   /// 提交操作
-  final VoidCallback? onSubmitClick;
+  final VoidCallback? onSubmit;
 
   /// 操作按钮背景色
   final Color? submitBgColor;
@@ -102,7 +102,7 @@ class SantoScrollableText extends StatelessWidget {
       this.textColor,
       this.textFontSize,
       this.submitText,
-      this.onSubmitClick,
+      this.onSubmit,
       this.submitBgColor,
       this.linksCallback,
       this.isShowOperateWidget = true});
@@ -136,8 +136,8 @@ class SantoScrollableText extends StatelessWidget {
       submitText: submitText,
       submitBgColor: submitBgColor,
       onSubmit: () {
-        if (onSubmitClick != null) {
-          onSubmitClick!();
+        if (onSubmit != null) {
+          onSubmit!();
         }
       },
       isShowOperateWidget: isShowOperateWidget,

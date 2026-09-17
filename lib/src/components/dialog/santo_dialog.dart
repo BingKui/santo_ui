@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 typedef DialogIndexedActionClickCallback = void Function(int index);
 
 /// icon的间距
-const EdgeInsetsGeometry cIconPadding = const EdgeInsets.only(top: 28.0);
+const EdgeInsetsGeometry cIconPadding = const EdgeInsets.only(top: 25.0);
 
 /// title的文字样式
 const TextStyle cTitleTextStyle = const TextStyle(
@@ -68,12 +68,12 @@ const TextStyle cGreyActionsTextStyle = const TextStyle(
 
 /// 水平分割线 内容与按钮
 const VerticalDivider cVerticalDivider =
-    const VerticalDivider(width: 1.0, color: Color(0xF0F0F0F0));
+    const VerticalDivider(width: 1.0, color: Color(0xFFE8EAEC));
 
 /// 垂直分割线 按钮分割
 const Divider cDividerLine = const Divider(
   height: 1.0,
-  color: Color(0xF0F0F0F0),
+  color: Color(0xFFE8EAEC),
 );
 
 
@@ -337,14 +337,14 @@ class SantoDialog extends AlertDialog {
     int length = showTextActions ? actionsText!.length : actionsWidget!.length;
     if (length == 1) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
         child: showTextActions
             ? _mapTextToGesWidget(context, actionsText![0], 0, true)
             : actionsWidget![0],
       );
     } else if (length == 2) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
         child: Row(
           children: [
             Expanded(
@@ -363,7 +363,7 @@ class SantoDialog extends AlertDialog {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

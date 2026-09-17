@@ -157,7 +157,7 @@ class SantoRatioInputFormItemState extends State<SantoRatioInputFormItem> {
                 Row(
                   children: <Widget>[
                     Container(
-                        padding: EdgeInsets.only(right: 10),
+                        padding: EdgeInsets.only(right: 20),
                         child: Text(
                           "1 : ",
                           style:

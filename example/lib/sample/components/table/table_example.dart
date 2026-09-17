@@ -11,8 +11,6 @@ class _TableExampleState extends State<TableExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Table 表格示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -9,8 +9,6 @@ class ScrollActorTabExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '锚点',
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: SantoAnchorTab(
         itemCount: 20,

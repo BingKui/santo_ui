@@ -135,7 +135,7 @@ class _SantoFlatSelectionState extends State<SantoFlatSelection>
   @override
   Widget build(BuildContext context) {
     return MeasureSize(
-        onChange: (size) {
+        onChanged: (size) {
           setState(() {
             _lineWidth = size.width;
           });

@@ -13,8 +13,6 @@ class _SantoTextExpandedContentExampleState
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '展开收起文本',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

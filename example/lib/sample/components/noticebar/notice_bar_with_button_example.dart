@@ -9,8 +9,6 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '带按钮的通知',
-      padding: EdgeInsets.zero,
       child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

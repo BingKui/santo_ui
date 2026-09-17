@@ -11,8 +11,6 @@ class _MessageExampleState extends State<MessageExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Message 消息通知示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

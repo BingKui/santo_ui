@@ -36,8 +36,6 @@ class _SegmentedExampleState extends State<SegmentedExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Segmented 分段选择器',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -50,11 +48,11 @@ class _SegmentedExampleState extends State<SegmentedExample> {
               children: [
                 _center(SantoSegmented<String>(
                   options: _simpleOptions,
-                  onChange: (value) => setState(() => _basicValue = value),
+                  onChanged: (value) => setState(() => _basicValue = value),
                 )),
                 const SizedBox(height: 8),
                 Text(
-                  'onChange 回调值：$_basicValue',
+                  'onChanged 回调值：$_basicValue',
                   style: const TextStyle(fontSize: 13, color: Colors.grey),
                 ),
               ],
@@ -70,7 +68,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                 SantoSegmentedOption(value: 'board', label: '看板'),
                 SantoSegmentedOption(value: 'chart', label: '图表'),
               ],
-              onChange: (value) =>
+              onChanged: (value) =>
                   setState(() => _controlledValue = value),
             )),
           ),
@@ -91,7 +89,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                     SantoSegmentedOption(
                         value: SantoSegmentedSize.large, label: 'large'),
                   ],
-                  onChange: (value) => setState(() => _sizeValue = value),
+                  onChanged: (value) => setState(() => _sizeValue = value),
                 ),
                 const SizedBox(height: 12),
                 _center(SantoSegmented<String>(
@@ -112,7 +110,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                 SantoSegmentedOption(value: 'doing', label: '进行中'),
                 SantoSegmentedOption(value: 'done', label: '已完成'),
               ],
-              onChange: (value) => setState(() => _blockValue = value),
+              onChanged: (value) => setState(() => _blockValue = value),
             ),
           ),
           SantoSection(
@@ -126,7 +124,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                 SantoSegmentedOption(value: 'dark', label: '深色'),
                 SantoSegmentedOption(value: 'auto', label: '跟随系统'),
               ],
-              onChange: (value) => setState(() => _roundValue = value),
+              onChanged: (value) => setState(() => _roundValue = value),
             )),
           ),
           SantoSection(
@@ -142,7 +140,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                   SantoSegmentedOption(value: 'board', label: '看板视图'),
                   SantoSegmentedOption(value: 'chart', label: '图表视图'),
                 ],
-                onChange: (value) => setState(() => _verticalValue = value),
+                onChanged: (value) => setState(() => _verticalValue = value),
               ),
             ),
           ),
@@ -171,7 +169,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                       icon: Icon(Icons.bar_chart),
                     ),
                   ],
-                  onChange: (value) => setState(() => _iconValue = value),
+                  onChanged: (value) => setState(() => _iconValue = value),
                 )),
                 const SizedBox(height: 12),
                 _center(SantoSegmented<String>(
@@ -216,7 +214,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                   labelWidget: _TwoLineLabel(title: '冬', desc: '10-12 月'),
                 ),
               ],
-              onChange: (value) => setState(() => _customValue = value),
+              onChanged: (value) => setState(() => _customValue = value),
             )),
           ),
           SantoSection(
@@ -242,7 +240,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                     ),
                     SantoSegmentedOption(value: 'c', label: '可选中'),
                   ],
-                  onChange: (value) =>
+                  onChanged: (value) =>
                       setState(() => _dynamicValue = value),
                 )),
               ],
@@ -257,7 +255,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                 _center(SantoSegmented<String>(
                   value: _dynamicValue,
                   options: _dynamicOptions,
-                  onChange: (value) =>
+                  onChanged: (value) =>
                       setState(() => _dynamicValue = value),
                 )),
                 const SizedBox(height: 12),

@@ -52,7 +52,7 @@ class SantoPopover {
   /// [direction] 弹出方向，默认 [SantoPopoverDirection.bottom]
   /// [showArrow] 是否显示三角箭头，默认 true
   /// [backgroundColor] 气泡背景颜色
-  /// [borderRadius] 气泡圆角
+  /// [radius] 气泡圆角
   /// [arrowSize] 箭头大小
   /// [offset] 与锚点的偏移距离
   /// [onDismiss] 关闭回调
@@ -65,7 +65,7 @@ class SantoPopover {
     SantoPopoverDirection direction = SantoPopoverDirection.bottom,
     bool showArrow = true,
     Color? backgroundColor,
-    double borderRadius = 12,
+    double radius = 12,
     double arrowSize = 8,
     double offset = 4,
     SantoPopoverDismissCallback? onDismiss,
@@ -95,7 +95,7 @@ class SantoPopover {
             direction: direction,
             showArrow: showArrow,
             backgroundColor: backgroundColor,
-            borderRadius: borderRadius,
+            radius: radius,
             arrowSize: arrowSize,
             offset: offset,
             onDismiss: onDismiss,
@@ -122,7 +122,7 @@ class _SantoPopoverOverlay extends StatefulWidget {
   final SantoPopoverDirection direction;
   final bool showArrow;
   final Color? backgroundColor;
-  final double borderRadius;
+  final double radius;
   final double arrowSize;
   final double offset;
   final SantoPopoverDismissCallback? onDismiss;
@@ -135,7 +135,7 @@ class _SantoPopoverOverlay extends StatefulWidget {
     required this.direction,
     required this.showArrow,
     required this.backgroundColor,
-    required this.borderRadius,
+    required this.radius,
     required this.arrowSize,
     required this.offset,
     required this.onDismiss,
@@ -274,7 +274,7 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
         showArrow: widget.showArrow,
         arrowSize: widget.arrowSize,
         backgroundColor: _backgroundColor,
-        borderRadius: widget.borderRadius,
+        radius: widget.radius,
         targetOffset: widget.targetOffset,
         targetSize: widget.targetSize,
         popoverPosition: _popoverPosition ?? Offset.zero,
@@ -296,7 +296,7 @@ class _PopoverArrowPainter extends CustomPainter {
   final bool showArrow;
   final double arrowSize;
   final Color backgroundColor;
-  final double borderRadius;
+  final double radius;
   final Offset targetOffset;
   final Size targetSize;
   final Offset popoverPosition;
@@ -306,16 +306,16 @@ class _PopoverArrowPainter extends CustomPainter {
     required this.showArrow,
     required this.arrowSize,
     required this.backgroundColor,
-    required this.borderRadius,
+    required this.radius,
     required this.targetOffset,
     required this.targetSize,
     required this.popoverPosition,
   });
 
-  /// 箭头锚点钳制：气泡尺寸不足以留出 arrowSize + borderRadius 时，
+  /// 箭头锚点钳制：气泡尺寸不足以留出 arrowSize + radius 时，
   /// 退化为在整个范围内钳制，避免 clamp 下限大于上限抛异常
   double _clampArrowCenter(double value, double total) {
-    final double min = arrowSize + borderRadius;
+    final double min = arrowSize + radius;
     final double max = total - min;
     if (max < min) {
       return value.clamp(0.0, math.max(0.0, total));
@@ -351,7 +351,7 @@ class _PopoverArrowPainter extends CustomPainter {
     }
 
     canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, Radius.circular(borderRadius)),
+      RRect.fromRectAndRadius(rect, Radius.circular(radius)),
       paint,
     );
 
@@ -408,7 +408,7 @@ class _PopoverArrowPainter extends CustomPainter {
         oldDelegate.showArrow != showArrow ||
         oldDelegate.backgroundColor != backgroundColor ||
         oldDelegate.arrowSize != arrowSize ||
-        oldDelegate.borderRadius != borderRadius ||
+        oldDelegate.radius != radius ||
         oldDelegate.targetOffset != targetOffset ||
         oldDelegate.targetSize != targetSize ||
         oldDelegate.popoverPosition != popoverPosition;

@@ -17,9 +17,9 @@ class SantoSwitchTitle extends StatefulWidget {
 
   /// 选中时的回调
   /// index 选中的title的索引
-  final void Function(int index)? onSelect;
+  final void Function(int index)? onChanged;
 
-  /// 标题的 padding，默认 `EdgeInsets.fromLTRB(0, 14, 20, 14)`
+  /// 标题的 padding，默认 `EdgeInsets.fromLTRB(0, 15, 20, 15)`
   final EdgeInsets padding;
 
   /// 下划线的高度，默认是 2
@@ -42,10 +42,10 @@ class SantoSwitchTitle extends StatefulWidget {
       {Key? key,
       required this.nameList,
       this.defaultSelectIndex = 0,
-      this.onSelect,
+      this.onChanged,
       this.indicatorWeight = 2.0,
       this.indicatorWidth = 24.0,
-      this.padding = const EdgeInsets.fromLTRB(0, 14, 20, 14),
+      this.padding = const EdgeInsets.fromLTRB(0, 15, 20, 15),
       this.controller,
       this.selectedTextStyle,
       this.unselectedTextStyle})
@@ -168,8 +168,8 @@ class _SantoSwitchTitleState extends State<SantoSwitchTitle>
         // weight 设置为0，让外部通过 padding 设置下划线和标题间的距离
         indicatorWeight: 0,
         onTap: (index) {
-          if (null != widget.onSelect && widget.nameList.length > 1) {
-            widget.onSelect!(index);
+          if (null != widget.onChanged && widget.nameList.length > 1) {
+            widget.onChanged!(index);
           }
         },
       ),

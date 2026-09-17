@@ -11,8 +11,6 @@ class _CellExampleState extends State<CellExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Cell 示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

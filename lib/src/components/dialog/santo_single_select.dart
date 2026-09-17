@@ -34,7 +34,7 @@ class SantoSingleSelectDialog extends Dialog {
   final String? submitText;
 
   /// 提交按钮点击回调
-  final SantoSingleSelectOnSubmitCallback? onSubmitClick;
+  final SantoSingleSelectOnSubmitCallback? onSubmit;
 
   /// item 点击回调
   final SantoSingleSelectOnItemClickCallback? onItemClick;
@@ -65,7 +65,7 @@ class SantoSingleSelectDialog extends Dialog {
       required this.conditions,
       this.submitText,
       this.submitBgColor,
-      this.onSubmitClick,
+      this.onSubmit,
       this.onItemClick,
       this.checkedItem,
       this.customWidget,
@@ -82,7 +82,7 @@ class SantoSingleSelectDialog extends Dialog {
       messageWidget: messageWidget,
       conditions: conditions,
       submitText: submitText ?? SantoIntl.of(context).localizedResource.submit,
-      onSubmitClick: onSubmitClick,
+      onSubmit: onSubmit,
       onItemClick: onItemClick,
       submitBgColor: submitBgColor,
       checkedItem: checkedItem,
@@ -103,7 +103,7 @@ class SantoSingleSelectDialogWidget extends StatefulWidget {
   final Widget? messageWidget;
   final List<String>? conditions;
   final String submitText;
-  final SantoSingleSelectOnSubmitCallback? onSubmitClick;
+  final SantoSingleSelectOnSubmitCallback? onSubmit;
   final SantoSingleSelectOnItemClickCallback? onItemClick; //可供埋点需求用
   final Color? submitBgColor;
   String? checkedItem; // 选择项目
@@ -127,7 +127,7 @@ class SantoSingleSelectDialogWidget extends StatefulWidget {
       this.conditions,
       this.submitText = "",
       this.submitBgColor,
-      this.onSubmitClick,
+      this.onSubmit,
       this.onItemClick,
       this.checkedItem,
       this.customWidget,
@@ -153,7 +153,7 @@ class SantoSingleSelectDialogWidgetState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0x33999999),
+        backgroundColor: Color(0x33808695),
         body: Container(
             alignment: Alignment.center,
             child: Container(
@@ -172,7 +172,7 @@ class SantoSingleSelectDialogWidgetState
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 28, 20, 12),
+                        padding: EdgeInsets.fromLTRB(20, 25, 20, 12),
                         child: Text(
                           widget.title,
                           style: SantoDialogUtils.getDialogTitleStyle(
@@ -248,8 +248,8 @@ class SantoSingleSelectDialogWidgetState
                               if (widget.canDismissOnConfirmClick) {
                                 Navigator.of(context).pop();
                               }
-                              if (widget.onSubmitClick != null) {
-                                widget.onSubmitClick!(widget.checkedItem);
+                              if (widget.onSubmit != null) {
+                                widget.onSubmit!(widget.checkedItem);
                               }
                             },
                           ))

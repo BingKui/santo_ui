@@ -14,8 +14,6 @@ class TagExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: "标签示例",
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
         children: [

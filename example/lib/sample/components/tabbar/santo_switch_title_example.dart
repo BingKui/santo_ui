@@ -25,8 +25,6 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '一级标题',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +43,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                 SizedBox(height: 12),
                 SantoSwitchTitle(
                   nameList: ['标题内容'],
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -62,7 +60,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
               padding: EdgeInsets.all(0),
               selectedTextStyle: TextStyle(fontSize: 24),
               unselectedTextStyle: TextStyle(fontSize: 12),
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -77,7 +75,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                   nameList: ['标题内容1', '标题内容2', '标题内容3'],
                   defaultSelectIndex: 0,
                   controller: _controller,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -106,7 +104,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                 '标题内容6'
               ],
               defaultSelectIndex: 0,
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -121,7 +119,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                 '标题内容3',
               ],
               defaultSelectIndex: 0,
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -136,7 +134,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                 '3',
               ],
               defaultSelectIndex: 0,
-              onSelect: (value) {
+              onChanged: (value) {
                 SantoToast.show(value.toString(), context);
               },
             ),
@@ -153,7 +151,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                     '3',
                   ],
                   defaultSelectIndex: 0,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),
@@ -165,7 +163,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
                     '3',
                   ],
                   defaultSelectIndex: 0,
-                  onSelect: (value) {
+                  onChanged: (value) {
                     SantoToast.show(value.toString(), context);
                   },
                 ),

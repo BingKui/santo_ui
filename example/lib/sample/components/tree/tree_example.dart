@@ -143,8 +143,6 @@ class _TreeExampleState extends State<TreeExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Tree 树形控件示例',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

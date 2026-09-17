@@ -65,10 +65,8 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      appBar: buildBarByIndex(context),
-      padding: EdgeInsets.zero,
       scrollable: false,
-      child: buildContentByIndex(context),
+      child: buildContentByIndex(context) ?? const SizedBox.shrink(),
     );
   }
 

@@ -78,7 +78,7 @@ class SantoNoticeBarWithButton extends StatelessWidget {
     // 如果没有自定义视图，设置最小高度
     return Container(
       constraints: BoxConstraints(minHeight: this.minHeight),
-      color: backgroundColor ?? Color(0x14FA5741),
+      color: backgroundColor ?? Color(0x14FF4D4F),
       padding: this.padding ?? EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -108,14 +108,14 @@ class SantoNoticeBarWithButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: leftTagBackgroundColor ?? Color(0xFFFA5741),
+          color: leftTagBackgroundColor ?? Color(0xFFFF4D4F),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           leftTagText!,
           style: TextStyle(
               color: leftTagTextColor ?? Colors.white,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: FontWeight.w600,
               height: 1),
         ),
@@ -174,7 +174,7 @@ class SantoNoticeBarWithButton extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: Border.all(
-              color: rightButtonBorderColor ?? Color(0xFFFA5741),
+              color: rightButtonBorderColor ?? Color(0xFFFF4D4F),
               width: 1.0,
             ),
             borderRadius: BorderRadius.circular(12),
@@ -182,7 +182,7 @@ class SantoNoticeBarWithButton extends StatelessWidget {
           child: Text(
             rightButtonText!,
             style: TextStyle(
-              color: rightButtonTextColor ?? Color(0xFFFA5741),
+              color: rightButtonTextColor ?? Color(0xFFFF4D4F),
               fontSize: 12,
               height: 1,
               fontWeight: FontWeight.w600,

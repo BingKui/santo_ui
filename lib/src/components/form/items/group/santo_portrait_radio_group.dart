@@ -124,7 +124,7 @@ class SantoPortraitRadioGroupState extends State<SantoPortraitRadioGroup> {
       option = options[index];
       result.add(
         Container(
-          padding: EdgeInsets.only(top: 14, bottom: 14, left: 20, right: 20),
+          padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

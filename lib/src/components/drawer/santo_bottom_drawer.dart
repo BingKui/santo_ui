@@ -229,7 +229,7 @@ class SantoBottomDrawer extends StatelessWidget {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF333333),
+            color: Color(0xFF17233D),
           ),
           child: titleContent,
         ),
@@ -238,7 +238,7 @@ class SantoBottomDrawer extends StatelessWidget {
           Text(
             desc!,
             style: const TextStyle(
-              fontSize: 13,
+              fontSize: 12,
               color: Color(0xFF808695),
             ),
           ),

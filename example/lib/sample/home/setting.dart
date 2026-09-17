@@ -10,13 +10,15 @@ class Setting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       appBar: SantoAppBar(
         title: '设置',
         leading: SantoBackLeading(),
         automaticallyImplyLeading: false,
       ),
-      body: Container(
+      // body 自带 ListView,不再叠加滚动容器
+      scrollable: false,
+      child: Container(
         padding: EdgeInsets.all(20),
         child: ListView(
           children: <Widget>[

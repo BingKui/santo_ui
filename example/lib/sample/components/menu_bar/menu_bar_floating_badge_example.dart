@@ -61,7 +61,7 @@ class _MenuBarFloatingBadgeExampleState
               style: SantoMenuBarStyle.floating,
               gap: 12,
               currentIndex: _index,
-              onChange: (i) => setState(() => _index = i),
+              onChanged: (i) => setState(() => _index = i),
               items: [
                 SantoMenuBarItem(
                   text: '首页',

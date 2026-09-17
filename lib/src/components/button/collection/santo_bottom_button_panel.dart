@@ -159,7 +159,7 @@ class SantoBottomButtonPanel extends StatelessWidget {
     rowChildren.add(btnListWidget);
 
     return Container(
-      padding: EdgeInsets.only(right: 20, left: 8, bottom: 18, top: 16),
+      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       color: Colors.white,
       child: Row(
         children: rowChildren,
@@ -206,7 +206,7 @@ class SantoBottomButtonPanel extends StatelessWidget {
           },
           child: Container(
               height: 48,
-              padding: EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
               decoration: BoxDecoration(
                 color: enableSecondaryButton
                     ? SantoThemeConfigurator.instance
@@ -248,7 +248,7 @@ class SantoBottomButtonPanel extends StatelessWidget {
       },
       child: Container(
           height: 48,
-          padding: EdgeInsets.only(left: 8, right: 8, top: 6, bottom: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
           decoration: BoxDecoration(
             color: enableMainButton
                 ? SantoThemeConfigurator.instance

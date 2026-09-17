@@ -306,7 +306,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
           data.value = dateTime.millisecondsSinceEpoch.toString();
         });
       }
-    }, onChange: (dateTime, list) {}, onCancel: () {}, onClose: () {});
+    }, onChanged: (dateTime, list) {}, onCancel: () {}, onClose: () {});
   }
 }
 

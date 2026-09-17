@@ -86,7 +86,7 @@ class _SoftGuideExampleState extends State<SoftGuideExample> {
                     tags: nameList,
                     tagWidth: (MediaQuery.of(context).size.width - 40 - 24) / 3,
                     fixWidthMode: false,
-                    onSelect: (index) {
+                    onChanged: (index) {
                       SantoToast.show("$index is selected", context);
                     }),
                 SizedBox(

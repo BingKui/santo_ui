@@ -86,7 +86,6 @@ testWidgets('SantoPanel 标题后置控件紧跟标题且让位正确', (tester)
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: SantoPanel(
-          margin: EdgeInsets.zero,
           title: '标题',
           titleExtra: const SizedBox(
             key: ValueKey('extra'),

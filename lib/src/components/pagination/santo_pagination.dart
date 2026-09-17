@@ -47,7 +47,7 @@ const BorderRadius _allEdgeRadius = BorderRadius.all(
 /// 分页组件:把大量数据分页展示
 ///
 /// 参考 vant Pagination:多页模式展示页码并支持省略号,简单模式展示"当前页/总页数"。
-/// 组件为受控组件,[current] 为当前页,[onChange] 回传点击后的页码。
+/// 组件为受控组件,[current] 为当前页,[onChanged] 回传点击后的页码。
 ///
 /// 示例:
 /// ```dart
@@ -55,7 +55,7 @@ const BorderRadius _allEdgeRadius = BorderRadius.all(
 ///   current: _page,
 ///   totalItems: 50,
 ///   itemsPerPage: 10,
-///   onChange: (page) => setState(() => _page = page),
+///   onChanged: (page) => setState(() => _page = page),
 /// )
 /// ```
 class SantoPagination extends StatelessWidget {
@@ -66,7 +66,7 @@ class SantoPagination extends StatelessWidget {
   final int current;
 
   /// 页码变化回调
-  final ValueChanged<int>? onChange;
+  final ValueChanged<int>? onChanged;
 
   /// 总条数,配合 [itemsPerPage] 算出总页数
   final int totalItems;
@@ -99,7 +99,7 @@ class SantoPagination extends StatelessWidget {
     Key? key,
     this.mode = SantoPaginationMode.multi,
     this.current = 1,
-    this.onChange,
+    this.onChanged,
     this.totalItems = 0,
     this.itemsPerPage = 10,
     this.pageCount = 0,
@@ -274,7 +274,7 @@ class SantoPagination extends StatelessWidget {
   void _select(int page, int count) {
     final int target = page.clamp(1, count);
     if (target != current) {
-      onChange?.call(target);
+      onChanged?.call(target);
     }
   }
 

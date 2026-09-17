@@ -14,8 +14,6 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: '两列纯文本',
-      padding: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

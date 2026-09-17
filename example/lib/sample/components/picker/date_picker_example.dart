@@ -14,7 +14,6 @@ class DatePickerExamplePage extends StatelessWidget {
       appBar: SantoAppBar(
           title: _title,
         ),
-      padding: EdgeInsets.zero,
       scrollable: false,
       child: ListView(
           children: <Widget>[
@@ -172,8 +171,8 @@ class DatePickerExamplePage extends StatelessWidget {
       print("onClose");
     }, onCancel: () {
       print("onCancel");
-    }, onChange: (dateTime, list) {
-      print("onChange:  $dateTime    $list");
+    }, onChanged: (dateTime, list) {
+      print("onChanged:  $dateTime    $list");
     });
   }
 
@@ -205,9 +204,9 @@ class DatePickerExamplePage extends StatelessWidget {
       print("onClose");
     }, onCancel: () {
       print("onCancel");
-    }, onChange: (startDateTime, endDateTime, startlist, endlist) {
+    }, onChanged: (startDateTime, endDateTime, startlist, endlist) {
       SantoToast.show(
-          "onChange:  $startDateTime   $endDateTime     $startlist     $endlist",
+          "onChanged:  $startDateTime   $endDateTime     $startlist     $endlist",
           context);
     });
   }
@@ -238,9 +237,9 @@ class DatePickerExamplePage extends StatelessWidget {
           print("onClose");
         }, onCancel: () {
           print("onCancel");
-        }, onChange: (startDateTime, endDateTime, startlist, endlist) {
+        }, onChanged: (startDateTime, endDateTime, startlist, endlist) {
           SantoToast.show(
-              "onChange:  $startDateTime   $endDateTime     $startlist     $endlist",
+              "onChanged:  $startDateTime   $endDateTime     $startlist     $endlist",
               context);
         });
         break;
@@ -266,9 +265,9 @@ class DatePickerExamplePage extends StatelessWidget {
           print("onClose");
         }, onCancel: () {
           print("onCancel");
-        }, onChange: (startDateTime, endDateTime, startlist, endlist) {
+        }, onChanged: (startDateTime, endDateTime, startlist, endlist) {
           SantoToast.show(
-              "onChange:  $startDateTime   $endDateTime     $startlist     $endlist",
+              "onChanged:  $startDateTime   $endDateTime     $startlist     $endlist",
               context);
         });
         break;
@@ -297,9 +296,9 @@ class DatePickerExamplePage extends StatelessWidget {
       print("onClose");
     }, onCancel: () {
       print("onCancel");
-    }, onChange: (startDateTime, endDateTime, startlist, endlist) {
+    }, onChanged: (startDateTime, endDateTime, startlist, endlist) {
       SantoToast.show(
-          "onChange:  $startDateTime   $endDateTime     $startlist     $endlist",
+          "onChanged:  $startDateTime   $endDateTime     $startlist     $endlist",
           context);
     });
   }

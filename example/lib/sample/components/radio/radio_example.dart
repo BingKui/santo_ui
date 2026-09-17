@@ -24,8 +24,6 @@ class _RadioExampleState extends State<RadioExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(
       backgroundColor: Colors.white,
-      title: 'Radio 单选框',
-      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

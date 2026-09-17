@@ -43,16 +43,16 @@ class SantoShareDialog extends StatelessWidget {
   /// 分享渠道列表
   final List<int> shareChannels;
 
-  /// 标题颜色，默认值 Color(0xff222222)
+  /// 标题颜色，默认值 Color(0xff17233D)
   final Color titleColor;
 
-  /// 分享渠道文案颜色，默认值 Color(0xff666666)
+  /// 分享渠道文案颜色，默认值 Color(0xff515A6E)
   final Color descColor;
 
-  /// 分享文本颜色，Color(0xff999999)
+  /// 分享文本颜色，Color(0xff808695)
   final Color shareTextColor;
 
-  /// 分割线颜色，默认值 Color(0xffEEEEEE)
+  /// 分割线颜色，默认值 Color(0xffE8EAEC)
   final Color separatorLineColor;
 
   /// 点击事件
@@ -76,9 +76,9 @@ class SantoShareDialog extends StatelessWidget {
     this.clickCallBack,
     this.getCustomChannelTitle,
     this.getCustomChannelWidget,
-    this.titleColor = const Color(0xff222222),
-    this.descColor = const Color(0xff666666),
-    this.shareTextColor = const Color(0xff999999),
+    this.titleColor = const Color(0xff17233D),
+    this.descColor = const Color(0xff515A6E),
+    this.shareTextColor = const Color(0xff808695),
     this.separatorLineColor = const Color(0xfff0f0f0),
     this.themeData,
   }) {
@@ -152,7 +152,7 @@ class SantoShareDialog extends StatelessWidget {
         children: <Widget>[
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.only(top: 28),
+            padding: EdgeInsets.only(top: 25),
             child: Text(
               titleText,
               style: SantoDialogUtils.getDialogTitleStyle(themeData!),
@@ -260,7 +260,7 @@ class SantoShareDialog extends StatelessWidget {
         ? 14
         : (300 - 39 * shareItems.length) / (shareItems.length + 1);
     return Container(
-      padding: EdgeInsets.only(bottom: 28),
+      padding: EdgeInsets.only(bottom: 25),
       alignment: Alignment.center,
       child: Wrap(
         spacing: space,

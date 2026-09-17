@@ -54,7 +54,7 @@ class SantoContentExportWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0x33999999),
+        backgroundColor: Color(0x33808695),
         body: Container(
           alignment: Alignment.center,
           child: SingleChildScrollView(
@@ -112,7 +112,7 @@ class SantoContentExportWidget extends StatelessWidget {
   Widget _generateTitleWidget() {
     return Padding(
       padding: null != title && title!.isNotEmpty
-          ? EdgeInsets.fromLTRB(20, 28, 20, 12)
+          ? EdgeInsets.fromLTRB(20, 25, 20, 12)
           : EdgeInsets.only(top: 20),
       child: null != title && title!.isNotEmpty
           ? Text(
