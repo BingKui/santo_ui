@@ -12,7 +12,9 @@ class EmptyExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '异常页面',
         scrollable: false,
-        child: _buildEmpty(caseIndex, context) ?? const SizedBox.shrink());
+      children: <Widget>[
+        _buildEmpty(caseIndex, context) ?? const SizedBox.shrink(),
+      ]);
   }
 
   Widget? _buildEmpty(int? index, BuildContext context) {

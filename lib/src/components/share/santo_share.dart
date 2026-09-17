@@ -76,13 +76,15 @@ class SantoShare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
         decoration: ShapeDecoration(
           color: Color(0xFFFFFFFF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12.0),
-              topRight: Radius.circular(12.0),
+              topLeft: Radius.circular(commonConfig.radiusXs),
+              topRight: Radius.circular(commonConfig.radiusXs),
             ),
           ),
         ),
@@ -101,6 +103,8 @@ class SantoShare extends StatelessWidget {
 
   /// 构建单个分享渠道
   Widget? _configChannelWidget(BuildContext context, int section, int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     // 分享类型
     SantoShareItem channel;
     // 渠道名称
@@ -110,7 +114,7 @@ class SantoShare extends StatelessWidget {
     // 元素宽度(图片边长也是48)
     double itemsWidth = 48;
     // 元素间隔为20写死
-    double space = 20;
+    double space = commonConfig.hSpacingLg;
     title = null;
     image = null;
     // 判断区域
@@ -149,14 +153,16 @@ class SantoShare extends StatelessWidget {
               height: itemsWidth,
             ),
             Divider(
-              height: 8,
+              height: commonConfig.vSpacingSm,
               color: Colors.transparent,
             ),
             Text(
               title,
               maxLines: 1,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, color: shareTextColor),
+              style: TextStyle(
+                  fontSize: commonConfig.fontSizeCaption,
+                  color: shareTextColor),
             )
           ],
         ),
@@ -177,17 +183,19 @@ class SantoShare extends StatelessWidget {
 
   /// 构建actionSheet的按钮
   Widget _configActionWidgets(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> tiles = [];
     // 预设分享渠道
     List<Widget> firstSectionItems = [];
     // 自定义分享渠道
     List<Widget> secondSectionItems = [];
     // 容器左侧留白
-    double leftGap = 10;
+    double leftGap = commonConfig.hSpacingSm;
     // 容器上方留白
-    double topGap = 20;
+    double topGap = commonConfig.vSpacingLg;
     // 容器下方留白
-    double bottomGap = 20;
+    double bottomGap = commonConfig.vSpacingLg;
     // 构建第一行
     if (firstShareChannels != null) {
       for (int index = 0; index < firstShareChannels!.length; index++) {
@@ -209,14 +217,15 @@ class SantoShare extends StatelessWidget {
     // 添加title
     tiles.add(Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(top: 16, left: 20),
+      padding: EdgeInsets.only(
+          top: commonConfig.vSpacingMd, left: commonConfig.hSpacingLg),
       child: Text(
         mainTitle ?? SantoIntl.of(context).localizedResource.shareTo,
         maxLines: 1,
         textAlign: TextAlign.left,
         style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontSize: commonConfig.fontSizeSubHead,
+            fontWeight: FontWeight.w500,
             color: SantoThemeConfigurator.instance
                 .getConfig()
                 .commonConfig
@@ -241,7 +250,8 @@ class SantoShare extends StatelessWidget {
     // 添加分割线
     tiles.add(Container(
       // 分割线左右填充20
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding:
+          EdgeInsets.only(left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
       child: SantoLine(),
     ));
 
@@ -268,12 +278,18 @@ class SantoShare extends StatelessWidget {
     tiles.add(GestureDetector(
         behavior: HitTestBehavior.opaque,
         child: Container(
-          padding: EdgeInsets.only(left: 61, right: 61, top: 12, bottom: 12),
+          padding: EdgeInsets.only(
+              left: 61,
+              right: 61,
+              top: commonConfig.pageGap,
+              bottom: commonConfig.pageGap),
           child: Center(
             child: Text(
               cancelTitle ?? SantoIntl.of(context).localizedResource.cancel,
               style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
+                  fontSize: commonConfig.fontSizeSubHead,
+                  fontWeight: FontWeight.w500,
+                  color: textColor),
             ),
           ),
         ),

@@ -171,6 +171,8 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
   }
 
   Widget _buildHeader(BuildContext context, Widget? child) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final Color borderSideColor = /*_borderColor.value ??*/ Colors.transparent;
 
     return Container(
@@ -195,11 +197,14 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
                       _handleTap();
                     },
                     child: Container(
-                      padding: EdgeInsets.only(left: 20, top: 14),
+                      padding: EdgeInsets.only(
+                          left: commonConfig.hSpacingLg,
+                          top: commonConfig.vSpacingMd),
                       child: Row(
                         children: <Widget>[
                           Container(
-                              padding: EdgeInsets.only(right: 6),
+                              padding: EdgeInsets.only(
+                                  right: commonConfig.hSpacingXs),
                               child: Text(
                                 widget.title,
                                 style: SantoFormUtil.getHeadTitleTextStyle(
@@ -226,7 +231,9 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
                         }
                       },
                       child: Container(
-                        padding: EdgeInsets.only(top: 14, right: 20),
+                        padding: EdgeInsets.only(
+                            top: commonConfig.vSpacingMd,
+                            right: commonConfig.hSpacingLg),
                         child: Text(
                           widget.deleteText ?? "",
                           style: TextStyle(
@@ -245,7 +252,10 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
           // 副标题
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: 20, top: 4, bottom: 14),
+            padding: EdgeInsets.only(
+                left: commonConfig.hSpacingLg,
+                top: commonConfig.vSpacingXs,
+                bottom: commonConfig.vSpacingMd),
             child: Offstage(
               offstage: (widget.subtitle == null || widget.subtitle!.isEmpty),
               child: Text(

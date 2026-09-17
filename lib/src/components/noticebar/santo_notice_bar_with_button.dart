@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/noticebar/santo_marquee_text.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// 描述: 左边标签，右边按钮的通知
@@ -75,11 +76,14 @@ class SantoNoticeBarWithButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     // 如果没有自定义视图，设置最小高度
     return Container(
       constraints: BoxConstraints(minHeight: this.minHeight),
       color: backgroundColor ?? Color(0x14FF4D4F),
-      padding: this.padding ?? EdgeInsets.symmetric(horizontal: 20),
+      padding: this.padding ??
+          EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -103,20 +107,22 @@ class SantoNoticeBarWithButton extends StatelessWidget {
       return Container();
     }
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
-      padding: EdgeInsets.only(right: 8, top: 2),
+      padding: EdgeInsets.only(right: commonConfig.hSpacingSm, top: 2),
       child: Container(
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.all(commonConfig.vSpacingXs),
         decoration: BoxDecoration(
           color: leftTagBackgroundColor ?? Color(0xFFFF4D4F),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         ),
         child: Text(
           leftTagText!,
           style: TextStyle(
               color: leftTagTextColor ?? Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
+              fontSize: commonConfig.fontSizeCaptionSm,
+              fontWeight: FontWeight.w500,
               height: 1),
         ),
       ),
@@ -127,6 +133,8 @@ class SantoNoticeBarWithButton extends StatelessWidget {
     if (content.isEmpty) {
       return Container();
     }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
 
     if (marquee) {
       return SantoMarqueeText(
@@ -134,7 +142,7 @@ class SantoNoticeBarWithButton extends StatelessWidget {
         text: content,
         textStyle: TextStyle(
           color: contentTextColor ?? Color(0xFF333333),
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
         ),
       );
     } else {
@@ -143,7 +151,7 @@ class SantoNoticeBarWithButton extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: contentTextColor ?? Color(0xFF333333),
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
         ),
       );
     }
@@ -158,6 +166,8 @@ class SantoNoticeBarWithButton extends StatelessWidget {
     if (rightButtonText?.isEmpty ?? true) {
       return Container();
     }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
       onTap: () {
         if (onRightButtonTap != null) {
@@ -165,7 +175,7 @@ class SantoNoticeBarWithButton extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 8),
+        padding: EdgeInsets.only(left: commonConfig.hSpacingSm),
         child: Container(
           height: 30,
           alignment: Alignment.center,
@@ -177,15 +187,15 @@ class SantoNoticeBarWithButton extends StatelessWidget {
               color: rightButtonBorderColor ?? Color(0xFFFF4D4F),
               width: 1.0,
             ),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(commonConfig.radiusXs),
           ),
           child: Text(
             rightButtonText!,
             style: TextStyle(
               color: rightButtonTextColor ?? Color(0xFFFF4D4F),
-              fontSize: 12,
+              fontSize: commonConfig.fontSizeCaption,
               height: 1,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),

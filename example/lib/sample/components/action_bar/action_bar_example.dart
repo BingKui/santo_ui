@@ -8,10 +8,9 @@ import 'package:flutter/material.dart';
 class ActionBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: 'ActionBar 操作栏',
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: 'ActionBar 操作栏',
+        children: <Widget>[
           ListItem(
             title: '基础用法',
             isShowLine: false,
@@ -24,7 +23,6 @@ class ActionBarExample extends StatelessWidget {
             onPressed: () => _push(context, ActionBarBottomExample()),
           ),
         ],
-      ),
     );
   }
 

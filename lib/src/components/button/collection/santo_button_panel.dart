@@ -93,6 +93,8 @@ class _SantoButtonPanelState extends State<SantoButtonPanel> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> list = <Widget>[];
 
     if (_secondaryButtonList.length > 2) {
@@ -102,7 +104,7 @@ class _SantoButtonPanelState extends State<SantoButtonPanel> {
       );
       list.add(
         SizedBox(
-          width: 20,
+          width: commonConfig.hSpacingLg,
         ),
       );
       list.add(Expanded(
@@ -160,6 +162,8 @@ class _SantoButtonPanelState extends State<SantoButtonPanel> {
   }
 
   Widget _secondaryButton(int btnIndex) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     SantoSmallOutlineButton button = SantoSmallOutlineButton(
       title: _secondaryButtonList[btnIndex].name,
       isEnable: _secondaryButtonList[btnIndex].isEnable,
@@ -170,7 +174,7 @@ class _SantoButtonPanelState extends State<SantoButtonPanel> {
       },
     );
     return Padding(
-      padding: EdgeInsets.only(right: 8),
+      padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
       child: button,
     );
   }

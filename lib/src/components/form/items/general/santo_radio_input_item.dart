@@ -226,6 +226,8 @@ class SantoRadioInputFormItemState extends State<SantoRadioInputFormItem> {
   }
 
   Widget _buildTipWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Offstage(
       offstage: (widget.tipLabel == null /*|| widget.tipLabel.isEmpty*/),
       child: GestureDetector(
@@ -238,7 +240,9 @@ class SantoRadioInputFormItemState extends State<SantoRadioInputFormItem> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-                padding: EdgeInsets.only(left: 6, right: 7),
+                padding: EdgeInsets.only(
+                    left: commonConfig.hSpacingXs,
+                    right: commonConfig.hSpacingXs),
                 child: SantoFormUtil.getQuestionMarkIcon()),
             Container(
               constraints: BoxConstraints(

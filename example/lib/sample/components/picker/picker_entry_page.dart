@@ -24,117 +24,114 @@ class PickerEntryPage extends StatelessWidget {
       appBar: SantoAppBar(
           title: _title,
         ),
-      scrollable: false,
-      child: ListView(
-          children: <Widget>[
-            ListItem(
-              title: "MultiDataPicker",
-              isShowLine: false,
-              describe: '底部多级选择',
-              onPressed: () {
-                _showMultiDataPicker(context);
-              },
-            ),
-            ListItem(
-              title: "DatePicker",
-              describe: '日期选择控件',
-              onPressed: () {
-                _showDatePicker(context);
-              },
-            ),
-            ListItem(
-              title: "BottomWriteDialog",
-              describe: 'Picker/文字录入  底部输入弹框',
-              onPressed: () {
-                _showBottomWriteDialog(context);
-              },
-            ),
-            ListItem(
-              title: "Picker/多选/勾选（MultiSelectBottomPicker）",
-              describe: '底部多选弹框',
-              onPressed: () {
-                _showBottomMultiSelectPicker(context);
-              },
-            ),
-            ListItem(
-              title: "Picker/多选/勾选（MultiSelectBottomPicker）",
-              describe: '底部多选弹框(自定义数据协议)',
-              onPressed: () {
-                _showExpandBottomMultiSelectPicker(context);
-              },
-            ),
-            ListItem(
-              title: "Picker/多选/勾选（MultiSelectBottomPicker）",
-              describe: '底部多选弹框(实现限制选择个数)',
-              onPressed: () {
-                _showCountLimitBottomMultiSelectPicker(context);
-              },
-            ),
-            ListItem(
-              title: "Picker/多选/点选（SantoMultiSelectTagsPicker）",
-              describe: "底部多选弹框",
-              onPressed: () {
-                _showMulSelectTagPicker(context);
-              },
-            ),
-            ListItem(
-              title: "Picker/多选/点选（SantoSelectTagsWithInputPicker）",
-              describe: "底部多选弹框带输入框",
-              onPressed: () {
-                _showSelectTagsWithTextInputPicker(context);
-              },
-            ),
-            ListItem(
-              title: "Picker 级联选择",
-              describe: "底部级联选择框",
-              onPressed: () {
-                rootBundle.loadString('assets/list_picker.json').then((data) {
-                  List<SantoPickerEntity> _selectionData = []..addAll(
-                      (JsonDecoder().convert(data)["data"]['list'] as List? ??
-                              [])
-                          .map((o) => SantoPickerEntity.fromMap(o)));
-                  if (_selectionData.length > 0) {
-                    _selectionData.forEach((f) => f.configChild());
-                    if (dataList.length == 0) {
-                      dataList.addAll(_selectionData);
-                    }
-                    _showRangePicker(context, dataList);
+        children: <Widget>[
+          ListItem(
+            title: "MultiDataPicker",
+            isShowLine: false,
+            describe: '底部多级选择',
+            onPressed: () {
+              _showMultiDataPicker(context);
+            },
+          ),
+          ListItem(
+            title: "DatePicker",
+            describe: '日期选择控件',
+            onPressed: () {
+              _showDatePicker(context);
+            },
+          ),
+          ListItem(
+            title: "BottomWriteDialog",
+            describe: 'Picker/文字录入  底部输入弹框',
+            onPressed: () {
+              _showBottomWriteDialog(context);
+            },
+          ),
+          ListItem(
+            title: "Picker/多选/勾选（MultiSelectBottomPicker）",
+            describe: '底部多选弹框',
+            onPressed: () {
+              _showBottomMultiSelectPicker(context);
+            },
+          ),
+          ListItem(
+            title: "Picker/多选/勾选（MultiSelectBottomPicker）",
+            describe: '底部多选弹框(自定义数据协议)',
+            onPressed: () {
+              _showExpandBottomMultiSelectPicker(context);
+            },
+          ),
+          ListItem(
+            title: "Picker/多选/勾选（MultiSelectBottomPicker）",
+            describe: '底部多选弹框(实现限制选择个数)',
+            onPressed: () {
+              _showCountLimitBottomMultiSelectPicker(context);
+            },
+          ),
+          ListItem(
+            title: "Picker/多选/点选（SantoMultiSelectTagsPicker）",
+            describe: "底部多选弹框",
+            onPressed: () {
+              _showMulSelectTagPicker(context);
+            },
+          ),
+          ListItem(
+            title: "Picker/多选/点选（SantoSelectTagsWithInputPicker）",
+            describe: "底部多选弹框带输入框",
+            onPressed: () {
+              _showSelectTagsWithTextInputPicker(context);
+            },
+          ),
+          ListItem(
+            title: "Picker 级联选择",
+            describe: "底部级联选择框",
+            onPressed: () {
+              rootBundle.loadString('assets/list_picker.json').then((data) {
+                List<SantoPickerEntity> _selectionData = []..addAll(
+                    (JsonDecoder().convert(data)["data"]['list'] as List? ??
+                            [])
+                        .map((o) => SantoPickerEntity.fromMap(o)));
+                if (_selectionData.length > 0) {
+                  _selectionData.forEach((f) => f.configChild());
+                  if (dataList.length == 0) {
+                    dataList.addAll(_selectionData);
                   }
-                });
-              },
-            ),
-            ListItem(
-              title: "Picker 级联选择",
-              describe: "底部级联选择框（Title 动态改变）",
-              onPressed: () {
-                rootBundle.loadString('assets/list_picker.json').then((data) {
-                  List<SantoPickerEntity> _selectionData = []..addAll(
-                      (JsonDecoder().convert(data)["data"]['list'] as List? ??
-                              [])
-                          .map((o) => SantoPickerEntity.fromMap(o)));
-                  if (_selectionData.length > 0) {
-                    _selectionData.forEach((f) => f.configChild());
-                    if (dataList.length == 0) {
-                      dataList.addAll(_selectionData);
-                    }
-                    _showRangePicker1(context, dataList);
+                  _showRangePicker(context, dataList);
+                }
+              });
+            },
+          ),
+          ListItem(
+            title: "Picker 级联选择",
+            describe: "底部级联选择框（Title 动态改变）",
+            onPressed: () {
+              rootBundle.loadString('assets/list_picker.json').then((data) {
+                List<SantoPickerEntity> _selectionData = []..addAll(
+                    (JsonDecoder().convert(data)["data"]['list'] as List? ??
+                            [])
+                        .map((o) => SantoPickerEntity.fromMap(o)));
+                if (_selectionData.length > 0) {
+                  _selectionData.forEach((f) => f.configChild());
+                  if (dataList.length == 0) {
+                    dataList.addAll(_selectionData);
                   }
-                });
-              },
-            ),
-            ListItem(
-              title: "自定义底部弹窗Picker",
-              describe: "支持自定义内容",
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return CustomPickerExamplePage();
-                  },
-                ));
-              },
-            ),
-          ],
-        ),
+                  _showRangePicker1(context, dataList);
+                }
+              });
+            },
+          ),
+          ListItem(
+            title: "自定义底部弹窗Picker",
+            describe: "支持自定义内容",
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CustomPickerExamplePage();
+                },
+              ));
+            },
+          ),
+        ],
     );
   }
 

@@ -10,13 +10,22 @@ import 'package:flutter/material.dart';
 typedef DialogIndexedActionClickCallback = void Function(int index);
 
 /// icon的间距
-const EdgeInsetsGeometry cIconPadding = const EdgeInsets.only(top: 25.0);
+final EdgeInsetsGeometry cIconPadding = EdgeInsets.only(
+    top: SantoThemeConfigurator
+        .instance
+        .getConfig()
+        .commonConfig
+        .vSpacingLg);
 
 /// title的文字样式
-const TextStyle cTitleTextStyle = const TextStyle(
-    fontWeight: FontWeight.w600,
+final TextStyle cTitleTextStyle = TextStyle(
+    fontWeight: FontWeight.w500,
     inherit: true,
-    fontSize: 18.0,
+    fontSize: SantoThemeConfigurator
+        .instance
+        .getConfig()
+        .commonConfig
+        .fontSizeHead,
     color: Color(0xFF17233D));
 
 /// title的文字的对齐
@@ -29,16 +38,24 @@ const TextAlign cTitleTextAlign = TextAlign.center;
 const TextAlign cContentTextAlign = TextAlign.center;
 
 /// 内容部分的文字的样式
-const TextStyle cContentTextStyle = const TextStyle(
+final TextStyle cContentTextStyle = TextStyle(
     inherit: true,
-    fontSize: 14.0,
+    fontSize: SantoThemeConfigurator
+        .instance
+        .getConfig()
+        .commonConfig
+        .fontSizeBase,
     color: Color(0xFF515A6E),
     decoration: TextDecoration.none);
 
 /// 警示文案样式
-const TextStyle cWarningTextStyle = TextStyle(
+final TextStyle cWarningTextStyle = TextStyle(
     inherit: true,
-    fontSize: 14.0,
+    fontSize: SantoThemeConfigurator
+        .instance
+        .getConfig()
+        .commonConfig
+        .fontSizeBase,
     color: Color(0xFFFF4D4F),
     decoration: TextDecoration.none);
 
@@ -48,23 +65,36 @@ const TextAlign cWarningTextAlign = TextAlign.center;
 /// 对话框的背景---》默认白色
 const Color cBackgroundColor = Colors.white;
 
-/// 对话框的边框----》默认圆角5
-const ShapeBorder cShape = const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(12.0)));
+/// 对话框的边框----》默认圆角取 radiusXs
+final ShapeBorder cShape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(
+        SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs)));
 
 /// 主题按钮的背景颜色---》白色
 const Color cMainBackgroundColor = Colors.white;
 
 /// 主题按钮的文字样式---》主色调
-const TextStyle cMainTextStyle = const TextStyle(
-    color: Color(0xFF52C41A), fontWeight: FontWeight.w600, fontSize: 16);
+final TextStyle cMainTextStyle = TextStyle(
+    color: Color(0xFF52C41A),
+    fontWeight: FontWeight.w500,
+    fontSize: SantoThemeConfigurator
+        .instance
+        .getConfig()
+        .commonConfig
+        .fontSizeSubHead);
 
 /// 灰色按钮的背景颜色---》白色
 const Color cGreyBackgroundColor = Colors.white;
 
 /// 非按钮的文字样式---》灰色
-const TextStyle cGreyActionsTextStyle = const TextStyle(
-    color: Color(0xFF17233D), fontWeight: FontWeight.w600, fontSize: 16);
+final TextStyle cGreyActionsTextStyle = TextStyle(
+    color: Color(0xFF17233D),
+    fontWeight: FontWeight.w500,
+    fontSize: SantoThemeConfigurator
+        .instance
+        .getConfig()
+        .commonConfig
+        .fontSizeSubHead);
 
 /// 水平分割线 内容与按钮
 const VerticalDivider cVerticalDivider =
@@ -333,18 +363,22 @@ class SantoDialog extends AlertDialog {
 
   Widget _generateActionsWidget(
       BuildContext context, SantoDialogConfig defaultConfig) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     bool showTextActions = _isEmptyActionsWidget();
     int length = showTextActions ? actionsText!.length : actionsWidget!.length;
     if (length == 1) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
+        padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+            commonConfig.hSpacingLg, commonConfig.vSpacingMd),
         child: showTextActions
             ? _mapTextToGesWidget(context, actionsText![0], 0, true)
             : actionsWidget![0],
       );
     } else if (length == 2) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
+        padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+            commonConfig.hSpacingLg, commonConfig.vSpacingMd),
         child: Row(
           children: [
             Expanded(
@@ -352,7 +386,7 @@ class SantoDialog extends AlertDialog {
                   ? _mapTextToGesWidget(context, actionsText![0], 0, false)
                   : actionsWidget![0],
             ),
-            const SizedBox(width: 12.0),
+            SizedBox(width: commonConfig.pageGap),
             Expanded(
               child: showTextActions
                   ? _mapTextToGesWidget(context, actionsText![1], 1, true)
@@ -363,12 +397,13 @@ class SantoDialog extends AlertDialog {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
+        padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+            commonConfig.hSpacingLg, commonConfig.vSpacingMd),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             for (int i = 0; i < length; i++) ...[
-              if (i > 0) const SizedBox(height: 12.0),
+              if (i > 0) SizedBox(height: commonConfig.pageGap),
               showTextActions
                   ? _mapTextToGesWidget(context, actionsText![i], i, true)
                   : actionsWidget![i],

@@ -27,7 +27,9 @@ import 'package:flutter/material.dart';
 ///    3：展开收起规则：
 ///         如果expandAtIndex是-1、大于等于孩子的长度-1，则不具备展开收起功能
 ///         isFolded控制 初始的展开收起状态
-///         展开和收起的button是蒙层
+///         折叠态：只展示到 [expandAtIndex] 这一行，且该行内容折成一行(超出省略)，
+///                 行尾放"展开"按钮，点击后展示已有全部内容
+///         展开态：展示全部内容，并在末尾右侧放"收起"按钮，点击后重新折成一行
 ///
 /// 对齐的情况是使用Table实现，通过自定义的[TableColumnWidth]来达到对齐的效果。
 /// TableColumnWidth提供了获取所有子节点宽度的API。
@@ -130,28 +132,25 @@ class _SantoPairInfoTableState extends State<SantoPairInfoTable> {
   //当前的展示状态
   late bool _isFolded;
 
-  //指定索引位置去具备展开功能
-  late int _expandAtIndex;
-
-  // 收起状态显示的孩子
-  List<SantoInfoModal>? _foldList;
-
-  // 展开状态显示的孩子
-  List<SantoInfoModal?>? _expandedList;
-
-  // 在页面呈现的孩子
-  List<SantoInfoModal?>? _showList;
-
-  // 指定位置的最原始 modal
-  SantoInfoModal? indexModal;
-
-  // 是否具备展开收起功能 如果不展示则显示全部
-  bool _canFold = false;
-
   late SantoPairInfoTableConfig themeData;
 
   @override
   void initState() {
+    super.initState();
+    _isFolded = widget.isFolded;
+    _initThemeData();
+  }
+
+  @override
+  void didUpdateWidget(SantoPairInfoTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isFolded != oldWidget.isFolded) {
+      _isFolded = widget.isFolded;
+    }
+    _initThemeData();
+  }
+
+  void _initThemeData() {
     themeData = widget.themeData ?? SantoPairInfoTableConfig();
     themeData =
         themeData.merge(SantoPairInfoTableConfig(rowSpacing: widget.rowDistance));
@@ -159,246 +158,149 @@ class _SantoPairInfoTableState extends State<SantoPairInfoTable> {
         .getConfig(configId: themeData.configId)
         .pairInfoTableConfig
         .merge(themeData);
-
-    _isFolded = widget.isFolded;
-    _expandAtIndex = widget.expandAtIndex;
-
-    if (_expandAtIndex < 0 ||
-        widget.expandAtIndex >= (widget.children.length - 1)) {
-      _expandAtIndex = -1;
-      _showList = widget.children;
-      _canFold = false;
-    } else {
-      indexModal = widget.children[_expandAtIndex];
-      _foldList = _generateFoldList();
-      _expandedList = _generateExpandedList();
-      _canFold = true;
-    }
-    super.initState();
   }
 
-  @override
-  void didUpdateWidget(SantoPairInfoTable oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    themeData =
-        themeData.merge(SantoPairInfoTableConfig(rowSpacing: widget.rowDistance));
-    themeData = SantoThemeConfigurator.instance
-        .getConfig(configId: themeData.configId)
-        .pairInfoTableConfig
-        .merge(themeData);
+  /// 具备展开收起功能的索引;-1 表示不具备该功能
+  ///
+  /// 索引需在 [0, children.length - 1) 范围内,保证折叠后仍有内容被隐藏
+  int get _expandIndex {
+    final int index = widget.expandAtIndex;
+    if (index < 0 || index >= widget.children.length - 1) {
+      return -1;
+    }
+    return index;
+  }
+
+  void _toggleFolded() {
+    widget.onFolded?.call(!_isFolded);
+    setState(() {
+      _isFolded = !_isFolded;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget showWidget;
-
-    if (_canFold) {
-      if (_isFolded) {
-        _showList = _foldList;
-      } else {
-        _showList = _expandedList;
-      }
-    } else {
-      _showList = widget.children;
-    }
+    final int expandIndex = _expandIndex;
+    // 每次 build 都按当前 children 重新生成,保证 children 变化(如动态追加)后列表即时刷新
+    final List<SantoInfoModal?> showList = expandIndex < 0
+        ? widget.children
+        : (_isFolded
+            ? _generateFoldList(expandIndex)
+            : _generateExpandedList());
 
     if (widget.isValueAlign) {
-      showWidget = SantoAlignPairInfo(
+      return SantoAlignPairInfo(
         defaultVerticalAlignment: widget.defaultVerticalAlignment,
-        children: _showList,
+        children: showList,
         itemSpacing: widget.itemSpacing,
         rowDistance: widget.rowDistance,
         themeData: themeData,
         customKeyWidth: widget.customKeyWidth,
       );
-    } else {
-      showWidget = SantoFollowPairInfo(
-        children: _showList,
-        itemSpacing: widget.itemSpacing,
-        rowDistance: widget.rowDistance,
-        themeData: themeData,
-      );
     }
-    return showWidget;
-  }
-
-  Widget _finalValueWidget(SantoInfoModal data, {double? itemSpacing}) {
-    Widget? valueWidget;
-
-    if (data.valuePart is String) {
-      valueWidget = _valueTitleText(data.valuePart,
-          isValueAlign: widget.isValueAlign,
-          isArrow: data.isArrow,
-          themeData: themeData);
-    } else {
-      valueWidget = data.valuePart;
-
-      if (valueWidget == null) {
-        valueWidget = Text(
-          '--',
-          style: themeData.valueTextStyle.generateTextStyle(),
-        );
-      }
-    }
-    if (data.isArrow) {
-      valueWidget = Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(child: valueWidget),
-          SantoTools.getAssetImage(SantoAsset.iconRightArrow),
-        ],
-      );
-    }
-    return Padding(
-      padding: EdgeInsets.only(left: itemSpacing ?? themeData.itemSpacing),
-      child: valueWidget,
+    return SantoFollowPairInfo(
+      children: showList,
+      itemSpacing: widget.itemSpacing,
+      rowDistance: widget.rowDistance,
+      themeData: themeData,
     );
   }
 
-  /// 收起状态的孩子
-  /// 替换指定位置的value为具备展开功能的widget
-  List<SantoInfoModal> _generateFoldList() {
-    List<SantoInfoModal> finalChildren = List<SantoInfoModal>.of(widget.children);
-    //生成新的value
-    SantoInfoModal expRowWidget = _foldButtonWidget();
-    //替换modal
-    finalChildren[widget.expandAtIndex] = expRowWidget;
-    //移除指定索引
-    finalChildren.removeRange(widget.expandAtIndex + 1, widget.children.length);
+  /// 收起状态的孩子:只保留指定索引及之前的内容,并把该行折叠成一行 + "更多"
+  List<SantoInfoModal> _generateFoldList(int expandIndex) {
+    List<SantoInfoModal> finalChildren =
+        List<SantoInfoModal>.of(widget.children);
+    finalChildren[expandIndex] = _foldedRowModal(widget.children[expandIndex]);
+    finalChildren.removeRange(expandIndex + 1, widget.children.length);
     return finalChildren;
   }
 
-  /// 张开状态的孩子
-  /// 替换最后的value 为具备收起功能的 value
-  /// 替换index的value 为原始的value
+  /// 展开状态的孩子:展示已有的全部内容,
+  /// 并把"收起"内联到最后一行行尾(不额外增加一行)
   List<SantoInfoModal?> _generateExpandedList() {
-    List<SantoInfoModal?> finalChildren = List<SantoInfoModal?>.of(widget.children);
-    SantoInfoModal foldRowWidget = _expandedButtonWidget();
-    finalChildren[_expandAtIndex] = indexModal;
-    finalChildren[widget.children.length - 1] = foldRowWidget;
+    List<SantoInfoModal?> finalChildren =
+        List<SantoInfoModal?>.of(widget.children);
+    final int lastIndex = finalChildren.length - 1;
+    final SantoInfoModal last = widget.children[lastIndex];
+    finalChildren[lastIndex] = SantoInfoModal(
+      keyPart: last.keyPart,
+      isArrow: last.isArrow,
+      valueClickCallback: last.valueClickCallback,
+      valuePart: _valueWithTrailing(
+        last.valuePart,
+        _toggleButton(SantoIntl.currentResource.collapse, true),
+        singleLine: last.isArrow,
+      ),
+    );
     return finalChildren;
   }
 
-  SantoInfoModal _foldButtonWidget() {
-    Image img = SantoTools.getAssetImage(SantoAsset.iconUpArrow);
-    Transform trsm = Transform.rotate(angle: pi, child: img);
-    Row row = Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 4),
-          child: Text(
-            SantoIntl.currentResource.expand,
-            style: TextStyle(
-              fontSize: 14,
-              color: themeData.commonConfig.colorTextSecondary,
-            ),
-          ),
-        ),
-        trsm
-      ],
-    );
-    GestureDetector gdt = GestureDetector(
-        child: row,
-        onTap: () {
-          widget.onFolded?.call(!_isFolded);
-          setState(() {
-            _isFolded = !_isFolded;
-          });
-        });
-
-    Container layerCtn = Container(
-      padding: const EdgeInsets.only(left: 30),
-      alignment: Alignment.center,
-      child: gdt,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [Colors.white.withAlpha(100), Colors.white, Colors.white],
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-      )),
-    );
-
-    /// 展开蒙层
-    Widget foldButtonWidget = layerCtn;
-
-    /// 将原有的value显示替换为 stack
-    SantoInfoModal santoInfoModal = SantoInfoModal(
-      isArrow: indexModal!.isArrow,
-      keyPart: indexModal!.keyPart,
-      valuePart: indexModal!.valuePart,
-    );
-    Container stack = Container(
-      child: Stack(
-        children: <Widget>[
-          _finalValueWidget(santoInfoModal, itemSpacing: 0),
-          Positioned(bottom: 0, right: 0, child: foldButtonWidget),
-        ],
+  /// 折叠行:内容只展示一行,行尾内联"展开"
+  SantoInfoModal _foldedRowModal(SantoInfoModal modal) {
+    return SantoInfoModal(
+      keyPart: modal.keyPart,
+      isArrow: modal.isArrow,
+      valueClickCallback: modal.valueClickCallback,
+      valuePart: _valueWithTrailing(
+        modal.valuePart,
+        _toggleButton(SantoIntl.currentResource.expand, false),
+        singleLine: true,
       ),
     );
-    santoInfoModal.valuePart = stack;
-    return santoInfoModal;
   }
 
-  SantoInfoModal _expandedButtonWidget() {
-    Image img = SantoTools.getAssetImage(SantoAsset.iconUpArrow);
-    Row row = Row(
+  /// 把 [trailing] 内联到 value 的行尾
+  ///
+  /// [singleLine] 为 true 时 value 只展示一行,超出省略
+  Widget _valueWithTrailing(dynamic valuePart, Widget trailing,
+      {required bool singleLine}) {
+    Widget valueWidget;
+    if (valuePart is String) {
+      valueWidget = Text(
+        valuePart,
+        maxLines: singleLine ? 1 : null,
+        overflow: singleLine ? TextOverflow.ellipsis : TextOverflow.clip,
+        style: themeData.valueTextStyle.generateTextStyle(),
+      );
+    } else {
+      valueWidget = valuePart ?? const SizedBox.shrink();
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 4),
-          child: Text(
-            SantoIntl.currentResource.collapse,
-            style: TextStyle(
-              fontSize: 14,
-              color: themeData.commonConfig.colorTextSecondary,
-            ),
-          ),
-        ),
-        img
+        Expanded(child: valueWidget),
+        trailing,
       ],
     );
+  }
 
-    GestureDetector gdt = GestureDetector(
-        child: row,
-        onTap: () {
-          widget.onFolded?.call(!_isFolded);
-          setState(() {
-            _isFolded = !_isFolded;
-          });
-        });
-
-    Container layerCtn = Container(
-      padding: EdgeInsets.only(left: 30),
-      alignment: Alignment.topRight,
-      child: gdt,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [Colors.white.withAlpha(100), Colors.white, Colors.white],
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-      )),
-    );
-
-    ///收起的widget
-    Widget foldButtonWidget = layerCtn;
-
-    SantoInfoModal santoInfoModal = SantoInfoModal(
-      isArrow: widget.children.last.isArrow,
-      keyPart: widget.children.last.keyPart,
-      valuePart: widget.children.last.valuePart,
-    );
-
-    Container stack = Container(
-      child: Stack(
-        children: <Widget>[
-          _finalValueWidget(santoInfoModal, itemSpacing: 0),
-          Positioned(bottom: 0, right: 0, child: foldButtonWidget),
-        ],
+  /// 展开/收起按钮,[isUp] 为 true 时箭头朝上(收起)
+  Widget _toggleButton(String label, bool isUp) {
+    Image img = SantoTools.getAssetImage(SantoAsset.iconUpArrow);
+    Widget arrow = isUp ? img : Transform.rotate(angle: pi, child: img);
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: _toggleFolded,
+      child: Padding(
+        padding: EdgeInsets.only(left: themeData.commonConfig.hSpacingSm),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: themeData.commonConfig.hSpacingXs),
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: themeData.commonConfig.fontSizeBase,
+                  color: themeData.commonConfig.colorTextSecondary,
+                ),
+              ),
+            ),
+            arrow,
+          ],
+        ),
       ),
     );
-    santoInfoModal.valuePart = stack;
-    return santoInfoModal;
   }
 
   Widget _valueTitleText(String text,
@@ -1013,7 +915,7 @@ class SantoInfoModal {
           alignment: PlaceholderAlignment.top);
       keyGen.addIcon(
           SizedBox(
-            width: 8,
+            width: themeData.commonConfig.hSpacingSm,
           ),
           alignment: PlaceholderAlignment.middle);
     }

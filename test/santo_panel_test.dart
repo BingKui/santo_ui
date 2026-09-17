@@ -108,10 +108,10 @@ testWidgets('SantoPanel 标题后置控件紧跟标题且让位正确', (tester)
     // 后置控件在标题右侧、且保留完整宽度
     expect(extraRect.left, greaterThan(titleRect.right));
     expect(extraRect.width, 120);
-    // 操作区在后置控件右侧,并贴齐面板右侧(16 内边距 + 0.5 描边)
+    // 操作区在后置控件右侧,并贴齐面板右侧(15 内边距 + 0.5 描边)
     expect(actionRect.left, greaterThan(extraRect.right));
     final panelRect = tester.getRect(find.byType(SantoPanel));
-    expect(panelRect.right - actionRect.right, closeTo(16.5, 0.5));
+    expect(panelRect.right - actionRect.right, closeTo(15.5, 0.5));
   });
 
   testWidgets('SantoPanel 标题过长时后置控件保持完整宽度', (tester) async {

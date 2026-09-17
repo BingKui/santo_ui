@@ -732,11 +732,11 @@ class _SantoInputShellState extends State<_SantoInputShell> {
             ],
             Expanded(child: widget.editor),
             if (clearButton != null) ...[
-              const SizedBox(width: 4),
+              SizedBox(width: commonConfig.hSpacingXs),
               clearButton,
             ],
             if (passwordButton != null) ...[
-              const SizedBox(width: 4),
+              SizedBox(width: commonConfig.hSpacingXs),
               passwordButton,
             ],
             if (widget.suffixText != null) ...[

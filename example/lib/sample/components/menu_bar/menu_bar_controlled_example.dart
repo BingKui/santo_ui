@@ -34,36 +34,25 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       backgroundColor: Colors.white,
-      appBar: SantoAppBar(title: 'MenuBar · 受控与更多菜单'),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 12),
-          const RulePanel(
-            'currentIndex 受控选中,点更多标签弹出 SantoMoreMenu 宫格菜单',
-            maxLines: 2,
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                for (int i = 1; i <= 20; i++)
-                  Container(
-                    margin: EdgeInsets.fromLTRB(12, i == 1 ? 12 : 0, 12, 12),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF5F6FA),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text('标签${_index + 1}内容卡片 $i',
-                        style: const TextStyle(fontSize: 14)),
-                  ),
-              ],
+      title: 'MenuBar · 受控与更多菜单',
+      children: <Widget>[
+        const RulePanel(
+          'currentIndex 受控选中,点更多标签弹出 SantoMoreMenu 宫格菜单',
+          maxLines: 2,
+        ),
+        for (int i = 1; i <= 20; i++)
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F6FA),
+              borderRadius: BorderRadius.circular(12),
             ),
+            child: Text('标签${_index + 1}内容卡片 $i',
+                style: const TextStyle(fontSize: 14)),
           ),
-        ],
-      ),
+      ],
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
         onChanged: (index) => setState(() => _index = index),

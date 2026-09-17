@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+
 /// 底部 Drawer 标题对齐方式
 enum SantoBottomDrawerTitleAlign {
   /// 左侧
@@ -214,6 +216,8 @@ class SantoBottomDrawer extends StatelessWidget {
 
   /// Header:标题/描述(左对齐或居中) + 右侧关闭按钮
   Widget _buildHeader(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (title == null && titleWidget == null && !showCloseButton) {
       return const SizedBox.shrink();
     }
@@ -226,19 +230,19 @@ class SantoBottomDrawer extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         DefaultTextStyle(
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+          style: TextStyle(
+            fontSize: commonConfig.fontSizeHead,
+            fontWeight: FontWeight.w500,
             color: Color(0xFF17233D),
           ),
           child: titleContent,
         ),
         if (desc != null) ...[
-          const SizedBox(height: 4),
+          SizedBox(height: commonConfig.vSpacingXs),
           Text(
             desc!,
-            style: const TextStyle(
-              fontSize: 12,
+            style: TextStyle(
+              fontSize: commonConfig.fontSizeCaption,
               color: Color(0xFF808695),
             ),
           ),
@@ -250,8 +254,8 @@ class SantoBottomDrawer extends StatelessWidget {
         ? GestureDetector(
             onTap: () => _close(context),
             behavior: HitTestBehavior.opaque,
-            child: const Padding(
-              padding: EdgeInsets.all(8),
+            child: Padding(
+              padding: EdgeInsets.all(commonConfig.vSpacingSm),
               child: Icon(Icons.close, size: 20, color: Color(0xFF808695)),
             ),
           )
@@ -283,7 +287,11 @@ class SantoBottomDrawer extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 12, 0),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingLg,
+          top: commonConfig.vSpacingMd,
+          right: 12,
+          bottom: 0),
       child: header,
     );
   }

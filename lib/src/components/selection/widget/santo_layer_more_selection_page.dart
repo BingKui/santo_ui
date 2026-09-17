@@ -152,8 +152,11 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
                           .getConfig()
                           .commonConfig
                           .colorTextBase,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
+                      fontSize: SantoThemeConfigurator.instance
+                          .getConfig()
+                          .commonConfig
+                          .fontSizeSubHead,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
               SantoLine(),
@@ -340,7 +343,11 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
       height: 48,
       color: index == _currentIndex ? Colors.white : Color(0xff8F8F8F),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: EdgeInsets.only(
+            left: SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .hSpacingLg),
         child: Text(
           name,
           maxLines: 2,
@@ -396,7 +403,15 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
         height: 48,
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: EdgeInsets.only(
+              left: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .hSpacingLg,
+              right: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .hSpacingLg),
           child: isSingle
               ? _buildRightSingleItem(_currentFirstEntity?.children[index])
               : _buildRightMultiItem(_currentFirstEntity?.children[index]),

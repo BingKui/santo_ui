@@ -312,6 +312,8 @@ class _SantoTooltipState extends State<SantoTooltip> {
 
   // Tooltip的弹出样式
   Widget _buildPopWidget(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     // 状态栏高度
     double statusBarHeight = MediaQueryData.fromView(View.of(context)).padding.top;
     return Positioned(
@@ -343,7 +345,8 @@ class _SantoTooltipState extends State<SantoTooltip> {
                                 ? WidgetSpan(
                                     alignment: PlaceholderAlignment.middle,
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 6),
+                                      padding: EdgeInsets.only(
+                                          left: commonConfig.hSpacingXs),
                                       child: SantoTools.getAssetImage(
                                           SantoAsset.iconPopupClose),
                                     ))
@@ -363,7 +366,8 @@ class _SantoTooltipState extends State<SantoTooltip> {
                               ),
                               widget.isShowCloseIcon
                                   ? Padding(
-                                      padding: EdgeInsets.only(left: 6),
+                                      padding: EdgeInsets.only(
+                                          left: commonConfig.hSpacingXs),
                                       child: SantoTools.getAssetImage(
                                           SantoAsset.iconPopupClose),
                                     )
@@ -484,8 +488,10 @@ class SantoPopupListWindow {
     SantoPopupListItemClick? onItemClick,
     VoidCallback? onDismiss,
   }) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     TextStyle textStyle = TextStyle(
-        color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase, fontSize: 16);
+        color: commonConfig.colorTextBase, fontSize: commonConfig.fontSizeSubHead);
     double arrowHeight = 6.0;
     Color borderColor = Color(0xffCCCCCC);
     Color backgroundColor = Colors.white;
@@ -494,7 +500,7 @@ class SantoPopupListWindow {
     double minWidth = 100;
     double maxWidth = 150;
     double maxHeight = 200;
-    double radius = 12;
+    double radius = commonConfig.radiusXs;
     bool hasCloseIcon = true;
     assert(popKey.currentContext != null && popKey.currentContext!.findRenderObject() != null);
     if (popKey.currentContext == null || popKey.currentContext!.findRenderObject() == null) return;
@@ -517,7 +523,9 @@ class SantoPopupListWindow {
                   constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: maxHeight),
                   child: SingleChildScrollView(
                     child: Container(
-                      padding: EdgeInsets.only(top: 6, bottom: 6),
+                      padding: EdgeInsets.only(
+                          top: commonConfig.vSpacingXs,
+                          bottom: commonConfig.vSpacingXs),
                       child: Column(
                         children:
                             _getItems(context, minWidth, maxWidth, itemBuilder, textStyle, data!,
@@ -558,11 +566,13 @@ class SantoPopupListWindow {
       double? arrowOffset,
       SantoPopupListItemClick? onItemClick,
       VoidCallback? onDismiss}) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     assert(popKey.currentContext != null && popKey.currentContext!.findRenderObject() != null);
     if (popKey.currentContext == null || popKey.currentContext!.findRenderObject() == null) return;
 
     double arrowHeight = 6.0;
-    double radius = 12;
+    double radius = commonConfig.radiusXs;
     double spaceMargin = 0;
     double minWidth = 100;
     double maxWidth = 150;
@@ -570,7 +580,7 @@ class SantoPopupListWindow {
     Color borderColor = SantoThemeConfigurator.instance.getConfig().commonConfig.dividerColorBase;
     Color backgroundColor = Colors.white;
     TextStyle textStyle = TextStyle(
-        color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase, fontSize: 14);
+        color: commonConfig.colorTextBase, fontSize: commonConfig.fontSizeBase);
     bool hasCloseIcon = true;
 
     Navigator.push(
@@ -593,7 +603,9 @@ class SantoPopupListWindow {
                   constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: maxHeight),
                   child: SingleChildScrollView(
                     child: Container(
-                      padding: EdgeInsets.only(top: 6, bottom: 6),
+                      padding: EdgeInsets.only(
+                          top: commonConfig.vSpacingXs,
+                          bottom: commonConfig.vSpacingXs),
                       child: Column(
                         children: _getItems(context, minWidth, maxWidth, null, textStyle, data!,
                             (index, item) {
@@ -628,6 +640,8 @@ class SantoPopupListWindow {
       TextStyle textStyle,
       List<String> data,
       void Function(int index, String item) onItemClick) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     double textMaxWidth = _getMaxWidth(textStyle, data);
     if (textMaxWidth + 52 < minWidth) {
       textMaxWidth = minWidth;
@@ -645,7 +659,11 @@ class SantoPopupListWindow {
               width: textMaxWidth,
               alignment: Alignment.center,
               color: Colors.transparent,
-              padding: EdgeInsets.only(left: 26, right: 26, top: 6, bottom: 6),
+              padding: EdgeInsets.only(
+                  left: 26,
+                  right: 26,
+                  top: commonConfig.vSpacingXs,
+                  bottom: commonConfig.vSpacingXs),
               child: _getTextWidget(itemBuilder, data, f, textStyle)));
     }).toList();
   }

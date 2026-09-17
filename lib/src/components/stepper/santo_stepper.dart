@@ -51,12 +51,31 @@ class _StepperSizePreset {
   });
 }
 
-const _StepperSizePreset _smallPreset =
-    _StepperSizePreset(height: 24, inputWidth: 40, fontSize: 12, iconSize: 14);
-const _StepperSizePreset _normalPreset =
-    _StepperSizePreset(height: 32, inputWidth: 50, fontSize: 14, iconSize: 18);
-const _StepperSizePreset _largePreset =
-    _StepperSizePreset(height: 40, inputWidth: 60, fontSize: 16, iconSize: 22);
+/// 各档位尺寸预设,字号从主题配置取值
+_StepperSizePreset get _smallPreset => _StepperSizePreset(
+    height: 24,
+    inputWidth: 40,
+    fontSize: SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig
+        .fontSizeCaption,
+    iconSize: 14);
+_StepperSizePreset get _normalPreset => _StepperSizePreset(
+    height: 32,
+    inputWidth: 50,
+    fontSize: SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig
+        .fontSizeBase,
+    iconSize: 18);
+_StepperSizePreset get _largePreset => _StepperSizePreset(
+    height: 40,
+    inputWidth: 60,
+    fontSize: SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig
+        .fontSizeSubHead,
+    iconSize: 22);
 
 /// 数量增减控件（步进器）
 ///
@@ -214,6 +233,8 @@ class _SantoStepperState extends State<SantoStepper> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final Color btnColor = widget.buttonColor ?? _fillBase;
     final Color disColor = widget.disabledColor ?? _dividerColor.withAlpha(100);
     final Color txtColor = widget.textColor ?? _textBase;
@@ -258,10 +279,12 @@ class _SantoStepperState extends State<SantoStepper> {
                 fontSize: preset.fontSize,
                 color: widget.enabled ? txtColor : txtColor.withAlpha(100),
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: commonConfig.hSpacingXs,
+                    vertical: commonConfig.vSpacingSm),
               ),
               onSubmitted: _onInputSubmitted,
             ),

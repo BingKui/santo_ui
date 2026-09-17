@@ -155,6 +155,8 @@ class SantoStarsFormItemState extends State<SantoStarsFormItem> {
   }
 
   List<Widget> getStarWidgets() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     _result.clear();
     int sum = widget.sumStar;
 
@@ -174,8 +176,15 @@ class SantoStarsFormItemState extends State<SantoStarsFormItem> {
         },
         child: Container(
           padding: (index == sum - 1)
-              ? EdgeInsets.only(left: 20, top: 5, bottom: 5)
-              : EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+              ? EdgeInsets.only(
+                  left: commonConfig.hSpacingLg,
+                  top: commonConfig.vSpacingXs,
+                  bottom: commonConfig.vSpacingXs)
+              : EdgeInsets.only(
+                  left: commonConfig.hSpacingLg,
+                  right: commonConfig.hSpacingLg,
+                  top: commonConfig.vSpacingXs,
+                  bottom: commonConfig.vSpacingXs),
           child: getStar(index, widget.value, sum),
         ),
       ));

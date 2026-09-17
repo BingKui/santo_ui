@@ -32,68 +32,63 @@ class _MenuBarFloatingBadgeExampleState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       backgroundColor: const Color(0xFFD6E4FF),
-      appBar: SantoAppBar(title: 'MenuBar · 悬浮红点与徽标'),
-      body: Stack(
-        children: [
-          ListView(
-            padding: const EdgeInsets.only(bottom: 120),
-            children: [
-              for (int i = 1; i <= 20; i++)
-                Container(
-                  margin: EdgeInsets.fromLTRB(12, i == 1 ? 12 : 0, 12, 12),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text('${_tabNames[_index]}内容卡片 $i',
-                      style: const TextStyle(fontSize: 14)),
-                ),
+      title: 'MenuBar · 悬浮红点与徽标',
+      // 内容从悬浮栏下方穿过:用 bottomInset 留出栏高 64 + gap 12
+      bottomInset: 64 + 12,
+      children: <Widget>[
+        for (int i = 1; i <= 20; i++)
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text('${_tabNames[_index]}内容卡片 $i',
+                style: const TextStyle(fontSize: 14)),
+          ),
+      ],
+      // 悬浮菜单栏:叠在内容之上
+      overlay:           Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: SantoMenuBar(
+            style: SantoMenuBarStyle.floating,
+            gap: 12,
+            currentIndex: _index,
+            onChanged: (i) => setState(() => _index = i),
+            items: [
+              SantoMenuBarItem(
+                text: '首页',
+                selectedIcon: const Icon(Icons.home_filled),
+                unselectedIcon: const Icon(Icons.home_outlined),
+              ),
+              // 图标 + 红点
+              SantoMenuBarItem(
+                text: '发现',
+                selectedIcon: const Icon(Icons.explore),
+                unselectedIcon: const Icon(Icons.explore_outlined),
+                showBadge: true,
+              ),
+              // 图标 + 数字徽标
+              SantoMenuBarItem(
+                text: '消息',
+                selectedIcon: const Icon(Icons.chat_bubble),
+                unselectedIcon: const Icon(Icons.chat_bubble_outline),
+                badge: _numberBadge('9'),
+              ),
+              // 图标 + 超长数字徽标
+              SantoMenuBarItem(
+                text: '我的',
+                selectedIcon: const Icon(Icons.person),
+                unselectedIcon: const Icon(Icons.person_outline),
+                badge: _numberBadge('99+'),
+              ),
             ],
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SantoMenuBar(
-              style: SantoMenuBarStyle.floating,
-              gap: 12,
-              currentIndex: _index,
-              onChanged: (i) => setState(() => _index = i),
-              items: [
-                SantoMenuBarItem(
-                  text: '首页',
-                  selectedIcon: const Icon(Icons.home_filled),
-                  unselectedIcon: const Icon(Icons.home_outlined),
-                ),
-                // 图标 + 红点
-                SantoMenuBarItem(
-                  text: '发现',
-                  selectedIcon: const Icon(Icons.explore),
-                  unselectedIcon: const Icon(Icons.explore_outlined),
-                  showBadge: true,
-                ),
-                // 图标 + 数字徽标
-                SantoMenuBarItem(
-                  text: '消息',
-                  selectedIcon: const Icon(Icons.chat_bubble),
-                  unselectedIcon: const Icon(Icons.chat_bubble_outline),
-                  badge: _numberBadge('9'),
-                ),
-                // 图标 + 超长数字徽标
-                SantoMenuBarItem(
-                  text: '我的',
-                  selectedIcon: const Icon(Icons.person),
-                  unselectedIcon: const Icon(Icons.person_outline),
-                  badge: _numberBadge('99+'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
     );
   }
 }

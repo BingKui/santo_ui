@@ -26,24 +26,22 @@ class _SelectionViewExamplePageState
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      appBar: SantoAppBar(title: widget._title),
-      child: Column(
-          children: <Widget>[
-            SantoSelectionView(
-              originalSelectionData: widget._filterData!,
-              onSelectionChanged: (int menuIndex,
-                  Map<String, String> filterParams,
-                  Map<String, String> customParams,
-                  SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
-                SantoToast.show(filterParams.toString(), context);
-              },
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 400),
-              alignment: Alignment.center,
-              child: Text("背景内容区域"),
-            )
-          ],
-        ),
+      children: <Widget>[
+          SantoSelectionView(
+            originalSelectionData: widget._filterData!,
+            onSelectionChanged: (int menuIndex,
+                Map<String, String> filterParams,
+                Map<String, String> customParams,
+                SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
+              SantoToast.show(filterParams.toString(), context);
+            },
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 400),
+            alignment: Alignment.center,
+            child: Text("背景内容区域"),
+          )
+      ],
     );
   }
 }

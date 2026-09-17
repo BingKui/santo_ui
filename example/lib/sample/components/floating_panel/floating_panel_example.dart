@@ -9,10 +9,9 @@ import 'package:flutter/material.dart';
 class FloatingPanelExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: 'FloatingPanel 浮层面板',
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: 'FloatingPanel 浮层面板',
+        children: <Widget>[
           ListItem(
             title: '基础用法',
             isShowLine: false,
@@ -31,7 +30,6 @@ class FloatingPanelExample extends StatelessWidget {
                 _push(context, const FloatingPanelControlledExample()),
           ),
         ],
-      ),
     );
   }
 

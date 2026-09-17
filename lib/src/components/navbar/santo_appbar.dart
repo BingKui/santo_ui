@@ -612,7 +612,8 @@ class _SantoSearchResultAppBar extends StatelessWidget {
         Visibility(
           visible: showLeadingDivider,
           child: Container(
-            margin: EdgeInsets.only(left: 12, right: 12),
+            margin: EdgeInsets.only(
+                left: commonConfig.pageGap, right: commonConfig.pageGap),
             height: 16,
             width: 1,
             color: _defaultConfig.commonConfig.dividerColorBase,
@@ -623,7 +624,7 @@ class _SantoSearchResultAppBar extends StatelessWidget {
         Visibility(
           visible: !(showLeadingDivider),
           child: Padding(
-            padding: EdgeInsets.only(left: 12),
+            padding: EdgeInsets.only(left: commonConfig.pageGap),
           ),
         ),
 

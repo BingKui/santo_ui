@@ -32,10 +32,10 @@ class SantoSwitchTitle extends StatefulWidget {
   /// 只在需要外部控制tab切换时传递
   final TabController? controller;
 
-  /// 选中时的标题样式，默认 `TextStyle(fontWeight: FontWeight.w600,fontSize: 18)`
+  /// 选中时的标题样式，默认 `TextStyle(fontWeight: FontWeight.w500,fontSize: fontSizeHead)`
   final TextStyle? selectedTextStyle;
 
-  /// 未选中时的标题样式，默认 `TextStyle(fontWeight: FontWeight.w600,fontSize: 18)`
+  /// 未选中时的标题样式，默认 `TextStyle(fontWeight: FontWeight.w500,fontSize: fontSizeHead)`
   final TextStyle? unselectedTextStyle;
 
   const SantoSwitchTitle(
@@ -105,6 +105,9 @@ class _SantoSwitchTitleState extends State<SantoSwitchTitle>
       return const SizedBox.shrink();
     }
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+
     List<Widget> widgetChildren = widget.nameList.map((name) {
       Text tx = Text(name);
 
@@ -151,8 +154,8 @@ class _SantoSwitchTitleState extends State<SantoSwitchTitle>
         labelStyle: widget.selectedTextStyle ??
             TextStyle(
               //选中态
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              fontSize: commonConfig.fontSizeHead,
             ),
         // 设置为 0 完全由外部的 padding 控制间距
         labelPadding: const EdgeInsets.all(0),
@@ -161,8 +164,8 @@ class _SantoSwitchTitleState extends State<SantoSwitchTitle>
         //未选中态样式
         unselectedLabelStyle: widget.unselectedTextStyle ??
             TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              fontSize: commonConfig.fontSizeHead,
             ),
         indicator: widget.nameList.length == 1 ? BoxDecoration() : _indicator,
         // weight 设置为0，让外部通过 padding 设置下划线和标题间的距离

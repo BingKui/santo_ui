@@ -106,6 +106,8 @@ class _SantoExpandableTextState extends State<SantoExpandableText> {
   }
 
   Widget _clickExpandTextWidget(context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Color btnColor = widget.color ?? Colors.white;
 
     Text tx = Text(
@@ -115,10 +117,12 @@ class _SantoExpandableTextState extends State<SantoExpandableText> {
               .getConfig()
               .commonConfig
               .brandPrimary,
-          fontSize: 14),
+          fontSize:
+              SantoThemeConfigurator.instance.getConfig().commonConfig.fontSizeBase,
+        ),
     );
     Container cnt = Container(
-      padding: EdgeInsets.only(left: 22),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingLg),
       alignment: Alignment.centerRight,
       child: tx,
       decoration: BoxDecoration(
@@ -152,7 +156,10 @@ class _SantoExpandableTextState extends State<SantoExpandableText> {
   TextStyle _defaultTextStyle() {
     TextStyle style = widget.textStyle ??
         TextStyle(
-          fontSize: 14,
+          fontSize: SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .fontSizeBase,
           fontWeight: FontWeight.w400,
           color: SantoThemeConfigurator.instance
               .getConfig()
@@ -170,7 +177,10 @@ class _SantoExpandableTextState extends State<SantoExpandableText> {
               .getConfig()
               .commonConfig
               .brandPrimary,
-          fontSize: 14,
+          fontSize: SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .fontSizeBase,
         ),
         recognizer: TapGestureRecognizer()
           ..onTap = () {

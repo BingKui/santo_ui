@@ -8,7 +8,10 @@ const double kPageGap = 12;
 void main() {
   testWidgets('PageLayout 用 title 构建导航栏', (tester) async {
     await tester.pumpWidget(const MaterialApp(
-      home: SantoPageLayout(title: '页面标题', child: Text('页面内容')),
+      home: SantoPageLayout(title: '页面标题',
+        children: <Widget>[
+          Text('页面内容'),
+        ]),
     ));
 
     expect(find.byType(SantoAppBar), findsOneWidget);
@@ -21,7 +24,9 @@ void main() {
       home: SantoPageLayout(
         title: '简写标题',
         appBar: SantoAppBar(title: '自定义标题'),
-        child: const Text('页面内容'),
+        children: <Widget>[
+          const Text('页面内容'),
+        ],
       ),
     ));
 
@@ -35,7 +40,10 @@ void main() {
         builder: (context) => MediaQuery(
           data: MediaQuery.of(context)
               .copyWith(padding: const EdgeInsets.only(top: 47)),
-          child: const SantoPageLayout(child: Text('页面内容')),
+          child: const SantoPageLayout(
+            children: <Widget>[
+              Text('页面内容'),
+            ]),
         ),
       ),
     ));
@@ -47,7 +55,10 @@ void main() {
 
   testWidgets('PageLayout 内容可滚动并应用默认 padding', (tester) async {
     await tester.pumpWidget(const MaterialApp(
-      home: SantoPageLayout(child: Text('页面内容')),
+      home: SantoPageLayout(
+        children: <Widget>[
+          Text('页面内容'),
+        ]),
     ));
 
     final scroll = tester.widget<SingleChildScrollView>(
@@ -61,7 +72,10 @@ void main() {
         builder: (context) => MediaQuery(
           data: MediaQuery.of(context)
               .copyWith(padding: const EdgeInsets.only(bottom: 34)),
-          child: const SantoPageLayout(bottomInset: 8, child: Text('页面内容')),
+          child: const SantoPageLayout(bottomInset: 8,
+            children: <Widget>[
+              Text('页面内容'),
+            ]),
         ),
       ),
     ));
@@ -81,7 +95,9 @@ void main() {
               .copyWith(padding: const EdgeInsets.only(bottom: 34)),
           child: const SantoPageLayout(
             bottomSafeArea: false,
-            child: Text('页面内容'),
+            children: <Widget>[
+              Text('页面内容'),
+            ],
           ),
         ),
       ),
@@ -95,7 +111,10 @@ void main() {
 
   testWidgets('PageLayout scrollable 为 false 时不产生滚动容器', (tester) async {
     await tester.pumpWidget(const MaterialApp(
-      home: SantoPageLayout(scrollable: false, child: Text('页面内容')),
+      home: SantoPageLayout(scrollable: false,
+        children: <Widget>[
+          Text('页面内容'),
+        ]),
     ));
 
     expect(find.byType(SingleChildScrollView), findsNothing);
@@ -111,11 +130,13 @@ void main() {
           child: SantoPageLayout(
             title: '测试',
             scrollable: false,
-            child: Builder(
-              builder: (innerContext) => Text(
-                '${MediaQuery.of(innerContext).padding.bottom}',
+            children: <Widget>[
+              Builder(
+                builder: (innerContext) => Text(
+                  '${MediaQuery.of(innerContext).padding.bottom}',
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -136,10 +157,12 @@ void main() {
           ),
           child: SantoPageLayout(
             scrollable: false,
-            child: ListView(
-              children: List.generate(
-                  30, (i) => SizedBox(height: 40, child: Text('item $i'))),
-            ),
+            children: <Widget>[
+              ListView(
+                children: List.generate(
+                    30, (i) => SizedBox(height: 40, child: Text('item $i'))),
+              ),
+            ],
           ),
         ),
       ),
@@ -162,7 +185,10 @@ void main() {
         items: <SantoAppLayoutItem>[
           SantoAppLayoutItem(
             text: '首页',
-            page: const SantoPageLayout(child: Text('页面内容')),
+            page: const SantoPageLayout(
+              children: <Widget>[
+                Text('页面内容'),
+              ]),
           ),
         ],
       ),

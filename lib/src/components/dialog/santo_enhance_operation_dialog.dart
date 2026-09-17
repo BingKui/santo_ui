@@ -126,10 +126,12 @@ class SantoEnhanceOperationDialog extends StatelessWidget {
 
   /// 构建widgets框架
   List<Widget> _configDialogWidgets(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> widgets = [];
     //分割
     widgets.add(Container(
-      height: 16,
+      height: commonConfig.vSpacingMd,
       color: Colors.transparent,
     ));
     // 主要按钮
@@ -138,7 +140,7 @@ class SantoEnhanceOperationDialog extends StatelessWidget {
     if (secondaryButtonText != null) {
       //分割
       widgets.add(Container(
-        height: 16,
+        height: commonConfig.vSpacingMd,
         color: Colors.transparent,
       ));
       //次要按钮
@@ -149,8 +151,11 @@ class SantoEnhanceOperationDialog extends StatelessWidget {
 
   /// 构建主按钮widget
   Widget _configMainButton(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
       child: SantoBigMainButton(
         title: mainButtonText ?? SantoIntl.of(context).localizedResource.confirm,
         onTap: () {
@@ -172,7 +177,7 @@ class SantoEnhanceOperationDialog extends StatelessWidget {
             secondaryButtonText!,
             style: TextStyle(
               color: themeData!.commonConfig.brandPrimary,
-              fontSize: 16,
+              fontSize: themeData!.commonConfig.fontSizeSubHead,
             ),
           ),
         ),

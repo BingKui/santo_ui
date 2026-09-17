@@ -252,7 +252,9 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     }
     return EdgeInsets.symmetric(
       horizontal: insetSpacing,
-      vertical: widget.size == SantoCheckBoxSize.large ? 16 : 12,
+      vertical: widget.size == SantoCheckBoxSize.large
+          ? _commonConfig.vSpacingMd
+          : 12,
     );
   }
 
@@ -333,10 +335,12 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   ) {
     if (icon == null) return content ?? const SizedBox.shrink();
 
-    final spacing = widget.spacing ?? groupState?.widget.spacing ?? 8;
+    final spacing = widget.spacing ??
+        groupState?.widget.spacing ??
+        _commonConfig.hSpacingSm;
     final direction =
         groupState?.widget.contentDirection ?? widget.contentDirection;
-    final insetSpacing = widget.insetSpacing ?? 16;
+    final insetSpacing = widget.insetSpacing ?? _commonConfig.hSpacingMd;
 
     if (content == null) {
       return Padding(
@@ -388,7 +392,9 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     final subTitle = widget.subTitle;
     if (subTitle == null || subTitle == '') return const SizedBox.shrink();
     final subTitleStyle = (widget.subTitleStyle ??
-            const TextStyle(fontSize: 14, color: Color(0xFF808695)))
+            TextStyle(
+                fontSize: _commonConfig.fontSizeBase,
+                color: Color(0xFF808695)))
         .copyWith(
       color: _disabled
           ? _commonConfig.colorTextDisabled
@@ -398,10 +404,11 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     final left = widget.cardMode
         ? insetSpacing
         : (direction == SantoContentDirection.right
-            ? insetSpacing + indicatorSize + (widget.spacing ?? 8)
+            ? insetSpacing + indicatorSize + (widget.spacing ?? _commonConfig.hSpacingSm)
             : 0.0);
     return Padding(
-      padding: EdgeInsets.only(top: 4, left: left, right: insetSpacing),
+      padding: EdgeInsets.only(
+          top: _commonConfig.vSpacingXs, left: left, right: insetSpacing),
       child: Text(
         subTitle,
         maxLines: widget.subTitleMaxLine,
@@ -446,10 +453,10 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   Widget _buildDivider(SantoCheckboxGroupState? groupState, bool hasContent) {
     final direction =
         groupState?.widget.contentDirection ?? widget.contentDirection;
-    final insetSpacing = widget.insetSpacing ?? 16;
+    final insetSpacing = widget.insetSpacing ?? _commonConfig.hSpacingMd;
     final leftInset =
         direction == SantoContentDirection.right && hasContent
-            ? insetSpacing + indicatorSize + (widget.spacing ?? 8)
+            ? insetSpacing + indicatorSize + (widget.spacing ?? _commonConfig.hSpacingSm)
             : insetSpacing;
     return SantoLine(leftInset: leftInset);
   }
@@ -473,7 +480,9 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     final title = widget.title;
     if (title == null) return null;
     final titleStyle = (widget.titleStyle ??
-            const TextStyle(fontSize: 16, color: Color(0xFF17233D)))
+            TextStyle(
+                fontSize: _commonConfig.fontSizeSubHead,
+                color: Color(0xFF17233D)))
         .copyWith(
       color: _disabled
           ? _commonConfig.colorTextDisabled

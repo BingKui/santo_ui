@@ -94,6 +94,8 @@ class SantoBubbleText extends StatelessWidget {
   }
 
   Widget _buildExpandedWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final isStart = placement == SantoBubblePlacement.start;
     return Align(
       alignment: isStart ? Alignment.centerLeft : Alignment.centerRight,
@@ -106,7 +108,11 @@ class SantoBubbleText extends StatelessWidget {
                 topRight: Radius.circular(isStart ? radius : cornerRadius),
                 bottomLeft: Radius.circular(radius),
                 bottomRight: Radius.circular(radius))),
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 12),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg,
+            top: 12,
+            bottom: 12),
         child: SantoExpandableText(
           text: text,
           maxLines: maxLines,
@@ -115,7 +121,7 @@ class SantoBubbleText extends StatelessWidget {
           textStyle: textStyle ??
               TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 14,
+                fontSize: commonConfig.fontSizeBase,
                 color: textColor ??
                     SantoThemeConfigurator.instance
                         .getConfig()

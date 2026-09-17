@@ -1,6 +1,7 @@
 import 'package:santo_ui/src/components/picker/multi_range_picker/bean/santo_multi_column_picker_entity.dart';
 import 'package:santo_ui/src/components/picker/multi_range_picker/santo_multi_column_picker_util.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -31,11 +32,13 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Container checkbox;
     if (!item.isUnLimit() && (item.children.isEmpty)) {
       if (item.isInLastLevel() && _hasCheckBoxBrother(item)) {
         checkbox = Container(
-          padding: EdgeInsets.only(left: 6),
+          padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
           width: 21,
           child: (item.isSelected)
               ? SantoTools.getAssetImageWithBandColor(
@@ -57,7 +60,8 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
       },
       child: Container(
         height: 40,
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
         color: _getItemBGColor(),
         child: Align(
           alignment: Alignment.centerLeft,
@@ -71,7 +75,7 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      fontSize: 14,
+                      fontSize: commonConfig.fontSizeBase,
                       fontWeight: _getItemFontWeight(),
                       decoration: TextDecoration.none,
                       color: _getItemTextColor()),
@@ -106,11 +110,11 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
   FontWeight _getItemFontWeight() {
     FontWeight fontWeight =
         (item.isUnLimit() ? isCurrentFocused : item.isSelected)!
-            ? FontWeight.w600
+            ? FontWeight.w500
             : FontWeight.normal;
 
     if (!item.isInLastLevel()) {
-      fontWeight = isCurrentFocused! ? FontWeight.w600 : FontWeight.normal;
+      fontWeight = isCurrentFocused! ? FontWeight.w500 : FontWeight.normal;
     }
     return fontWeight;
   }

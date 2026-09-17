@@ -21,74 +21,71 @@ class _RefreshExampleState extends State<RefreshExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Refresh 下拉刷新示例',
       scrollable: false,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              '下拉刷新 / 上拉加载更多',
-              style: TextStyle(fontSize: 13, color: Colors.grey),
-            ),
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(
+            '下拉刷新 / 上拉加载更多',
+            style: TextStyle(fontSize: 13, color: Colors.grey),
           ),
-          Expanded(
-            child: SantoRefresh(
-              onRefresh: _onRefresh,
-              onLoadMore: _onLoadMore,
-              hasMore: _hasMore,
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Color(0xFFDCDEE2),
-                          width: 0.5,
-                        ),
+        ),
+        Expanded(
+          child: SantoRefresh(
+            onRefresh: _onRefresh,
+            onLoadMore: _onLoadMore,
+            hasMore: _hasMore,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: _items.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xFFDCDEE2),
+                        width: 0.5,
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF1677FF).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '${index + 1}',
-                            style: TextStyle(
-                              color: Color(0xFF1677FF),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF1677FF).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            _items[index],
-                            style: TextStyle(fontSize: 15),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${index + 1}',
+                          style: TextStyle(
+                            color: Color(0xFF1677FF),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(
-                          Icons.chevron_right,
-                          color: Colors.grey[400],
-                          size: 20,
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          _items[index],
+                          style: TextStyle(fontSize: 15),
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                      Icon(
+                        Icons.chevron_right,
+                        color: Colors.grey[400],
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

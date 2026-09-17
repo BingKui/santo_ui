@@ -175,6 +175,8 @@ class _SearchTextState extends State<SantoSearchText> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: widget.maxHeight,
@@ -198,7 +200,8 @@ class _SearchTextState extends State<SantoSearchText> {
                   children: <Widget>[
                     widget.prefixIcon ??
                         Padding(
-                          padding: const EdgeInsets.only(left: 14),
+                          padding:
+                              EdgeInsets.only(left: commonConfig.hSpacingMd),
                           child: Center(
                             child: SantoTools.getAssetSizeImage(
                                 SantoAsset.iconSearch, 16, 16),
@@ -225,12 +228,14 @@ class _SearchTextState extends State<SantoSearchText> {
                                       .getConfig()
                                       .commonConfig
                                       .colorTextBase,
-                                  fontSize: 16),
+                                  fontSize: commonConfig.fontSizeSubHead),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: widget.borderRadius,
                                 borderSide: BorderSide.none),
-                            contentPadding: EdgeInsets.only(left: 8, right: 6),
+                            contentPadding: EdgeInsets.only(
+                                left: commonConfig.hSpacingSm,
+                                right: commonConfig.hSpacingXs),
                             // 填充颜色属性，填充装饰容器的颜色。
                             fillColor: widget.innerColor,
                             // 是密集属性，输入子项是否是密集形式的一部分（即使用较少的垂直空间）。
@@ -238,7 +243,7 @@ class _SearchTextState extends State<SantoSearchText> {
                             filled: true,
                             hintStyle: widget.hintStyle ??
                                 TextStyle(
-                                  fontSize: 16,
+                                  fontSize: commonConfig.fontSizeSubHead,
                                   height: 1,
                                   textBaseline: TextBaseline.alphabetic,
                                   color: Color(0xff808695),
@@ -300,7 +305,8 @@ class _SearchTextState extends State<SantoSearchText> {
                       }
                     },
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0, 0, 0),
                       child: Text(
                         SantoIntl.of(context).localizedResource.cancel,
                         style: TextStyle(
@@ -308,7 +314,7 @@ class _SearchTextState extends State<SantoSearchText> {
                                 .getConfig()
                                 .commonConfig
                                 .colorTextBase,
-                            fontSize: 16,
+                            fontSize: commonConfig.fontSizeSubHead,
                             height: 1),
                       ),
                     ),

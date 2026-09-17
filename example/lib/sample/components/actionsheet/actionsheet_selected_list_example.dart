@@ -42,92 +42,94 @@ class SelectedListActionSheetExamplePageState
         return true;
       },
       child: SantoPageLayout(        title: '已选菜单列表',
-        child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                SantoBottomButtonPanel(
-                    mainButtonName: 'SantoBottomButtonPanel',
-                    mainButtonOnTap: () {
-                      SantoToast.show('确定！sheet 的数据源长度 ${_data.length}', context);
-                    },
-                    iconButtonList: [
-                      SantoVerticalIconButton(
-                          name: '已选(${_data.length})',
-                          iconWidget: SantoTools.getAssetImage(
-                              'icons/grey_place_holder.png'),
-                          onTap: () {
-                            if (!controller.isHidden) {
-                              controller.dismiss();
-                            } else {
-                              if (_data.length <= 0) {
-                                SantoToast.show('数据为空，弹窗不展示', context);
-                                return;
-                              }
-                              SantoSelectedListActionSheet<String>(
-                                  context: context,
-                                  isClearButtonHidden: false,
-                                  isDeleteButtonHidden: false,
-                                  items: _data,
-                                  bottomOffset: 82,
-                                  controller: controller,
-                                  title: '已选标题，优先级没有titleWidget高',
-                                  titleWidget: Container(
-                                    color: Colors.blueGrey,
-                                    child: Center(
-                                      child: Text(
-                                        '自定义的视图',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          decoration: TextDecoration.none,
+        children: <Widget>[
+          SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  SantoBottomButtonPanel(
+                      mainButtonName: 'SantoBottomButtonPanel',
+                      mainButtonOnTap: () {
+                        SantoToast.show('确定！sheet 的数据源长度 ${_data.length}', context);
+                      },
+                      iconButtonList: [
+                        SantoVerticalIconButton(
+                            name: '已选(${_data.length})',
+                            iconWidget: SantoTools.getAssetImage(
+                                'icons/grey_place_holder.png'),
+                            onTap: () {
+                              if (!controller.isHidden) {
+                                controller.dismiss();
+                              } else {
+                                if (_data.length <= 0) {
+                                  SantoToast.show('数据为空，弹窗不展示', context);
+                                  return;
+                                }
+                                SantoSelectedListActionSheet<String>(
+                                    context: context,
+                                    isClearButtonHidden: false,
+                                    isDeleteButtonHidden: false,
+                                    items: _data,
+                                    bottomOffset: 82,
+                                    controller: controller,
+                                    title: '已选标题，优先级没有titleWidget高',
+                                    titleWidget: Container(
+                                      color: Colors.blueGrey,
+                                      child: Center(
+                                        child: Text(
+                                          '自定义的视图',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            decoration: TextDecoration.none,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  itemTitleBuilder:
-                                      (int index, String? entity) {
-                                    return entity;
-                                  },
-                                  onClear: () {
-                                    controller.dismiss();
-                                    // 自定义清空的操作，可以不实现，会走默认的清空操作。
-                                    SantoDialogManager.showConfirmDialog(context,
-                                        title: "确定要清空已选列表吗?",
-                                        cancel: '取消',
-                                        confirm: '确定', onConfirm: () {
+                                    itemTitleBuilder:
+                                        (int index, String? entity) {
+                                      return entity;
+                                    },
+                                    onClear: () {
+                                      controller.dismiss();
+                                      // 自定义清空的操作，可以不实现，会走默认的清空操作。
+                                      SantoDialogManager.showConfirmDialog(context,
+                                          title: "确定要清空已选列表吗?",
+                                          cancel: '取消',
+                                          confirm: '确定', onConfirm: () {
+                                        setState(() {});
+                                        _data.clear();
+                                      }, onCancel: () {});
+                                    },
+                                    onClearCanceled: () {
+                                      SantoToast.show("取消!!!!", context);
+                                    },
+                                    onClearConfirmed: () {
                                       setState(() {});
-                                      _data.clear();
-                                    }, onCancel: () {});
-                                  },
-                                  onClearCanceled: () {
-                                    SantoToast.show("取消!!!!", context);
-                                  },
-                                  onClearConfirmed: () {
-                                    setState(() {});
-                                    SantoToast.show("确定!!!!", context);
-                                  },
-                                  onListDismissed:
-                                      (bool isClosedByClearButton) {
-                                    SantoToast.show(
-                                        "消失了!!!!$isClosedByClearButton",
-                                        context);
-                                  },
-                                  onListShowed: () {
-                                    SantoToast.show("显示了哦~~", context);
-                                  },
-                                  onItemDelete: (int idx, String? entity) {
-                                    _data[idx] = '$idx 变化了哈';
-                                    controller.reloadData();
-                                    SantoToast.show("$idx 奇数行无法删除", context);
-                                    return true;
-                                  }).show();
-                            }
-                          })
-                    ]),
-              ],
+                                      SantoToast.show("确定!!!!", context);
+                                    },
+                                    onListDismissed:
+                                        (bool isClosedByClearButton) {
+                                      SantoToast.show(
+                                          "消失了!!!!$isClosedByClearButton",
+                                          context);
+                                    },
+                                    onListShowed: () {
+                                      SantoToast.show("显示了哦~~", context);
+                                    },
+                                    onItemDelete: (int idx, String? entity) {
+                                      _data[idx] = '$idx 变化了哈';
+                                      controller.reloadData();
+                                      SantoToast.show("$idx 奇数行无法删除", context);
+                                      return true;
+                                    }).show();
+                              }
+                            })
+                      ]),
+                ],
+              ),
             ),
-          ),
+        ],
       ),
     );
   }

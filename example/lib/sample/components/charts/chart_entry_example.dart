@@ -13,7 +13,9 @@ class FunnelChartExamplePage extends StatelessWidget {
       // the App.build method, and use it to set our appbar title.
       title: '漏斗图',
       scrollable: false,
-      child: FunnelChartExample(),
+      children: <Widget>[
+        FunnelChartExample(),
+      ],
     );
   }
 }
@@ -442,7 +444,9 @@ class RadarChartExamplePage extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: '雷达图',
       ),
-      child: RadarChartExample(),
+      children: <Widget>[
+        RadarChartExample(),
+      ],
     );
   }
 }

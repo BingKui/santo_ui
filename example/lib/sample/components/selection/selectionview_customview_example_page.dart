@@ -57,50 +57,48 @@ class _SelectionViewExamplePageState
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      appBar: SantoAppBar(title: widget._title),
-      child: Column(
-          children: <Widget>[
-            SantoSelectionView(
-              key: selectionKey,
-              selectionViewController: _selectionViewController,
-              originalSelectionData: _filterData!,
-              onCustomSelectionMenuClick: (int index,
-                  SantoSelectionEntity customMenuItem,
-                  SantoSetCustomSelectionParams customHandleCallBack) {
-                if (isCustomFilterViewShow) {
-                  closeCustomFilterView();
-                } else {
-                  filterViewEntry = getCustomFilterView();
-                  Overlay.of(context).insert(filterViewEntry!);
-                  isCustomFilterViewShow = true;
-                }
-                _customHandleCallBack = customHandleCallBack;
-              },
-              onSelectionChanged: (int menuIndex,
-                  Map<String, String> filterParams,
-                  Map<String, String> customParams,
-                  SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
-                SantoToast.show(
-                    'filterParams : $filterParams'
-                        ',\n customParams : $customParams',
-                    context);
-                _filterSelectedDate = customParams['date'];
-                if (customParams.isNotEmpty) {
-                  setCustomTitleFunction(
-                      menuTitle: customParams.values.first,
-                      isMenuTitleHighLight: true);
-                } else {
-                  setCustomTitleFunction(
-                      menuTitle: '自定义事件选择', isMenuTitleHighLight: false);
-                }
-              },
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 400),
-              alignment: Alignment.center,
-              child: Text("背景内容区域"),
-            )
-          ],
-        ),
+      children: <Widget>[
+          SantoSelectionView(
+            key: selectionKey,
+            selectionViewController: _selectionViewController,
+            originalSelectionData: _filterData!,
+            onCustomSelectionMenuClick: (int index,
+                SantoSelectionEntity customMenuItem,
+                SantoSetCustomSelectionParams customHandleCallBack) {
+              if (isCustomFilterViewShow) {
+                closeCustomFilterView();
+              } else {
+                filterViewEntry = getCustomFilterView();
+                Overlay.of(context).insert(filterViewEntry!);
+                isCustomFilterViewShow = true;
+              }
+              _customHandleCallBack = customHandleCallBack;
+            },
+            onSelectionChanged: (int menuIndex,
+                Map<String, String> filterParams,
+                Map<String, String> customParams,
+                SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
+              SantoToast.show(
+                  'filterParams : $filterParams'
+                      ',\n customParams : $customParams',
+                  context);
+              _filterSelectedDate = customParams['date'];
+              if (customParams.isNotEmpty) {
+                setCustomTitleFunction(
+                    menuTitle: customParams.values.first,
+                    isMenuTitleHighLight: true);
+              } else {
+                setCustomTitleFunction(
+                    menuTitle: '自定义事件选择', isMenuTitleHighLight: false);
+              }
+            },
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 400),
+            alignment: Alignment.center,
+            child: Text("背景内容区域"),
+          )
+      ],
     );
   }
 

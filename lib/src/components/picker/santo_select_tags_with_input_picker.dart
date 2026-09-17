@@ -240,9 +240,15 @@ class _SantoSelectTagsWithInputPickerWidgetState
   }
 
   Widget _headerArea(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20, bottom: 20),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingLg,
+          right: commonConfig.hSpacingLg,
+          top: commonConfig.vSpacingLg,
+          bottom: commonConfig.vSpacingLg),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -253,8 +259,8 @@ class _SantoSelectTagsWithInputPickerWidgetState
                   .getConfig()
                   .commonConfig
                   .colorTextBase,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w600,
+              fontSize: commonConfig.fontSizeHead,
+              fontWeight: FontWeight.w500,
             ),
           ),
           GestureDetector(
@@ -265,7 +271,7 @@ class _SantoSelectTagsWithInputPickerWidgetState
                 Navigator.of(context).pop();
               },
               child: Padding(
-                padding: EdgeInsets.all(4),
+                padding: EdgeInsets.all(commonConfig.vSpacingXs),
                 child: SantoTools.getAssetImage(SantoAsset.iconPickerClose),
               ))
         ],
@@ -296,6 +302,8 @@ class _SantoSelectTagsWithInputPickerWidgetState
   }
 
   Widget _tagsArea(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Color selectedTagTitleColor = widget.tagPickerBean?.selectedTagTitleColor ??
         SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
     Color tagTitleColor = widget.tagPickerBean?.tagTitleColor ??
@@ -315,9 +323,12 @@ class _SantoSelectTagsWithInputPickerWidgetState
 
     return Container(
         color: Colors.white,
-        padding: EdgeInsets.only(left: 20, right: 10, bottom: 12),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingSm,
+            bottom: 12),
         child: Wrap(
-          spacing: 12.0,
+          spacing: commonConfig.pageGap,
           children: this._sourceTags.map((choice) {
             bool selected = choice.isSelect;
             Color titleColor = selected ? selectedTagTitleColor : tagTitleColor;
@@ -328,12 +339,14 @@ class _SantoSelectTagsWithInputPickerWidgetState
               selectedColor: selectedTagBackgroundColor,
               pressElevation: 0,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)),
+                  borderRadius: BorderRadius.circular(commonConfig.radiusXs)),
               padding: EdgeInsets.zero,
-              labelPadding: EdgeInsets.only(left: 8, right: 8),
+              labelPadding: EdgeInsets.only(
+                  left: commonConfig.hSpacingSm,
+                  right: commonConfig.hSpacingSm),
               labelStyle: TextStyle(
                   color: titleColor,
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
                   fontSize: widget.tagPickerBean!.tagTitleFontSize),
               label: Container(
                 width: preferredWidthWithText(textToDisplay),
@@ -369,19 +382,25 @@ class _SantoSelectTagsWithInputPickerWidgetState
   }
 
   Widget _inputArea(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 100,
       color: Colors.white,
       child: Container(
-        margin: EdgeInsets.only(left: 20, right: 20),
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 16),
+        margin: EdgeInsets.only(
+            left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg,
+            bottom: commonConfig.vSpacingMd),
         decoration: BoxDecoration(
           color: Color(0xFFF5F5F5),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         ),
         child: TextField(
             style: TextStyle(
-                fontSize: 16,
+                fontSize: commonConfig.fontSizeSubHead,
                 color: SantoThemeConfigurator.instance
                     .getConfig()
                     .commonConfig
@@ -396,13 +415,13 @@ class _SantoSelectTagsWithInputPickerWidgetState
             decoration: InputDecoration(
               border: InputBorder.none,
               hintStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: commonConfig.fontSizeSubHead,
                   color: SantoThemeConfigurator.instance
                       .getConfig()
                       .commonConfig
                       .colorTextHint),
               counterStyle: TextStyle(
-                  fontSize: 12,
+                  fontSize: commonConfig.fontSizeCaption,
                   color: SantoThemeConfigurator.instance
                       .getConfig()
                       .commonConfig
@@ -414,12 +433,18 @@ class _SantoSelectTagsWithInputPickerWidgetState
   }
 
   Widget _confirmButton(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 72,
       color: Colors.white,
       child: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 16, bottom: 16),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingLg,
+            top: commonConfig.vSpacingMd,
+            bottom: commonConfig.vSpacingMd),
         child: GestureDetector(
           onTap: () {
             if (!isCommitBtnEnable()) return;
@@ -437,14 +462,15 @@ class _SantoSelectTagsWithInputPickerWidgetState
                         .commonConfig
                         .brandPrimary
                     : Color(0xffcccccc),
-                borderRadius: BorderRadius.all(Radius.circular(12))),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(commonConfig.radiusXs))),
             child: Center(
               child: Text(
                   SantoIntl.of(context).localizedResource.submit,
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: commonConfig.fontSizeSubHead,
                     color: Colors.white,
-                    fontWeight: FontWeight.w600),
+                    fontWeight: FontWeight.w500),
               ),
             ),
           ),

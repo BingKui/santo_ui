@@ -3,7 +3,6 @@
 import 'dart:math';
 
 import 'package:santo_ui/src/components/button/santo_normal_button.dart';
-import 'package:santo_ui/src/constants/santo_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +80,8 @@ class SantoSmallOutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     SantoButtonConfig defaultThemeConfig = themeData ?? SantoButtonConfig();
 
     defaultThemeConfig = defaultThemeConfig.merge(SantoButtonConfig(
@@ -95,9 +96,9 @@ class SantoSmallOutlineButton extends StatelessWidget {
         TextPainter(textScaler: MediaQuery.textScalerOf(context));
 
     final EdgeInsetsGeometry effectivePadding = insertPadding ??
-        const EdgeInsets.symmetric(
-            vertical: SantoButtonConstant.verticalPadding,
-            horizontal: SantoButtonConstant.horizontalPadding);
+        EdgeInsets.symmetric(
+            vertical: commonConfig.vSpacingSm,
+            horizontal: commonConfig.hSpacingXs);
 
     return LayoutBuilder(
       builder: (_, con) {

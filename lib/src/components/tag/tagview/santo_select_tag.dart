@@ -190,6 +190,8 @@ class _SantoSelectTagState extends State<SantoSelectTag> {
   }
 
   Widget _tagWidgetAtIndex(int nameIndex) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     bool selected = _tagState[nameIndex];
     Text tx = Text(
       widget.tags[nameIndex],
@@ -205,7 +207,8 @@ class _SantoSelectTagState extends State<SantoSelectTag> {
           borderRadius: BorderRadius.circular(widget.themeData!.tagRadius)),
       width: widget.fixWidthMode ? widget.themeData!.tagWidth : null,
       height: widget.themeData!.tagHeight,
-      padding: EdgeInsets.only(left: 8, right: 8),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingSm, right: commonConfig.hSpacingSm),
       child: Center(widthFactor: 1, child: tx),
     );
     return container;

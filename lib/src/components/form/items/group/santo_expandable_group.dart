@@ -157,7 +157,8 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
   }
 
   Widget _buildHeader(BuildContext context, Widget? child) {
-
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       child: Column(
@@ -170,8 +171,11 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
                 _handleTap();
               },
               child: Container(
-                padding:
-                    EdgeInsets.only(left: 20, top: 15, bottom: 15, right: 20),
+                padding: EdgeInsets.only(
+                    left: commonConfig.hSpacingLg,
+                    top: commonConfig.vSpacingMd,
+                    bottom: commonConfig.vSpacingMd,
+                    right: commonConfig.hSpacingLg),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +184,8 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                            padding: EdgeInsets.only(right: 6),
+                            padding: EdgeInsets.only(
+                                right: commonConfig.hSpacingXs),
                             child: Text(
                               widget.title,
                               style: SantoFormUtil.getHeadTitleTextStyle(
@@ -190,7 +195,8 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
                         // 副标题
                         Container(
                           alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(top: 4),
+                          padding:
+                              EdgeInsets.only(top: commonConfig.vSpacingXs),
                           child: Offstage(
                             // ignore: deprecated_member_use_from_same_package
                             offstage: (widget.subtitle == null ||

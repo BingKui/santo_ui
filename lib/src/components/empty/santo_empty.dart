@@ -177,10 +177,12 @@ class SantoEmpty extends StatelessWidget {
 
   ///文案区域：标题
   _buildTextWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return title != null
         ? Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.fromLTRB(60, 24, 60, 0),
+            padding: EdgeInsets.fromLTRB(60, commonConfig.vSpacingLg, 60, 0),
             child: Text(title!,
                 textAlign: TextAlign.center,
                 style: themeData!.titleTextStyle.generateTextStyle()),
@@ -213,6 +215,8 @@ class SantoEmpty extends StatelessWidget {
 
   ///操作区按钮
   _buildOperateContentWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (OperateAreaType.singleButton == operateAreaType) {
       return GestureDetector(
         onTap: () {
@@ -220,7 +224,8 @@ class SantoEmpty extends StatelessWidget {
         },
         child: Container(
           constraints: BoxConstraints(minWidth: themeData!.singleMinWidth),
-          padding: EdgeInsets.fromLTRB(48, 16, 48, 16),
+          padding: EdgeInsets.fromLTRB(
+              48, commonConfig.vSpacingMd, 48, commonConfig.vSpacingMd),
           decoration: BoxDecoration(
               color: themeData!.commonConfig.brandPrimary,
               borderRadius:
@@ -240,7 +245,8 @@ class SantoEmpty extends StatelessWidget {
             },
             child: Container(
               constraints: BoxConstraints(minWidth: themeData!.doubleMinWidth),
-              padding: EdgeInsets.fromLTRB(36, 16, 36, 16),
+              padding: EdgeInsets.fromLTRB(
+                  36, commonConfig.vSpacingMd, 36, commonConfig.vSpacingMd),
               decoration: BoxDecoration(
                   color: themeData!.commonConfig.brandPrimary.withAlpha(0x14),
                   borderRadius:
@@ -260,7 +266,8 @@ class SantoEmpty extends StatelessWidget {
             },
             child: Container(
               constraints: BoxConstraints(minWidth: themeData!.doubleMinWidth),
-              padding: EdgeInsets.fromLTRB(36, 16, 36, 16),
+              padding: EdgeInsets.fromLTRB(
+                  36, commonConfig.vSpacingMd, 36, commonConfig.vSpacingMd),
               decoration: BoxDecoration(
                   color: themeData!.commonConfig.brandPrimary.withAlpha(0x14),
                   borderRadius:

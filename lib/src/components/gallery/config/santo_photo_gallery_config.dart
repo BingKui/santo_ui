@@ -2,7 +2,6 @@ import 'package:santo_ui/src/components/gallery/config/santo_basic_gallery_confi
 import 'package:santo_ui/src/components/gallery/config/santo_bottom_card.dart';
 import 'package:santo_ui/src/components/loading/santo_loading.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
-import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_gallery_detail_config.dart';
 import 'package:flutter/material.dart';

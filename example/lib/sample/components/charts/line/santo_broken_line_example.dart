@@ -21,44 +21,37 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: '折线',
-      scrollable: false,
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // 首个区块前保留原有顶部留白
-              SizedBox(height: 20),
-              SantoSection(
-                title: '单条曲线与数据点',
-                description: '数据点与坐标刻度由 brokenData 动态生成，提示框常驻不消失',
-                child: _brokenLineExample1(context, widget.brokenData),
-              ),
-              SantoSection(
-                title: '多条折线与图例',
-                description: 'lines 叠加两条折线并展示图例，x 轴刻度文案可自定义',
-                child: _brokenLineExample2(context),
-              ),
-              SantoSection(
-                title: '自定义提示内容',
-                description: 'onTouch 返回 Widget 渲染浮层，y 轴刻度文案也可自定义',
-                child: _brokenLineExample3(context),
-              ),
-              SantoSection(
-                title: '超宽图表横向滑动',
-                description: 'size 宽度设为屏幕两倍，数据点超出可视区时可左右滑动查看',
-                child: _brokenLineExample4(context),
-              ),
-              SantoSection(
-                title: '数据点文本与样式',
-                description: 'isShowPointText 开启数据点文本，样式与偏移可自定义',
-                child: _brokenLineExample5(context),
-              ),
-            ],
-          ),
+    return SantoPageLayout(
+      title: '折线',
+      children: <Widget>[
+        // 首个区块前保留原有顶部留白
+        SizedBox(height: 20),
+        SantoSection(
+          title: '单条曲线与数据点',
+          description: '数据点与坐标刻度由 brokenData 动态生成，提示框常驻不消失',
+          child: _brokenLineExample1(context, widget.brokenData),
         ),
-      ),
+        SantoSection(
+          title: '多条折线与图例',
+          description: 'lines 叠加两条折线并展示图例，x 轴刻度文案可自定义',
+          child: _brokenLineExample2(context),
+        ),
+        SantoSection(
+          title: '自定义提示内容',
+          description: 'onTouch 返回 Widget 渲染浮层，y 轴刻度文案也可自定义',
+          child: _brokenLineExample3(context),
+        ),
+        SantoSection(
+          title: '超宽图表横向滑动',
+          description: 'size 宽度设为屏幕两倍，数据点超出可视区时可左右滑动查看',
+          child: _brokenLineExample4(context),
+        ),
+        SantoSection(
+          title: '数据点文本与样式',
+          description: 'isShowPointText 开启数据点文本，样式与偏移可自定义',
+          child: _brokenLineExample5(context),
+        ),
+      ],
     );
   }
 

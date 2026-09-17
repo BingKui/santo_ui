@@ -52,6 +52,8 @@ class SantoAddLabel extends StatefulWidget {
 class SantoAddLabelState extends State<SantoAddLabel> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
       onTap: () {
         if (!SantoFormUtil.isEdit(widget.isEdit)) {
@@ -62,7 +64,8 @@ class SantoAddLabelState extends State<SantoAddLabel> {
       },
       child: Container(
         color: widget.themeData!.backgroundColor,
-        padding: EdgeInsets.fromLTRB(20, 15, 0, 15),
+        padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg,
+            commonConfig.vSpacingMd, 0, commonConfig.vSpacingMd),
         child: Text(
           widget.title,
           style: TextStyle(

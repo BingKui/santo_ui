@@ -8,71 +8,67 @@ class SectionExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Section 区块',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 12),
-          SantoSection(
-            title: '语法糖',
-            titleSuffix: const Icon(Icons.edit_outlined,
-                size: 16, color: Color(0xFF17233D)),
-            descriptionWidget: Text.rich(
-              TextSpan(
-                children: [
-                  const TextSpan(text: '通过 '),
-                  WidgetSpan(child: _buildCodeChip('type')),
-                  const TextSpan(
-                      text:
-                          ' 语法糖，使用预设的按钮样式：主按钮、次按钮、虚线按钮、文本按钮和链接按钮。推荐主按钮在同一个操作区域最多出现一次。'),
-                ],
-              ),
-            ),
-            child: Wrap(
-              spacing: 12,
-              runSpacing: 12,
+      children: <Widget>[
+        SantoSection(
+          title: '语法糖',
+          titleSuffix: const Icon(Icons.edit_outlined,
+              size: 16, color: Color(0xFF17233D)),
+          descriptionWidget: Text.rich(
+            TextSpan(
               children: [
-                SantoBigMainButton(
-                  title: 'Primary Button',
-                  onTap: () {},
-                ),
-                SantoBigOutlineButton(
-                  title: 'Default Button',
-                  onTap: () {},
-                ),
-                SantoBigGhostButton(
-                  title: 'Ghost Button',
-                  onTap: () {},
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 12),
-                    child: Text(
-                      'Text Button',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: SantoThemeConfigurator.instance
-                            .getConfig()
-                            .commonConfig
-                            .brandPrimary,
-                      ),
-                    ),
-                  ),
-                ),
+                const TextSpan(text: '通过 '),
+                WidgetSpan(child: _buildCodeChip('type')),
+                const TextSpan(
+                    text:
+                        ' 语法糖，使用预设的按钮样式：主按钮、次按钮、虚线按钮、文本按钮和链接按钮。推荐主按钮在同一个操作区域最多出现一次。'),
               ],
             ),
           ),
-          SantoSection(
-            title: '基础用法',
-            description: '上方为演示内容,下方为标题和描述信息,整体为圆角卡片。',
-            child: Text('这里展示具体内容'),
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              SantoBigMainButton(
+                title: 'Primary Button',
+                onTap: () {},
+              ),
+              SantoBigOutlineButton(
+                title: 'Default Button',
+                onTap: () {},
+              ),
+              SantoBigGhostButton(
+                title: 'Ghost Button',
+                onTap: () {},
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 12),
+                  child: Text(
+                    'Text Button',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: SantoThemeConfigurator.instance
+                          .getConfig()
+                          .commonConfig
+                          .brandPrimary,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          SantoSection(
-            description: '只有描述,没有标题与演示内容。',
-          ),
-        ],
-      ),
+        ),
+        SantoSection(
+          title: '基础用法',
+          description: '上方为演示内容,下方为标题和描述信息,整体为圆角卡片。',
+          child: Text('这里展示具体内容'),
+        ),
+        SantoSection(
+          description: '只有描述,没有标题与演示内容。',
+        ),
+      ],
     );
   }
 

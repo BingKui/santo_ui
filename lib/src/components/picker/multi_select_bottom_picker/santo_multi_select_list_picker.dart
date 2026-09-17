@@ -134,6 +134,8 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
   }
 
   Widget _buildItem(BuildContext context, int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -147,15 +149,16 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: EdgeInsets.fromLTRB(
+                  commonConfig.hSpacingLg, 0, commonConfig.hSpacingLg, 0),
               child: Row(
                 children: <Widget>[
                   Expanded(
                       child: Text(widget.items[index].content,
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: commonConfig.fontSizeSubHead,
                               fontWeight: widget.items[index].isChecked
-                                  ? FontWeight.w600
+                                  ? FontWeight.w500
                                   : FontWeight.normal,
                               color: widget.items[index].isChecked
                                   ? SantoThemeConfigurator.instance
@@ -178,7 +181,8 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
             ),
             index != widget.items.length - 1
                 ? Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(
+                        commonConfig.hSpacingLg, 0, commonConfig.hSpacingLg, 0),
                     child: SantoLine())
                 : const SizedBox.shrink()
           ],

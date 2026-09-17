@@ -122,6 +122,8 @@ class SantoRatioInputFormItemState extends State<SantoRatioInputFormItem> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: widget.themeData!.backgroundColor,
       padding: SantoFormUtil.itemEdgeInsets(widget.themeData!),
@@ -157,7 +159,8 @@ class SantoRatioInputFormItemState extends State<SantoRatioInputFormItem> {
                 Row(
                   children: <Widget>[
                     Container(
-                        padding: EdgeInsets.only(right: 20),
+                        padding:
+                            EdgeInsets.only(right: commonConfig.hSpacingLg),
                         child: Text(
                           "1 : ",
                           style:

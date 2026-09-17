@@ -75,6 +75,9 @@ class _SantoSubSwitchTitleState extends State<SantoSubSwitchTitle>
       return const SizedBox.shrink();
     }
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+
     List<Widget> widgetChildren = widget.nameList.map((name) {
       Text tx = Text(name);
       return Container(
@@ -82,7 +85,8 @@ class _SantoSubSwitchTitleState extends State<SantoSubSwitchTitle>
           color: Colors.white,
           shape: BoxShape.rectangle,
         ),
-        padding: widget.padding ?? EdgeInsets.only(right: 20),
+        padding: widget.padding ??
+            EdgeInsets.only(right: commonConfig.hSpacingLg),
         child: tx,
       );
     }).toList();
@@ -96,21 +100,20 @@ class _SantoSubSwitchTitleState extends State<SantoSubSwitchTitle>
       indicatorWeight: 0,
       //选中态颜色，只有一个item时，默认黑色加粗，多个item时为主题色
       labelColor: widget.nameList.length == 1
-          ? SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase
-          : SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary,
+          ? commonConfig.colorTextBase
+          : commonConfig.brandPrimary,
       labelStyle: TextStyle(
         //选中态
-        fontWeight: FontWeight.w600,
-        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        fontSize: commonConfig.fontSizeBase,
       ),
       labelPadding: EdgeInsets.all(0),
       //未选中态颜色
-      unselectedLabelColor:
-          SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase,
+      unselectedLabelColor: commonConfig.colorTextBase,
       //未选中态样式
       unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w400,
-        fontSize: 14,
+        fontSize: commonConfig.fontSizeBase,
       ),
       onTap: (index) {
         if (null != widget.onChanged) {

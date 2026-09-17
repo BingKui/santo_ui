@@ -10,6 +10,7 @@ import 'package:santo_ui/src/components/toast/santo_toast.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -76,6 +77,8 @@ class _SantoMoreSelectionPageState extends State<SantoMoreSelectionPage>
   /// 页面结构：左侧的透明黑 + 右侧宽为300的内容区域
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Scaffold(
       backgroundColor: Color(0x660c0c0c),
       body: Row(
@@ -114,7 +117,7 @@ class _SantoMoreSelectionPageState extends State<SantoMoreSelectionPage>
                   children: <Widget>[
                     SantoLine(),
                     Padding(
-                      padding: const EdgeInsets.only(top: 15),
+                      padding: EdgeInsets.only(top: commonConfig.vSpacingMd),
                       child: _buildBottomButtons(),
                     ),
                   ],
@@ -290,6 +293,8 @@ class MoreBottomSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -300,7 +305,8 @@ class MoreBottomSelectionWidget extends StatelessWidget {
             }
           },
           child: Container(
-            margin: EdgeInsets.only(left: 20, right: 20),
+            margin: EdgeInsets.only(
+                left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,

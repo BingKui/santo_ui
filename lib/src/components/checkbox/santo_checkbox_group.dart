@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:santo_ui/src/components/checkbox/santo_checkbox.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 分组勾选状态变化监听:返回当前勾选的 id 列表
 typedef SantoCheckboxGroupChange = void Function(List<String> checkedIds);
@@ -276,19 +277,27 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
     required int? rowCount,
   }) {
     if (direction == null) return child!;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final isHorizontal = direction == Axis.horizontal;
     // 非通栏样式:整体裁切圆角并向左右留出外边距
     Widget container = isHorizontal
         ? (cardMode
             ? Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
                 alignment: Alignment.topLeft,
                 child: LayoutBuilder(builder: (context, constraints) {
                   // 三等分去掉两个列间距,避免按屏幕宽度硬编码卡片宽
                   final itemWidth = (constraints.maxWidth - 24) / 3;
                   return Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
+                    spacing: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .pageGap,
+                    runSpacing: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .pageGap,
                     children: directionalCheckboxes
                         .map((e) =>
                             SizedBox(width: itemWidth, height: 56, child: e))
@@ -297,7 +306,7 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
                 }),
               )
             : Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
                 child: _horizontalMoreThanOneRow(directionalCheckboxes, rowCount),
               ))
         : ListView.separated(
@@ -306,11 +315,15 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: directionalCheckboxes.length,
             separatorBuilder: (context, index) => cardMode
-                ? const SizedBox(height: 12)
+                ? SizedBox(
+                    height: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .pageGap)
                 : const SizedBox.shrink(),
             itemBuilder: (context, index) => Container(
               margin: cardMode
-                  ? const EdgeInsets.symmetric(horizontal: 16)
+                  ? EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd)
                   : null,
               height: cardMode ? 82 : null,
               child: directionalCheckboxes[index],
@@ -321,8 +334,13 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
     if (passThrough && !isHorizontal) {
       container = Container(
         clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(SantoThemeConfigurator
+                .instance
+                .getConfig()
+                .commonConfig
+                .radiusXs)),
+        margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
         child: container,
       );
     }

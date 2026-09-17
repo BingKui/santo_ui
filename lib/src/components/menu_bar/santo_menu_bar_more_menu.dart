@@ -207,7 +207,11 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               color: widget.backgroundColor ?? Colors.white.withAlpha(0xF2),
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+              padding: EdgeInsets.fromLTRB(
+                  _commonConfig.hSpacingLg,
+                  _commonConfig.vSpacingLg,
+                  _commonConfig.hSpacingLg,
+                  _commonConfig.vSpacingMd),
               child: Material(
                 color: Colors.transparent,
                 child: ConstrainedBox(
@@ -234,7 +238,7 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: _commonConfig.vSpacingSm),
                     // 图标宫格(内容超出最大高度时可滚动)
                     Flexible(
                       child: GridView.count(

@@ -73,27 +73,23 @@ class AppLayoutDemoRoutePage extends StatelessWidget {
     final routeName = ModalRoute.of(context)?.settings.name;
     return SantoPageLayout(
       title: title,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const SizedBox(height: 12),
-          SantoSection(
-            title: '页面地址跳转',
-            description: '「更多」菜单项按 routeName 跳转,路由由宿主 App 注册',
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F6FA),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '当前页面地址:${routeName ?? ''}',
-                style: const TextStyle(fontSize: 14),
-              ),
+      children: <Widget>[
+        SantoSection(
+          title: '页面地址跳转',
+          description: '「更多」菜单项按 routeName 跳转,路由由宿主 App 注册',
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F6FA),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              '当前页面地址:${routeName ?? ''}',
+              style: const TextStyle(fontSize: 14),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -106,16 +102,18 @@ class _AppLayoutHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(
       appBar: SantoAppBar(title: '首页'),
-      child: SantoSection(
-        title: 'AppLayout 应用布局',
-        description: '底部悬浮菜单栏 + 每个菜单对应的页面,切换菜单时各页面状态保留',
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            for (int i = 1; i <= 14; i++) _card('首页内容卡片 $i'),
-          ],
+      children: <Widget>[
+        SantoSection(
+          title: 'AppLayout 应用布局',
+          description: '底部悬浮菜单栏 + 每个菜单对应的页面,切换菜单时各页面状态保留',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              for (int i = 1; i <= 14; i++) _card('首页内容卡片 $i'),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -128,16 +126,18 @@ class _AppLayoutDiscoverPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(
       appBar: SantoAppBar(title: '发现'),
-      child: SantoSection(
-        title: '悬浮菜单栏占位',
-        description: '内容延伸到底部,PageLayout 自动预留栏高 + gap,最后一张卡片不会被遮住',
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            for (int i = 1; i <= 12; i++) _card('发现内容卡片 $i'),
-          ],
+      children: <Widget>[
+        SantoSection(
+          title: '悬浮菜单栏占位',
+          description: '内容延伸到底部,PageLayout 自动预留栏高 + gap,最后一张卡片不会被遮住',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              for (int i = 1; i <= 12; i++) _card('发现内容卡片 $i'),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -150,36 +150,32 @@ class _AppLayoutProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(
       appBar: SantoAppBar(title: '我的'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: const <Widget>[
-                Icon(Icons.account_circle, size: 48, color: Color(0xFFBFC3CC)),
-                SizedBox(width: 12),
-                Text('Santo 用户', style: TextStyle(fontSize: 16)),
-              ],
-            ),
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
-          SantoSection(
-            title: '独立页面状态',
-            description: 'IndexedStack 承载各页面,切换到其它标签再切回来时滚动位置不丢失',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                for (int i = 1; i <= 10; i++) _card('我的内容卡片 $i'),
-              ],
-            ),
+          child: Row(
+            children: const <Widget>[
+              Icon(Icons.account_circle, size: 48, color: Color(0xFFBFC3CC)),
+              SizedBox(width: 12),
+              Text('Santo 用户', style: TextStyle(fontSize: 16)),
+            ],
           ),
-        ],
-      ),
+        ),
+        SantoSection(
+          title: '独立页面状态',
+          description: 'IndexedStack 承载各页面,切换到其它标签再切回来时滚动位置不丢失',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              for (int i = 1; i <= 10; i++) _card('我的内容卡片 $i'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

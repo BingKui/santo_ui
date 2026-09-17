@@ -142,7 +142,12 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
         childAspectRatio: santoChildAspectRatio,
         children: _sourceTags.map((choice) {
           return _getItem(
-              choice, EdgeInsets.only(left: 8, right: 8, bottom: 1));
+              choice,
+              EdgeInsets.only(
+                left: commonConfig.hSpacingSm,
+                right: commonConfig.hSpacingSm,
+                bottom: 1,
+              ));
         }).toList(),
       ),
     );
@@ -156,8 +161,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
         padding: widget.padding ??
             EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
         child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
+          spacing: commonConfig.pageGap,
+          runSpacing: commonConfig.pageGap,
           children: _sourceTags.map((choice) {
             return _getItem(
                 choice, EdgeInsets.all(commonConfig.vSpacingSm));

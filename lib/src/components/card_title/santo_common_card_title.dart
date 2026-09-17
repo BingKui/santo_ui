@@ -127,6 +127,8 @@ class SantoCommonCardTitle extends StatelessWidget {
   }
 
   Widget _rowWidget(BuildContext context, SantoCardTitleConfig defaultConfig) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> children = [];
     children.add(Expanded(child: _titleWidget(context, defaultConfig)));
 
@@ -136,7 +138,7 @@ class SantoCommonCardTitle extends StatelessWidget {
       accessory = Container(
         height: 25,
         alignment: Alignment.center,
-        padding: EdgeInsets.only(left: 4),
+        padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
         child: accessoryWidget,
       );
     } else if (this.accessoryText?.isNotEmpty ?? false) {
@@ -156,6 +158,8 @@ class SantoCommonCardTitle extends StatelessWidget {
 
   ///标题最右侧的widget
   Widget _accessoryTextWidget(SantoCardTitleConfig defaultConfig) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Text tx = Text(
       accessoryText ?? "",
       style: defaultConfig.accessoryTextStyle.generateTextStyle(),
@@ -164,16 +168,18 @@ class SantoCommonCardTitle extends StatelessWidget {
     return Container(
       child: tx,
       height: 25,
-      padding: EdgeInsets.only(left: 4),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
       alignment: Alignment.center,
     );
   }
 
   ///标题右侧的widget
   Widget _subTitleWidgetFromWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
       child: subTitleWidget,
-      padding: EdgeInsets.only(left: 4),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
     );
   }
 
@@ -214,6 +220,8 @@ class SantoCommonCardTitle extends StatelessWidget {
 
   ///标题下方的widget
   Widget _detailTextWidget(SantoCardTitleConfig defaultConfig) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Text tx = Text(
       detailTextString ?? "",
       overflow: TextOverflow.ellipsis,
@@ -222,7 +230,7 @@ class SantoCommonCardTitle extends StatelessWidget {
     );
     return Container(
       child: tx,
-      padding: EdgeInsets.only(top: 4),
+      padding: EdgeInsets.only(top: commonConfig.vSpacingXs),
     );
   }
 }

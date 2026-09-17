@@ -13,6 +13,7 @@ import 'package:santo_ui/src/components/toast/santo_toast.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -151,6 +152,8 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     try {
       _tagWidth = (widget.parentWidth -
               _spacing * (widget.preLineTagSize - 1) -
@@ -166,21 +169,22 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
       _tagWidth = 75;
     }
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(
+          left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
       child: Stack(
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
                 child: _buildTitleWidget(),
               ),
               Visibility(
                 visible: widget.selectionEntity
                         .currentShowTagByExpanded(isExpanded).isNotEmpty,
                 child: Container(
-                  padding: EdgeInsets.only(top: 12),
+                  padding: EdgeInsets.only(top: commonConfig.pageGap),
                   child: _buildOptionWidgets(),
                 ),
               ),
@@ -275,6 +279,8 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
   /// 当默认显示tag数<= tag总数时，仅展示tag
   /// 当点击更多时全部展示
   Widget _buildOptionWidgets() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> widgets = [];
     widgets.addAll(_buildSelectionTag());
     if (isExpanded ||
@@ -285,7 +291,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
 
     return Wrap(
       spacing: _spacing,
-      runSpacing: 12,
+      runSpacing: commonConfig.pageGap,
       children: widgets,
     );
   }
@@ -370,6 +376,8 @@ class __MoreArrowState extends State<_MoreArrow> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     String asset = isExpanded ? SantoAsset.iconUpArrow : SantoAsset.iconDownArrow;
 
     return GestureDetector(
@@ -383,7 +391,8 @@ class __MoreArrowState extends State<_MoreArrow> {
         });
       },
       child: Container(
-        padding: EdgeInsets.only(top: 20, bottom: 20),
+        padding: EdgeInsets.only(
+            top: commonConfig.vSpacingLg, bottom: commonConfig.vSpacingLg),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -392,7 +401,7 @@ class __MoreArrowState extends State<_MoreArrow> {
             Container(
               height: 16,
               width: 16,
-              padding: EdgeInsets.only(left: 4),
+              padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
               child: SantoTools.getAssetImage(
                 asset,
               ),
@@ -626,19 +635,25 @@ class FilterLayerTypeWidget extends StatefulWidget {
 class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     widget.selectionEntity.configDefaultValue();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg, top: commonConfig.vSpacingLg),
           child: Text(
             widget.selectionEntity.title,
             style: widget.themeData.titleForMoreTextStyle.generateTextStyle(),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 6),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingLg,
+              top: commonConfig.vSpacingXs),
           child: GestureDetector(
             onTap: () {
               if (widget.selectionEntity.filterType ==
@@ -695,7 +710,9 @@ class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
             ),
           ),
         ),
-        Padding(padding: EdgeInsets.only(top: 15), child: SantoLine())
+        Padding(
+            padding: EdgeInsets.only(top: commonConfig.vSpacingMd),
+            child: SantoLine())
       ],
     );
   }

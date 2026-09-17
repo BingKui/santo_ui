@@ -29,6 +29,8 @@ class SantoPickerTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (pickerTitleConfig.title != null) {
       return pickerTitleConfig.title!;
     }
@@ -49,7 +51,7 @@ class SantoPickerTitle extends StatelessWidget {
         children: <Widget>[
           Container(
             height: themeData!.titleHeight - 0.5,
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

@@ -86,10 +86,9 @@ class GalleryExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: "Gallery 图片",
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: "Gallery 图片",
+        children: <Widget>[
           SantoSection(
             title: '缩略图列表',
             description: '进入 SantoGallerySummaryPage，按分组查看多张图片',
@@ -122,7 +121,6 @@ class GalleryExample extends StatelessWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }

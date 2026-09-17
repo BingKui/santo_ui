@@ -18,14 +18,10 @@ class TagViewExamplePageState extends State<DeleteTagExamplePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: '删除标签',
-      scrollable: false,
-      child: Container(
-        color: Colors.white,
-        child: ListView(
-          children: <Widget>[_buildDeleteWidget()],
-        ),
-      ),
+    return SantoPageLayout(
+      title: '删除标签',
+      children: <Widget>[_buildDeleteWidget()
+      ],
     );
   }
 

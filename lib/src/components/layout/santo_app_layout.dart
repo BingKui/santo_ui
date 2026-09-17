@@ -87,7 +87,10 @@ class SantoAppLayoutMoreMenu {
 ///     SantoAppLayoutItem(
 ///       text: '首页',
 ///       selectedIcon: const Icon(Icons.home_filled),
-///       page: SantoPageLayout(title: '首页', child: ...),
+///       page: SantoPageLayout(
+///         title: '首页',
+///         children: <Widget>[...],
+///       ),
 ///     ),
 ///   ],
 ///   moreMenu: const SantoAppLayoutMoreMenu(

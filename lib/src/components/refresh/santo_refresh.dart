@@ -353,12 +353,12 @@ class _SantoRefreshState extends State<SantoRefresh>
                     size: 20,
                   ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: commonConfig.hSpacingSm),
           Text(
             _getRefreshText(),
             style: TextStyle(
               color: commonConfig.colorTextSecondary,
-              fontSize: 14,
+              fontSize: commonConfig.fontSizeBase,
             ),
           ),
         ],
@@ -397,14 +397,14 @@ class _SantoRefreshState extends State<SantoRefresh>
 
     if (!widget.hasMore) {
       return Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
         alignment: Alignment.center,
         color: Colors.white,
         child: Text(
           '没有更多数据了',
           style: TextStyle(
             color: commonConfig.colorTextSecondary,
-            fontSize: 12,
+            fontSize: commonConfig.fontSizeCaption,
           ),
         ),
       );
@@ -412,7 +412,7 @@ class _SantoRefreshState extends State<SantoRefresh>
 
     if (_isLoadingMore) {
       return Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
         alignment: Alignment.center,
         color: Colors.white,
         child: Row(
@@ -427,12 +427,12 @@ class _SantoRefreshState extends State<SantoRefresh>
                     commonConfig.brandPrimary),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: commonConfig.hSpacingSm),
             Text(
               '正在加载...',
               style: TextStyle(
                 color: commonConfig.colorTextSecondary,
-                fontSize: 12,
+                fontSize: commonConfig.fontSizeCaption,
               ),
             ),
           ],

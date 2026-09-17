@@ -254,6 +254,8 @@ class _SantoSwiperState extends State<SantoSwiper> {
   }
 
   Widget _buildDotIndicator() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(_realPageCount, (index) {
@@ -265,7 +267,7 @@ class _SantoSwiperState extends State<SantoSwiper> {
           height: 8,
           decoration: BoxDecoration(
             color: isActive ? _brandPrimary : Colors.white.withAlpha(180),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(commonConfig.radiusXs),
           ),
         );
       }),
@@ -273,17 +275,20 @@ class _SantoSwiperState extends State<SantoSwiper> {
   }
 
   Widget _buildNumberIndicator() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(
+          horizontal: commonConfig.hSpacingSm, vertical: commonConfig.vSpacingXs),
       decoration: BoxDecoration(
         color: Colors.black.withAlpha(100),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(commonConfig.radiusXs),
       ),
       child: Text(
         '${_currentPage + 1} / $_realPageCount',
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.white,
-          fontSize: 12,
+          fontSize: commonConfig.fontSizeCaption,
           fontWeight: FontWeight.w500,
         ),
       ),

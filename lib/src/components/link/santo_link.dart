@@ -95,13 +95,15 @@ class _SantoLinkState extends State<SantoLink> {
 
   /// 根据尺寸获取字体大小
   double get _fontSize {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     switch (widget.size) {
       case SantoLinkSize.small:
-        return 12;
+        return commonConfig.fontSizeCaption;
       case SantoLinkSize.medium:
-        return 14;
+        return commonConfig.fontSizeBase;
       case SantoLinkSize.large:
-        return 16;
+        return commonConfig.fontSizeSubHead;
     }
   }
 
@@ -138,6 +140,8 @@ class _SantoLinkState extends State<SantoLink> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final Color currentColor = _getColor();
     final bool isDisabled = widget.state == SantoLinkState.disabled;
 
@@ -180,7 +184,7 @@ class _SantoLinkState extends State<SantoLink> {
                   ? currentColor.withOpacity(0.7)
                   : currentColor,
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: commonConfig.hSpacingXs),
           ],
           Text(
             widget.text,
@@ -189,7 +193,7 @@ class _SantoLinkState extends State<SantoLink> {
                 : style,
           ),
           if (widget.suffixIcon != null) ...[
-            const SizedBox(width: 4),
+            SizedBox(width: commonConfig.hSpacingXs),
             Icon(
               widget.suffixIcon,
               size: _iconSize,

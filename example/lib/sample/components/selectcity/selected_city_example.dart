@@ -126,22 +126,20 @@ class _CitySelectRouteState extends State<CitySelectRoute> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '选择城市 Example',
       scrollable: false,
-      child: Column(
-        children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: AzListView(
-                data: _cityList,
-                itemBuilder: (context, model) =>
-                    _buildListItem(model as SantoSelectCityModel),
-                suspensionWidget: _buildSusWidget(_suspensionTag),
-                isUseRealIndex: true,
-                itemHeight: _itemHeight,
-                suspensionHeight: _suspensionHeight,
-                onSusTagChanged: _onSusTagChanged,
-              )),
-        ],
-      ),
+      children: <Widget>[
+        Expanded(
+            flex: 1,
+            child: AzListView(
+              data: _cityList,
+              itemBuilder: (context, model) =>
+                  _buildListItem(model as SantoSelectCityModel),
+              suspensionWidget: _buildSusWidget(_suspensionTag),
+              isUseRealIndex: true,
+              itemHeight: _itemHeight,
+              suspensionHeight: _suspensionHeight,
+              onSusTagChanged: _onSusTagChanged,
+            )),
+      ],
     );
   }
 }

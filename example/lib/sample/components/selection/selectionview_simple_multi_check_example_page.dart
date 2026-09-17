@@ -27,27 +27,25 @@ class _SelectionViewExamplePageState
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      appBar: SantoAppBar(title: widget._title),
-      child: Column(
-          children: <Widget>[
-            SantoSimpleSelection.checkbox(
-              menuName: widget._filterData.name,
-              menuKey: widget._filterData.key ?? 'defaultMenuKey',
-              items: widget._filterData.children,
-              maxSelectedCount: 4,
-              defaultValue: widget._filterData.defaultValue,
-              onSimpleSelectionChanged: (List<ItemEntity> filterParams) {
-                SantoToast.show(
-                    filterParams.map((e) => e.value).toList().join(','),
-                    context);
-              },
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 400),
-              alignment: Alignment.center,
-              child: Text("背景内容区域"),
-            )
-          ],
-        ),
+      children: <Widget>[
+          SantoSimpleSelection.checkbox(
+            menuName: widget._filterData.name,
+            menuKey: widget._filterData.key ?? 'defaultMenuKey',
+            items: widget._filterData.children,
+            maxSelectedCount: 4,
+            defaultValue: widget._filterData.defaultValue,
+            onSimpleSelectionChanged: (List<ItemEntity> filterParams) {
+              SantoToast.show(
+                  filterParams.map((e) => e.value).toList().join(','),
+                  context);
+            },
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 400),
+            alignment: Alignment.center,
+            child: Text("背景内容区域"),
+          )
+      ],
     );
   }
 }

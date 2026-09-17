@@ -5,7 +5,6 @@ import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
 import 'package:santo_ui/src/components/scroll_anchor/santo_scroll_anchor_tab.dart';
 import 'package:santo_ui/src/components/tabbar/normal/santo_tab_bar.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
-import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -111,7 +110,7 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
         height: 53,
         child: Padding(
           padding: EdgeInsets.only(
-              top: 16,
+              top: commonConfig.vSpacingMd,
               bottom: 12,
               left: commonConfig.hSpacingLg,
               right: commonConfig.hSpacingLg),

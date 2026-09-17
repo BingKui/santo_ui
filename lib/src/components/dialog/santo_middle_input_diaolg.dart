@@ -95,6 +95,8 @@ class SantoMiddleInputDialog {
   }
 
   void _doShow(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     String _value = inputEditingController?.text ?? "";
     var dialogMessageWidgets = <Widget>[];
     if (message != null && message!.isNotEmpty) {
@@ -139,7 +141,7 @@ class SantoMiddleInputDialog {
       //光标圆角弧度
       cursorRadius: Radius.circular(2.0),
       style: TextStyle(
-          fontSize: 14,
+          fontSize: commonConfig.fontSizeBase,
           color: SantoThemeConfigurator.instance
               .getConfig()
               .commonConfig
@@ -149,16 +151,16 @@ class SantoMiddleInputDialog {
       },
       inputFormatters: tmpInputFormatters,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(12),
+        contentPadding: EdgeInsets.all(commonConfig.pageGap),
         hintText: hintText,
         hintStyle: TextStyle(
-            fontSize: 14,
+            fontSize: commonConfig.fontSizeBase,
             color: SantoThemeConfigurator.instance
                 .getConfig()
                 .commonConfig
                 .colorTextHint),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(commonConfig.radiusXs),
             borderSide: BorderSide(
               width: 0.5,
               color: SantoThemeConfigurator.instance
@@ -167,7 +169,7 @@ class SantoMiddleInputDialog {
                   .colorTextHint,
             )),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(commonConfig.radiusXs),
             borderSide: BorderSide(
               width: 0.5,
               color: SantoThemeConfigurator.instance

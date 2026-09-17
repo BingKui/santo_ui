@@ -9,10 +9,9 @@ import 'package:flutter/material.dart';
 class GuideEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: "引导示例",
-      scrollable: false,
-      child: ListView(
-        children: [
+    return SantoPageLayout(
+      title: "引导示例",
+        children: <Widget>[
           ListItem(
             title: "强引导组件",
             isShowLine: false,
@@ -37,7 +36,6 @@ class GuideEntryPage extends StatelessWidget {
             },
           ),
         ],
-      ),
     );
   }
 }

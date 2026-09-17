@@ -17,9 +17,6 @@ const double _BRadius = 12;
 const Color _BOutlineLineColor = Color(0xFFDCDEE2);
 const Color _BOutlineDisableLineColor = Color(0xFFCCCCCC);
 
-/// 图标与文案之间的间距
-const double _kIconGap = 8;
-
 /// 按钮类型,对标 antd Button 的 type
 enum SantoButtonType {
   /// 主按钮:品牌色实心,一个操作区最多一个
@@ -333,9 +330,9 @@ class SantoNormalButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ?leading,
-        if (leading != null) const SizedBox(width: _kIconGap),
+        if (leading != null) SizedBox(width: _commonConfig.hSpacingSm),
         Flexible(child: textWidget),
-        if (trailing != null) const SizedBox(width: _kIconGap),
+        if (trailing != null) SizedBox(width: _commonConfig.hSpacingSm),
         ?trailing,
       ],
     );

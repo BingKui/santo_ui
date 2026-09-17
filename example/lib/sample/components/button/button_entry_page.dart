@@ -13,9 +13,8 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: '按钮',
-      scrollable: false,
-      child: ListView(
+    return SantoPageLayout(
+      title: '按钮',
         children: <Widget>[
           _buildButtonTypeSection(),
           _buildBigMainButtonSection(),
@@ -30,7 +29,6 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
           _buildSelectionBottomButtonSection(),
           _buildIconButtonSection(),
         ],
-      ),
     );
   }
 

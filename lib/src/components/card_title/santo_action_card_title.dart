@@ -109,8 +109,10 @@ class SantoActionCardTitle extends StatelessWidget {
   }
 
   Widget _titleWidget(SantoCardTitleConfig defaultConfig) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      padding: EdgeInsets.only(right: 8),
+      padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
       child: Text(
         this.title,
         maxLines: 1,
@@ -144,8 +146,10 @@ class SantoActionCardTitle extends StatelessWidget {
   }
 
   Widget _accessoryTextWidget(SantoCardTitleConfig defaultConfig) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingLg),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,

@@ -94,6 +94,8 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
   }
 
   Widget _operationWidgetAtIndex(int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     String title = widget.nameList[index];
     Text tx = Text(
       title,
@@ -109,7 +111,8 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
     return SantoPressFeedback(
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+          padding: EdgeInsets.fromLTRB(
+              commonConfig.hSpacingXs, 0, commonConfig.hSpacingXs, 0),
           child: tx,
         ),
         onTap: () {
@@ -124,6 +127,8 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
 
   /// 更多按钮
   Widget _moreButton() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.nameList.length > _maxNum) {
       List<String> list = [];
       for (int i = _maxNum - 1; i < widget.nameList.length; i++) {
@@ -151,7 +156,7 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
             children: <Widget>[
               tx,
               SizedBox(
-                width: 4,
+                width: commonConfig.hSpacingXs,
               ),
               imageWidget
             ],

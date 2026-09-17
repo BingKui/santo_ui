@@ -1,5 +1,6 @@
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,8 @@ class SantoSelectionMenuItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -58,7 +61,7 @@ class SantoSelectionMenuItemWidget extends StatelessWidget {
                 ),
               )),
               Padding(
-                  padding: EdgeInsets.only(left: 4),
+                  padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
                   child: isHighLight
                       ? (active
                           ? SantoTools.getAssetImageWithBandColor(

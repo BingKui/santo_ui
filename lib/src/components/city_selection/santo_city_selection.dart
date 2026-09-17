@@ -11,6 +11,7 @@ import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -134,13 +135,19 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
   }
 
   Widget _buildHeader() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<SantoSelectCityModel> hotCityList = widget.hotCityList;
     double width = (MediaQuery.of(context).size.width - 70) / 3;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 20, right: 10, top: 20, bottom: 0),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingSm,
+              top: commonConfig.vSpacingLg,
+              bottom: 0),
           child: Text(
             widget.hotCityTitle ?? SantoIntl.of(context).localizedResource.recommandCity,
             textAlign: TextAlign.left,
@@ -150,11 +157,15 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 0),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingLg,
+              top: commonConfig.vSpacingSm,
+              bottom: 0),
           child: Wrap(
             alignment: WrapAlignment.start,
             runAlignment: WrapAlignment.start,
-            spacing: 10.0,
+            spacing: commonConfig.hSpacingSm,
             children: hotCityList.map((e) {
               return OutlinedButton(
                 style: OutlinedButton.styleFrom(
@@ -194,16 +205,18 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
   }
 
   Widget _buildSusWidget(String? susTag) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: _suspensionHeight.toDouble(),
-      padding: const EdgeInsets.only(left: 15.0),
+      padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
       color: Color(0xfff3f4f5),
       alignment: Alignment.centerLeft,
       child: Text(
         '$susTag',
         softWrap: false,
         style: TextStyle(
-          fontSize: 14.0,
+          fontSize: commonConfig.fontSizeBase,
           color: Color(0xff808695),
         ),
       ),
@@ -260,8 +273,14 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
 
   ///定位当前 城市
   Widget _buildLocationBar(String locationText) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-        padding: EdgeInsets.only(left: 20, right: 10, top: 10, bottom: 10),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg,
+            right: commonConfig.hSpacingSm,
+            top: commonConfig.vSpacingSm,
+            bottom: commonConfig.vSpacingSm),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -336,7 +355,11 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
               height: 40.0,
               decoration: BoxDecoration(
                   color: Color(0x2217233D),
-                  borderRadius: BorderRadius.circular(12.0)),
+                  borderRadius: BorderRadius.circular(
+                      SantoThemeConfigurator.instance
+                          .getConfig()
+                          .commonConfig
+                          .radiusXs)),
               child: Text(hint,
                   style: TextStyle(color: Colors.white, fontSize: 20.0)),
             );

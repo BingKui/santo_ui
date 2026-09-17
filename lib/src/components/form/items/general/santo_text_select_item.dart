@@ -270,6 +270,8 @@ class SantoTextSelectFormItemState extends State<SantoTextSelectFormItem> {
 
   // 提示语
   Widget _buildTipWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Offstage(
       offstage: (widget.tipLabel == null),
       child: GestureDetector(
@@ -283,7 +285,8 @@ class SantoTextSelectFormItemState extends State<SantoTextSelectFormItem> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-                padding: EdgeInsets.only(left: 5, right: 5),
+                padding: EdgeInsets.only(
+                    left: commonConfig.hSpacingXs, right: commonConfig.hSpacingXs),
                 child: SantoFormUtil.getQuestionMarkIcon()),
             Container(
               constraints: BoxConstraints(

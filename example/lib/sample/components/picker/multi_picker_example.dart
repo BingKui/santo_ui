@@ -71,113 +71,111 @@ List<Map<String, List>> list = [
 class MultiPickerExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: '多列选择picker',
-      scrollable: false,
-      child: ListView(
-          children: <Widget>[
-            SantoSection(
-              title: '单列选择',
-              description: 'Santo1RowDelegate 提供单列数据，firstSelectedIndex 设初始项',
-              child: ListItem(
-                isShowLine: false,
-                title: "单列",
-                describe: '自定义单列Picker',
-                onPressed: () {
-                  SantoMultiDataPicker(
-                    context: context,
-                    title: '来源',
-                    delegate: Santo1RowDelegate(firstSelectedIndex: 1),
-                    confirmClick: (list) {
-                      SantoToast.show(list.toString(), context);
-                    },
-                  ).show();
-                },
-              ),
+    return SantoPageLayout(
+      title: '多列选择picker',
+        children: <Widget>[
+          SantoSection(
+            title: '单列选择',
+            description: 'Santo1RowDelegate 提供单列数据，firstSelectedIndex 设初始项',
+            child: ListItem(
+              isShowLine: false,
+              title: "单列",
+              describe: '自定义单列Picker',
+              onPressed: () {
+                SantoMultiDataPicker(
+                  context: context,
+                  title: '来源',
+                  delegate: Santo1RowDelegate(firstSelectedIndex: 1),
+                  confirmClick: (list) {
+                    SantoToast.show(list.toString(), context);
+                  },
+                ).show();
+              },
             ),
-            SantoSection(
-              title: '两列选择',
-              description: 'Santo2RowDelegate 联动切换，sync 传 false 时两列互不影响',
-              child: Column(
-                children: <Widget>[
-                  ListItem(
-                    title: "两列-有联动",
-                    describe: '自定义Picker',
-                    onPressed: () {
-                      SantoMultiDataPicker(
-                        context: context,
-                        title: '来源',
-                        delegate: Santo2RowDelegate(
-                            firstSelectedIndex: 1, secondSelectedIndex: 0),
-                        confirmClick: (list) {
-                          SantoToast.show(list.toString(), context);
-                        },
-                      ).show();
-                    },
-                  ),
-                  ListItem(
-                    title: "两列-无联动",
-                    describe: '自定义Picker，两列直接无联动',
-                    onPressed: () {
-                      SantoMultiDataPicker(
-                        sync: false,
-                        context: context,
-                        title: '来源',
-                        delegate: Santo2RowCustomDelegate(
-                            firstSelectedIndex: 1, secondSelectedIndex: 0),
-                        confirmClick: (list) {
-                          SantoToast.show(list.toString(), context);
-                        },
-                      ).show();
-                    },
-                  ),
-                ],
-              ),
+          ),
+          SantoSection(
+            title: '两列选择',
+            description: 'Santo2RowDelegate 联动切换，sync 传 false 时两列互不影响',
+            child: Column(
+              children: <Widget>[
+                ListItem(
+                  title: "两列-有联动",
+                  describe: '自定义Picker',
+                  onPressed: () {
+                    SantoMultiDataPicker(
+                      context: context,
+                      title: '来源',
+                      delegate: Santo2RowDelegate(
+                          firstSelectedIndex: 1, secondSelectedIndex: 0),
+                      confirmClick: (list) {
+                        SantoToast.show(list.toString(), context);
+                      },
+                    ).show();
+                  },
+                ),
+                ListItem(
+                  title: "两列-无联动",
+                  describe: '自定义Picker，两列直接无联动',
+                  onPressed: () {
+                    SantoMultiDataPicker(
+                      sync: false,
+                      context: context,
+                      title: '来源',
+                      delegate: Santo2RowCustomDelegate(
+                          firstSelectedIndex: 1, secondSelectedIndex: 0),
+                      confirmClick: (list) {
+                        SantoToast.show(list.toString(), context);
+                      },
+                    ).show();
+                  },
+                ),
+              ],
             ),
-            SantoSection(
-              title: '三列选择',
-              description: 'Santo3RowDelegate 三列依次联动，可分别指定各列初始下标',
-              child: ListItem(
-                title: "三列-有联动",
-                describe: '自定义三列Picker',
-                onPressed: () {
-                  SantoMultiDataPicker(
-                    context: context,
-                    title: '来源',
-                    delegate: Santo3RowDelegate(
-                        firstSelectedIndex: 1,
-                        secondSelectedIndex: 0,
-                        thirdSelectedIndex: 0),
-                    confirmClick: (list) {
-                      SantoToast.show(list.toString(), context);
-                    },
-                  ).show();
-                },
-              ),
+          ),
+          SantoSection(
+            title: '三列选择',
+            description: 'Santo3RowDelegate 三列依次联动，可分别指定各列初始下标',
+            child: ListItem(
+              title: "三列-有联动",
+              describe: '自定义三列Picker',
+              onPressed: () {
+                SantoMultiDataPicker(
+                  context: context,
+                  title: '来源',
+                  delegate: Santo3RowDelegate(
+                      firstSelectedIndex: 1,
+                      secondSelectedIndex: 0,
+                      thirdSelectedIndex: 0),
+                  confirmClick: (list) {
+                    SantoToast.show(list.toString(), context);
+                  },
+                ).show();
+              },
             ),
-            SantoSection(
-              title: '默认 Delegate',
-              description: 'SantoDefaultMultiDataPickerDelegate 传 Entity 列表即自动渲染',
-              child: ListItem(
-                title: "默认 Delegate",
-                describe: '使用默认 Delegate 构造数据展示',
-                onPressed: () {
-                  SantoMultiDataPicker(
-                    context: context,
-                    title: '来源',
-                    delegate: SantoDefaultMultiDataPickerDelegate(
-                        firstSelectedIndex: 2,
-                        secondSelectedIndex: 1,
-                        thirdSelectedIndex: 1,
-                    data: _getDefaultDelegateData()),
-                    confirmClick: (list) {
-                      SantoToast.show(list.toString(), context);
-                    },
-                  ).show();
-                },
-              ),
+          ),
+          SantoSection(
+            title: '默认 Delegate',
+            description: 'SantoDefaultMultiDataPickerDelegate 传 Entity 列表即自动渲染',
+            child: ListItem(
+              title: "默认 Delegate",
+              describe: '使用默认 Delegate 构造数据展示',
+              onPressed: () {
+                SantoMultiDataPicker(
+                  context: context,
+                  title: '来源',
+                  delegate: SantoDefaultMultiDataPickerDelegate(
+                      firstSelectedIndex: 2,
+                      secondSelectedIndex: 1,
+                      thirdSelectedIndex: 1,
+                  data: _getDefaultDelegateData()),
+                  confirmClick: (list) {
+                    SantoToast.show(list.toString(), context);
+                  },
+                ).show();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
     );
   }
 

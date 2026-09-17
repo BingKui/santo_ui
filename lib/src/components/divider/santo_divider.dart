@@ -99,13 +99,15 @@ class SantoDivider extends StatelessWidget {
   static const double _titleHorizontalPadding = 12;
 
   double get _verticalSpacing {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     switch (size) {
       case SantoDividerSize.small:
-        return 8;
+        return commonConfig.vSpacingSm;
       case SantoDividerSize.medium:
-        return 16;
+        return commonConfig.vSpacingMd;
       case SantoDividerSize.large:
-        return 24;
+        return commonConfig.vSpacingLg;
     }
   }
 
@@ -148,8 +150,8 @@ class SantoDivider extends StatelessWidget {
     final margin = titleMargin ?? _titleHorizontalPadding;
     final title = DefaultTextStyle.merge(
       style: TextStyle(
-        fontSize: 14,
-        fontWeight: plain ? FontWeight.w400 : FontWeight.w600,
+        fontSize: commonConfig.fontSizeBase,
+        fontWeight: plain ? FontWeight.w400 : FontWeight.w500,
         color: plain
             ? commonConfig.colorTextSecondary
             : commonConfig.colorTextBase,
@@ -204,7 +206,7 @@ class SantoDivider extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: _verticalSpacing),
-      child: SizedBox(height: 20, child: result),
+      child: SizedBox(height: commonConfig.vSpacingLg, child: result),
     );
   }
 

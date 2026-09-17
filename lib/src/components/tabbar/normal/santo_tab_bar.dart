@@ -20,8 +20,7 @@ const int _scrollableLimitTabLength = 4;
 /// tab 项圆角底色的圆角
 const double _tabItemRadius = 12.0;
 
-/// tab 项圆角底色的左右内边距
-const EdgeInsets _tabItemPadding = EdgeInsets.symmetric(horizontal: 12);
+/// tab 项圆角底色的左右内边距默认取 pageGap
 
 /// 选中 tab 项底色的透明度
 const int _tabItemSelectedAlpha = 0x14;
@@ -396,9 +395,10 @@ class SantoTabBarState extends State<SantoTabBar> {
   EdgeInsets get _tabItemInsets {
     final EdgeInsets labelPadding =
         widget.labelPadding.resolve(TextDirection.ltr);
+    final double itemPadding = widget.themeData!.commonConfig.pageGap;
     return EdgeInsets.only(
-      left: math.max(labelPadding.left, _tabItemPadding.left),
-      right: math.max(labelPadding.right, _tabItemPadding.right),
+      left: math.max(labelPadding.left, itemPadding),
+      right: math.max(labelPadding.right, itemPadding),
       top: labelPadding.top,
       bottom: labelPadding.bottom,
     );
@@ -460,7 +460,8 @@ class SantoTabBarState extends State<SantoTabBar> {
                   softWrap: true,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: widget.themeData!.commonConfig.fontSizeSubHead),
                 ),
               ],
             ),
@@ -485,25 +486,31 @@ class SantoTabBarState extends State<SantoTabBar> {
         (badgeTab.badgeText != null ? badgeTab.badgeText!.isNotEmpty : false);
     if (!visible) return null;
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     String text = "";
-    EdgeInsets padding = const EdgeInsets.only(left: 4.0, right: 4.0);
+    EdgeInsets padding = EdgeInsets.only(
+        left: commonConfig.hSpacingXs, right: commonConfig.hSpacingXs);
     double largeSize = 8.0;
     if (badgeTab.badgeNum != null) {
       largeSize = 16.0;
       if (badgeTab.badgeNum! < 10) {
-        padding = const EdgeInsets.symmetric(horizontal: 5.0);
+        padding = EdgeInsets.symmetric(horizontal: commonConfig.hSpacingXs);
         text = badgeTab.badgeNum!.toString();
       } else if (badgeTab.badgeNum! > 99) {
-        padding = const EdgeInsets.fromLTRB(4, 3, 4, 2);
+        padding = EdgeInsets.fromLTRB(
+            commonConfig.hSpacingXs, 3, commonConfig.hSpacingXs, 2);
         text = "99+";
       } else {
-        padding = const EdgeInsets.fromLTRB(4, 3, 4, 2);
+        padding = EdgeInsets.fromLTRB(
+            commonConfig.hSpacingXs, 3, commonConfig.hSpacingXs, 2);
         text = badgeTab.badgeNum!.toString();
       }
     } else if (badgeTab.badgeText != null &&
         badgeTab.badgeText!.isNotEmpty) {
       largeSize = 16.0;
-      padding = const EdgeInsets.fromLTRB(6, 3, 6, 3);
+      padding = EdgeInsets.fromLTRB(
+          commonConfig.hSpacingXs, 3, commonConfig.hSpacingXs, 3);
       text = badgeTab.badgeText!;
     }
 
@@ -513,7 +520,10 @@ class SantoTabBarState extends State<SantoTabBar> {
       backgroundColor: Colors.red,
       label: Text(
         text,
-        style: const TextStyle(color: Color(0xFFFFFFFF), fontSize: 10, height: 1),
+        style: TextStyle(
+            color: Color(0xFFFFFFFF),
+            fontSize: widget.themeData!.commonConfig.fontSizeCaptionSm,
+            height: 1),
       ),
     );
   }
@@ -687,7 +697,8 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
   /// tag宽度
   double _tagWidth = _tagDefaultSize;
 
-  double _padding = 20;
+  double _padding =
+      SantoThemeConfigurator.instance.getConfig().commonConfig.vSpacingLg;
 
   double _parentWidth = 0.0;
 
@@ -714,7 +725,8 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(20),
+                padding:
+                    EdgeInsets.all(widget.themeData.commonConfig.vSpacingLg),
                 color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -724,17 +736,21 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
                         visible: widget.moreWindowText != null &&
                             widget.moreWindowText!.isNotEmpty,
                         child: Padding(
-                          padding: EdgeInsets.only(bottom: 16),
+                          padding: EdgeInsets.only(
+                              bottom:
+                                  widget.themeData.commonConfig.vSpacingMd),
                           child: Text(
                             widget.moreWindowText ?? "",
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: widget
+                                    .themeData.commonConfig.fontSizeSubHead,
                                 color: Color(0xff17233D),
                                 fontWeight: FontWeight.w700),
                           ),
                         )),
                     Container(
-                      padding: EdgeInsets.only(top: 12),
+                      padding: EdgeInsets.only(
+                          top: widget.themeData.commonConfig.pageGap),
                       child: _createMoreItems(),
                     ),
                   ],
@@ -764,7 +780,7 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
     }
     return Wrap(
       spacing: widget.spacing,
-      runSpacing: 12,
+      runSpacing: widget.themeData.commonConfig.pageGap,
       children: widgets,
     );
   }

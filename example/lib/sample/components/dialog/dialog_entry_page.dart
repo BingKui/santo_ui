@@ -14,236 +14,233 @@ class DialogEntryPage extends StatelessWidget {
       appBar: SantoAppBar(
           title: _title,
         ),
-      scrollable: false,
-      child: ListView(
-          children: <Widget>[
-            ListItem(
-              title: "富文本弹窗",
-              isShowLine: false,
-              describe: '富文本弹窗',
-              onPressed: () {
-                _showRichTextDialog(context);
-              },
-            ),
-            ListItem(
-              title: "无标题+无按钮",
-              describe: '无标题、无按钮',
-              onPressed: () {
-                _showStyle0Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "无标题+单按钮",
-              describe: '无标题、辅助信息、单按钮',
-              onPressed: () {
-                _showStyle1Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "无标题+单按钮，单行内容",
-              describe: '无标题、辅助信息、单按钮',
-              onPressed: () {
-                _showStyle1Dialog0(context);
-              },
-            ),
-            ListItem(
-              title: "标题+信息+双按钮",
-              describe: '有标题、双底部按钮、辅助信息为文案',
-              onPressed: () {
-                _showStyle4Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+信息+单按钮",
-              describe: '有标题、单按钮、有辅助文案',
-              onPressed: () {
-                _showStyle2Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+信息+单按钮",
-              describe: '有标题、单按钮、有【多行】辅助文案',
-              onPressed: () {
-                _showStyle2_1Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+信息+警示",
-              describe: '有标题、单按钮、有辅助文案',
-              onPressed: () {
-                _showStyle9Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+信息+自定义警示UI",
-              describe: '有标题、单按钮、有辅助文案',
-              onPressed: () {
-                _showStyle9_1Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+按钮",
-              describe: '双个按钮、换行标题',
-              onPressed: () {
-                _showStyle8Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "Icon+标题+信息+双按钮",
-              describe: '双按钮、有头部Icon、辅助信息',
-              onPressed: () {
-                _showStyle71Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "Icon+标题+单按钮",
-              describe: '单按钮、有头部Icon',
-              onPressed: () {
-                _showStyle7Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "多按钮 + 标题+信息",
-              describe: '有标题、多按钮、辅助信息为文案',
-              onPressed: () {
-                _showStyle6Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "多按钮 + 标题",
-              describe: '标题、多按钮',
-              onPressed: () {
-                _showStyle5_1Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "多按钮 + 信息",
-              describe: '无标题、多按钮、辅助信息为文案',
-              onPressed: () {
-                _showStyle5Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+信息+输入+按钮",
-              describe: '中间有输入框弹框',
-              onPressed: () {
-                _showMiddleInputDialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+输入+按钮",
-              describe: '中间有输入框弹框',
-              onPressed: () {
-                _showMiddleInputDialog2(context);
-              },
-            ),
-            ListItem(
-              title: "标题+输入+按钮",
-              describe: '中间有输入框弹框, 设置最大高度',
-              onPressed: () {
-                _showMiddleInputDialog3(context);
-              },
-            ),
-            ListItem(
-              title: "标题+单选选项+按钮",
-              describe: '中间单选弹框（SingleSelectDialogWidget）',
-              onPressed: () {
-                _showMiddleSingleSelectPicker(context);
-              },
-            ),
-            ListItem(
-              title: "标题+多选选项+按钮",
-              describe: '中间多选弹框（MultiSelectDialog）',
-              onPressed: () {
-                _showMiddleMultiSelectDialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+提示信息文本+多选选项+按钮",
-              describe: '中间多选弹框（MultiSelectDialog）',
-              onPressed: () {
-                _showMiddleMultiSelectWithMessageDialog(context);
-              },
-            ),
-            ListItem(
-              title: "标题+提示信息Widget+多选选项+按钮",
-              describe: '中间多选弹框（MultiSelectDialog）',
-              onPressed: () {
-                _showMiddleMultiSelectWithMessageWidgetDialog(context);
-              },
-            ),
-            ListItem(
-              title: "Loading Dialog",
-              describe: 'LoadingDialog Example',
-              onPressed: () {
-                _showSantoLoadingDialog(context);
-              },
-            ),
-            ListItem(
-              title: "Safe Dialog",
-              describe: '可以放心 pop 的 Dialog，防止误关闭页面',
-              onPressed: () {
-                _showSafeDialog(context);
-              },
-            ),
-            ListItem(
-              title: "Share Dialog",
-              describe: '分享Dialog（五个 icon）',
-              onPressed: () {
-                _showSantoShareDialog5(context);
-              },
-            ),
-            ListItem(
-              title: "Share Dialog",
-              describe: '分享Dialog（3个 icon）',
-              onPressed: () {
-                _showSantoShareDialog3(context);
-              },
-            ),
-            ListItem(
-              title: "Two Vertical Button Dialog（单按钮）",
-              describe: '主次要按钮Dialog',
-              onPressed: () {
-                _showSantoOneVerticalButtonDialogDialog(context);
-              },
-            ),
-            ListItem(
-              title: "Two Vertical Button Dialog（双按钮）",
-              describe: '主次要按钮Dialog',
-              onPressed: () {
-                _showSantoTwoVerticalButtonDialogDialog(context);
-              },
-            ),
-            ListItem(
-              title: "纯文本弹框",
-              describe: '标题+纯本文内容+按钮',
-              onPressed: () {
-                _showStyle81Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "纯文本弹框含富文本",
-              describe: '标题+纯本文内容含富文本+按钮',
-              onPressed: () {
-                _showStyle82Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "纯文本弹框无标题",
-              describe: '纯本文内容+按钮',
-              onPressed: () {
-                _showStyle83Dialog(context);
-              },
-            ),
-            ListItem(
-              title: "纯文本弹框无操作按钮",
-              describe: '标题+纯本文内容',
-              onPressed: () {
-                _showStyle84Dialog(context);
-              },
-            ),
-          ],
-        ),
+        children: <Widget>[
+          ListItem(
+            title: "富文本弹窗",
+            isShowLine: false,
+            describe: '富文本弹窗',
+            onPressed: () {
+              _showRichTextDialog(context);
+            },
+          ),
+          ListItem(
+            title: "无标题+无按钮",
+            describe: '无标题、无按钮',
+            onPressed: () {
+              _showStyle0Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "无标题+单按钮",
+            describe: '无标题、辅助信息、单按钮',
+            onPressed: () {
+              _showStyle1Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "无标题+单按钮，单行内容",
+            describe: '无标题、辅助信息、单按钮',
+            onPressed: () {
+              _showStyle1Dialog0(context);
+            },
+          ),
+          ListItem(
+            title: "标题+信息+双按钮",
+            describe: '有标题、双底部按钮、辅助信息为文案',
+            onPressed: () {
+              _showStyle4Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+信息+单按钮",
+            describe: '有标题、单按钮、有辅助文案',
+            onPressed: () {
+              _showStyle2Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+信息+单按钮",
+            describe: '有标题、单按钮、有【多行】辅助文案',
+            onPressed: () {
+              _showStyle2_1Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+信息+警示",
+            describe: '有标题、单按钮、有辅助文案',
+            onPressed: () {
+              _showStyle9Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+信息+自定义警示UI",
+            describe: '有标题、单按钮、有辅助文案',
+            onPressed: () {
+              _showStyle9_1Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+按钮",
+            describe: '双个按钮、换行标题',
+            onPressed: () {
+              _showStyle8Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "Icon+标题+信息+双按钮",
+            describe: '双按钮、有头部Icon、辅助信息',
+            onPressed: () {
+              _showStyle71Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "Icon+标题+单按钮",
+            describe: '单按钮、有头部Icon',
+            onPressed: () {
+              _showStyle7Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "多按钮 + 标题+信息",
+            describe: '有标题、多按钮、辅助信息为文案',
+            onPressed: () {
+              _showStyle6Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "多按钮 + 标题",
+            describe: '标题、多按钮',
+            onPressed: () {
+              _showStyle5_1Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "多按钮 + 信息",
+            describe: '无标题、多按钮、辅助信息为文案',
+            onPressed: () {
+              _showStyle5Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+信息+输入+按钮",
+            describe: '中间有输入框弹框',
+            onPressed: () {
+              _showMiddleInputDialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+输入+按钮",
+            describe: '中间有输入框弹框',
+            onPressed: () {
+              _showMiddleInputDialog2(context);
+            },
+          ),
+          ListItem(
+            title: "标题+输入+按钮",
+            describe: '中间有输入框弹框, 设置最大高度',
+            onPressed: () {
+              _showMiddleInputDialog3(context);
+            },
+          ),
+          ListItem(
+            title: "标题+单选选项+按钮",
+            describe: '中间单选弹框（SingleSelectDialogWidget）',
+            onPressed: () {
+              _showMiddleSingleSelectPicker(context);
+            },
+          ),
+          ListItem(
+            title: "标题+多选选项+按钮",
+            describe: '中间多选弹框（MultiSelectDialog）',
+            onPressed: () {
+              _showMiddleMultiSelectDialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+提示信息文本+多选选项+按钮",
+            describe: '中间多选弹框（MultiSelectDialog）',
+            onPressed: () {
+              _showMiddleMultiSelectWithMessageDialog(context);
+            },
+          ),
+          ListItem(
+            title: "标题+提示信息Widget+多选选项+按钮",
+            describe: '中间多选弹框（MultiSelectDialog）',
+            onPressed: () {
+              _showMiddleMultiSelectWithMessageWidgetDialog(context);
+            },
+          ),
+          ListItem(
+            title: "Loading Dialog",
+            describe: 'LoadingDialog Example',
+            onPressed: () {
+              _showSantoLoadingDialog(context);
+            },
+          ),
+          ListItem(
+            title: "Safe Dialog",
+            describe: '可以放心 pop 的 Dialog，防止误关闭页面',
+            onPressed: () {
+              _showSafeDialog(context);
+            },
+          ),
+          ListItem(
+            title: "Share Dialog",
+            describe: '分享Dialog（五个 icon）',
+            onPressed: () {
+              _showSantoShareDialog5(context);
+            },
+          ),
+          ListItem(
+            title: "Share Dialog",
+            describe: '分享Dialog（3个 icon）',
+            onPressed: () {
+              _showSantoShareDialog3(context);
+            },
+          ),
+          ListItem(
+            title: "Two Vertical Button Dialog（单按钮）",
+            describe: '主次要按钮Dialog',
+            onPressed: () {
+              _showSantoOneVerticalButtonDialogDialog(context);
+            },
+          ),
+          ListItem(
+            title: "Two Vertical Button Dialog（双按钮）",
+            describe: '主次要按钮Dialog',
+            onPressed: () {
+              _showSantoTwoVerticalButtonDialogDialog(context);
+            },
+          ),
+          ListItem(
+            title: "纯文本弹框",
+            describe: '标题+纯本文内容+按钮',
+            onPressed: () {
+              _showStyle81Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "纯文本弹框含富文本",
+            describe: '标题+纯本文内容含富文本+按钮',
+            onPressed: () {
+              _showStyle82Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "纯文本弹框无标题",
+            describe: '纯本文内容+按钮',
+            onPressed: () {
+              _showStyle83Dialog(context);
+            },
+          ),
+          ListItem(
+            title: "纯文本弹框无操作按钮",
+            describe: '标题+纯本文内容',
+            onPressed: () {
+              _showStyle84Dialog(context);
+            },
+          ),
+        ],
     );
   }
 

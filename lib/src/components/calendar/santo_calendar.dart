@@ -169,12 +169,14 @@ class _CustomCalendarState extends State<SantoCalendar> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       child: Column(
         children: <Widget>[
           _controllerBar(),
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: EdgeInsets.only(bottom: commonConfig.vSpacingSm),
             child: Row(
               children: _getDaysNameUI(),
             ),
@@ -188,11 +190,13 @@ class _CustomCalendarState extends State<SantoCalendar> {
   }
 
   Widget _controllerBar() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     bool isPreIconEnable = _isIconEnable(true);
     bool isNextIconEnable = _isIconEnable(false);
     if (widget.showControllerBar) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.only(bottom: commonConfig.vSpacingMd),
         child: Row(
           children: <Widget>[
             GestureDetector(
@@ -213,7 +217,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 height: 25,
                 width: 40,
                 color: Colors.transparent,
-                padding: EdgeInsets.only(left: 15),
+                padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
                 child: isPreIconEnable
                     ? SantoTools.getAssetImage(SantoAsset.iconCalendarPreMonth)
                     : SantoTools.getAssetImageWithColor(
@@ -226,8 +230,8 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 child: Text(
                   DateFormat(SantoIntl.of(context).localizedResource.dateFormatYYYYMM).format(_currentDate),
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontSize: commonConfig.fontSizeSubHead,
                       color: SantoThemeConfigurator.instance
                           .getConfig()
                           .commonConfig
@@ -253,7 +257,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 height: 25,
                 width: 40,
                 color: Colors.transparent,
-                padding: EdgeInsets.only(right: 15),
+                padding: EdgeInsets.only(right: commonConfig.hSpacingMd),
                 child: isNextIconEnable
                     ? SantoTools.getAssetImage(SantoAsset.iconCalendarNextMonth)
                     : SantoTools.getAssetImageWithColor(
@@ -317,6 +321,8 @@ class _CustomCalendarState extends State<SantoCalendar> {
   }
 
   List<Widget> _getDaysNameUI() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final List<Widget> listUI = <Widget>[];
     for (int i = 0; i < 7; i++) {
       listUI.add(
@@ -325,7 +331,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
             child: Text(
               _getChinaWeekName(i),
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: commonConfig.fontSizeBase,
                   fontWeight: FontWeight.normal,
                   color: SantoThemeConfigurator.instance
                       .getConfig()
@@ -340,6 +346,8 @@ class _CustomCalendarState extends State<SantoCalendar> {
   }
 
   List<Widget> _getDaysNoUI() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final List<Widget> noList = <Widget>[];
     int count = 0;
     for (int i = 0; i < dateList.length / 7; i++) {
@@ -358,8 +366,8 @@ class _CustomCalendarState extends State<SantoCalendar> {
                       padding: const EdgeInsets.only(top: 3, bottom: 3),
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: 5,
-                            bottom: 5,
+                            top: commonConfig.vSpacingXs,
+                            bottom: commonConfig.vSpacingXs,
                             left: _isStartDateRadius(date) ? 8 : 0,
                             right: _isEndDateRadius(date) ? 8 : 0),
                         child: Container(
@@ -394,7 +402,10 @@ class _CustomCalendarState extends State<SantoCalendar> {
                         color: Colors.transparent,
                         child: Padding(
                           padding: EdgeInsets.only(
-                              top: 5, bottom: 5, left: 8, right: 8),
+                              top: commonConfig.vSpacingXs,
+                              bottom: commonConfig.vSpacingXs,
+                              left: commonConfig.hSpacingSm,
+                              right: commonConfig.hSpacingSm),
                           child: Container(
                             decoration: BoxDecoration(
                               color: _getIsItStartAndEndDate(date)
@@ -473,7 +484,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
                                                     .getConfig()
                                                     .commonConfig
                                                     .colorTextHint)),
-                                    fontSize: 14,
+                                    fontSize: commonConfig.fontSizeBase,
                                     fontWeight: FontWeight.normal),
                               ),
                             ),

@@ -130,145 +130,142 @@ class _CascaderExampleState extends State<CascaderExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Cascader 级联选择器示例',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 场景1：省/市/区三级选择
-          SantoSection(
-            title: '省/市/区 三级联动',
-            description: 'columnCount 为 3，onConfirm 回传选中项并拼接展示',
-            child: GestureDetector(
-              onTap: () {
-                SantoCascader.show(
-                  context: context,
-                  title: '请选择地区',
-                  data: _regionData,
-                  columnCount: 3,
-                  onConfirm: (selectedItems, selectedValues) {
-                    setState(() {
-                      _selectedRegion = selectedItems.map((e) => e.label).join(' / ');
-                    });
-                  },
-                );
-              },
-              child: Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFDCDEE2)),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _selectedRegion,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: _selectedRegion == '请选择地区'
-                              ? Color(0xFF808695)
-                              : Color(0xFF17233D),
-                        ),
+      children: <Widget>[
+        // 场景1：省/市/区三级选择
+        SantoSection(
+          title: '省/市/区 三级联动',
+          description: 'columnCount 为 3，onConfirm 回传选中项并拼接展示',
+          child: GestureDetector(
+            onTap: () {
+              SantoCascader.show(
+                context: context,
+                title: '请选择地区',
+                data: _regionData,
+                columnCount: 3,
+                onConfirm: (selectedItems, selectedValues) {
+                  setState(() {
+                    _selectedRegion = selectedItems.map((e) => e.label).join(' / ');
+                  });
+                },
+              );
+            },
+            child: Container(
+              height: 48,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFDCDEE2)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _selectedRegion,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: _selectedRegion == '请选择地区'
+                            ? Color(0xFF808695)
+                            : Color(0xFF17233D),
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
-                  ],
-                ),
+                  ),
+                  Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
+                ],
               ),
             ),
           ),
+        ),
 
-          // 场景2：两级分类选择
-          SantoSection(
-            title: '大类/小类 两级联动',
-            description: 'columnCount 为 2，确认后回写所选分类到输入框',
-            child: GestureDetector(
-              onTap: () {
-                SantoCascader.show(
-                  context: context,
-                  title: '请选择分类',
-                  data: _categoryData,
-                  columnCount: 2,
-                  onConfirm: (selectedItems, selectedValues) {
-                    setState(() {
-                      _selectedAddress = selectedItems.map((e) => e.label).join(' / ');
-                    });
-                  },
-                );
-              },
-              child: Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFDCDEE2)),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _selectedAddress,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: _selectedAddress == '请选择地址'
-                              ? Color(0xFF808695)
-                              : Color(0xFF17233D),
-                        ),
+        // 场景2：两级分类选择
+        SantoSection(
+          title: '大类/小类 两级联动',
+          description: 'columnCount 为 2，确认后回写所选分类到输入框',
+          child: GestureDetector(
+            onTap: () {
+              SantoCascader.show(
+                context: context,
+                title: '请选择分类',
+                data: _categoryData,
+                columnCount: 2,
+                onConfirm: (selectedItems, selectedValues) {
+                  setState(() {
+                    _selectedAddress = selectedItems.map((e) => e.label).join(' / ');
+                  });
+                },
+              );
+            },
+            child: Container(
+              height: 48,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFDCDEE2)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _selectedAddress,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: _selectedAddress == '请选择地址'
+                            ? Color(0xFF808695)
+                            : Color(0xFF17233D),
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
-                  ],
-                ),
+                  ),
+                  Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
+                ],
               ),
             ),
           ),
+        ),
 
-          // 场景3：带初始值的选择
-          SantoSection(
-            title: '带初始值的选择',
-            description: 'initialValues 预置广东省、深圳市、南山区为默认选中',
-            child: GestureDetector(
-              onTap: () {
-                SantoCascader.show(
-                  context: context,
-                  title: '请选择地区',
-                  data: _regionData,
-                  columnCount: 3,
-                  initialValues: ['guangdong', 'shenzhen', 'nanshan'],
-                  onConfirm: (selectedItems, selectedValues) {
-                    SantoToast.show(
-                        '选择了: ${selectedValues.join(" / ")}', context);
-                  },
-                );
-              },
-              child: Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFDCDEE2)),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '默认选中：广东省/深圳市/南山区',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF17233D),
-                        ),
+        // 场景3：带初始值的选择
+        SantoSection(
+          title: '带初始值的选择',
+          description: 'initialValues 预置广东省、深圳市、南山区为默认选中',
+          child: GestureDetector(
+            onTap: () {
+              SantoCascader.show(
+                context: context,
+                title: '请选择地区',
+                data: _regionData,
+                columnCount: 3,
+                initialValues: ['guangdong', 'shenzhen', 'nanshan'],
+                onConfirm: (selectedItems, selectedValues) {
+                  SantoToast.show(
+                      '选择了: ${selectedValues.join(" / ")}', context);
+                },
+              );
+            },
+            child: Container(
+              height: 48,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFDCDEE2)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '默认选中：广东省/深圳市/南山区',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF17233D),
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
-                  ],
-                ),
+                  ),
+                  Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
+                ],
               ),
             ),
           ),
+        ),
 
-          SizedBox(height: 40),
-        ],
-      ),
+        SizedBox(height: 40),
+      ],
     );
   }
 }
