@@ -77,6 +77,7 @@ import 'package:example/sample/components/message/message_example.dart';
 import 'package:example/sample/components/refresh/refresh_example.dart';
 import 'package:example/sample/components/time_counter/time_counter_example.dart';
 import 'package:example/sample/components/table/table_example.dart';
+import 'package:example/sample/components/segmented/segmented_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -192,6 +193,7 @@ class CardDataConfig {
       _item("Image 图片", "增强图片组件", ImageExample()),
       _item("Table 表格", "数据表格展示", TableExample()),
       _item("Pagination 分页", "页码切换", PaginationExample()),
+      _item("Segmented 分段选择器", "分段切换选择", SegmentedExample()),
       _item("Tag 标签", "标记与分类", TagExample()),
       _item("BubbleText 气泡文本", "气泡文本", BubbleTextExample()),
       _item("Highlight 关键词高亮", "关键词高亮文本", HighlightExample()),

@@ -21,6 +21,10 @@ class SantoPanel extends StatelessWidget {
   /// Header 左侧自定义标题控件,设置后 [title] 失效
   final Widget? titleWidget;
 
+  /// Header 标题后方的自定义控件(如 Segmented),位于标题与右侧 [actions] 之间;
+  /// 会优先保证其完整展示,标题空间不足时由标题收缩让位
+  final Widget? titleExtra;
+
   /// 标题下方的描述信息,字号较小、灰色
   final String? description;
 
@@ -52,6 +56,7 @@ class SantoPanel extends StatelessWidget {
     Key? key,
     this.title,
     this.titleWidget,
+    this.titleExtra,
     this.description,
     this.actions,
     required this.child,
