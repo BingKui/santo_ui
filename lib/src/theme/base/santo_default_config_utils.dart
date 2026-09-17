@@ -219,6 +219,9 @@ class SantoDefaultConfigUtils {
     vSpacingXl: 20.0,
     vSpacingXxl: 40.0,
 
+    /// 页面左右/区块间距 iPageGap
+    pageGap: kSantoPageGap,
+
     /// 图标大小
     iconSizeXxs: 8.0,
     iconSizeXs: 12.0,

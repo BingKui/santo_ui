@@ -21,11 +21,11 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: '折线',
-      ),
-      body: SafeArea(
+    return SantoPageLayout(
+      title: '折线',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

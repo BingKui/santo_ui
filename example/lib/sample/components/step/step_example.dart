@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 class StepExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: "步骤条示例",
-      ),
-      body: ListView(
+    return SantoPageLayout(
+      title: "步骤条示例",
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: [
           ListItem(
             title: "横向步骤条",

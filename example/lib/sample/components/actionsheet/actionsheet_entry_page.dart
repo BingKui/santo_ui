@@ -20,11 +20,13 @@ class ActionSheetEntryPage extends StatefulWidget {
 class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: widget.title,
         ),
-        body: ListView(
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             ListItem(
               title: "CommonActionSheet",
@@ -85,7 +87,8 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
               },
             ),
           ],
-        ));
+        ),
+    );
   }
 
   void _showCommonStyle(BuildContext context) {

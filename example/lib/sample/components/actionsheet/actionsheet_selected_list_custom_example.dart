@@ -42,11 +42,10 @@ class SelectedListActionSheetCustomExamplePageState
         }
         return true;
       },
-      child: Scaffold(
-          appBar: SantoAppBar(
-            title: '已选菜单列表',
-          ),
-          body: Column(
+      child: SantoPageLayout(
+        title: '已选菜单列表',
+        padding: EdgeInsets.zero,
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               SantoBottomButtonPanel(
@@ -111,7 +110,8 @@ class SelectedListActionSheetCustomExamplePageState
                         })
                   ]),
             ],
-          )),
+          ),
+      ),
     );
   }
 }

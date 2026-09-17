@@ -40,46 +40,46 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       appBar: SantoAppBar(title: widget._title),
-      body: SingleChildScrollView(
-          child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 20),
-            alignment: Alignment.center,
-            child: GestureDetector(
-              child: Text("点击关闭展开"),
-              onTap: () {
-                setState(() {
-                  _isShow = !_isShow;
-                });
-              },
-            ),
+      padding: EdgeInsets.zero,
+      child: Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 20),
+          alignment: Alignment.center,
+          child: GestureDetector(
+            child: Text("点击关闭展开"),
+            onTap: () {
+              setState(() {
+                _isShow = !_isShow;
+              });
+            },
           ),
-          _isShow
-              ? Column(
-                  children: <Widget>[
-                    Container(
-                        color: Colors.white,
-                        width: double.infinity,
-                        height: 400,
-                        child: SantoFlatSelection(
-                            preLineTagSize: 5,
-                            entityDataList: widget._filterData,
-                            confirmCallback: (data) {
-                              var str = "";
-                              data.forEach(
-                                  (k, v) => str = str + " " + '$k: $v');
-                              SantoToast.show(str, context);
-                            },
-                            controller: controller)),
-                    _bottomWidget(),
-                  ],
-                )
-              : new Container(),
-        ],
-      )),
+        ),
+        _isShow
+            ? Column(
+                children: <Widget>[
+                  Container(
+                      color: Colors.white,
+                      width: double.infinity,
+                      height: 400,
+                      child: SantoFlatSelection(
+                          preLineTagSize: 5,
+                          entityDataList: widget._filterData,
+                          confirmCallback: (data) {
+                            var str = "";
+                            data.forEach(
+                                (k, v) => str = str + " " + '$k: $v');
+                            SantoToast.show(str, context);
+                          },
+                          controller: controller)),
+                  _bottomWidget(),
+                ],
+              )
+            : new Container(),
+      ],
+    ),
     );
   }
 

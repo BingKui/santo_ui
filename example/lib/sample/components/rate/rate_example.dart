@@ -14,11 +14,11 @@ class _RateExampleState extends State<RateExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: 'Rate 评分示例',
-      ),
-      body: Padding(
+    return SantoPageLayout(
+      title: 'Rate 评分示例',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: ListView(
           children: <Widget>[

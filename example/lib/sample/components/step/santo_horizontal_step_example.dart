@@ -30,9 +30,10 @@ class SantoHorizontalStepExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       appBar: SantoAppBar(title: widget.title),
-      body: Column(
+      padding: EdgeInsets.zero,
+      child: Column(
         children: [
           SantoSection(
             title: '步骤个数调节',

@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 class FunnelChartExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: '漏斗图',
-      ),
-      body: FunnelChartExample(),
+    return SantoPageLayout(
+      // Here we take the value from the MyHomePage object that was created by
+      // the App.build method, and use it to set our appbar title.
+      title: '漏斗图',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: FunnelChartExample(),
     );
   }
 }
@@ -437,13 +437,14 @@ class _FunnelChartExampleState extends State<FunnelChartExample> {
 class RadarChartExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SantoPageLayout(
       appBar: SantoAppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: '雷达图',
       ),
-      body: SingleChildScrollView(child: RadarChartExample()),
+      padding: EdgeInsets.zero,
+      child: RadarChartExample(),
     );
   }
 }

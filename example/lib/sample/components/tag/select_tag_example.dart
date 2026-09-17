@@ -18,11 +18,11 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: '选择标签',
-      ),
-      body: Container(
+    return SantoPageLayout(
+      title: '选择标签',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: Container(
         color: Colors.white,
         child: ListView(
           children: <Widget>[

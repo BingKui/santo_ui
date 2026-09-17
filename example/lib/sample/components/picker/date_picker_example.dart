@@ -10,11 +10,13 @@ class DatePickerExamplePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: _title,
         ),
-        body: ListView(
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             SantoSection(
               title: '基础模式',
@@ -95,7 +97,8 @@ class DatePickerExamplePage extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+    );
   }
 
 //  ///时间样式时间选择器

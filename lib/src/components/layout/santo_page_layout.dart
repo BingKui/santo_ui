@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:santo_ui/src/components/layout/santo_app_layout_scope.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
-
-/// 内容区默认内边距
-const EdgeInsets kSantoPageLayoutPadding = EdgeInsets.all(12);
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 页面布局:统一承载页面导航栏与内容容器
 ///
@@ -32,8 +30,8 @@ class SantoPageLayout extends StatelessWidget {
   /// 导航栏标题简写:未传 [appBar] 时用它构建 [SantoAppBar]
   final String? title;
 
-  /// 内容内边距,默认 [kSantoPageLayoutPadding](四边 12)
-  final EdgeInsets padding;
+  /// 内容内边距;不传时取主题 `commonConfig.pageGap`(默认 12)
+  final EdgeInsets? padding;
 
   /// 内容是否可滚动,默认 true;内容自带滚动(如 ListView/Refresh)时传 false
   final bool scrollable;
@@ -52,7 +50,7 @@ class SantoPageLayout extends StatelessWidget {
     required this.child,
     this.appBar,
     this.title,
-    this.padding = kSantoPageLayoutPadding,
+    this.padding,
     this.scrollable = true,
     this.bottomSafeArea = true,
     this.bottomInset = 0,
@@ -61,6 +59,8 @@ class SantoPageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gap =
+        SantoThemeConfigurator.instance.getConfig().commonConfig.pageGap;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: appBar ?? (title == null ? null : SantoAppBar(title: title)),
@@ -71,8 +71,8 @@ class SantoPageLayout extends StatelessWidget {
           final bottom = (bottomSafeArea ? media.padding.bottom : 0.0) +
               bottomInset +
               SantoAppLayoutScope.bottomBarInsetOf(context);
-          final contentPadding =
-              padding + EdgeInsets.only(top: media.padding.top, bottom: bottom);
+          final contentPadding = (padding ?? EdgeInsets.all(gap)) +
+              EdgeInsets.only(top: media.padding.top, bottom: bottom);
 
           if (!scrollable) {
             return Padding(padding: contentPadding, child: child);

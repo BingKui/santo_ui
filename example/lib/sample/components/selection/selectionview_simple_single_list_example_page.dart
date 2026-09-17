@@ -26,9 +26,10 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(title: widget._title),
-        body: Column(
+    return SantoPageLayout(
+      appBar: SantoAppBar(title: widget._title),
+      padding: EdgeInsets.zero,
+      child: Column(
           children: <Widget>[
             SantoSimpleSelection.radio(
               menuName: widget._filterData.name,
@@ -47,6 +48,7 @@ class _SelectionViewExamplePageState
               child: Text("背景内容区域"),
             )
           ],
-        ));
+        ),
+    );
   }
 }

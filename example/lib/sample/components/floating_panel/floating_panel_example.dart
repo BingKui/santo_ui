@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 class FloatingPanelExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(title: 'FloatingPanel 浮层面板'),
-      body: ListView(
+    return SantoPageLayout(
+      title: 'FloatingPanel 浮层面板',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: [
           ListItem(
             title: '基础用法',

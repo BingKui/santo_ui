@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santo_ui/santo_ui.dart';
 
+/// 主题默认的页面间距 commonConfig.pageGap
+const double kPageGap = 12;
+
 void main() {
   testWidgets('PageLayout 用 title 构建导航栏', (tester) async {
     await tester.pumpWidget(const MaterialApp(
@@ -39,8 +42,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect((scroll.padding as EdgeInsets).top,
-        kSantoPageLayoutPadding.top + 47);
+    expect((scroll.padding as EdgeInsets).top, kPageGap + 47);
   });
 
   testWidgets('PageLayout 内容可滚动并应用默认 padding', (tester) async {
@@ -50,7 +52,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect(scroll.padding, kSantoPageLayoutPadding);
+    expect(scroll.padding, const EdgeInsets.all(kPageGap));
   });
 
   testWidgets('PageLayout 预留底部安全区域与 bottomInset', (tester) async {
@@ -66,8 +68,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect((scroll.padding as EdgeInsets).bottom,
-        kSantoPageLayoutPadding.bottom + 34 + 8);
+    expect((scroll.padding as EdgeInsets).bottom, kPageGap + 34 + 8);
   });
 
   testWidgets('PageLayout bottomSafeArea 为 false 时不预留安全区域', (tester) async {
@@ -86,8 +87,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect((scroll.padding as EdgeInsets).bottom,
-        kSantoPageLayoutPadding.bottom);
+    expect((scroll.padding as EdgeInsets).bottom, kPageGap);
   });
 
   testWidgets('PageLayout scrollable 为 false 时不产生滚动容器', (tester) async {
@@ -113,7 +113,6 @@ void main() {
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
     // 悬浮栏默认 64 高、gap 12
-    expect((scroll.padding as EdgeInsets).bottom,
-        kSantoPageLayoutPadding.bottom + 64 + 12);
+    expect((scroll.padding as EdgeInsets).bottom, kPageGap + 64 + 12);
   });
 }

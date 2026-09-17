@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 class TitleExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: "标题示例",
-      ),
-      body: ListView(
+    return SantoPageLayout(
+      title: "标题示例",
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: [
           ListItem(
             title: "普通标题",

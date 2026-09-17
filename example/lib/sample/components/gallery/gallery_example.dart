@@ -86,11 +86,11 @@ class GalleryExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: "Gallery 图片",
-      ),
-      body: ListView(
+    return SantoPageLayout(
+      title: "Gallery 图片",
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: [
           SantoSection(
             title: '缩略图列表',

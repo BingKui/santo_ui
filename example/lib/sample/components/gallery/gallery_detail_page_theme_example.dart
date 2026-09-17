@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 class GalleryDetailPageThemeExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: "图片详情查看",
-        ),
-        body: CustomScrollView(slivers: [
+    return SantoPageLayout(
+      title: "图片详情查看",
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: CustomScrollView(slivers: [
           SliverList(
               delegate: SliverChildListDelegate([
             ListItem(
@@ -45,6 +45,7 @@ class GalleryDetailPageThemeExample extends StatelessWidget {
               },
             ),
           ]))
-        ]));
+        ]),
+    );
   }
 }

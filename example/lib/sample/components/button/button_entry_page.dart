@@ -13,11 +13,11 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: '按钮',
-      ),
-      body: ListView(
+    return SantoPageLayout(
+      title: '按钮',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: <Widget>[
           _buildButtonTypeSection(),
           _buildBigMainButtonSection(),
