@@ -115,7 +115,9 @@ class SantoPanel extends StatelessWidget {
             child: Text(title!),
           );
 
-    if (headerTitle == null && (actions == null || actions!.isEmpty)) {
+    if (headerTitle == null &&
+        titleExtra == null &&
+        (actions == null || actions!.isEmpty)) {
       return const SizedBox.shrink();
     }
 
@@ -158,7 +160,21 @@ class SantoPanel extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(child: leftWidget ?? const SizedBox.shrink()),
+          if (titleExtra == null)
+            Expanded(child: leftWidget ?? const SizedBox.shrink())
+          else
+            // 标题与后置控件同处左侧区域:标题按内容宽度收缩,后置控件优先保留完整宽度
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(child: leftWidget ?? const SizedBox.shrink()),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: titleExtra!,
+                  ),
+                ],
+              ),
+            ),
           if (actions != null && actions!.isNotEmpty)
             Row(mainAxisSize: MainAxisSize.min, children: actions!),
         ],

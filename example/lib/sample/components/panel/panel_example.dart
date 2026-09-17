@@ -51,6 +51,40 @@ class PanelExample extends StatelessWidget {
             ),
           ),
           SantoPanel(
+            title: '标题后置控件',
+            titleExtra: SantoSegmented<String>(
+              options: const [
+                SantoSegmentedOption(value: 'day', label: '日'),
+                SantoSegmentedOption(value: 'week', label: '周'),
+                SantoSegmentedOption(value: 'month', label: '月'),
+              ],
+              defaultValue: 'day',
+              shape: SantoSegmentedShape.round,
+              size: SantoSegmentedSize.small,
+              onChange: (value) => SantoToast.show('切换到 $value', context),
+            ),
+            child: Text('titleExtra 可放 Segmented 等其他控件,位于标题与右侧操作区之间。'),
+          ),
+          SantoPanel(
+            title: '标题后置控件 + 操作区',
+            titleExtra: SantoSegmented<String>(
+              options: const [
+                SantoSegmentedOption(value: 'on', label: '启用'),
+                SantoSegmentedOption(value: 'off', label: '停用'),
+              ],
+              defaultValue: 'on',
+              shape: SantoSegmentedShape.round,
+              size: SantoSegmentedSize.small,
+            ),
+            actions: [
+              SantoSmallMainButton(
+                title: '确定',
+                onTap: () => SantoToast.show('点击了确定', context),
+              ),
+            ],
+            child: Text('标题空间不足时由标题收缩让位,后置控件与操作区保持完整展示。'),
+          ),
+          SantoPanel(
             title: '无内容边距面板',
             contentPadding: false,
             child: Container(
