@@ -13,7 +13,6 @@ class ActionBarExample extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: '基础用法',
-            isShowLine: false,
             describe: '图标按钮与按钮混排、角标、类型与状态',
             onPressed: () => _push(context, ActionBarBasicExample()),
           ),

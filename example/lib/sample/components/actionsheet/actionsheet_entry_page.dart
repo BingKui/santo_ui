@@ -27,7 +27,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
         children: <Widget>[
           ListItem(
             title: "CommonActionSheet",
-            isShowLine: false,
             describe: '通用样式ActionSheet，无独立辅助信息',
             onPressed: () {
               _showCommonStylex();
@@ -35,7 +34,6 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
           ),
           ListItem(
             title: "CommonActionSheet",
-            isShowLine: false,
             describe: '通用样式ActionSheet，包含描述信息',
             onPressed: () {
               _showCommonStyle(context);

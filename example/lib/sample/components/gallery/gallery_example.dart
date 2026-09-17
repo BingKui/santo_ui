@@ -94,7 +94,6 @@ class GalleryExample extends StatelessWidget {
             description: '进入 SantoGallerySummaryPage，按分组查看多张图片',
             child: ListItem(
               title: "图片选择控件",
-              isShowLine: false,
               describe: "查看图片列表页",
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(

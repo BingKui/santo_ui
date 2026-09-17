@@ -14,7 +14,6 @@ class AppbarEntryPage extends StatelessWidget {
           ListItem(
             title: "NavBar示例",
             describe: 'Navbar/黑/2个文字模块切换+左右2icon',
-            isShowLine: false,
             onPressed: () {
               _openNavBarPage(context, 0);
             },

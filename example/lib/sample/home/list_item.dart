@@ -20,7 +20,6 @@ class ListItem extends StatefulWidget {
 
   /// 右侧控件
   final Widget? rightWidget;
-  final bool isShowLine;
 
   /// 构造函数
   ListItem({
@@ -33,7 +32,6 @@ class ListItem extends StatefulWidget {
     this.describeColor = const Color(0xFF808695),
     this.rightWidget,
     this.imgPath,
-    this.isShowLine = true,
   }) : super(key: key);
 
   @override
@@ -47,8 +45,13 @@ class _ListItemState extends State<ListItem> with AutomaticKeepAliveClientMixin 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final double radius =
+        SantoThemeConfigurator.instance.getConfig().commonConfig.radiusMd;
     return Material(
       color: Colors.white,
+      // 圆角 + 裁切,让水波纹也贴着圆角走
+      borderRadius: BorderRadius.circular(radius),
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: widget.onPressed,
         child: Container(
@@ -58,12 +61,6 @@ class _ListItemState extends State<ListItem> with AutomaticKeepAliveClientMixin 
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              widget.isShowLine
-                  ? SantoLine(
-                      color: Color(0xFFDCDEE2),
-                      height: 1,
-                    )
-                  : Container(),
               SantoLine(
                 height: 14,
                 color: Colors.transparent,

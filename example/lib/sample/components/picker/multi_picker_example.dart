@@ -78,7 +78,6 @@ class MultiPickerExamplePage extends StatelessWidget {
             title: '单列选择',
             description: 'Santo1RowDelegate 提供单列数据，firstSelectedIndex 设初始项',
             child: ListItem(
-              isShowLine: false,
               title: "单列",
               describe: '自定义单列Picker',
               onPressed: () {

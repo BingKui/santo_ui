@@ -14,7 +14,6 @@ class GuideEntryPage extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: "强引导组件",
-            isShowLine: false,
             describe: '强引导组件example',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(

@@ -21,7 +21,6 @@ class Setting extends StatelessWidget {
           key: _localKey,
           title: "切换组件词条语言",
           describe: "仅改变组件内部词条语言，Demo示例部分不支持",
-          isShowLine: false,
           onPressed: () {
             SantoPopupListWindow.showPopListWindow(context, _localKey,
                 data: ['中文', '英文', '德语'], onItemClick: (int index, item) {

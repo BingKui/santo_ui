@@ -14,7 +14,6 @@ class StepExample extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: "横向步骤条",
-            isShowLine: false,
             describe: "显示流程阶段，告知用户'我在哪/我能去哪'，跟随主题色",
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(

@@ -19,7 +19,6 @@ class TextContentEntryPage extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: "单列左对齐",
-            isShowLine: false,
             describe: 'key宽度最多92，value是左对齐的',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -42,7 +41,6 @@ class TextContentEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "两列纯文本",
-            isShowLine: false,
             describe: '两组key-value展示',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -54,7 +52,6 @@ class TextContentEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "两列复杂元素",
-            isShowLine: false,
             describe: '元素中可以携带问号等',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -66,7 +63,6 @@ class TextContentEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "强化数字信息",
-            isShowLine: false,
             describe: '数字是大字体',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -78,7 +74,6 @@ class TextContentEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "纯文本展示可收起",
-            isShowLine: false,
             describe: '展开收起文本',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -90,7 +85,6 @@ class TextContentEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "文本+跳转操作",
-            isShowLine: false,
             describe: 'value带有跳转箭头',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(

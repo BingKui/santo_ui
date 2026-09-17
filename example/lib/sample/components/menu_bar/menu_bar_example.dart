@@ -16,7 +16,6 @@ class MenuBarExample extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: '默认样式',
-            isShowLine: false,
             describe: '纯色背景、顶部左右圆角、底部贴边停靠',
             onPressed: () => _push(context, const MenuBarDefaultExample()),
           ),

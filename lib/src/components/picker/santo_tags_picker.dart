@@ -160,10 +160,6 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 选择超限被拒绝时自增,用于重建 [SantoSelectTag] 回滚选中状态
   int _tagStateEpoch = 0;
 
-  /// 内容区统一间距,取主题 commonConfig.pageGap
-  double get gap =>
-      SantoThemeConfigurator.instance.getConfig().commonConfig.pageGap;
-
   @override
   void show() {
     _dataSetup();
@@ -229,32 +225,28 @@ class SantoTagsPicker extends CommonTagsPicker {
 
   /// 标签区:复用可选择标签组件 [SantoSelectTag]
   ///
-  /// 等分布局用固定宽度排 [crossAxisCount] 列,流式布局按内容自适应宽度
+  /// 等分布局用固定宽度排 [crossAxisCount] 列,流式布局按内容自适应宽度;
+  /// 内容区四周留白与标签间距统一取 hSpacingMd / vSpacingMd
   Widget _buildTagsWidget(BuildContext context, VoidCallback? onUpdate) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     final bool average = layoutStyle == SantoTagsPickerLayoutStyle.average;
-    // 等分布局:列间距取标签网格的 hSpacingXs,宽度向下取整保证一行排满 count 个
-    final double spacing =
-        average ? commonConfig.hSpacingXs : commonConfig.hSpacingMd;
+    final double spacing = commonConfig.hSpacingMd;
     return LayoutBuilder(builder: (_, constraints) {
       final int count =
           (this.crossAxisCount == null || this.crossAxisCount == 0)
               ? 4
               : this.crossAxisCount!;
+      // 固定宽度向下取整,保证一行排满 count 个
       final double tagWidth = ((constraints.maxWidth -
-                  commonConfig.hSpacingLg * 2 -
+                  spacing * 2 -
                   spacing * (count - 1)) /
               count)
           .floorToDouble();
       return Container(
-        padding: average
-            ? EdgeInsets.symmetric(
-                vertical: commonConfig.vSpacingLg,
-                horizontal: commonConfig.hSpacingLg)
-            : EdgeInsets.symmetric(
-                vertical: commonConfig.vSpacingMd,
-                horizontal: commonConfig.hSpacingMd),
+        padding: EdgeInsets.symmetric(
+            vertical: commonConfig.vSpacingMd,
+            horizontal: commonConfig.hSpacingMd),
         child: SantoSelectTag(
           // 选中状态由本组件掌管:单选收敛、超限回滚时自增 epoch 重建,
           // 让 SantoSelectTag 回到 _sourceTags 的选中状态
@@ -266,8 +258,7 @@ class SantoTagsPicker extends CommonTagsPicker {
           tagWidth: average ? tagWidth : null,
           tagHeight: itemHeight,
           spacing: spacing,
-          verticalSpacing:
-              average ? commonConfig.pageGap : commonConfig.vSpacingMd,
+          verticalSpacing: commonConfig.vSpacingMd,
           tagTextStyle: TextStyle(
             height: 1,
             fontSize: this.tagPickerConfig.tagTitleFontSize,
@@ -355,8 +346,12 @@ class SantoTagsPicker extends CommonTagsPicker {
 
   /// 底部提交按钮:未选中标签时置灰
   Widget _buildSubmitButton(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
-      padding: EdgeInsets.fromLTRB(gap, gap, gap, gap),
+      padding: EdgeInsets.symmetric(
+          vertical: commonConfig.vSpacingMd,
+          horizontal: commonConfig.hSpacingMd),
       child: SantoBigMainButton(
         title: SantoIntl.of(context).localizedResource.submit,
         isEnable: _selectedTags.isNotEmpty,
@@ -374,7 +369,7 @@ class SantoTagsPicker extends CommonTagsPicker {
     return Container(
       color: Colors.white,
       // 底边留白交给底部提交按钮,避免与按钮的间距翻倍
-      padding: EdgeInsets.only(left: gap, right: gap),
+      padding: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
       child: SantoInputText(
         controller: textEditingController,
         initialValue:
