@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class SantoNoticeBarWithButtonExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '带按钮的通知',
       child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

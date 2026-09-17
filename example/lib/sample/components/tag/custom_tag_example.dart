@@ -11,7 +11,7 @@ class CustomTagExample extends StatefulWidget {
 class _CustomTagExampleState extends State<CustomTagExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '自定义标签',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

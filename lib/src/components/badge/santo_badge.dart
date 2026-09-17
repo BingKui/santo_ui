@@ -82,6 +82,8 @@ class SantoBadge extends StatelessWidget {
 
   /// 构建徽标内容
   Widget _buildBadge() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final bgColor = color ??
         SantoThemeConfigurator.instance.getConfig().commonConfig.brandError;
     final txtColor = textColor ??
@@ -111,14 +113,15 @@ class SantoBadge extends StatelessWidget {
           displayCount > maxCount ? '$maxCount+' : '$displayCount',
           style: TextStyle(
             color: txtColor,
-            fontSize: 10,
+            fontSize: commonConfig.fontSizeCaptionSm,
             fontWeight: FontWeight.w500,
             height: 1.2,
           ),
         );
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+      padding: EdgeInsets.symmetric(
+          horizontal: commonConfig.hSpacingXs, vertical: 1),
       constraints: BoxConstraints(
         minWidth: badgeSize,
         minHeight: badgeSize,

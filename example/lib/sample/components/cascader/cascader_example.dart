@@ -129,7 +129,7 @@ class _CascaderExampleState extends State<CascaderExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Cascader 级联选择器示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

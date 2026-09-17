@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class LinkExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Link 链接',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

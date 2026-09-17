@@ -10,7 +10,7 @@ class ResultExample extends StatefulWidget {
 class _ResultExampleState extends State<ResultExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Result 示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

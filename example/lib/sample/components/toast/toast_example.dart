@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ToastExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'SantoToast 示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

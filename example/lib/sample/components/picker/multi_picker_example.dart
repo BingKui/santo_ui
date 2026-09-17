@@ -71,7 +71,7 @@ List<Map<String, List>> list = [
 class MultiPickerExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '多列选择picker',
       scrollable: false,
       child: ListView(
           children: <Widget>[

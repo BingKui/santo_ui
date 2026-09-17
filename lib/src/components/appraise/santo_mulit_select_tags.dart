@@ -44,8 +44,8 @@ class SantoMultiSelectTags extends StatefulWidget {
   /// 没有数据时的样式
   final Widget? emptyWidget;
 
-  /// 没有数据时的样式，如果为 null，默认 EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0, bottom: 0.0)
-  final EdgeInsets padding;
+  /// 没有数据时的样式，如果为 null，默认 EdgeInsets.only(top: 0.0, left: hSpacingLg, right: hSpacingLg, bottom: 0.0)
+  final EdgeInsets? padding;
 
   ///是等分样式还是流式布局样式 默认等分
   final SantoMultiSelectStyle tagStyle;
@@ -70,7 +70,7 @@ class SantoMultiSelectTags extends StatefulWidget {
     this.tagStyle = SantoMultiSelectStyle.average,
     this.selectedTagsCallback,
     this.emptyWidget,
-    this.padding = const EdgeInsets.symmetric(horizontal: 20),
+    this.padding,
     this.multiSelect = true,
     this.physics,
     this.minWidth = 75,
@@ -116,6 +116,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
 
   ///等宽度的布局
   Widget _buildGridViewWidget(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     int santoCrossAxisCount = widget.santoCrossAxisCount;
     double width = (MediaQuery.of(context).size.width -
             (santoCrossAxisCount - 1) * 12 -
@@ -125,7 +127,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
     double santoChildAspectRatio = width / 34.0;
 
     return Container(
-      padding: widget.padding,
+      padding: widget.padding ??
+          EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
       constraints: BoxConstraints(maxHeight: 322, minHeight: 120),
       child: GridView.count(
         shrinkWrap: true,
@@ -147,14 +150,17 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
 
   ///流式布局
   Widget _buildWrapViewWidget(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-        padding: widget.padding,
+        padding: widget.padding ??
+            EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
         child: Wrap(
           spacing: 12,
           runSpacing: 12,
           children: _sourceTags.map((choice) {
-            return _getItem(choice,
-                EdgeInsets.all(10));
+            return _getItem(
+                choice, EdgeInsets.all(commonConfig.vSpacingSm));
           }).toList(),
         ));
   }
@@ -203,6 +209,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
   }
 
   Widget _getItem(SantoTagItemBean choice, EdgeInsets padding) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Color selectedTagTitleColor = widget.tagPickerBean.selectedTagTitleColor ??
         SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
     Color tagTitleColor = widget.tagPickerBean.tagTitleColor ??
@@ -230,7 +238,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
       child: Container(
         constraints: BoxConstraints(minWidth: widget.minWidth),
         decoration: BoxDecoration(
-            color: bgColor, borderRadius: BorderRadius.circular(12.0)),
+            color: bgColor,
+            borderRadius: BorderRadius.circular(commonConfig.radiusXs)),
         padding: padding,
         alignment: widget.tagStyle == SantoMultiSelectStyle.average
             ? Alignment.center
@@ -240,8 +249,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-            fontSize: 12,
+            fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
+            fontSize: commonConfig.fontSizeCaption,
             color: titleColor,
           ),
         ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class PanelExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Panel 面板',
       scrollable: false,
       child: ListView(
         children: [

@@ -9,7 +9,7 @@ class CustomPickerExamplePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '自定义底部弹窗',
       scrollable: false,
       child: ListView(
           children: <Widget>[

@@ -12,7 +12,7 @@ class _KeyTextCloseContentExampleState
     extends State<KeyTextCloseContentExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '单列展示紧随',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

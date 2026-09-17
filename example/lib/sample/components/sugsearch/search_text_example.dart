@@ -36,7 +36,7 @@ class _SearchTextExampleState extends State<SearchTextExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '搜索输入框示例',
       child: Container(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

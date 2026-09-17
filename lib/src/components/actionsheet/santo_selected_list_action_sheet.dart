@@ -5,6 +5,7 @@ import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// 获取对应 index 行内容的回调。类型必须为 String 或者自定义的 widget.自定义 widget 时，左边的 icon 会自动隐藏，自定义widget填充整行。
@@ -80,14 +81,14 @@ class SantoSelectedListActionSheet<T> {
   ///
   /// ``` dart
   /// TextStyle(
-  ///   fontSize: 18,
+  ///   fontSize: fontSizeHead,
   ///   color: Color(0xff17233D),
-  ///   fontWeight: FontWeight.w600,
+  ///   fontWeight: FontWeight.w500,
   ///   decoration: TextDecoration.none)
   /// ```
   final String? title;
 
-  /// 自定义标题视图。默认外层有 `const EdgeInsets.fromLTRB(20, 20, 20, 15)` 的 padding，且优先级比 [title] 高
+  /// 自定义标题视图。默认外层有 `EdgeInsets.fromLTRB(hSpacingLg, vSpacingLg, hSpacingLg, vSpacingMd)` 的 padding，且优先级比 [title] 高
   final Widget? titleWidget;
 
   /// 清空按钮是否显示，默认为 false
@@ -374,19 +375,23 @@ class _SantoActionSheetSelectedItemListState<T>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     // 顶部标题处理
     String title =
         (widget.itemWidget.title != null && widget.itemWidget.title!.isNotEmpty)
             ? widget.itemWidget.title!
             : SantoIntl.of(context).localizedResource.selectedList;
-    TextStyle titleStyle = const TextStyle(
-        fontSize: 18,
+    TextStyle titleStyle = TextStyle(
+        fontSize: commonConfig.fontSizeHead,
         color: Color(0xff17233D),
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         decoration: TextDecoration.none);
     Widget topTitle = Expanded(
         child: Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+      padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg,
+          commonConfig.vSpacingLg, commonConfig.hSpacingLg,
+          commonConfig.vSpacingMd),
       child: widget.itemWidget.titleWidget ??
           Text(
             title,
@@ -401,11 +406,12 @@ class _SantoActionSheetSelectedItemListState<T>
           this._onClearAction();
         },
         child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 20, 20, 15),
+            padding: EdgeInsets.fromLTRB(0, commonConfig.vSpacingLg,
+                commonConfig.hSpacingLg, commonConfig.vSpacingMd),
             child: Text(SantoIntl.of(context).localizedResource.clear,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: commonConfig.fontSizeSubHead,
                     color: Color(0xff808695),
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.none))),
@@ -420,7 +426,8 @@ class _SantoActionSheetSelectedItemListState<T>
           color: Colors.white,
           height: 50,
           width: 45,
-          padding: const EdgeInsets.only(left: 20, right: 8),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingLg, right: 8),
           child: widget.itemWidget.itemIconImage);
     } else {
       itemIcon = Container(color: Colors.white, width: 20);
@@ -446,8 +453,10 @@ class _SantoActionSheetSelectedItemListState<T>
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
+                          topLeft:
+                              Radius.circular(commonConfig.radiusXs),
+                          topRight:
+                              Radius.circular(commonConfig.radiusXs),
                         ),
                       ),
                     ),
@@ -476,8 +485,8 @@ class _SantoActionSheetSelectedItemListState<T>
                               if (item is String) {
                                 content = Text(
                                   item,
-                                  style: const TextStyle(
-                                      fontSize: 16,
+                                  style: TextStyle(
+                                      fontSize: commonConfig.fontSizeSubHead,
                                       color: Color(0xff17233D),
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.none),
@@ -513,8 +522,10 @@ class _SantoActionSheetSelectedItemListState<T>
                                           child: Container(
                                               color: Colors.white,
                                               width: 45,
-                                              padding: const EdgeInsets.only(
-                                                  left: 5, right: 20),
+                                              padding: EdgeInsets.only(
+                                                  left: commonConfig.hSpacingXs,
+                                                  right:
+                                                      commonConfig.hSpacingLg),
                                               child: SantoTools.getAssetImage(
                                                   SantoAsset.iconTrashBin)),
                                         ),

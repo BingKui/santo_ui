@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LoadingExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Loading案例',
       child: Center(
           child: Column(children: [
         SantoSection(

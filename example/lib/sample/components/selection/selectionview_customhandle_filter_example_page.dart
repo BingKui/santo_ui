@@ -21,7 +21,7 @@ class _SelectionViewExamplePageState extends State<SelectionViewCustomHandleFilt
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      appBar: SantoAppBar(title: widget._title),
       child: Column(
           children: <Widget>[
             SantoSelectionView(

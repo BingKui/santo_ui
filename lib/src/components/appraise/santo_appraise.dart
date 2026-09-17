@@ -7,6 +7,7 @@ import 'package:santo_ui/src/components/input/santo_input_text.dart';
 import 'package:santo_ui/src/components/picker/santo_tags_picker_config.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_config.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_interface.dart';
 
@@ -88,9 +89,11 @@ class _SantoAppraiseState extends State<SantoAppraise> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         color: Colors.white,
       ),
       child: Column(
@@ -98,19 +101,23 @@ class _SantoAppraiseState extends State<SantoAppraise> {
         children: <Widget>[
           _headerArea(context),
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                commonConfig.hSpacingLg, 0),
             child: _getIconWidget(),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                commonConfig.hSpacingLg, 0),
             child: _getTags(),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                commonConfig.hSpacingLg, 0),
             child: _inputArea(),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(commonConfig.hSpacingLg, 0,
+                commonConfig.hSpacingLg, 0),
             child: _confirmButton(),
           ),
         ],
@@ -120,10 +127,18 @@ class _SantoAppraiseState extends State<SantoAppraise> {
 
   /// header
   Widget _headerArea(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     EdgeInsets defaultPadding =
         (widget.headerType == SantoAppraiseHeaderType.center)
-            ? EdgeInsets.only(top: 20, bottom: 20)
-            : EdgeInsets.only(left: 20, top: 16, right: 16, bottom: 20);
+            ? EdgeInsets.only(
+                top: commonConfig.vSpacingLg,
+                bottom: commonConfig.vSpacingLg)
+            : EdgeInsets.only(
+                left: commonConfig.hSpacingLg,
+                top: 16,
+                right: 16,
+                bottom: commonConfig.vSpacingLg);
     return SantoAppraiseHeader(
       showHeader: widget.config.showHeader,
       headerType: widget.headerType,

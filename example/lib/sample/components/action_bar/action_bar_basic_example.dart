@@ -19,7 +19,7 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'ActionBar 基础用法',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

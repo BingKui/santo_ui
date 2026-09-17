@@ -19,7 +19,7 @@ class ProgressBarChartExampleState extends State<ProgressBarChartExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '柱状图',
       child: Column(
         children: <Widget>[
           // 横向柱状图

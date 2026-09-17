@@ -149,6 +149,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> rowChildren = <Widget>[];
     if (null != iconButtonList) {
       Widget iconListWidget = _iconWidgetListWidget();
@@ -159,7 +161,11 @@ class SantoBottomButtonPanel extends StatelessWidget {
     rowChildren.add(btnListWidget);
 
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+      padding: EdgeInsets.fromLTRB(
+          commonConfig.hSpacingLg,
+          commonConfig.vSpacingMd,
+          commonConfig.hSpacingLg,
+          commonConfig.vSpacingMd),
       color: Colors.white,
       child: Row(
         children: rowChildren,
@@ -194,6 +200,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
   }
 
   Widget _secondaryWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(left: _isEmptyIcon() ? 12 : 8),
@@ -206,7 +214,11 @@ class SantoBottomButtonPanel extends StatelessWidget {
           },
           child: Container(
               height: 48,
-              padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+              padding: EdgeInsets.only(
+                  left: commonConfig.hSpacingSm,
+                  right: commonConfig.hSpacingSm,
+                  top: commonConfig.vSpacingXs,
+                  bottom: commonConfig.vSpacingXs),
               decoration: BoxDecoration(
                 color: enableSecondaryButton
                     ? SantoThemeConfigurator.instance
@@ -214,7 +226,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
                         .commonConfig
                         .brandAuxiliary
                     : Color(0xFFCCCCCC),
-                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(commonConfig.radiusXs)),
               ),
               child: Center(
                 child: Text(
@@ -223,8 +236,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
+                    fontSize: commonConfig.fontSizeSubHead,
+                    fontWeight: FontWeight.w500,
                     color: enableSecondaryButton
                         ? Colors.white
                         : SantoThemeConfigurator.instance
@@ -239,6 +252,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
   }
 
   Widget _mainButtonWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Widget mainWidget = SantoPressFeedback(
       enabled: enableMainButton,
       onTap: () {
@@ -248,7 +263,11 @@ class SantoBottomButtonPanel extends StatelessWidget {
       },
       child: Container(
           height: 48,
-          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+          padding: EdgeInsets.only(
+              left: commonConfig.hSpacingSm,
+              right: commonConfig.hSpacingSm,
+              top: commonConfig.vSpacingXs,
+              bottom: commonConfig.vSpacingXs),
           decoration: BoxDecoration(
             color: enableMainButton
                 ? SantoThemeConfigurator.instance
@@ -256,7 +275,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
                     .commonConfig
                     .brandPrimary
                 : Color(0xFFCCCCCC),
-            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(commonConfig.radiusXs)),
           ),
           child: Center(
             child: Text(
@@ -265,8 +285,8 @@ class SantoBottomButtonPanel extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
+                fontSize: commonConfig.fontSizeSubHead,
+                fontWeight: FontWeight.w500,
                 color: enableMainButton
                     ? Colors.white
                     : SantoThemeConfigurator.instance

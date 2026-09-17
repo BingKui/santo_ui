@@ -12,7 +12,7 @@ class _SantoTextExpandedContentExampleState
     extends State<SantoTextExpandedContentExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '展开收起文本',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

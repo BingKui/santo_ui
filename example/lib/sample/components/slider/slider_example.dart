@@ -19,7 +19,7 @@ class _SliderExampleState extends State<SliderExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Slider 示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

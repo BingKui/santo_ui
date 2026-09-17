@@ -14,7 +14,7 @@ class _RateExampleState extends State<RateExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Rate 评分示例',
       scrollable: false,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),

@@ -127,7 +127,7 @@ class SantoActionBarButton extends StatelessWidget {
                   color: foreground,
                 ),
               ),
-              const SizedBox(width: 5),
+              SizedBox(width: common.hSpacingXs),
             ],
             if (icon != null) ...[
               icon!,

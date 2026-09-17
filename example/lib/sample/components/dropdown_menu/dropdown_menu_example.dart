@@ -39,7 +39,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'DropdownMenu 下拉菜单示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -18,7 +18,7 @@ class SelectTagExamplePageState extends State<SelectTagExamplePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '选择标签',
       scrollable: false,
       child: Container(
         color: Colors.white,

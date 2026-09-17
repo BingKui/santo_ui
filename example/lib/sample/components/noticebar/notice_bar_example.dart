@@ -34,7 +34,7 @@ class SantoNoticeBarExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '通知样式',
       child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

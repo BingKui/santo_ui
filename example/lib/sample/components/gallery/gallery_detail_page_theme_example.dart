@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class GalleryDetailPageThemeExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: "图片详情查看",
       scrollable: false,
       child: CustomScrollView(slivers: [
           SliverList(

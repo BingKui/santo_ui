@@ -24,7 +24,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '二级标题',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

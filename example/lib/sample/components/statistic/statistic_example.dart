@@ -7,7 +7,7 @@ class StatisticExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Statistic 统计数值',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -7,7 +7,7 @@ class ShareExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Share 分享',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

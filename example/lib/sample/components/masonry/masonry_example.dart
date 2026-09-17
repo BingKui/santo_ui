@@ -30,7 +30,7 @@ class MasonryExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Masonry 瀑布流',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

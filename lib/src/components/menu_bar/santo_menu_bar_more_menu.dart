@@ -260,6 +260,8 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
   }
 
   Widget _buildItem(SantoMenuBarMoreMenuItem item, Color itemColor) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -271,12 +273,12 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
         children: [
           item.iconWidget ??
               Icon(item.icon, size: 30, color: itemColor),
-          const SizedBox(height: 10),
+          SizedBox(height: commonConfig.vSpacingSm),
           Text(
             item.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 14, color: itemColor),
+            style: TextStyle(fontSize: commonConfig.fontSizeBase, color: itemColor),
           ),
         ],
       ),

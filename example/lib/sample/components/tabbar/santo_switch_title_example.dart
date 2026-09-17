@@ -24,7 +24,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '一级标题',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

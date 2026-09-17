@@ -23,6 +23,7 @@ class _RadioExampleState extends State<RadioExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
+      title: 'Radio 单选框',
       backgroundColor: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

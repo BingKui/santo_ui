@@ -80,6 +80,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> rowChildren = <Widget>[
       _allSelectedWidget(),
       _selectedCountWidget(),
@@ -89,7 +91,11 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
     return Container(
       height: 82,
       color: Colors.white,
-      padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+      padding: EdgeInsets.only(
+          top: commonConfig.vSpacingMd,
+          bottom: commonConfig.vSpacingMd,
+          left: commonConfig.hSpacingLg,
+          right: commonConfig.hSpacingLg),
       child: Row(
         children: rowChildren,
       ),
@@ -97,6 +103,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
   }
 
   Widget _allSelectedWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return widget.onSelectAll != null
         ? GestureDetector(
             onTap: () {
@@ -147,7 +155,9 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   padding: EdgeInsets.only(left: 4, right: 8),
                   child: Text(
                     SantoIntl.of(context).localizedResource.selectAll,
-                    style: TextStyle(color: Color(0XFF17233D), fontSize: 16),
+                    style: TextStyle(
+                        color: Color(0XFF17233D),
+                        fontSize: commonConfig.fontSizeSubHead),
                   ),
                 ),
               ],
@@ -157,6 +167,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
   }
 
   Widget _selectedCountWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Image unfoldWidget = SantoTools.getAssetImageWithColor(
         SantoAsset.iconSelectedUpTriangle,
         SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary);
@@ -191,7 +203,9 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
           children: <Widget>[
             Text(
               SantoIntl.of(context).localizedResource.selected,
-              style: TextStyle(color: Color(0XFF17233D), fontSize: 16),
+              style: TextStyle(
+                  color: Color(0XFF17233D),
+                  fontSize: commonConfig.fontSizeSubHead),
             ),
             ValueListenableBuilder<MultiSelectState>(
               valueListenable: _controller.valueNotifier,
@@ -206,7 +220,7 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                               .commonConfig
                               .brandPrimary
                           : Color(0x99808695),
-                      fontSize: 16),
+                      fontSize: commonConfig.fontSizeSubHead),
                 ));
                 if (value.selectedCount == 0) _unfoldState = false;
                 if (widget.hasArrow) {
@@ -277,6 +291,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
   }
 
   Widget _mainButton() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return widget.mainButton != null
         ? Expanded(
             child: ValueListenableBuilder<MultiSelectState>(
@@ -287,9 +303,12 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   onTap: widget.onMainButtonTap,
                   child: Container(
                     margin: EdgeInsets.only(left: 8),
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(
+                        left: commonConfig.hSpacingSm,
+                        right: commonConfig.hSpacingSm),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(commonConfig.radiusXs)),
                         color: value.mainButtonState
                             ? SantoThemeConfigurator.instance
                                 .getConfig()
@@ -304,8 +323,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                                 color: value.mainButtonState
                                     ? Colors.white
                                     : Color(0xAAFFFFFF),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
+                                fontSize: commonConfig.fontSizeSubHead,
+                                fontWeight: FontWeight.w500),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ))
@@ -319,6 +338,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
   }
 
   Widget _subButton() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return widget.subButton != null
         ? Expanded(
             child: ValueListenableBuilder<MultiSelectState>(
@@ -329,9 +350,12 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                   onTap: widget.onSubButtonTap,
                   child: Container(
                     margin: EdgeInsets.only(left: 8),
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(
+                        left: commonConfig.hSpacingSm,
+                        right: commonConfig.hSpacingSm),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(commonConfig.radiusXs)),
                         color: value.subButtonState
                             ? SantoThemeConfigurator.instance
                                 .getConfig()
@@ -346,8 +370,8 @@ class _SantoMultipleBottomButtonState extends State<SantoMultipleBottomButton> {
                                 color: value.subButtonState
                                     ? Colors.white
                                     : Color(0xAAFFFFFF),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
+                                fontSize: commonConfig.fontSizeSubHead,
+                                fontWeight: FontWeight.w500),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ))

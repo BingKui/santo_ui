@@ -10,7 +10,7 @@ class EmptyExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '异常页面',
         scrollable: false,
         child: _buildEmpty(caseIndex, context) ?? const SizedBox.shrink());
   }

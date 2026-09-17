@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class TitleExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: "标题示例",
       scrollable: false,
       child: ListView(
         children: [

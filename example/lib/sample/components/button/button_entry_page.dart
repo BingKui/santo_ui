@@ -13,7 +13,7 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '按钮',
       scrollable: false,
       child: ListView(
         children: <Widget>[

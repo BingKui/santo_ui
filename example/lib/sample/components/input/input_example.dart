@@ -24,7 +24,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
   Widget build(BuildContext context) {
     final brandPrimary =
         SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Input 输入框',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -7,7 +7,7 @@ class SectionExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Section 区块',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

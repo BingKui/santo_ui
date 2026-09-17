@@ -35,6 +35,7 @@ class _CheckboxExampleState extends State<CheckboxExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
+      title: 'Checkbox 多选框',
       backgroundColor: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

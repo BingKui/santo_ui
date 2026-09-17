@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class HighlightExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Highlight 关键词高亮',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

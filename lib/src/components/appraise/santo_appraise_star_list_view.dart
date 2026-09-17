@@ -40,6 +40,8 @@ class _SantoAppraiseStarListViewState extends State<SantoAppraiseStarListView> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.titles.isEmpty) {
       return _buildStars();
     } else {
@@ -54,12 +56,12 @@ class _SantoAppraiseStarListViewState extends State<SantoAppraiseStarListView> {
           child: Text(
             subTitle ?? '',
             style: TextStyle(
-                fontSize: 12.0,
+                fontSize: commonConfig.fontSizeCaption,
                 color: SantoThemeConfigurator.instance
                     .getConfig()
                     .commonConfig
                     .colorTextSecondary,
-                fontWeight: FontWeight.w600),
+                fontWeight: FontWeight.w500),
           ),
         );
       }

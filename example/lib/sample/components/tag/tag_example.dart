@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class TagExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: "标签示例",
       scrollable: false,
       child: ListView(
         children: [

@@ -35,7 +35,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Segmented 分段选择器',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -1,5 +1,6 @@
 import 'package:santo_ui/src/components/dialog/santo_safe_dialog.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// 页面或者弹窗中间的圆形加载框，左侧是可定制的加载文案[content]，比如：加载中、提交中等等
@@ -39,6 +40,8 @@ class SantoPageLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     double _loadingMaxWidth = MediaQuery.of(context).size.width * 2 / 3;
     double _iconSize = 19.0;
     double _textLeftPadding = 8.0;
@@ -51,8 +54,8 @@ class SantoPageLoading extends StatelessWidget {
       text: TextSpan(
           text: loadingText,
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+              fontSize: commonConfig.fontSizeBase,
+              fontWeight: FontWeight.w500,
               color: Colors.white,
               decoration: TextDecoration.none)),
     )..layout(
@@ -66,7 +69,9 @@ class SantoPageLoading extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: maxWidth, minWidth: _iconSize + _textLeftPadding),
         height: 50,
         width: _loadingMaxWidth,
-        decoration: BoxDecoration(color: Color(0xff1A1A1A), borderRadius: BorderRadius.circular(12)),
+        decoration: BoxDecoration(
+            color: Color(0xff1A1A1A),
+            borderRadius: BorderRadius.circular(commonConfig.radiusXs)),
         child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -86,8 +91,8 @@ class SantoPageLoading extends StatelessWidget {
                     loadingText,
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontSize: commonConfig.fontSizeBase,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
                         decoration: TextDecoration.none),
                     overflow: TextOverflow.ellipsis,

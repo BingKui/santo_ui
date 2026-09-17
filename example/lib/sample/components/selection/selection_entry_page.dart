@@ -24,7 +24,7 @@ import 'selectionview_multi_range_example_page.dart';
 class SelectionEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Selection 示例',
       scrollable: false,
       child: ListView(
           children: <Widget>[

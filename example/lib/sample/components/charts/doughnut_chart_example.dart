@@ -46,7 +46,7 @@ class DoughnutChartExampleState extends State<DoughnutChartExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '数据展示',
       scrollable: false,
       child: ListView(
         children: <Widget>[

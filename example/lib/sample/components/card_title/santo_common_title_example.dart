@@ -12,7 +12,7 @@ class SantoCommonTitleExample extends StatefulWidget {
 class _SantoCommonTitleExampleState extends State<SantoCommonTitleExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '普通标题',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

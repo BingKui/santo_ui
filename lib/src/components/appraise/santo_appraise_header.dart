@@ -19,8 +19,8 @@ class SantoAppraiseHeader extends StatelessWidget {
   final SantoAppraiseHeaderType headerType;
 
   /// 标题的 padding，为 null 时为默认 padding。
-  /// headerType 为 spaceBetween 时默认为 EdgeInsets.only(left: 20, top: 16, right: 16, bottom: 20)
-  /// headerType 为 center 时默认为 EdgeInsets.only(top: 20, bottom: 20)
+  /// headerType 为 spaceBetween 时默认为 EdgeInsets.only(left: hSpacingLg, top: 16, right: 16, bottom: vSpacingLg)
+  /// headerType 为 center 时默认为 EdgeInsets.only(top: vSpacingLg, bottom: vSpacingLg)
   final EdgeInsets? headPadding;
 
   /// 点击关闭的回掉
@@ -49,9 +49,13 @@ class SantoAppraiseHeader extends StatelessWidget {
   }
 
   Widget _centerHeader() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: Colors.white,
-      padding: headPadding ?? const EdgeInsets.only(top: 20, bottom: 20),
+      padding: headPadding ??
+          EdgeInsets.only(
+              top: commonConfig.vSpacingLg, bottom: commonConfig.vSpacingLg),
       child: Text(
         title,
         maxLines: maxLines,
@@ -60,20 +64,26 @@ class SantoAppraiseHeader extends StatelessWidget {
               .getConfig()
               .commonConfig
               .colorTextBase,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w600,
+          fontSize: commonConfig.fontSizeHead,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );
   }
 
   Widget _spaceHeader(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       color: Colors.white,
       height: 38 + maxLines * 22.0,
       child: Padding(
         padding: headPadding ??
-            EdgeInsets.only(left: 20, top: 16, right: 16, bottom: 20),
+            EdgeInsets.only(
+                left: commonConfig.hSpacingLg,
+                top: 16,
+                right: 16,
+                bottom: commonConfig.vSpacingLg),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,9 +99,9 @@ class SantoAppraiseHeader extends StatelessWidget {
                         .getConfig()
                         .commonConfig
                         .colorTextBase,
-                    fontSize: 18.0,
+                    fontSize: commonConfig.fontSizeHead,
                     height: 1,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),

@@ -34,7 +34,7 @@ class _SidebarExampleState extends State<SidebarExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Sidebar 侧边栏示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

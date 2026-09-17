@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class AppbarEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'NavBar示例',
       scrollable: false,
       child: ListView(
           children: <Widget>[
