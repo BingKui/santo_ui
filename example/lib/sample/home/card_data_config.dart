@@ -32,6 +32,8 @@ import 'package:example/sample/components/guide/guide_entry_page.dart';
 import 'package:example/sample/components/input/input_example.dart';
 import 'package:example/sample/components/divider/divider_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_example.dart';
+import 'package:example/sample/components/layout/app_layout_example.dart';
+import 'package:example/sample/components/layout/page_layout_example.dart';
 import 'package:example/sample/components/highlight/highlight_example.dart';
 import 'package:example/sample/components/text_ellipsis/text_ellipsis_example.dart';
 import 'package:example/sample/components/action_bar/action_bar_example.dart';
@@ -39,7 +41,7 @@ import 'package:example/sample/components/loading/loading_widget_example.dart';
 import 'package:example/sample/components/navbar/appbar_entry_page.dart';
 import 'package:example/sample/components/noticebar/santo_notice_bar_example.dart';
 import 'package:example/sample/components/picker/picker_entry_page.dart';
-import 'package:example/sample/components/popup/popwindow_example.dart';
+import 'package:example/sample/components/tooltip/tooltip_example.dart';
 import 'package:example/sample/components/popup/overlay_window_example.dart';
 import 'package:example/sample/components/rate/rate_example.dart';
 import 'package:example/sample/components/scroll_anchor/scroll_actor_tab_example.dart';
@@ -78,6 +80,7 @@ import 'package:example/sample/components/refresh/refresh_example.dart';
 import 'package:example/sample/components/time_counter/time_counter_example.dart';
 import 'package:example/sample/components/table/table_example.dart';
 import 'package:example/sample/components/segmented/segmented_example.dart';
+import 'package:example/sample/components/statistic/statistic_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -101,7 +104,7 @@ class GroupInfo {
 }
 
 /// 数据配置类
-/// 分组参考 Ant Design 组件分类：通用、布局、导航、数据录入、数据展示、反馈、重型组件
+/// 分组参考 Ant Design 组件分类：通用、布局、导航、数据录入、数据展示、反馈、数据图表
 class CardDataConfig {
   static List<GroupInfo> getAllGroup() {
     return [
@@ -111,7 +114,7 @@ class CardDataConfig {
       _getDataEntryGroup(),
       _getDataDisplayGroup(),
       _getFeedbackGroup(),
-      _getHeavyComponentGroup(),
+      _getChartGroup(),
     ];
   }
 
@@ -137,6 +140,8 @@ class CardDataConfig {
       _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
       _item("Skeleton 骨架屏", "加载占位骨架", SkeletonExample()),
       _item("FloatingPanel 浮层面板", "拖动吸附的底部面板", FloatingPanelExample()),
+      _item("AppLayout 应用布局", "底部悬浮菜单栏 + 多页面", AppLayoutExample()),
+      _item("PageLayout 页面布局", "可配置导航栏 + 滚动内容容器", PageLayoutExample()),
     ];
     return GroupInfo(groupName: "布局", children: children);
   }
@@ -194,6 +199,7 @@ class CardDataConfig {
       _item("Table 表格", "数据表格展示", TableExample()),
       _item("Pagination 分页", "页码切换", PaginationExample()),
       _item("Segmented 分段选择器", "分段切换选择", SegmentedExample()),
+      _item("Statistic 统计数值", "突出展示统计数字", StatisticExample()),
       _item("Tag 标签", "标记与分类", TagExample()),
       _item("BubbleText 气泡文本", "气泡文本", BubbleTextExample()),
       _item("Highlight 关键词高亮", "关键词高亮文本", HighlightExample()),
@@ -219,7 +225,7 @@ class CardDataConfig {
       _item("Share 分享", "分享面板", ShareExample()),
       _item("Toast 轻提示", "轻量反馈提示", ToastExample()),
       _item("Message 全局提示", "顶部消息通知", MessageExample()),
-      _item("PopupWindow 弹出提示", "定位气泡提示", PopWindowExamplePage("Tips 提示示例")),
+      _item("Tooltip 文字提示", "定位气泡提示", TooltipExample()),
       _item("OverlayWindow 悬浮窗", "搜索悬浮层", OverlayWindowExample("悬浮窗示例")),
       _item("Loading 加载", "加载状态动画", LoadingExample()),
       _item("Refresh 下拉刷新", "下拉刷新/上拉加载", RefreshExample()),
@@ -229,8 +235,8 @@ class CardDataConfig {
     return GroupInfo(groupName: "反馈", children: children, isExpand: false);
   }
 
-  // ========== 重型组件 ==========
-  static GroupInfo _getHeavyComponentGroup() {
+  // ========== 数据图表 ==========
+  static GroupInfo _getChartGroup() {
     List<GroupInfo> children = [
       _item("BrokenLine 折线图", "数据折线图", null, customNav: (context) {
         rootBundle.loadString('assets/brokenline_data.json').then((data) {
@@ -248,7 +254,7 @@ class CardDataConfig {
       _item("ProgressChart 进度图", "进度展示图", ProgressChartExample()),
       _item("BarChart 柱状图", "柱状数据图", ProgressBarChartExample()),
     ];
-    return GroupInfo(groupName: "重型组件", children: children, isExpand: true);
+    return GroupInfo(groupName: "数据图表", children: children, isExpand: true);
   }
 
   // ========== 工具方法 ==========

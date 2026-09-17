@@ -1,17 +1,17 @@
 ---
-title: SantoPopupWindow
+title: SantoTooltip
 group:
   title: Popup
   order: 24
 ---
 
-# SantoPopupWindow
+# SantoTooltip
 
 悬浮框
 
 ## 一、效果总览
 
-<img src="./img/SantoPopupWindowIntro.png" alt="image-20211028170601032" style="zoom: 33%;" />
+<img src="./img/SantoTooltipIntro.png" alt="image-20211028170601032" style="zoom: 33%;" />
 
 
 
@@ -20,7 +20,7 @@ group:
 ### 适用场景
 1. 显示在目标控件的上方或下方的Tips提示。
 
-2. 使用静态方法showPopWindow 弹出提示
+2. 使用静态方法show 弹出提示
 
 ## 三、构造函数及参数配置
 
@@ -28,7 +28,7 @@ group:
 
 
 ``` dart
-SantoPopupWindow(this.context,
+SantoTooltip(this.context,
       {Key? key,
       this.text,
       required this.popKey,
@@ -81,7 +81,7 @@ SantoPopupWindow(this.context,
 
 ###  效果1：Tips/左
 
- <img src="./img/SantoPopupWindowDemo1.png" style="zoom:50%;" />
+ <img src="./img/SantoTooltipDemo1.png" style="zoom:50%;" />
 
 
 
@@ -91,7 +91,7 @@ RaisedButton(
   key: _leftKey,  
   onPressed: () {  
     // popKey值和目标组件的GlobalKey要保持一致*  
-    SantoPopupWindow.showPopWindow(  
+    SantoTooltip.show(  
       context, "订阅搜索条件，新上房源立即通知", _leftKey,  
       hasCloseIcon: true);  
   },  
@@ -101,14 +101,14 @@ RaisedButton(
 
 ###  效果2：Tips/右
 
- <img src="./img/SantoPopupWindowDemo2.png" style="zoom:50%;" />
+ <img src="./img/SantoTooltipDemo2.png" style="zoom:50%;" />
 
 
 ```dart
 RaisedButton(  
   key: _leftKey4,  
   onPressed: () {  
-    SantoPopupWindow.showPopWindow(  
+    SantoTooltip.show(  
       context, "订阅搜索条件，新上房源立即通知", _leftKey4,  
       hasCloseIcon: true,  
       dismissCallback: () {},  
@@ -122,7 +122,7 @@ RaisedButton(
 
 ### 效果3：其他封装用法：Popup 中展示简单列表
 
-![image-20211028170442805](./img/SantoPopupWindowDemo3.png)
+![image-20211028170442805](./img/SantoTooltipDemo3.png)
 
 注意：onItemClick 必须返回 true 或 false 决定是否拦截点击事件， 如果为 true 拦截事件，则内部不再走 pop 消失逻辑。
 ```dart

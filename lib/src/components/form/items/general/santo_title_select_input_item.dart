@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/components/popup/santo_popup_window.dart';
+import 'package:santo_ui/src/components/tooltip/santo_tooltip.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';

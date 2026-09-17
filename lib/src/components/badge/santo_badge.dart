@@ -41,7 +41,7 @@ class SantoBadge extends StatelessWidget {
   /// 被包裹的子组件，徽标叠加在其右上角
   final Widget? child;
 
-  /// 自定义徽标内容，优先级高于 [count] 和 [isDot]
+  /// 自定义徽标内容，优先级高于 [count] 和 [isDot]；内容会放在徽标底色内
   final Widget? badgeContent;
 
   /// 是否始终显示，即使 count 为 0
@@ -87,13 +87,8 @@ class SantoBadge extends StatelessWidget {
     final txtColor = textColor ??
         SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBaseInverse;
 
-    // 自定义内容优先
-    if (badgeContent != null) {
-      return badgeContent!;
-    }
-
     // 红点模式
-    if (isDot) {
+    if (isDot && badgeContent == null) {
       return Container(
         width: badgeSize * 0.5,
         height: badgeSize * 0.5,
@@ -104,14 +99,23 @@ class SantoBadge extends StatelessWidget {
       );
     }
 
-    // 数字模式
+    // 数字模式:count 为 0 且未开启 showZero 时不展示
     final int displayCount = count ?? 0;
-    if (displayCount == 0 && !showZero) {
+    if (badgeContent == null && displayCount == 0 && !showZero) {
       return const SizedBox.shrink();
     }
 
-    final String text =
-        displayCount > maxCount ? '$maxCount+' : '$displayCount';
+    // 自定义内容优先,与数字一样放在徽标底色内
+    final Widget content = badgeContent ??
+        Text(
+          displayCount > maxCount ? '$maxCount+' : '$displayCount',
+          style: TextStyle(
+            color: txtColor,
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+            height: 1.2,
+          ),
+        );
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
@@ -124,15 +128,7 @@ class SantoBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(badgeSize / 2),
       ),
       alignment: Alignment.center,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: txtColor,
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          height: 1.2,
-        ),
-      ),
+      child: content,
     );
   }
 }

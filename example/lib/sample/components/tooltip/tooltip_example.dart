@@ -3,16 +3,15 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart';
 
-class PopWindowExamplePage extends StatefulWidget {
-  final String _title;
-
-  PopWindowExamplePage(this._title);
+/// SantoTooltip 文字提示示例
+class TooltipExample extends StatefulWidget {
+  const TooltipExample({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => PopWindowExamplePageState();
+  State<TooltipExample> createState() => _TooltipExampleState();
 }
 
-class PopWindowExamplePageState extends State<PopWindowExamplePage> {
+class _TooltipExampleState extends State<TooltipExample> {
   GlobalKey? _leftKey;
   GlobalKey? _leftKey1;
   GlobalKey? _leftKey2;
@@ -41,7 +40,7 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: SantoAppBar(
-          title: widget._title,
+          title: 'Tooltip 文字提示',
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -58,10 +57,10 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(context, "提示内容", _leftKey!,
+                          SantoTooltip.show(context, "提示内容", _leftKey!,
                               hasCloseIcon: true);
                         },
-                        child: Text("左侧带关闭Tips"),
+                        child: Text("左侧带关闭"),
                       ),
                     ),
                     Padding(
@@ -69,11 +68,11 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey1,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(
+                          SantoTooltip.show(
                               context, "提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容", _leftKey1!,
                               hasCloseIcon: false);
                         },
-                        child: Text("左侧带无关闭Tips"),
+                        child: Text("左侧带无关闭"),
                       ),
                     ),
                   ],
@@ -90,12 +89,12 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey2,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(context,
+                          SantoTooltip.show(context,
                               "提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容", _leftKey2!,
                               popDirection: SantoPopupDirection.top,
                               hasCloseIcon: true);
                         },
-                        child: Text("左侧带关闭，箭头朝下Tips"),
+                        child: Text("左侧带关闭，箭头朝下"),
                       ),
                     ),
                     Padding(
@@ -103,12 +102,12 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey3,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(
+                          SantoTooltip.show(
                               context, "提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容", _leftKey3!,
                               dismissCallback: () {},
                               popDirection: SantoPopupDirection.top);
                         },
-                        child: Text("左侧无关闭，箭头朝下Tips"),
+                        child: Text("左侧无关闭，箭头朝下"),
                       ),
                     ),
                   ],
@@ -125,13 +124,13 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey4,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(
+                          SantoTooltip.show(
                               context, "提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容", _leftKey4!,
                               hasCloseIcon: true,
                               dismissCallback: () {},
                               popDirection: SantoPopupDirection.bottom);
                         },
-                        child: Text("右侧带关闭Tips"),
+                        child: Text("右侧带关闭"),
                       ),
                     ),
                     Padding(
@@ -139,13 +138,13 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey5,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(
+                          SantoTooltip.show(
                               context, "提示内容提示内容提示内容提示内容", _leftKey5!,
                               hasCloseIcon: false,
                               dismissCallback: () {},
                               popDirection: SantoPopupDirection.bottom);
                         },
-                        child: Text("右侧无关闭Tips"),
+                        child: Text("右侧无关闭"),
                       ),
                     ),
                   ],
@@ -162,14 +161,14 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey6,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(
+                          SantoTooltip.show(
                               context, "提示内容提示内容提示内容提示内容提示内容提示内容", _leftKey6!,
                               hasCloseIcon: true,
                               canWrap: false,
                               dismissCallback: () {},
                               popDirection: SantoPopupDirection.top);
                         },
-                        child: Text("右侧带关闭，箭头朝下Tips"),
+                        child: Text("右侧带关闭，箭头朝下"),
                       ),
                     ),
                     Padding(
@@ -177,13 +176,13 @@ class PopWindowExamplePageState extends State<PopWindowExamplePage> {
                       child: SantoNormalButton(
                         key: _leftKey7,
                         onTap: () {
-                          SantoPopupWindow.showPopWindow(
+                          SantoTooltip.show(
                               context, "提示内容提示内容提示内容提示内容提示内容提示内容", _leftKey7!,
                               hasCloseIcon: false,
                               dismissCallback: () {},
                               popDirection: SantoPopupDirection.top);
                         },
-                        child: Text("右侧无关闭，箭头朝下Tips"),
+                        child: Text("右侧无关闭，箭头朝下"),
                       ),
                     ),
                   ],
