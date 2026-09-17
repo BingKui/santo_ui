@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class DrawerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Drawer 示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

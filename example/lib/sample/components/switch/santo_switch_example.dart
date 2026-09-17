@@ -21,7 +21,7 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '开关元件',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

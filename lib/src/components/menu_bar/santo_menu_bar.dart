@@ -406,7 +406,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: _commonConfig.fontSizeCaption,
               fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
               color: color,
             ),

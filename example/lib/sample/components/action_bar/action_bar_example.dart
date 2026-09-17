@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class ActionBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'ActionBar 操作栏',
       scrollable: false,
       child: ListView(
         children: [

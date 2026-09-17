@@ -596,6 +596,9 @@ class _SantoSearchResultAppBar extends StatelessWidget {
         .appBarConfig
         .merge(_defaultConfig);
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -633,7 +636,7 @@ class _SantoSearchResultAppBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 20),
+          padding: EdgeInsets.only(left: commonConfig.hSpacingLg),
         )
       ],
     );

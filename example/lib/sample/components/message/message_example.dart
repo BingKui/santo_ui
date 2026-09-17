@@ -10,7 +10,7 @@ class MessageExample extends StatefulWidget {
 class _MessageExampleState extends State<MessageExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Message 消息通知示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

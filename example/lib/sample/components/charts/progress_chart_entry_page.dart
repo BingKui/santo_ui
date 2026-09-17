@@ -13,7 +13,7 @@ class ProgressChartExampleState extends State<ProgressChartExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '数据展示',
       scrollable: false,
       child: Column(
         children: <Widget>[

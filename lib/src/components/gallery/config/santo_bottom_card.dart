@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_gallery_detail_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
@@ -55,10 +57,13 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
 
   /// 构建可折叠的card
   Widget buildFoldableWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (state == PhotoBottomCardState.fold) {
       return Container(
         height: 53,
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -92,7 +97,8 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
       );
     } else {
       return Padding(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
         child: Column(
           children: <Widget>[
             Container(
@@ -137,6 +143,8 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
 
   /// 构建不可折叠的 card, content 是一个 ScrollView
   Widget buildCantFoldWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +152,11 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
         Container(
           height: 53,
           child: Padding(
-            padding: EdgeInsets.only(top: 16, bottom: 12, left: 20, right: 20),
+            padding: EdgeInsets.only(
+                top: 16,
+                bottom: 12,
+                left: commonConfig.hSpacingLg,
+                right: commonConfig.hSpacingLg),
             child: Text(
               widget.name ?? "",
               style: widget.themeData!.titleStyle.generateTextStyle(),
@@ -160,7 +172,9 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
                     widget.des ?? "",
                     style: widget.themeData!.contentStyle.generateTextStyle(),
                   ),
-                  padding: EdgeInsets.only(left: 20, right: 20)),
+                  padding: EdgeInsets.only(
+                      left: commonConfig.hSpacingLg,
+                      right: commonConfig.hSpacingLg)),
             ))
       ],
     );

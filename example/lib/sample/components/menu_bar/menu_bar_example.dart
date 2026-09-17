@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class MenuBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'MenuBar 菜单栏',
       scrollable: false,
       child: ListView(
         children: [

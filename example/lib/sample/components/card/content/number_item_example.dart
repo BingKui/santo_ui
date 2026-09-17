@@ -12,7 +12,7 @@ class NumberItemRowExample extends StatefulWidget {
 class _NumberItemRowExampleState extends State<NumberItemRowExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '数字信息',
       scrollable: false,
       child: SafeArea(
         child: SingleChildScrollView(

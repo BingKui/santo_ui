@@ -13,7 +13,7 @@ class SantoTwoRichContentExample extends StatefulWidget {
 class _SantoTwoRichContentExampleState extends State<SantoTwoRichContentExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '两列复杂文本',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

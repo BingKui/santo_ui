@@ -277,6 +277,8 @@ class _SantoMessageWidgetState extends State<_SantoMessageWidget>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Positioned(
@@ -294,7 +296,7 @@ class _SantoMessageWidgetState extends State<_SantoMessageWidget>
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: widget.backgroundColor,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(commonConfig.radiusXs),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.15),
@@ -316,7 +318,7 @@ class _SantoMessageWidgetState extends State<_SantoMessageWidget>
                       widget.content,
                       style: TextStyle(
                         color: widget.textColor,
-                        fontSize: 14,
+                        fontSize: commonConfig.fontSizeBase,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

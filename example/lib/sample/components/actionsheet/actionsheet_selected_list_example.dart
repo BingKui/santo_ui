@@ -41,7 +41,7 @@ class SelectedListActionSheetExamplePageState
         }
         return true;
       },
-      child: SantoPageLayout(
+      child: SantoPageLayout(        title: '已选菜单列表',
         child: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,

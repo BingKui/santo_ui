@@ -20,7 +20,7 @@ class _PaginationExampleState extends State<PaginationExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Pagination 分页',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

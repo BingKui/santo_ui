@@ -5,6 +5,8 @@ import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
 import 'package:santo_ui/src/components/scroll_anchor/santo_scroll_anchor_tab.dart';
 import 'package:santo_ui/src/components/tabbar/normal/santo_tab_bar.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -77,12 +79,14 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
   }
 
   Widget _body() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<SantoBasicGroupConfig> allConfig = widget.allConfig;
     if (allConfig.length == 1) {
       return SingleChildScrollView(child: _buildItem(allConfig[0], 0));
     } else {
       return Padding(
-        padding: EdgeInsets.only(bottom: 20),
+        padding: EdgeInsets.only(bottom: commonConfig.vSpacingLg),
         child: SantoAnchorTab(
             widgetIndexedBuilder: (c, i) {
               return _buildItem(allConfig[i], i);
@@ -98,19 +102,25 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
   }
 
   Widget _buildItem(SantoBasicGroupConfig? groupConfig, int groupId) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (groupConfig == null) return Row();
     List<Widget> columnViews = <Widget>[];
     if (groupConfig.title != null) {
       columnViews.add(Container(
         height: 53,
         child: Padding(
-          padding: EdgeInsets.only(top: 16, bottom: 12, left: 20, right: 20),
+          padding: EdgeInsets.only(
+              top: 16,
+              bottom: 12,
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingLg),
           child: Text(
             '${groupConfig.title}(${groupConfig.configList?.length ?? 0})',
             style: TextStyle(
                 color: Color(0xFF17233D),
-                fontSize: 18,
-                fontWeight: FontWeight.w600),
+                fontSize: commonConfig.fontSizeHead,
+                fontWeight: FontWeight.w500),
           ),
         ),
       ));
@@ -144,11 +154,12 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         //水平子Widget之间间距
-        crossAxisSpacing: 10.0,
+        crossAxisSpacing: commonConfig.hSpacingSm,
         //垂直子Widget之间间距
-        mainAxisSpacing: 10.0,
+        mainAxisSpacing: commonConfig.vSpacingSm,
         //GridView内边距
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(
+            left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
         //一行的Widget数量
         crossAxisCount: widget.rowCount,
         //子Widget宽高比例

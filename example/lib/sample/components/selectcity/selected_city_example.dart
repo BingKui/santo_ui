@@ -124,7 +124,7 @@ class _CitySelectRouteState extends State<CitySelectRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: '选择城市 Example',
       scrollable: false,
       child: Column(
         children: <Widget>[

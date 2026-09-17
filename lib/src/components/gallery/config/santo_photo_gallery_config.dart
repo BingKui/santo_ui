@@ -2,6 +2,7 @@ import 'package:santo_ui/src/components/gallery/config/santo_basic_gallery_confi
 import 'package:santo_ui/src/components/gallery/config/santo_bottom_card.dart';
 import 'package:santo_ui/src/components/loading/santo_loading.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_gallery_detail_config.dart';
 import 'package:flutter/material.dart';
@@ -96,12 +97,14 @@ class SantoPhotoItemConfig extends SantoBasicItemConfig {
   @override
   Widget buildSummaryWidget(BuildContext context,
       List<SantoBasicGroupConfig> allConfig, int groupId, int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          borderRadius: BorderRadius.all(Radius.circular(commonConfig.radiusXs)),
           border: Border.all(color: Color(0xFFE8EAEC), width: 0.5)),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         child: FadeInImage.assetNetwork(
           image: url,
           fit: fit,

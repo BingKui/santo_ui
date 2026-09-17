@@ -15,7 +15,7 @@ class _SafeAreaExampleState extends State<SafeAreaExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'SafeArea 安全区域',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

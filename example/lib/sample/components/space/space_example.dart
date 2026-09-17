@@ -16,7 +16,7 @@ class SpaceExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Space 间距',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

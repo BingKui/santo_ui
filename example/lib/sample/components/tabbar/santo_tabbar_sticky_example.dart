@@ -38,7 +38,7 @@ class _SantoTabbarStickyExampleState extends State<SantoTabbarStickyExample>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: SantoPageLayout(
+        child: SantoPageLayout(          title: 'TabBar Sticky 效果',
           scrollable: false,
           child: NestedScrollView(
             controller: scrollController,

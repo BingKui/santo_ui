@@ -14,6 +14,7 @@ class _SkeletonExampleState extends State<SkeletonExample> {
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
+      title: 'Skeleton 骨架屏',
       backgroundColor: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

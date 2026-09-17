@@ -100,7 +100,8 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-          fontSize: 14,
+          fontSize:
+              SantoThemeConfigurator.instance.getConfig().commonConfig.fontSizeBase,
           fontWeight: FontWeight.w500,
           color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary),
     );
@@ -134,7 +135,8 @@ class _SantoTextButtonPanelState extends State<SantoTextButtonPanel> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-          fontSize: 14,
+          fontSize:
+              SantoThemeConfigurator.instance.getConfig().commonConfig.fontSizeBase,
           color: Color(0xff808695),
         ),
       );

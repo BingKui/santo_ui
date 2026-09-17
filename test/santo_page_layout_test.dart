@@ -110,6 +110,7 @@ void main() {
           ),
           child: SantoPageLayout(
             title: '测试',
+            scrollable: false,
             child: Builder(
               builder: (innerContext) => Text(
                 '${MediaQuery.of(innerContext).padding.bottom}',
@@ -133,6 +134,7 @@ void main() {
             size: const Size(400, 600),
             padding: const EdgeInsets.only(bottom: 34),
           ),
+          child: SantoPageLayout(
             scrollable: false,
             child: ListView(
               children: List.generate(
@@ -143,14 +145,15 @@ void main() {
       ),
     ));
 
-    // 视口铺满页面(不再在底部切出空白占位)
+    // 视口铺满页面(不再在底部切出空白占位),仅保留内容区固定的 pageGap 内边距
     final screen = tester.getRect(find.byType(Scaffold));
-    expect(tester.getRect(find.byType(ListView)).bottom, screen.bottom);
+    expect(tester.getRect(find.byType(ListView)).bottom,
+        screen.bottom - kPageGap);
 
     await tester.drag(find.byType(ListView), const Offset(0, -5000));
     await tester.pump();
     expect(tester.getRect(find.text('item 29')).bottom,
-        lessThanOrEqualTo(screen.bottom - 34));
+        lessThanOrEqualTo(screen.bottom - kPageGap - 34));
   });
 
   testWidgets('PageLayout 在 AppLayout 中自动预留悬浮菜单栏占位', (tester) async {

@@ -245,6 +245,8 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -296,7 +298,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                         TextStyle(
                             textBaseline: TextBaseline.alphabetic,
                             color: _defaultInputTextColor,
-                            fontSize: 16),
+                            fontSize: commonConfig.fontSizeSubHead),
                     // 装饰（`decoration`）属性，在文本字段周围显示的装饰。
                     decoration: InputDecoration(
                       // 边框属性，装饰的容器周围绘制的形状。
@@ -311,7 +313,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                       // 提示样式属性，用于提示文本（`hintText`）的样式。
                       hintStyle: widget.hintStyle ??
                           TextStyle(
-                            fontSize: 16,
+                            fontSize: commonConfig.fontSizeSubHead,
                             height: 1,
                             textBaseline: TextBaseline.alphabetic,
                             color: _defaultHintTextColor,
@@ -383,12 +385,12 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                           style: widget.dismissStyle ??
                               TextStyle(
                                   color: _defaultCancelTextColor,
-                                  fontSize: 16,
+                                  fontSize: commonConfig.fontSizeSubHead,
                                   height: 1,
                                   fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: commonConfig.hSpacingLg,
                         )
                       ],
                     ),

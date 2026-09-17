@@ -1,5 +1,6 @@
 import 'package:santo_ui/src/components/appraise/santo_flutter_gif_image.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// 评价组件单个表情包gif图
@@ -95,6 +96,8 @@ class _SantoAppraiseEmojiItemState extends State<SantoAppraiseEmojiItem>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return GestureDetector(
       child: Padding(
         padding: widget.padding,
@@ -110,8 +113,8 @@ class _SantoAppraiseEmojiItemState extends State<SantoAppraiseEmojiItem>
                   color: widget.index == widget.selectedIndex
                       ? Color(0xffffc300)
                       : Color(0xff808695),
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w600,
+                  fontSize: commonConfig.fontSizeCaption,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

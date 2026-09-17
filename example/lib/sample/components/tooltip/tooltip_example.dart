@@ -38,7 +38,7 @@ class _TooltipExampleState extends State<TooltipExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Tooltip 文字提示',
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

@@ -2,6 +2,7 @@ import 'package:santo_ui/src/components/appraise/santo_appraise.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_header.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_config.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_interface.dart';
 
@@ -86,14 +87,16 @@ class _SantoAppraiseBottomSheet extends StatefulWidget {
 class _SantoAppraiseBottomSheetState extends State<_SantoAppraiseBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
-    
+
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12.0),
-          topRight: Radius.circular(12.0),
+          topLeft: Radius.circular(commonConfig.radiusXs),
+          topRight: Radius.circular(commonConfig.radiusXs),
         ),
       ),
       child: Column(

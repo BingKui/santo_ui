@@ -30,7 +30,7 @@ class SantoHorizontalStepExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      appBar: SantoAppBar(title: widget.title),
       child: Column(
         children: [
           SantoSection(

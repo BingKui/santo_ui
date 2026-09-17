@@ -56,7 +56,7 @@ class _SwiperExampleState extends State<SwiperExample> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Swiper 示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

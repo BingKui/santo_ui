@@ -110,7 +110,7 @@ class SantoAvatar extends StatelessWidget {
                   .commonConfig
                   .colorTextBaseInverse,
               fontSize: size * 0.4,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
       ));
     } else if (icon != null) {
@@ -289,7 +289,7 @@ class SantoAvatarGroup extends StatelessWidget {
                     .commonConfig
                     .colorTextBaseInverse,
                 fontSize: size * 0.35,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),

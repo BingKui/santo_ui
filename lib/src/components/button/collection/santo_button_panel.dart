@@ -201,7 +201,10 @@ class _SantoButtonPanelState extends State<SantoButtonPanel> {
                         color: _secondaryButtonList[index + 2].isEnable
                             ? SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase
                             : SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextHint,
-                        fontSize: 16));
+                        fontSize: SantoThemeConfigurator.instance
+                            .getConfig()
+                            .commonConfig
+                            .fontSizeSubHead));
               },
               popDirection: widget.popDirection,
               onItemClick: (index, item) {

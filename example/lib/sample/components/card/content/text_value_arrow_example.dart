@@ -14,7 +14,7 @@ class _TextValueArrowContentExampleState
     extends State<TextValueArrowContentExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'value带有操作箭头',
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -10,7 +10,7 @@ class CellExample extends StatefulWidget {
 class _CellExampleState extends State<CellExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(
+    return SantoPageLayout(      title: 'Cell 示例',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

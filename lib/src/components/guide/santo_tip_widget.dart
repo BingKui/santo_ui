@@ -156,6 +156,8 @@ class SantoTipInfoWidget extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -164,7 +166,7 @@ class SantoTipInfoWidget extends StatelessWidget {
               offset: Offset(0, 2),
               color: Color(0x15000000))
         ],
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         color: Colors.white,
         border: mode == GuideMode.force
             ? null
@@ -195,6 +197,8 @@ class SantoTipInfoWidget extends StatelessWidget {
   }
 
   Widget buildTitle() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 18,
       margin: EdgeInsets.only(top: 14),
@@ -207,9 +211,9 @@ class SantoTipInfoWidget extends StatelessWidget {
             child: Text(
               "${info.title}",
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: commonConfig.fontSizeBase,
                   color: Color(0XFF17233D),
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w500),
             ),
           ),
           Positioned(
@@ -233,16 +237,23 @@ class SantoTipInfoWidget extends StatelessWidget {
 
   Widget buildMessage() {
     if (info.message.isEmpty) return Row();
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
       padding: EdgeInsets.only(top: 6),
       child: Text('${info.message}',
-          style: TextStyle(fontSize: 14, color: Color(0xFF808695), height: 1.3),
+          style: TextStyle(
+              fontSize: commonConfig.fontSizeBase,
+              color: Color(0xFF808695),
+              height: 1.3),
           maxLines: 3),
     );
   }
 
   Widget _buildSoftBottom(BuildContext context) {
     if (onNext == null && onSkip == null) return Row();
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 32,
       margin: EdgeInsets.only(top: 12),
@@ -263,8 +274,9 @@ class SantoTipInfoWidget extends StatelessWidget {
                         },
                         child: Text(
                           '${SantoIntl.of(context).localizedResource.skip} (${currentStepIndex + 1}/$stepCount)',
-                          style:
-                              TextStyle(color: Color(0xFF808695), fontSize: 14),
+                          style: TextStyle(
+                              color: Color(0xFF808695),
+                              fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
                     ))
@@ -285,7 +297,8 @@ class SantoTipInfoWidget extends StatelessWidget {
                             .getConfig()
                             .commonConfig
                             .brandPrimary,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius:
+                            BorderRadius.circular(commonConfig.radiusXs),
                       ),
                       child: GestureDetector(
                         onTap: () {
@@ -296,7 +309,9 @@ class SantoTipInfoWidget extends StatelessWidget {
                               (stepCount == currentStepIndex + 1
                                   ? SantoIntl.of(context).localizedResource.known
                                   : SantoIntl.of(context).localizedResource.next),
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
                     ),
@@ -310,6 +325,8 @@ class SantoTipInfoWidget extends StatelessWidget {
 
   Widget _buildForceBottom(BuildContext context) {
     if (onNext == null && onSkip == null) return Row();
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 20,
       margin: EdgeInsets.only(top: 12),
@@ -330,8 +347,9 @@ class SantoTipInfoWidget extends StatelessWidget {
                         },
                         child: Text(
                           '${SantoIntl.of(context).localizedResource.skip} (${currentStepIndex + 1}/$stepCount)',
-                          style:
-                              TextStyle(color: Color(0xFF808695), fontSize: 14),
+                          style: TextStyle(
+                              color: Color(0xFF808695),
+                              fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
                     ))
@@ -360,7 +378,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                                   .getConfig()
                                   .commonConfig
                                   .brandPrimary,
-                              fontSize: 14),
+                              fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
                     ),
