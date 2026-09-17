@@ -16,11 +16,13 @@ class CalendarExample extends StatefulWidget {
 class TagViewExamplePageState extends State<CalendarExample> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: widget._title,
         ),
-        body: Padding(
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
           child: ListView(
             children: <Widget>[
@@ -56,7 +58,8 @@ class TagViewExamplePageState extends State<CalendarExample> {
               ),
             ],
           ),
-        ));
+        ),
+    );
   }
 
   Widget _calendarViewWeekNocontroll(context) {

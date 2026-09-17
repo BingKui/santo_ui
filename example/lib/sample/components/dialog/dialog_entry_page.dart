@@ -10,11 +10,13 @@ class DialogEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: _title,
         ),
-        body: ListView(
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             ListItem(
               title: "富文本弹窗",
@@ -242,7 +244,8 @@ class DialogEntryPage extends StatelessWidget {
               },
             ),
           ],
-        ));
+        ),
+    );
   }
 
   void _showMiddleSingleSelectPicker(BuildContext context) {

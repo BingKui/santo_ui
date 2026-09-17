@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 class AppbarEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: 'NavBar示例',
-        ),
-        body: ListView(
+    return SantoPageLayout(
+      title: 'NavBar示例',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             ListItem(
               title: "NavBar示例",
@@ -113,7 +113,8 @@ class AppbarEntryPage extends StatelessWidget {
               },
             ),
           ],
-        ));
+        ),
+    );
   }
 
   _openNavBarPage(BuildContext context, int index) {

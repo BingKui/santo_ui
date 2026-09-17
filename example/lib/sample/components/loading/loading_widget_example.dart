@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 class LoadingExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: 'Loading案例',
-      ),
-      body: Center(
+    return SantoPageLayout(
+      title: 'Loading案例',
+      padding: EdgeInsets.zero,
+      child: Center(
           child: Column(children: [
         SantoSection(
           title: '默认文案 Loading',

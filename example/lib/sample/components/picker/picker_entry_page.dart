@@ -20,11 +20,13 @@ class PickerEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: _title,
         ),
-        body: ListView(
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             ListItem(
               title: "MultiDataPicker",
@@ -133,7 +135,8 @@ class PickerEntryPage extends StatelessWidget {
               },
             ),
           ],
-        ));
+        ),
+    );
   }
 
   ///多选弹框

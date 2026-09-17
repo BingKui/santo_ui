@@ -13,11 +13,11 @@ import 'package:flutter/services.dart';
 class FlatSelectionEntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: 'Selection 示例',
-        ),
-        body: ListView(
+    return SantoPageLayout(
+      title: 'Selection 示例',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -121,6 +121,7 @@ class FlatSelectionEntryPage extends StatelessWidget {
               },
             ),
           ],
-        ));
+        ),
+    );
   }
 }

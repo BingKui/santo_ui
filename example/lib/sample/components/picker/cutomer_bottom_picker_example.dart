@@ -9,11 +9,11 @@ class CustomPickerExamplePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: '自定义底部弹窗',
-        ),
-        body: ListView(
+    return SantoPageLayout(
+      title: '自定义底部弹窗',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             SantoSection(
               title: '输入框内容',
@@ -146,6 +146,7 @@ class CustomPickerExamplePage extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+    );
   }
 }

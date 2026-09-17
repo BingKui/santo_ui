@@ -93,6 +93,15 @@ class GroupInfo {
   List<GroupInfo>? children;
   Function(BuildContext context)? navigatorPage;
 
+  /// 底部菜单栏上的短标签(分组名超过两个字时使用)
+  String? shortName;
+
+  /// 底部菜单栏图标
+  IconData? icon;
+
+  /// 未选中图标,为空时与 [icon] 相同
+  IconData? unselectedIcon;
+
   GroupInfo({
     this.groupId,
     this.groupName = "",
@@ -100,6 +109,9 @@ class GroupInfo {
     this.isExpand = false,
     this.navigatorPage,
     this.children,
+    this.shortName,
+    this.icon,
+    this.unselectedIcon,
   });
 }
 
@@ -129,7 +141,14 @@ class CardDataConfig {
       _item("SafeArea 安全区域", "顶部与底部安全区域", SafeAreaExample()),
       _item("CardContent 卡片内容", "文本展示与展开", TextContentEntryPage()),
     ];
-    return GroupInfo(groupName: "通用", children: children, isExpand: true);
+    return GroupInfo(
+      groupName: "通用",
+      shortName: "通用",
+      icon: Icons.widgets,
+      unselectedIcon: Icons.widgets_outlined,
+      children: children,
+      isExpand: true,
+    );
   }
 
   // ========== 布局 ==========
@@ -143,7 +162,13 @@ class CardDataConfig {
       _item("AppLayout 应用布局", "底部悬浮菜单栏 + 多页面", AppLayoutExample()),
       _item("PageLayout 页面布局", "可配置导航栏 + 滚动内容容器", PageLayoutExample()),
     ];
-    return GroupInfo(groupName: "布局", children: children);
+    return GroupInfo(
+      groupName: "布局",
+      shortName: "布局",
+      icon: Icons.dashboard,
+      unselectedIcon: Icons.dashboard_outlined,
+      children: children,
+    );
   }
 
   // ========== 导航 ==========
@@ -160,7 +185,13 @@ class CardDataConfig {
       _item("Guide 引导", "新手操作引导", GuideEntryPage()),
       _item("ActionBar 操作栏", "底部操作栏", ActionBarExample()),
     ];
-    return GroupInfo(groupName: "导航", children: children);
+    return GroupInfo(
+      groupName: "导航",
+      shortName: "导航",
+      icon: Icons.explore,
+      unselectedIcon: Icons.explore_outlined,
+      children: children,
+    );
   }
 
   // ========== 数据录入 ==========
@@ -183,7 +214,14 @@ class CardDataConfig {
       _item("Calendar 日历", "日历日期选择", CalendarExample("日历组件")),
       _item("CitySelection 城市选择", "城市列表选择", _buildCitySelectionPage()),
     ];
-    return GroupInfo(groupName: "数据录入", children: children, isExpand: false);
+    return GroupInfo(
+      groupName: "数据录入",
+      shortName: "录入",
+      icon: Icons.edit,
+      unselectedIcon: Icons.edit_outlined,
+      children: children,
+      isExpand: false,
+    );
   }
 
   // ========== 数据展示 ==========
@@ -214,7 +252,13 @@ class CardDataConfig {
       _item("Footer 页脚", "页面底部信息", FooterExample()),
       _item("Gallery 图片浏览", "大图预览", GalleryExample()),
     ];
-    return GroupInfo(groupName: "数据展示", children: children);
+    return GroupInfo(
+      groupName: "数据展示",
+      shortName: "展示",
+      icon: Icons.insert_chart,
+      unselectedIcon: Icons.insert_chart_outlined,
+      children: children,
+    );
   }
 
   // ========== 反馈 ==========
@@ -232,7 +276,14 @@ class CardDataConfig {
       _item("Result 结果", "操作结果反馈", ResultExample()),
       _item("Appraise 评价", "评分评价组件", AppraiseExample()),
     ];
-    return GroupInfo(groupName: "反馈", children: children, isExpand: false);
+    return GroupInfo(
+      groupName: "反馈",
+      shortName: "反馈",
+      icon: Icons.chat_bubble,
+      unselectedIcon: Icons.chat_bubble_outline,
+      children: children,
+      isExpand: false,
+    );
   }
 
   // ========== 数据图表 ==========
@@ -254,7 +305,14 @@ class CardDataConfig {
       _item("ProgressChart 进度图", "进度展示图", ProgressChartExample()),
       _item("BarChart 柱状图", "柱状数据图", ProgressBarChartExample()),
     ];
-    return GroupInfo(groupName: "数据图表", children: children, isExpand: true);
+    return GroupInfo(
+      groupName: "数据图表",
+      shortName: "图表",
+      icon: Icons.auto_graph,
+      unselectedIcon: Icons.auto_graph_outlined,
+      children: children,
+      isExpand: true,
+    );
   }
 
   // ========== 工具方法 ==========

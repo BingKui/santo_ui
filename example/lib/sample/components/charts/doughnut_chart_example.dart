@@ -46,11 +46,11 @@ class DoughnutChartExampleState extends State<DoughnutChartExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: '数据展示',
-      ),
-      body: ListView(
+    return SantoPageLayout(
+      title: '数据展示',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: <Widget>[
           // 环状图与图例
           SantoSection(

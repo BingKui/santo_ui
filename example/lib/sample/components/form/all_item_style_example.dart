@@ -34,11 +34,13 @@ class AllFormItemStyleExamplePage extends StatelessWidget {
     if (this.hideAppBar) {
       return this.getBodyWidget(context);
     }
-    return Scaffold(
+    return SantoPageLayout(
         appBar: SantoAppBar(
           title: _title,
         ),
-        body: this.getBodyWidget(context));
+        padding: EdgeInsets.zero,
+        scrollable: false,
+        child: this.getBodyWidget(context));
   }
 
   Widget getBodyWidget(BuildContext context) {

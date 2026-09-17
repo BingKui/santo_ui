@@ -10,11 +10,11 @@ class EmptyExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: '异常页面',
-        ),
-        body: _buildEmpty(caseIndex, context));
+    return SantoPageLayout(
+        title: '异常页面',
+        padding: EdgeInsets.zero,
+        scrollable: false,
+        child: _buildEmpty(caseIndex, context));
   }
 
   Widget? _buildEmpty(int? index, BuildContext context) {

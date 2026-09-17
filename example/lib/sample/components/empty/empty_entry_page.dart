@@ -12,11 +12,13 @@ class EmptyEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: _title,
         ),
-        body: ListView(
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             ListItem(
               title: "异常信息+操作",
@@ -111,6 +113,7 @@ class EmptyEntryPage extends StatelessWidget {
               },
             ),
           ],
-        ));
+        ),
+    );
   }
 }

@@ -13,11 +13,11 @@ import 'package:flutter/material.dart';
 class TagExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: "标签示例",
-      ),
-      body: ListView(
+    return SantoPageLayout(
+      title: "标签示例",
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: [
           ListItem(
             title: "选择标签",

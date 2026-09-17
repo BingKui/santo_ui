@@ -71,11 +71,11 @@ List<Map<String, List>> list = [
 class MultiPickerExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
-          title: '多列选择picker',
-        ),
-        body: ListView(
+    return SantoPageLayout(
+      title: '多列选择picker',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
           children: <Widget>[
             SantoSection(
               title: '单列选择',
@@ -179,7 +179,8 @@ class MultiPickerExamplePage extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+    );
   }
 
   List<SantoMultiDataPickerEntity> _getDefaultDelegateData() {

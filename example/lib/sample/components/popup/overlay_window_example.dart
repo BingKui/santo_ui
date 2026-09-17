@@ -24,22 +24,22 @@ class OverlayWindowExamplePageState extends State<OverlayWindowExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: SantoAppBar(
+    return SantoPageLayout(
+      appBar: SantoAppBar(
           title: widget._title,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SantoSection(
-                title: '基础用法',
-                description: '输入关键字自动弹出悬浮层，清空或提交内容后自动关闭',
-                child: _searchBar(),
-              ),
-            ],
-          ),
-        ));
+      padding: EdgeInsets.zero,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SantoSection(
+              title: '基础用法',
+              description: '输入关键字自动弹出悬浮层，清空或提交内容后自动关闭',
+              child: _searchBar(),
+            ),
+          ],
+        ),
+    );
   }
 
   ///

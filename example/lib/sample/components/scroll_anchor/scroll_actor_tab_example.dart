@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 class ScrollActorTabExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: '锚点',
-      ),
-      body: SantoAnchorTab(
+    return SantoPageLayout(
+      title: '锚点',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: SantoAnchorTab(
         itemCount: 20,
         widgetIndexedBuilder: (context, index) {
           return StatefulBuilder(builder: (_, state) {

@@ -5,6 +5,12 @@ import 'package:santo_ui/src/theme/base/santo_default_config_utils.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/painting.dart';
 
+/// 页面左右/区块间距
+///
+/// 用作 [SantoCommonConfig.pageGap] 的兜底值:新字段不写"回退默认单例"的写法,
+/// 否则热重载保留的旧静态实例(该字段为 null)会让 getter 自我递归成 Stack Overflow
+const double kSantoPageGap = 12;
+
 /// 描述: 全局配置
 /// 配置属性：色值、字体大小、间距、圆角
 class SantoCommonConfig extends SantoBaseConfig {
@@ -55,6 +61,7 @@ class SantoCommonConfig extends SantoBaseConfig {
     double? vSpacingLg,
     double? vSpacingXl,
     double? vSpacingXxl,
+    double? pageGap,
     double? iconSizeXxs,
     double? iconSizeXs,
     double? iconSizeSm,
@@ -107,6 +114,7 @@ class SantoCommonConfig extends SantoBaseConfig {
         _vSpacingLg = vSpacingLg,
         _vSpacingXl = vSpacingXl,
         _vSpacingXxl = vSpacingXxl,
+        _pageGap = pageGap,
         _iconSizeXxs = iconSizeXxs,
         _iconSizeXs = iconSizeXs,
         _iconSizeSm = iconSizeSm,
@@ -161,6 +169,7 @@ class SantoCommonConfig extends SantoBaseConfig {
     double? vSpacingLg,
     double? vSpacingXl,
     double? vSpacingXxl,
+    double? pageGap,
     double? iconSizeXxs,
     double? iconSizeXs,
     double? iconSizeSm,
@@ -213,6 +222,7 @@ class SantoCommonConfig extends SantoBaseConfig {
         _vSpacingLg = vSpacingLg,
         _vSpacingXl = vSpacingXl,
         _vSpacingXxl = vSpacingXxl,
+        _pageGap = pageGap,
         _iconSizeXxs = iconSizeXxs,
         _iconSizeXs = iconSizeXs,
         _iconSizeSm = iconSizeSm,
@@ -347,20 +357,19 @@ class SantoCommonConfig extends SantoBaseConfig {
   double? _fontSizeCaption;
 
   ///辅助字体-小
-  /// 默认为 11
+  /// 默认为 10
   double? _fontSizeCaptionSm;
 
-  /// 圆角尺寸
-  /// 默认为 2.0
+  /// 圆角尺寸 iRadius，统一 12
   double? _radiusXs;
 
-  /// 默认为 4.0
+  /// 统一 12
   double? _radiusSm;
 
-  /// 默认为 6.0
+  /// 统一 12
   double? _radiusMd;
 
-  /// 默认为 8.0
+  /// 统一 12
   double? _radiusLg;
 
   /// 边框尺寸
@@ -374,43 +383,47 @@ class SantoCommonConfig extends SantoBaseConfig {
   /// 默认为 2
   double? _borderWidthLg;
 
-  /// 水平间距
-  /// 默认为 8
+  /// 水平间距 iDefaultGap 梯度 5/10/15/20/40
+  /// 默认为 5
   double? _hSpacingXs;
 
-  /// 默认为 12
+  /// 默认为 10
   double? _hSpacingSm;
 
-  /// 默认为 16
+  /// 默认为 15
   double? _hSpacingMd;
 
   /// 默认为 20
   double? _hSpacingLg;
 
-  /// 默认为 24
+  /// 默认为 20
   double? _hSpacingXl;
 
-  /// 默认为 42
+  /// 默认为 40
   double? _hSpacingXxl;
 
-  /// 垂直间距
-  /// 默认为 4
+  /// 垂直间距 iDefaultGap 梯度 5/10/15/20/40
+  /// 默认为 5
   double? _vSpacingXs;
 
-  /// 默认为 8
+  /// 默认为 10
   double? _vSpacingSm;
 
-  /// 默认为 12
+  /// 默认为 15
   double? _vSpacingMd;
 
-  /// 默认为 14
+  /// 默认为 20
   double? _vSpacingLg;
 
-  /// 默认为 16
+  /// 默认为 20
   double? _vSpacingXl;
 
-  /// 默认为 28
+  /// 默认为 40
   double? _vSpacingXxl;
+
+  /// 页面左右/区块间距 iPageGap
+  /// 默认为 12
+  double? _pageGap;
 
   /// 图标尺寸
   /// 默认为 8
@@ -580,6 +593,8 @@ class SantoCommonConfig extends SantoBaseConfig {
   double get vSpacingXxl =>
       _vSpacingXxl ?? SantoDefaultConfigUtils.defaultCommonConfig.vSpacingXxl;
 
+  double get pageGap => _pageGap ?? kSantoPageGap;
+
   double get iconSizeXxs =>
       _iconSizeXxs ?? SantoDefaultConfigUtils.defaultCommonConfig.iconSizeXxs;
 
@@ -653,6 +668,7 @@ class SantoCommonConfig extends SantoBaseConfig {
     _vSpacingLg ??= commonConfig._vSpacingLg;
     _vSpacingXl ??= commonConfig._vSpacingXl;
     _vSpacingXxl ??= commonConfig._vSpacingXxl;
+    _pageGap ??= commonConfig._pageGap;
     _iconSizeXxs ??= commonConfig._iconSizeXxs;
     _iconSizeXs ??= commonConfig._iconSizeXs;
     _iconSizeSm ??= commonConfig._iconSizeSm;

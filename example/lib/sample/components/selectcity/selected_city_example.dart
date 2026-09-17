@@ -124,11 +124,11 @@ class _CitySelectRouteState extends State<CitySelectRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(
-        title: '选择城市 Example',
-      ),
-      body: Column(
+    return SantoPageLayout(
+      title: '选择城市 Example',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: Column(
         children: <Widget>[
           Expanded(
               flex: 1,

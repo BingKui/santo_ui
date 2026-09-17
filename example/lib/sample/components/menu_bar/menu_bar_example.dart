@@ -11,9 +11,11 @@ import 'package:flutter/material.dart';
 class MenuBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SantoAppBar(title: 'MenuBar 菜单栏'),
-      body: ListView(
+    return SantoPageLayout(
+      title: 'MenuBar 菜单栏',
+      padding: EdgeInsets.zero,
+      scrollable: false,
+      child: ListView(
         children: [
           ListItem(
             title: '默认样式',
