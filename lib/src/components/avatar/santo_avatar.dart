@@ -270,8 +270,6 @@ class SantoAvatarGroup extends StatelessWidget {
         Positioned(
           left: displayCount * (size - overlap),
           child: Container(
-            width: size,
-            height: size,
             decoration: BoxDecoration(
               color: SantoThemeConfigurator.instance
                   .getConfig()
@@ -280,16 +278,21 @@ class SantoAvatarGroup extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 2),
             ),
-            alignment: Alignment.center,
-            child: Text(
-              '+$remaining',
-              style: TextStyle(
-                color: SantoThemeConfigurator.instance
-                    .getConfig()
-                    .commonConfig
-                    .colorTextBaseInverse,
-                fontSize: size * 0.35,
-                fontWeight: FontWeight.w500,
+            child: SizedBox(
+              width: size,
+              height: size,
+              child: Center(
+                child: Text(
+                  '+$remaining',
+                  style: TextStyle(
+                    color: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .colorTextBaseInverse,
+                    fontSize: size * 0.35,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
           ),

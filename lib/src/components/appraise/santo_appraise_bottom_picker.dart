@@ -1,13 +1,16 @@
 import 'package:santo_ui/src/components/appraise/santo_appraise.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_header.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_config.dart';
+import 'package:santo_ui/src/components/drawer/santo_bottom_drawer.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
-import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_interface.dart';
 
-/// 描述: 评价组件bottom picker，
-/// 使用 showModalBottomSheet 从底部弹出，支持顶部圆角和安全区域处理
+/// 描述: 评价组件bottom picker
+///
+/// 复用底部弹窗组件 [SantoBottomDrawer] 从底部弹出评价面板:
+/// 圆角、最大高度、遮罩、底部安全区域都由弹窗统一处理,
+/// 标题与关闭按钮沿用评价组件自身的 header
 class SantoAppraiseBottomPicker {
   /// 从底部弹出评价组件
   ///
@@ -20,8 +23,8 @@ class SantoAppraiseBottomPicker {
   /// * [inputHintText] 输入框允许提示文案
   /// * [onConfirm] 提交按钮的点击回调
   /// * [config] 评价组件的配置项
-  /// * [isScrollControlled] 是否允许弹窗高度自适应，默认 true
   /// * [barrierColor] 遮罩层颜色，默认半透明黑色
+  /// * [barrierDismissible] 点击遮罩是否关闭，默认 true
   static Future<T?> show<T>({
     required BuildContext context,
     String title = '',
@@ -32,98 +35,33 @@ class SantoAppraiseBottomPicker {
     String inputHintText = '',
     SantoAppraiseConfirmClick? onConfirm,
     SantoAppraiseConfig config = const SantoAppraiseConfig(),
-    bool isScrollControlled = true,
     Color? barrierColor,
+    bool barrierDismissible = true,
   }) {
-    return showModalBottomSheet<T>(
+    return SantoBottomDrawer.show<T>(
       context: context,
-      isScrollControlled: isScrollControlled,
-      backgroundColor: Colors.transparent,
-      barrierColor: barrierColor ?? Colors.black.withAlpha(0x66),
-      builder: (BuildContext context) {
-        return _SantoAppraiseBottomSheet(
+      // 标题与关闭按钮沿用评价组件自身的 header
+      showCloseButton: false,
+      barrierDismissible: barrierDismissible,
+      maskColor: barrierColor,
+      contentPadding: EdgeInsets.zero,
+      child: SingleChildScrollView(
+        child: SantoAppraise(
           title: title,
           headerType: headerType,
           type: type,
-          iconDescriptions: iconDescriptions ?? SantoIntl.of(context).localizedResource.appriseLevel,
+          iconDescriptions:
+              iconDescriptions ?? SantoIntl.of(context).localizedResource.appriseLevel,
           tags: tags,
           inputHintText: inputHintText,
-          onConfirm: onConfirm,
+          onConfirm: (index, list, input) {
+            if (onConfirm != null) {
+              onConfirm(index, list, input);
+            }
+            Navigator.of(context).pop();
+          },
           config: config,
-        );
-      },
-    );
-  }
-}
-
-/// 底部弹出评价组件的内部实现
-class _SantoAppraiseBottomSheet extends StatefulWidget {
-  final String title;
-  final SantoAppraiseHeaderType headerType;
-  final SantoAppraiseType type;
-  final List<String>? iconDescriptions;
-  final List<String>? tags;
-  final String inputHintText;
-  final SantoAppraiseConfirmClick? onConfirm;
-  final SantoAppraiseConfig config;
-
-  const _SantoAppraiseBottomSheet({
-    Key? key,
-    this.title = '',
-    this.headerType = SantoAppraiseHeaderType.spaceBetween,
-    this.type = SantoAppraiseType.star,
-    this.iconDescriptions,
-    this.tags,
-    this.inputHintText = '',
-    this.onConfirm,
-    this.config = const SantoAppraiseConfig(),
-  }) : super(key: key);
-
-  @override
-  State<_SantoAppraiseBottomSheet> createState() =>
-      _SantoAppraiseBottomSheetState();
-}
-
-class _SantoAppraiseBottomSheetState extends State<_SantoAppraiseBottomSheet> {
-  @override
-  Widget build(BuildContext context) {
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(commonConfig.radiusXs),
-          topRight: Radius.circular(commonConfig.radiusXs),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Flexible(
-            child: SingleChildScrollView(
-              child: SantoAppraise(
-                title: widget.title,
-                headerType: widget.headerType,
-                type: widget.type,
-                iconDescriptions: widget.iconDescriptions,
-                tags: widget.tags,
-                inputHintText: widget.inputHintText,
-                onConfirm: (index, list, input) {
-                  if (widget.onConfirm != null) {
-                    widget.onConfirm!(index, list, input);
-                  }
-                  Navigator.of(context).pop();
-                },
-                config: widget.config,
-              ),
-            ),
-          ),
-          // 底部安全区域
-          SizedBox(height: bottomPadding),
-        ],
       ),
     );
   }

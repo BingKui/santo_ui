@@ -219,19 +219,14 @@ class _SantoAppraiseState extends State<SantoAppraise> {
     if (widget.config.showTextInput) {
       return Padding(
         padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
-        child: Container(
+        child: ConstrainedBox(
           constraints: BoxConstraints(
               maxHeight: widget.config.inputMaxHeight, minHeight: 40),
-          padding: EdgeInsets.all(commonConfig.pageGap),
-          decoration: BoxDecoration(
-            color: Color(0xfff8f8f8),
-            borderRadius: BorderRadius.circular(8),
-          ),
           child: SantoInputText(
-            borderless: true,
             maxLines: null,
-            minLines: 1,
+            minLines: 3,
             maxLength: widget.config.maxLength,
+            indicator: true,
             hintText: widget.inputHintText,
             initialValue: (_inputText ?? widget.config.inputDefaultText) ?? '',
             onChanged: (input) {

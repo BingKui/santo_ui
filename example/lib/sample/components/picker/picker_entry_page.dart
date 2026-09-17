@@ -69,15 +69,15 @@ class PickerEntryPage extends StatelessWidget {
             },
           ),
           ListItem(
-            title: "Picker/多选/点选（SantoMultiSelectTagsPicker）",
-            describe: "底部多选弹框",
+            title: "Picker/标签选择（SantoTagsPicker）",
+            describe: "底部标签弹框，支持多选/单选与输入框",
             onPressed: () {
               _showMulSelectTagPicker(context);
             },
           ),
           ListItem(
-            title: "Picker/多选/点选（SantoSelectTagsWithInputPicker）",
-            describe: "底部多选弹框带输入框",
+            title: "Picker/标签选择-带输入框（SantoTagsPicker）",
+            describe: "单选 + 输入框",
             onPressed: () {
               _showSelectTagsWithTextInputPicker(context);
             },
@@ -339,10 +339,10 @@ class PickerEntryPage extends StatelessWidget {
       items.add(item);
     }
 
-    SantoMultiSelectTagsPicker(
+    SantoTagsPicker(
       context: context,
       //排列样式 默认 平均分配排序
-      layoutStyle: SantoMultiSelectTagsLayoutStyle.average,
+      layoutStyle: SantoTagsPickerLayoutStyle.average,
       //一行多少个 默认4个
       crossAxisCount: 4,
       //最大选中数目 - 不设置 或者设置为0 则可以全选
@@ -365,8 +365,8 @@ class PickerEntryPage extends StatelessWidget {
         selectedTagBackgroudColor: Color(0x141677FF),
         selectedTagTitleColor: Color(0xFF1677FF),
       ),
-      onConfirm: (value) {
-        SantoToast.show(value.toString(), context);
+      onConfirm: (tags, text) {
+        SantoToast.show('选中 ${tags.length} 个标签', context);
       },
       onCancel: () {
         SantoToast.show('点击了取消按钮', context);
@@ -377,7 +377,7 @@ class PickerEntryPage extends StatelessWidget {
     ).show();
   }
 
-  ///标签选择弹框
+  ///标签选择弹框(单选 + 输入框)
   void _showSelectTagsWithTextInputPicker(BuildContext context) {
     List tags = [
       '我',
@@ -389,36 +389,38 @@ class PickerEntryPage extends StatelessWidget {
       '我是可选择的标签1',
     ];
 
-    List<SantoTagInputItemBean> items = [];
+    List<SantoTagItemBean> items = [];
     for (int i = 0; i < tags.length; i++) {
       String it = tags[i];
-      SantoTagInputItemBean item =
-          SantoTagInputItemBean(name: it, index: i, needExpend: (i % 2 == 0));
-      items.add(item);
+      items.add(SantoTagItemBean(name: it, code: it, index: i));
     }
 
-    showDialog(
-        context: context,
-        builder: (_) => SantoSelectTagsWithInputPicker(
-              title: '这里是标题文字',
-              hintText: '请输入',
-              confirm: (context, selectedTags, string) {
-                Navigator.of(context).pop();
-                return;
-              },
-              defaultText: "",
-              tagPickerConfig: SantoTagsInputPickerConfig(
-                tagItemSource: items,
-                tagTitleFontSize: 12,
-                tagTitleColor: Color(0xff222222),
-                tagBackgroundColor: Color(0xffF8F8F8),
-                selectedTagBackgroundColor: Color(0x141677FF),
-                selectedTagTitleColor: Color(0xFF1677FF),
-              ),
-              onTagValueGetter: (choice) {
-                return choice.name;
-              },
-            ));
+    SantoTagsPicker(
+      context: context,
+      // 单选 + 带输入框
+      multiSelect: false,
+      showTextInput: true,
+      hintText: '请输入',
+      maxLength: 100,
+      layoutStyle: SantoTagsPickerLayoutStyle.auto,
+      pickerTitleConfig: SantoPickerTitleConfig(
+        titleContent: '这里是标题文字',
+      ),
+      tagPickerConfig: SantoTagsPickerConfig(
+        tagItemSource: items,
+        tagTitleFontSize: 12,
+        tagTitleColor: Color(0xff222222),
+        tagBackgroudColor: Color(0xffF8F8F8),
+        selectedTagBackgroudColor: Color(0x141677FF),
+        selectedTagTitleColor: Color(0xFF1677FF),
+      ),
+      onConfirm: (tags, text) {
+        SantoToast.show('选中 ${tags.length} 个标签，输入：$text', context);
+      },
+      onTagValueGetter: (choice) {
+        return choice.name;
+      },
+    ).show();
   }
 
   ///底部多级弹框

@@ -19,18 +19,18 @@ abstract class SantoBaseConfig {
   /// 部分代码示意如下：
   ///
   /// ```dart
-  /// cardTitleConfig.detailTextStyle.merge(
+  /// pairInfoTableConfig.valueTextStyle.merge(
   ///   SantoTextStyle(
   ///     color: commonConfig.colorTextBase,
   ///     fontSize: commonConfig.fontSizeBase,
-  ///   ).merge(detailTextStyle),
+  ///   ).merge(valueTextStyle),
   /// );
   ///
-  /// - 以 `commonConfig` 字段为基础 merge `detailTextStyle`。
-  ///   `detailTextStyle` 字段优先级高，当detailTextStyle中字段（如 color）为 null 时
+  /// - 以 `commonConfig` 字段为基础 merge `valueTextStyle`。
+  ///   `valueTextStyle` 字段优先级高，当valueTextStyle中字段（如 color）为 null 时
   ///   会使用 `commonConfig.colorTextBase`。
   /// - 以默认上一级配置为基础 merge 第一步的结果，当第一步中字段（如 color）为空时，
-  ///   使用上一层级配置的 color (`cardTitleConfig.detailTextStyle.color`)。
+  ///   使用上一层级配置的 color (`pairInfoTableConfig.valueTextStyle.color`)。
   void initThemeConfig(
     String configId, {
     SantoCommonConfig? currentLevelCommonConfig,

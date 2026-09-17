@@ -296,30 +296,22 @@ class DrawerExample extends StatelessWidget {
                 children: [
                   Text('状态', style: TextStyle(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 12),
-                  Wrap(
+                  SantoSelectTag(
+                    tags: const ['全部', '进行中', '已完成', '已取消'],
+                    initTagState: const [true],
+                    fixWidthMode: false,
                     spacing: 8,
-                    runSpacing: 8,
-                    children: ['全部', '进行中', '已完成', '已取消'].map((e) {
-                      return ChoiceChip(
-                        label: Text(e),
-                        selected: e == '全部',
-                        onSelected: (selected) {},
-                      );
-                    }).toList(),
+                    verticalSpacing: 8,
                   ),
                   const SizedBox(height: 24),
                   Text('类型', style: TextStyle(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 12),
-                  Wrap(
+                  SantoSelectTag(
+                    tags: const ['全部', '类型A', '类型B', '类型C'],
+                    initTagState: const [true],
+                    fixWidthMode: false,
                     spacing: 8,
-                    runSpacing: 8,
-                    children: ['全部', '类型A', '类型B', '类型C'].map((e) {
-                      return ChoiceChip(
-                        label: Text(e),
-                        selected: e == '全部',
-                        onSelected: (selected) {},
-                      );
-                    }).toList(),
+                    verticalSpacing: 8,
                   ),
                 ],
               ),

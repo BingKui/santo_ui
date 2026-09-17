@@ -1,361 +1,431 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
-/// 刷新状态枚举
+/// 下拉刷新状态
+///
+/// 对齐 TDesign PullDownRefresh 的四态 + 超时通知
 enum SantoRefreshState {
-  /// 空闲状态
-  idle,
+  /// 未触发(初始/完成复位后)
+  inactive,
 
-  /// 下拉中（未达到刷新阈值）
-  pulling,
+  /// 下拉中,未达到触发阈值
+  dragging,
 
-  /// 松开即可刷新（已达到刷新阈值）
+  /// 已达阈值、松手即触发刷新
   ready,
 
-  /// 正在刷新
+  /// 刷新进行中
   refreshing,
 
-  /// 刷新完成
-  refreshDone,
+  /// 刷新完成、展示完成态
+  done,
 
-  /// 正在加载更多
-  loadingMore,
-
-  /// 没有更多数据
-  noMore,
+  /// 刷新超时的一次性通知,随后回到 [inactive]
+  timeout,
 }
 
-/// Refresh 下拉刷新组件
+/// 下拉刷新四态提示语,未设置时使用默认文案
+class SantoRefreshTexts {
+  /// 下拉未达阈值时的提示语,默认「下拉刷新」
+  final String pullToRefresh;
+
+  /// 下拉已达阈值、松手即刷新的提示语,默认「松手刷新」
+  final String releaseToRefresh;
+
+  /// 刷新进行中的提示语,默认「正在刷新」
+  final String refreshing;
+
+  /// 刷新完成时的提示语,默认「刷新完成」
+  final String refreshComplete;
+
+  const SantoRefreshTexts({
+    this.pullToRefresh = '下拉刷新',
+    this.releaseToRefresh = '松手刷新',
+    this.refreshing = '正在刷新',
+    this.refreshComplete = '刷新完成',
+  });
+}
+
+/// [SantoRefresh] 的外部刷新控制器:从页面外部主动触发一次刷新
 ///
-/// 支持下拉刷新和上拉加载更多。
-/// 支持自定义刷新头部和加载更多底部。
-/// 使用 [NotificationListener] + [ScrollController] 实现。
+/// 底层刷新逻辑由 [SantoRefresh] 的 State 持有,本控制器只持有引用,
+/// 不拥有需要释放的资源,因此不提供 dispose。
+class SantoRefreshController {
+  _SantoRefreshState? _delegate;
+
+  /// 主动触发一次刷新
+  ///
+  /// 返回的 Future 在本次刷新结束(完成/失败/超时复位)后完成,不返回业务结果
+  Future<void> refresh() async {
+    await _delegate?._triggerRefresh();
+  }
+
+  void _attach(_SantoRefreshState state) {
+    _delegate = state;
+  }
+
+  void _detach(_SantoRefreshState state) {
+    if (identical(_delegate, state)) {
+      _delegate = null;
+    }
+  }
+}
+
+/// 下拉刷新组件
 ///
-/// 注意：[child] 必须是可滚动组件（如 [ListView]、[GridView]、[SingleChildScrollView] 等），
-/// 且需要传入其 [ScrollController] 以便监听滚动事件。如果不传入，组件会自动创建。
+/// 对齐 TDesign PullDownRefresh 的行为:下拉 → 松手 → 刷新 → 完成四态,
+/// 支持触底加载、刷新超时、四态文案自定义与外部主动刷新
 ///
-/// 使用示例：
+/// [child] 必须是**可滚动**内容(如 ListView / GridView / CustomScrollView),
+/// 否则下拉与触底手势无法生效
+///
+/// 使用示例:
 /// ```dart
 /// SantoRefresh(
-///   onRefresh: () async {
-///     await Future.delayed(Duration(seconds: 2));
-///     // 刷新数据
-///   },
-///   onLoadMore: () async {
-///     await Future.delayed(Duration(seconds: 1));
-///     // 加载更多
-///   },
-///   hasMore: true,
-///   child: ListView.builder(
-///     itemCount: items.length,
-///     itemBuilder: (context, index) => ListTile(title: Text(items[index])),
-///   ),
+///   onRefresh: () async => await loadData(),
+///   onLoadMore: () async => await loadMore(),
+///   child: ListView.builder(...),
 /// )
 /// ```
 class SantoRefresh extends StatefulWidget {
-  /// 子组件（必须为可滚动组件，如 ListView / GridView 等）
+  /// 滚动内容(必须为可滚动组件)
   final Widget child;
 
-  /// 下拉刷新回调，返回 Future
+  /// 外部主动刷新控制器
+  final SantoRefreshController? controller;
+
+  /// 下拉刷新回调;为空时禁用下拉刷新
+  ///
+  /// 返回的 Future 完成后自动展示完成态并复位;回调抛错或 Future 失败时
+  /// 刷新任务正常结束,错误通过 [FlutterError.reportError] 上报
   final Future<void> Function()? onRefresh;
 
-  /// 上拉加载更多回调，返回 Future
+  /// 触底加载回调;为空时禁用触底加载
+  ///
+  /// 返回的 Future 完成后自动结束加载态,错误处理同 [onRefresh]
   final Future<void> Function()? onLoadMore;
 
-  /// 是否还有更多数据
+  /// 刷新状态变化回调,仅在状态跳变时触发
+  final ValueChanged<SantoRefreshState>? onStateChanged;
+
+  /// 头部容器高度,即触发刷新阈值,默认 50
+  final double loadingBarHeight;
+
+  /// 最大下拉高度,默认 80
+  final double maxBarHeight;
+
+  /// 距离底部多少像素时触发加载,默认 50
+  final double lowerThreshold;
+
+  /// 刷新超时时长,默认 3 秒;传 null 关闭超时
+  ///
+  /// 超时后自动结束刷新并上报 [SantoRefreshState.timeout],随后回到
+  /// [SantoRefreshState.inactive];迟到的刷新结果不再改变状态
+  final Duration? refreshTimeout;
+
+  /// 刷新完成提示的展示时长,默认 500 毫秒
+  final Duration successDuration;
+
+  /// 四态提示语
+  final SantoRefreshTexts? texts;
+
+  /// 是否还有更多数据;为 false 时底部展示「没有更多数据了」且不再触发加载
   final bool hasMore;
 
-  /// 自定义刷新头部 Widget
-  /// 接收当前刷新状态和下拉距离百分比
+  /// 自定义刷新头部,接收当前状态与下拉距离
   final Widget Function(SantoRefreshState state, double extent)? refreshHeader;
 
-  /// 自定义加载更多底部 Widget
-  /// 接收当前加载状态和是否还有更多数据
-  final Widget Function(SantoRefreshState state, bool hasMore)? loadMoreFooter;
-
-  /// 触发刷新的下拉距离阈值，默认80
-  final double refreshTriggerDistance;
-
-  /// 刷新完成后头部停留时间，默认500毫秒
-  final Duration refreshCompleteDuration;
-
-  /// 是否启用下拉刷新，默认true
-  final bool enableRefresh;
-
-  /// 是否启用上拉加载更多，默认true
-  final bool enableLoadMore;
+  /// 自定义加载更多底部,接收是否还有更多数据
+  final Widget Function(bool hasMore)? loadMoreFooter;
 
   /// 创建下拉刷新组件
   const SantoRefresh({
     Key? key,
     required this.child,
+    this.controller,
     this.onRefresh,
     this.onLoadMore,
+    this.onStateChanged,
+    this.loadingBarHeight = 50,
+    this.maxBarHeight = 80,
+    this.lowerThreshold = 50,
+    this.refreshTimeout = const Duration(milliseconds: 3000),
+    this.successDuration = const Duration(milliseconds: 500),
+    this.texts,
     this.hasMore = true,
     this.refreshHeader,
     this.loadMoreFooter,
-    this.refreshTriggerDistance = 80.0,
-    this.refreshCompleteDuration = const Duration(milliseconds: 500),
-    this.enableRefresh = true,
-    this.enableLoadMore = true,
-  }) : super(key: key);
+  })  : assert(loadingBarHeight >= 0, 'loadingBarHeight 不能为负'),
+        assert(maxBarHeight >= 0, 'maxBarHeight 不能为负'),
+        assert(refreshTimeout == null || refreshTimeout >= Duration.zero,
+            'refreshTimeout 不能为负'),
+        super(key: key);
 
   @override
   State<SantoRefresh> createState() => _SantoRefreshState();
 }
 
-/// SantoRefresh 内部状态
 class _SantoRefreshState extends State<SantoRefresh>
-    with TickerProviderStateMixin {
-  /// 滚动控制器
-  late ScrollController _scrollController;
-
-  /// 是否自动创建了 ScrollController
-  bool _ownScrollController = false;
-
-  /// 当前刷新状态
-  SantoRefreshState _refreshState = SantoRefreshState.idle;
-
+    with SingleTickerProviderStateMixin {
   /// 当前下拉距离
-  double _pullExtent = 0.0;
+  double _pullExtent = 0;
 
-  /// 是否正在刷新
-  bool _isRefreshing = false;
+  /// 当前状态
+  SantoRefreshState _state = SantoRefreshState.inactive;
 
   /// 是否正在加载更多
   bool _isLoadingMore = false;
 
-  /// 刷新头部动画控制器
-  late AnimationController _headerAnimController;
+  /// 头部高度过渡动画(松手后回弹/停在刷新高度)
+  late final AnimationController _settleController;
+  Animation<double>? _settleAnimation;
 
-  /// 刷新头部高度动画值
-  late Animation<double> _headerHeightAnimation;
+  SantoRefreshTexts get _texts => widget.texts ?? const SantoRefreshTexts();
 
   @override
   void initState() {
     super.initState();
-    _headerAnimController = AnimationController(
+    _settleController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-    _headerHeightAnimation = Tween<double>(begin: 0, end: 0).animate(
-      CurvedAnimation(parent: _headerAnimController, curve: Curves.easeOut),
-    );
-
-    _setupScrollController();
+      duration: const Duration(milliseconds: 200),
+    )..addListener(() {
+        final animation = _settleAnimation;
+        if (animation != null) {
+          setState(() => _pullExtent = animation.value);
+        }
+      });
+    widget.controller?._attach(this);
   }
 
-  /// 设置滚动控制器
-  void _setupScrollController() {
-    // 尝试从子组件中获取 ScrollController
-    // 如果没有，则自动创建
-    _scrollController = ScrollController();
-    _ownScrollController = true;
-
-    if (widget.enableLoadMore && widget.onLoadMore != null) {
-      _scrollController.addListener(_onScroll);
+  @override
+  void didUpdateWidget(covariant SantoRefresh oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller?._detach(this);
+      widget.controller?._attach(this);
     }
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
-    if (_ownScrollController) {
-      _scrollController.dispose();
-    }
-    _headerAnimController.dispose();
+    widget.controller?._detach(this);
+    _settleController.dispose();
     super.dispose();
   }
 
-  /// 滚动监听，检测是否滚动到底部
-  void _onScroll() {
-    if (!_scrollController.hasClients) return;
-    if (_isLoadingMore || !widget.hasMore) return;
-
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-
-    if (currentScroll >= maxScroll - 50) {
-      _loadMore();
+  /// 状态跳变时通知外部(异步调度,不在 build 期间同步回调)
+  void _notifyState(SantoRefreshState state) {
+    if (_state == state) return;
+    setState(() => _state = state);
+    final callback = widget.onStateChanged;
+    if (callback != null) {
+      scheduleMicrotask(() {
+        if (mounted) callback(state);
+      });
     }
   }
 
-  /// 执行加载更多
-  Future<void> _loadMore() async {
-    if (_isLoadingMore || !widget.hasMore || widget.onLoadMore == null) return;
-
-    setState(() {
-      _isLoadingMore = true;
-      _refreshState = SantoRefreshState.loadingMore;
-    });
-
-    try {
-      await widget.onLoadMore!();
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoadingMore = false;
-          _refreshState = SantoRefreshState.idle;
-        });
-      }
-    }
+  /// 头部高度动画到 [target]
+  void _settleTo(double target) {
+    _settleController.stop();
+    if (_pullExtent == target) return;
+    _settleAnimation = Tween<double>(begin: _pullExtent, end: target).animate(
+      CurvedAnimation(parent: _settleController, curve: Curves.easeOut),
+    );
+    _settleController
+      ..reset()
+      ..forward();
   }
 
-  /// 处理滚动通知（用于下拉刷新）
+  /// 更新下拉距离与状态
+  void _updatePull(double extent) {
+    final double value = extent.clamp(0.0, widget.maxBarHeight).toDouble();
+    setState(() => _pullExtent = value);
+    _notifyState(value >= widget.loadingBarHeight
+        ? SantoRefreshState.ready
+        : SantoRefreshState.dragging);
+  }
+
+  /// 滚动通知:处理下拉刷新与触底加载
   bool _handleScrollNotification(ScrollNotification notification) {
-    if (!widget.enableRefresh || widget.onRefresh == null || _isRefreshing) {
-      return false;
-    }
+    if (notification.depth != 0) return false;
 
-    if (notification is ScrollUpdateNotification) {
-      final metrics = notification.metrics;
-      // 检测过度滚动（下拉）
-      if (metrics.extentBefore == 0 &&
+    final bool refreshing = _state == SantoRefreshState.refreshing ||
+        _state == SantoRefreshState.done;
+    if (widget.onRefresh != null && !refreshing) {
+      if (notification is OverscrollNotification &&
+          notification.overscroll < 0) {
+        _updatePull(_pullExtent - notification.overscroll);
+      } else if (notification is ScrollUpdateNotification &&
           notification.dragDetails != null &&
-          notification.dragDetails!.delta.dy > 0) {
-        final overscroll = metrics.extentBefore == 0
-            ? -metrics.pixels
-            : 0.0;
-        if (overscroll > 0) {
-          setState(() {
-            _pullExtent = overscroll.clamp(0.0, widget.refreshTriggerDistance * 1.5);
-            if (_pullExtent >= widget.refreshTriggerDistance) {
-              _refreshState = SantoRefreshState.ready;
-            } else {
-              _refreshState = SantoRefreshState.pulling;
-            }
-          });
-        }
-      }
-    } else if (notification is OverscrollNotification) {
-      // 处理 Overscroll（下拉时顶部过度滚动）
-      if (notification.overscroll < 0) {
-        setState(() {
-          _pullExtent += -notification.overscroll;
-          _pullExtent = _pullExtent.clamp(0.0, widget.refreshTriggerDistance * 1.5);
-          if (_pullExtent >= widget.refreshTriggerDistance) {
-            _refreshState = SantoRefreshState.ready;
-          } else {
-            _refreshState = SantoRefreshState.pulling;
-          }
-        });
-      }
-    } else if (notification is ScrollEndNotification) {
-      if (_pullExtent > 0 && !_isRefreshing) {
-        if (_pullExtent >= widget.refreshTriggerDistance) {
-          // 达到阈值，触发刷新
-          _performRefresh();
+          notification.metrics.extentBefore == 0 &&
+          notification.metrics.pixels < 0) {
+        _updatePull(-notification.metrics.pixels);
+      } else if (notification is ScrollEndNotification &&
+          _state != SantoRefreshState.inactive) {
+        if (_pullExtent >= widget.loadingBarHeight) {
+          _triggerRefresh();
         } else {
-          // 未达到阈值，回弹
-          setState(() {
-            _pullExtent = 0;
-            _refreshState = SantoRefreshState.idle;
-          });
+          _settleTo(0);
+          _notifyState(SantoRefreshState.inactive);
         }
       }
     }
 
+    if (_pullExtent == 0 && !refreshing) {
+      _handleLoadMoreIfNeeded(notification);
+    }
     return false;
   }
 
-  /// 执行刷新
-  Future<void> _performRefresh() async {
-    if (_isRefreshing || widget.onRefresh == null) return;
+  /// 触底检测
+  void _handleLoadMoreIfNeeded(ScrollNotification notification) {
+    if (widget.onLoadMore == null || _isLoadingMore || !widget.hasMore) return;
+    if (notification is! ScrollUpdateNotification) return;
+    final metrics = notification.metrics;
+    if (metrics.axis != Axis.vertical) return;
+    if (metrics.extentAfter > widget.lowerThreshold) return;
+    _loadMore();
+  }
 
-    setState(() {
-      _isRefreshing = true;
-      _refreshState = SantoRefreshState.refreshing;
-      _pullExtent = widget.refreshTriggerDistance;
+  /// 触发下拉刷新
+  Future<void> _triggerRefresh() async {
+    final onRefresh = widget.onRefresh;
+    if (onRefresh == null || _state == SantoRefreshState.refreshing) return;
+
+    _settleController.stop();
+    setState(() => _pullExtent = widget.loadingBarHeight);
+    _notifyState(SantoRefreshState.refreshing);
+
+    /// 回调是否已结束(用于区分超时)
+    bool callbackDone = false;
+    final completer = Completer<void>();
+
+    /// 刷新超时计时器,回调结束后取消
+    Timer? timeoutTimer;
+    final timeout = widget.refreshTimeout;
+    if (timeout != null) {
+      timeoutTimer = Timer(timeout, () {
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
+      });
+    }
+
+    // 回调异常上报,不吞掉也不中断刷新流程
+    _guard(Future<void>(() => onRefresh())).whenComplete(() {
+      callbackDone = true;
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
     });
 
+    await completer.future;
+    timeoutTimer?.cancel();
+    if (!mounted) return;
+
+    if (!callbackDone) {
+      _notifyState(SantoRefreshState.timeout);
+    }
+    _notifyState(SantoRefreshState.done);
+
+    await Future<void>.delayed(widget.successDuration);
+    if (!mounted) return;
+    _settleTo(0);
+    _notifyState(SantoRefreshState.inactive);
+  }
+
+  /// 执行回调并把异常上报(不吞掉,也不中断动画流程)
+  Future<void> _guard(Future<void> callback) async {
     try {
-      await widget.onRefresh!();
+      await callback;
+    } catch (error, stack) {
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: error,
+        stack: stack,
+        library: 'santo_ui',
+        context: ErrorDescription('SantoRefresh 回调执行失败'),
+      ));
+    }
+  }
+
+  /// 触底加载
+  Future<void> _loadMore() async {
+    final onLoadMore = widget.onLoadMore;
+    if (onLoadMore == null || _isLoadingMore || !widget.hasMore) return;
+    setState(() => _isLoadingMore = true);
+    try {
+      await _guard(Future<void>(() => onLoadMore()));
     } finally {
-      // 刷新完成，停留一段时间后回弹
-      await Future.delayed(widget.refreshCompleteDuration);
       if (mounted) {
-        setState(() {
-          _isRefreshing = false;
-          _pullExtent = 0;
-          _refreshState = SantoRefreshState.idle;
-        });
+        setState(() => _isLoadingMore = false);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-      onNotification: _handleScrollNotification,
-      child: Stack(
-        children: [
-          // 子组件（可滚动内容）
-          widget.child,
-          // 刷新头部覆盖层
-          if (widget.enableRefresh)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _buildRefreshHeader(),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: NotificationListener<ScrollNotification>(
+            onNotification: _handleScrollNotification,
+            child: Stack(
+              children: <Widget>[
+                widget.child,
+                if (widget.onRefresh != null)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: _buildRefreshHeader(),
+                  ),
+              ],
             ),
-          // 加载更多底部
-          if (widget.enableLoadMore && widget.onLoadMore != null)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: _buildLoadMoreFooter(),
-            ),
-        ],
-      ),
+          ),
+        ),
+        if (widget.onLoadMore != null) _buildLoadMoreFooter(),
+      ],
     );
   }
 
-  /// 构建刷新头部
+  /// 刷新头部:高度随下拉距离变化
   Widget _buildRefreshHeader() {
-    if (_pullExtent <= 0 && !_isRefreshing) {
-      return const SizedBox.shrink();
-    }
-
+    if (_pullExtent <= 0) return const SizedBox.shrink();
     if (widget.refreshHeader != null) {
-      return widget.refreshHeader!(_refreshState, _pullExtent);
+      return widget.refreshHeader!(_state, _pullExtent);
     }
-    return _buildDefaultRefreshHeader();
-  }
-
-  /// 构建默认刷新头部
-  Widget _buildDefaultRefreshHeader() {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
-    final brandColor = commonConfig.brandPrimary;
-
     return Container(
-      height: _isRefreshing ? widget.refreshTriggerDistance : _pullExtent,
+      height: _pullExtent,
       alignment: Alignment.center,
-      color: Colors.white,
+      color: commonConfig.fillBody,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           SizedBox(
-            width: 20,
-            height: 20,
-            child: _isRefreshing
+            width: 18,
+            height: 18,
+            child: _state == SantoRefreshState.refreshing
                 ? CircularProgressIndicator(
                     strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(brandColor),
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(commonConfig.brandPrimary),
                   )
                 : Icon(
-                    _refreshState == SantoRefreshState.ready
+                    _state == SantoRefreshState.ready
                         ? Icons.arrow_upward
                         : Icons.arrow_downward,
-                    color: brandColor,
-                    size: 20,
+                    size: 18,
+                    color: commonConfig.brandPrimary,
                   ),
           ),
           SizedBox(width: commonConfig.hSpacingSm),
           Text(
-            _getRefreshText(),
+            _refreshText,
             style: TextStyle(
               color: commonConfig.colorTextSecondary,
               fontSize: commonConfig.fontSizeBase,
@@ -366,80 +436,70 @@ class _SantoRefreshState extends State<SantoRefresh>
     );
   }
 
-  /// 获取刷新提示文字
-  String _getRefreshText() {
-    switch (_refreshState) {
-      case SantoRefreshState.pulling:
-        return '下拉刷新';
+  /// 当前状态对应的提示语
+  String get _refreshText {
+    switch (_state) {
       case SantoRefreshState.ready:
-        return '松开刷新';
+        return _texts.releaseToRefresh;
       case SantoRefreshState.refreshing:
-        return '正在刷新...';
-      case SantoRefreshState.refreshDone:
-        return '刷新完成';
-      default:
-        return '下拉刷新';
+        return _texts.refreshing;
+      case SantoRefreshState.done:
+        return _texts.refreshComplete;
+      case SantoRefreshState.inactive:
+      case SantoRefreshState.dragging:
+      case SantoRefreshState.timeout:
+        return _texts.pullToRefresh;
     }
   }
 
-  /// 构建加载更多底部
+  /// 加载更多底部:占据布局空间,不遮挡列表内容
   Widget _buildLoadMoreFooter() {
     if (widget.loadMoreFooter != null) {
-      return widget.loadMoreFooter!(_refreshState, widget.hasMore);
+      return widget.loadMoreFooter!(widget.hasMore);
     }
-    return _buildDefaultLoadMoreFooter();
-  }
-
-  /// 构建默认加载更多底部
-  Widget _buildDefaultLoadMoreFooter() {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
-
     if (!widget.hasMore) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
         alignment: Alignment.center,
-        color: Colors.white,
         child: Text(
           '没有更多数据了',
           style: TextStyle(
-            color: commonConfig.colorTextSecondary,
+            color: commonConfig.colorTextHint,
             fontSize: commonConfig.fontSizeCaption,
           ),
         ),
       );
     }
-
-    if (_isLoadingMore) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
-        alignment: Alignment.center,
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 18,
-              height: 18,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                    commonConfig.brandPrimary),
-              ),
-            ),
-            SizedBox(width: commonConfig.hSpacingSm),
-            Text(
-              '正在加载...',
-              style: TextStyle(
-                color: commonConfig.colorTextSecondary,
-                fontSize: commonConfig.fontSizeCaption,
-              ),
-            ),
-          ],
-        ),
-      );
+    if (!_isLoadingMore) {
+      return const SizedBox.shrink();
     }
-
-    return const SizedBox.shrink();
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            width: 14,
+            height: 14,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(commonConfig.brandPrimary),
+            ),
+          ),
+          SizedBox(width: commonConfig.hSpacingSm),
+          Text(
+            '正在加载',
+            style: TextStyle(
+              color: commonConfig.colorTextSecondary,
+              fontSize: commonConfig.fontSizeCaption,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

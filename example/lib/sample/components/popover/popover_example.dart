@@ -70,22 +70,6 @@ class _PopoverExampleState extends State<PopoverExample> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SantoNormalButton(
-                key: _leftKey,
-                onTap: () {
-                  SantoPopover.show(
-                    context: context,
-                    target: _leftKey,
-                    direction: SantoPopoverDirection.left,
-                    content: Text(
-                      '向左弹出',
-                      style:
-                          TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  );
-                },
-                text: '向左',
-              ),
-              SantoNormalButton(
                 key: _rightKey,
                 onTap: () {
                   SantoPopover.show(
@@ -100,6 +84,22 @@ class _PopoverExampleState extends State<PopoverExample> {
                   );
                 },
                 text: '向右',
+              ),
+              SantoNormalButton(
+                key: _leftKey,
+                onTap: () {
+                  SantoPopover.show(
+                    context: context,
+                    target: _leftKey,
+                    direction: SantoPopoverDirection.left,
+                    content: Text(
+                      '向左弹出',
+                      style:
+                          TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                  );
+                },
+                text: '向左',
               ),
             ],
           ),
