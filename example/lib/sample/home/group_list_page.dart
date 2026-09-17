@@ -39,23 +39,14 @@ class GroupListPage extends StatelessWidget {
       ),
       children: <Widget>[
         for (final child in children)
-          Container(
-            // 裁切:否则 ListItem 的方块白底与波纹会盖住圆角
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListItem(
-              isShowLine: false,
-              title: child.groupName,
-              describe: child.desc,
-              onPressed: () {
-                if (child.navigatorPage != null) {
-                  child.navigatorPage!(context);
-                }
-              },
-            ),
+          ListItem(
+            title: child.groupName,
+            describe: child.desc,
+            onPressed: () {
+              if (child.navigatorPage != null) {
+                child.navigatorPage!(context);
+              }
+            },
           ),
       ],
     );

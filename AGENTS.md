@@ -22,15 +22,13 @@ santo_ui 组件库开发约定。新增/改动组件前先读本文件。
 
 ## 内容区间距取主题变量
 
-组件内边距不要写魔法数字,统一取主题 `commonConfig`;内容区四周留白用 `pageGap`,以 `gap` 命名:
+组件内边距不要写魔法数字,统一取主题 `commonConfig`:
 
-```dart
-double get gap => SantoThemeConfigurator.instance.getConfig().commonConfig.pageGap;
-```
+- 内容区四周留白与块间距用 `hSpacingMd` / `vSpacingMd`(默认 15),同一组件内保持同一档位;
+- 更小的横向间距用 `hSpacingXs / hSpacingSm`,更大的用 `hSpacingLg`;
+- 页面级留白(页面内容区、区块之间)才用 `pageGap`(默认 12)。
 
-横向小间距用 `hSpacingXs / hSpacingSm / hSpacingMd / hSpacingLg`,纵向用 `vSpacingMd`。示例:`SantoTagsPicker` 的输入区 padding、底部按钮 padding 取 `gap`。
-
-同一组件内的间距若沿用既有实现(如标签网格的 `hSpacingLg` / `vSpacingLg`),保持原样不动,不要顺手改成 `gap`。
+示例:`SantoTagsPicker` 的标签区、输入区、底部提交按钮的左右 15 取 `hSpacingMd`,上下 15 取 `vSpacingMd`,标签间距同样取 `hSpacingMd` / `vSpacingMd`。
 
 ## 验证
 

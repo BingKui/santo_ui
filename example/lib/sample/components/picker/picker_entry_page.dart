@@ -27,7 +27,6 @@ class PickerEntryPage extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: "MultiDataPicker",
-            isShowLine: false,
             describe: '底部多级选择',
             onPressed: () {
               _showMultiDataPicker(context);

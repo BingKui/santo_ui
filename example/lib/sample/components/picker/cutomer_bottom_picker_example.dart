@@ -18,7 +18,6 @@ class CustomPickerExamplePage extends StatelessWidget {
             child: ListItem(
               title: "底部弹窗的内容为输入框",
               describe: '被键盘抬起',
-              isShowLine: false,
               onPressed: () {
                 SantoBottomPicker.show(context, onCancel: () {
                   Navigator.of(context).pop();

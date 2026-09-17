@@ -40,7 +40,6 @@ class SelectionEntryPage extends StatelessWidget {
           Divider(indent: 15),
           ListItem(
             title: "简单筛选示例-单列单选",
-            isShowLine: false,
             onPressed: () {
               rootBundle
                   .loadString('assets/multi_list_filter.json')
@@ -80,7 +79,6 @@ class SelectionEntryPage extends StatelessWidget {
           ),
           ListItem(
             title: "一列、两列、三列情况",
-            isShowLine: false,
             describe: "筛选项",
             onPressed: () {
               rootBundle

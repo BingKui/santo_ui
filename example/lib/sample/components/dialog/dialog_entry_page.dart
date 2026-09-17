@@ -17,7 +17,6 @@ class DialogEntryPage extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: "富文本弹窗",
-            isShowLine: false,
             describe: '富文本弹窗',
             onPressed: () {
               _showRichTextDialog(context);

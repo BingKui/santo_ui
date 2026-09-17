@@ -14,7 +14,6 @@ class FloatingPanelExample extends StatelessWidget {
         children: <Widget>[
           ListItem(
             title: '基础用法',
-            isShowLine: false,
             describe: '默认锚点,拖动把手或内容区域改变高度',
             onPressed: () => _push(context, const FloatingPanelBasicExample()),
           ),

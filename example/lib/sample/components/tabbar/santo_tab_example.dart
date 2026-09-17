@@ -28,7 +28,6 @@ class _SantoTabExampleState extends State<SantoTabExample>
           children: <Widget>[
             ListItem(
               title: "SantoTabBarBadge实现",
-              isShowLine: false,
             ),
             SantoSection(
               title: '吸顶 Tab',
