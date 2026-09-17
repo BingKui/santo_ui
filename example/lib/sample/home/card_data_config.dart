@@ -17,7 +17,6 @@ import 'package:example/sample/components/calendar/calendar_example.dart';
 import 'package:example/sample/components/card/santo_shadow_card_example.dart';
 import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
 import 'package:example/sample/components/card/content/text_content_entry_page.dart';
-import 'package:example/sample/components/card_title/title_example.dart';
 import 'package:example/sample/components/charts/chart_entry_example.dart';
 import 'package:example/sample/components/charts/doughnut_chart_example.dart';
 import 'package:example/sample/components/charts/line/santo_broken_line_example.dart';
@@ -25,7 +24,7 @@ import 'package:example/sample/components/charts/line/db_data_node_model.dart';
 import 'package:example/sample/components/charts/progress_bar_chart_example.dart';
 import 'package:example/sample/components/charts/progress_chart_entry_page.dart';
 import 'package:example/sample/components/dialog/dialog_entry_page.dart';
-import 'package:example/sample/components/empty/empty_entry_page.dart';
+import 'package:example/sample/components/empty/empty_example.dart';
 import 'package:example/sample/components/form/all_item_style_example.dart';
 import 'package:example/sample/components/gallery/gallery_example.dart';
 import 'package:example/sample/components/guide/guide_entry_page.dart';
@@ -243,12 +242,11 @@ class CardDataConfig {
       _item("Highlight 关键词高亮", "关键词高亮文本", HighlightExample()),
       _item("TextEllipsis 文本省略", "多行省略与展开收起", TextEllipsisExample()),
       _item("Popover 气泡卡片", "锚点弹出气泡", PopoverExample()),
-      _item("CardTitle 卡片标题", "卡片头部标题", TitleExample()),
       _item("SwipeCell 滑动单元格", "列表项滑动操作", SwipeCellExample()),
       _item("NoticeBar 通知栏", "滚动通知条", SantoNoticeBarExample()),
       _item("Progress 进度条", "线性/环形进度", ProgressExample()),
       _item("TimeCounter 计时器", "倒计时/正计时", TimeCounterExample()),
-      _item("Empty 空状态", "空数据提示", EmptyEntryPage("异常页面示例")),
+      _item("Empty 空状态", "空数据提示", EmptyExample()),
       _item("Footer 页脚", "页面底部信息", FooterExample()),
       _item("Gallery 图片浏览", "大图预览", GalleryExample()),
     ];

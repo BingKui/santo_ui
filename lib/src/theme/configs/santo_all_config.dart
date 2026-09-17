@@ -4,7 +4,6 @@ import 'package:santo_ui/src/theme/configs/santo_abnormal_state_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_action_sheet_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_button_config.dart';
-import 'package:santo_ui/src/theme/configs/santo_card_title_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_enhance_number_card_config.dart';
@@ -32,7 +31,6 @@ class SantoAllThemeConfig {
     SantoButtonConfig? buttonConfig,
     SantoDialogConfig? dialogConfig,
     SantoFormItemConfig? formItemConfig,
-    SantoCardTitleConfig? cardTitleConfig,
     SantoAbnormalStateConfig? abnormalStateConfig,
     SantoTagConfig? tagConfig,
     SantoPairInfoTableConfig? pairInfoTableConfig,
@@ -51,7 +49,6 @@ class SantoAllThemeConfig {
         _buttonConfig = buttonConfig,
         _dialogConfig = dialogConfig,
         _formItemConfig = formItemConfig,
-        _cardTitleConfig = cardTitleConfig,
         _abnormalStateConfig = abnormalStateConfig,
         _tagConfig = tagConfig,
         _pairInfoTableConfig = pairInfoTableConfig,
@@ -84,11 +81,6 @@ class SantoAllThemeConfig {
 
   SantoDialogConfig get dialogConfig =>
       _dialogConfig ?? SantoDefaultConfigUtils.defaultDialogConfig;
-
-  SantoCardTitleConfig? _cardTitleConfig;
-
-  SantoCardTitleConfig get cardTitleConfig =>
-      _cardTitleConfig ?? SantoDefaultConfigUtils.defaultCardTitleConfig;
 
   SantoAbnormalStateConfig? _abnormalStateConfig;
 
@@ -163,7 +155,6 @@ class SantoAllThemeConfig {
     this._buttonConfig ??= SantoButtonConfig();
     this._dialogConfig ??= SantoDialogConfig();
     this._formItemConfig ??= SantoFormItemConfig();
-    this._cardTitleConfig ??= SantoCardTitleConfig();
     this._abnormalStateConfig ??= SantoAbnormalStateConfig();
     this._tagConfig ??= SantoTagConfig();
     this._appBarConfig ??= SantoAppBarConfig();
@@ -192,10 +183,6 @@ class SantoAllThemeConfig {
       currentLevelCommonConfig: commonConfig,
     );
     formItemConfig.initThemeConfig(
-      configId,
-      currentLevelCommonConfig: commonConfig,
-    );
-    cardTitleConfig.initThemeConfig(
       configId,
       currentLevelCommonConfig: commonConfig,
     );

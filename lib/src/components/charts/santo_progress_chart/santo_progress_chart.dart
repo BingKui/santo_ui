@@ -187,6 +187,6 @@ class _IndicatorWidgetBuilderState extends State<IndicatorWidgetBuilder> {
     final SantoProgressIndicatorBuilder? builder =
         widget.santoProgressIndicatorBuilder;
     return builder?.call(context, _value) ??
-        Text('$_value', style: widget.textStyle);
+        Text(_value.toStringAsFixed(2), style: widget.textStyle);
   }
 }

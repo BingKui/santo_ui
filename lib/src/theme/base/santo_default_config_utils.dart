@@ -10,7 +10,6 @@ import 'package:santo_ui/src/theme/configs/santo_action_sheet_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_all_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_button_config.dart';
-import 'package:santo_ui/src/theme/configs/santo_card_title_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
@@ -35,7 +34,6 @@ class SantoDefaultConfigUtils {
     commonConfig: defaultCommonConfig,
     formItemConfig: defaultFormItemConfig,
     dialogConfig: defaultDialogConfig,
-    cardTitleConfig: defaultCardTitleConfig,
     abnormalStateConfig: defaultAbnormalStateConfig,
     tagConfig: defaultTagConfig,
     appBarConfig: defaultAppBarConfig,
@@ -350,39 +348,6 @@ class SantoDefaultConfigUtils {
     ),
     dividerPadding: EdgeInsets.only(top: 25.0),
     backgroundColor: defaultCommonConfig.fillBase,
-  );
-
-  /// 卡片标题配置
-  static SantoCardTitleConfig defaultCardTitleConfig = SantoCardTitleConfig(
-    titleWithHeightTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextBase,
-      fontSize: defaultCommonConfig.fontSizeHead,
-      height: 25.0 / 18.0,
-      fontWeight: FontWeight.w500,
-    ),
-    titleTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextBase,
-      fontSize: defaultCommonConfig.fontSizeHead,
-      fontWeight: FontWeight.w500,
-    ),
-    subtitleTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextSecondary,
-      fontSize: defaultCommonConfig.fontSizeBase,
-    ),
-    detailTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextBase,
-      fontSize: defaultCommonConfig.fontSizeBase,
-    ),
-    accessoryTextStyle: SantoTextStyle(
-      color: defaultCommonConfig.colorTextSecondary,
-      fontSize: defaultCommonConfig.fontSizeBase,
-    ),
-    cardTitlePadding: EdgeInsets.only(
-      top: defaultCommonConfig.vSpacingXl,
-      bottom: defaultCommonConfig.vSpacingMd,
-    ),
-    alignment: PlaceholderAlignment.middle,
-    cardBackgroundColor: defaultCommonConfig.fillBase,
   );
 
   /// 空页面配置

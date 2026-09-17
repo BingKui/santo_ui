@@ -46,8 +46,15 @@ abstract class CommonTagsPicker extends StatefulWidget {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
+        // 允许弹窗使用更大高度(带输入框时需要容纳底部按钮)
+        isScrollControlled: true,
         builder: (BuildContext context) {
-          return this;
+          // 键盘弹起时整体上移,避免输入区被遮挡
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: this,
+          );
         }).then((type) {
       if (type == SantoCommonPickBackType.confirm) {
         if (onConfirm != null) {
@@ -66,6 +73,16 @@ abstract class CommonTagsPicker extends StatefulWidget {
   Widget? createBuilder(BuildContext context, VoidCallback? onUpdate) {
     return null;
   }
+
+  /// 子类可重写,提供固定在底部的区域(如提交按钮)
+  @protected
+  Widget? buildFooter(BuildContext context, VoidCallback? onUpdate) {
+    return null;
+  }
+
+  /// 子类可重写,控制内容区最大高度
+  @protected
+  double maxContentHeight(BuildContext context) => 370.0;
 
   /// 子类需重写getConfirmData()函数，直接使用LJTagsPickerWidget类时忽略
   @protected
@@ -103,13 +120,29 @@ class _CommonPickerState extends State<CommonTagsPicker> {
       ),
       child: Container(
           color: Colors.white,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: 168.0, maxHeight: 370.0),
+          // 底部安全区:白色背景铺到屏幕底部(包含安全区),内容在其上方避让,
+          // 与 SantoFloatingPanel 的处理一致
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom),
+            child: ConstrainedBox(
+            constraints: BoxConstraints(
+                minHeight: 168.0,
+                maxHeight: widget.maxContentHeight(context)),
             child: Stack(
               children: <Widget>[
-                _createContentWidget(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    // Flexible:内容按自身高度收拢,过高时内部滚动
+                    Flexible(child: _createContentWidget()),
+                    ?widget.buildFooter(context, _onUpdate),
+                  ],
+                ),
                 _createHeaderWidget(), // 保证头视图在Stack的最上层
               ],
+              ),
             ),
           )),
     );

@@ -133,6 +133,8 @@ class _SantoMultiSelectTagsState extends State<SantoMultiSelectTags> {
       child: GridView.count(
         shrinkWrap: true,
         physics: widget.physics,
+        // 不消费 MediaQuery 的 padding,避免状态栏/底部安全区被当成标签列表的留白
+        padding: EdgeInsets.zero,
         crossAxisCount: santoCrossAxisCount,
         //水平子Widget之间间距
         crossAxisSpacing: 12.0,

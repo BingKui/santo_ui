@@ -69,7 +69,6 @@ export 'src/components/selection/widget/santo_selection_animate_widget.dart';
 export 'src/components/picker/multi_range_picker/bean/santo_multi_column_picker_entity.dart';
 export 'src/components/picker/multi_range_picker/santo_multi_column_picker.dart';
 export 'src/components/picker/multi_select_bottom_picker/santo_multi_select_list_picker.dart';
-export 'src/components/picker/santo_select_tags_with_input_picker.dart';
 export 'src/components/picker/santo_bottom_picker.dart';
 export 'src/components/picker/time_picker/date_picker/santo_date_picker.dart';
 export 'src/components/picker/time_picker/date_range_picker/santo_date_range_picker.dart';
@@ -77,7 +76,7 @@ export 'src/components/picker/base/santo_picker_title_config.dart';
 export 'src/components/picker/santo_multi_picker.dart';
 export 'src/components/picker/base/santo_picker_constants.dart';
 export 'src/components/picker/multi_select_bottom_picker/santo_multi_select_data.dart';
-export 'src/components/picker/santo_mulit_select_tags_picker.dart';
+export 'src/components/picker/santo_tags_picker.dart';
 export 'src/components/picker/santo_tags_picker_config.dart';
 export 'src/components/picker/time_picker/santo_date_time_formatter.dart';
 export 'src/components/picker/santo_bottom_write_picker.dart';
@@ -206,8 +205,6 @@ export 'src/components/button/collection/santo_text_button_panel.dart';
 export 'src/components/button/collection/santo_multiple_bottom_button.dart';
 
 //卡片标题
-export 'src/components/card_title/santo_action_card_title.dart';
-export 'src/components/card_title/santo_common_card_title.dart';
 
 //卡片内容
 export 'src/components/card/content_card/santo_pair_info_table.dart';

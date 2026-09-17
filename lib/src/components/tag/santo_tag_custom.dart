@@ -39,7 +39,7 @@ class SantoTagCustom extends StatelessWidget {
   final FontWeight fontWeight;
 
   /// 最大宽度
-  final double maxWidth;
+  final double? maxWidth;
 
   /// 标签边框
   final Border? border;
@@ -55,7 +55,7 @@ class SantoTagCustom extends StatelessWidget {
     this.border,
     this.fontSize = 11,
     this.fontWeight = FontWeight.normal,
-    this.maxWidth = double.infinity,
+    this.maxWidth,
   }) : super(key: key);
 
   ///快捷方式生成边框标签
@@ -64,14 +64,14 @@ class SantoTagCustom extends StatelessWidget {
     required this.tagText,
     this.backgroundColor = Colors.transparent,
     this.textPadding =
-        const EdgeInsets.only(bottom: 3, left: 4, right: 4, top: 0),
+        const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
     this.fontSize = 11,
     this.fontWeight = FontWeight.normal,
     this.tagBorderRadius = const BorderRadius.all(Radius.circular(12)),
     Color? textColor,
     Color? borderColor,
     double borderWidth = 1,
-  })  : this.maxWidth = double.infinity,
+  })  : this.maxWidth = null,
         this.border = Border.all(
           color: borderColor ??
               SantoThemeConfigurator.instance
@@ -86,10 +86,10 @@ class SantoTagCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 不设置 alignment:标签默认按内容自适应宽度;
+    // 设置 alignment 会让 Container 在有界约束下撑满可用宽度
     return Container(
-        constraints: BoxConstraints(
-          maxWidth: maxWidth,
-        ),
+        constraints: maxWidth != null ? BoxConstraints(maxWidth: maxWidth!) : null,
         decoration: BoxDecoration(
             color: backgroundColor ??
                 SantoThemeConfigurator.instance

@@ -178,34 +178,41 @@ class SantoBottomDrawer extends StatelessWidget {
       ),
       child: child,
     );
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: GestureDetector(
-        onTap: () {}, // 阻止事件穿透到遮罩
-        child: Material(
-          color: backgroundColor ?? Colors.white,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(radius),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: double.infinity,
-              constraints: BoxConstraints(
-                minHeight: height ?? 0,
-                maxHeight: height ?? effectiveMaxHeight,
-              ),
-              child: Column(
-                mainAxisSize:
-                    height != null ? MainAxisSize.max : MainAxisSize.min,
-                children: [
-                  _buildHeader(context),
-                  if (height != null)
-                    Expanded(child: content)
-                  else
-                    content,
-                ],
+    // 键盘弹起时整体上移到键盘上方,避免输入区域被键盘遮挡
+    final keyboardInset = MediaQuery.of(context).viewInsets.bottom;
+    return AnimatedPadding(
+      padding: EdgeInsets.only(bottom: keyboardInset),
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.easeOut,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: GestureDetector(
+          onTap: () {}, // 阻止事件穿透到遮罩
+          child: Material(
+            color: backgroundColor ?? Colors.white,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(radius),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: double.infinity,
+                constraints: BoxConstraints(
+                  minHeight: height ?? 0,
+                  maxHeight: height ?? effectiveMaxHeight,
+                ),
+                child: Column(
+                  mainAxisSize:
+                      height != null ? MainAxisSize.max : MainAxisSize.min,
+                  children: [
+                    _buildHeader(context),
+                    if (height != null)
+                      Expanded(child: content)
+                    else
+                      content,
+                  ],
+                ),
               ),
             ),
           ),
@@ -222,7 +229,9 @@ class SantoBottomDrawer extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    Widget titleContent = titleWidget ?? Text(title!);
+    // 只显示关闭按钮时标题为空
+    Widget titleContent = titleWidget ??
+        (title == null ? const SizedBox.shrink() : Text(title!));
     titleContent = Column(
       crossAxisAlignment: titleAlign == SantoBottomDrawerTitleAlign.center
           ? CrossAxisAlignment.center
