@@ -21,7 +21,8 @@ group:
 
 ### 使用规范
 - 一个页面中多个 Panel 建议间距一致(默认 margin 16)。
-- Header 不传 title/titleWidget/actions 时不渲染。
+- Header 不传 title/titleWidget/titleExtra/actions 时不渲染。
+- 标题后需要放其他控件(如 Segmented)时用 titleExtra,它会紧跟标题展示并优先保留完整宽度,标题空间不足时收缩让位。
 
 ## 三、构造函数及参数说明
 
@@ -29,6 +30,7 @@ group:
 | --- | --- | --- | --- | --- |
 | title | String? | Header 左侧标题文案 | 否 | null |
 | titleWidget | Widget? | 自定义标题控件,设置后 title 失效 | 否 | null |
+| titleExtra | Widget? | 标题后方的控件(如 Segmented),位于标题与 actions 之间 | 否 | null |
 | actions | List&lt;Widget&gt;? | Header 右侧操作区 | 否 | null |
 | child | Widget | 内容区控件 | 是 | 无 |
 | contentPadding | bool | 内容区是否显示内边距 | 否 | true |

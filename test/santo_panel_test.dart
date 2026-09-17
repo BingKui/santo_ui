@@ -81,4 +81,57 @@ void main() {
     );
     expect(find.text('条目19'), findsOneWidget);
   });
+
+testWidgets('SantoPanel 标题后置控件紧跟标题且让位正确', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: SantoPanel(
+          margin: EdgeInsets.zero,
+          title: '标题',
+          titleExtra: const SizedBox(
+            key: ValueKey('extra'),
+            width: 120,
+            height: 24,
+          ),
+          actions: const [
+            SizedBox(key: ValueKey('action'), width: 60, height: 24),
+          ],
+          child: const Text('内容'),
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final titleRect = tester.getRect(find.text('标题'));
+    final extraRect = tester.getRect(find.byKey(const ValueKey('extra')));
+    final actionRect = tester.getRect(find.byKey(const ValueKey('action')));
+
+    // 后置控件在标题右侧、且保留完整宽度
+    expect(extraRect.left, greaterThan(titleRect.right));
+    expect(extraRect.width, 120);
+    // 操作区在后置控件右侧,并贴齐面板右侧(16 内边距 + 0.5 描边)
+    expect(actionRect.left, greaterThan(extraRect.right));
+    final panelRect = tester.getRect(find.byType(SantoPanel));
+    expect(panelRect.right - actionRect.right, closeTo(16.5, 0.5));
+  });
+
+  testWidgets('SantoPanel 标题过长时后置控件保持完整宽度', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: SantoPanel(
+          title: '这是一个特别特别特别特别特别特别特别特别长的面板标题' * 3,
+          titleExtra: const SizedBox(
+            key: ValueKey('extra'),
+            width: 120,
+            height: 24,
+          ),
+          child: const Text('内容'),
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    // 标题收缩让位,后置控件仍为完整 120 宽
+    expect(tester.getSize(find.byKey(const ValueKey('extra'))).width, 120);
+  });
 }
