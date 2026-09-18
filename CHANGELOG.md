@@ -4,6 +4,17 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.0.1] - 2026-09-18
+
+### 🐛 Bug 修复
+
+- 修复 `SantoProgress` 移除未使用字段后 `initState` 仍引用 `_previousValue` 导致的编译错误
+- 移除 `SantoMessage` 中对 `Overlay.of(context)` 结果的无效空判断
+
+### ⚡ 优化
+
+- 移除 `SantoAvatar`、`SantoDrawer`、`SantoLink`、`SantoSkeleton`、`SantoMenuBar` 中的未使用变量、冗余非空断言与未使用导入,`dart analyze` 全量通过无告警
+
 ## [1.0.0] - 2026-09-18
 
 Santo UI v1.0.0 初始版本发布。包含 **80** 组件,按示例菜单分为通用、布局、导航、数据录入、数据展示、反馈、数据图表 7 个分组。

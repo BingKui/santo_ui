@@ -418,7 +418,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           padding: const EdgeInsets.only(bottom: 2),
           child: _attachBadge(icon, item),
         ),
-        if (label != null) label,
+        ?label,
       ];
     }
     // 无图标时徽标挂在文字上

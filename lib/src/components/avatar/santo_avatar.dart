@@ -97,7 +97,7 @@ class SantoAvatar extends StatelessWidget {
           width: size,
           height: size,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => _buildFallback(bgColor),
+          errorBuilder: (_, _, _) => _buildFallback(bgColor),
         ),
       );
     } else if (text != null) {
