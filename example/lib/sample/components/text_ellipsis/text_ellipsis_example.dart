@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 const String _ellipsisText =
@@ -18,6 +19,7 @@ class _TextEllipsisExampleState extends State<TextEllipsisExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'TextEllipsis 文本省略',
       children: <Widget>[
+        ExampleIntro('text_ellipsis'),
         SantoSection(
           title: '基础用法',
           description: 'rows 默认 1 行，超出后折叠并在省略号后紧跟 expandText',
@@ -135,7 +137,7 @@ class _TextEllipsisExampleState extends State<TextEllipsisExample> {
                 collapseText: '收起',
               ),
               const SizedBox(height: 12),
-              SantoNormalButton(
+              SantoButton(
                 text: '切换展开/收起',
                 onTap: () => _ellipsisKey.currentState?.toggle(),
               ),

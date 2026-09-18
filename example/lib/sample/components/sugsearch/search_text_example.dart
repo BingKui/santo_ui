@@ -1,5 +1,6 @@
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 第二种searchba的示例，场景应用于 页面标题的下方
@@ -39,6 +40,7 @@ class _SearchTextExampleState extends State<SearchTextExample> {
     return SantoPageLayout(
       title: '搜索输入框示例',
       children: <Widget>[
+        ExampleIntro('sugsearch'),
         Container(
           height: 40,
         ),

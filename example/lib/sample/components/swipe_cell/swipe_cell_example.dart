@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 滑动单元格示例页面
@@ -16,6 +17,7 @@ class _SwipeCellExampleState extends State<SwipeCellExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'SwipeCell 示例',
       children: <Widget>[
+        ExampleIntro('swipe_cell'),
         // 提示
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),

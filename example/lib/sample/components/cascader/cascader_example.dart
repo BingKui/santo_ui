@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 级联选择器示例
@@ -131,6 +132,7 @@ class _CascaderExampleState extends State<CascaderExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Cascader 级联选择器示例',
       children: <Widget>[
+        ExampleIntro('cascader'),
         // 场景1：省/市/区三级选择
         SantoSection(
           title: '省/市/区 三级联动',

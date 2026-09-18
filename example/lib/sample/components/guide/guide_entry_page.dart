@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/guide/force_guide_example.dart';
 import 'package:example/sample/components/guide/soft_intro_example.dart';
 import 'package:example/sample/home/list_item.dart';
@@ -12,6 +13,7 @@ class GuideEntryPage extends StatelessWidget {
     return SantoPageLayout(
       title: "引导示例",
         children: <Widget>[
+          ExampleIntro('guide'),
           ListItem(
             title: "强引导组件",
             describe: '强引导组件example',

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class SelectedListActionSheetExamplePage extends StatefulWidget {
@@ -43,20 +44,25 @@ class SelectedListActionSheetExamplePageState
       },
       child: SantoPageLayout(        title: '已选菜单列表',
         children: <Widget>[
+          ExampleIntro('actionsheet'),
           SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  SantoBottomButtonPanel(
-                      mainButtonName: 'SantoBottomButtonPanel',
-                      mainButtonOnTap: () {
-                        SantoToast.show('确定！sheet 的数据源长度 ${_data.length}', context);
-                      },
-                      iconButtonList: [
-                        SantoVerticalIconButton(
-                            name: '已选(${_data.length})',
-                            iconWidget: SantoTools.getAssetImage(
+                  Container(
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 18),
+                      color: Colors.white,
+                      child: Row(
+                        children: <Widget>[
+                          SantoButton(
+                            text: '已选(${_data.length})',
+                            icon: SantoTools.getAssetImage(
                                 'icons/grey_place_holder.png'),
+                            iconPlacement: SantoButtonIconPlacement.top,
+                            iconSize: 24,
+                            textStyle: const TextStyle(fontSize: 12),
+                            insertPadding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 2),
                             onTap: () {
                               if (!controller.isHidden) {
                                 controller.dismiss();
@@ -124,8 +130,22 @@ class SelectedListActionSheetExamplePageState
                                       return true;
                                     }).show();
                               }
-                            })
-                      ]),
+                            }),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: SantoButton(
+                              text: '确定',
+                              type: SantoButtonType.primary,
+                              size: SantoButtonSize.large,
+                              block: true,
+                              onTap: () {
+                                SantoToast.show(
+                                    '确定！sheet 的数据源长度 ${_data.length}', context);
+                              },
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ),

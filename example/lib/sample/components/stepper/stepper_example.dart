@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 步进器示例页面
@@ -20,6 +21,7 @@ class _StepperExampleState extends State<StepperExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Stepper 示例',
       children: <Widget>[
+        ExampleIntro('stepper'),
         // 基础步进器
         SantoSection(
           title: '基础步进器',

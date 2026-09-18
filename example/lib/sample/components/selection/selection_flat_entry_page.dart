@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/selection/flat_selection_five_tags_example.dart';
 import 'package:example/sample/components/selection/flat_selection_four_tags_example.dart';
 import 'package:example/sample/components/selection/flat_selection_three_tags_example.dart';
@@ -16,6 +17,7 @@ class FlatSelectionEntryPage extends StatelessWidget {
     return SantoPageLayout(
       title: 'Selection 示例',
         children: <Widget>[
+          ExampleIntro('selection'),
           Container(
             padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(

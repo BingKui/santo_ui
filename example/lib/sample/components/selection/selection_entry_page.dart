@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/selection/selectionview_custom_floating_layer_example.dart';
 import 'package:example/sample/components/selection/selectionview_customhandle_filter_example_page.dart';
 import 'package:example/sample/components/selection/selectionview_customview_example_page.dart';
@@ -27,6 +28,7 @@ class SelectionEntryPage extends StatelessWidget {
     return SantoPageLayout(
       title: 'Selection 示例',
         children: <Widget>[
+          ExampleIntro('selection'),
           Container(
             padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(

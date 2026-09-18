@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 评价组件example
@@ -23,6 +24,7 @@ class _AppraiseExampleState extends State<AppraiseExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '评价组件',
       children: <Widget>[
+        ExampleIntro('appraise'),
         SantoSection(
           title: '基础用法',
           description: 'SantoAppraise 供页面内嵌，BottomPicker 从底部弹窗',
@@ -94,8 +96,9 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                 ),
               ),
               SizedBox(height: 10),
-              SantoSmallMainButton(
-                title: '点击显示默认样式弹窗',
+              SantoButton(
+                type: SantoButtonType.primary,
+                text: '点击显示默认样式弹窗',
                 onTap: () {
                   SantoAppraiseBottomPicker.show(
                     context: context,
@@ -131,8 +134,9 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                 ),
               ),
               SizedBox(height: 10),
-              SantoSmallMainButton(
-                title: '点击显示评价弹窗',
+              SantoButton(
+                type: SantoButtonType.primary,
+                text: '点击显示评价弹窗',
                 onTap: () {
                   SantoAppraiseBottomPicker.show(
                     context: context,
@@ -160,8 +164,9 @@ class _AppraiseExampleState extends State<AppraiseExample> {
                 ),
               ),
               SizedBox(height: 10),
-              SantoSmallMainButton(
-                title: '点击显示评价弹窗',
+              SantoButton(
+                type: SantoButtonType.primary,
+                text: '点击显示评价弹窗',
                 onTap: () {
                   SantoAppraiseBottomPicker.show(
                     context: context,

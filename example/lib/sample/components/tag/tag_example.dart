@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Tag 标签示例
@@ -26,6 +27,7 @@ class _TagExampleState extends State<TagExample> {
     return SantoPageLayout(
       title: 'Tag 标签',
       children: <Widget>[
+        ExampleIntro('tag'),
         _buildBasicSection(),
         _buildColorfulSection(),
         _buildSelectTagSections(),
@@ -238,18 +240,16 @@ class _TagExampleState extends State<TagExample> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SantoIconButton(
-                name: '',
-                iconWidget: Icon(Icons.add),
-                widgetWidth: 48,
-                widgetHeight: 48,
+              SantoButton(
+                child: Icon(Icons.add),
+                type: SantoButtonType.text,
+                insertPadding: const EdgeInsets.all(12),
                 onTap: () => _deleteTagController.addTag('增加的tag'),
               ),
-              SantoIconButton(
-                name: '',
-                iconWidget: Icon(Icons.delete_forever),
-                widgetWidth: 48,
-                widgetHeight: 48,
+              SantoButton(
+                child: Icon(Icons.delete_forever),
+                type: SantoButtonType.text,
+                insertPadding: const EdgeInsets.all(12),
                 onTap: () => _deleteTagController.deleteForIndex(0),
               )
             ],

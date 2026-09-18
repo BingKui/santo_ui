@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 链接组件示例
@@ -7,6 +8,7 @@ class LinkExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Link 链接',
       children: <Widget>[
+        ExampleIntro('link'),
         SantoSection(
           title: '基础链接',
           description: '点击触发 onTap 回调，underline 控制是否显示下划线',

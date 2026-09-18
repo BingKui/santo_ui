@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class SubSwitchTitleExample extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '二级标题',
       children: <Widget>[
+        ExampleIntro('tabbar'),
         SantoSection(
           title: '基础用法',
           description: 'nameList 传一个标题时无选中态，多个时选中项显示主题色',
@@ -103,8 +105,9 @@ class _SubSwitchTitleExampleState extends State<SubSwitchTitleExample>
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
-                child: SantoSmallOutlineButton(
-                  title: '点击选中第三个',
+                child: SantoButton(
+                  type: SantoButtonType.normal,
+                  text: '点击选中第三个',
                   onTap: () {
                     _controller.index = 2;
                   },

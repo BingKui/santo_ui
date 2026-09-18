@@ -6,10 +6,10 @@
 
 
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// A single-line [ListTile] with a trailing button that expands or collapses
@@ -127,9 +127,9 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
     }
 
     if (_isExpanded) {
-      _arrowIcon = SantoTools.getAssetSizeImage(SantoAsset.iconDownArrow, 12, 12);
+      _arrowIcon = SantoIcon(SantoIcons.navArrowDown, size: 12);
     } else {
-      _arrowIcon = SantoTools.getAssetSizeImage(SantoAsset.iconUpArrow, 12, 12);
+      _arrowIcon = SantoIcon(SantoIcons.navArrowUp, size: 12);
     }
   }
 

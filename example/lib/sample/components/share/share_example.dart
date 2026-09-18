@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoShare 分享面板示例
@@ -9,6 +10,7 @@ class ShareExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Share 分享',
       children: <Widget>[
+        ExampleIntro('share'),
         SantoSection(
           title: '单行 7 项',
           description: '预设渠道 + 自定义渠道混合,取消按钮文案可自定义',
@@ -48,7 +50,7 @@ class ShareExample extends StatelessWidget {
   }
 
   Widget _buildTrigger({required String text, required VoidCallback onTap}) {
-    return SantoNormalButton(
+    return SantoButton(
       text: text,
       alignment: Alignment.center,
       constraints: const BoxConstraints.tightFor(height: 48),

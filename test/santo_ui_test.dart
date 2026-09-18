@@ -18,26 +18,29 @@ void main() {
     expect(config, same(custom));
   });
 
-  testWidgets('SantoBigMainButton renders and handles tap', (tester) async {
+  testWidgets('SantoButton renders and handles tap', (tester) async {
     var tapped = false;
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: SantoBigMainButton(
-          title: '主操作',
+        body: SantoButton(
+          text: '主操作',
+          type: SantoButtonType.primary,
+          size: SantoButtonSize.large,
+          block: true,
           onTap: () => tapped = true,
         ),
       ),
     ));
     expect(find.text('主操作'), findsOneWidget);
-    await tester.tap(find.byType(SantoBigMainButton));
+    await tester.tap(find.byType(SantoButton));
     expect(tapped, isTrue);
   });
 
-  testWidgets('SantoNormalButton renders title', (tester) async {
+  testWidgets('SantoButton renders text', (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: Center(
-          child: SantoNormalButton(
+          child: SantoButton(
             text: '普通按钮',
             onTap: () {},
           ),

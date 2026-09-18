@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 轮播图示例页面
@@ -58,6 +59,7 @@ class _SwiperExampleState extends State<SwiperExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Swiper 示例',
       children: <Widget>[
+        ExampleIntro('swiper'),
         // 基础轮播（圆点指示器）
         SantoSection(
           title: '基础轮播（圆点指示器）',
@@ -136,7 +138,7 @@ class _SwiperExampleState extends State<SwiperExample> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SantoNormalButton(
+                    SantoButton(
                       onTap: () {
                         setState(() {
                           _currentPage = (_currentPage - 1 + 5) % 5;
@@ -146,7 +148,7 @@ class _SwiperExampleState extends State<SwiperExample> {
                       text: '上一页',
                     ),
                     const SizedBox(width: 16),
-                    SantoNormalButton(
+                    SantoButton(
                       onTap: () {
                         setState(() {
                           _currentPage = (_currentPage + 1) % 5;

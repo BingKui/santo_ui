@@ -124,9 +124,11 @@ class _SelectionViewExamplePageState
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  SantoBigOutlineButton(
+                  SantoButton(
                       width: 104,
-                      title: "取消",
+                      type: SantoButtonType.normal,
+                      size: SantoButtonSize.large,
+                      text: "取消",
                       onTap: () {
                         if (controller != null) {
                           controller!.cancelSelectedOptions();
@@ -138,9 +140,11 @@ class _SelectionViewExamplePageState
                   Container(
                     width: 20,
                   ),
-                  SantoBigMainButton(
+                  SantoButton(
                       width: 104,
-                      title: "确定",
+                      type: SantoButtonType.primary,
+                      size: SantoButtonSize.large,
+                      text: "确定",
                       onTap: () {
                         if (controller != null) {
                           controller!.confirmSelectedOptions();

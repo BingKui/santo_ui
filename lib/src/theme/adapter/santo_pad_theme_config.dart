@@ -141,12 +141,12 @@ class SantoPadThemeConfig {
   );
 
   static SantoButtonConfig buttonConfig = SantoButtonConfig(
-      bigButtonRadius: 12,
-      bigButtonHeight: 50,
-      bigButtonFontSize: 18,
-      smallButtonRadius: 12,
-      smallButtonFontSize: 14,
-      smallButtonHeight: 36);
+      largeButtonRadius: 12,
+      largeButtonHeight: 50,
+      largeButtonFontSize: 18,
+      middleButtonRadius: 12,
+      middleButtonFontSize: 14,
+      middleButtonHeight: 36);
 
   static SantoPairInfoTableConfig metaPairInfoTableConfig =
       SantoPairInfoTableConfig(

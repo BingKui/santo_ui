@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class SantoHorizontalStepExamplePage extends StatefulWidget {
@@ -32,6 +33,7 @@ class SantoHorizontalStepExamplePageState
   Widget build(BuildContext context) {
     return SantoPageLayout(      appBar: SantoAppBar(title: widget.title),
       children: <Widget>[
+        ExampleIntro('step'),
         SantoSection(
           title: '步骤个数调节',
           description: '拖动 SantoSlider 调整步骤总数，最多 5 步，变化后回到第 1 步',
@@ -57,13 +59,13 @@ class SantoHorizontalStepExamplePageState
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SantoNormalButton(
+                  SantoButton(
                     child: const Text('上一步'),
                     onTap: () {
                       _controller.backStep();
                     },
                   ),
-                  SantoNormalButton(
+                  SantoButton(
                     child: const Text('下一步'),
                     onTap: () {
                       _controller.forwardStep();
@@ -74,13 +76,13 @@ class SantoHorizontalStepExamplePageState
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SantoNormalButton(
+                  SantoButton(
                     child: const Text('跳至第3步'),
                     onTap: () {
                       _controller.setCurrentIndex(2);
                     },
                   ),
-                  SantoNormalButton(
+                  SantoButton(
                     child: const Text('完成'),
                     onTap: () {
                       _controller.setCompleted();

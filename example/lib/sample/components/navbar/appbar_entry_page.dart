@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:example/sample/components/navbar/nav_bar_example_page.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class AppbarEntryPage extends StatelessWidget {
     return SantoPageLayout(
       title: 'NavBar示例',
         children: <Widget>[
+          ExampleIntro('navbar'),
           ListItem(
             title: "NavBar示例",
             describe: 'Navbar/黑/2个文字模块切换+左右2icon',

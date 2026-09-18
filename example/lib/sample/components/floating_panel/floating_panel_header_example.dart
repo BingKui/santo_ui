@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// FloatingPanel 自定义标头与多锚点示例
@@ -18,10 +18,7 @@ class FloatingPanelHeaderExample extends StatelessWidget {
       // 内容自带滚动(Column + Expanded),由内层列表避让面板
       scrollable: false,
       children: <Widget>[
-              const RulePanel(
-                'header 插槽与把手条同属拖拽区域整块可拖,anchors 传入三档高度(100px、35%、85%)在档位间吸附',
-                maxLines: 3,
-              ),
+              ExampleIntro('floating_panel'),
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.only(bottom: 480),
@@ -59,7 +56,8 @@ class FloatingPanelHeaderExample extends StatelessWidget {
                     ),
                   ),
                 ),
-                SantoNormalButton.outline(
+                SantoButton(
+                  type: SantoButtonType.normal,
                   text: '操作',
                   fontSize: 12,
                   insertPadding: const EdgeInsets.symmetric(

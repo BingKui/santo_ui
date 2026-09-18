@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/form/group_example/expansion_group_example.dart';
 import 'package:example/sample/components/form/group_example/group_add_example.dart';
 import 'package:example/sample/components/form/group_example/normal_group_example.dart';
@@ -47,6 +48,7 @@ class AllFormItemStyleExamplePage extends StatelessWidget {
   Widget getBodyWidget(BuildContext context) {
     return ListView(
       children: <Widget>[
+        ExampleIntro('form'),
 
         // 基础类型
         SantoSection(

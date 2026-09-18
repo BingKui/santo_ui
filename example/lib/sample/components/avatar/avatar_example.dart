@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 头像组件示例
@@ -7,6 +8,7 @@ class AvatarExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Avatar 示例',
       children: <Widget>[
+        ExampleIntro('avatar'),
         SantoSection(
           title: '图片头像',
           description: 'imageUrl 加载图片，size 分别取 48、64、80',

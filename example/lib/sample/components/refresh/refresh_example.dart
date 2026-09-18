@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoRefresh 下拉刷新示例
@@ -36,6 +37,7 @@ class _RefreshExampleState extends State<RefreshExample> {
     return SantoPageLayout(
       title: 'Refresh 下拉刷新',
       children: <Widget>[
+        ExampleIntro('refresh'),
         _buildBasicSection(),
         _buildControllerSection(),
         _buildTextsAndStateSection(),
@@ -78,7 +80,7 @@ class _RefreshExampleState extends State<RefreshExample> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SantoNormalButton(
+          SantoButton(
             text: '主动刷新（已触发 $_controllerRefreshCount 次）',
             type: SantoButtonType.primary,
             onTap: () async {

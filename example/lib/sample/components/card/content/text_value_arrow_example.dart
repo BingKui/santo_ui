@@ -1,8 +1,8 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class TextValueArrowContentExample extends StatefulWidget {
   @override
@@ -16,9 +16,7 @@ class _TextValueArrowContentExampleState
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'value带有操作箭头',
       children: <Widget>[
-RulePanel(
-        'value带有操作箭头，箭头在最右侧，value单行展示',
-        maxLines: 4),
+ExampleIntro('card'),
 SantoSection(
         title: '正常案例',
         description: '紧随布局下 isArrow 展示右侧箭头，问号与超链接均可点',

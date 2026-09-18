@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoInputText 输入框示例
@@ -26,6 +27,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
     return SantoPageLayout(      title: 'Input 输入框',
       children: <Widget>[
+        ExampleIntro('input'),
         SantoPanel(
           title: '基础输入框',
           child: SantoInputText(
@@ -84,8 +86,9 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 hintText: '请输入验证码',
                 inputFormat: SantoInputFormat.digit,
                 maxLength: 6,
-                suffixButton: SantoSmallOutlineButton(
-                  title: '获取',
+                suffixButton: SantoButton(
+                  type: SantoButtonType.normal,
+                  text: '获取',
                   width: 56,
                   fontSize: 12,
                   lineColor: brandPrimary,

@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class SantoTabbarStickyExample extends StatefulWidget {
@@ -46,6 +47,7 @@ class _SantoTabbarStickyExampleState extends State<SantoTabbarStickyExample>
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
+                  SliverToBoxAdapter(child: ExampleIntro('tabbar')),
                   buildHeaderWidget(),
                   SliverOverlapAbsorber(
                     handle:

@@ -44,7 +44,7 @@ group:
 ```dart
 SantoPanel(
   title: '面板标题',
-  actions: [SantoNormalButton.outline(text: '更多', onTap: () {})],
+  actions: [SantoButton(text: '更多操作', type: SantoButtonType.normal, onTap: () {})],
   child: Text('面板内容'),
 )
 

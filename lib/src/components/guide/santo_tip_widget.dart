@@ -1,10 +1,24 @@
-import 'package:santo_ui/src/components/button/santo_icon_button.dart';
 import 'package:santo_ui/src/components/guide/santo_flutter_guide.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
+
+/// 引导组件的气泡箭头方向
+enum Direction {
+  /// 箭头在左侧
+  left,
+
+  /// 箭头在右侧
+  right,
+
+  /// 箭头在上方
+  top,
+
+  /// 箭头在下方
+  bottom,
+}
 
 /// 引导组件试，[force] 有蒙层遮挡，[soft] 无蒙层遮挡
 enum GuideMode { force, soft }
@@ -233,8 +247,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                     onTap: () {
                       onClose!();
                     },
-                    child: SantoTools.getAssetImageWithColor(
-                        SantoAsset.iconClose, Colors.black),
+                    child: SantoIcon(SantoIcons.xmark, color: Colors.black),
                   ),
           ),
         ],

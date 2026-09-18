@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoSection 区块示例
@@ -9,6 +10,7 @@ class SectionExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Section 区块',
       children: <Widget>[
+        ExampleIntro('section'),
         SantoSection(
           title: '语法糖',
           titleSuffix: const Icon(Icons.edit_outlined,
@@ -28,16 +30,26 @@ class SectionExample extends StatelessWidget {
             spacing: 12,
             runSpacing: 12,
             children: [
-              SantoBigMainButton(
-                title: 'Primary Button',
+              SantoButton(
+                type: SantoButtonType.primary,
+                size: SantoButtonSize.large,
+                block: true,
+                text: 'Primary Button',
                 onTap: () {},
               ),
-              SantoBigOutlineButton(
-                title: 'Default Button',
+              SantoButton(
+                type: SantoButtonType.normal,
+                size: SantoButtonSize.large,
+                block: true,
+                text: 'Default Button',
                 onTap: () {},
               ),
-              SantoBigGhostButton(
-                title: 'Ghost Button',
+              SantoButton(
+                color: SantoButtonColor.primary,
+                variant: SantoButtonVariant.filled,
+                size: SantoButtonSize.large,
+                block: true,
+                text: 'Ghost Button',
                 onTap: () {},
               ),
               GestureDetector(

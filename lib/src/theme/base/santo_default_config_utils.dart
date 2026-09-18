@@ -480,12 +480,15 @@ class SantoDefaultConfigUtils {
 
   /// 按钮配置
   static SantoButtonConfig defaultButtonConfig = SantoButtonConfig(
-    bigButtonRadius: 12.0,
-    bigButtonHeight: 48.0,
-    bigButtonFontSize: 16.0,
+    largeButtonRadius: 12.0,
+    largeButtonHeight: 48.0,
+    largeButtonFontSize: 16.0,
+    middleButtonRadius: 12.0,
+    middleButtonHeight: 32.0,
+    middleButtonFontSize: 14.0,
     smallButtonRadius: 12.0,
-    smallButtonHeight: 32.0,
-    smallButtonFontSize: 14.0,
+    smallButtonHeight: 24.0,
+    smallButtonFontSize: 12.0,
     configId: SANTO_CONFIG_ID,
   );
 

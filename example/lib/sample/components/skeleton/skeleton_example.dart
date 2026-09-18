@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoSkeleton 骨架屏示例
@@ -17,11 +17,7 @@ class _SkeletonExampleState extends State<SkeletonExample> {
       title: 'Skeleton 骨架屏',
       backgroundColor: const Color(0xFFF5F6FA),
       children: <Widget>[
-        const RulePanel(
-          '骨架屏用于内容加载前的占位反馈,支持文本/头像/图片/宫格预设主题,'
-          '以及自定义行列结构和渐变扫光/闪烁动画。',
-          maxLines: 3,
-        ),
+        ExampleIntro('skeleton'),
         SantoSection(
           title: '预设主题',
           description: 'theme 内置 text、avatar、image 与 grid 四种占位主题',
@@ -116,7 +112,7 @@ class _SkeletonExampleState extends State<SkeletonExample> {
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
-                child: SantoNormalButton(
+                child: SantoButton(
                   text: _loading ? '加载完成' : '重新加载',
                   onTap: () {
                     setState(() {

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// MenuBar 悬浮样式红点与徽标示例
@@ -38,6 +39,7 @@ class _MenuBarFloatingBadgeExampleState
       // 内容从悬浮栏下方穿过:用 bottomInset 留出栏高 64 + gap 12
       bottomInset: 64 + 12,
       children: <Widget>[
+        ExampleIntro('menu_bar'),
         for (int i = 1; i <= 20; i++)
           Container(
             padding: const EdgeInsets.all(16),

@@ -1,4 +1,4 @@
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/dialog/santo_dialog.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
@@ -156,8 +156,11 @@ class SantoEnhanceOperationDialog extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
           left: commonConfig.hSpacingLg, right: commonConfig.hSpacingLg),
-      child: SantoBigMainButton(
-        title: mainButtonText ?? SantoIntl.of(context).localizedResource.confirm,
+      child: SantoButton(
+        text: mainButtonText ?? SantoIntl.of(context).localizedResource.confirm,
+        type: SantoButtonType.primary,
+        size: SantoButtonSize.large,
+        block: true,
         onTap: () {
           Navigator.of(context).pop(mainButtonText ?? SantoIntl.of(context).localizedResource.confirm);
         },

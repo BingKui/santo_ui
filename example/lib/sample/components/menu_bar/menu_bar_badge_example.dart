@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// MenuBar 红点与徽标示例(停靠样式)
@@ -34,6 +35,7 @@ class _MenuBarBadgeExampleState extends State<MenuBarBadgeExample> {
       backgroundColor: Colors.white,
       title: 'MenuBar · 红点与徽标',
       children: <Widget>[
+        ExampleIntro('menu_bar'),
         for (int i = 1; i <= 20; i++)
           Container(
             padding: const EdgeInsets.all(16),

@@ -1,6 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class KeyTextCloseContentExample extends StatefulWidget {
   @override
@@ -14,9 +14,7 @@ class _KeyTextCloseContentExampleState
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '单列展示紧随',
       children: <Widget>[
-RulePanel(
-        '一行展示内容，key和value都不换行',
-        maxLines: 4),
+ExampleIntro('card'),
 SantoSection(
         title: '正常案例',
         description: 'isValueAlign 为 false 时 key 与 value 同行紧随展示，单行不换行',

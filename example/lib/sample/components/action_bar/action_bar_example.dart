@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/action_bar/action_bar_basic_example.dart';
 import 'package:example/sample/components/action_bar/action_bar_bottom_example.dart';
 import 'package:example/sample/home/list_item.dart';
@@ -11,6 +12,7 @@ class ActionBarExample extends StatelessWidget {
     return SantoPageLayout(
       title: 'ActionBar 操作栏',
         children: <Widget>[
+          ExampleIntro('action_bar'),
           ListItem(
             title: '基础用法',
             describe: '图标按钮与按钮混排、角标、类型与状态',

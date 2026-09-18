@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoHighlight 关键词高亮示例
@@ -7,6 +8,7 @@ class HighlightExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Highlight 关键词高亮',
       children: <Widget>[
+        ExampleIntro('highlight'),
         SantoSection(
           title: '基础用法',
           description: 'keywords 传入需要高亮的关键词，命中片段使用品牌主题色',

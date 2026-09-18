@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/actionsheet/actionsheet_selected_list_custom_example.dart';
 import 'package:example/sample/components/actionsheet/actionsheet_selected_list_example.dart';
 import 'package:example/sample/home/list_item.dart';
@@ -25,6 +26,7 @@ class _ActionSheetEntryPageState extends State<ActionSheetEntryPage> {
           title: widget.title,
         ),
         children: <Widget>[
+          ExampleIntro('actionsheet'),
           ListItem(
             title: "CommonActionSheet",
             describe: '通用样式ActionSheet，无独立辅助信息',

@@ -1,9 +1,9 @@
-import 'package:santo_ui/src/components/button/santo_normal_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/dialog/santo_dialog_utils.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// 描述: 内容可扩展Dialog
@@ -109,7 +109,7 @@ class SantoContentExportWidget extends StatelessWidget {
                         .getConfig()
                         .commonConfig
                         .vSpacingMd),
-                child: SantoTools.getAssetImage(SantoAsset.iconPickerClose),
+                child: SantoIcon(SantoIcons.xmark),
               )));
     }
     return const SizedBox.shrink();
@@ -145,12 +145,12 @@ class SantoContentExportWidget extends StatelessWidget {
         child: isShowOperateWidget
             ? SizedBox(
                 width: double.infinity,
-                child: SantoNormalButton(
+                child: SantoButton(
                   text: submitText ?? "",
-                  alignment: Alignment.center,
-                  constraints: const BoxConstraints.tightFor(height: 48),
-                  backgroundColor:
-                      submitBgColor ?? themeData!.commonConfig.brandPrimary,
+                  type: SantoButtonType.primary,
+                  size: SantoButtonSize.large,
+                  block: true,
+                  backgroundColor: submitBgColor,
                   textStyle: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,

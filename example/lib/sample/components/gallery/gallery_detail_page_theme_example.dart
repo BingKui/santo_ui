@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/gallery/gallery_detail_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class GalleryDetailPageThemeExample extends StatelessWidget {
       scrollable: false,
       children: <Widget>[
         CustomScrollView(slivers: [
+            SliverToBoxAdapter(child: ExampleIntro('gallery')),
             SliverList(
                 delegate: SliverChildListDelegate([
               ListItem(

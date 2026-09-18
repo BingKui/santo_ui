@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoToast 轻提示示例
@@ -7,13 +8,14 @@ class ToastExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'SantoToast 示例',
       children: <Widget>[
+        ExampleIntro('toast'),
         SantoSection(
           title: '基础用法',
           description: 'duration 可指定展示时长，不传时按文案长度自动计算',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoToast.show(
                     '普通长 Toast',
@@ -25,7 +27,7 @@ class ToastExample extends StatelessWidget {
                 text: '普通长 Toast（屏幕居中）',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoToast.show('普通短 Toast', context);
                 },
@@ -40,7 +42,7 @@ class ToastExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoToast.show(
                     '失败图标 Toast',
@@ -56,7 +58,7 @@ class ToastExample extends StatelessWidget {
                 text: '失败图标 Toast',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoToast.show(
                     '成功图标 Toast',
@@ -80,7 +82,7 @@ class ToastExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoToast.show(
                     '顶部 Toast',
@@ -92,7 +94,7 @@ class ToastExample extends StatelessWidget {
                 text: '顶部弹出',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoToast.show(
                     '底部 Toast',

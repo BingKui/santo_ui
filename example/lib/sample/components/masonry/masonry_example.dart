@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoMasonry 瀑布流示例
@@ -32,6 +33,7 @@ class MasonryExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Masonry 瀑布流',
       children: <Widget>[
+        ExampleIntro('masonry'),
         SantoSection(
           title: '两列瀑布流 (gutter: 8)',
           description: '子项按最短列优先排布，高度不一时自动错落填充',

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Table 表格示例页面
@@ -12,6 +13,7 @@ class _TableExampleState extends State<TableExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Table 表格示例',
       children: <Widget>[
+        ExampleIntro('table'),
         // 基础用法
         SantoSection(
           title: '基础用法',

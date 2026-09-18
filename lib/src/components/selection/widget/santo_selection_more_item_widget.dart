@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/time_picker/santo_date_picker_constants.dart';
@@ -12,7 +14,6 @@ import 'package:santo_ui/src/components/selection/dropdown_menu.dart';
 import 'package:santo_ui/src/components/selection/widget/santo_layer_more_selection_page.dart';
 import 'package:santo_ui/src/components/selection/widget/santo_selection_date_range_item_widget.dart';
 import 'package:santo_ui/src/components/toast/santo_toast.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
@@ -340,7 +341,9 @@ class __MoreArrowState extends State<_MoreArrow> {
   Widget build(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
-    String asset = isExpanded ? SantoAsset.iconUpArrow : SantoAsset.iconDownArrow;
+    Widget icon = isExpanded
+        ? SantoIcon(SantoIcons.navArrowUp)
+        : SantoIcon(SantoIcons.navArrowDown);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -366,9 +369,7 @@ class __MoreArrowState extends State<_MoreArrow> {
               height: 16,
               width: 16,
               padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
-              child: SantoTools.getAssetImage(
-                asset,
-              ),
+              child: icon,
             )
           ],
         ),
@@ -671,11 +672,7 @@ class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
                           : widget.themeData.optionTextStyle
                               .generateTextStyle()),
                 ),
-                Container(
-                  height: 16,
-                  width: 16,
-                  child: SantoTools.getAssetImage(SantoAsset.iconRightArrow),
-                )
+                SantoIcon(SantoIcons.navArrowRight, size: 16)
               ],
             ),
           ),

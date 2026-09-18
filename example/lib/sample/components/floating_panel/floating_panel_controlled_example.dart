@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// FloatingPanel 受控高度与开关示例
@@ -31,10 +31,7 @@ class _FloatingPanelControlledExampleState
       // 内容不滚动:说明与开关在上方,面板叠在底部
       scrollable: false,
       children: <Widget>[
-              const RulePanel(
-                'height 受控由外部驱动,拖动结束 onHeightChange 回传吸附后高度;下方按钮与开关可直接对比三种拖拽配置',
-                maxLines: 3,
-              ),
+              ExampleIntro('floating_panel'),
               Text(
                 '当前高度 ${_height.toStringAsFixed(0)}px',
                 style: const TextStyle(fontSize: 14),
@@ -43,7 +40,8 @@ class _FloatingPanelControlledExampleState
                   spacing: 10,
                   runSpacing: 10,
                   children: [
-                    SantoNormalButton.outline(
+                    SantoButton(
+                      type: SantoButtonType.normal,
                       text: '展开',
                       fontSize: 12,
                       insertPadding: const EdgeInsets.symmetric(
@@ -52,7 +50,8 @@ class _FloatingPanelControlledExampleState
                       ),
                       onTap: () => setState(() => _height = _anchors.last),
                     ),
-                    SantoNormalButton.outline(
+                    SantoButton(
+                      type: SantoButtonType.normal,
                       text: '收起',
                       fontSize: 12,
                       insertPadding: const EdgeInsets.symmetric(
@@ -61,7 +60,8 @@ class _FloatingPanelControlledExampleState
                       ),
                       onTap: () => setState(() => _height = _anchors.first),
                     ),
-                    SantoNormalButton.outline(
+                    SantoButton(
+                      type: SantoButtonType.normal,
                       text: '磁力吸附 ${_magnetic ? "开" : "关"}',
                       fontSize: 12,
                       insertPadding: const EdgeInsets.symmetric(
@@ -70,7 +70,8 @@ class _FloatingPanelControlledExampleState
                       ),
                       onTap: () => setState(() => _magnetic = !_magnetic),
                     ),
-                    SantoNormalButton.outline(
+                    SantoButton(
+                      type: SantoButtonType.normal,
                       text: '可拖拽 ${_draggable ? "开" : "关"}',
                       fontSize: 12,
                       insertPadding: const EdgeInsets.symmetric(
@@ -79,7 +80,8 @@ class _FloatingPanelControlledExampleState
                       ),
                       onTap: () => setState(() => _draggable = !_draggable),
                     ),
-                    SantoNormalButton.outline(
+                    SantoButton(
+                      type: SantoButtonType.normal,
                       text: '内容可拖拽 ${_contentDraggable ? "开" : "关"}',
                       fontSize: 12,
                       insertPadding: const EdgeInsets.symmetric(

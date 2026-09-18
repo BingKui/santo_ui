@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 星级评分条
@@ -17,6 +18,7 @@ class _RateExampleState extends State<RateExample> {
     return SantoPageLayout(
       title: 'Rate 评分示例',
       children: <Widget>[
+        ExampleIntro('rate'),
         SantoSection(
           title: '基础用法',
           description: 'selectedCount 支持小数，小数部分以半颗展示，count 可指定星星总数',

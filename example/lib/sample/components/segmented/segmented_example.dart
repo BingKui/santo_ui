@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoSegmented 分段选择器示例
@@ -37,6 +38,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Segmented 分段选择器',
       children: <Widget>[
+        ExampleIntro('segmented'),
         SantoSection(
           title: '基础用法',
           description: 'options 定义选项，未传 value 时非受控，默认选中第一个选项',
@@ -258,8 +260,9 @@ class _SegmentedExampleState extends State<SegmentedExample> {
               const SizedBox(height: 12),
               Row(
                 children: [
-                  SantoSmallOutlineButton(
-                    title: '加载选项',
+                  SantoButton(
+                    type: SantoButtonType.normal,
+                    text: '加载选项',
                     onTap: () => setState(() {
                       _dynamicValue = 'c';
                       _dynamicOptions = const [
@@ -269,8 +272,9 @@ class _SegmentedExampleState extends State<SegmentedExample> {
                     }),
                   ),
                   const SizedBox(width: 12),
-                  SantoSmallOutlineButton(
-                    title: '重置',
+                  SantoButton(
+                    type: SantoButtonType.normal,
+                    text: '重置',
                     onTap: () => setState(() {
                       _dynamicValue = 'a';
                       _dynamicOptions = _baseDynamicOptions;

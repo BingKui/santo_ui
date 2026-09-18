@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// AppLayout 示例「更多」菜单用到的页面地址
@@ -74,6 +75,7 @@ class AppLayoutDemoRoutePage extends StatelessWidget {
     return SantoPageLayout(
       title: title,
       children: <Widget>[
+        ExampleIntro('layout'),
         SantoSection(
           title: '页面地址跳转',
           description: '「更多」菜单项按 routeName 跳转,路由由宿主 App 注册',

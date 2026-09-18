@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/charts/line/db_data_node_model.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class _BrokenLineExampleState extends State<BrokenLineExample> {
     return SantoPageLayout(
       title: '折线',
       children: <Widget>[
+        ExampleIntro('charts'),
         // 首个区块前保留原有顶部留白
         SizedBox(height: 20),
         SantoSection(

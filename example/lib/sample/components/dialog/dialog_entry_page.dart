@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ class DialogEntryPage extends StatelessWidget {
           title: _title,
         ),
         children: <Widget>[
+          ExampleIntro('dialog'),
           ListItem(
             title: "富文本弹窗",
             describe: '富文本弹窗',

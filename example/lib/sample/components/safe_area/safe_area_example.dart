@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoSafeArea 安全区域示例
@@ -17,6 +18,7 @@ class _SafeAreaExampleState extends State<SafeAreaExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'SafeArea 安全区域',
       children: <Widget>[
+        ExampleIntro('safe_area'),
         SantoSection(
           title: '顶部与底部开关',
           description: '两个开关分别控制是否避让状态栏与底部 Home Indicator',

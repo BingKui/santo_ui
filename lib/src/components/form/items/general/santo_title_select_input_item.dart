@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/tooltip/santo_tooltip.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -277,19 +277,21 @@ class SantoTitleSelectInputFormItemState
   }
 
   Widget _buildTriangle() {
-    return Container(
-      height: 14,
-      width: 14,
-      child: StreamBuilder<bool>(
-        stream: _showController.stream,
-        initialData: false,
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          return snapshot.data!
-              ? SantoTools.getAssetImageWithBandColor(
-                  SantoAsset.iconSelectedUpTriangle)
-              : SantoTools.getAssetImage(SantoAsset.iconUnSelectDownTriangle);
-        },
-      ),
+    return StreamBuilder<bool>(
+      stream: _showController.stream,
+      initialData: false,
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        return snapshot.data!
+            ? SantoIcon(
+                SantoIcons.navArrowUp,
+                size: 14,
+                color: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .brandPrimary,
+              )
+            : SantoIcon(SantoIcons.navArrowDown, size: 14);
+      },
     );
   }
 

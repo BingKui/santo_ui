@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class SantoSwitchButtonExample extends StatefulWidget {
@@ -23,6 +24,7 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '开关元件',
       children: <Widget>[
+        ExampleIntro('switch'),
         SantoSection(
           title: '基础用法',
           description: 'value 与 onChanged 双向绑定，点击切换开关状态',
@@ -128,7 +130,8 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
               Wrap(
                 spacing: 10,
                 children: [
-                  SantoNormalButton.outline(
+                  SantoButton(
+                    type: SantoButtonType.normal,
                     text: '外部开启',
                     fontSize: 12,
                     insertPadding: const EdgeInsets.symmetric(
@@ -137,7 +140,8 @@ class _SantoSwitchButtonExampleState extends State<SantoSwitchButtonExample> {
                     ),
                     onTap: () => setState(() => externalValue = true),
                   ),
-                  SantoNormalButton.outline(
+                  SantoButton(
+                    type: SantoButtonType.normal,
                     text: '外部关闭',
                     fontSize: 12,
                     insertPadding: const EdgeInsets.symmetric(

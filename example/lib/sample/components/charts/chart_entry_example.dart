@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,9 @@ class FunnelChartExamplePage extends StatelessWidget {
       title: '漏斗图',
       scrollable: false,
       children: <Widget>[
-        FunnelChartExample(),
+        ExampleIntro('charts'),
+        // 图表内容自带滚动,用 Expanded 给它一个有界高度
+        Expanded(child: FunnelChartExample()),
       ],
     );
   }
@@ -402,7 +405,8 @@ class _FunnelChartExampleState extends State<FunnelChartExample> {
                   padding: EdgeInsets.only(left: 20),
                   child: Text('标签位置'),
                 ),
-                SantoNormalButton.outline(
+                SantoButton(
+                  type: SantoButtonType.normal,
                   onTap: () {
                     setState(() {
                       alignment = MarkerAlignment.left;
@@ -410,7 +414,8 @@ class _FunnelChartExampleState extends State<FunnelChartExample> {
                   },
                   text: '居左',
                 ),
-                SantoNormalButton.outline(
+                SantoButton(
+                  type: SantoButtonType.normal,
                   onTap: () {
                     setState(() {
                       alignment = MarkerAlignment.center;
@@ -418,7 +423,8 @@ class _FunnelChartExampleState extends State<FunnelChartExample> {
                   },
                   text: '居中',
                 ),
-                SantoNormalButton.outline(
+                SantoButton(
+                  type: SantoButtonType.normal,
                   onTap: () {
                     setState(() {
                       alignment = MarkerAlignment.right;

@@ -1,7 +1,7 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// 强化数字展示的组件
@@ -247,10 +247,10 @@ class SantoEnhanceNumberCard extends StatelessWidget {
     );
     Widget? icon;
     if (model.iconTapCallBack != null) {
-      icon = SantoTools.getAssetSizeImage(SantoAsset.iconQuestion, 14, 14);
+      icon = SantoIcon(SantoIcons.helpCircle, size: 14);
 
       if (model.numberInfoIcon == SantoNumberInfoIcon.arrow) {
-        icon = SantoTools.getAssetSizeImage(SantoAsset.iconRightArrow, 14, 14);
+        icon = SantoIcon(SantoIcons.navArrowRight, size: 14);
       }
       debugPrint('${tp.height}');
       debugPrint(model.title);

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Collapse 折叠面板示例
@@ -22,6 +23,7 @@ class _CollapseExampleState extends State<CollapseExample> {
 
     return SantoPageLayout(      title: 'Collapse 折叠面板',
       children: <Widget>[
+        ExampleIntro('collapse'),
         SantoSection(
           title: '基础折叠面板',
           description: '受控用法，value 绑定当前展开项，onChanged 回传最新选中集合',

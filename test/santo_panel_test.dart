@@ -10,8 +10,9 @@ void main() {
         body: SantoPanel(
           title: '面板标题',
           actions: [
-            SantoNormalButton.outline(
-              text: '更多',
+            SantoButton(
+              text: '更多操作',
+              type: SantoButtonType.normal,
               onTap: () => tapped = true,
             ),
           ],
@@ -22,8 +23,8 @@ void main() {
 
     expect(find.text('面板标题'), findsOneWidget);
     expect(find.text('面板内容'), findsOneWidget);
-    expect(find.text('更多'), findsOneWidget);
-    await tester.tap(find.text('更多'));
+    expect(find.text('更多操作'), findsOneWidget);
+    await tester.tap(find.text('更多操作'));
     expect(tapped, isTrue);
   });
 

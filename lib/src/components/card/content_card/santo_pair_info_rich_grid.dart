@@ -1,8 +1,8 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_pair_info_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// 两列key-value 展示信息的集合,需要配合[SantoRichGridInfo]使用
@@ -227,8 +227,7 @@ class SantoRichGridInfo {
           child: Padding(
             padding: EdgeInsets.only(
                 left: isKey ? 0 : themeData!.commonConfig.hSpacingXs),
-            child: SantoTools.getAssetSizeImage(
-                SantoAsset.iconPairInfoQuestion, 14, 14),
+            child: SantoIcon(SantoIcons.helpCircle, size: 14),
           ));
     }
 

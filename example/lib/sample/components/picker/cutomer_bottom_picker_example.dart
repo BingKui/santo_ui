@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class CustomPickerExamplePage extends StatelessWidget {
     return SantoPageLayout(
       title: '自定义底部弹窗',
         children: <Widget>[
+          ExampleIntro('picker'),
           SantoSection(
             title: '输入框内容',
             description: 'contentWidget 内放 SantoInputText，autofocus 时被键盘抬起且不遮挡',

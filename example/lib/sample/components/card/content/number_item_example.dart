@@ -1,8 +1,8 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class NumberItemRowExample extends StatefulWidget {
   @override
@@ -15,11 +15,7 @@ class _NumberItemRowExampleState extends State<NumberItemRowExample> {
     return SantoPageLayout(
       title: '数字信息',
       children: <Widget>[
-  RulePanel(
-              '数字信息是特殊字体，前后可携带正常字体\n'
-                      '特殊字体的样式为28号字，正常字体为12号字\n'
-                      '上下间距是8',
-              maxLines: 4),
+  ExampleIntro('card'),
   SantoSection(
               title: '正常案例 只有一个Item',
               description: '只有一个 item 时的基础展示，number 使用 Bebas 字体放大',

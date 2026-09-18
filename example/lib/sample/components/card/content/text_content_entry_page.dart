@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/card/content/keyvalue_align_content_example.dart';
 import 'package:example/sample/components/card/content/keyvalue_close_content_example.dart';
 import 'package:example/sample/components/card/content/number_item_example.dart';
@@ -17,6 +18,7 @@ class TextContentEntryPage extends StatelessWidget {
     return SantoPageLayout(
       title: "文本内容示例",
         children: <Widget>[
+          ExampleIntro('card'),
           ListItem(
             title: "单列左对齐",
             describe: 'key宽度最多92，value是左对齐的',

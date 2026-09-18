@@ -199,7 +199,9 @@ class _SelectionViewExamplePageState
             },
           ),
           Expanded(
-            child: SantoBigMainButton(
+            child: SantoButton(
+              type: SantoButtonType.primary,
+              size: SantoButtonSize.large,
               onTap: () {
                 /// 真正点击【确定】时，选中的参数才有意义
                 if (_customHandleCallBack != null)
@@ -213,7 +215,7 @@ class _SelectionViewExamplePageState
                     _currentCalendarSelectedDate.value?.toString();
                 closeCustomFilterView();
               },
-              title: '确定',
+              text: '确定',
             ),
           )
         ],

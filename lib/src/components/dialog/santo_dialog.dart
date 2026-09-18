@@ -1,6 +1,5 @@
 import 'package:santo_ui/src/components/dialog/santo_dialog_utils.dart';
-import 'package:santo_ui/src/components/button/santo_big_ghost_button.dart';
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
@@ -427,12 +426,19 @@ class SantoDialog extends AlertDialog {
     }
 
     return main
-        ? SantoBigMainButton(
-            title: label,
+        ? SantoButton(
+            text: label,
+            type: SantoButtonType.primary,
+            size: SantoButtonSize.large,
+            block: true,
             onTap: handleTap,
           )
-        : SantoBigGhostButton(
-            title: label,
+        : SantoButton(
+            text: label,
+            color: SantoButtonColor.primary,
+            variant: SantoButtonVariant.filled,
+            size: SantoButtonSize.large,
+            block: true,
             onTap: handleTap,
           );
   }

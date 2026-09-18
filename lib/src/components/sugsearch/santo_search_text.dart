@@ -1,7 +1,7 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -203,8 +203,7 @@ class _SearchTextState extends State<SantoSearchText> {
                           padding:
                               EdgeInsets.only(left: commonConfig.hSpacingMd),
                           child: Center(
-                            child: SantoTools.getAssetSizeImage(
-                                SantoAsset.iconSearch, 16, 16),
+                            child: SantoIcon(SantoIcons.search, size: 16),
                           ),
                         ),
                     Expanded(
@@ -284,9 +283,7 @@ class _SearchTextState extends State<SantoSearchText> {
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: SantoTools.getAssetImage(
-                              SantoAsset.iconDeleteText,
-                            ),
+                            child: SantoIcon(SantoIcons.bin),
                           ),
                         ),
                       ),

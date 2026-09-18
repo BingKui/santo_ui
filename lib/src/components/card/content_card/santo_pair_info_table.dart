@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:santo_ui/src/utils/santo_rich_text.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/utils/css/santo_core_funtion.dart';
 import 'package:santo_ui/src/utils/css/santo_css_2_text.dart';
 import 'package:flutter/material.dart';
@@ -276,7 +276,7 @@ class _SantoPairInfoTableState extends State<SantoPairInfoTable> {
 
   /// 展开/收起按钮,[isUp] 为 true 时箭头朝上(收起)
   Widget _toggleButton(String label, bool isUp) {
-    Image img = SantoTools.getAssetImage(SantoAsset.iconUpArrow);
+    Widget img = SantoIcon(SantoIcons.navArrowUp);
     Widget arrow = isUp ? img : Transform.rotate(angle: pi, child: img);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -388,7 +388,7 @@ mixin PairInfoPart {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(child: valueWidget),
-          SantoTools.getAssetImage(SantoAsset.iconRightArrow),
+          SantoIcon(SantoIcons.navArrowRight),
         ],
       );
     }
@@ -791,7 +791,7 @@ class SantoInfoModal {
                     keyCallback();
                   }
                 },
-                child: SantoTools.getAssetImage(SantoAsset.iconQuestion),
+                child: SantoIcon(SantoIcons.helpCircle),
               ),
               Text(
                 '：',
@@ -824,7 +824,7 @@ class SantoInfoModal {
                   valueCallback();
                 }
               },
-              child: SantoTools.getAssetImage(SantoAsset.iconQuestion),
+              child: SantoIcon(SantoIcons.helpCircle),
             )
           ],
         );
@@ -842,7 +842,7 @@ class SantoInfoModal {
               keyCallback();
             }
           },
-          child: SantoTools.getAssetImage(SantoAsset.iconQuestion),
+          child: SantoIcon(SantoIcons.helpCircle),
         ));
         keyGen.addText('：',
             textStyle: themeData.keyTextStyle.generateTextStyle());
@@ -859,7 +859,7 @@ class SantoInfoModal {
               valueCallback();
             }
           },
-          child: SantoTools.getAssetImage(SantoAsset.iconQuestion),
+          child: SantoIcon(SantoIcons.helpCircle),
         ));
       }
       valueWidget = valueGen.build();

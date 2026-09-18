@@ -277,8 +277,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
-                child:
-                    SantoTools.getAssetSizeImage(SantoAsset.iconSearch, 16, 16),
+                child: SantoIcon(SantoIcons.search, size: 16),
               ),
               Expanded(
                 child: TextField(
@@ -352,14 +351,8 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                     padding: EdgeInsets.only(
                         right: commonConfig.hSpacingLg,
                         left: commonConfig.hSpacingLg),
-                    child: Image.asset(
-                      'assets/${SantoAsset.iconDeleteText}',
-                      color: _defaultClearIconColor,
-                      scale: 3.0,
-                      height: 16,
-                      package: SantoStrings.flutterPackageName,
-                      width: 16,
-                    ),
+                    child: SantoIcon(SantoIcons.bin,
+                        size: 16, color: _defaultClearIconColor),
                   ),
                 ),
               )

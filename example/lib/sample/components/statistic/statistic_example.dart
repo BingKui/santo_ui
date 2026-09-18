@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoStatistic 统计数值示例
@@ -9,6 +10,7 @@ class StatisticExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Statistic 统计数值',
       children: <Widget>[
+        ExampleIntro('statistic'),
         SantoSection(
           title: '基础用法',
           description: 'title 为标题、value 为数值，整数默认按千分位分组',

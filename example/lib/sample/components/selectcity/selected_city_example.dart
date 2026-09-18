@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -127,6 +128,7 @@ class _CitySelectRouteState extends State<CitySelectRoute> {
     return SantoPageLayout(      title: '选择城市 Example',
       scrollable: false,
       children: <Widget>[
+        ExampleIntro('selectcity'),
         Expanded(
             flex: 1,
             child: AzListView(

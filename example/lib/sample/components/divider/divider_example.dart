@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class DividerExample extends StatefulWidget {
@@ -13,6 +14,7 @@ class _DividerExampleState extends State<DividerExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Divider 分割线',
       children: <Widget>[
+        ExampleIntro('divider'),
         // ---------- SantoDivider（参考 antd） ----------
         SantoSection(
           title: '水平分割线',
