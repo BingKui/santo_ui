@@ -1,3 +1,29 @@
+## Unreleased
+
+### 主题与令牌
+
+* 去掉自定义间距 `pageGap`,改用规范间距:`iDefaultGap`(5)+ `gapXs~gapXxl`(5/10/15/20/20/40),并提供 `iGapAll / iGapAllSmall / iGapAllMiddle / iGapAllLarger / iGapHorizontal / iGapVertical` 预设
+* 组件内容区统一取 `gapMd`,`SantoPageLayout` 内容区取 `iGapAllMiddle`;Pad 主题同步删除 `pageGap` 覆盖
+
+### 组件
+
+* SantoTagsPicker:原「多选标签弹框」与「带输入框选择器」合并为一个组件,数据改为 `tags: List<String>` + 下标回调(与 `SantoSelectTag` 对齐),支持多选/单选、选择上限、等分/流式布局、可选输入框与底部提交按钮
+* SantoInputText 按 TDesign 重构:左侧 label 与必填标记、右侧按钮/标识/图标/文字插槽、`SantoInputFormat` 限制输入类型、多行输入(不再单独提供 textarea 组件)
+* Checkbox/Radio 按 TDesign 重构(指示器尺寸、卡片描边、半选态),修复真机首次点击丢失
+* 底部安全区域统一规范:贴底组件与半屏弹窗背景铺到屏幕底部、内容在安全区之上避让,且不可配置;`SantoPageLayout` 底部安全区改由 `SantoBottomSafeArea` 承接
+* SantoRefresh 按 TDesign 下拉刷新重写(四态 + 控制器 + 超时 + 触底加载)
+* SantoFloatingPanel:增加顶部阴影,底部安全区交由内容滚动避让;SantoFloatingPanel 面板内容不再消费 `MediaQuery.padding`
+* SantoBottomDrawer:键盘弹起整体上移、修复 title 为空时的崩溃;Appraise 底部弹窗改为复用 `SantoBottomDrawer`
+* MenuBar:红点/徽标定位修正(挂内容右上角),悬浮样式毛玻璃与滑动选中背景,更多菜单集成进组件
+* SantoTable 列宽与圆角边框修复;Collapse 内容折叠改为裁剪式高度动画;Card 内容展开/收起逻辑修正
+* 示例菜单项改为一等公民的圆角卡片(去分割线),移除 CardTitle 系列组件
+
+### 示例与文档
+
+* 同类示例合并单页(按钮/空态/标签等),示例统一用 `SantoSection` 分块
+* 文档站目录重组,组件文档统一为 `doc/components/<分类>/santo_<组件>.md`
+* 新增 `AGENTS.md`:底部安全区域处理、内容区/块间距取哪个令牌、示例页组织约定
+
 ## 0.1.0
 
 * 参照 Bruno 完成组件库整体移植:主题系统(SantoThemeConfigurator 多 configId)+ 8 大类 58+ 组件

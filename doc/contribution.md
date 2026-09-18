@@ -8,8 +8,8 @@ order: 5
 
 ### 开发环境要求
 
-- Flutter SDK >= 3.3.0
-- Dart SDK >= 2.18.0
+- Flutter SDK >= 3.10.0
+- Dart SDK ^3.13.3
 - 推荐使用 VS Code 或 Android Studio
 
 ### 分支管理
@@ -20,14 +20,15 @@ order: 5
 
 1. **组件命名**: 所有组件以 `Santo` 开头,如 `SantoButton`、`SantoDialog`
 2. **文件命名**: 使用 snake_case,如 `santo_button.dart`、`santo_dialog.dart`
-3. **文档规范**: 每个公共组件必须有对应的文档,放在 `doc/components/` 目录下
-4. **示例代码**: 在 `example/lib/sample/` 下提供组件使用示例
+3. **文档规范**: 每个公共组件必须有对应的文档,放在 `doc/components/<分类>/santo_<组件>.md`
+4. **示例代码**: 在 `example/lib/sample/` 下提供组件使用示例,同一组件的示例合并到单页、按 `SantoSection` 分块
+5. **组件约定**: 底部安全区域处理、内容区与块间距取哪个令牌等,见根目录 [AGENTS.md](../AGENTS.md)
 
 ### 如何贡献
 
-如果你想处理一个 issue,请先检查[现有 issue 列表](https://github.com/LianjiaTech/santo_ui/issues)确保没有别人正在处理。如果当前没有人在处理,可以留言认领。
+如果你想处理一个 issue,请先到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)确认没有别人正在处理。如果当前没有人在处理,可以留言认领。
 
-在发送 pull request 之前,请确认按照以下步骤操作:
+在提交 merge request 之前,请确认按照以下步骤操作:
 
 1. 基于正确的分支做修改(feature 分支或 bugfix 分支)
 2. 运行 `dart analyze lib example/lib` 确保无静态检查错误
@@ -35,7 +36,7 @@ order: 5
 4. 在 `example` 目录下运行相关 demo 确认功能正常
 5. 为新功能或修改补充文档
 
-Santo 团队会 review 所有的 pull request,合并符合规范的代码,并在 review 过程中提供反馈。
+Santo 团队会 review 所有的 merge request,合并符合规范的代码,并在 review 过程中提供反馈。
 
 ### 文档贡献
 
@@ -46,4 +47,4 @@ Santo 团队会 review 所有的 pull request,合并符合规范的代码,并在
 
 ### 加入我们
 
-Santo 经过多条业务线累计上万次的引用,仍在不断迭代优化。如果你在使用过程中遇到问题或有改进建议,欢迎提 [issue](https://github.com/LianjiaTech/santo_ui/issues/new) 与我们交流。我们期待与你一起将 Santo 打造成 Flutter 生态中最有影响力的组件项目之一。
+Santo 仍在持续迭代优化。如果你在使用过程中遇到问题或有改进建议,欢迎到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)提 issue 与我们交流。

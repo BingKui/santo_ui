@@ -10,10 +10,6 @@ order: 2
 </p>
 </blockquote>
 
-#### 从设计侧开始
-
-首先你需要下载 [UI 资源文件](https://santo-ui.example.com/download/sketch) ，下载完成后参照 [Sketch 设计指引](./sketch) 制作页面并输出一份带有组件信息的标注稿。
-
 #### 代码侧接入
 
 首先你需要有一个 Flutter 工程，具体工程创建步骤请参考 [Flutter 中文开发者网站](https://flutter.cn/docs/get-started/editor?tab=androidstudio)
@@ -22,10 +18,11 @@ order: 2
 
 ```yaml
 dependencies:
-  santo_ui: version
+  santo_ui:
+    git:
+      url: https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI.git
+      ref: main
 ```
-
-<p color="#666666"><font size="2">注意：这里版本信息需要根据本地 Flutter SDK 版本选择 详见 <a href="https://pub.flutter-io.cn/packages/santo_ui/versions"> pub.dev </a> </font></p>
 
 终端运行
 
@@ -33,7 +30,7 @@ dependencies:
 flutter pub get
 ```
 
-<p color="#666666"><font size="2">如果运行报错，请到<a href="https://pub.flutter-io.cn/packages/santo_ui/versions"> pub.dev </a> 上查阅依赖版本是否与本地 Flutter SDK 版本对应</font></p>
+版本与 Flutter SDK 的对应关系见 [Santo 概览](./santo_ui)。
 
 代码引入：
 

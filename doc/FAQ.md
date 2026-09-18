@@ -4,17 +4,13 @@ order: 6
 
 # FAQ
 
-#### Santo 什么时候支持空安全？
-
-我们已经在着手迁移空安全的工作，但由于组件体量较大，需要对每个组件的属性及接口做评估，因此支持空安全会相对滞后，敬请期待。
-
 #### 如何找到适配 Flutter SDK 版本？
 
-我们会把最新适配版本更新到 [pub.dev](https://pub.dev/packages/santo_ui/) 上
+版本与 SDK 对应关系见 [Santo 概览](./santo_ui) 的「适配 Flutter SDK 版本」表,以工程根目录 `pubspec.yaml` 的 `environment` 为准。
 
 #### 主题定制没生效可能原因？
 
-请确定在 <code>main.dart</code> 中注册，如果正确注册仍没有生效，可以给我们提 [issue](https://github.com/LianjiaTech/santo_ui/issues/new)
+请确定在 <code>main.dart</code> 中注册，如果正确注册仍没有生效，欢迎到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)提 issue
 
 #### 会提供独立组件拆分依赖吗？
 
@@ -30,6 +26,6 @@ Santo 是作为整套解决方案输出，因此没有做组件拆分，以后�
 
 #### 遇到问题怎么办？
 
-可以提 [issue](https://github.com/LianjiaTech/santo_ui/issues/new) 给我们，这里请参照 [issue 规范](https://github.com/LianjiaTech/santo_ui/issues/3) 提交，我们会定期查阅大家提的 issue，如果你已经有了解法，欢迎提 [pull request](https://github.com/LianjiaTech/santo_ui/pulls) 给我们。
+欢迎到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)提 issue 或提交 merge request,我们会定期查阅;如果你已经有了解法,也欢迎直接提 MR。
 
 
