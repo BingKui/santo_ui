@@ -73,6 +73,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Pagination** - 分页
 
 ### 反馈组件
+
 - **Toast** - 轻提示
 - **Dialog** - 对话框
 - **Message** - 消息提示
@@ -83,11 +84,13 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Popover** - 气泡卡片
 
 ### 导航组件
+
 - **Navbar** - 导航栏
 - **Tabbar** - 标签栏(粘性、滑动)
 - **MenuBar** - 菜单栏(红点/徽标、悬浮样式)
 
 ### 操作反馈组件
+
 - **Actionsheet** - 动作面板
 - **Drawer** - 抽屉
 - **Popup** - 弹出层
@@ -98,6 +101,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **FAB** - 浮动按钮
 
 ### 业务组件
+
 - **Card** - 卡片(内容展开/收起)
 - **Image** - 图片
 - **Gallery** - 图片画廊
@@ -118,7 +122,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 
 ## 工程结构
 
-```
+```shell
 santo_ui/
 ├── lib/
 │   ├── santo_ui.dart                 # 统一出口:import 'package:santo_ui/santo_ui.dart'
@@ -179,19 +183,6 @@ SantoDialogManager.showConfirmDialog(context,
 | `vSpacingXs / Sm / Md / Lg / Xl / Xxl` | 5 / 10 / 15 / 20 / 20 / 40 | 纵向间距 |
 
 成块留白直接用预设常量:`iGapAllSmall / iGapAll / iGapAllMiddle / iGapAllLarger`(5 / 10 / 15 / 20)与 `iGapHorizontal / iGapVertical`。组件内容区统一取 `gapMd`,不再有 `pageGap` 这类自定义间距。
-
-## 组件覆盖
-
-| 分类 | 内容 |
-| --- | --- |
-| 基础与布局 | AppBar/搜索导航栏、TabBar、Sidebar、Collapse、Divider/虚线、阴影卡片、Panel、Section、Space、SafeArea、Cell、ScrollAnchor |
-| 按钮 | 大主/幽灵/描边按钮、小按钮、图标按钮、按钮组/吸底面板、ActionBar |
-| 文本与标签 | 可展开/省略/高亮文本、气泡文本、通知栏、Tag 系列(普通/状态/可删/可选中/自定义) |
-| 表单 | InputText(必填标记、前后缀、按钮/图标/文字插槽、输入类型限制、多行)、Checkbox/Radio、Slider、Switch、Stepper、Segmented、SearchText、表单项与分组 |
-| 弹窗与浮层 | Dialog 系列、Drawer/BottomDrawer、FloatingPanel、Popover、Tooltip、ActionSheet、Toast、Loading、Message、Share |
-| 选择器 | 底部滚轮 Picker、多级联动、日期/区间/时间、城市选择、TagsPicker(标签选择,支持多选/单选/输入框)、筛选器系列 |
-| 数据展示 | Table、Tree、Statistic、Progress/图表系列、Swiper、Masonry、Skeleton、Gallery、Empty/Result、Appraise |
-| 其他 | Refresh 下拉刷新、BackTop、TimeCounter、Calendar、Guide 引导、Fab、Badge/Avatar、Image |
 
 完整清单与用法见 `doc/components/`;示例运行 `cd example && flutter run`。
 
