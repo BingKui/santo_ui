@@ -1,6 +1,6 @@
 # Santo UI
 
-企业级 Flutter 组件库(参考 [Bruno](https://github.com/LianjiaTech/bruno) 构建)。提供统一主题定制、多主题 configId 注册、开箱即用的移动端组件。
+企业级 Flutter 组件库。提供统一主题定制、多主题 configId 注册、开箱即用的移动端组件。
 
 ## 工程结构
 
@@ -96,4 +96,4 @@ dart doc                             # API Reference(--output doc/api)
 
 ## 许可
 
-MIT。组件库移植自 [Bruno](https://github.com/LianjiaTech/bruno)(MIT),保留原项目版权声明。
+MIT License.
