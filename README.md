@@ -15,110 +15,299 @@
 
 ## 组件覆盖
 
-Santo UI 包含 **60+** 组件,涵盖以下分类:
+Santo UI 包含 **74** 组件,按示例目录分组如下:
 
-### 基础组件
+### action_bar (1)
+
+- **ActionBar** - 底部操作栏(图标+角标、五种按钮类型/自定义色/加载/禁用)
+
+### actionsheet (1)
+
+- **ActionSheet** - 动作面板
+
+### appraise (1)
+
+- **Appraise** - 评价
+
+### avatar (1)
+
+- **Avatar** - 头像
+
+### backtop (1)
+
+- **BackTop** - 回到顶部
+
+### badge (1)
+
+- **Badge** - 徽标
+
+### bubble_text (1)
+
+- **BubbleText** - 气泡文本
+
+### button (1)
 
 - **Button** - 按钮(五种类型、加载态、禁用态、图标按钮)
-- **Link** - 链接
-- **Divider** - 分割线
-- **Space** - 间距
 
-### 布局组件
+### calendar (1)
 
-- **Layout** - 布局容器
-- **PageLayout** - 页面布局
-- **Panel** - 面板
-- **Section** - 区块
-- **Footer** - 页脚
-- **SafeArea** - 安全区域
-- **Masonry** - 瀑布流
-- **ScrollAnchor** - 滚动锚点
-
-### 表单组件
-
-- **Input** - 输入框(label、必填标记、右侧插槽、多行输入)
-- **Checkbox** - 复选框(卡片描边、半选态)
-- **Radio** - 单选框(卡片描边)
-- **Switch** - 开关
-- **Rate** - 评分
-- **Stepper** - 步进器
-- **Slider** - 滑块
-- **Form** - 表单项(多种样式、分组)
-- **Cell** - 单元格
-- **SugSearch** - 搜索建议
-
-### 选择器组件
-
-- **Picker** - 底部选择器(单列/多列/日期)
-- **Cascader** - 级联选择
-- **DropdownMenu** - 下拉筛选菜单(单选/多选/范围/日期/自定义)
-- **Selection** - 筛选组件
-- **SelectCity** - 城市选择
 - **Calendar** - 日历
-- **TagsPicker** - 标签选择器(多选/单选/输入框)
 
-### 数据展示组件
-
-- **Table** - 表格
-- **Tag** - 标签(自适应宽度、状态标签)
-- **Badge** - 徽标
-- **Avatar** - 头像
-- **Progress** - 进度条
-- **Statistic** - 统计数值
-- **Step** - 步骤条(水平/垂直)
-- **Collapse** - 折叠面板
-- **Tree** - 树形控件
-- **Sidebar** - 侧边栏
-- **Segmented** - 分段控制器
-- **Pagination** - 分页
-- **TimeCounter** - 计时器
-
-### 反馈组件
-
-- **Toast** - 轻提示
-- **Dialog** - 对话框
-- **Message** - 消息提示
-- **Loading** - 加载
-- **Result** - 结果页
-- **Empty** - 空状态
-- **Skeleton** - 骨架屏
-- **Popover** - 气泡卡片
-- **Tooltip** - 文字提示
-
-### 导航组件
-
-- **Navbar** - 导航栏
-- **Tabbar** - 标签栏(粘性、滑动)
-- **MenuBar** - 菜单栏(红点/徽标、悬浮样式)
-
-### 操作反馈组件
-
-- **Actionsheet** - 动作面板
-- **Drawer** - 抽屉
-- **Popup** - 弹出层
-- **FloatingPanel** - 浮动面板(顶部阴影、安全区避让)
-- **BottomDrawer** - 底部抽屉
-- **Backtop** - 回到顶部
-- **FAB** - 浮动按钮
-
-### 业务组件
+### card (1)
 
 - **Card** - 卡片(内容展开/收起)
-- **Image** - 图片
-- **Gallery** - 图片画廊
+
+### cascader (1)
+
+- **Cascader** - 级联选择
+
+### cell (1)
+
+- **Cell** - 单元格
+
+### charts (1)
+
 - **Charts** - 图表(折线图、环形图、进度条)
-- **Refresh** - 下拉刷新(四态、控制器、超时)
-- **SwipeCell** - 滑动单元格(组内互斥)
-- **Swiper** - 轮播
-- **NoticeBar** - 通知栏
-- **ActionBar** - 底部操作栏
-- **Share** - 分享
-- **Appraise** - 评价
+
+### checkbox (1)
+
+- **Checkbox** - 复选框(卡片描边、半选态)
+
+### collapse (1)
+
+- **Collapse** - 折叠面板
+
+### dialog (1)
+
+- **Dialog** - 对话框
+
+### divider (1)
+
+- **Divider** - 分割线
+
+### drawer (1)
+
+- **Drawer** - 抽屉
+
+### dropdown_menu (1)
+
+- **DropdownMenu** - 下拉筛选菜单(单选/多选/范围/日期/自定义)
+
+### empty (1)
+
+- **Empty** - 空状态
+
+### fab (1)
+
+- **FAB** - 浮动按钮
+
+### floating_panel (1)
+
+- **FloatingPanel** - 浮动面板(顶部阴影、安全区避让)
+
+### footer (1)
+
+- **Footer** - 页脚
+
+### form (1)
+
+- **Form** - 表单(多种样式、分组)
+
+### gallery (1)
+
+- **Gallery** - 图片画廊
+
+### guide (1)
+
 - **Guide** - 引导
+
+### highlight (1)
+
 - **Highlight** - 关键词高亮
-- **TextEllipsis** - 文本省略
-- **BubbleText** - 气泡文本
+
+### image (1)
+
+- **Image** - 图片
+
+### input (1)
+
+- **Input** - 输入框(label、必填标记、右侧插槽、多行输入)
+
+### layout (1)
+
+- **Layout** - 布局容器
+
+### link (1)
+
+- **Link** - 链接
+
+### loading (1)
+
+- **Loading** - 加载
+
+### masonry (1)
+
+- **Masonry** - 瀑布流(columns/gutter/verticalGutter/items)
+
+### menu_bar (1)
+
+- **MenuBar** - 菜单栏(红点/徽标、悬浮样式)
+
+### message (1)
+
+- **Message** - 消息提示
+
+### navbar (1)
+
+- **Navbar** - 导航栏
+
+### noticebar (1)
+
+- **NoticeBar** - 通知栏
+
+### pagination (1)
+
+- **Pagination** - 分页
+
+### panel (1)
+
+- **Panel** - 面板(圆角容器 + Header 标题/操作区 + 可滚动内容区)
+
+### picker (1)
+
+- **Picker** - 底部选择器(单列/多列/日期)
+
+### popover (1)
+
+- **Popover** - 气泡卡片
+
+### popup (1)
+
+- **Popup** - 弹出层
+
+### progress (1)
+
+- **Progress** - 进度条
+
+### radio (1)
+
+- **Radio** - 单选框(卡片描边)
+
+### rate (1)
+
+- **Rate** - 评分
+
+### refresh (1)
+
+- **Refresh** - 下拉刷新(四态、控制器、超时、触底加载)
+
+### result (1)
+
+- **Result** - 结果页
+
+### safe_area (1)
+
+- **SafeArea** - 安全区域
+
+### scroll_anchor (1)
+
+- **ScrollAnchor** - 滚动锚点
+
+### section (1)
+
+- **Section** - 区块
+
+### segmented (1)
+
+- **Segmented** - 分段控制器
+
+### selectcity (1)
+
+- **SelectCity** - 城市选择
+
+### selection (1)
+
+- **Selection** - 筛选组件
+
+### share (1)
+
+- **Share** - 分享
+
+### sidebar (1)
+
+- **Sidebar** - 侧边栏
+
+### skeleton (1)
+
+- **Skeleton** - 骨架屏(text/avatar/image/grid 预设、渐变扫光/闪烁动画)
+
+### slider (1)
+
+- **Slider** - 滑块
+
+### space (1)
+
+- **Space** - 间距(水平/垂直方向、三档预设 + 自定义 + 自动换行)
+
+### statistic (1)
+
+- **Statistic** - 统计数值
+
+### step (1)
+
+- **Step** - 步骤条(水平/垂直)
+
+### stepper (1)
+
+- **Stepper** - 步进器
+
+### sugsearch (1)
+
+- **SugSearch** - 搜索建议
+
+### swipe_cell (1)
+
+- **SwipeCell** - 滑动单元格(cell/left/right Panel、组内互斥)
+
+### swiper (1)
+
+- **Swiper** - 轮播
+
+### switch (1)
+
+- **Switch** - 开关
+
+### tabbar (1)
+
+- **Tabbar** - 标签栏(粘性、滑动)
+
+### table (1)
+
+- **Table** - 表格
+
+### tag (1)
+
+- **Tag** - 标签(自适应宽度、状态标签五态)
+
+### text_ellipsis (1)
+
+- **TextEllipsis** - 文本省略(rows/dots/expandText/collapseText、position 支持 start/middle/end)
+
+### time_counter (1)
+
+- **TimeCounter** - 计时器
+
+### toast (1)
+
+- **Toast** - 轻提示
+
+### tooltip (1)
+
+- **Tooltip** - 文字提示
+
+### tree (1)
+
+- **Tree** - 树形控件
 
 ## 工程结构
 
