@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
+// import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 
 /// 骨架屏动画类型
 enum SantoSkeletonAnimation {
