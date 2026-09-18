@@ -13,6 +13,104 @@
 
 感谢这些优秀项目的贡献,为我们提供了宝贵的参考和灵感。
 
+## 组件覆盖
+
+Santo UI 包含 **60+** 组件,涵盖以下分类:
+
+### 基础组件
+- **Button** - 按钮(五种类型、加载态、禁用态、图标按钮)
+- **Text** - 文本样式
+- **Icon** - 图标
+- **Link** - 链接
+- **Divider** - 分割线
+- **Space** - 间距
+
+### 布局组件
+- **Layout** - 布局容器
+- **PageLayout** - 页面布局
+- **Panel** - 面板
+- **Section** - 区块
+- **Footer** - 页脚
+- **SafeArea** - 安全区域
+- **Masonry** - 瀑布流
+
+### 表单组件
+- **Input** - 输入框(label、必填标记、右侧插槽、多行输入)
+- **Checkbox** - 复选框(卡片描边、半选态)
+- **Radio** - 单选框(卡片描边)
+- **Switch** - 开关
+- **Rate** - 评分
+- **Stepper** - 步进器
+- **Slider** - 滑块
+- **Form** - 表单项(多种样式、分组)
+- **Cell** - 单元格
+
+### 选择器组件
+- **Picker** - 底部选择器(单列/多列/日期)
+- **Cascader** - 级联选择
+- **DropdownMenu** - 下拉筛选菜单(单选/多选/范围/日期/自定义)
+- **Selection** - 筛选组件
+- **SelectCity** - 城市选择
+- **Calendar** - 日历
+
+### 数据展示组件
+- **Table** - 表格
+- **Tag** - 标签(自适应宽度、状态标签)
+- **Badge** - 徽标
+- **Avatar** - 头像
+- **Progress** - 进度条
+- **Statistic** - 统计数值
+- **Step** - 步骤条(水平/垂直)
+- **Collapse** - 折叠面板
+- **Tree** - 树形控件
+- **Sidebar** - 侧边栏
+- **Segmented** - 分段控制器
+- **Pagination** - 分页
+
+### 反馈组件
+- **Toast** - 轻提示
+- **Dialog** - 对话框
+- **Message** - 消息提示
+- **Loading** - 加载
+- **Result** - 结果页
+- **Empty** - 空状态
+- **Skeleton** - 骨架屏
+- **Popover** - 气泡卡片
+
+### 导航组件
+- **Navbar** - 导航栏
+- **Tabbar** - 标签栏(粘性、滑动)
+- **MenuBar** - 菜单栏(红点/徽标、悬浮样式)
+
+### 操作反馈组件
+- **Actionsheet** - 动作面板
+- **Drawer** - 抽屉
+- **Popup** - 弹出层
+- **FloatingPanel** - 浮动面板(顶部阴影、安全区避让)
+- **BottomDrawer** - 底部抽屉
+- **Tooltip** - 文字提示
+- **Backtop** - 回到顶部
+- **FAB** - 浮动按钮
+
+### 业务组件
+- **Card** - 卡片(内容展开/收起)
+- **Image** - 图片
+- **Gallery** - 图片画廊
+- **Charts** - 图表(折线图、环形图、进度条)
+- **Refresh** - 下拉刷新(四态、控制器、超时)
+- **SwipeCell** - 滑动单元格(组内互斥)
+- **Swiper** - 轮播
+- **NoticeBar** - 通知栏
+- **ActionBar** - 底部操作栏
+- **Share** - 分享
+- **Appraise** - 评价
+- **Guide** - 引导
+- **Highlight** - 关键词高亮
+- **TextEllipsis** - 文本省略
+- **TimeCounter** - 计时器
+- **TagsPicker** - 标签选择器
+- **SugSearch** - 搜索建议
+
 ## 工程结构
 
 ```
