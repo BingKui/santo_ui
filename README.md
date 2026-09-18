@@ -15,299 +15,124 @@
 
 ## 组件覆盖
 
-Santo UI 包含 **74** 组件,按示例目录分组如下:
-
-### action_bar (1)
-
-- **ActionBar** - 底部操作栏(图标+角标、五种按钮类型/自定义色/加载/禁用)
-
-### actionsheet (1)
-
-- **ActionSheet** - 动作面板
-
-### appraise (1)
-
-- **Appraise** - 评价
-
-### avatar (1)
-
-- **Avatar** - 头像
-
-### backtop (1)
-
-- **BackTop** - 回到顶部
-
-### badge (1)
-
-- **Badge** - 徽标
-
-### bubble_text (1)
-
-- **BubbleText** - 气泡文本
-
-### button (1)
-
-- **Button** - 按钮(五种类型、加载态、禁用态、图标按钮)
-
-### calendar (1)
-
-- **Calendar** - 日历
-
-### card (1)
-
-- **Card** - 卡片(内容展开/收起)
-
-### cascader (1)
-
-- **Cascader** - 级联选择
-
-### cell (1)
-
-- **Cell** - 单元格
-
-### charts (1)
-
-- **Charts** - 图表(折线图、环形图、进度条)
-
-### checkbox (1)
-
-- **Checkbox** - 复选框(卡片描边、半选态)
-
-### collapse (1)
-
-- **Collapse** - 折叠面板
-
-### dialog (1)
-
-- **Dialog** - 对话框
-
-### divider (1)
-
-- **Divider** - 分割线
-
-### drawer (1)
-
-- **Drawer** - 抽屉
-
-### dropdown_menu (1)
-
-- **DropdownMenu** - 下拉筛选菜单(单选/多选/范围/日期/自定义)
-
-### empty (1)
-
-- **Empty** - 空状态
-
-### fab (1)
-
-- **FAB** - 浮动按钮
-
-### floating_panel (1)
-
-- **FloatingPanel** - 浮动面板(顶部阴影、安全区避让)
-
-### footer (1)
-
-- **Footer** - 页脚
-
-### form (1)
-
-- **Form** - 表单(多种样式、分组)
-
-### gallery (1)
-
-- **Gallery** - 图片画廊
-
-### guide (1)
-
-- **Guide** - 引导
-
-### highlight (1)
-
-- **Highlight** - 关键词高亮
-
-### image (1)
-
-- **Image** - 图片
-
-### input (1)
-
-- **Input** - 输入框(label、必填标记、右侧插槽、多行输入)
-
-### layout (1)
-
-- **Layout** - 布局容器
-
-### link (1)
-
-- **Link** - 链接
-
-### loading (1)
-
-- **Loading** - 加载
-
-### masonry (1)
-
-- **Masonry** - 瀑布流(columns/gutter/verticalGutter/items)
-
-### menu_bar (1)
-
-- **MenuBar** - 菜单栏(红点/徽标、悬浮样式)
-
-### message (1)
-
-- **Message** - 消息提示
-
-### navbar (1)
-
-- **Navbar** - 导航栏
-
-### noticebar (1)
-
-- **NoticeBar** - 通知栏
-
-### pagination (1)
-
-- **Pagination** - 分页
-
-### panel (1)
-
-- **Panel** - 面板(圆角容器 + Header 标题/操作区 + 可滚动内容区)
-
-### picker (1)
-
-- **Picker** - 底部选择器(单列/多列/日期)
-
-### popover (1)
-
-- **Popover** - 气泡卡片
-
-### popup (1)
-
-- **Popup** - 弹出层
-
-### progress (1)
-
-- **Progress** - 进度条
-
-### radio (1)
-
-- **Radio** - 单选框(卡片描边)
-
-### rate (1)
-
-- **Rate** - 评分
-
-### refresh (1)
-
-- **Refresh** - 下拉刷新(四态、控制器、超时、触底加载)
-
-### result (1)
-
-- **Result** - 结果页
-
-### safe_area (1)
-
-- **SafeArea** - 安全区域
-
-### scroll_anchor (1)
-
-- **ScrollAnchor** - 滚动锚点
-
-### section (1)
-
-- **Section** - 区块
-
-### segmented (1)
-
-- **Segmented** - 分段控制器
-
-### selectcity (1)
-
-- **SelectCity** - 城市选择
-
-### selection (1)
-
-- **Selection** - 筛选组件
-
-### share (1)
-
-- **Share** - 分享
-
-### sidebar (1)
-
-- **Sidebar** - 侧边栏
-
-### skeleton (1)
-
-- **Skeleton** - 骨架屏(text/avatar/image/grid 预设、渐变扫光/闪烁动画)
-
-### slider (1)
-
-- **Slider** - 滑块
-
-### space (1)
-
-- **Space** - 间距(水平/垂直方向、三档预设 + 自定义 + 自动换行)
-
-### statistic (1)
-
-- **Statistic** - 统计数值
-
-### step (1)
-
-- **Step** - 步骤条(水平/垂直)
-
-### stepper (1)
-
-- **Stepper** - 步进器
-
-### sugsearch (1)
-
-- **SugSearch** - 搜索建议
-
-### swipe_cell (1)
-
-- **SwipeCell** - 滑动单元格(cell/left/right Panel、组内互斥)
-
-### swiper (1)
-
-- **Swiper** - 轮播
-
-### switch (1)
-
-- **Switch** - 开关
-
-### tabbar (1)
-
-- **Tabbar** - 标签栏(粘性、滑动)
-
-### table (1)
-
-- **Table** - 表格
-
-### tag (1)
-
-- **Tag** - 标签(自适应宽度、状态标签五态)
-
-### text_ellipsis (1)
-
-- **TextEllipsis** - 文本省略(rows/dots/expandText/collapseText、position 支持 start/middle/end)
-
-### time_counter (1)
-
-- **TimeCounter** - 计时器
-
-### toast (1)
-
-- **Toast** - 轻提示
-
-### tooltip (1)
-
-- **Tooltip** - 文字提示
-
-### tree (1)
-
-- **Tree** - 树形控件
+Santo UI 包含 **80** 组件,按示例菜单分为 7 个分组。
+
+### 通用
+
+| 组件 | 说明 |
+| --- | --- |
+| Button 按钮 | 主按钮、次按钮、幽灵按钮、按钮集合、吸底按钮、图文按钮 |
+| Fab 悬浮按钮 | 页面悬浮操作入口 |
+| Link 链接 | 文字链接 |
+| Panel 面板 | 标题 + 操作 + 可滚动内容 |
+| Section 区块 | 演示内容 + 标题描述 |
+| SafeArea 安全区域 | 顶部与底部安全区域 |
+| CardContent 卡片内容 | 文本展示与展开收起 |
+
+### 布局
+
+| 组件 | 说明 |
+| --- | --- |
+| Divider 分割线 | 实线与虚线分割 |
+| Space 间距 | 元素间距 gap |
+| Masonry 瀑布流 | 多列瀑布流布局 |
+| Skeleton 骨架屏 | 加载占位骨架 |
+| FloatingPanel 浮层面板 | 拖动吸附的底部面板 |
+| AppLayout 应用布局 | 底部悬浮菜单栏 + 多页面 |
+| PageLayout 页面布局 | 可配置导航栏 + 滚动内容容器 |
+
+### 导航
+
+| 组件 | 说明 |
+| --- | --- |
+| AppBar 导航栏 | 页面顶部导航 |
+| Tabs 标签页 | 内容分类切换 |
+| MenuBar 菜单栏 | 默认/悬浮两种样式 |
+| Sidebar 侧边栏 | 侧边导航菜单 |
+| Steps 步骤条 | 流程进度引导 |
+| AnchorTab 锚点 | 锚点定位导航 |
+| BackTop 返回顶部 | 长列表快速回顶 |
+| Drawer 抽屉 | 侧边滑出面板 |
+| Guide 引导 | 新手操作引导 |
+| ActionBar 操作栏 | 底部操作栏 |
+
+### 数据录入
+
+| 组件 | 说明 |
+| --- | --- |
+| Input 输入框 | 文本输入 |
+| Form 表单 | 表单集合 |
+| Radio 单选框 | 单项选择 |
+| Checkbox 多选框 | 多项选择 |
+| Switch 开关 | 状态切换 |
+| Rate 评分 | 星级打分 |
+| Stepper 步进器 | 数量增减 |
+| Slider 滑动输入条 | 范围数值选择 |
+| SearchText 搜索框 | 搜索输入 |
+| Picker 选择器 | 底部弹出选择 |
+| Cascader 级联选择 | 多级联动选择 |
+| DropdownMenu 下拉菜单 | 列表筛选下拉 |
+| Selection 筛选 | 复杂条件筛选 |
+| Tree 树形控件 | 树形结构选择 |
+| Calendar 日历 | 日历日期选择 |
+| CitySelection 城市选择 | 城市列表选择 |
+
+### 数据展示
+
+| 组件 | 说明 |
+| --- | --- |
+| Avatar 头像 | 用户头像展示 |
+| Badge 徽标数 | 红点/数字角标 |
+| Cell 单元格 | 列表标准行 |
+| Card 卡片 | 阴影卡片容器 |
+| Swiper 轮播 | 图片/内容轮播 |
+| Collapse 折叠面板 | 可展开/收起内容 |
+| Image 图片 | 增强图片组件 |
+| Table 表格 | 数据表格展示 |
+| Pagination 分页 | 页码切换 |
+| Segmented 分段选择器 | 分段切换选择 |
+| Statistic 统计数值 | 突出展示统计数字 |
+| Tag 标签 | 标记与分类 |
+| BubbleText 气泡文本 | 气泡文本 |
+| Highlight 关键词高亮 | 关键词高亮文本 |
+| TextEllipsis 文本省略 | 多行省略与展开收起 |
+| Popover 气泡卡片 | 锚点弹出气泡 |
+| SwipeCell 滑动单元格 | 列表项滑动操作 |
+| NoticeBar 通知栏 | 滚动通知条 |
+| Progress 进度条 | 线性/环形进度 |
+| TimeCounter 计时器 | 倒计时/正计时 |
+| Empty 空状态 | 空数据提示 |
+| Footer 页脚 | 页面底部信息 |
+| Gallery 图片浏览 | 大图预览 |
+
+### 反馈
+
+| 组件 | 说明 |
+| --- | --- |
+| Dialog 对话框 | 弹窗交互 |
+| ActionSheet 动作面板 | 底部动作菜单 |
+| Share 分享 | 分享面板 |
+| Toast 轻提示 | 轻量反馈提示 |
+| Message 全局提示 | 顶部消息通知 |
+| Tooltip 文字提示 | 定位气泡提示 |
+| OverlayWindow 悬浮窗 | 搜索悬浮层 |
+| Loading 加载 | 加载状态动画 |
+| Refresh 下拉刷新 | 下拉刷新/上拉加载 |
+| Result 结果 | 操作结果反馈 |
+| Appraise 评价 | 评分评价组件 |
+
+### 数据图表
+
+| 组件 | 说明 |
+| --- | --- |
+| BrokenLine 折线图 | 数据折线图 |
+| Radar 雷达图 | 多维数据展示 |
+| Funnel 漏斗图 | 漏斗数据展示 |
+| Doughnut 环状图 | 环形数据图 |
+| ProgressChart 进度图 | 进度展示图 |
+| BarChart 柱状图 | 柱状数据图 |
+
+完整清单与用法见 `doc/components/`;示例运行 `cd example && flutter run`。
 
 ## 工程结构
 

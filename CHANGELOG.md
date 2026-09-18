@@ -6,7 +6,7 @@
 
 ## [1.0.0] - 2026-09-18
 
-Santo UI v1.0.0 初始版本发布。包含 **74** 组件,按示例目录分为以下分类:
+Santo UI v1.0.0 初始版本发布。包含 **80** 组件,按示例菜单分为通用、布局、导航、数据录入、数据展示、反馈、数据图表 7 个分组。
 
 ###  核心特性
 
@@ -15,299 +15,35 @@ Santo UI v1.0.0 初始版本发布。包含 **74** 组件,按示例目录分为�
 - **底部安全区规范**: 贴底组件背景铺到屏幕底部,内容在安全区之上避让且不可配置
 - **全局圆角统一**: 12px 基准,主题令牌 radiusXs/Sm/Md/Lg 及各组件容器圆角
 
-### 📦 组件清单(按示例目录分组)
+### 📦 组件清单(按示例菜单分组)
 
-#### action_bar (1)
+#### 通用 (7)
 
-ActionBar - 底部操作栏
+Button 按钮、Fab 悬浮按钮、Link 链接、Panel 面板、Section 区块、SafeArea 安全区域、CardContent 卡片内容
 
-#### actionsheet (1)
+#### 布局 (7)
 
-ActionSheet - 动作面板
+Divider 分割线、Space 间距、Masonry 瀑布流、Skeleton 骨架屏、FloatingPanel 浮层面板、AppLayout 应用布局、PageLayout 页面布局
 
-#### appraise (1)
+#### 导航 (10)
 
-Appraise - 评价
+AppBar 导航栏、Tabs 标签页、MenuBar 菜单栏、Sidebar 侧边栏、Steps 步骤条、AnchorTab 锚点、BackTop 返回顶部、Drawer 抽屉、Guide 引导、ActionBar 操作栏
 
-#### avatar (1)
+#### 数据录入 (16)
 
-Avatar - 头像
+Input 输入框、Form 表单、Radio 单选框、Checkbox 多选框、Switch 开关、Rate 评分、Stepper 步进器、Slider 滑动输入条、SearchText 搜索框、Picker 选择器、Cascader 级联选择、DropdownMenu 下拉菜单、Selection 筛选、Tree 树形控件、Calendar 日历、CitySelection 城市选择
 
-#### backtop (1)
+#### 数据展示 (23)
 
-BackTop - 回到顶部
+Avatar 头像、Badge 徽标数、Cell 单元格、Card 卡片、Swiper 轮播、Collapse 折叠面板、Image 图片、Table 表格、Pagination 分页、Segmented 分段选择器、Statistic 统计数值、Tag 标签、BubbleText 气泡文本、Highlight 关键词高亮、TextEllipsis 文本省略、Popover 气泡卡片、SwipeCell 滑动单元格、NoticeBar 通知栏、Progress 进度条、TimeCounter 计时器、Empty 空状态、Footer 页脚、Gallery 图片浏览
 
-#### badge (1)
+#### 反馈 (11)
 
-Badge - 徽标
+Dialog 对话框、ActionSheet 动作面板、Share 分享、Toast 轻提示、Message 全局提示、Tooltip 文字提示、OverlayWindow 悬浮窗、Loading 加载、Refresh 下拉刷新、Result 结果、Appraise 评价
 
-#### bubble_text (1)
+#### 数据图表 (6)
 
-BubbleText - 气泡文本
-
-#### button (1)
-
-Button - 按钮
-
-#### calendar (1)
-
-Calendar - 日历
-
-#### card (1)
-
-Card - 卡片
-
-#### cascader (1)
-
-Cascader - 级联选择
-
-#### cell (1)
-
-Cell - 单元格
-
-#### charts (1)
-
-Charts - 图表
-
-#### checkbox (1)
-
-Checkbox - 复选框
-
-#### collapse (1)
-
-Collapse - 折叠面板
-
-#### dialog (1)
-
-Dialog - 对话框
-
-#### divider (1)
-
-Divider - 分割线
-
-#### drawer (1)
-
-Drawer - 抽屉
-
-#### dropdown_menu (1)
-
-DropdownMenu - 下拉筛选菜单
-
-#### empty (1)
-
-Empty - 空状态
-
-#### fab (1)
-
-FAB - 浮动按钮
-
-#### floating_panel (1)
-
-FloatingPanel - 浮动面板
-
-#### footer (1)
-
-Footer - 页脚
-
-#### form (1)
-
-Form - 表单
-
-#### gallery (1)
-
-Gallery - 图片画廊
-
-#### guide (1)
-
-Guide - 引导
-
-#### highlight (1)
-
-Highlight - 关键词高亮
-
-#### image (1)
-
-Image - 图片
-
-#### input (1)
-
-Input - 输入框
-
-#### layout (1)
-
-Layout - 布局
-
-#### link (1)
-
-Link - 链接
-
-#### loading (1)
-
-Loading - 加载
-
-#### masonry (1)
-
-Masonry - 瀑布流
-
-#### menu_bar (1)
-
-MenuBar - 菜单栏
-
-#### message (1)
-
-Message - 消息提示
-
-#### navbar (1)
-
-Navbar - 导航栏
-
-#### noticebar (1)
-
-NoticeBar - 通知栏
-
-#### pagination (1)
-
-Pagination - 分页
-
-#### panel (1)
-
-Panel - 面板
-
-#### picker (1)
-
-Picker - 选择器
-
-#### popover (1)
-
-Popover - 气泡卡片
-
-#### popup (1)
-
-Popup - 弹出层
-
-#### progress (1)
-
-Progress - 进度条
-
-#### radio (1)
-
-Radio - 单选框
-
-#### rate (1)
-
-Rate - 评分
-
-#### refresh (1)
-
-Refresh - 下拉刷新
-
-#### result (1)
-
-Result - 结果页
-
-#### safe_area (1)
-
-SafeArea - 安全区域
-
-#### scroll_anchor (1)
-
-ScrollAnchor - 滚动锚点
-
-#### section (1)
-
-Section - 区块
-
-#### segmented (1)
-
-Segmented - 分段控制器
-
-#### selectcity (1)
-
-SelectCity - 城市选择
-
-#### selection (1)
-
-Selection - 筛选
-
-#### share (1)
-
-Share - 分享
-
-#### sidebar (1)
-
-Sidebar - 侧边栏
-
-#### skeleton (1)
-
-Skeleton - 骨架屏
-
-#### slider (1)
-
-Slider - 滑块
-
-#### space (1)
-
-Space - 间距
-
-#### statistic (1)
-
-Statistic - 统计数值
-
-#### step (1)
-
-Step - 步骤条
-
-#### stepper (1)
-
-Stepper - 步进器
-
-#### sugsearch (1)
-
-SugSearch - 搜索建议
-
-#### swipe_cell (1)
-
-SwipeCell - 滑动单元格
-
-#### swiper (1)
-
-Swiper - 轮播
-
-#### switch (1)
-
-Switch - 开关
-
-#### tabbar (1)
-
-Tabbar - 标签栏
-
-#### table (1)
-
-Table - 表格
-
-#### tag (1)
-
-Tag - 标签
-
-#### text_ellipsis (1)
-
-TextEllipsis - 文本省略
-
-#### time_counter (1)
-
-TimeCounter - 计时器
-
-#### toast (1)
-
-Toast - 轻提示
-
-#### tooltip (1)
-
-Tooltip - 文字提示
-
-#### tree (1)
-
-Tree - 树形控件
+BrokenLine 折线图、Radar 雷达图、Funnel 漏斗图、Doughnut 环状图、ProgressChart 进度图、BarChart 柱状图
 
 ### 🎯 设计参考
 
