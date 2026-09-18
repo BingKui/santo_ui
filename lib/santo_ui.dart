@@ -28,7 +28,6 @@ export 'src/components/space/santo_space.dart';
 export 'src/components/masonry/santo_masonry.dart';
 export 'src/components/skeleton/santo_skeleton.dart';
 export 'src/components/menu_bar/santo_menu_bar_more_menu.dart';
-export 'src/components/share/santo_share.dart';
 export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 
 //底部导航

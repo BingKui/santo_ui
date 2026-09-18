@@ -20,8 +20,6 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 ### 基础组件
 
 - **Button** - 按钮(五种类型、加载态、禁用态、图标按钮)
-- **Text** - 文本样式
-- **Icon** - 图标
 - **Link** - 链接
 - **Divider** - 分割线
 - **Space** - 间距
@@ -35,6 +33,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Footer** - 页脚
 - **SafeArea** - 安全区域
 - **Masonry** - 瀑布流
+- **ScrollAnchor** - 滚动锚点
 
 ### 表单组件
 
@@ -47,6 +46,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Slider** - 滑块
 - **Form** - 表单项(多种样式、分组)
 - **Cell** - 单元格
+- **SugSearch** - 搜索建议
 
 ### 选择器组件
 
@@ -56,6 +56,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Selection** - 筛选组件
 - **SelectCity** - 城市选择
 - **Calendar** - 日历
+- **TagsPicker** - 标签选择器(多选/单选/输入框)
 
 ### 数据展示组件
 
@@ -71,6 +72,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Sidebar** - 侧边栏
 - **Segmented** - 分段控制器
 - **Pagination** - 分页
+- **TimeCounter** - 计时器
 
 ### 反馈组件
 
@@ -82,6 +84,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Empty** - 空状态
 - **Skeleton** - 骨架屏
 - **Popover** - 气泡卡片
+- **Tooltip** - 文字提示
 
 ### 导航组件
 
@@ -96,7 +99,6 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Popup** - 弹出层
 - **FloatingPanel** - 浮动面板(顶部阴影、安全区避让)
 - **BottomDrawer** - 底部抽屉
-- **Tooltip** - 文字提示
 - **Backtop** - 回到顶部
 - **FAB** - 浮动按钮
 
@@ -116,9 +118,7 @@ Santo UI 包含 **60+** 组件,涵盖以下分类:
 - **Guide** - 引导
 - **Highlight** - 关键词高亮
 - **TextEllipsis** - 文本省略
-- **TimeCounter** - 计时器
-- **TagsPicker** - 标签选择器
-- **SugSearch** - 搜索建议
+- **BubbleText** - 气泡文本
 
 ## 工程结构
 

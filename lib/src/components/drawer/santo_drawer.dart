@@ -75,8 +75,8 @@ class SantoDrawer extends StatefulWidget {
     required Widget child,
     bool barrierDismissible = true,
   }) {
-    final isVertical = direction == SantoDrawerDirection.top ||
-        direction == SantoDrawerDirection.bottom;
+    // final isVertical = direction == SantoDrawerDirection.top ||
+    //     direction == SantoDrawerDirection.bottom;
     Offset beginOffset;
     switch (direction) {
       case SantoDrawerDirection.left:
@@ -135,8 +135,8 @@ class _SantoDrawerState extends State<SantoDrawer> {
   Widget build(BuildContext context) {
     final isLeft =
         widget.direction == SantoDrawerDirection.left;
-    final isRight =
-        widget.direction == SantoDrawerDirection.right;
+    // final isRight =
+    //     widget.direction == SantoDrawerDirection.right;
     final isTop = widget.direction == SantoDrawerDirection.top;
     final isBottom = widget.direction == SantoDrawerDirection.bottom;
     final isVertical = isTop || isBottom;

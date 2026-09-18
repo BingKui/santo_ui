@@ -79,12 +79,12 @@ class SantoAvatar extends StatelessWidget {
             .getConfig()
             .commonConfig
             .colorTextSecondary;
-    final ShapeBorder shapeBorder = shape == SantoAvatarShape.circle
-        ? CircleBorder(side: BorderSide(color: borderColor ?? Colors.transparent))
-        : RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius),
-            side: BorderSide(color: borderColor ?? Colors.transparent),
-          );
+    // final ShapeBorder shapeBorder = shape == SantoAvatarShape.circle
+    //     ? CircleBorder(side: BorderSide(color: borderColor ?? Colors.transparent))
+    //     : RoundedRectangleBorder(
+    //         borderRadius: BorderRadius.circular(radius),
+    //         side: BorderSide(color: borderColor ?? Colors.transparent),
+    //       );
 
     Widget content;
     if (imageUrl != null && imageUrl!.isNotEmpty) {

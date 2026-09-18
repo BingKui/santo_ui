@@ -70,7 +70,6 @@ class SantoMessage {
     _dismiss();
 
     final overlayState = Overlay.of(context);
-    if (overlayState == null) return;
 
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
