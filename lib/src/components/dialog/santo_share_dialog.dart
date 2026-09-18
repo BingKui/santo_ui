@@ -141,7 +141,7 @@ class SantoShareDialog extends StatelessWidget {
     widgets.add(_configDialogseparator());
     //分割
     widgets.add(Padding(
-      padding: EdgeInsets.only(top: commonConfig.pageGap),
+      padding: EdgeInsets.only(top: commonConfig.gapMd),
     ));
     widgets.add(_configDialogShareItems());
     return widgets;

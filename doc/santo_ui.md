@@ -5,14 +5,27 @@ title: Santo
 
 ### Santo 是什么？
 
-Santo 是基于一整套设计体系的 Flutter 组件库。
+Santo 是基于一整套设计体系的 Flutter 组件库,提供 70+ 高质量组件,覆盖表单、导航、反馈、数据展示等常见场景。
 
 ### 特征
 
 - 提炼自企业级移动端产品的交互和视觉风格
-- 开箱即用的高质量 Flutter 组件
+- 开箱即用的高质量 Flutter 组件(70+)
 - 提供满足业务差异的主题定制能力
+- 完善的组件文档和示例
 - 设计工具赋能开发全链路
+
+### 组件分类
+
+- **基础组件**: Badge徽标、Avatar头像、Button按钮、Icon图标、Link链接
+- **布局组件**: Cell单元格、Divider分割线、Space间距、Section区块、SafeArea安全区域
+- **导航组件**: AppBar导航栏、TabBar标签栏、Sidebar侧边栏、DropdownMenu下拉菜单、Pagination分页
+- **表单组件**: Input输入框、Checkbox复选框、Radio单选框、Switch开关、Slider滑块、Stepper步进器、Segmented分段选择器
+- **反馈组件**: Toast轻提示、Message消息、Dialog对话框、Loading加载、Result结果页、Empty空状态、Progress进度条
+- **数据展示**: Table表格、Tree树形控件、Collapse折叠面板、Statistic统计数值、Swiper轮播图、Gallery大图预览
+- **操作反馈**: ActionSheet动作面板、Drawer抽屉、FloatingPanel悬浮面板、Popover气泡弹出框、Tooltip工具提示、Fab悬浮按钮
+- **选择器**: Picker选择器、Cascader级联选择器、DatePicker日期选择器、TagsPicker标签选择器
+- **其他**: Refresh下拉刷新、BackTop返回顶部、TimeCounter计时器、Calendar日历、Highlight高亮、NoticeBar通知栏
 
 ### 适配 Flutter SDK 版本
 
@@ -25,6 +38,8 @@ Santo 是基于一整套设计体系的 Flutter 组件库。
 | 3.0.0      | 3.0.3            |  
 | 3.1.0      | 3.3.0            |  
 | 3.2.0      | 3.3.0            |  
+
+> 当前最新版本请参考 pubspec.yaml 或 GitHub Release 页面  
 
 ### 接入
 

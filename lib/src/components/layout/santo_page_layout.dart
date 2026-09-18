@@ -4,6 +4,7 @@ import 'package:santo_ui/src/components/layout/santo_app_layout_scope.dart';
 import 'package:santo_ui/src/components/layout/santo_bottom_safe_area.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
 import 'package:santo_ui/src/components/space/santo_space.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 页面布局:统一承载页面导航栏与内容容器
@@ -11,8 +12,8 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 /// * 导航栏可配置:传 [appBar] 可使用任意自定义导航栏(如 [SantoAppBar]),
 ///   只传 [title] 时用 [SantoAppBar] 快速构建,两者都不传则不显示导航栏,
 ///   此时内容区自动避开状态栏;
-/// * 内容区固定内边距,取主题 `commonConfig.pageGap`(默认 12),不可单独调整;
-/// * [children] 是页面的内容块,块之间由 [SantoSpace] 统一加 `pageGap` 间距,
+/// * 内容区固定内边距取 [iGapAllMiddle],不可单独调整;
+/// * [children] 是页面的内容块,块之间由 [SantoSpace] 统一加 `gapMd` 间距,
 ///   页面不用自己写分隔间距;
 /// * 内容默认可滚动([scrollable]),滚动容器自带该内边距(可用 [scrollController]
 ///   驱动,便于回顶/锚点等联动),底部安全区域
@@ -45,7 +46,7 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 /// )
 /// ```
 class SantoPageLayout extends StatelessWidget {
-  /// 页面内容块,块之间统一加 `commonConfig.pageGap` 间距
+  /// 页面内容块,块之间统一加 `commonConfig.gapMd` 间距
   final List<Widget> children;
 
   /// 页面导航栏;设置后 [title] 失效
@@ -100,7 +101,7 @@ class SantoPageLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gap =
-        SantoThemeConfigurator.instance.getConfig().commonConfig.pageGap;
+        SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: appBar ?? (title == null ? null : SantoAppBar(title: title)),
@@ -115,7 +116,7 @@ class SantoPageLayout extends StatelessWidget {
               bottomInset +
               SantoAppLayoutScope.bottomBarInsetOf(context);
           final contentPadding =
-              EdgeInsets.all(gap) + EdgeInsets.only(top: media.padding.top);
+              iGapAllMiddle + EdgeInsets.only(top: media.padding.top);
 
           // 内容自带滚动:把底部安全区并入内容的 MediaQuery,
           // 由内容自己的滚动避让,不在视口底部切出空白

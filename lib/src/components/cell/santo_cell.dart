@@ -100,21 +100,21 @@ class SantoCell extends StatelessWidget {
             constraints: BoxConstraints(minHeight: minHeight),
             padding: padding ??
                 EdgeInsets.symmetric(
-                    horizontal: commonConfig.pageGap,
-                    vertical: commonConfig.pageGap),
+                    horizontal: commonConfig.gapMd,
+                    vertical: commonConfig.gapMd),
             child: Row(
               children: [
                 // 左侧图标
                 if (leftWidget != null) ...[
                   leftWidget!,
-                  SizedBox(width: commonConfig.pageGap),
+                  SizedBox(width: commonConfig.gapMd),
                 ] else if (leftIcon != null) ...[
                   Icon(
                     leftIcon,
                     size: 22,
                     color: commonConfig.colorTextBase,
                   ),
-                  SizedBox(width: commonConfig.pageGap),
+                  SizedBox(width: commonConfig.gapMd),
                 ],
                 // 中间内容
                 Expanded(

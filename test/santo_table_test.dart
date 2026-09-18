@@ -13,10 +13,12 @@ Widget _wrap(Widget child, {double width = 390}) {
 }
 
 /// 表头和数据行的单元格都是带 cellPadding 的 Container
+/// (cellPadding 默认水平取 gapMd = iDefaultGap * 3)
 final Finder _cells = find.byWidgetPredicate(
   (widget) =>
       widget is Container &&
-      widget.padding == const EdgeInsets.symmetric(horizontal: 12),
+      widget.padding ==
+          const EdgeInsets.symmetric(horizontal: iDefaultGap * 3),
 );
 
 void main() {

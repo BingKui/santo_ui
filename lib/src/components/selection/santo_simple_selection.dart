@@ -1,6 +1,6 @@
 import 'package:santo_ui/src/components/selection/bean/santo_filter_entity.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
-import 'package:santo_ui/src/components/selection/santo_selection_view.dart';
+import 'package:santo_ui/src/components/selection/dropdown_menu.dart' as santo_dropdown;
 import 'package:santo_ui/src/constants/santo_constants.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ typedef SantoSimpleSelectionOnSelectionChanged = void Function(
 
 const String _defaultMenuKey = "defaultMenuKey";
 
-/// 简单筛选，基于 SantoSelectionView 实现
+/// 简单筛选，基于 DropdownMenu 实现
 // ignore: must_be_immutable
 class SantoSimpleSelection extends StatefulWidget {
   /// 标题文案
@@ -109,7 +109,7 @@ class SantoSimpleSelectionState extends State<SantoSimpleSelection> {
 
   @override
   Widget build(BuildContext context) {
-    return SantoSelectionView(
+    return santo_dropdown.DropdownMenu(
       themeData: widget.themeData,
       originalSelectionData: selectionEntityList,
       onSelectionChanged:

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:santo_ui/src/components/popup/santo_measure_size.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
-import 'package:santo_ui/src/components/selection/santo_selection_view.dart';
+import 'package:santo_ui/src/components/selection/dropdown_menu.dart';
 import 'package:santo_ui/src/components/selection/controller/santo_flat_selection_controller.dart';
 import 'package:santo_ui/src/components/selection/converter/santo_selection_converter.dart';
 import 'package:santo_ui/src/components/selection/widget/santo_flat_selection_item.dart';

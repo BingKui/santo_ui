@@ -88,8 +88,6 @@ class SantoPadThemeConfig {
     vSpacingXl: 16,
     vSpacingXxl: 28,
 
-    pageGap: 16,
-
     iconSizeXxs: 8,
     iconSizeXs: 12,
     iconSizeSm: 14,

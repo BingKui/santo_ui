@@ -7,7 +7,7 @@ import 'package:example/sample/components/selection/flat_selection_five_tags_exa
 import 'package:example/sample/components/selection/flat_selection_four_tags_example.dart';
 import 'package:example/sample/components/selection/flat_selection_three_tags_example.dart';
 import 'package:example/sample/home/list_item.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DropdownMenu;
 import 'package:flutter/services.dart';
 
 class FlatSelectionEntryPage extends StatelessWidget {
@@ -19,7 +19,7 @@ class FlatSelectionEntryPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(
-              "SantoSelectionView 组件：",
+              "DropdownMenu 组件：",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,

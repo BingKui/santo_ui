@@ -2,9 +2,8 @@ import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
 import 'package:santo_ui/src/components/input/santo_input_text.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/santo_tags_common_picker.dart';
-import 'package:santo_ui/src/components/picker/santo_tags_picker_config.dart';
-import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/components/tag/tagview/santo_select_tag.dart';
+import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -20,31 +19,30 @@ enum SantoTagsPickerLayoutStyle {
   auto,
 }
 
-/// 标签展示文本的取值回调
-typedef SantoTagsPickerValueGetter = String Function(SantoTagItemBean data);
+/// 标签点击回调,index 为 [SantoTagsPicker.tags] 中的下标
+typedef SantoTagsPickerItemClick = void Function(int index, bool isSelect);
 
-/// 标签点击回调
-typedef SantoTagsPickerItemClick = void Function(
-    SantoTagItemBean onTapTag, bool isSelect);
-
-/// 确认回调:返回选中的标签与输入内容(未开启输入框时为空串)
+/// 确认回调:返回选中标签的下标与输入内容(未开启输入框时为空串)
 typedef SantoTagsPickerConfirm = void Function(
-    List<SantoTagItemBean> selectedTags, String inputText);
+    List<int> selectedIndexes, String inputText);
 
 /// 确认结果
 class SantoTagsPickerResult {
-  /// 选中的标签
-  final List<SantoTagItemBean> selectedTags;
+  /// 选中的下标,对应传入的 tags 顺序
+  final List<int> selectedIndexes;
 
   /// 输入框内容(未开启输入框时为空串)
   final String inputText;
 
-  const SantoTagsPickerResult(this.selectedTags, this.inputText);
+  const SantoTagsPickerResult(this.selectedIndexes, this.inputText);
 }
 
 /// 标签选择弹框(底部弹出)
 ///
-/// 由原先的「多选标签弹框」与「带输入框的选择器」合并而来,通过参数区分:
+/// 标签区复用可选择标签组件 [SantoSelectTag],数据直接用标签文案列表,
+/// 选中结果以下标形式回调,与 [SantoSelectTag] 的 API 保持一致。
+///
+/// 通过参数区分形态:
 /// * [multiSelect] 多选/单选,多选时可用 [maxSelectItemCount] 限制可选个数(0 表示不限)
 /// * [showTextInput] 是否带输入框,开启后可通过 [hintText]/[maxLength] 等配置输入区
 /// * [layoutStyle] 等分布局或流式布局,[crossAxisCount] 控制等分布局每行个数
@@ -53,11 +51,10 @@ class SantoTagsPickerResult {
 /// ```dart
 /// SantoTagsPicker(
 ///   context: context,
-///   onConfirm: (tags, text) {},
-///   onTagValueGetter: (tag) => tag.name,
+///   tags: const ['标签一', '标签二', '标签三'],
+///   onConfirm: (indexes, text) {},
 ///   multiSelect: true,
 ///   showTextInput: true,
-///   tagPickerConfig: SantoTagsPickerConfig(tagItemSource: items),
 /// ).show();
 /// ```
 // ignore: must_be_immutable
@@ -65,17 +62,21 @@ class SantoTagsPicker extends CommonTagsPicker {
   SantoTagsPicker({
     Key? key,
     required this.context,
+    required this.tags,
     required SantoTagsPickerConfirm onConfirm,
     this.onCancel,
-    required this.tagPickerConfig,
-    required this.onTagValueGetter,
-    this.onMaxSelectClick,
     this.onItemClick,
+    this.onMaxSelectClick,
     this.multiSelect = true,
     this.maxSelectItemCount = 0,
+    this.initialSelectedIndexes,
     this.crossAxisCount,
-    this.itemHeight = 34.0,
     this.layoutStyle = SantoTagsPickerLayoutStyle.average,
+    this.tagHeight = 34.0,
+    this.tagTextStyle,
+    this.selectedTagTextStyle,
+    this.tagBackgroundColor,
+    this.selectedTagBackgroundColor,
     this.showTextInput = false,
     this.hintText,
     this.maxLength = 200,
@@ -95,21 +96,24 @@ class SantoTagsPicker extends CommonTagsPicker {
             onCancel: onCancel,
             onConfirm: (Object? data) {
               if (data is SantoTagsPickerResult) {
-                onConfirm(data.selectedTags, data.inputText);
+                onConfirm(data.selectedIndexes, data.inputText);
               }
             });
 
   /// 父类属性
   final BuildContext context;
 
+  /// 标签文案列表,回调里的下标对应这里的顺序
+  final List<String> tags;
+
   /// 点击取消按钮
   final VoidCallback? onCancel;
 
-  /// 当点击到最大数目时的点击事件
-  final VoidCallback? onMaxSelectClick;
-
   /// 点击某个标签的回调
   final SantoTagsPickerItemClick? onItemClick;
+
+  /// 当点击到最大数目时的点击事件
+  final VoidCallback? onMaxSelectClick;
 
   /// 一行多少个数据,默认 4 个
   final int? crossAxisCount;
@@ -120,17 +124,26 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 多选还是单选,默认多选
   final bool multiSelect;
 
-  /// 本类属性
-  final SantoTagsPickerConfig tagPickerConfig;
-
-  /// 传入的泛型数据转换为展示文本
-  final SantoTagsPickerValueGetter onTagValueGetter;
+  /// 初始选中的下标,单选时只取第一个
+  final List<int>? initialSelectedIndexes;
 
   /// 布局样式,默认等分
   final SantoTagsPickerLayoutStyle layoutStyle;
 
-  /// item 的高度,默认 34
-  final double itemHeight;
+  /// 标签高度,默认 34
+  final double tagHeight;
+
+  /// 未选中标签的文字样式,默认取标签主题配置
+  final TextStyle? tagTextStyle;
+
+  /// 选中标签的文字样式,默认取标签主题配置
+  final TextStyle? selectedTagTextStyle;
+
+  /// 未选中标签底色,默认 0xFFF5F5F5
+  final Color? tagBackgroundColor;
+
+  /// 选中标签底色,默认品牌色
+  final Color? selectedTagBackgroundColor;
 
   /// 是否展示输入框,默认 false
   final bool showTextInput;
@@ -150,15 +163,23 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 输入框光标颜色
   final Color? cursorColor;
 
-  /// 操作类型属性
-  late List<SantoTagItemBean> _selectedTags;
-  late List<SantoTagItemBean> _sourceTags;
+  /// 每个标签是否选中,下标与 [tags] 对齐
+  late List<bool> _selected;
 
   /// 输入框内容(未传 [textEditingController] 时由组件自己记录)
   String _inputText = '';
 
   /// 选择超限被拒绝时自增,用于重建 [SantoSelectTag] 回滚选中状态
   int _tagStateEpoch = 0;
+
+  /// 已选中的下标
+  List<int> get _selectedIndexes {
+    final List<int> indexes = <int>[];
+    for (int index = 0; index < _selected.length; index++) {
+      if (_selected[index]) indexes.add(index);
+    }
+    return indexes;
+  }
 
   @override
   void show() {
@@ -169,55 +190,52 @@ class SantoTagsPicker extends CommonTagsPicker {
   @override
   Object getConfirmData() {
     return SantoTagsPickerResult(
-      this._selectedTags,
+      _selectedIndexes,
       textEditingController?.text ?? _inputText,
     );
   }
 
   @override
   Widget createBuilder(BuildContext context, VoidCallback? onUpdate) {
-    if (this.tagPickerConfig.tagItemSource.isNotEmpty) {
-      return _buildContent(context, onUpdate);
+    if (tags.isEmpty) {
+      return Container(
+        height: 200,
+        child: Center(
+          child: Text(SantoIntl.of(context).localizedResource.noTagDataTip),
+        ),
+      );
     }
-    return Container(
-      height: 200,
-      child: Center(
-        child: Text(SantoIntl.of(context).localizedResource.noTagDataTip),
-      ),
-    );
+    return _buildContent(context, onUpdate);
   }
 
   void _dataSetup() {
     _inputText = defaultText ?? '';
-    List<SantoTagItemBean> tagItems = [];
-    List<SantoTagItemBean> tagSelectedItems = [];
-    for (SantoTagItemBean item in this.tagPickerConfig.tagItemSource) {
-      tagItems.add(item);
-      if (item.isSelect) {
-        tagSelectedItems.add(item);
-      }
-      if (!multiSelect && tagSelectedItems.length > 1) {
-        tagSelectedItems.removeRange(1, tagSelectedItems.length);
+    _selected = List<bool>.filled(tags.length, false);
+    for (final int index in initialSelectedIndexes ?? const <int>[]) {
+      if (index >= 0 && index < _selected.length) {
+        _selected[index] = true;
       }
     }
-    this._sourceTags = tagItems;
-    // name 越长越靠后
-    this._sourceTags.sort((left, right) {
-      return (left.name.length).compareTo(right.name.length);
-    });
-    this._selectedTags = tagSelectedItems;
+    // 单选只保留第一个已选项
+    if (!multiSelect) {
+      final int firstSelected = _selected.indexOf(true);
+      if (firstSelected >= 0) {
+        _selected = List<bool>.filled(tags.length, false);
+        _selected[firstSelected] = true;
+      }
+    }
   }
 
   Widget _buildContent(BuildContext context, VoidCallback? onUpdate) {
-    final Widget tags = _buildTagsWidget(context, onUpdate);
+    final Widget tagsWidget = _buildTagsWidget(context, onUpdate);
     if (!showTextInput) {
-      return tags;
+      return tagsWidget;
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        tags,
+        tagsWidget,
         _buildInputArea(context, onUpdate),
       ],
     );
@@ -226,57 +244,41 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 标签区:复用可选择标签组件 [SantoSelectTag]
   ///
   /// 等分布局用固定宽度排 [crossAxisCount] 列,流式布局按内容自适应宽度;
-  /// 内容区四周留白与标签间距统一取 hSpacingMd / vSpacingMd
+  /// 内容区四周留白与标签间距统一取 gapMd
   Widget _buildTagsWidget(BuildContext context, VoidCallback? onUpdate) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     final bool average = layoutStyle == SantoTagsPickerLayoutStyle.average;
-    final double spacing = commonConfig.hSpacingMd;
+    final double spacing = commonConfig.gapMd;
     return LayoutBuilder(builder: (_, constraints) {
       final int count =
           (this.crossAxisCount == null || this.crossAxisCount == 0)
               ? 4
               : this.crossAxisCount!;
       // 固定宽度向下取整,保证一行排满 count 个
-      final double tagWidth = ((constraints.maxWidth -
-                  spacing * 2 -
-                  spacing * (count - 1)) /
-              count)
-          .floorToDouble();
+      final double tagWidth =
+          ((constraints.maxWidth - spacing * 2 - spacing * (count - 1)) / count)
+              .floorToDouble();
       return Container(
         padding: EdgeInsets.symmetric(
-            vertical: commonConfig.vSpacingMd,
-            horizontal: commonConfig.hSpacingMd),
+            vertical: commonConfig.gapMd, horizontal: commonConfig.gapMd),
         child: SantoSelectTag(
           // 选中状态由本组件掌管:单选收敛、超限回滚时自增 epoch 重建,
-          // 让 SantoSelectTag 回到 _sourceTags 的选中状态
+          // 让 SantoSelectTag 回到 _selected 的选中状态
           key: ValueKey<int>(_tagStateEpoch),
-          tags: _sourceTags.map((tag) => onTagValueGetter(tag)).toList(),
+          tags: tags,
           isSingleSelect: false,
-          initTagState: _sourceTags.map((tag) => tag.isSelect).toList(),
+          initTagState: _selected,
           fixWidthMode: average,
           tagWidth: average ? tagWidth : null,
-          tagHeight: itemHeight,
+          tagHeight: tagHeight,
           spacing: spacing,
-          verticalSpacing: commonConfig.vSpacingMd,
-          tagTextStyle: TextStyle(
-            height: 1,
-            fontSize: this.tagPickerConfig.tagTitleFontSize,
-            color: this.tagPickerConfig.tagTitleColor ??
-                commonConfig.colorTextImportant,
-          ),
-          selectedTagTextStyle: TextStyle(
-            height: 1,
-            fontSize: this.tagPickerConfig.tagTitleFontSize,
-            fontWeight: FontWeight.w500,
-            color: this.tagPickerConfig.selectedTagTitleColor ??
-                commonConfig.brandPrimary,
-          ),
-          tagBackgroundColor:
-              this.tagPickerConfig.tagBackgroudColor ?? const Color(0xFFF5F5F5),
+          verticalSpacing: commonConfig.gapMd,
+          tagTextStyle: tagTextStyle,
+          selectedTagTextStyle: selectedTagTextStyle,
+          tagBackgroundColor: tagBackgroundColor ?? const Color(0xFFF5F5F5),
           selectedTagBackgroundColor:
-              this.tagPickerConfig.selectedTagBackgroudColor ??
-                  commonConfig.brandPrimary,
+              selectedTagBackgroundColor ?? commonConfig.brandPrimary,
           onChanged: (indexes) => _handleTagChanged(indexes, onUpdate),
         ),
       );
@@ -288,12 +290,9 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 单选时只保留最新点选的一项;超出可选上限时回滚本次选择并回调
   /// [onMaxSelectClick]
   void _handleTagChanged(List<int> selectedIndexes, VoidCallback? onUpdate) {
+    final List<int> previous = _selectedIndexes;
     List<int> next = selectedIndexes;
     if (!multiSelect && next.length > 1) {
-      final List<int> previous = <int>[];
-      for (int index = 0; index < _sourceTags.length; index++) {
-        if (_sourceTags[index].isSelect) previous.add(index);
-      }
       next = <int>[
         next.firstWhere((index) => !previous.contains(index),
             orElse: () => next.last),
@@ -312,18 +311,19 @@ class SantoTagsPicker extends CommonTagsPicker {
       // 单选收敛后的结果与组件内部状态不同,重建组件以同步
       _tagStateEpoch++;
     }
-    for (int index = 0; index < _sourceTags.length; index++) {
-      final SantoTagItemBean tag = _sourceTags[index];
-      final bool selected = next.contains(index);
-      if (tag.isSelect == selected) {
-        continue;
-      }
-      tag.isSelect = selected;
-      if (this.onItemClick != null) {
-        this.onItemClick!(tag, selected);
+    _selected = List<bool>.filled(tags.length, false);
+    for (final int index in next) {
+      if (index >= 0 && index < _selected.length) {
+        _selected[index] = true;
       }
     }
-    _selectedTags = next.map((index) => _sourceTags[index]).toList();
+    if (this.onItemClick != null) {
+      for (int index = 0; index < tags.length; index++) {
+        final bool selected = next.contains(index);
+        if (selected == previous.contains(index)) continue;
+        this.onItemClick!(index, selected);
+      }
+    }
     onUpdate!();
   }
 
@@ -350,11 +350,10 @@ class SantoTagsPicker extends CommonTagsPicker {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: commonConfig.vSpacingMd,
-          horizontal: commonConfig.hSpacingMd),
+          vertical: commonConfig.gapMd, horizontal: commonConfig.gapMd),
       child: SantoBigMainButton(
         title: SantoIntl.of(context).localizedResource.submit,
-        isEnable: _selectedTags.isNotEmpty,
+        isEnable: _selected.contains(true),
         onTap: () {
           Navigator.of(context).pop(SantoCommonPickBackType.confirm);
         },
@@ -369,13 +368,12 @@ class SantoTagsPicker extends CommonTagsPicker {
     return Container(
       color: Colors.white,
       // 底边留白交给底部提交按钮,避免与按钮的间距翻倍
-      padding: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
+      padding: EdgeInsets.symmetric(horizontal: commonConfig.gapMd),
       child: SantoInputText(
         controller: textEditingController,
         initialValue:
             textEditingController == null ? (defaultText ?? '') : null,
-        hintText: hintText ??
-            SantoIntl.of(context).localizedResource.pleaseEnter,
+        hintText: hintText ?? SantoIntl.of(context).localizedResource.pleaseEnter,
         maxLength: maxLength,
         indicator: true,
         maxLines: null,

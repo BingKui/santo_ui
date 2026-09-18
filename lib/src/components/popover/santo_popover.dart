@@ -105,7 +105,7 @@ class SantoPopover {
                     horizontal: SantoThemeConfigurator.instance
                         .getConfig()
                         .commonConfig
-                        .pageGap,
+                        .gapMd,
                     vertical: SantoThemeConfigurator.instance
                         .getConfig()
                         .commonConfig

@@ -106,7 +106,7 @@ class SantoRadioGroup extends SantoCheckboxGroup {
                 height: SantoThemeConfigurator.instance
                     .getConfig()
                     .commonConfig
-                    .pageGap)
+                    .gapMd)
             : const SizedBox.shrink(),
         itemBuilder: (context, index) => Container(
           margin: cardMode
@@ -127,11 +127,11 @@ class SantoRadioGroup extends SantoCheckboxGroup {
             spacing: SantoThemeConfigurator.instance
                 .getConfig()
                 .commonConfig
-                .pageGap,
+                .gapMd,
             runSpacing: SantoThemeConfigurator.instance
                 .getConfig()
                 .commonConfig
-                .pageGap,
+                .gapMd,
             children: directionalRadios
                 .map((e) => SizedBox(width: itemWidth, height: 56, child: e))
                 .toList(),

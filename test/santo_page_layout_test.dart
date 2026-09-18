@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santo_ui/santo_ui.dart';
 
-/// 主题默认的页面间距 commonConfig.pageGap
-const double kPageGap = 12;
+/// 主题默认的内容区间距 commonConfig.gapMd(规范 iGapAllMiddle)
+const double kContentGap = 15;
 
 void main() {
   testWidgets('PageLayout 用 title 构建导航栏', (tester) async {
@@ -50,7 +50,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect((scroll.padding as EdgeInsets).top, kPageGap + 47);
+    expect((scroll.padding as EdgeInsets).top, kContentGap + 47);
   });
 
   testWidgets('PageLayout 内容可滚动并应用默认 padding', (tester) async {
@@ -63,7 +63,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect(scroll.padding, const EdgeInsets.all(kPageGap));
+    expect(scroll.padding, iGapAllMiddle);
   });
 
   testWidgets('PageLayout 预留底部安全区域与 bottomInset', (tester) async {
@@ -83,7 +83,7 @@ void main() {
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
     // 底部安全区域不再算进滚动 padding,而由内容尾部的 SantoBottomSafeArea 承担
-    expect((scroll.padding as EdgeInsets).bottom, kPageGap);
+    expect((scroll.padding as EdgeInsets).bottom, kContentGap);
     expect(tester.getSize(find.byType(SantoBottomSafeArea)).height, 34 + 8);
   });
 
@@ -105,7 +105,7 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    expect((scroll.padding as EdgeInsets).bottom, kPageGap);
+    expect((scroll.padding as EdgeInsets).bottom, kContentGap);
     expect(tester.getSize(find.byType(SantoBottomSafeArea)).height, 0);
   });
 
@@ -168,15 +168,15 @@ void main() {
       ),
     ));
 
-    // 视口铺满页面(不再在底部切出空白占位),仅保留内容区固定的 pageGap 内边距
+    // 视口铺满页面(不再在底部切出空白占位),仅保留内容区固定的 iGapAllMiddle 内边距
     final screen = tester.getRect(find.byType(Scaffold));
     expect(tester.getRect(find.byType(ListView)).bottom,
-        screen.bottom - kPageGap);
+        screen.bottom - kContentGap);
 
     await tester.drag(find.byType(ListView), const Offset(0, -5000));
     await tester.pump();
     expect(tester.getRect(find.text('item 29')).bottom,
-        lessThanOrEqualTo(screen.bottom - kPageGap - 34));
+        lessThanOrEqualTo(screen.bottom - kContentGap - 34));
   });
 
   testWidgets('PageLayout 在 AppLayout 中自动预留悬浮菜单栏占位', (tester) async {
@@ -196,8 +196,8 @@ void main() {
 
     final scroll = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView));
-    // 悬浮栏默认 64 高、gap 12,由尾部安全区组件预留
-    expect((scroll.padding as EdgeInsets).bottom, kPageGap);
+    // 悬浮栏默认 64 高、AppLayout.gap 12,由尾部安全区组件预留
+    expect((scroll.padding as EdgeInsets).bottom, kContentGap);
     expect(tester.getSize(find.byType(SantoBottomSafeArea)).height, 64 + 12);
   });
 }

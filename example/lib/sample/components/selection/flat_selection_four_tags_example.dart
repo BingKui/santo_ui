@@ -1,7 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DropdownMenu;
 
 class FlatSelectionFourTagsExample extends StatefulWidget {
   final String _title;
@@ -40,42 +40,47 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      appBar: SantoAppBar(title: widget._title),
-      children: <Widget>[
-      Container(
-        padding: EdgeInsets.only(top: 20),
-        alignment: Alignment.center,
-        child: GestureDetector(
-          child: Text("点击关闭展开"),
-          onTap: () {
-            setState(() {
-              _isShow = !_isShow;
-            });
-          },
-        ),
+    return Scaffold(
+      appBar: AppBar(title: Text(widget._title)),
+      body: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 20),
+            alignment: Alignment.center,
+            child: GestureDetector(
+              child: Text("点击关闭展开"),
+              onTap: () {
+                setState(() {
+                  _isShow = !_isShow;
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: _isShow
+                ? Column(
+                    children: <Widget>[
+                      Container(
+                          color: Colors.white,
+                          width: double.infinity,
+                          height: 400,
+                          child: SantoFlatSelection(
+                              preLineTagSize: 4,
+                              entityDataList: widget._filterData,
+                              confirmCallback: (data) {
+                                var str = "";
+                                data.forEach(
+                                    (k, v) => str = str + " " + '$k: $v');
+                                SantoToast.show(str, context);
+                              },
+                              controller: controller)),
+                      _bottomWidget(),
+                    ],
+                  )
+                : Container(),
+          ),
+        ],
       ),
-      _isShow
-          ? Column(
-              children: <Widget>[
-                Container(
-                    color: Colors.white,
-                    width: double.infinity,
-                    height: 400,
-                    child: SantoFlatSelection(
-                        preLineTagSize: 4,
-                        entityDataList: widget._filterData,
-                        confirmCallback: (data) {
-                          var str = "";
-                          data.forEach(
-                              (k, v) => str = str + " " + '$k: $v');
-                          SantoToast.show(str, context);
-                        },
-                        controller: controller)),
-                _bottomWidget(),
-              ],
-            )
-          : new Container(),
-      ],
     );
   }
 

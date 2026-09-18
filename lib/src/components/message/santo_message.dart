@@ -293,11 +293,11 @@ class _SantoMessageWidgetState extends State<_SantoMessageWidget>
             color: Colors.transparent,
             child: Container(
               margin: EdgeInsets.symmetric(
-                  horizontal: commonConfig.pageGap,
+                  horizontal: commonConfig.gapMd,
                   vertical: commonConfig.vSpacingXs),
               padding: EdgeInsets.symmetric(
                   horizontal: commonConfig.hSpacingMd,
-                  vertical: commonConfig.pageGap),
+                  vertical: commonConfig.gapMd),
               decoration: BoxDecoration(
                 color: widget.backgroundColor,
                 borderRadius: BorderRadius.circular(commonConfig.radiusXs),
