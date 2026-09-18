@@ -1,6 +1,7 @@
 import 'package:santo_ui/src/components/dialog/santo_dialog.dart';
 import 'package:santo_ui/src/components/dialog/santo_dialog_utils.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/constants/santo_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -166,11 +167,7 @@ class SantoShareDialog extends StatelessWidget {
             top: 10,
             right: 10,
             child: GestureDetector(
-              child: Container(
-                width: 30,
-                height: 30,
-                child: SantoTools.getAssetImage(SantoAsset.iconPickerClose),
-              ),
+              child: SantoIcon(SantoIcons.xmark, size: 30),
               onTap: () {
                 Navigator.of(context).pop();
               },

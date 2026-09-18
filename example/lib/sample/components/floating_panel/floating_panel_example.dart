@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_basic_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_controlled_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_header_example.dart';
@@ -12,6 +13,7 @@ class FloatingPanelExample extends StatelessWidget {
     return SantoPageLayout(
       title: 'FloatingPanel 浮层面板',
         children: <Widget>[
+          ExampleIntro('floating_panel'),
           ListItem(
             title: '基础用法',
             describe: '默认锚点,拖动把手或内容区域改变高度',

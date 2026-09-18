@@ -3,8 +3,8 @@
 import 'dart:math';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class StepLineExample extends StatefulWidget {
   const StepLineExample({Key? key}) : super(key: key);
@@ -26,10 +26,7 @@ class _StepLineExampleState extends State<StepLineExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '竖向步骤条',
       children: <Widget>[
-RulePanel(
-        '头部icon需要显示主题相关的icon，线条需要时圆头\n,'
-            '线条的高度随着左侧内容变化而改变，线宽2',
-        maxLines: 2),
+ExampleIntro('step'),
 SantoSection(
         title: '正常案例',
         description: 'isGrey 控制灰/高亮状态，lineColor 支持单色与多色列表',

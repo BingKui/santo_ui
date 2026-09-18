@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoTooltip 文字提示示例
@@ -40,6 +41,7 @@ class _TooltipExampleState extends State<TooltipExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Tooltip 文字提示',
       children: <Widget>[
+          ExampleIntro('tooltip'),
           SantoSection(
             title: '左侧弹出',
             description: 'hasCloseIcon 控制气泡右上角关闭按钮的显隐，长文案自动换行',
@@ -48,7 +50,7 @@ class _TooltipExampleState extends State<TooltipExample> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 10, top: 10),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey,
                     onTap: () {
                       SantoTooltip.show(context, "提示内容", _leftKey!,
@@ -59,7 +61,7 @@ class _TooltipExampleState extends State<TooltipExample> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 10),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey1,
                     onTap: () {
                       SantoTooltip.show(
@@ -80,7 +82,7 @@ class _TooltipExampleState extends State<TooltipExample> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 10),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey2,
                     onTap: () {
                       SantoTooltip.show(context,
@@ -93,7 +95,7 @@ class _TooltipExampleState extends State<TooltipExample> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 10),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey3,
                     onTap: () {
                       SantoTooltip.show(
@@ -115,7 +117,7 @@ class _TooltipExampleState extends State<TooltipExample> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 250),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey4,
                     onTap: () {
                       SantoTooltip.show(
@@ -129,7 +131,7 @@ class _TooltipExampleState extends State<TooltipExample> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 250),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey5,
                     onTap: () {
                       SantoTooltip.show(
@@ -152,7 +154,7 @@ class _TooltipExampleState extends State<TooltipExample> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 250),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey6,
                     onTap: () {
                       SantoTooltip.show(
@@ -167,7 +169,7 @@ class _TooltipExampleState extends State<TooltipExample> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 250),
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     key: _leftKey7,
                     onTap: () {
                       SantoTooltip.show(

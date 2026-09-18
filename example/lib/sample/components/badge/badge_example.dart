@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 徽标组件示例
@@ -7,6 +8,7 @@ class BadgeExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Badge 示例',
       children: <Widget>[
+        ExampleIntro('badge'),
         SantoSection(
           title: '红点模式',
           description: 'isDot 为 true 显示红点，color 可自定义颜色',

@@ -1,6 +1,6 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// 删除模式的标签
@@ -211,11 +211,9 @@ class DeleteTagItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(themeData!.tagRadius)),
       //删除图标
       deleteIcon: deleteIconSize != null
-          ? SantoTools.getAssetSizeImage(
-              SantoAsset.iconClose, deleteIconSize!.width, deleteIconSize!.height,
-              color: deleteIconColor)
-          : SantoTools.getAssetImageWithColor(
-              SantoAsset.iconClose, deleteIconColor),
+          ? SantoIcon(SantoIcons.xmark,
+              size: deleteIconSize!.width, color: deleteIconColor)
+          : SantoIcon(SantoIcons.xmark, color: deleteIconColor),
       onDeleted: () {
         debugPrint('$index');
         didDeleted(index);

@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:santo_ui/src/components/dialog/santo_dialog.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
@@ -526,8 +526,8 @@ class _SantoActionSheetSelectedItemListState<T>
                                                   left: commonConfig.hSpacingXs,
                                                   right:
                                                       commonConfig.hSpacingLg),
-                                              child: SantoTools.getAssetImage(
-                                                  SantoAsset.iconTrashBin)),
+                                              child:
+                                                  SantoIcon(SantoIcons.trash)),
                                         ),
                                       ),
                                     ],

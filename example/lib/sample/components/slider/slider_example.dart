@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 滑块示例页面
@@ -21,6 +22,7 @@ class _SliderExampleState extends State<SliderExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Slider 示例',
       children: <Widget>[
+        ExampleIntro('slider'),
         // 基础单值滑块
         SantoSection(
           title: '基础单值滑块',

@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 通知样式example
@@ -36,6 +37,7 @@ class SantoNoticeBarExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '通知样式',
       children: <Widget>[
+        ExampleIntro('noticebar'),
         SantoSection(
           title: '基础用法',
           description: 'noticeStyle 指定预设样式，点击通知或右侧图标触发回调',

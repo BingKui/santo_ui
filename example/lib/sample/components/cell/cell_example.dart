@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 单元格组件示例
@@ -12,6 +13,7 @@ class _CellExampleState extends State<CellExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Cell 示例',
       children: <Widget>[
+        ExampleIntro('cell'),
         // 基本用法
         SantoSection(
           title: '基本用法',

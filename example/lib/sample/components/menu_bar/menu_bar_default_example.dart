@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// MenuBar 默认样式示例
@@ -20,6 +21,7 @@ class _MenuBarDefaultExampleState extends State<MenuBarDefaultExample> {
       backgroundColor: Colors.white,
       title: 'MenuBar · 默认样式',
       children: <Widget>[
+        ExampleIntro('menu_bar'),
         for (int i = 1; i <= 20; i++)
           Container(
             padding: const EdgeInsets.all(16),

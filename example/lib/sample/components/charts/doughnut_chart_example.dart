@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class DoughnutChartExample extends StatefulWidget {
@@ -49,6 +50,7 @@ class DoughnutChartExampleState extends State<DoughnutChartExample> {
     return SantoPageLayout(
       title: '数据展示',
         children: <Widget>[
+          ExampleIntro('charts'),
           // 环状图与图例
           SantoSection(
             title: '环状图与图例',

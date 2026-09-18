@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class SantoSwitchTitleExample extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '一级标题',
       children: <Widget>[
+        ExampleIntro('tabbar'),
         SantoSection(
           title: '基础用法',
           description: 'nameList 只有一个标题时不显示下划线、分割线与选中态',
@@ -78,8 +80,9 @@ class _SantoSwitchTitleExampleState extends State<SantoSwitchTitleExample>
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
-                child: SantoSmallOutlineButton(
-                  title: '点击选中第二个',
+                child: SantoButton(
+                  type: SantoButtonType.normal,
+                  text: '点击选中第二个',
                   onTap: () {
                     _controller.index = 1;
                   },

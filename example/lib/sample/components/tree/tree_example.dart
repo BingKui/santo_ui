@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 树形控件示例
@@ -144,6 +145,7 @@ class _TreeExampleState extends State<TreeExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Tree 树形控件示例',
       children: <Widget>[
+        ExampleIntro('tree'),
         // 场景1：基础单选树
         SantoSection(
           title: '基础单选树',

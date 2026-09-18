@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/step/santo_horizontal_step_example.dart';
 import 'package:example/sample/components/step/step_line_example.dart';
 import 'package:example/sample/home/list_item.dart';
@@ -12,6 +13,7 @@ class StepExample extends StatelessWidget {
     return SantoPageLayout(
       title: "步骤条示例",
         children: <Widget>[
+          ExampleIntro('step'),
           ListItem(
             title: "横向步骤条",
             describe: "显示流程阶段，告知用户'我在哪/我能去哪'，跟随主题色",

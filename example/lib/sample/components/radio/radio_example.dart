@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoRadio 单选框示例
@@ -26,11 +26,7 @@ class _RadioExampleState extends State<RadioExample> {
       title: 'Radio 单选框',
       backgroundColor: const Color(0xFFF5F6FA),
       children: <Widget>[
-        const RulePanel(
-          '单选框用于在一组选项中执行单项选择。分组默认严格模式,选中后不可取消只能切换;'
-          '支持圆形/方形/无背景勾选/镂空圆点四种样式、内容方位、卡片模式与下划线。',
-          maxLines: 3,
-        ),
+        ExampleIntro('radio'),
         SantoSection(
           title: '横向单选框',
           description: 'SantoRadioGroup 设置 direction 为 horizontal 横向排列',

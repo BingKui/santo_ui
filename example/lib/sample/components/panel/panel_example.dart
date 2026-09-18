@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoPanel 面板示例
@@ -8,6 +9,7 @@ class PanelExample extends StatelessWidget {
     return SantoPageLayout(
       title: 'Panel 面板',
       children: <Widget>[
+        ExampleIntro('panel'),
         SantoPanel(
           title: '基础面板',
           child: Text('这是一个基础面板,内容自适应高度,圆角 12px。'),
@@ -20,13 +22,15 @@ class PanelExample extends StatelessWidget {
         SantoPanel(
           title: '带操作面板',
           actions: [
-            SantoSmallOutlineButton(
-              title: '取消',
+            SantoButton(
+              text: '取消',
+              type: SantoButtonType.normal,
               onTap: () => SantoToast.show('点击了取消', context),
             ),
             SizedBox(width: 12),
-            SantoSmallMainButton(
-              title: '确定',
+            SantoButton(
+              text: '确定',
+              type: SantoButtonType.primary,
               onTap: () => SantoToast.show('点击了确定', context),
             ),
           ],
@@ -76,8 +80,9 @@ class PanelExample extends StatelessWidget {
             size: SantoSegmentedSize.small,
           ),
           actions: [
-            SantoSmallMainButton(
-              title: '确定',
+            SantoButton(
+              text: '确定',
+              type: SantoButtonType.primary,
               onTap: () => SantoToast.show('点击了确定', context),
             ),
           ],

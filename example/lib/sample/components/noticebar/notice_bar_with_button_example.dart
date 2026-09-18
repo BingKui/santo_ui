@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 描述: 带按钮的通知example
@@ -10,6 +11,7 @@ class SantoNoticeBarWithButtonExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '带按钮的通知',
       children: <Widget>[
+        ExampleIntro('noticebar'),
         SantoSection(
           title: '基础用法',
           description: '仅传 content 时左侧标签与右侧按钮均不显示',

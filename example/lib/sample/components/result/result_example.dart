@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Result 结果页示例
@@ -12,6 +13,7 @@ class _ResultExampleState extends State<ResultExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Result 示例',
       children: <Widget>[
+        ExampleIntro('result'),
         // 成功状态
         SantoSection(
           title: '成功状态',
@@ -61,14 +63,16 @@ class _ResultExampleState extends State<ResultExample> {
             title: '支付成功',
             description: '订单编号：202609150001',
             actions: [
-              SantoSmallOutlineButton(
-                title: '查看订单',
+              SantoButton(
+                text: '查看订单',
+                type: SantoButtonType.normal,
                 onTap: () {
                   SantoToast.show('点击了查看订单', context);
                 },
               ),
-              SantoSmallMainButton(
-                title: '返回首页',
+              SantoButton(
+                text: '返回首页',
+                type: SantoButtonType.primary,
                 onTap: () {
                   SantoToast.show('点击了返回首页', context);
                 },

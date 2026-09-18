@@ -3,8 +3,8 @@
 import 'dart:math';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class TextContentExample extends StatefulWidget {
   @override
@@ -38,9 +38,7 @@ class _TextContentExampleState extends State<TextContentExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '单列展示左对齐',
       children: <Widget>[
-RulePanel(
-        'key的宽度最多为92，value是左对齐的，key和value过长的时候可以换行',
-        maxLines: 4),
+ExampleIntro('card'),
 SantoSection(
         title: '正常案例',
         description: 'valuePart 左对齐展示，可组合 Row 追加尾部金额，点击整块区域弹出提示',
@@ -300,8 +298,7 @@ SantoSection(
                         ),
                         Transform.rotate(
                             angle: pi,
-                            child: SantoTools.getAssetImage(
-                                'icons/icon_up_arrow.png')),
+                            child: SantoIcon(SantoIcons.navArrowUp)),
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -357,8 +354,7 @@ SantoSection(
                         ),
                         Transform.rotate(
                             angle: pi,
-                            child: SantoTools.getAssetImage(
-                                'icons/icon_down_arrow.png')),
+                            child: SantoIcon(SantoIcons.navArrowDown)),
                       ],
                     ),
                     decoration: BoxDecoration(

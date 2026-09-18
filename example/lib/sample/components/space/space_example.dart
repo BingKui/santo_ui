@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoSpace 间距示例
@@ -18,6 +19,7 @@ class SpaceExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Space 间距',
       children: <Widget>[
+        ExampleIntro('space'),
         SantoSection(
           title: '水平排列',
           description: 'size 提供 small、middle、large 三档间距',

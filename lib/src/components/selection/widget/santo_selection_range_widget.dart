@@ -1,5 +1,5 @@
 
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/calendar/santo_calendar.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/picker/time_picker/santo_date_time_formatter.dart';
@@ -413,8 +413,11 @@ class _SantoRangeSelectionGroupWidgetState
             onTap: _clearAllSelectedItems,
           ),
           Expanded(
-            child: SantoBigMainButton(
-              title: SantoIntl.of(context).localizedResource.ok,
+            child: SantoButton(
+              text: SantoIntl.of(context).localizedResource.ok,
+              type: SantoButtonType.primary,
+              size: SantoButtonSize.large,
+              block: true,
               onTap: () {
                 _confirmButtonClickEvent();
               },

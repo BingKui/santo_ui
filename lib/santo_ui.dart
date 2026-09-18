@@ -180,27 +180,13 @@ export 'src/components/gallery/config/santo_controller.dart';
 
 export 'src/components/input/santo_input_text.dart';
 export 'src/components/calendar/santo_calendar.dart';
-export 'src/components/button/santo_icon_button.dart';
 
 //新手引导
 export 'src/components/guide/santo_flutter_guide.dart';
 export 'src/components/guide/santo_tip_widget.dart';
 
 //按钮
-export 'src/components/button/santo_big_main_button.dart';
-export 'src/components/button/santo_big_outline_button.dart';
-export 'src/components/button/santo_big_ghost_button.dart';
-export 'src/components/button/santo_small_main_button.dart';
-export 'src/components/button/santo_small_outline_button.dart';
-export 'src/components/button/santo_small_ghost_button.dart';
-export 'src/components/button/santo_vertical_icon_button.dart';
-export 'src/components/button/santo_normal_button.dart';
-
-//按钮集合
-export 'src/components/button/collection/santo_bottom_button_panel.dart';
-export 'src/components/button/collection/santo_button_panel.dart';
-export 'src/components/button/collection/santo_text_button_panel.dart';
-export 'src/components/button/collection/santo_multiple_bottom_button.dart';
+export 'src/components/button/santo_button.dart';
 
 //卡片标题
 
@@ -350,3 +336,7 @@ export 'src/components/statistic/santo_statistic.dart';
 export 'src/components/action_bar/santo_action_bar.dart';
 export 'src/components/action_bar/santo_action_bar_icon.dart';
 export 'src/components/action_bar/santo_action_bar_button.dart';
+
+//图标
+export 'src/components/icon/santo_icon.dart';
+export 'src/components/icon/santo_icons.dart';

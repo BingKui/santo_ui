@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// MenuBar 受控选中与更多菜单示例
@@ -38,10 +38,7 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
       backgroundColor: Colors.white,
       title: 'MenuBar · 受控与更多菜单',
       children: <Widget>[
-        const RulePanel(
-          'currentIndex 受控选中,点更多标签弹出 SantoMoreMenu 宫格菜单',
-          maxLines: 2,
-        ),
+        ExampleIntro('menu_bar'),
         for (int i = 1; i <= 20; i++)
           Container(
             padding: const EdgeInsets.all(16),

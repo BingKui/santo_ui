@@ -1,10 +1,10 @@
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -221,17 +221,27 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
     );
   }
 
-  Image _getAddIcon() {
+  Widget _getAddIcon() {
     if (!widget.isEdit) {
-      return SantoTools.getAssetImage(SantoAsset.iconAddDisable);
+      return SantoIcon(SantoIcons.plus, color: _disabledIconColor);
     }
 
     if (_isReachMaxLevel()) {
-      return SantoTools.getAssetImage(SantoAsset.iconAddDisable);
+      return SantoIcon(SantoIcons.plus, color: _disabledIconColor);
     }
 
-    return SantoTools.getAssetImage(SantoAsset.iconAddEnable);
+    return SantoIcon(SantoIcons.plus, color: _iconColor);
   }
+
+  /// 可用态图标色
+  Color get _iconColor =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextSecondary;
+
+  /// 禁用态图标色
+  Color get _disabledIconColor => SantoThemeConfigurator.instance
+      .getConfig()
+      .commonConfig
+      .colorTextDisabled;
 
   bool _isReachMaxLevel() {
     if (_value >= widget.maxLimit) {
@@ -240,16 +250,16 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
     return false;
   }
 
-  Image _getMinusIcon() {
+  Widget _getMinusIcon() {
     if (!widget.isEdit) {
-      return SantoTools.getAssetImage(SantoAsset.iconMinusDisable);
+      return SantoIcon(SantoIcons.minus, color: _disabledIconColor);
     }
 
     if (_isReachMinLevel()) {
-      return SantoTools.getAssetImage(SantoAsset.iconMinusDisable);
+      return SantoIcon(SantoIcons.minus, color: _disabledIconColor);
     }
 
-    return SantoTools.getAssetImage(SantoAsset.iconMinusEnable);
+    return SantoIcon(SantoIcons.minus, color: _iconColor);
   }
 
   bool _isReachMinLevel() {

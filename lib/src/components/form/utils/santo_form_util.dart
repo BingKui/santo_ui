@@ -2,6 +2,8 @@
 
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
@@ -118,9 +120,17 @@ class SantoFormUtil {
   //
   static Widget getPrefixIcon(String type) {
     if (type == SantoPrefixIconType.add) {
-      return SantoTools.getAssetImageWithBandColor(SantoAsset.iconAddFormItem);
+      return SantoIcon(SantoIcons.plusCircle,
+          color: SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .brandPrimary);
     } else if (type == SantoPrefixIconType.remove) {
-      return SantoTools.getAssetImage(SantoAsset.iconRemoveFormItem);
+      return SantoIcon(SantoIcons.minusCircle,
+          color: SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .brandError);
     } else {
       return Container();
     }
@@ -152,13 +162,12 @@ class SantoFormUtil {
   }
 
   /// 视觉同学要求修改右箭头图标
-  static Image getRightArrowIcon() {
-    return SantoTools.getAssetSizeImage(
-        SantoAsset.iconRightArrow, rightArrowSize, rightArrowSize);
+  static Widget getRightArrowIcon() {
+    return SantoIcon(SantoIcons.navArrowRight, size: rightArrowSize);
   }
 
-  static Image getQuestionMarkIcon() {
-    return SantoTools.getAssetImage(SantoAsset.iconQuestion);
+  static Widget getQuestionMarkIcon() {
+    return SantoIcon(SantoIcons.helpCircle);
   }
 
   static EdgeInsets computeErrorEdgeInsets(String type, bool isRequire) {

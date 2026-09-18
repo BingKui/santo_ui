@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 气泡弹出框示例
@@ -20,11 +21,12 @@ class _PopoverExampleState extends State<PopoverExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Popover 气泡弹出框示例',
       children: <Widget>[
+        ExampleIntro('popover'),
         // 场景1：向下弹出
         SantoSection(
           title: '向下弹出 (bottom)',
           description: 'direction 设为 bottom，气泡从触发元素下方弹出',
-          child: SantoNormalButton(
+          child: SantoButton(
             key: _bottomKey,
             onTap: () {
               SantoPopover.show(
@@ -45,7 +47,7 @@ class _PopoverExampleState extends State<PopoverExample> {
         SantoSection(
           title: '向上弹出 (top)',
           description: 'direction 设为 top，气泡从触发元素上方弹出',
-          child: SantoNormalButton(
+          child: SantoButton(
             key: _topKey,
             onTap: () {
               SantoPopover.show(
@@ -69,7 +71,7 @@ class _PopoverExampleState extends State<PopoverExample> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 key: _rightKey,
                 onTap: () {
                   SantoPopover.show(
@@ -85,7 +87,7 @@ class _PopoverExampleState extends State<PopoverExample> {
                 },
                 text: '向右',
               ),
-              SantoNormalButton(
+              SantoButton(
                 key: _leftKey,
                 onTap: () {
                   SantoPopover.show(
@@ -109,7 +111,7 @@ class _PopoverExampleState extends State<PopoverExample> {
         SantoSection(
           title: '不显示箭头',
           description: 'showArrow 传 false，气泡与触发元素间不绘制指示三角',
-          child: SantoNormalButton(
+          child: SantoButton(
             key: _noArrowKey,
             onTap: () {
               SantoPopover.show(
@@ -131,7 +133,7 @@ class _PopoverExampleState extends State<PopoverExample> {
         SantoSection(
           title: '自定义背景色',
           description: 'backgroundColor 传入自定义色值，替换气泡默认深色背景',
-          child: SantoNormalButton(
+          child: SantoButton(
             key: _customKey,
             onTap: () {
               SantoPopover.show(
@@ -153,7 +155,7 @@ class _PopoverExampleState extends State<PopoverExample> {
         SantoSection(
           title: '富文本内容',
           description: 'content 可传 Column 与 Row，在气泡内自定义多行分享面板',
-          child: SantoNormalButton(
+          child: SantoButton(
             key: _richKey,
             onTap: () {
               SantoPopover.show(

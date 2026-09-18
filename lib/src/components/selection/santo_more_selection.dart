@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
@@ -325,8 +325,11 @@ class MoreBottomSelectionWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-            child: SantoBigMainButton(
-          title: SantoIntl.of(context).localizedResource.ok,
+            child: SantoButton(
+          text: SantoIntl.of(context).localizedResource.ok,
+          type: SantoButtonType.primary,
+          size: SantoButtonSize.large,
+          block: true,
           onTap: () {
             if (conformCallback != null) {
               conformCallback!(entity);

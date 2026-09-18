@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class OverlayWindowExample extends StatefulWidget {
@@ -29,6 +30,7 @@ class OverlayWindowExamplePageState extends State<OverlayWindowExample> {
           title: widget._title,
         ),
       children: <Widget>[
+          ExampleIntro('popup'),
           SantoSection(
             title: '基础用法',
             description: '输入关键字自动弹出悬浮层，清空或提交内容后自动关闭',

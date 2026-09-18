@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// BackTop 返回顶部示例
@@ -23,6 +24,7 @@ class _BacktopExampleState extends State<BacktopExample> {
       // 回顶按钮要驱动页面滚动
       scrollController: _scrollController,
       children: <Widget>[
+        ExampleIntro('backtop'),
         for (int index = 0; index < 50; index++)
           Container(
             padding: const EdgeInsets.all(16),

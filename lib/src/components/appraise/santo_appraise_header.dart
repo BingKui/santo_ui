@@ -1,6 +1,6 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_interface.dart';
 
@@ -115,7 +115,7 @@ class SantoAppraiseHeader extends StatelessWidget {
                 }
                 Navigator.of(context).pop();
               },
-              child: SantoTools.getAssetImage(SantoAsset.iconPickerClose),
+              child: SantoIcon(SantoIcons.xmark),
             ),
           ],
         ),

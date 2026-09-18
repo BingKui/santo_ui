@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class NavBarPage extends StatefulWidget {
@@ -67,6 +68,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
     return SantoPageLayout(      appBar: buildBarByIndex(context),
       scrollable: false,
       children: <Widget>[
+        ExampleIntro('navbar'),
         buildContentByIndex(context) ?? const SizedBox.shrink(),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Fab 悬浮按钮示例页面
@@ -17,6 +18,7 @@ class _FabExampleState extends State<FabExample> {
       // 右下角悬浮按钮会盖住内容末尾,底部留出避让
       bottomInset: 80,
       children: <Widget>[
+        ExampleIntro('fab'),
         // 基础用法
         SantoSection(
           title: '基础用法',

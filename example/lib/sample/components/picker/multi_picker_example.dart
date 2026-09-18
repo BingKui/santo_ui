@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -74,6 +75,7 @@ class MultiPickerExamplePage extends StatelessWidget {
     return SantoPageLayout(
       title: '多列选择picker',
         children: <Widget>[
+          ExampleIntro('picker'),
           SantoSection(
             title: '单列选择',
             description: 'Santo1RowDelegate 提供单列数据，firstSelectedIndex 设初始项',

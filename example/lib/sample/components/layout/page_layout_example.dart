@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoPageLayout 页面布局示例
@@ -17,6 +18,7 @@ class PageLayoutExample extends StatelessWidget {
         ),
       ),
       children: <Widget>[
+        ExampleIntro('layout'),
         SantoSpace(
           direction: SantoSpaceDirection.vertical,
           customSize: 12,

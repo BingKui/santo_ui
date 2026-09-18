@@ -13,17 +13,23 @@
 
 感谢这些优秀项目的贡献,为我们提供了宝贵的参考和灵感。
 
+## 图标数据源
+
+图标组件 `SantoIcon` 的数据源为 **[Iconoir](https://github.com/iconoir-icons/iconoir)**(MIT 协议),
+其 1383 个常规图标 SVG 全量内置在 `assets/icons/iconoir/`,按名称取用,详见 [SantoIcon 文档](doc/components/icon/santo_icon.md)。
+
 ## 组件覆盖
 
-Santo UI 包含 **80** 组件,按示例菜单分为 7 个分组。
+Santo UI 包含 **81** 组件,按示例菜单分为 7 个分组。
 
 ### 通用
 
 | 组件 | 说明 |
 | --- | --- |
-| Button 按钮 | 主按钮、次按钮、幽灵按钮、按钮集合、吸底按钮、图文按钮 |
+| Button 按钮 | 统一按钮入口:类型/尺寸/颜色与变体/形状/图标/幽灵/危险/加载/禁用/block |
 | Fab 悬浮按钮 | 页面悬浮操作入口 |
 | Link 链接 | 文字链接 |
+| Icon 图标 | 统一图标入口,内置 Iconoir 全量图标(1383 个),按名称取用 |
 | Panel 面板 | 标题 + 操作 + 可滚动内容 |
 | Section 区块 | 演示内容 + 标题描述 |
 | SafeArea 安全区域 | 顶部与底部安全区域 |
@@ -178,7 +184,13 @@ SantoTagsPicker(
   },
 ).show();
 
-SantoBigMainButton(title: '提交', onTap: () {});
+SantoButton(
+  text: '提交',
+  type: SantoButtonType.primary,
+  size: SantoButtonSize.large,
+  block: true,
+  onTap: () {},
+);
 SantoToast.show('保存成功', context);
 SantoDialogManager.showConfirmDialog(context,
     cancel: '取消', confirm: '确定', title: '提示', message: '确认删除?');

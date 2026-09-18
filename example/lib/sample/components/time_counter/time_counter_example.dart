@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// TimeCounter 计时器示例页面
@@ -30,6 +31,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'TimeCounter 计时器示例',
       children: <Widget>[
+        ExampleIntro('time_counter'),
         // 基础倒计时
         SantoSection(
           title: '基础倒计时',
@@ -257,7 +259,7 @@ class _TimeCounterExampleState extends State<TimeCounterExample> {
 
   /// 构建控制按钮
   Widget _buildControlButton(String text, VoidCallback onTap) {
-    return SantoNormalButton(
+    return SantoButton(
       onTap: onTap,
       text: text,
     );

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/noticebar/notice_bar_with_button_example.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class SantoNoticeBarExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'NoticeBar 示例',
       children: <Widget>[
+        ExampleIntro('noticebar'),
         SantoSection(
           title: '基础用法',
           description: '默认样式与 noticeStyle 指定样式，点击触发 onNoticeTap',
@@ -147,7 +149,8 @@ class SantoNoticeBarExample extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 12),
-              SantoNormalButton.outline(
+              SantoButton(
+                type: SantoButtonType.normal,
                 text: '查看更多 WithButton 示例',
                 onTap: () {
                   Navigator.of(context)

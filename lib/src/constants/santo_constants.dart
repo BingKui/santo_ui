@@ -65,11 +65,3 @@ class SantoShareItemConstants {
 class SantoSelectionConstant {
   static const int maxSelectCount = 65535;
 }
-
-class SantoButtonConstant {
-  /// 默认水平间距
-  static const double horizontalPadding = 6;
-
-  /// 默认垂直间距
-  static const double verticalPadding = 8;
-}

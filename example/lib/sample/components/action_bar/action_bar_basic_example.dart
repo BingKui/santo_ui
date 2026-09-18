@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoActionBar 基础用法示例
@@ -21,6 +22,7 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'ActionBar 基础用法',
       children: <Widget>[
+        ExampleIntro('action_bar'),
         SantoSection(
           title: '基础用法',
           description: 'children 混排图标与按钮，按钮平分剩余宽度，图标保持固定宽度',

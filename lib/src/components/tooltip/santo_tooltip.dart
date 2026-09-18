@@ -1,6 +1,7 @@
 import 'dart:core';
 
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_text_util.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
@@ -347,8 +348,7 @@ class _SantoTooltipState extends State<SantoTooltip> {
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                           left: commonConfig.hSpacingXs),
-                                      child: SantoTools.getAssetImage(
-                                          SantoAsset.iconPopupClose),
+                                      child: SantoIcon(SantoIcons.xmark),
                                     ))
                                 : TextSpan(text: "")
                           ]))
@@ -368,8 +368,7 @@ class _SantoTooltipState extends State<SantoTooltip> {
                                   ? Padding(
                                       padding: EdgeInsets.only(
                                           left: commonConfig.hSpacingXs),
-                                      child: SantoTools.getAssetImage(
-                                          SantoAsset.iconPopupClose),
+                                      child: SantoIcon(SantoIcons.xmark),
                                     )
                                   : Text("")
                             ],

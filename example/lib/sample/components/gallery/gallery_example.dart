@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/gallery/gallery_detail_page_theme_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,7 @@ class GalleryExample extends StatelessWidget {
     return SantoPageLayout(
       title: "Gallery 图片",
         children: <Widget>[
+          ExampleIntro('gallery'),
           SantoSection(
             title: '缩略图列表',
             description: '进入 SantoGallerySummaryPage，按分组查看多张图片',

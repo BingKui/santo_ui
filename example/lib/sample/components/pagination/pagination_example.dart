@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoPagination 分页示例
@@ -22,6 +23,7 @@ class _PaginationExampleState extends State<PaginationExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Pagination 分页',
       children: <Widget>[
+        ExampleIntro('pagination'),
         SantoSection(
           title: '基础用法',
           description: 'totalItems 与 itemsPerPage 决定总页数，当前页由 current 控制',

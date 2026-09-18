@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class BubbleTextExample extends StatelessWidget {
@@ -6,6 +7,7 @@ class BubbleTextExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '气泡信息',
       children: <Widget>[
+        ExampleIntro('bubble_text'),
         SantoSection(
           title: '左侧气泡（start）',
           description: 'placement 为 start 时气泡居左，maxLines 限制最多展示 3 行',

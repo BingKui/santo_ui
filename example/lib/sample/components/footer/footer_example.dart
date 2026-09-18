@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 页脚组件示例
@@ -7,6 +8,7 @@ class FooterExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Footer 页脚',
       children: <Widget>[
+        ExampleIntro('footer'),
         SantoSection(
           title: '纯文字页脚',
           description: '仅传入 text，展示最简的纯文字页脚',

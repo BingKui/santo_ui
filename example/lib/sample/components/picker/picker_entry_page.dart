@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/picker/cutomer_bottom_picker_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class PickerEntryPage extends StatelessWidget {
           title: _title,
         ),
         children: <Widget>[
+          ExampleIntro('picker'),
           ListItem(
             title: "MultiDataPicker",
             describe: '底部多级选择',

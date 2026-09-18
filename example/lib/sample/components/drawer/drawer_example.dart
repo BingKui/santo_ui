@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Drawer 抽屉示例
@@ -7,13 +8,14 @@ class DrawerExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Drawer 示例',
       children: <Widget>[
+        ExampleIntro('drawer'),
         SantoSection(
           title: '基础方向',
           description: 'direction 设为 left 或 right，从对应侧滑出抽屉面板',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -24,7 +26,7 @@ class DrawerExample extends StatelessWidget {
                 text: '打开右侧抽屉',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -43,7 +45,7 @@ class DrawerExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -55,7 +57,7 @@ class DrawerExample extends StatelessWidget {
                 text: '打开顶部抽屉 (height: 300)',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -75,7 +77,7 @@ class DrawerExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -87,7 +89,7 @@ class DrawerExample extends StatelessWidget {
                 text: '打开窄抽屉 (width: 200)',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -107,7 +109,7 @@ class DrawerExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -127,7 +129,7 @@ class DrawerExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoDrawer.show(
                     context: context,
@@ -147,7 +149,7 @@ class DrawerExample extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoBottomDrawer.show(
                     context: context,
@@ -159,7 +161,7 @@ class DrawerExample extends StatelessWidget {
                 text: '标题+描述(左对齐,自适应高度)',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoBottomDrawer.show(
                     context: context,
@@ -173,7 +175,7 @@ class DrawerExample extends StatelessWidget {
                 text: '标题+描述(居中,固定高度)',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoBottomDrawer.show(
                     context: context,
@@ -186,14 +188,14 @@ class DrawerExample extends StatelessWidget {
                 text: '隐藏右侧关闭按钮',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoBottomDrawer.show(
                     context: context,
                     title: '点击遮罩不关闭',
                     desc: 'barrierDismissible: false',
                     barrierDismissible: false,
-                    child: SantoNormalButton(
+                    child: SantoButton(
                       onTap: () => Navigator.of(context).pop(),
                       text: '点我关闭',
                     ),
@@ -202,7 +204,7 @@ class DrawerExample extends StatelessWidget {
                 text: '点击遮罩不关闭',
               ),
               const SizedBox(height: 16),
-              SantoNormalButton(
+              SantoButton(
                 onTap: () {
                   SantoBottomDrawer.show(
                     context: context,
@@ -323,14 +325,15 @@ class DrawerExample extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: SantoNormalButton.outline(
+                  child: SantoButton(
+                    type: SantoButtonType.normal,
                     onTap: () => Navigator.of(context).pop(),
                     text: '重置',
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: SantoNormalButton(
+                  child: SantoButton(
                     onTap: () {
                       Navigator.of(context).pop();
                       SantoToast.show('应用筛选', context);

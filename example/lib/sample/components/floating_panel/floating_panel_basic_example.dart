@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// FloatingPanel 基础用法示例
@@ -17,10 +17,7 @@ class FloatingPanelBasicExample extends StatelessWidget {
       // 内容自带滚动(Column + Expanded),由内层列表避让面板
       scrollable: false,
       children: <Widget>[
-        const RulePanel(
-          '不传 anchors 时使用默认锚点(100px 与可用高度 60%),拖动把手或内容区域改变高度,松手吸附到最近锚点',
-          maxLines: 3,
-        ),
+        ExampleIntro('floating_panel'),
         Expanded(
           child: ListView(
             padding: const EdgeInsets.only(bottom: 360),

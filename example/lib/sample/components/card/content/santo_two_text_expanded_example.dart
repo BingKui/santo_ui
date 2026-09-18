@@ -1,6 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class SantoTextExpandedContentExample extends StatefulWidget {
   @override
@@ -14,9 +14,7 @@ class _SantoTextExpandedContentExampleState
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '展开收起文本',
       children: <Widget>[
-RulePanel(
-        '显示指定行数的文本，超过的收起，点击更多会显示全部',
-        maxLines: 4),
+ExampleIntro('card'),
 SantoSection(
         title: '正常案例',
         description: 'maxLines 限制显示行数，点击更多展开全部并回调 onExpanded',

@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_default_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_floating_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_badge_example.dart';
@@ -14,6 +15,7 @@ class MenuBarExample extends StatelessWidget {
     return SantoPageLayout(
       title: 'MenuBar 菜单栏',
         children: <Widget>[
+          ExampleIntro('menu_bar'),
           ListItem(
             title: '默认样式',
             describe: '纯色背景、顶部左右圆角、底部贴边停靠',

@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_gallery_detail_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 /// [fold] 收起状态
@@ -86,8 +86,8 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
                   ),
                   Transform.rotate(
                     angle: pi,
-                    child: SantoTools.getAssetImageWithColor(
-                        SantoAsset.iconUpArrow, widget.themeData!.iconColor),
+                    child: SantoIcon(SantoIcons.navArrowUp,
+                        color: widget.themeData!.iconColor),
                   )
                 ],
               ),
@@ -124,8 +124,8 @@ class _SantoPhotoBottomCardState extends State<SantoPhotoBottomCard>
                               style: widget.themeData!.actionStyle
                                   .generateTextStyle()),
                         ),
-                        SantoTools.getAssetImageWithColor(
-                            SantoAsset.iconUpArrow, widget.themeData!.iconColor)
+                        SantoIcon(SantoIcons.navArrowUp,
+                            color: widget.themeData!.iconColor)
                       ],
                     ),
                   )

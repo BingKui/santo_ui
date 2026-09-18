@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// ActionBar 吸底用法示例
@@ -14,11 +14,7 @@ class ActionBarBottomExample extends StatelessWidget {
       backgroundColor: const Color(0xFFF5F6FA),
       title: 'ActionBar · 吸底用法',
       children: <Widget>[
-        const RulePanel(
-          '操作栏放在 PageLayout.bottomNavigationBar 上,固定在页面底部不随内容滚动;'
-          'safeAreaInsetBottom 默认 true,全面屏底部自动预留安全区高度',
-          maxLines: 3,
-        ),
+        ExampleIntro('action_bar'),
         for (int i = 1; i <= 10; i++)
           Container(
             padding: const EdgeInsets.all(16),

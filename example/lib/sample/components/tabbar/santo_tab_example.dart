@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,7 @@ class _SantoTabExampleState extends State<SantoTabExample>
     return WillPopScope(
         child: SantoPageLayout(          title: 'SantoTab示例',
           children: <Widget>[
+            ExampleIntro('tabbar'),
             ListItem(
               title: "SantoTabBarBadge实现",
             ),
@@ -33,7 +35,8 @@ class _SantoTabExampleState extends State<SantoTabExample>
               title: '吸顶 Tab',
               description: '点击按钮进入独立页面，查看 Tab 点击后自动收起的吸顶效果',
               child: Center(
-                child: SantoNormalButton.outline(
+                child: SantoButton(
+                  type: SantoButtonType.normal,
                   onTap: () {
                     Navigator.of(context)
                         .push(new MaterialPageRoute(builder: (context) {

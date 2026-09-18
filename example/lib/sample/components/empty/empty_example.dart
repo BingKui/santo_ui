@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Empty 空状态示例
@@ -21,6 +22,7 @@ class EmptyExample extends StatelessWidget {
     return SantoPageLayout(
       title: 'Empty 空状态',
       children: <Widget>[
+        ExampleIntro('empty'),
         _buildErrorWithActionSection(context),
         _buildErrorCenterSection(context),
         _buildErrorDefaultSection(context),

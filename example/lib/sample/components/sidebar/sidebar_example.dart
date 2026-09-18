@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 侧边栏示例
@@ -36,6 +37,7 @@ class _SidebarExampleState extends State<SidebarExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Sidebar 侧边栏示例',
       children: <Widget>[
+        ExampleIntro('sidebar'),
         // 场景1：基础侧边栏 + 右侧内容
         SantoSection(
           title: '基础侧边栏',

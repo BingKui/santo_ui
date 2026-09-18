@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// @desc    弱引导example
@@ -66,6 +67,7 @@ class _SoftGuideExampleState extends State<SoftGuideExample> {
         ),
         // 页面留白与滚动都由 PageLayout 提供
         children: <Widget>[
+          ExampleIntro('guide'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -94,12 +96,12 @@ class _SoftGuideExampleState extends State<SoftGuideExample> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    SantoNormalButton(
+                    SantoButton(
                       key: intro.keys[2],
                       onTap: () {},
                       child: Text("需求1"),
                     ),
-                    SantoNormalButton(
+                    SantoButton(
                       key: intro.keys[3],
                       onTap: () {},
                       child: Text("需求2"),

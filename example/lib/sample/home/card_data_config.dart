@@ -30,6 +30,7 @@ import 'package:example/sample/components/gallery/gallery_example.dart';
 import 'package:example/sample/components/guide/guide_entry_page.dart';
 import 'package:example/sample/components/input/input_example.dart';
 import 'package:example/sample/components/divider/divider_example.dart';
+import 'package:example/sample/components/icon/icon_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_example.dart';
 import 'package:example/sample/components/layout/app_layout_example.dart';
 import 'package:example/sample/components/layout/page_layout_example.dart';
@@ -132,9 +133,10 @@ class CardDataConfig {
   // ========== 通用 ==========
   static GroupInfo _getGeneralGroup() {
     List<GroupInfo> children = [
-      _item("Button 按钮", "主按钮、次按钮、幽灵按钮、按钮集合、吸底按钮、图文按钮", ButtonEntryPage()),
+      _item("Button 按钮", "唯一的按钮入口,类型/尺寸/颜色与变体/形状/图标/状态都靠参数配置", ButtonEntryPage()),
       _item("Fab 悬浮按钮", "页面悬浮操作入口", FabExample()),
       _item("Link 链接", "文字链接", LinkExample()),
+      _item("Icon 图标", "统一图标入口", IconExample()),
       _item("Panel 面板", "标题+操作+可滚动内容", PanelExample()),
       _item("Section 区块", "演示内容+标题描述", SectionExample()),
       _item("SafeArea 安全区域", "顶部与底部安全区域", SafeAreaExample()),

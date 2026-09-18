@@ -1,5 +1,6 @@
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class DatePickerExamplePage extends StatelessWidget {
           title: _title,
         ),
         children: <Widget>[
+          ExampleIntro('picker'),
           SantoSection(
             title: '基础模式',
             description: 'pickerMode 支持 time、date 与 datetime 三种选择类型',

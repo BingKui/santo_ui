@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
 import 'package:santo_ui/src/components/selection/widget/santo_selection_menu_widget.dart';
@@ -287,8 +287,11 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
                 onTap: _clearAllSelectedItems,
               ),
               Expanded(
-                child: SantoBigMainButton(
-                  title: SantoIntl.of(context).localizedResource.ok,
+                child: SantoButton(
+                  text: SantoIntl.of(context).localizedResource.ok,
+                  type: SantoButtonType.primary,
+                  size: SantoButtonSize.large,
+                  block: true,
                   onTap: () {
                     _confirmButtonClickEvent();
                   },

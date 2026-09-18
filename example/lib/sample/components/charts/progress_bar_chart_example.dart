@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class ProgressBarChartExample extends StatefulWidget {
@@ -21,6 +22,7 @@ class ProgressBarChartExampleState extends State<ProgressBarChartExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '柱状图',
       children: <Widget>[
+        ExampleIntro('charts'),
         // 横向柱状图
         SantoSection(
           title: '横向柱状图',

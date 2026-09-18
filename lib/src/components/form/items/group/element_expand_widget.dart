@@ -5,9 +5,10 @@
 
 
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -141,9 +142,9 @@ class _ExpansionElementState extends State<ExpansionElementWidget>
     }
 
     if (_isExpanded) {
-      arrowIcon = SantoTools.getAssetImage("icons/icon_down_arrow.png");
+      arrowIcon = SantoIcon(SantoIcons.navArrowDown);
     } else {
-      arrowIcon = SantoTools.getAssetImage("icons/icon_up_arrow.png");
+      arrowIcon = SantoIcon(SantoIcons.navArrowUp);
     }
   }
 

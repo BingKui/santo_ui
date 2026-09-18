@@ -1,4 +1,4 @@
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/input/santo_input_text.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/santo_tags_common_picker.dart';
@@ -351,8 +351,11 @@ class SantoTagsPicker extends CommonTagsPicker {
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: commonConfig.gapMd, horizontal: commonConfig.gapMd),
-      child: SantoBigMainButton(
-        title: SantoIntl.of(context).localizedResource.submit,
+      child: SantoButton(
+        text: SantoIntl.of(context).localizedResource.submit,
+        type: SantoButtonType.primary,
+        size: SantoButtonSize.large,
+        block: true,
         isEnable: _selected.contains(true),
         onTap: () {
           Navigator.of(context).pop(SantoCommonPickBackType.confirm);

@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 ///标签选择view
@@ -21,6 +22,7 @@ class TagViewExamplePageState extends State<CalendarExample> {
           title: widget._title,
         ),
       children: <Widget>[
+        ExampleIntro('calendar'),
         SantoSection(
           title: '单选-无控制-周视图',
           description: 'showControllerBar 为 false，仅渲染一周日期区域',

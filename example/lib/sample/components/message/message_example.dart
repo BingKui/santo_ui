@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Message 消息通知示例页面
@@ -12,6 +13,7 @@ class _MessageExampleState extends State<MessageExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Message 消息通知示例',
       children: <Widget>[
+        ExampleIntro('message'),
         // 基础用法
         SantoSection(
           title: '基础用法',
@@ -221,7 +223,7 @@ class _MessageExampleState extends State<MessageExample> {
 
   /// 构建按钮
   Widget _buildButton(String text, VoidCallback onTap) {
-    return SantoNormalButton(
+    return SantoButton(
       onTap: onTap,
       text: text,
     );

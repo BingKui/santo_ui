@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// Image 增强图片示例
@@ -10,6 +11,7 @@ class ImageExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Image 示例',
       children: <Widget>[
+        ExampleIntro('image'),
         SantoSection(
           title: '基础网络图片',
           description: '通过 imageUrl 加载网络图片，width、height 控制展示尺寸',

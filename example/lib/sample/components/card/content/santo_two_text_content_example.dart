@@ -1,8 +1,8 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
-import 'package:example/sample/home/rule_panel.dart';
 
 class SantoTextRIchContentExample extends StatefulWidget {
   @override
@@ -15,10 +15,7 @@ class _SantoTextRIchContentExampleState extends State<SantoTextRIchContentExampl
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: '两列纯文本',
       children: <Widget>[
-RulePanel(
-        '两组key-value内容平分屏幕，每一组key-value都是一行展示，'
-              'value紧挨着key，不考虑对齐',
-        maxLines: 4),
+ExampleIntro('card'),
 SantoSection(
         title: '正常案例',
         description: 'SantoRichInfoGrid 两列平分宽度，key 与 value 紧挨同行展示',

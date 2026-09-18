@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 进度条示例页面
@@ -17,6 +18,7 @@ class _ProgressExampleState extends State<ProgressExample> {
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'Progress 示例',
       children: <Widget>[
+        ExampleIntro('progress'),
         // 基础进度条
         SantoSection(
           title: '基础进度条',

@@ -1,11 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/popup/santo_measure_size.dart';
 import 'package:santo_ui/src/components/tabbar/indicator/santo_custom_width_indicator.dart';
 import 'package:santo_ui/src/components/tabbar/normal/santo_tabbar_controller.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -339,9 +339,12 @@ class SantoTabBarState extends State<SantoTabBar> {
               ],
             ),
             child: !_santoTabbarController.isShow
-                ? SantoTools.getAssetImage(SantoAsset.iconTriangleDown)
-                : SantoTools.getAssetImageWithBandColor(
-                    SantoAsset.iconTriangleUp)),
+                ? SantoIcon(SantoIcons.navArrowDown)
+                : SantoIcon(SantoIcons.navArrowUp,
+                    color: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .brandPrimary)),
       ),
     );
   }

@@ -1,7 +1,7 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -219,9 +219,9 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 color: Colors.transparent,
                 padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
                 child: isPreIconEnable
-                    ? SantoTools.getAssetImage(SantoAsset.iconCalendarPreMonth)
-                    : SantoTools.getAssetImageWithColor(
-                        SantoAsset.iconCalendarPreMonth, Color(0xFFCCCCCC)),
+                    ? SantoIcon(SantoIcons.navArrowLeft)
+                    : SantoIcon(SantoIcons.navArrowLeft,
+                        color: Color(0xFFCCCCCC)),
                 alignment: Alignment.center,
               ),
             ),
@@ -259,9 +259,9 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 color: Colors.transparent,
                 padding: EdgeInsets.only(right: commonConfig.hSpacingMd),
                 child: isNextIconEnable
-                    ? SantoTools.getAssetImage(SantoAsset.iconCalendarNextMonth)
-                    : SantoTools.getAssetImageWithColor(
-                        SantoAsset.iconCalendarNextMonth, Color(0xFFCCCCCC)),
+                    ? SantoIcon(SantoIcons.navArrowRight)
+                    : SantoIcon(SantoIcons.navArrowRight,
+                        color: Color(0xFFCCCCCC)),
                 alignment: Alignment.center,
               ),
             )

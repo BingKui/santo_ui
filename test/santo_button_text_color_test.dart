@@ -17,7 +17,7 @@ Widget _wrap(Widget child, {double width = 337}) => MaterialApp(
 
 RenderParagraph _buttonParagraph(WidgetTester tester) =>
     tester.renderObject<RenderParagraph>(find.descendant(
-        of: find.byType(SantoNormalButton), matching: find.byType(RichText)));
+        of: find.byType(SantoButton), matching: find.byType(RichText)));
 
 void main() {
   final common = SantoThemeConfigurator.instance.getConfig().commonConfig;
@@ -27,8 +27,9 @@ void main() {
       label: '验证码',
       labelWidth: 80,
       hintText: '请输入验证码',
-      suffixButton: SantoSmallOutlineButton(
-        title: '获取',
+      suffixButton: SantoButton(
+        text: '获取',
+        type: SantoButtonType.normal,
         width: 56,
         fontSize: 12,
         lineColor: common.brandPrimary,
@@ -47,7 +48,7 @@ void main() {
   });
 
   testWidgets('显式 textColor 优先于 type 默认色', (tester) async {
-    await tester.pumpWidget(_wrap(SantoNormalButton(
+    await tester.pumpWidget(_wrap(SantoButton(
       text: '获取',
       type: SantoButtonType.normal,
       textColor: common.brandPrimary,
@@ -59,7 +60,7 @@ void main() {
   });
 
   testWidgets('未指定 textColor 时由 type 决定文字色', (tester) async {
-    await tester.pumpWidget(_wrap(SantoNormalButton(
+    await tester.pumpWidget(_wrap(SantoButton(
       text: '获取',
       type: SantoButtonType.normal,
       onTap: () {},

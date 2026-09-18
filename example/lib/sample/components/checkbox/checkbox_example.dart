@@ -1,5 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/rule_panel.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoCheckbox 多选框示例
@@ -38,11 +38,7 @@ class _CheckboxExampleState extends State<CheckboxExample> {
       title: 'Checkbox 多选框',
       backgroundColor: const Color(0xFFF5F6FA),
       children: <Widget>[
-        const RulePanel(
-          '多选框用于在一组选项中执行多项选择。支持圆形/方形/无背景勾选三种样式、'
-          '主副标题、内容方位、卡片模式与底部分割线,也可完全自定义指示器与内容。',
-          maxLines: 3,
-        ),
+        ExampleIntro('checkbox'),
         SantoSection(
           title: '纵向多选框',
           description: '默认纵向排列,支持多行标题与副标题',

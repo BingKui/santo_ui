@@ -1,4 +1,5 @@
 import 'package:santo_ui/santo_ui.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 class LoadingExample extends StatelessWidget {
@@ -7,6 +8,7 @@ class LoadingExample extends StatelessWidget {
     return SantoPageLayout(
       title: 'Loading案例',
       children: <Widget>[
+        ExampleIntro('loading'),
         SantoSection(
           title: '默认文案 Loading',
           description: '不传 content 时展示本地化默认加载文案',

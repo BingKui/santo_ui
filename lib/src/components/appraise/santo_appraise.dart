@@ -1,7 +1,7 @@
 import 'package:santo_ui/src/components/appraise/santo_appraise_emoji_list_view.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_header.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_star_list_view.dart';
-import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/input/santo_input_text.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_config.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
@@ -239,8 +239,11 @@ class _SantoAppraiseState extends State<SantoAppraise> {
     if (widget.config.showConfirmButton) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
-        child: SantoBigMainButton(
-          title: widget.config.confirmButtonText ?? SantoIntl.of(context).localizedResource.submit,
+        child: SantoButton(
+          text: widget.config.confirmButtonText ?? SantoIntl.of(context).localizedResource.submit,
+          type: SantoButtonType.primary,
+          size: SantoButtonSize.large,
+          block: true,
           isEnable: _enable ?? _appraiseIndex != -1,
           onTap: () {
             if (_enable ?? _appraiseIndex != -1) {

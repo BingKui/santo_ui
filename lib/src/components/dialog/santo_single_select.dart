@@ -1,4 +1,6 @@
 import 'package:santo_ui/src/components/dialog/santo_dialog_utils.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
@@ -280,8 +282,7 @@ class SantoSingleSelectDialogWidgetState
                               child: Padding(
                                 padding:
                                     EdgeInsets.all(commonConfig.vSpacingMd),
-                                child: SantoTools.getAssetImage(
-                                    SantoAsset.iconPickerClose),
+                                child: SantoIcon(SantoIcons.xmark),
                               )))
                       : const SizedBox.shrink()
                 ],
