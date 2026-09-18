@@ -6,7 +6,7 @@
 
 ## [1.0.0] - 2026-09-18
 
-Santo UI v1.0.0 初始版本发布。包含 60+ 组件,涵盖基础、布局、表单、选择器、数据展示、反馈、导航、操作反馈和业务组件等 9 大分类。
+Santo UI v1.0.0 初始版本发布。包含 **74** 组件,涵盖基础、布局、表单、选择器、数据展示、反馈、导航、操作反馈和业务组件等 9 大分类。
 
 ### ✨ 核心特性
 
@@ -17,45 +17,46 @@ Santo UI v1.0.0 初始版本发布。包含 60+ 组件,涵盖基础、布局、�
 
 ### 📦 组件清单
 
-#### 基础组件 (6)
+#### 基础组件 (4)
 
-Button、Text、Icon、Link、Divider、Space
+Button、Link、Divider、Space
 
-#### 布局组件 (7)
+#### 布局组件 (8)
 
-Layout、PageLayout、Panel、Section、Footer、SafeArea、Masonry
+Layout、PageLayout、Panel、Section、Footer、SafeArea、Masonry、ScrollAnchor
 
-#### 表单组件 (9)
+#### 表单组件 (10)
 
-Input、Checkbox、Radio、Switch、Rate、Stepper、Slider、Form、Cell
+Input、Checkbox、Radio、Switch、Rate、Stepper、Slider、Form、Cell、SugSearch
 
-#### 选择器组件 (6)
+#### 选择器组件 (7)
 
-Picker、Cascader、DropdownMenu、Selection、SelectCity、Calendar
+Picker、Cascader、DropdownMenu、Selection、SelectCity、Calendar、TagsPicker
 
-#### 数据展示组件 (12)
+#### 数据展示组件 (13)
 
-Table、Tag、Badge、Avatar、Progress、Statistic、Step、Collapse、Tree、Sidebar、Segmented、Pagination
+Table、Tag、Badge、Avatar、Progress、Statistic、Step、Collapse、Tree、Sidebar、Segmented、Pagination、TimeCounter
 
-#### 反馈组件 (8)
+#### 反馈组件 (9)
 
-Toast、Dialog、Message、Loading、Result、Empty、Skeleton、Popover
+Toast、Dialog、Message、Loading、Result、Empty、Skeleton、Popover、Tooltip
 
 #### 导航组件 (3)
 
 Navbar、Tabbar、MenuBar
 
-#### 操作反馈组件 (8)
+#### 操作反馈组件 (6)
 
-Actionsheet、Drawer、Popup、FloatingPanel、BottomDrawer、Tooltip、Backtop、FAB
+Actionsheet、Drawer、Popup、FloatingPanel、BottomDrawer、Backtop、FAB
 
-#### 业务组件 (17)
+#### 业务组件 (14)
 
-Card、Image、Gallery、Charts、Refresh、SwipeCell、Swiper、NoticeBar、ActionBar、Share、Appraise、Guide、Highlight、TextEllipsis、TimeCounter、TagsPicker、SugSearch
+Card、Image、Gallery、Charts、Refresh、SwipeCell、Swiper、NoticeBar、ActionBar、Share、Appraise、Guide、Highlight、TextEllipsis、BubbleText
 
 ### 🎯 设计参考
 
 本组件库整合优化了以下优秀开源项目:
+
 - [Bruno](https://github.com/LianjiaTech/bruno) - 贝壳找房 Flutter 组件库
 - [antd](https://github.com/ant-design/ant-design) - Ant Design React 组件库
 - [TDesign](https://github.com/Tencent/tdesign-flutter) - 腾讯 TDesign Flutter 组件库
