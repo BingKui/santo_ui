@@ -20,7 +20,7 @@ group:
 2. 内容较多的面板需要限制高度滚动展示。
 
 ### 使用规范
-- Panel 自身不带外边距,页面里的间距(左右留白、面板之间)由页面容器提供,例如 `SantoPageLayout` 的 padding(主题 `commonConfig.pageGap`)或 `SantoSpace`。
+- Panel 自身不带外边距,页面里的间距(左右留白、面板之间)由页面容器提供,例如 `SantoPageLayout` 的内容区 padding(预设 `iGapAllMiddle`)或 `SantoSpace`(间距取主题 `commonConfig.gapMd`)。
 - Header 不传 title/titleWidget/titleExtra/actions 时不渲染。
 - 标题后需要放其他控件(如 Segmented)时用 titleExtra,它会紧跟标题展示并优先保留完整宽度,标题空间不足时收缩让位。
 

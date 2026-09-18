@@ -9,29 +9,29 @@ order: 3
 
 #### 哪些组件支持主题定制?
 
-主题定制支持 demo 中带有<img src="https://img.ljcdn.com/beike/zjz/santo_ui/img/1637748742363.png" alt="img" style="zoom: 50%;" />标签的组件
-
-<img src="https://img.ljcdn.com/beike/zjz/santo_ui/img/1637635513070.gif" alt="img" style="zoom:50%;" />
+全部组件都支持主题定制。全局令牌(颜色/字号/间距/圆角)在 `SantoCommonConfig` 里统一改;单个组件的样式可以用它自己的 <code>themeData</code>(对应的 <code>XxxConfig</code>,如 <code>SantoDialogConfig</code>、<code>SantoButtonConfig</code>)单独覆盖。
 
 #### 支持哪些属性的定制？
 
-这里的主题定制不仅是支持换色，还支持文字大小，间距、圆角等，每个可定制组件都有 <code>themeData</code> 属性，可以查看 <code>themeData</code> 相关类了解每个组件支持定制的样式。
+主题定制不只是换色,文字大小、间距、圆角同样可配:
+
+| 令牌 | 默认值 | 说明 |
+| --- | --- | --- |
+| `brandPrimary` | `0xFF1677FF` | 品牌色 |
+| `radiusXs / Sm / Md / Lg` | 12 | 圆角 |
+| `gapXs / gapSm / gapMd / gapLg / gapXl / gapXxl` | 5 / 10 / 15 / 20 / 20 / 40 | 规范间距(按 `iDefaultGap`(5) 倍数推导) |
+| `hSpacing* / vSpacing*` | 5 / 10 / 15 / 20 / 20 / 40 | 横向 / 纵向间距 |
 
 #### 适用什么场景？
 
-- 全局样式配置
+- 全局样式配置:品牌换色、统一圆角与间距,一次注册全局生效;
+- 单组件样式配置:只改某个组件的样式,不动全局。
 
-<img src="https://img.ljcdn.com/beike/zjz/santo_ui/img/1639051288686.gif" alt="img" style="zoom:50%;" />
-
-- 单组件样式配置
-
-<img src="https://img.ljcdn.com/beike/zjz/santo_ui/img/1639051268630.gif" alt="img" style="zoom:50%;" />
-
-如果你也需要类似适配，可以参照以下步骤开始专属定制~
+需要这类适配时,按下面的步骤定制~
 
 ### 主题配置
 
-Santo 默认走 [Santo](https://mp.weixin.qq.com/s?__biz=MzIyODcxODY0OA==&mid=2247486048&idx=1&sn=0cc95bd85a54ce0f39f6247d15618ae8&chksm=e84ceb37df3b62216b34c7be041229630eca3d7c4fd3823ebf0520a9f2c99ed2cdf3e677904b&mpshare=1&scene=1&srcid=11012tvWvcYunVGfiPa8EfCT&sharer_sharetime=1635751229200&sharer_shareid=dbde8f595d5b99a8f5cfb27122964615&version=3.1.16.90294) 设计风格，如果你想更换主题，可以参照以下步骤：
+Santo 默认走自家的设计风格(令牌见上表),如果你想更换主题,可以参照以下步骤:
 
 - step1：
 
@@ -55,7 +55,7 @@ class XxxConfigUtils {
   static SantoCommonConfig defaultCommonConfig = SantoCommonConfig(
     ///品牌色
     brandPrimary: const Color(0xFF3072F6),
-  ）;
+  );
 }
 ```
 
@@ -87,6 +87,8 @@ class XxxConfigUtils {
 ```dart
 SantoInitializer.register(allThemeConfig: XxxConfigUtils.defaultAllConfig);
 ```
+
+多套主题并存(多渠道)时,换成 `SantoThemeConfigurator.instance.register(XxxConfigUtils.defaultAllConfig, configId: 'xxx')` 注册,读配置时带同一个 `configId` 即可。
 
 当然你也可以忽略  step1 ~ step3，直接在 `main.dart` 中注册 `SantoAllThemeConfig`
 
