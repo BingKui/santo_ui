@@ -151,7 +151,7 @@ class SantoMiddleInputDialog {
       },
       inputFormatters: tmpInputFormatters,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(commonConfig.pageGap),
+        contentPadding: iGapAllMiddle,
         hintText: hintText,
         hintStyle: TextStyle(
             fontSize: commonConfig.fontSizeBase,

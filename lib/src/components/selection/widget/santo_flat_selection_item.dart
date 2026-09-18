@@ -6,7 +6,7 @@ import 'package:santo_ui/src/components/picker/time_picker/santo_date_time_forma
 import 'package:santo_ui/src/components/picker/time_picker/date_picker/santo_date_picker.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
-import 'package:santo_ui/src/components/selection/santo_selection_view.dart';
+import 'package:santo_ui/src/components/selection/dropdown_menu.dart';
 import 'package:santo_ui/src/components/selection/controller/santo_flat_selection_controller.dart';
 import 'package:santo_ui/src/components/selection/widget/santo_layer_more_selection_page.dart';
 import 'package:santo_ui/src/components/toast/santo_toast.dart';
@@ -184,7 +184,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
                 visible: widget.selectionEntity
                         .currentShowTagByExpanded(isExpanded).isNotEmpty,
                 child: Container(
-                  padding: EdgeInsets.only(top: commonConfig.pageGap),
+                  padding: EdgeInsets.only(top: commonConfig.gapMd),
                   child: _buildOptionWidgets(),
                 ),
               ),
@@ -291,7 +291,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
 
     return Wrap(
       spacing: _spacing,
-      runSpacing: commonConfig.pageGap,
+      runSpacing: commonConfig.gapMd,
       children: widgets,
     );
   }

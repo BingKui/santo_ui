@@ -92,7 +92,7 @@ class SantoAppraiseHeader extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(
                     top: commonConfig.vSpacingXs,
-                    right: commonConfig.pageGap),
+                    right: commonConfig.gapMd),
                 child: Text(
                   title,
                   maxLines: maxLines,

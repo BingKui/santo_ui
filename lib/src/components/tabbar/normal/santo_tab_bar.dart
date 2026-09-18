@@ -20,7 +20,7 @@ const int _scrollableLimitTabLength = 4;
 /// tab 项圆角底色的圆角
 const double _tabItemRadius = 12.0;
 
-/// tab 项圆角底色的左右内边距默认取 pageGap
+/// tab 项圆角底色的左右内边距默认取 gapMd
 
 /// 选中 tab 项底色的透明度
 const int _tabItemSelectedAlpha = 0x14;
@@ -395,7 +395,7 @@ class SantoTabBarState extends State<SantoTabBar> {
   EdgeInsets get _tabItemInsets {
     final EdgeInsets labelPadding =
         widget.labelPadding.resolve(TextDirection.ltr);
-    final double itemPadding = widget.themeData!.commonConfig.pageGap;
+    final double itemPadding = widget.themeData!.commonConfig.gapMd;
     return EdgeInsets.only(
       left: math.max(labelPadding.left, itemPadding),
       right: math.max(labelPadding.right, itemPadding),
@@ -750,7 +750,7 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
                         )),
                     Container(
                       padding: EdgeInsets.only(
-                          top: widget.themeData.commonConfig.pageGap),
+                          top: widget.themeData.commonConfig.gapMd),
                       child: _createMoreItems(),
                     ),
                   ],
@@ -780,7 +780,7 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
     }
     return Wrap(
       spacing: widget.spacing,
-      runSpacing: widget.themeData.commonConfig.pageGap,
+      runSpacing: widget.themeData.commonConfig.gapMd,
       children: widgets,
     );
   }

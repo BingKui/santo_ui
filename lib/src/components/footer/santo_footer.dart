@@ -128,7 +128,7 @@ class SantoFooter extends StatelessWidget {
       if (i > 0) {
         items.add(
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: commonConfig.pageGap),
+            padding: EdgeInsets.symmetric(horizontal: commonConfig.gapMd),
             child: Container(
               width: 1,
               height: 14,

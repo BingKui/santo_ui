@@ -124,7 +124,7 @@ class SantoResult extends StatelessWidget {
             ],
             // 描述
             if (description != null) ...[
-              SizedBox(height: commonConfig.pageGap),
+              SizedBox(height: commonConfig.gapMd),
               Text(
                 description!,
                 textAlign: TextAlign.center,

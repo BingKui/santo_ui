@@ -10,7 +10,7 @@ import 'package:example/sample/components/selection/selectionview_date_range_exa
 import 'package:example/sample/components/selection/selectionview_limit_max_selected_count_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:example/sample/components/selection/selection_flat_entry_page.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DropdownMenu;
 import 'package:flutter/services.dart';
 
 import 'filter_entity.dart';
@@ -30,7 +30,7 @@ class SelectionEntryPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
             child: Text(
-              "SantoSelectionView 组件：",
+              "DropdownMenu 组件：",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,

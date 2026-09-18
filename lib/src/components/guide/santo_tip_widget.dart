@@ -81,8 +81,8 @@ class SantoTipInfoWidget extends StatelessWidget {
                 ? Alignment.bottomRight
                 : Alignment.bottomLeft,
             padding: direction == GuideDirection.bottomLeft
-                ? EdgeInsets.only(right: arrowPadding ?? commonConfig.pageGap)
-                : EdgeInsets.only(left: arrowPadding ?? commonConfig.pageGap),
+                ? EdgeInsets.only(right: arrowPadding ?? commonConfig.gapMd)
+                : EdgeInsets.only(left: arrowPadding ?? commonConfig.gapMd),
             child: CustomPaint(
               size: Size(14.0, 6.0),
               painter: CustomTrianglePainter(
@@ -104,8 +104,8 @@ class SantoTipInfoWidget extends StatelessWidget {
                 ? Alignment.topRight
                 : Alignment.topLeft,
             padding: direction == GuideDirection.topLeft
-                ? EdgeInsets.only(right: arrowPadding ?? commonConfig.pageGap)
-                : EdgeInsets.only(left: arrowPadding ?? commonConfig.pageGap),
+                ? EdgeInsets.only(right: arrowPadding ?? commonConfig.gapMd)
+                : EdgeInsets.only(left: arrowPadding ?? commonConfig.gapMd),
             child: CustomPaint(
               size: Size(14.0, 6.0),
               painter: CustomTrianglePainter(
@@ -123,7 +123,7 @@ class SantoTipInfoWidget extends StatelessWidget {
           _buildContent(context),
           Container(
             alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(top: commonConfig.pageGap),
+            padding: EdgeInsets.only(top: commonConfig.gapMd),
             child: CustomPaint(
               size: Size(6.0, 14.0),
               painter: CustomTrianglePainter(
@@ -142,7 +142,7 @@ class SantoTipInfoWidget extends StatelessWidget {
           _buildContent(context),
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(top: commonConfig.pageGap),
+            padding: EdgeInsets.only(top: commonConfig.gapMd),
             child: CustomPaint(
               size: Size(6, 14.0),
               painter: CustomTrianglePainter(
@@ -263,7 +263,7 @@ class SantoTipInfoWidget extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 32,
-      margin: EdgeInsets.only(top: commonConfig.pageGap),
+      margin: EdgeInsets.only(top: commonConfig.gapMd),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -338,7 +338,7 @@ class SantoTipInfoWidget extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: 20,
-      margin: EdgeInsets.only(top: commonConfig.pageGap),
+      margin: EdgeInsets.only(top: commonConfig.gapMd),
       child: Stack(
         children: <Widget>[
           Positioned(

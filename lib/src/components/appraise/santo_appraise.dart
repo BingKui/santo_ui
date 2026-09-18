@@ -1,10 +1,8 @@
 import 'package:santo_ui/src/components/appraise/santo_appraise_emoji_list_view.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_header.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_star_list_view.dart';
-import 'package:santo_ui/src/components/appraise/santo_mulit_select_tags.dart';
 import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
 import 'package:santo_ui/src/components/input/santo_input_text.dart';
-import 'package:santo_ui/src/components/picker/santo_tags_picker_config.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_config.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -190,20 +188,12 @@ class _SantoAppraiseState extends State<SantoAppraise> {
     }
     return Padding(
       padding: EdgeInsets.only(top: commonConfig.vSpacingLg),
-      child: SantoMultiSelectTags(
-        padding: EdgeInsets.all(0),
-        physics: NeverScrollableScrollPhysics(),
-        tagPickerBean: SantoTagsPickerConfig(
-          tagItemSource: _string2Tag(widget.tags),
-        ),
-        tagText: (choice) {
-          return choice.name;
-        },
-        // tagStyle: SantoMultiSelectStyle.auto,
+      child: _AppraiseTagSelector(
+        tags: widget.tags!,
         multiSelect: widget.config.multiSelect,
-        santoCrossAxisCount: widget.config.tagCountEachRow,
-        selectedTagsCallback: (list) {
-          _selectedTag = _tag2String(list);
+        tagCountEachRow: widget.config.tagCountEachRow,
+        onSelected: (selected) {
+          _selectedTag = selected;
           if (widget.config.tagSelectCallback != null) {
             widget.config.tagSelectCallback!(_selectedTag);
           }
@@ -266,22 +256,106 @@ class _SantoAppraiseState extends State<SantoAppraise> {
 
     return const SizedBox.shrink();
   }
+}
 
-  List<SantoTagItemBean> _string2Tag(List<String>? tags) {
-    List<SantoTagItemBean> items = [];
-    if (tags?.isNotEmpty ?? false) {
-      for (int i = 0; i < tags!.length; i++) {
-        items.add(SantoTagItemBean(name: tags[i], code: tags[i], index: i));
-      }
-    }
-    return items;
+/// 评价组件内部的标签选择器
+class _AppraiseTagSelector extends StatefulWidget {
+  final List<String> tags;
+  final bool multiSelect;
+  final int tagCountEachRow;
+  final ValueChanged<List<String>> onSelected;
+
+  const _AppraiseTagSelector({
+    Key? key,
+    required this.tags,
+    required this.multiSelect,
+    required this.tagCountEachRow,
+    required this.onSelected,
+  }) : super(key: key);
+
+  @override
+  State<_AppraiseTagSelector> createState() => _AppraiseTagSelectorState();
+}
+
+class _AppraiseTagSelectorState extends State<_AppraiseTagSelector> {
+  final Set<int> _selectedIndexes = {};
+
+  @override
+  void initState() {
+    super.initState();
   }
 
-  List<String> _tag2String(List<SantoTagItemBean> tags) {
-    List<String> result = [];
-    tags.forEach((item) {
-      result.add(item.name);
-    });
-    return result;
+  @override
+  Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final int count = widget.tagCountEachRow > 0 ? widget.tagCountEachRow : 2;
+    final double spacing = commonConfig.hSpacingMd;
+
+    return Wrap(
+      spacing: spacing,
+      runSpacing: commonConfig.vSpacingMd,
+      children: widget.tags.asMap().entries.map((entry) {
+        final index = entry.key;
+        final tag = entry.value;
+        final isSelected = _selectedIndexes.contains(index);
+
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              if (!widget.multiSelect) {
+                _selectedIndexes.clear();
+                _selectedIndexes.add(index);
+              } else {
+                if (isSelected) {
+                  _selectedIndexes.remove(index);
+                } else {
+                  _selectedIndexes.add(index);
+                }
+              }
+              widget.onSelected(_selectedIndexes
+                  .map((i) => widget.tags[i])
+                  .toList());
+            });
+          },
+          child: Container(
+            constraints: BoxConstraints(minWidth: 75),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? SantoThemeConfigurator.instance
+                      .getConfig()
+                      .commonConfig
+                      .brandPrimary
+                      .withAlpha(0x14)
+                  : const Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.circular(commonConfig.radiusXs),
+            ),
+            padding: EdgeInsets.symmetric(
+              horizontal: commonConfig.hSpacingSm,
+              vertical: commonConfig.vSpacingSm,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              tag,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
+                fontSize: commonConfig.fontSizeCaption,
+                color: isSelected
+                    ? SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .brandPrimary
+                    : SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .colorTextBase,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
   }
 }

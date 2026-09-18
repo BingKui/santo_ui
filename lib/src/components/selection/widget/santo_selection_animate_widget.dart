@@ -1,4 +1,4 @@
-import 'package:santo_ui/src/components/selection/controller/santo_selection_view_controller.dart';
+import 'package:santo_ui/src/components/selection/controller/dropdown_menu_controller.dart';
 import 'package:flutter/material.dart';
 
 /// 筛选动画展示隐藏组件

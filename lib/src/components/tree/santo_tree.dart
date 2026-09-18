@@ -185,7 +185,7 @@ class _SantoTreeState extends State<SantoTree> {
 
     return Container(
       height: widget.nodeHeight,
-      padding: EdgeInsets.only(left: level * widget.indentWidth + commonConfig.pageGap),
+      padding: EdgeInsets.only(left: level * widget.indentWidth + commonConfig.gapMd),
       child: Row(
         children: [
           // 展开/收起图标

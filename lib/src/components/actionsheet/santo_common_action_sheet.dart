@@ -289,7 +289,7 @@ class SantoCommonActionSheet extends StatelessWidget {
       child: Container(
         color: Color(0xffffffff),
         padding: EdgeInsets.only(
-            top: commonConfig.pageGap, bottom: commonConfig.pageGap),
+            top: commonConfig.gapMd, bottom: commonConfig.gapMd),
         child: Center(
           child: Text(
             cancelTitle ?? SantoIntl.of(context).localizedResource.cancel,

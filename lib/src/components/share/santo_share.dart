@@ -281,8 +281,8 @@ class SantoShare extends StatelessWidget {
           padding: EdgeInsets.only(
               left: 61,
               right: 61,
-              top: commonConfig.pageGap,
-              bottom: commonConfig.pageGap),
+              top: commonConfig.gapMd,
+              bottom: commonConfig.gapMd),
           child: Center(
             child: Text(
               cancelTitle ?? SantoIntl.of(context).localizedResource.cancel,

@@ -1,7 +1,7 @@
 
 
 import 'package:santo_ui/santo_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DropdownMenu;
 
 class SelectionViewDateFilterExamplePage extends StatefulWidget {
   final String _title;
@@ -24,9 +24,11 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      appBar: SantoAppBar(title: widget._title),
-      children: <Widget>[
-          SantoSelectionView(
+    return Scaffold(
+      appBar: AppBar(title: Text(widget._title)),
+      body: Column(
+        children: <Widget>[
+          DropdownMenu(
             originalSelectionData: _filterData,
             onCustomSelectionMenuClick: (int index,
                 SantoSelectionEntity customMenuItem,
@@ -48,12 +50,14 @@ class _SelectionViewExamplePageState
                   context);
             },
           ),
-          Container(
-            padding: EdgeInsets.only(top: 400),
-            alignment: Alignment.center,
-            child: Text("背景内容区域"),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: Text("背景内容区域"),
+            ),
           )
-      ],
+        ],
+      ),
     );
   }
 }

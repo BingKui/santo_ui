@@ -293,11 +293,11 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
                     spacing: SantoThemeConfigurator.instance
                         .getConfig()
                         .commonConfig
-                        .pageGap,
+                        .gapMd,
                     runSpacing: SantoThemeConfigurator.instance
                         .getConfig()
                         .commonConfig
-                        .pageGap,
+                        .gapMd,
                     children: directionalCheckboxes
                         .map((e) =>
                             SizedBox(width: itemWidth, height: 56, child: e))
@@ -317,9 +317,9 @@ class SantoCheckboxGroupContainer extends SantoCheckboxGroup {
             separatorBuilder: (context, index) => cardMode
                 ? SizedBox(
                     height: SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .pageGap)
+                    .getConfig()
+                    .commonConfig
+                    .gapMd)
                 : const SizedBox.shrink(),
             itemBuilder: (context, index) => Container(
               margin: cardMode

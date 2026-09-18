@@ -71,14 +71,14 @@ class PickerEntryPage extends StatelessWidget {
             title: "Picker/标签选择（SantoTagsPicker）",
             describe: "底部标签弹框，支持多选/单选与输入框",
             onPressed: () {
-              _showMulSelectTagPicker(context);
+              _showTagsPicker(context);
             },
           ),
           ListItem(
             title: "Picker/标签选择-带输入框（SantoTagsPicker）",
             describe: "单选 + 输入框",
             onPressed: () {
-              _showSelectTagsWithTextInputPicker(context);
+              _showTagsPickerWithInput(context);
             },
           ),
           ListItem(
@@ -316,8 +316,8 @@ class PickerEntryPage extends StatelessWidget {
   }
 
   ///标签选择弹框
-  void _showMulSelectTagPicker(BuildContext context) {
-    List tags = [
+  void _showTagsPicker(BuildContext context) {
+    List<String> tags = [
       '洗衣机池',
       '机池',
       '电冰池',
@@ -331,23 +331,17 @@ class PickerEntryPage extends StatelessWidget {
       '可爱多池',
     ];
 
-    List<SantoTagItemBean> items = [];
-    for (int i = 0; i < tags.length; i++) {
-      String it = tags[i];
-      SantoTagItemBean item = SantoTagItemBean(name: it, code: it, index: i);
-      items.add(item);
-    }
-
     SantoTagsPicker(
       context: context,
+      tags: tags,
       //排列样式 默认 平均分配排序
       layoutStyle: SantoTagsPickerLayoutStyle.average,
       //一行多少个 默认4个
       crossAxisCount: 4,
       //最大选中数目 - 不设置 或者设置为0 则可以全选
       maxSelectItemCount: 5,
-      onItemClick: (SantoTagItemBean onTapTag, bool isSelect) {
-        SantoToast.show(onTapTag.toString(), context);
+      onItemClick: (int index, bool isSelect) {
+        SantoToast.show('$index -> $isSelect', context);
       },
       onMaxSelectClick: () {
         SantoToast.show('最大数值不能超过5个', context);
@@ -355,30 +349,23 @@ class PickerEntryPage extends StatelessWidget {
       pickerTitleConfig: SantoPickerTitleConfig(
         titleContent: '多选标题',
       ),
-      tagPickerConfig: SantoTagsPickerConfig(
-        tagItemSource: items,
-        tagTitleFontSize: 12,
-        chipPadding: EdgeInsets.only(left: 5, right: 5),
-        tagTitleColor: Color(0xFF515A6E),
-        tagBackgroudColor: Color(0xffF8F8F8),
-        selectedTagBackgroudColor: Color(0x141677FF),
-        selectedTagTitleColor: Color(0xFF1677FF),
-      ),
-      onConfirm: (tags, text) {
-        SantoToast.show('选中 ${tags.length} 个标签', context);
+      tagTextStyle: const TextStyle(color: Color(0xFF515A6E)),
+      selectedTagTextStyle: const TextStyle(
+          color: Color(0xFF1677FF), fontWeight: FontWeight.w500),
+      tagBackgroundColor: const Color(0xffF8F8F8),
+      selectedTagBackgroundColor: const Color(0x141677FF),
+      onConfirm: (List<int> indexes, String text) {
+        SantoToast.show('选中 ${indexes.length} 个标签', context);
       },
       onCancel: () {
         SantoToast.show('点击了取消按钮', context);
-      },
-      onTagValueGetter: (choice) {
-        return choice.name;
       },
     ).show();
   }
 
   ///标签选择弹框(单选 + 输入框)
-  void _showSelectTagsWithTextInputPicker(BuildContext context) {
-    List tags = [
+  void _showTagsPickerWithInput(BuildContext context) {
+    List<String> tags = [
       '我',
       '我是可选择',
       '我是可选择的标签',
@@ -388,14 +375,9 @@ class PickerEntryPage extends StatelessWidget {
       '我是可选择的标签1',
     ];
 
-    List<SantoTagItemBean> items = [];
-    for (int i = 0; i < tags.length; i++) {
-      String it = tags[i];
-      items.add(SantoTagItemBean(name: it, code: it, index: i));
-    }
-
     SantoTagsPicker(
       context: context,
+      tags: tags,
       // 单选 + 带输入框
       multiSelect: false,
       showTextInput: true,
@@ -405,19 +387,13 @@ class PickerEntryPage extends StatelessWidget {
       pickerTitleConfig: SantoPickerTitleConfig(
         titleContent: '这里是标题文字',
       ),
-      tagPickerConfig: SantoTagsPickerConfig(
-        tagItemSource: items,
-        tagTitleFontSize: 12,
-        tagTitleColor: Color(0xff222222),
-        tagBackgroudColor: Color(0xffF8F8F8),
-        selectedTagBackgroudColor: Color(0x141677FF),
-        selectedTagTitleColor: Color(0xFF1677FF),
-      ),
-      onConfirm: (tags, text) {
-        SantoToast.show('选中 ${tags.length} 个标签，输入：$text', context);
-      },
-      onTagValueGetter: (choice) {
-        return choice.name;
+      tagTextStyle: const TextStyle(color: Color(0xff222222)),
+      selectedTagTextStyle: const TextStyle(
+          color: Color(0xFF1677FF), fontWeight: FontWeight.w500),
+      tagBackgroundColor: const Color(0xffF8F8F8),
+      selectedTagBackgroundColor: const Color(0x141677FF),
+      onConfirm: (List<int> indexes, String text) {
+        SantoToast.show('选中 ${indexes.length} 个标签，输入：$text', context);
       },
     ).show();
   }

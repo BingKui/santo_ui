@@ -4,7 +4,7 @@ import 'package:santo_ui/src/components/button/santo_big_main_button.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
-import 'package:santo_ui/src/components/selection/santo_selection_view.dart';
+import 'package:santo_ui/src/components/selection/dropdown_menu.dart' as santo_dropdown;
 import 'package:santo_ui/src/components/selection/widget/santo_selection_more_item_widget.dart';
 import 'package:santo_ui/src/components/toast/santo_toast.dart';
 import 'package:santo_ui/src/constants/santo_asset_constants.dart';
@@ -26,11 +26,11 @@ import 'package:flutter/material.dart';
 ///                               如果他的某个子节点是range type， 该子节点的展示是自定义输入
 ///
 ///
-/// 参考[SantoSelectionEntity]和[SantoSelectionView]
+/// 参考[SantoSelectionEntity]和[santo_dropdown.DropdownMenu]
 class SantoMoreSelectionPage extends StatefulWidget {
   final SantoSelectionEntity entityData;
   final Function(SantoSelectionEntity)? confirmCallback;
-  final SantoOnCustomFloatingLayerClick? onCustomFloatingLayerClick;
+  final santo_dropdown.SantoOnCustomFloatingLayerClick? onCustomFloatingLayerClick;
   final SantoSelectionConfig themeData;
 
   SantoMoreSelectionPage(

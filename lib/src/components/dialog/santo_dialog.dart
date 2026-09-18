@@ -386,7 +386,7 @@ class SantoDialog extends AlertDialog {
                   ? _mapTextToGesWidget(context, actionsText![0], 0, false)
                   : actionsWidget![0],
             ),
-            SizedBox(width: commonConfig.pageGap),
+            SizedBox(width: commonConfig.gapMd),
             Expanded(
               child: showTextActions
                   ? _mapTextToGesWidget(context, actionsText![1], 1, true)
@@ -403,7 +403,7 @@ class SantoDialog extends AlertDialog {
           mainAxisSize: MainAxisSize.min,
           children: [
             for (int i = 0; i < length; i++) ...[
-              if (i > 0) SizedBox(height: commonConfig.pageGap),
+              if (i > 0) SizedBox(height: commonConfig.gapMd),
               showTextActions
                   ? _mapTextToGesWidget(context, actionsText![i], i, true)
                   : actionsWidget![i],

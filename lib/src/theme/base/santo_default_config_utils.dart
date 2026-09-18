@@ -214,8 +214,13 @@ class SantoDefaultConfigUtils {
     vSpacingXl: 20.0,
     vSpacingXxl: 40.0,
 
-    /// 页面左右/区块间距 iPageGap
-    pageGap: kSantoPageGap,
+    /// 间距基准倍数:gapXs 5、gapSm 10、gapMd 15、gapLg 20、gapXl 20、gapXxl 40
+    gapXs: iDefaultGap,
+    gapSm: iDefaultGap * 2,
+    gapMd: iDefaultGap * 3,
+    gapLg: iDefaultGap * 4,
+    gapXl: iDefaultGap * 4,
+    gapXxl: iDefaultGap * 8,
 
     /// 图标大小
     iconSizeXxs: 8.0,

@@ -112,7 +112,7 @@ class SantoTable extends StatelessWidget {
   /// 表头高度，默认48
   final double headerHeight;
 
-  /// 单元格内边距,默认水平 pageGap
+  /// 单元格内边距,默认水平 gapMd
   final EdgeInsets? cellPadding;
 
   /// 奇数行背景色，默认白色
@@ -334,9 +334,9 @@ class SantoTable extends StatelessWidget {
                 padding: cellPadding ??
             EdgeInsets.symmetric(
                 horizontal: SantoThemeConfigurator.instance
-                    .getConfig()
-                    .commonConfig
-                    .pageGap),
+                        .getConfig()
+                        .commonConfig
+                        .gapMd),
                 alignment: _getAlignment(columns[colIndex].align),
                 decoration: border
                     ? BoxDecoration(
@@ -393,9 +393,9 @@ class SantoTable extends StatelessWidget {
               padding: cellPadding ??
             EdgeInsets.symmetric(
                 horizontal: SantoThemeConfigurator.instance
-                    .getConfig()
-                    .commonConfig
-                    .pageGap),
+                        .getConfig()
+                        .commonConfig
+                        .gapMd),
               alignment: _getAlignment(col.align),
               decoration: border
                   ? BoxDecoration(

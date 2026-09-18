@@ -263,7 +263,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
         Visibility(
           visible: widget.showDivider,
           child: Padding(
-            padding: EdgeInsets.only(right: commonConfig.pageGap),
+            padding: EdgeInsets.only(right: commonConfig.gapMd),
             child: Container(
               height: 16,
               width: 1,

@@ -166,7 +166,7 @@ class SantoPanel extends StatelessWidget {
                 children: [
                   Flexible(child: leftWidget ?? const SizedBox.shrink()),
                   Padding(
-                    padding: EdgeInsets.only(left: commonConfig.pageGap),
+                    padding: EdgeInsets.only(left: commonConfig.gapMd),
                     child: titleExtra!,
                   ),
                 ],
