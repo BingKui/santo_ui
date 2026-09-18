@@ -1,6 +1,17 @@
 # Santo UI
 
-企业级 Flutter 组件库。提供统一主题定制、多主题 configId 注册、开箱即用的移动端组件。
+企业级 Flutter 组件库。Santo(云上先途)根据现有市面上的开源项目进行的整合和优化,主要用于内部应用的开发和支持。提供统一主题定制、多主题 configId 注册、开箱即用的移动端组件。
+
+## 参考项目
+
+本组件库在设计和实现过程中参考了以下优秀的开源项目:
+
+1. **[Bruno](https://github.com/LianjiaTech/bruno)** - 贝壳找房 Flutter 组件库
+2. **[antd](https://github.com/ant-design/ant-design)** - Ant Design React 组件库
+3. **[TDesign](https://github.com/Tencent/tdesign-flutter)** - 腾讯 TDesign Flutter 组件库
+4. **[Vant](https://github.com/youzan/vant)** - 有赞 Vant 移动端组件库
+
+感谢这些优秀项目的贡献,为我们提供了宝贵的参考和灵感。
 
 ## 工程结构
 

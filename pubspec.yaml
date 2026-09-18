@@ -1,5 +1,5 @@
 name: santo_ui
-description: 企业级 Flutter 组件库，提供丰富的移动端 UI 组件和交互组件。
+description: Santo(云上先途)企业级 Flutter 组件库,整合优化多个开源项目,用于内部应用开发。
 version: 1.0.0
 repository: https://github.com/BingKui/santo_ui
 homepage: https://github.com/BingKui/santo_ui
