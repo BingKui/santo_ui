@@ -53,7 +53,6 @@ class _SantoProgressState extends State<SantoProgress>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
-  // double _previousValue = 0.0;
 
   Color get _brandPrimary =>
       SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
@@ -64,7 +63,6 @@ class _SantoProgressState extends State<SantoProgress>
   @override
   void initState() {
     super.initState();
-    _previousValue = widget.value;
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),

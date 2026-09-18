@@ -1,6 +1,6 @@
 name: santo_ui
 description: Santo(云上先途)企业级 Flutter 组件库,整合优化多个开源项目,用于内部应用开发。
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/BingKui/santo_ui
 homepage: https://github.com/BingKui/santo_ui
 issue_tracker: https://github.com/BingKui/santo_ui/issues
