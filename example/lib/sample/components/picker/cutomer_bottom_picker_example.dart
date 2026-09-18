@@ -14,7 +14,7 @@ class CustomPickerExamplePage extends StatelessWidget {
         children: <Widget>[
           SantoSection(
             title: '输入框内容',
-            description: 'contentWidget 内放 TextField，autofocus 时被键盘抬起且不遮挡',
+            description: 'contentWidget 内放 SantoInputText，autofocus 时被键盘抬起且不遮挡',
             child: ListItem(
               title: "底部弹窗的内容为输入框",
               describe: '被键盘抬起',
@@ -36,9 +36,9 @@ class CustomPickerExamplePage extends StatelessWidget {
                               fontSize: 20,
                             ),
                           ),
-                          TextField(
+                          SantoInputText(
                             autofocus: true,
-                            decoration: InputDecoration(hintText: '请输入'),
+                            hintText: '请输入',
                           )
                         ],
                       ),
@@ -131,9 +131,9 @@ class CustomPickerExamplePage extends StatelessWidget {
                               fontSize: 20,
                             ),
                           ),
-                          TextField(
+                          SantoInputText(
                             autofocus: true,
-                            decoration: InputDecoration(hintText: '请输入'),
+                            hintText: '请输入',
                           )
                         ],
                       ),
