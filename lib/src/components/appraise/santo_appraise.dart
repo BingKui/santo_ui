@@ -289,7 +289,7 @@ class _AppraiseTagSelectorState extends State<_AppraiseTagSelector> {
   Widget build(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
-    final int count = widget.tagCountEachRow > 0 ? widget.tagCountEachRow : 2;
+    // final int count = widget.tagCountEachRow > 0 ? widget.tagCountEachRow : 2;
     final double spacing = commonConfig.hSpacingMd;
 
     return Wrap(

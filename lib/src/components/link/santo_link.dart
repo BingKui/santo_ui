@@ -134,7 +134,7 @@ class _SantoLinkState extends State<SantoLink> {
       case SantoLinkState.active:
         return commonConfig.brandPrimaryTap;
       case SantoLinkState.normal:
-        return commonConfig.colorLink ?? commonConfig.brandPrimary;
+        return commonConfig.colorLink!;
     }
   }
 
