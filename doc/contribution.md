@@ -26,7 +26,7 @@ order: 5
 
 ### 如何贡献
 
-如果你想处理一个 issue,请先到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)确认没有别人正在处理。如果当前没有人在处理,可以留言认领。
+如果你想处理一个 issue,请先到[仓库](https://github.com/BingKui/santo_ui)确认没有别人正在处理。如果当前没有人在处理,可以留言认领。
 
 在提交 merge request 之前,请确认按照以下步骤操作:
 
@@ -47,4 +47,4 @@ Santo 团队会 review 所有的 merge request,合并符合规范的代码,并�
 
 ### 加入我们
 
-Santo 仍在持续迭代优化。如果你在使用过程中遇到问题或有改进建议,欢迎到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)提 issue 与我们交流。
+Santo 仍在持续迭代优化。如果你在使用过程中遇到问题或有改进建议,欢迎到[仓库](https://github.com/BingKui/santo_ui)提 issue 与我们交流。

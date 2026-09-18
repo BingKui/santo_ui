@@ -20,7 +20,7 @@ order: 2
 dependencies:
   santo_ui:
     git:
-      url: https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI.git
+      url: https://github.com/BingKui/santo_ui.git
       ref: main
 ```
 

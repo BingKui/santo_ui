@@ -10,7 +10,7 @@ order: 6
 
 #### 主题定制没生效可能原因？
 
-请确定在 <code>main.dart</code> 中注册，如果正确注册仍没有生效，欢迎到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)提 issue
+请确定在 <code>main.dart</code> 中注册，如果正确注册仍没有生效，欢迎到[仓库](https://github.com/BingKui/santo_ui)提 issue
 
 #### 会提供独立组件拆分依赖吗？
 
@@ -26,6 +26,6 @@ Santo 是作为整套解决方案输出，因此没有做组件拆分，以后�
 
 #### 遇到问题怎么办？
 
-欢迎到[仓库](https://codeup.aliyun.com/67ee24d7b8d84778e0e7ee11/SantoUI)提 issue 或提交 merge request,我们会定期查阅;如果你已经有了解法,也欢迎直接提 MR。
+欢迎到[仓库](https://github.com/BingKui/santo_ui)提 issue 或提交 merge request,我们会定期查阅;如果你已经有了解法,也欢迎直接提 MR。
 
 

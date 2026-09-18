@@ -10,7 +10,7 @@ analyzer:
     - macos/**
     - linux/**
   errors:
-    # 组件库移植自 Bruno,历史代码风格与严格 lint 存在差异,info 级风格提示降级为 ignore;
+    # 历史代码风格与严格 lint 存在差异,info 级风格提示降级为 ignore;
     # error/warning 级别保持生效。
     unnecessary_this: ignore
     prefer_initializing_formals: ignore
@@ -60,7 +60,7 @@ analyzer:
     unused_element: ignore
     dead_code: ignore
 
-# 组件库移植自 Bruno,历史代码风格与严格 lint 存在差异,
+# 历史代码风格与严格 lint 存在差异,
 # 以下规则关闭 info 级风格提示;error/warning 级别保持生效,CI 仍可用 --fatal-infos。
 linter:
   rules:
