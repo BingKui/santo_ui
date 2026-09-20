@@ -25,14 +25,16 @@ enum SantoDividerTitlePlacement {
 }
 
 /// 水平分割线的上下间距（参考 antd size）
+///
+/// 三档分别取主题 `vSpacingSm / vSpacingMd / vSpacingLg`(默认 10/15/20)。
 enum SantoDividerSize {
-  /// 上下间距 8
+  /// 上下间距取主题 vSpacingSm
   small,
 
-  /// 上下间距 16（默认）
+  /// 上下间距取主题 vSpacingMd(默认)
   medium,
 
-  /// 上下间距 24
+  /// 上下间距取主题 vSpacingLg
   large,
 }
 

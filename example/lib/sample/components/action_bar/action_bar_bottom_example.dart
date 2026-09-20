@@ -31,18 +31,18 @@ class ActionBarBottomExample extends StatelessWidget {
       bottomNavigationBar: SantoActionBar(
         children: [
           SantoActionBarIcon(
-            icon: const Icon(Icons.headset_mic),
+            icon: SantoIcons.headset,
             text: '客服',
             onTap: () => SantoToast.show('点击了客服', context),
           ),
           SantoActionBarIcon(
-            icon: const Icon(Icons.shopping_cart),
+            icon: SantoIcons.cart,
             text: '购物车',
             badgeCount: 2,
             onTap: () => SantoToast.show('点击了购物车', context),
           ),
           SantoActionBarIcon(
-            icon: const Icon(Icons.star),
+            icon: SantoIcons.star,
             text: '收藏',
             onTap: () => SantoToast.show('点击了收藏', context),
           ),

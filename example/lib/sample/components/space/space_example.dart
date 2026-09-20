@@ -28,19 +28,19 @@ class SpaceExample extends StatelessWidget {
             children: [
               const SantoSpace(
                 size: SantoSpaceSize.small,
-                children: [Text('小间距 8'), Text('|'), Text('8')],
+                children: [Text('小间距 10'), Text('|'), Text('10')],
               ),
               const SantoSpace.gap(12,
                   direction: SantoSpaceDirection.vertical),
               const SantoSpace(
                 size: SantoSpaceSize.middle,
-                children: [Text('中间距 16'), Text('|'), Text('16')],
+                children: [Text('中间距 15'), Text('|'), Text('15')],
               ),
               const SantoSpace.gap(12,
                   direction: SantoSpaceDirection.vertical),
               const SantoSpace(
                 size: SantoSpaceSize.large,
-                children: [Text('大间距 24'), Text('|'), Text('24')],
+                children: [Text('大间距 20'), Text('|'), Text('20')],
               ),
             ],
           ),

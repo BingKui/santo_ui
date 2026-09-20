@@ -22,7 +22,7 @@ const double kSantoActionBarHeight = 50;
 /// Scaffold(
 ///   bottomNavigationBar: SantoActionBar(
 ///     children: [
-///       SantoActionBarIcon(icon: Icon(Icons.chat), text: '客服'),
+///       SantoActionBarIcon(icon: SantoIcons.headset, text: '客服'),
 ///       SantoActionBarButton(text: '加入购物车'),
 ///       SantoActionBarButton(text: '立即购买', type: SantoActionBarButtonType.danger),
 ///     ],

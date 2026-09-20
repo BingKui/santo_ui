@@ -217,10 +217,9 @@ export 'src/components/tag/santo_tag_custom.dart';
 export 'src/components/tag/santo_state_tag.dart';
 
 //气泡文本
-export 'src/components/card/bubble_card/santo_insert_info.dart';
+export 'src/components/card/bubble_card/santo_bubble_text.dart';
 
 //文本
-export 'src/components/card/bubble_card/santo_bubble_text.dart';
 export 'src/components/text/santo_expandable_text.dart';
 export 'src/components/text/santo_text_ellipsis.dart';
 

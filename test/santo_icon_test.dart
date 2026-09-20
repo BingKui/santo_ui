@@ -105,6 +105,27 @@ void main() {
     handle.dispose();
   });
 
+  test('名称清单 all 可用于遍历与搜索', () {
+    expect(SantoIcons.all.length, 1383);
+    expect(SantoSolidIcons.all.length, 288);
+
+    // 顺序与目录一致,即按名称升序
+    expect(SantoIcons.all, List<String>.of(SantoIcons.all)..sort());
+    expect(SantoSolidIcons.all, List<String>.of(SantoSolidIcons.all)..sort());
+
+    // 名称不重复,solid 是 regular 的子集
+    final Set<String> regularNames = SantoIcons.all.toSet();
+    expect(regularNames.length, SantoIcons.all.length);
+    expect(SantoSolidIcons.all.every(regularNames.contains), isTrue);
+
+    // 示例页「图标搜索」用的子串匹配
+    final List<String> arrowMatched = SantoIcons.all
+        .where((String name) => name.contains('arrow'))
+        .toList();
+    expect(arrowMatched, contains('arrow-left'));
+    expect(arrowMatched, contains('nav-arrow-right'));
+  });
+
   testWidgets('SantoIcons 常量值为 SVG 文件名', (tester) async {
     expect(SantoIcons.search, 'search');
     expect(SantoIcons.checkCircle, 'check-circle');

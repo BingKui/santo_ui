@@ -30,12 +30,12 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
             backgroundColor: _demoBackground,
             children: [
               SantoActionBarIcon(
-                icon: const Icon(Icons.headset_mic),
+                icon: SantoIcons.headset,
                 text: '客服',
                 onTap: () => _toast('点击了客服'),
               ),
               SantoActionBarIcon(
-                icon: const Icon(Icons.shopping_cart),
+                icon: SantoIcons.cart,
                 text: '购物车',
                 onTap: () => _toast('点击了购物车'),
               ),
@@ -54,17 +54,17 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
             backgroundColor: _demoBackground,
             children: [
               const SantoActionBarIcon(
-                icon: Icon(Icons.chat),
+                icon: SantoIcons.chatBubble,
                 text: '消息',
                 dot: true,
               ),
               const SantoActionBarIcon(
-                icon: Icon(Icons.shopping_cart),
+                icon: SantoIcons.cart,
                 text: '购物车',
                 badgeCount: 5,
               ),
               const SantoActionBarIcon(
-                icon: Icon(Icons.notifications),
+                icon: SantoIcons.bellNotification,
                 text: '通知',
                 badgeCount: 12,
               ),
@@ -83,12 +83,12 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
             backgroundColor: _demoBackground,
             children: [
               const SantoActionBarIcon(
-                icon: Icon(Icons.star),
+                icon: SantoIcons.star,
                 text: '收藏',
                 color: Color(0xFFFF5722),
               ),
               const SantoActionBarIcon(
-                icon: Icon(Icons.thumb_up),
+                icon: SantoIcons.thumbsUp,
                 text: '点赞',
                 color: Color(0xFF52C41A),
               ),
@@ -154,7 +154,7 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
             backgroundColor: _demoBackground,
             children: [
               const SantoActionBarIcon(
-                icon: Icon(Icons.headset_mic),
+                icon: SantoIcons.headset,
                 text: '客服',
                 disabled: true,
               ),

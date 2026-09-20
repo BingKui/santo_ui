@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// Space 方向
@@ -10,14 +11,17 @@ enum SantoSpaceDirection {
 }
 
 /// Space 间距档位
+///
+/// 三档取主题间距 token:水平方向取 `hSpacingSm / hSpacingMd / hSpacingLg`,
+/// 垂直方向取 `vSpacingSm / vSpacingMd / vSpacingLg`(默认 10/15/20)。
 enum SantoSpaceSize {
-  /// 小间距 8
+  /// 小间距,取主题 hSpacingSm / vSpacingSm
   small,
 
-  /// 中间距 16
+  /// 中间距,取主题 hSpacingMd / vSpacingMd(默认)
   middle,
 
-  /// 大间距 24
+  /// 大间距,取主题 hSpacingLg / vSpacingLg
   large,
 }
 
@@ -85,14 +89,17 @@ class SantoSpace extends StatelessWidget {
 
   double get _gap {
     if (customSize != null) return customSize!;
-    switch (size) {
-      case SantoSpaceSize.small:
-        return 8;
-      case SantoSpaceSize.middle:
-        return 16;
-      case SantoSpaceSize.large:
-        return 24;
-    }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final bool isHorizontal = direction == SantoSpaceDirection.horizontal;
+    return switch (size) {
+      SantoSpaceSize.small =>
+        isHorizontal ? commonConfig.hSpacingSm : commonConfig.vSpacingSm,
+      SantoSpaceSize.middle =>
+        isHorizontal ? commonConfig.hSpacingMd : commonConfig.vSpacingMd,
+      SantoSpaceSize.large =>
+        isHorizontal ? commonConfig.hSpacingLg : commonConfig.vSpacingLg,
+    };
   }
 
   @override

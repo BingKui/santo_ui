@@ -29,7 +29,6 @@ typedef TextExpandedCallback = Function(bool);
 ///
 /// 相关文本组件如下:
 ///  * [SantoBubbleText], 气泡背景的展开收起文本组件
-///  * [SantoInsertInfo], 气泡背景的文本组件
 ///
 class SantoExpandableText extends StatefulWidget {
   ///显示的文本

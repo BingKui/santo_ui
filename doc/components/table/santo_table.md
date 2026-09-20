@@ -29,7 +29,9 @@ group:
 - columns 定义列的数量和属性,data 为二维数组
 - data 中每个子数组的长度应与 columns 长度一致
 - cellBuilder 可自定义单元格的渲染逻辑
-- pinnedHeader 为 true 时表头会固定在顶部
+- height 设置内容区高度,数据超出时在内容区内纵向滚动,表头固定在顶部
+- 列宽和超出容器宽度,或任一列配置 fixed 时,表格横向滚动,所有列按定宽渲染(未定宽列取默认宽 120)
+- fixed 取 SantoTableColumnFixed.left / right,横向滚动时把列钉在左侧/右侧
 - striped 为 true 时奇偶行显示不同背景色
 
 ## 三、构造函数及参数说明
@@ -52,7 +54,7 @@ group:
 | oddRowColor | Color? | 奇数行背景色 | 否 | null(白色) |
 | evenRowColor | Color? | 偶数行背景色 | 否 | null(#F5F5F5) |
 | striped | bool | 是否显示斑马纹 | 否 | false |
-| pinnedHeader | bool | 是否固定表头 | 否 | false |
+| height | double? | 内容区高度,超出纵向滚动且表头固定 | 否 | null(不限高) |
 | tableWidth | double? | 表格总宽度 | 否 | null(自适应) |
 | empty | Widget? | 数据为空时的占位内容 | 否 | null("暂无数据") |
 
@@ -120,14 +122,29 @@ SantoTable(
 )
 ```
 
-### 固定表头
+### 固定表头与纵向滚动
 
 ```dart
 SantoTable(
   columns: const [...],
   data: largeData, // 大量数据
-  pinnedHeader: true,
+  height: 300, // 内容区高度,超出纵向滚动,表头固定
   rowHeight: 44,
+)
+```
+
+### 横向滚动与固定列
+
+```dart
+SantoTable(
+  columns: const [
+    SantoTableColumn(title: '姓名', width: 90, fixed: SantoTableColumnFixed.left),
+    SantoTableColumn(title: '部门', width: 110),
+    SantoTableColumn(title: '城市', width: 120),
+    SantoTableColumn(title: '操作', width: 90, fixed: SantoTableColumnFixed.right),
+  ],
+  data: largeData,
+  height: 300, // 可与固定列、纵向滚动组合使用
 )
 ```
 
@@ -146,3 +163,13 @@ SantoTable(
   ),
 )
 ```
+
+## 版本变更
+
+### v3.0.0
+
+- **新增**: `height` 内容区高度,数据超出时纵向滚动且表头固定(对标 antd Table 的 `scroll.y`)
+- **新增**: 横向滚动,列宽和超出容器宽度时自动开启,所有列按定宽渲染(未定宽列取默认宽 120)
+- **新增**: `SantoTableColumn.fixed` 固定列(left / right),横向滚动时钉在两侧,支持与纵向滚动组合(对标 `column.fixed`)
+- **删除**: `pinnedHeader` 参数,由 `height` 取代
+- **变更**: 全部列定宽且列宽和超出容器时,由"按比例压缩分摊"改为横向滚动

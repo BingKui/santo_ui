@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:santo_ui/src/components/button/santo_press_feedback.dart';
-import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
-import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+import 'package:santo_ui/src/components/button/santo_button.dart';
 
 /// 操作栏按钮高度
 const double kSantoActionBarButtonHeight = 40;
@@ -31,14 +29,14 @@ enum SantoActionBarButtonType {
 
 /// 操作栏按钮
 ///
-/// 对标 Vant ActionBarButton:在 [SantoActionBar] 中自动平分剩余宽度,
+/// 基于 [SantoButton] 实现:在 [SantoActionBar] 中自动平分剩余宽度,
 /// 位于整组按钮首位时左侧带圆角与外边距,末位时右侧带圆角与外边距,
 /// 中间的按钮保持直角,与相邻按钮拼成一组。
 ///
 /// 示例:
 /// ```dart
 /// SantoActionBar(children: [
-///   SantoActionBarIcon(icon: Icon(Icons.chat), text: '客服'),
+///   SantoActionBarIcon(icon: SantoIcons.headset, text: '客服'),
 ///   SantoActionBarButton(text: '加入购物车', type: SantoActionBarButtonType.warning),
 ///   SantoActionBarButton(text: '立即购买', type: SantoActionBarButtonType.danger),
 /// ])
@@ -62,7 +60,7 @@ class SantoActionBarButton extends StatelessWidget {
   /// 是否加载中,展示进度指示且不响应点击
   final bool loading;
 
-  /// 是否禁用,禁用后降低透明度且不响应点击
+  /// 是否禁用,禁用后使用 [SantoButton] 的禁用态且不响应点击
   final bool disabled;
 
   /// 点击回调
@@ -108,107 +106,48 @@ class SantoActionBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SantoCommonConfig common =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
-    final Color background = color ?? _backgroundColor(common);
-    final Color foreground = _foregroundColor(common);
     final bool hasCustomColor = color != null;
+    final SantoButtonColor? buttonColor = hasCustomColor
+        ? null
+        : switch (type) {
+            SantoActionBarButtonType.normal => null,
+            SantoActionBarButtonType.primary => SantoButtonColor.primary,
+            SantoActionBarButtonType.success => SantoButtonColor.success,
+            SantoActionBarButtonType.warning => SantoButtonColor.warning,
+            SantoActionBarButtonType.danger => SantoButtonColor.danger,
+          };
+    final SantoButtonType? buttonType =
+        hasCustomColor || buttonColor != null ? null : SantoButtonType.normal;
 
-    Widget content = child ??
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            if (loading) ...[
-              SizedBox(
-                width: 16,
-                height: 16,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: foreground,
-                ),
-              ),
-              SizedBox(width: common.hSpacingXs),
-            ],
-            if (icon != null) ...[
-              icon!,
-              SizedBox(width: common.hSpacingXs),
-            ],
-            Flexible(
-              child: Text(
-                text ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: common.fontSizeBase,
-                  fontWeight: FontWeight.bold,
-                  color: foreground,
-                ),
-              ),
-            ),
-          ],
-        );
-
-    return Align(
-      alignment: Alignment.center,
+    return Padding(
+      padding: EdgeInsets.only(
+        left: first ? kSantoActionBarButtonMargin : 0,
+        right: last ? kSantoActionBarButtonMargin : 0,
+      ),
       child: SizedBox(
         height: kSantoActionBarButtonHeight,
         width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: first ? kSantoActionBarButtonMargin : 0,
-            right: last ? kSantoActionBarButtonMargin : 0,
-          ),
-          child: SantoPressFeedback(
-            enabled: !disabled && !loading,
-            onTap: onTap,
-            child: Opacity(
-              opacity: disabled ? 0.4 : 1,
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: common.hSpacingSm),
-                decoration: BoxDecoration(
-                  color: background,
-                  border: hasCustomColor || type != SantoActionBarButtonType.normal
-                      ? null
-                      : Border.all(
-                          color: common.borderColorBase,
-                          width: common.borderWidthMd,
-                        ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(first ? kSantoActionBarRadius : 0),
-                    bottomLeft: Radius.circular(first ? kSantoActionBarRadius : 0),
-                    topRight: Radius.circular(last ? kSantoActionBarRadius : 0),
-                    bottomRight: Radius.circular(last ? kSantoActionBarRadius : 0),
-                  ),
-                ),
-                child: content,
-              ),
-            ),
+        child: SantoButton(
+          text: text,
+          child: child,
+          icon: icon,
+          loading: loading,
+          isEnable: !disabled,
+          onTap: onTap,
+          type: buttonType,
+          color: buttonColor,
+          variant: buttonColor != null || hasCustomColor
+              ? SantoButtonVariant.solid
+              : null,
+          backgroundColor: color,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(first ? kSantoActionBarRadius : 0),
+            bottomLeft: Radius.circular(first ? kSantoActionBarRadius : 0),
+            topRight: Radius.circular(last ? kSantoActionBarRadius : 0),
+            bottomRight: Radius.circular(last ? kSantoActionBarRadius : 0),
           ),
         ),
       ),
     );
-  }
-
-  Color _backgroundColor(SantoCommonConfig common) {
-    switch (type) {
-      case SantoActionBarButtonType.normal:
-        return common.fillBase;
-      case SantoActionBarButtonType.primary:
-        return common.brandPrimary;
-      case SantoActionBarButtonType.success:
-        return common.brandSuccess;
-      case SantoActionBarButtonType.warning:
-        return common.brandWarning;
-      case SantoActionBarButtonType.danger:
-        return common.brandError;
-    }
-  }
-
-  Color _foregroundColor(SantoCommonConfig common) {
-    if (color != null || type != SantoActionBarButtonType.normal) {
-      return common.colorTextBaseInverse;
-    }
-    return common.colorTextBase;
   }
 }

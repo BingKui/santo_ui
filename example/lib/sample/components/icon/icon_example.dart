@@ -3,8 +3,22 @@ import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// SantoIcon 图标示例
-class IconExample extends StatelessWidget {
+class IconExample extends StatefulWidget {
   const IconExample({Key? key}) : super(key: key);
+
+  @override
+  State<IconExample> createState() => _IconExampleState();
+}
+
+class _IconExampleState extends State<IconExample> {
+  /// 搜索结果最多渲染多少个,避免一次铺开上千个 SVG
+  static const int _maxResultCount = 60;
+
+  /// 有实心版的图标名称
+  static final Set<String> _solidNames = SantoSolidIcons.all.toSet();
+
+  /// 搜索关键字
+  String _query = '';
 
   /// 常用图标一览:名称 + SantoIcons 常量
   static const List<(String, String)> _commonIcons = [
@@ -61,6 +75,27 @@ class IconExample extends StatelessWidget {
       title: 'Icon 图标',
       children: <Widget>[
         ExampleIntro('icon'),
+        SantoSection(
+          title: '图标搜索',
+          description:
+              '输入关键字对全部 ${SantoIcons.all.length} 个常规图标做名称过滤（子串匹配，最多展示 $_maxResultCount 个）；'
+              '每条给出主图，若该名称也有实心版，右侧会浅色并排显示',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SantoInputText(
+                hintText: '搜索图标名称，如 arrow、user、circle',
+                onChanged: (String value) {
+                  setState(() {
+                    _query = value;
+                  });
+                },
+              ),
+              const SantoSpace.gap(12, direction: SantoSpaceDirection.vertical),
+              _buildSearchResult(commonConfig),
+            ],
+          ),
+        ),
         SantoSection(
           title: '基础用法',
           description: '名称即 SVG 文件名,不传 size / color 时跟随主题默认值',
@@ -221,6 +256,91 @@ class IconExample extends StatelessWidget {
         ),
         const SantoSpace.gap(24, direction: SantoSpaceDirection.vertical),
       ],
+    );
+  }
+
+  /// 搜索结果区:未输入时给提示,输入后按名称过滤
+  Widget _buildSearchResult(SantoCommonConfig commonConfig) {
+    final TextStyle hintStyle = TextStyle(
+      fontSize: commonConfig.fontSizeCaption,
+      color: commonConfig.colorTextSecondary,
+    );
+    final String keyword = _query.trim().toLowerCase();
+
+    if (keyword.isEmpty) {
+      return Text(
+        '共 ${SantoIcons.all.length} 个常规图标，其中 ${SantoSolidIcons.all.length} 个有实心版；'
+        '输入关键字开始搜索',
+        style: hintStyle,
+      );
+    }
+
+    final List<String> matched = SantoIcons.all
+        .where((String name) => name.contains(keyword))
+        .toList();
+    if (matched.isEmpty) {
+      return Text('没有匹配「${_query.trim()}」的图标', style: hintStyle);
+    }
+
+    final List<String> shown = matched.length > _maxResultCount
+        ? matched.sublist(0, _maxResultCount)
+        : matched;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          matched.length > shown.length
+              ? '共 ${matched.length} 个匹配，显示前 ${shown.length} 个'
+              : '共 ${matched.length} 个匹配',
+          style: hintStyle,
+        ),
+        const SantoSpace.gap(12, direction: SantoSpaceDirection.vertical),
+        SantoSpace(
+          wrap: true,
+          size: SantoSpaceSize.large,
+          children: [
+            for (final String name in shown) _resultCell(commonConfig, name),
+          ],
+        ),
+      ],
+    );
+  }
+
+  /// 单个搜索结果:常规图标,有实心版时并排展示实心图标
+  Widget _resultCell(SantoCommonConfig commonConfig, String name) {
+    return SizedBox(
+      width: 84,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SantoIcon(name, size: 24),
+              if (_solidNames.contains(name)) ...[
+                const SantoSpace.gap(4),
+                SantoIcon(
+                  name,
+                  solid: true,
+                  size: 24,
+                  color: commonConfig.colorTextSecondary,
+                ),
+              ],
+            ],
+          ),
+          const SantoSpace.gap(4, direction: SantoSpaceDirection.vertical),
+          Text(
+            name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: commonConfig.fontSizeCaption,
+              color: commonConfig.colorTextSecondary,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

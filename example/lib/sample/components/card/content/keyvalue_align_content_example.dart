@@ -189,11 +189,11 @@ SantoSection(
       ),
 SantoSection(
         title: '正常案例',
-        description: 'SantoAlignPairInfo 对齐两列展示，value 过长时自动换行不截断',
+        description: 'SantoPairInfoTable 对齐两列展示，value 过长时自动换行不截断',
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        SantoAlignPairInfo(
+        SantoPairInfoTable(
           children: <SantoInfoModal>[
             SantoInfoModal(keyPart: "名称：", valuePart: "内容内容内容内容"),
             SantoInfoModal(keyPart: "名称名：", valuePart: "内容内容内容内容内容"),
@@ -215,7 +215,7 @@ SantoSection(
           onTap: () {
             SantoToast.show('点击了卡片', context);
           },
-          child: SantoAlignPairInfo(
+          child: SantoPairInfoTable(
             children: <SantoInfoModal>[
               SantoInfoModal(keyPart: "名称1：", valuePart: "内容内容内容内容"),
               SantoInfoModal(keyPart: "名称名：", valuePart: "内容内容内容内容内容"),
@@ -267,7 +267,7 @@ SantoSection(
           children: [
         Stack(
           children: <Widget>[
-            SantoAlignPairInfo(
+            SantoPairInfoTable(
               children: list,
             ),
             Positioned(
@@ -325,7 +325,7 @@ SantoSection(
           children: [
         Stack(
           children: <Widget>[
-            SantoAlignPairInfo(
+            SantoPairInfoTable(
               children: list,
             ),
             Positioned(
@@ -379,7 +379,7 @@ SantoSection(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        SantoAlignPairInfo(
+        SantoPairInfoTable(
           children: <SantoInfoModal>[
             SantoInfoModal(keyPart: "名称：", valuePart: "内容内容内容内容"),
             SantoInfoModal(keyPart: "名称名：", valuePart: "内容内容内容内容内容"),
@@ -402,7 +402,7 @@ SantoSection(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        SantoAlignPairInfo(
+        SantoPairInfoTable(
           children: <SantoInfoModal>[
             SantoInfoModal(
                 keyPart: "名称：",
@@ -428,7 +428,7 @@ SantoSection(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        SantoAlignPairInfo(
+        SantoPairInfoTable(
           children: <SantoInfoModal>[
             SantoInfoModal(keyPart: "内容缺失：", valuePart: null),
             SantoInfoModal(keyPart: "", valuePart: "名称缺失"),

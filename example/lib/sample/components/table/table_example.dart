@@ -271,6 +271,112 @@ class _TableExampleState extends State<TableExample> {
             evenRowColor: Color(0xFFFAFAFA),
           ),
         ),
+        // 固定表头和纵向滚动
+        SantoSection(
+          title: '固定表头和纵向滚动',
+          description: 'height 设置内容区高度，数据超出时在内容区内纵向滚动，表头固定在顶部',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'height: 160,数据行超出后纵向滚动',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              SizedBox(height: 16),
+              SantoTable(
+                height: 160,
+                striped: true,
+                columns: [
+                  SantoTableColumn(title: '日期', width: 100),
+                  SantoTableColumn(title: '项目', align: SantoTableAlign.left),
+                  SantoTableColumn(title: '金额', width: 100,
+                      align: SantoTableAlign.right),
+                ],
+                data: List<List<dynamic>>.generate(20, (int i) {
+                  return [
+                    '09-${(i + 1).toString().padLeft(2, '0')}',
+                    '项目事项 ${i + 1}',
+                    '¥${(i + 1) * 320}',
+                  ];
+                }),
+              ),
+            ],
+          ),
+        ),
+
+        // 横向滚动
+        SantoSection(
+          title: '横向滚动',
+          description: '列宽和超出容器宽度时自动横向滚动，所有列按定宽渲染',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '列宽和 560 > 容器宽度,可左右滑动',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              SizedBox(height: 16),
+              SantoTable(
+                columns: [
+                  SantoTableColumn(title: '日期', width: 100),
+                  SantoTableColumn(title: '渠道', width: 110),
+                  SantoTableColumn(title: '曝光', width: 110,
+                      align: SantoTableAlign.right),
+                  SantoTableColumn(title: '点击', width: 110,
+                      align: SantoTableAlign.right),
+                  SantoTableColumn(title: '转化率', width: 130,
+                      align: SantoTableAlign.right),
+                ],
+                data: [
+                  ['09-18', '信息流', '128,400', '3,210', '2.5%'],
+                  ['09-18', '搜索广告', '86,200', '4,150', '4.8%'],
+                  ['09-18', '应用商店', '52,800', '1,960', '3.7%'],
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        // 固定列
+        SantoSection(
+          title: '固定列',
+          description: 'fixed 把列钉在左侧/右侧,横向滚动时固定列不随内容滚走;'
+              '横向滚动模式下未定宽列取默认宽 120',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '姓名固定在左侧,操作固定在右侧,中间列横向滚动',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              SizedBox(height: 16),
+              SantoTable(
+                height: 180,
+                striped: true,
+                columns: [
+                  SantoTableColumn(title: '姓名', width: 90,
+                      fixed: SantoTableColumnFixed.left),
+                  SantoTableColumn(title: '部门', width: 110),
+                  SantoTableColumn(title: '职位', width: 120),
+                  SantoTableColumn(title: '工龄', width: 90),
+                  SantoTableColumn(title: '城市', width: 110),
+                  SantoTableColumn(title: '操作', width: 90,
+                      fixed: SantoTableColumnFixed.right),
+                ],
+                data: List<List<dynamic>>.generate(12, (int i) {
+                  return [
+                    '员工 ${i + 1}',
+                    ['技术部', '产品部', '设计部', '市场部'][i % 4],
+                    ['工程师', '产品经理', '设计师', '运营'][i % 4],
+                    '${i % 8} 年',
+                    ['北京', '上海', '杭州', '深圳'][i % 4],
+                    '详情',
+                  ];
+                }),
+              ),
+            ],
+          ),
+        ),
         SizedBox(height: 48),
       ],
     );

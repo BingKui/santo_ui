@@ -20,8 +20,8 @@ void main() {
 
     final aBottomRight = tester.getBottomRight(find.text('A'));
     final bTopLeft = tester.getTopLeft(find.text('B'));
-    // 两个文本之间应有 16px 间距
-    expect(bTopLeft.dx - aBottomRight.dx, 16);
+    // 两个文本之间应有主题 hSpacingMd(默认 15px)间距
+    expect(bTopLeft.dx - aBottomRight.dx, 15);
   });
 
   testWidgets('SantoSpace vertical uses height gap', (tester) async {

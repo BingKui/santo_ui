@@ -57,6 +57,8 @@ double _rightOf(WidgetTester tester, String text) {
 const Radius _r12 = Radius.circular(12);
 
 void main() {
+  setUp(SantoMultiClickUtils.reset);
+
   testWidgets('SantoActionBar 渲染图标与按钮并响应点击', (tester) async {
     String? tapped;
     await _pump(
@@ -64,7 +66,7 @@ void main() {
       SantoActionBar(
         children: [
           SantoActionBarIcon(
-            icon: const Icon(Icons.headset_mic),
+            icon: SantoIcons.headset,
             text: '客服',
             onTap: () => tapped = '客服',
           ),
@@ -93,7 +95,7 @@ void main() {
       SantoActionBar(
         children: [
           const SantoActionBarIcon(
-            icon: Icon(Icons.shopping_cart),
+            icon: SantoIcons.cart,
             text: '购物车',
           ),
           SantoActionBarButton(text: '加入购物车'),
@@ -137,16 +139,17 @@ void main() {
     await _pump(
       tester,
       SantoActionBar(
-        children: [SantoActionBarButton(text: '确定')],
+        // 两个汉字会被 SantoButton 的 autoInsertSpace 插入空格
+        children: [SantoActionBarButton(text: '确 定')],
       ),
     );
 
     expect(
-      _decorationOf(tester, '确定').borderRadius,
+      _decorationOf(tester, '确 定').borderRadius,
       const BorderRadius.all(_r12),
     );
-    expect(_leftOf(tester, '确定'), 5);
-    expect(800 - _rightOf(tester, '确定'), 5);
+    expect(_leftOf(tester, '确 定'), 5);
+    expect(800 - _rightOf(tester, '确 定'), 5);
   });
 
   testWidgets('SantoActionBar 按钮类型决定背景与描边', (tester) async {
@@ -175,12 +178,12 @@ void main() {
       SantoActionBar(
         children: [
           const SantoActionBarIcon(
-            icon: Icon(Icons.chat),
+            icon: SantoIcons.chatBubble,
             text: '消息',
             dot: true,
           ),
           const SantoActionBarIcon(
-            icon: Icon(Icons.shopping_cart),
+            icon: SantoIcons.cart,
             text: '购物车',
             badgeCount: 5,
           ),
@@ -201,7 +204,7 @@ void main() {
       SantoActionBar(
         children: [
           SantoActionBarIcon(
-            icon: const Icon(Icons.star),
+            icon: SantoIcons.star,
             text: '收藏',
             disabled: true,
             onTap: () => tapped = true,

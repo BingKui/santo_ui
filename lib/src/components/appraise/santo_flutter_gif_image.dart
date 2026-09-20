@@ -1,4 +1,5 @@
-import 'dart:ui' as ui show Codec;
+import 'dart:typed_data';
+import 'dart:ui' as ui show Codec, ImmutableBuffer;
 import 'dart:ui';
 
 import 'package:bindings_compatible/bindings_compatible.dart';
@@ -125,11 +126,14 @@ class GifImageState extends State<GifImage> {
   Future<void> fetchGif(ImageProvider provider) async {
     List<ImageInfo> infos = [];
     if (provider is AssetImage) {
-      dynamic data;
       AssetBundleImageKey key = await provider.obtainKey(ImageConfiguration());
-      data = await key.bundle.load(key.name);
-      ui.Codec codec = await usePaintingBinding()
-          .instantiateImageCodecWithSize(data.buffer.asUint8List());
+      final ByteData data = await key.bundle.load(key.name);
+      // instantiateImageCodecWithSize 从 Flutter 3.7 起要的是 ImmutableBuffer,
+      // 直接传 Uint8List 会抛 subtype 错误
+      final ui.ImmutableBuffer buffer =
+          await ui.ImmutableBuffer.fromUint8List(data.buffer.asUint8List());
+      ui.Codec codec =
+          await usePaintingBinding().instantiateImageCodecWithSize(buffer);
       for (int i = 0; i < codec.frameCount; i++) {
         FrameInfo frameInfo = await codec.getNextFrame();
         infos.add(ImageInfo(image: frameInfo.image));

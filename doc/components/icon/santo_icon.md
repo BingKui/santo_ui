@@ -42,6 +42,7 @@ SVG 资源全量内置在 `assets/iconoir/`,分 regular(常规描边,1383 个)�
 - 常规风格:`assets/iconoir/regular/<名称>.svg`,例如 `search`、`nav-arrow-right`
 - 实心风格:`assets/iconoir/solid/<名称>.svg`,名称是常规的子集
 - `SantoIcons` / `SantoSolidIcons` 常量与文件名一一对应,`SantoIcons.navArrowRight` 即 `'nav-arrow-right'`
+- 需要遍历或搜索全部名称时用 `SantoIcons.all` / `SantoSolidIcons.all`(示例页的「图标搜索」即基于它做名称过滤)
 - 需要新增图标时,把 Iconoir 的 SVG 放进对应风格目录,并在对应名称清单里补一条常量即可
 - Iconoir 原始协议文本随资源一并存放于 `assets/iconoir/LICENSE`
 

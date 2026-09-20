@@ -40,10 +40,8 @@ import 'package:flutter/material.dart';
 ///    常用的情况可以通过类中的静态函数构造
 ///    富文本和Icon的情况推荐使用 [SantoRichTextGenerator] 构造
 ///
-/// 如果不想要展开收起的功能，那么可以使用[SantoFollowPairInfo]和[SantoAlignPairInfo]
-///
-/// [SantoFollowPairInfo]的value紧跟随者key，只具备展示的功能
-/// [SantoAlignPairInfo]的value具备对齐的功能，只具备展示的功能
+/// 如果不想要展开收起的功能，把 [SantoPairInfoTable.expandAtIndex] 保持为 -1 即可;
+/// value 是否对齐通过 [SantoPairInfoTable.isValueAlign] 控制。
 ///
 /// ```dart
 /// SantoPairInfoTable(
@@ -69,8 +67,6 @@ import 'package:flutter/material.dart';
 /// 其他信息展示组件
 ///  * [SantoEnhanceNumberCard], 强化数字信息展示组件
 ///  * [SantoRichInfoGrid], 两列富文本展示组件
-///  * [SantoAlignPairInfo], value对齐的文本组件
-///  * [SantoFollowPairInfo], key-value紧紧相随的的文本组件
 ///
 class SantoPairInfoTable extends StatefulWidget {
 
@@ -189,7 +185,7 @@ class _SantoPairInfoTableState extends State<SantoPairInfoTable> {
             : _generateExpandedList());
 
     if (widget.isValueAlign) {
-      return SantoAlignPairInfo(
+      return _AlignPairInfo(
         defaultVerticalAlignment: widget.defaultVerticalAlignment,
         children: showList,
         itemSpacing: widget.itemSpacing,
@@ -198,7 +194,7 @@ class _SantoPairInfoTableState extends State<SantoPairInfoTable> {
         customKeyWidth: widget.customKeyWidth,
       );
     }
-    return SantoFollowPairInfo(
+    return _FollowPairInfo(
       children: showList,
       itemSpacing: widget.itemSpacing,
       rowDistance: widget.rowDistance,
@@ -331,7 +327,7 @@ class _SantoPairInfoTableState extends State<SantoPairInfoTable> {
   }
 }
 
-mixin PairInfoPart {
+mixin _PairInfoPart {
   bool isValueAlign();
 
   SantoPairInfoTableConfig configDefaultThemeData(
@@ -432,7 +428,7 @@ mixin PairInfoPart {
   }
 }
 
-class SantoFollowPairInfo extends StatelessWidget with PairInfoPart {
+class _FollowPairInfo extends StatelessWidget with _PairInfoPart {
   /// 待展示的文本信息集合
   final List<SantoInfoModal?>? children;
 
@@ -444,8 +440,7 @@ class SantoFollowPairInfo extends StatelessWidget with PairInfoPart {
 
   final SantoPairInfoTableConfig? themeData;
 
-  SantoFollowPairInfo({
-    Key? key,
+  _FollowPairInfo({
     required this.children,
     this.rowDistance,
     this.itemSpacing,
@@ -515,16 +510,13 @@ class SantoFollowPairInfo extends StatelessWidget with PairInfoPart {
   }
 }
 
-class SantoAlignPairInfo extends StatelessWidget with PairInfoPart {
+class _AlignPairInfo extends StatelessWidget with _PairInfoPart {
   /// TableCell 默认垂直对齐方式， 默认值为 [TableCellVerticalAlignment.baseline]
   /// 当 [SantoInfoModal.valuePart] 为自定义 Widget 时，可设置该参数调整对齐方式
   final TableCellVerticalAlignment defaultVerticalAlignment;
 
   /// 待展示的文本信息集合
   final List<SantoInfoModal?>? children;
-
-  ///控件的背景色 默认为白色
-  final Color? backgroundColor;
 
   /// 每一行的间距
   final double? rowDistance;
@@ -536,11 +528,10 @@ class SantoAlignPairInfo extends StatelessWidget with PairInfoPart {
 
   final SantoPairInfoTableConfig? themeData;
 
-  SantoAlignPairInfo(
+  _AlignPairInfo(
       {this.children,
       this.defaultVerticalAlignment = TableCellVerticalAlignment.baseline,
       this.rowDistance,
-      this.backgroundColor,
       this.itemSpacing,
       this.customKeyWidth,
       this.themeData});

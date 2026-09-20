@@ -151,7 +151,7 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
   'card': ExampleIntroData(
     title: 'Card 卡片',
     description: '卡片把一组相关信息组织成一块。',
-    widgets: <String>['SantoShadowCard', 'SantoAlignPairInfo', 'SantoFollowPairInfo'],
+    widgets: <String>['SantoShadowCard', 'SantoPairInfoTable', 'SantoEnhanceNumberCard', 'SantoRichInfoGrid', 'SantoBubbleText'],
     whenToUseDesc: '页面信息需要分块呈现,或需要成对展示 key-value 内容时使用。',
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('阴影卡片', '白底圆角带阴影,用于页面内容分块'),

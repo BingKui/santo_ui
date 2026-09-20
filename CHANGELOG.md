@@ -4,6 +4,21 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [4.0.0] - 未发布
+
+ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复与从属入口。**破坏性变更。**
+
+### 💥 破坏性变更
+
+- **变更(破坏性)**: `SantoActionBarIcon` 的 `icon` 参数类型由 `Widget` 改为 `String` 图标名称(取值见 `SantoIcons` / `SantoSolidIcons`),内部统一用 `SantoIcon` 渲染,颜色与尺寸由组件掌控
+- **删除**: `SantoInsertInfo`(与 `SantoBubbleText` 重复,气泡文本统一用 `SantoBubbleText`)
+- **删除**: `SantoFollowPairInfo`、`SantoAlignPairInfo`(由 `SantoPairInfoTable` 的 `isValueAlign` 覆盖,两者转为库内私有实现)
+
+### 变更
+
+- **变更**: `SantoActionBarButton` 改为基于 `SantoButton` 实现,不再自绘容器与按压反馈;禁用态由透明度 0.4 改为 `SantoButton` 标准禁用样式(置灰),文字字重改为 `SantoButton` 默认 w500,并接入全局防连点
+- **变更**: ActionBar 示例与文档中的 Material 图标全部替换为 SantoIcon 图标
+
 ## [3.0.0] - 2026-09-18
 
 弹窗收拢为唯一入口 `SantoDialog`,六个组成部分参数化,常见业务形态改为命名构造。**破坏性变更。**
@@ -37,6 +52,14 @@
 - **变更**: 组件内的图标统一改用 `SantoIcon`(语义色;弹窗预设图标与选中/点亮态用 `SantoSolidIcons` 的 solid 实心变体),替换掉此前的多色 PNG:
   选择指示器(单选/多选/已选状态)、评分星(评分组件/表单星级/评价星级)、筛选重置、选择菜单上下箭头、表单必填星、NoticeBar 的十种状态图标
 - **保留**: 评价表情、分享渠道品牌图标、步骤数字徽标,以及插画类图片(`SantoEmpty` 的 no_data / network_error、城市选择空态)
+
+### 🧩 Table 支持滚动与固定列
+
+- **新增**: `SantoTable.height` 内容区高度,数据超出时在内容区内纵向滚动,表头固定(对标 antd `scroll.y`)
+- **新增**: 横向滚动,列宽和超出容器宽度时自动开启,所有列按定宽渲染,未定宽列取默认宽 120
+- **新增**: `SantoTableColumn.fixed`(left / right)固定列,横向滚动时钉在两侧,可与纵向滚动组合(对标 `column.fixed`)
+- **删除**: `SantoTable.pinnedHeader`,由 `height` 取代
+- **变更**: 全部列定宽且超出容器时由"按比例压缩"改为横向滚动
 
 ### 📝 示例与文档
 

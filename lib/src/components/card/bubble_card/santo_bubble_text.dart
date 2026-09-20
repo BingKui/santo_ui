@@ -42,7 +42,6 @@ enum SantoBubblePlacement {
 ///
 /// 相关文本组件如下:
 ///  * [SantoExpandableText], 气泡背景的展开收起文本组件
-///  * [SantoInsertInfo], 气泡背景的文本组件
 ///
 class SantoBubbleText extends StatelessWidget {
   /// 显示的文本

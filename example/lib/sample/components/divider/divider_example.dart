@@ -94,15 +94,15 @@ class _DividerExampleState extends State<DividerExample> {
         ),
         SantoSection(
           title: '不同间距（size）',
-          description: 'size 可选 small、medium、large，对应上下间距 8、16、24',
+          description: 'size 可选 small、medium、large，上下间距取主题 vSpacingSm/Md/Lg（默认 10/15/20）',
           child: Column(
             children: const [
               SantoDivider(size: SantoDividerSize.small),
-              Text('small：上下间距 8'),
+              Text('small：上下间距 10'),
               SantoDivider(size: SantoDividerSize.medium),
-              Text('medium：上下间距 16（默认）'),
+              Text('medium：上下间距 15（默认）'),
               SantoDivider(size: SantoDividerSize.large),
-              Text('large：上下间距 24'),
+              Text('large：上下间距 20'),
             ],
           ),
         ),
