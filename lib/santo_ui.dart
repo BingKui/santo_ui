@@ -206,7 +206,9 @@ export 'src/components/tabbar/normal/santo_sub_switch_title.dart';
 export 'src/components/tabbar/normal/santo_switch_title.dart';
 
 //阴影卡片
-export 'src/components/card/shadow_card/santo_shadow_card.dart';
+export 'src/components/card/santo_card.dart';
+export 'src/components/card/santo_card_meta.dart';
+export 'src/components/descriptions/santo_descriptions.dart';
 
 //步骤条
 export 'src/components/step/santo_step_line.dart';

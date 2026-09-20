@@ -6,7 +6,7 @@
 
 ## [4.0.0] - 未发布
 
-ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复与从属入口。**破坏性变更。**
+ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复与从属入口;Card 补齐标题/操作/元信息插槽并新增 Descriptions。**破坏性变更。**
 
 ### 💥 破坏性变更
 
@@ -18,6 +18,13 @@ ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复
 
 - **变更**: `SantoActionBarButton` 改为基于 `SantoButton` 实现,不再自绘容器与按压反馈;禁用态由透明度 0.4 改为 `SantoButton` 标准禁用样式(置灰),文字字重改为 `SantoButton` 默认 w500,并接入全局防连点
 - **变更**: ActionBar 示例与文档中的 Material 图标全部替换为 SantoIcon 图标
+
+### 🧩 Card 与 Descriptions
+
+- **变更**: `SantoShadowCard` 改名为 `SantoCard`,并新增 `title` / `titleWidget` / `extra` / `meta` 参数,默认背景改为主题 `fillBase`(白)
+- **新增**: `SantoCardMeta`(头像 + 标题 + 描述)与 `SantoDescriptions` / `SantoDescriptionsItem`,对标 antd Descriptions,支持 `column` / `layout` / `bordered` / `size` / `colon` / `labelWidth` / `span`
+- **变更**: 原「CardContent 卡片内容」入口改名为「Descriptions 描述列表」,示例重写为单页
+- 新增组件文档 `doc/components/card/santo_card.md`、`doc/components/descriptions/santo_descriptions.md`
 
 ## [3.0.0] - 2026-09-18
 

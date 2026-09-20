@@ -14,9 +14,9 @@ import 'package:example/sample/components/masonry/masonry_example.dart';
 import 'package:example/sample/components/skeleton/skeleton_example.dart';
 import 'package:example/sample/components/button/button_entry_page.dart';
 import 'package:example/sample/components/calendar/calendar_example.dart';
-import 'package:example/sample/components/card/santo_shadow_card_example.dart';
+import 'package:example/sample/components/card/santo_card_example.dart';
 import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
-import 'package:example/sample/components/card/content/text_content_entry_page.dart';
+import 'package:example/sample/components/descriptions/descriptions_example.dart';
 import 'package:example/sample/components/charts/chart_entry_example.dart';
 import 'package:example/sample/components/charts/doughnut_chart_example.dart';
 import 'package:example/sample/components/charts/line/santo_broken_line_example.dart';
@@ -140,7 +140,7 @@ class CardDataConfig {
       _item("Panel 面板", "标题+操作+可滚动内容", PanelExample()),
       _item("Section 区块", "演示内容+标题描述", SectionExample()),
       _item("SafeArea 安全区域", "顶部与底部安全区域", SafeAreaExample()),
-      _item("CardContent 卡片内容", "文本展示与展开", TextContentEntryPage()),
+      _item("Descriptions 描述列表", "键值成对展示", DescriptionsExample()),
     ];
     return GroupInfo(
       groupName: "通用",
@@ -231,7 +231,7 @@ class CardDataConfig {
       _item("Avatar 头像", "用户头像展示", AvatarExample()),
       _item("Badge 徽标数", "红点/数字角标", BadgeExample()),
       _item("Cell 单元格", "列表标准行", CellExample()),
-      _item("Card 卡片", "阴影卡片容器", SantoShadowCardExample()),
+      _item("Card 卡片", "标题/操作/元信息与阴影容器", SantoCardExample()),
       _item("Swiper 轮播", "图片/内容轮播", SwiperExample()),
       _item("Collapse 折叠面板", "可展开/收起内容", CollapseExample()),
       _item("Image 图片", "增强图片组件", ImageExample()),

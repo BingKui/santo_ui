@@ -140,7 +140,7 @@ class StatisticExample extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: SantoShadowCard(
+                child: SantoCard(
                   padding: const EdgeInsets.all(15),
                   child: SantoStatistic(
                     title: '上涨',
@@ -157,7 +157,7 @@ class StatisticExample extends StatelessWidget {
               ),
               const SizedBox(width: 15),
               Expanded(
-                child: SantoShadowCard(
+                child: SantoCard(
                   padding: const EdgeInsets.all(15),
                   child: SantoStatistic(
                     title: '下跌',
