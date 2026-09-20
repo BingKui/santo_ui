@@ -6,9 +6,10 @@ import 'package:santo_ui/src/components/picker/base/santo_picker_title.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/santo_picker_cliprrect.dart';
 import 'package:santo_ui/src/components/picker/multi_select_bottom_picker/santo_multi_select_data.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 
 /// 点击确定时的回调
@@ -173,9 +174,12 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
                       alignment: Alignment.center,
                       height: 50,
                       child: widget.items[index].isChecked
-                          ? SantoTools.getAssetImageWithBandColor(
-                              SantoAsset.iconMultiSelected)
-                          : SantoTools.getAssetImage(SantoAsset.iconUnSelect)),
+                          ? SantoIcon(SantoSolidIcons.checkCircle,
+                              solid: true,
+                              size: 16,
+                              color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary)
+                          : SantoIcon(SantoIcons.circle,
+                              size: 16, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextDisabled)),
                 ],
               ),
             ),

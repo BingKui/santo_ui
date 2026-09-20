@@ -68,7 +68,7 @@ class _BaseAZListViewPageState extends State<BaseAZListViewPage> {
           future: widget.createFuture(),
           builder: (context, snapShot) {
             if (snapShot.connectionState == ConnectionState.waiting) {
-              return SantoPageLoading();
+              return const SantoLoading();
             }
 
             if (snapShot.connectionState == ConnectionState.done) {

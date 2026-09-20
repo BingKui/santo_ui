@@ -409,4 +409,21 @@ void main() {
     expect(find.byIcon(Icons.arrow_upward), findsOneWidget);
     expect(find.byIcon(Icons.arrow_downward), findsOneWidget);
   });
+
+  testWidgets('外部传入的 key 挂到元素上,可当 Tooltip 锚点', (tester) async {
+    final GlobalKey buttonKey = GlobalKey();
+    await tester.pumpWidget(wrap(SantoButton(
+      key: buttonKey,
+      text: '带 key',
+      onTap: () => SantoTooltip.show(buttonKey.currentContext!, '提示内容', buttonKey),
+    )));
+
+    expect(buttonKey.currentContext, isNotNull);
+    expect(buttonKey.currentContext!.findRenderObject(), isNotNull);
+
+    await tester.tap(find.byType(SantoButton));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(tester.takeException(), isNull);
+    expect(find.text('提示内容'), findsOneWidget);
+  });
 }

@@ -283,7 +283,7 @@ class _SearchTextState extends State<SantoSearchText> {
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: SantoIcon(SantoIcons.bin),
+                            child: SantoIcon(SantoIcons.xmarkCircle),
                           ),
                         ),
                       ),

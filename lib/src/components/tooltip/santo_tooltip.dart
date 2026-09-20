@@ -166,6 +166,10 @@ class _SantoTooltipState extends State<SantoTooltip> {
   /// targetView的位置
   Rect _showRect = Rect.zero;
 
+  /// 关闭图标跟随文字色:深色气泡上取白色,白底弹层上取深色
+  Color get _closeIconColor =>
+      widget.textStyle?.color ?? const Color(0xFFFFFFFF);
+
   /// 屏幕的尺寸
   late Size _screenSize;
 
@@ -348,7 +352,8 @@ class _SantoTooltipState extends State<SantoTooltip> {
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                           left: commonConfig.hSpacingXs),
-                                      child: SantoIcon(SantoIcons.xmark),
+                                      child: SantoIcon(SantoIcons.xmark,
+                                          color: _closeIconColor),
                                     ))
                                 : TextSpan(text: "")
                           ]))
@@ -368,7 +373,8 @@ class _SantoTooltipState extends State<SantoTooltip> {
                                   ? Padding(
                                       padding: EdgeInsets.only(
                                           left: commonConfig.hSpacingXs),
-                                      child: SantoIcon(SantoIcons.xmark),
+                                      child: SantoIcon(SantoIcons.xmark,
+                                          color: _closeIconColor),
                                     )
                                   : Text("")
                             ],

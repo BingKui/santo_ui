@@ -369,21 +369,11 @@ class _SantoRefreshState extends State<SantoRefresh>
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        if (widget.onRefresh != null) _buildRefreshHeader(),
         Expanded(
           child: NotificationListener<ScrollNotification>(
             onNotification: _handleScrollNotification,
-            child: Stack(
-              children: <Widget>[
-                widget.child,
-                if (widget.onRefresh != null)
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: _buildRefreshHeader(),
-                  ),
-              ],
-            ),
+            child: widget.child,
           ),
         ),
         if (widget.onLoadMore != null) _buildLoadMoreFooter(),
@@ -391,7 +381,7 @@ class _SantoRefreshState extends State<SantoRefresh>
     );
   }
 
-  /// 刷新头部:高度随下拉距离变化
+  /// 刷新头部:紧贴列表上方占位,高度随下拉距离变化(不上浮覆盖列表内容)
   Widget _buildRefreshHeader() {
     if (_pullExtent <= 0) return const SizedBox.shrink();
     if (widget.refreshHeader != null) {

@@ -1,10 +1,12 @@
 import 'package:santo_ui/src/components/selection/bean/santo_selection_common_entity.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/utils/css/santo_css_2_text.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 
 /// [SantoSelectionSingleListWidget] 子组件中的单项
@@ -56,10 +58,14 @@ class SantoSelectionCommonItemWidget extends StatelessWidget {
         checkbox = Container(
           padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
           width: 21,
-          child: (item.isSelected)
-              ? SantoTools.getAssetImageWithBandColor(
-                  SantoAsset.iconMultiSelected)
-              : SantoTools.getAssetImage(SantoAsset.iconUnSelect),
+          child: SantoIcon(
+            item.isSelected ? SantoSolidIcons.checkCircle : SantoIcons.circle,
+            solid: item.isSelected,
+            size: 16,
+            color: item.isSelected
+                ? commonConfig.brandPrimary
+                : commonConfig.colorTextDisabled,
+          ),
         );
       } else {
         checkbox = Container();

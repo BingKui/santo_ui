@@ -16,7 +16,8 @@
 ## 图标数据源
 
 图标组件 `SantoIcon` 的数据源为 **[Iconoir](https://github.com/iconoir-icons/iconoir)**(MIT 协议),
-其 1383 个常规图标 SVG 全量内置在 `assets/icons/iconoir/`,按名称取用,详见 [SantoIcon 文档](doc/components/icon/santo_icon.md)。
+其 SVG 资源全量内置在 `assets/iconoir/`:常规描边(regular)1383 个、实心(solid)288 个,
+按名称取用,详见 [SantoIcon 文档](doc/components/icon/santo_icon.md)。
 
 ## 组件覆盖
 
@@ -121,8 +122,8 @@ Santo UI 包含 **81** 组件,按示例菜单分为 7 个分组。
 | Toast 轻提示 | 轻量反馈提示 |
 | Message 全局提示 | 顶部消息通知 |
 | Tooltip 文字提示 | 定位气泡提示 |
-| OverlayWindow 悬浮窗 | 搜索悬浮层 |
-| Loading 加载 | 加载状态动画 |
+| OverlayWindow 悬浮窗 | 页面之上的独立窗口 |
+| Loading 加载 | 统一加载入口,对标 antd Spin:尺寸/文案/延迟/包裹/全屏/进度/浮层 |
 | Refresh 下拉刷新 | 下拉刷新/上拉加载 |
 | Result 结果 | 操作结果反馈 |
 | Appraise 评价 | 评分评价组件 |
@@ -161,7 +162,7 @@ santo_ui/
 
 ```yaml
 dependencies:
-  santo_ui: ^1.0.1
+  santo_ui: ^3.0.0
 ```
 
 ```dart
@@ -192,8 +193,21 @@ SantoButton(
   onTap: () {},
 );
 SantoToast.show('保存成功', context);
-SantoDialogManager.showConfirmDialog(context,
-    cancel: '取消', confirm: '确定', title: '提示', message: '确认删除?');
+// 一次性确认用静态方法,复杂弹窗用构造函数 + showDialog
+SantoDialog.confirm(context, title: '提示', message: '确认删除?');
+
+showDialog<void>(
+  context: context,
+  builder: (_) => SantoDialog(
+    iconType: SantoDialogIconType.info,
+    title: '拒绝理由',
+    showInput: true,
+    inputController: controller,
+    closable: true,
+    cancelText: '取消',
+    okText: '确定',
+  ),
+);
 ```
 
 ## 主题与设计令牌

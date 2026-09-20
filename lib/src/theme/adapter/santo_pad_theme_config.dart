@@ -122,11 +122,7 @@ class SantoPadThemeConfig {
     dialogWidth: 420,
     radius: 12.0,
     titleTextStyle: SantoTextStyle(fontSize: 22),
-    titlePaddingSm: EdgeInsets.only(top: 14, left: 32, right: 32),
-    titlePaddingLg: EdgeInsets.only(top: 28, left: 32, right: 32),
     contentTextStyle: SantoTextStyle(fontSize: 16),
-    contentPaddingSm: EdgeInsets.only(top: 14, left: 32, right: 32),
-    contentPaddingLg: EdgeInsets.only(top: 28, left: 32, right: 32),
   );
 
   static SantoAppBarConfig appbarConfig = SantoAppBarConfig(

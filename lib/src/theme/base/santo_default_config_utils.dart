@@ -304,14 +304,14 @@ class SantoDefaultConfigUtils {
     radius: defaultCommonConfig.radiusLg,
     iconPadding: EdgeInsets.only(top: defaultCommonConfig.vSpacingXxl),
     titlePaddingSm: EdgeInsets.only(
-      top: 12.0,
-      left: defaultCommonConfig.hSpacingXxl,
-      right: defaultCommonConfig.hSpacingXxl,
+      top: defaultCommonConfig.vSpacingMd,
+      left: defaultCommonConfig.hSpacingMd,
+      right: defaultCommonConfig.hSpacingMd,
     ),
     titlePaddingLg: EdgeInsets.only(
-      top: 25.0,
-      left: defaultCommonConfig.hSpacingXxl,
-      right: defaultCommonConfig.hSpacingXxl,
+      top: defaultCommonConfig.vSpacingXl,
+      left: defaultCommonConfig.hSpacingMd,
+      right: defaultCommonConfig.hSpacingMd,
     ),
     titleTextStyle: SantoTextStyle(
       fontWeight: FontWeight.w500,
@@ -320,14 +320,14 @@ class SantoDefaultConfigUtils {
     ),
     titleTextAlign: TextAlign.center,
     contentPaddingSm: EdgeInsets.only(
-      top: 8.0,
-      left: defaultCommonConfig.hSpacingXl,
-      right: defaultCommonConfig.hSpacingXl,
+      top: defaultCommonConfig.vSpacingMd,
+      left: defaultCommonConfig.hSpacingMd,
+      right: defaultCommonConfig.hSpacingMd,
     ),
     contentPaddingLg: EdgeInsets.only(
-      top: 25.0,
-      left: defaultCommonConfig.hSpacingXl,
-      right: defaultCommonConfig.hSpacingXl,
+      top: defaultCommonConfig.vSpacingXl,
+      left: defaultCommonConfig.hSpacingMd,
+      right: defaultCommonConfig.hSpacingMd,
     ),
     contentTextStyle: SantoTextStyle(
       fontSize: defaultCommonConfig.fontSizeBase,
@@ -336,14 +336,14 @@ class SantoDefaultConfigUtils {
     ),
     contentTextAlign: TextAlign.center,
     warningPaddingSm: EdgeInsets.only(
-      top: 6.0,
-      left: defaultCommonConfig.hSpacingXl,
-      right: defaultCommonConfig.hSpacingXl,
+      top: defaultCommonConfig.vSpacingMd,
+      left: defaultCommonConfig.hSpacingMd,
+      right: defaultCommonConfig.hSpacingMd,
     ),
     warningPaddingLg: EdgeInsets.only(
-      top: 25.0,
-      left: defaultCommonConfig.hSpacingXl,
-      right: defaultCommonConfig.hSpacingXl,
+      top: defaultCommonConfig.vSpacingMd,
+      left: defaultCommonConfig.hSpacingMd,
+      right: defaultCommonConfig.hSpacingMd,
     ),
     warningTextAlign: TextAlign.center,
     warningTextStyle: SantoTextStyle(
@@ -351,7 +351,7 @@ class SantoDefaultConfigUtils {
       color: defaultCommonConfig.brandError,
       decoration: TextDecoration.none,
     ),
-    dividerPadding: EdgeInsets.only(top: 25.0),
+    dividerPadding: EdgeInsets.only(top: defaultCommonConfig.vSpacingMd),
     backgroundColor: defaultCommonConfig.fillBase,
   );
 

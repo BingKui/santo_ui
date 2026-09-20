@@ -1,8 +1,9 @@
 import 'package:santo_ui/src/components/picker/multi_range_picker/bean/santo_multi_column_picker_entity.dart';
 import 'package:santo_ui/src/components/picker/multi_range_picker/santo_multi_column_picker_util.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 
 class SantoMultiRangePickerCommonItem extends StatelessWidget {
@@ -40,10 +41,11 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
         checkbox = Container(
           padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
           width: 21,
-          child: (item.isSelected)
-              ? SantoTools.getAssetImageWithBandColor(
-                  SantoAsset.iconMultiSelected)
-              : SantoTools.getAssetImage(SantoAsset.iconUnSelect),
+          child: item.isSelected
+              ? SantoIcon(SantoSolidIcons.checkCircle,
+                  solid: true, size: 16, color: commonConfig.brandPrimary)
+              : SantoIcon(SantoIcons.circle,
+                  size: 16, color: commonConfig.colorTextDisabled),
         );
       } else {
         checkbox = Container();

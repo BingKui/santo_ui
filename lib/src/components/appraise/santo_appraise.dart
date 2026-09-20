@@ -293,11 +293,10 @@ class _AppraiseTagSelectorState extends State<_AppraiseTagSelector> {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     // final int count = widget.tagCountEachRow > 0 ? widget.tagCountEachRow : 2;
-    final double spacing = commonConfig.hSpacingMd;
 
     return Wrap(
-      spacing: spacing,
-      runSpacing: commonConfig.vSpacingMd,
+      spacing: commonConfig.gapSm,
+      runSpacing: commonConfig.gapSm,
       children: widget.tags.asMap().entries.map((entry) {
         final index = entry.key;
         final tag = entry.value;
@@ -337,7 +336,6 @@ class _AppraiseTagSelectorState extends State<_AppraiseTagSelector> {
               horizontal: commonConfig.hSpacingSm,
               vertical: commonConfig.vSpacingSm,
             ),
-            alignment: Alignment.center,
             child: Text(
               tag,
               textAlign: TextAlign.center,

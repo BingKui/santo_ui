@@ -142,7 +142,7 @@ class SantoPhotoItemConfig extends SantoBasicItemConfig {
                       BoxDecoration(color: themeData!.pageBackgroundColor),
                   loadingBuilder: (context, event) {
                     return Container(
-                      child: SantoLoadingDialog(),
+                      child: const SantoLoading(),
                       color: themeData!.pageBackgroundColor,
                     );
                   },

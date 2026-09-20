@@ -1,10 +1,11 @@
 import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -197,15 +198,15 @@ class SantoStarsFormItemState extends State<SantoStarsFormItem> {
     return widget.isEdit;
   }
 
-  Image getStar(int index, int selectCount, int sum) {
-    if (selectCount <= 0) {
-      return SantoTools.getAssetImage(SantoAsset.iconStarUnSelect);
-    }
-
-    if (index < selectCount) {
-      return SantoTools.getAssetImage(SantoAsset.iconStarSelect);
-    }
-
-    return SantoTools.getAssetImage(SantoAsset.iconStarUnSelect);
+  Widget getStar(int index, int selectCount, int sum) {
+    final commonConfig = SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final bool selected = selectCount > 0 && index < selectCount;
+    return SantoIcon(
+      selected ? SantoSolidIcons.star : SantoIcons.star,
+      solid: selected,
+      size: 18,
+      color:
+          selected ? commonConfig.brandWarning : commonConfig.colorTextDisabled,
+    );
   }
 }

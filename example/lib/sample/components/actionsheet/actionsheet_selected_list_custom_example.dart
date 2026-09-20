@@ -97,14 +97,14 @@ class SelectedListActionSheetCustomExamplePageState
                                   onClear: () {
                                     controller.dismiss();
                                     // 自定义清空的操作，可以不实现，会走默认的清空操作。
-                                    SantoDialogManager.showConfirmDialog(
+                                    SantoDialog.confirm(
                                         context,
                                         title: "确定要清空已选列表吗?",
-                                        cancel: '取消',
-                                        confirm: '确定', onConfirm: () {
+                                        cancelText: '取消',
+                                        okText: '确定', onOk: () {
                                       setState(() {});
                                       _data!.clear();
-                                    }, onCancel: () {});
+                                    });
                                   })
                               .showWithTargetKey(
                                   bottomWidgetKey: _bottomActionKey);

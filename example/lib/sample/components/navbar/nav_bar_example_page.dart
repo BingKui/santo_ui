@@ -250,9 +250,8 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
         iconPressed: () {
           SantoPopupListWindow.showPopListWindow(context, actionKey,
               offset: 10, data: ["aaaa", "bbbbb"], onItemClick: (index, item){
-                SantoDialogManager.showConfirmDialog(context, cancel: 'cancel', confirm: 'confirm', message: 'message', onCancel: (){
-                  Navigator.pop(context);
-                });
+                SantoDialog.confirm(context,
+                    cancelText: 'cancel', okText: 'confirm', message: 'message');
                 return true;
               }, onDismiss: (){
                 SantoToast.show('onDismiss', context);
@@ -522,7 +521,8 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
           keyLeading,
           data: ["aaaa", "bbbbb"],
           onItemClick: (index, data) {
-            SantoDialogManager.showConfirmDialog(context, cancel: 'cancel', confirm: 'confirm', message: 'message');
+            SantoDialog.confirm(context,
+                cancelText: 'cancel', okText: 'confirm', message: 'message');
             return true;
           },
           onDismiss: (){

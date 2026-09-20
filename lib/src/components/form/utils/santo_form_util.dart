@@ -4,9 +4,7 @@ import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/base/input_item_interface.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/widgets.dart';
 
 ///
@@ -155,8 +153,8 @@ class SantoFormUtil {
       padding:
           isRequire ? EdgeInsets.only(right: 2) : EdgeInsets.only(right: 0),
       child: isRequire
-          ? SantoTools.getAssetSizeImage(SantoAsset.iconRequireRed, 8, 8,
-              color: Color(0xFFFF4D4F))
+          ? SantoIcon(SantoIcons.asterisk,
+                  size: 8, color: const Color(0xFFFF4D4F))
           : null,
     );
   }

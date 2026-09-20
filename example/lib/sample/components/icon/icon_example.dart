@@ -170,7 +170,7 @@ class IconExample extends StatelessWidget {
           title: '按名称直接使用',
           description:
               'SantoIcons 之外的图标可直接传 SVG 文件名;'
-              '全部 1383 个常规图标见 assets/icons/iconoir 目录',
+              '全部 1383 个常规图标见 assets/iconoir 目录',
           child: Row(
             children: const [
               SantoIcon('activity', size: 20),
@@ -182,6 +182,40 @@ class IconExample extends StatelessWidget {
               SantoIcon('compact-disc', size: 20),
               SantoSpace.gap(12),
               SantoIcon('rocket', size: 20),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '实心风格（solid）',
+          description:
+              'solid 置 true 从常规描边切到实心风格；solid 共 288 个，名称见 SantoSolidIcons，'
+              '是常规名称的子集（同名），如 search、xmark 没有实心版',
+          child: Row(
+            children: const [
+              SantoIcon(SantoIcons.star, size: 24),
+              SantoSpace.gap(8),
+              SantoIcon(SantoSolidIcons.star, solid: true, size: 24),
+              SantoSpace.gap(20),
+              SantoIcon(SantoIcons.checkCircle, size: 24),
+              SantoSpace.gap(8),
+              SantoIcon(SantoSolidIcons.checkCircle, solid: true, size: 24),
+              SantoSpace.gap(20),
+              SantoIcon(
+                SantoIcons.warningTriangle,
+                size: 24,
+                color: Color(0xFFFAAD14),
+              ),
+              SantoSpace.gap(8),
+              SantoIcon(
+                SantoSolidIcons.warningTriangle,
+                solid: true,
+                size: 24,
+                color: Color(0xFFFAAD14),
+              ),
+              SantoSpace.gap(20),
+              SantoIcon(SantoSolidIcons.heart, solid: true, size: 24),
+              SantoSpace.gap(8),
+              SantoIcon(SantoSolidIcons.bookmark, solid: true, size: 24),
             ],
           ),
         ),

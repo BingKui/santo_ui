@@ -4,11 +4,12 @@ import 'package:santo_ui/src/components/selection/bean/santo_selection_common_en
 import 'package:santo_ui/src/components/selection/santo_more_selection.dart';
 import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
 import 'package:santo_ui/src/components/toast/santo_toast.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -463,10 +464,14 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
           Container(
             height: 16,
             width: 16,
-            child: entity.isSelected
-                ? SantoTools.getAssetImageWithBandColor(
-                    SantoAsset.selectCheckedStatus)
-                : SantoTools.getAssetImage(SantoAsset.iconUnSelect),
+            child: SantoIcon(
+              entity.isSelected ? SantoSolidIcons.checkCircle : SantoIcons.circle,
+              solid: entity.isSelected,
+              size: 16,
+              color: entity.isSelected
+                  ? SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary
+                  : SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextDisabled,
+            ),
           )
         ],
       );

@@ -4,6 +4,45 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [3.0.0] - 2026-09-18
+
+弹窗收拢为唯一入口 `SantoDialog`,六个组成部分参数化,常见业务形态改为命名构造。**破坏性变更。**
+
+### 💥 破坏性变更
+
+- **新增**: `SantoDialog` 统一弹窗入口,六项配置全部参数化 —— 图标 `icon` / `iconType`、标题 `title` / `titleWidget`、辅助文案 `message` / `messageWidget`、输入框 `showInput` 及 `input*` 一组参数、底部两个按钮 `okText` / `cancelText`、右上角关闭 `closable`
+- **新增**: 输入框内部渲染 `SantoInputText`;`messageMaxHeight` 限定辅助文案区高度,超出后在文案区内滚动
+- **新增**: 命名构造 `SantoDialog.alert`(纵向主次按钮强提示)、`SantoDialog.richText`(长文本 CSS2 富文本)、`SantoDialog.singleSelect`(单选列表)、`SantoDialog.multiSelect`(多选列表)、`SantoDialog.share`(分享渠道)
+- **新增**: 静态方法 `SantoDialog.confirm` / `info` / `success` / `warning` / `error`,一次性弹窗无需自己 `new` 与 `pop`;`SantoDialog.show` / `SantoDialog.dismiss` 支持按 tag 精确关闭弹窗
+- **新增**: `SantoDialogIconType` 预设图标 info / warning / error / success,统一取 `SantoIcon` 的线图标与主题语义色、`SantoDialogSingleSelectSubmit` / `SantoDialogMultiSelectSubmit` / `SantoDialogSelectItemClick` / `SantoDialogShareItemClick` 等回调类型
+- **删除**: `SantoDialogManager`(三个 show 方法分别由 `SantoDialog.confirm` 与构造函数 + `showDialog` 承接)
+- **删除**: `SantoEnhanceOperationDialog`、`SantoDialogConstants`
+- **删除**: `SantoContentExportWidget`、`SantoScrollableTextDialog`、`SantoScrollableText`
+- **删除**: `SantoMiddleInputDialog`、`SantoSingleSelectDialog`、`SantoSingleSelectDialogWidget`
+- **删除**: `SantoMultiSelectDialog`、`MultiSelect`(选项 `MultiSelectItem` 保留)
+- **删除**: `SantoShareDialog`(分享渠道形态并入 `SantoDialog.share`,底部面板形态继续用 `SantoShare`)
+- **删除**: `SantoSafeDialog`(能力并入 `SantoDialog.show` / `SantoDialog.dismiss`)、`SantoDialogUtils`
+- **变更**: 底部按钮由 `actionsText` + `indexedActionCallback` 改为 `okText` / `cancelText` / `onOk` / `onCancel`;`actionsWidget` 改为 `footer`,两个按钮以上由调用方用 `Row` / `Column` 拼装
+- **变更**: 头部图标由 `showIcon` / `iconImage` 改为 `iconType` / `icon`;关闭按钮由 `isClose` / `onCloseClick` 改为 `closable` / `onClose`
+- **变更**: 辅助文案参数 `messageText` → `message`;`dismissOnActionsTap` → `dismissOnActionTap`
+- **变更**: 按钮点击统一为「先关闭弹窗再回调」;输入框的值改为从 `inputController.text` 读取(原 `onConfirm(value)`)
+- **变更**: 弹窗内边距与块间距统一取规范间距 token,清掉继承自 Bruno 的非档位值(标题横向 40、内容横向 20、
+  标题↔正文 8、图标↔标题 12、正文↔底部 28、警示上方 6、无图标顶 25):横向与块间距取 `hSpacingMd` / `vSpacingMd`(15),
+  顶部留白单独一档 —— 图标距顶部 `vSpacingXxl`(40),无图标时 `vSpacingXl`(20)
+- **变更**: 弹窗宽度恢复为屏幕宽的 85%(与收拢前的 `SantoDialog` 一致;收拢中曾误用主题里未被使用的 `dialogWidth` 300),需要固定宽度时传 `width`
+- **变更**: 弹窗内部不再有重复的灰色底/Scaffold,统一为一层白色圆角 `Material`,内容超出可用高度时整体可滚动
+
+### 🎨 图标统一为 SantoIcon
+
+- **变更**: 组件内的图标统一改用 `SantoIcon`(语义色;弹窗预设图标与选中/点亮态用 `SantoSolidIcons` 的 solid 实心变体),替换掉此前的多色 PNG:
+  选择指示器(单选/多选/已选状态)、评分星(评分组件/表单星级/评价星级)、筛选重置、选择菜单上下箭头、表单必填星、NoticeBar 的十种状态图标
+- **保留**: 评价表情、分享渠道品牌图标、步骤数字徽标,以及插画类图片(`SantoEmpty` 的 no_data / network_error、城市选择空态)
+
+### 📝 示例与文档
+
+- 弹窗示例页按 antd Modal 分组重写:基础用法/图标/辅助文案/输入框/警示文案/右上角关闭/自定义底部/强提示弹窗/语义弹窗/长文本/单选列表/多选列表/分享渠道/按 tag 关闭
+- 新增组件文档 `doc/components/dialog/santo_dialog.md`(含旧的 9 个弹窗类到新 API 的迁移对照)
+
 ## [2.0.0] - 2026-09-18
 
 按钮收拢为唯一入口 `SantoButton`,对标 antd Button,类型/尺寸/颜色/形状/图标/状态全部参数化。**破坏性变更。**
@@ -26,10 +65,19 @@
 - 全库调用点(对话框、选择器、标签选择、评价、选择筛选等)与示例统一迁移到 `SantoButton`
 - 新增组件文档 `doc/components/button/santo_button.md`
 
+### ⏳ Loading 收拢
+
+- **新增**: `SantoLoading` 统一加载组件,对标 antd Spin,覆盖尺寸、文案、受控、延迟、自定义指示器、包裹、全屏、进度
+- **新增**: `SantoLoadingSize` 三档尺寸 small(14)、medium(20,默认)、large(32)
+- **新增**: 静态方法 `SantoLoading.show` / `SantoLoading.dismiss` 展示与关闭加载浮层
+- **删除**: `SantoPageLoading`、`SantoLoadingDialog`,由 `SantoLoading` 与 `SantoLoading.show` / `dismiss` 承接
+- **变更**: 浮层文案参数由 `content` 改为 `tip`
+
 ### 🎨 图标体系
 
-- **新增**: `SantoIcon` 统一图标组件,按名称取用图标;`SantoIcons` 提供全部 1383 个图标名称常量
-- **新增**: 内置开源图标库 [Iconoir](https://github.com/iconoir-icons/iconoir)(MIT)的常规图标 SVG 资源,存于 `assets/icons/iconoir/`
+- **新增**: `SantoIcon` 统一图标组件,按名称取用图标;`SantoIcons` 提供全部 1383 个常规图标名称常量
+- **新增**: 内置开源图标库 [Iconoir](https://github.com/iconoir-icons/iconoir)(MIT)的图标 SVG 资源,存于 `assets/iconoir/`,分 regular(1383 个)与 solid(288 个)两种风格
+- **新增**: `solid` 参数支持实心风格,配套 `SantoSolidIcons` 名称常量
 - **变更**: 新增依赖 `flutter_svg ^2.3.0`
 - **变更**: 搜索、关闭、右/上/下箭头、三角、增删、问号、日历翻月等线图标由 PNG 资源统一换为 `SantoIcon`,涉及 43 个组件文件
 - **变更**: 步进器增删按钮的可用/禁用态改用主题色 `colorTextSecondary` / `colorTextDisabled` 区分

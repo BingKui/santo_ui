@@ -7,11 +7,12 @@ import 'package:santo_ui/src/components/selection/santo_selection_util.dart';
 import 'package:santo_ui/src/components/selection/dropdown_menu.dart' as santo_dropdown;
 import 'package:santo_ui/src/components/selection/widget/santo_selection_more_item_widget.dart';
 import 'package:santo_ui/src/components/toast/santo_toast.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:flutter/material.dart';
 
 /// 更多的多选页面
@@ -314,7 +315,8 @@ class MoreBottomSelectionWidget extends StatelessWidget {
                 Container(
                   height: 24,
                   width: 24,
-                  child: SantoTools.getAssetImage(SantoAsset.iconSelectionReset),
+                  child: SantoIcon(SantoIcons.refresh,
+                      size: 24, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase),
                 ),
                 Text(
                   SantoIntl.of(context).localizedResource.reset,

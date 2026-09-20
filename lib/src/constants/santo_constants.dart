@@ -16,9 +16,9 @@ class SantoShareItemConstants {
 
   /// 不可点击的分享渠道图片地址列表
   static const List<String> disableShareItemImagePathList = [
-    "images/icon_share_weChat_disable.png",
+    "images/icon_share_wechat_disable.png",
     "images/icon_share_moments_disable.png",
-    "images/icon_share_qq_disble.png",
+    "images/icon_share_qq_disable.png",
     "images/icon_share_zone_disable.png",
     "images/icon_share_weibo_disable.png",
     "images/icon_share_shareLink_disable.png",

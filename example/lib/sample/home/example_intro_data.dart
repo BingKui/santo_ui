@@ -228,7 +228,7 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
   'dialog': ExampleIntroData(
     title: 'Dialog 对话框',
     description: '对话框要求在浮层中完成一次交互。',
-    widgets: <String>['SantoDialog', 'SantoSafeDialog'],
+    widgets: <String>['SantoDialog'],
     whenToUseDesc: '需要用户确认、填写或选择后才能继续时使用。',
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('确认框', '二次确认危险或不可逆的操作'),
@@ -430,13 +430,18 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
   ),
   'loading': ExampleIntroData(
     title: 'Loading 加载中',
-    description: '加载中提示正在进行的等待。',
-    widgets: <String>['SantoPageLoading', 'SantoLoadingDialog'],
-    whenToUseDesc: '内容或操作结果需要等待时使用。',
+    description: '加载中用于提示正在进行的等待。',
+    widgets: <String>['SantoLoading'],
+    whenToUseDesc: '页面局部或整页在等待异步数据、渲染过程中,展示加载动画可以缓解用户的等待焦虑。',
     whenToUse: <ExampleIntroPoint>[
-      ExampleIntroPoint('页面加载', '整页等待时展示加载态'),
-      ExampleIntroPoint('浮层加载', '阻塞式等待,完成或失败后关闭'),
-      ExampleIntroPoint('文案', '可附带说明当前正在做什么'),
+      ExampleIntroPoint('基础用法', '默认主题色圆环,独立使用时占满可用空间并居中'),
+      ExampleIntroPoint('尺寸', 'small / medium / large 三档,分别用于文字旁、卡片级区块与整页'),
+      ExampleIntroPoint('自定义文案', 'tip 展示在指示器下方,长文案自动换行'),
+      ExampleIntroPoint('包裹模式', '传入 child 后在内容上盖一层蒙层,阻塞该区域的交互'),
+      ExampleIntroPoint('延迟展示', 'delay 避免一闪而过的加载动画'),
+      ExampleIntroPoint('进度', 'percent 传 0~100 时圆环展示确定进度'),
+      ExampleIntroPoint('全屏', 'fullscreen 铺满父布局并居中展示'),
+      ExampleIntroPoint('浮层', 'SantoLoading.show 打开、SantoLoading.dismiss 关闭,黑胶囊样式'),
     ],
   ),
   'masonry': ExampleIntroData(
@@ -546,7 +551,7 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
     ],
   ),
   'popup': ExampleIntroData(
-    title: 'Popup 浮层',
+    title: 'OverlayWindow 悬浮窗',
     description: '浮层用于展示独立于页面流的内容。',
     widgets: <String>['SantoOverlayWindow'],
     whenToUseDesc: '需要一块覆盖在页面之上、可自行控制位置与关闭的窗口时使用。',

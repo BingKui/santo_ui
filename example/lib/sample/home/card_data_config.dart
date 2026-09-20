@@ -264,14 +264,14 @@ class CardDataConfig {
   // ========== 反馈 ==========
   static GroupInfo _getFeedbackGroup() {
     List<GroupInfo> children = [
-      _item("Dialog 对话框", "弹窗交互", DialogEntryPage("弹窗示例")),
+      _item("Dialog 对话框", "唯一弹窗入口:图标/标题/辅助文案/输入框/两个按钮/右上角关闭", DialogEntryPage()),
       _item("ActionSheet 动作面板", "底部动作菜单", ActionSheetEntryPage("动作面板")),
       _item("Share 分享", "分享面板", ShareExample()),
       _item("Toast 轻提示", "轻量反馈提示", ToastExample()),
       _item("Message 全局提示", "顶部消息通知", MessageExample()),
       _item("Tooltip 文字提示", "定位气泡提示", TooltipExample()),
-      _item("OverlayWindow 悬浮窗", "搜索悬浮层", OverlayWindowExample("悬浮窗示例")),
-      _item("Loading 加载", "加载状态动画", LoadingExample()),
+      _item("OverlayWindow 悬浮窗", "页面之上的独立窗口", OverlayWindowExample("OverlayWindow 悬浮窗")),
+      _item("Loading 加载", "统一加载入口:尺寸/文案/延迟/包裹/全屏/进度/浮层", LoadingExample()),
       _item("Refresh 下拉刷新", "下拉刷新/上拉加载", RefreshExample()),
       _item("Result 结果", "操作结果反馈", ResultExample()),
       _item("Appraise 评价", "评分评价组件", AppraiseExample()),

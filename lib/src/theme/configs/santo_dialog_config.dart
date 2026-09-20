@@ -70,9 +70,9 @@ class SantoDialogConfig extends SantoBaseConfig {
   /// title 在顶部有 icon 时的边距
   ///
   /// EdgeInsets.only(
-  ///   top: 12,
-  ///   left: [SantoCommonConfig.hSpacingXxl],
-  ///   right: [SantoCommonConfig.hSpacingXxl],
+  ///   top: [SantoCommonConfig.vSpacingMd],
+  ///   left: [SantoCommonConfig.hSpacingMd],
+  ///   right: [SantoCommonConfig.hSpacingMd],
   /// )
   EdgeInsets? _titlePaddingSm;
 
@@ -83,9 +83,9 @@ class SantoDialogConfig extends SantoBaseConfig {
   /// title 当顶部无 icon 时的边距
   ///
   /// EdgeInsets.only(
-  ///   top: 28,
-  ///   left: [SantoCommonConfig.hSpacingXxl],
-  ///   right: [SantoCommonConfig.hSpacingXxl],
+  ///   top: [SantoCommonConfig.vSpacingXl],
+  ///   left: [SantoCommonConfig.hSpacingMd],
+  ///   right: [SantoCommonConfig.hSpacingMd],
   /// )
   EdgeInsets? _titlePaddingLg;
 
@@ -117,9 +117,9 @@ class SantoDialogConfig extends SantoBaseConfig {
   /// content 当顶部有 title 或者 icon 时的边距
   ///
   /// EdgeInsets.only(
-  ///   top: 8,
-  ///   left: [SantoCommonConfig.hSpacingXl],
-  ///   right: [SantoCommonConfig.hSpacingXl],
+  ///   top: [SantoCommonConfig.vSpacingMd],
+  ///   left: [SantoCommonConfig.hSpacingMd],
+  ///   right: [SantoCommonConfig.hSpacingMd],
   /// )
   EdgeInsets? _contentPaddingSm;
 
@@ -130,9 +130,9 @@ class SantoDialogConfig extends SantoBaseConfig {
   /// content 当顶部无 title 或者 icon 时的边距
   ///
   /// EdgeInsets.only(
-  ///   top: 28,
-  ///   left: [SantoCommonConfig.hSpacingXl],
-  ///   right: [SantoCommonConfig.hSpacingXl],
+  ///   top: [SantoCommonConfig.vSpacingXl],
+  ///   left: [SantoCommonConfig.hSpacingMd],
+  ///   right: [SantoCommonConfig.hSpacingMd],
   /// )
   EdgeInsets? _contentPaddingLg;
 
@@ -163,9 +163,9 @@ class SantoDialogConfig extends SantoBaseConfig {
   /// warning 当顶部有 title/icon/content 时的边距
   ///
   /// EdgeInsets.only(
-  ///   top: 6,
-  ///   left: [SantoCommonConfig.hSpacingXl],
-  ///   right: [SantoCommonConfig.hSpacingXl],
+  ///   top: [SantoCommonConfig.vSpacingMd],
+  ///   left: [SantoCommonConfig.hSpacingMd],
+  ///   right: [SantoCommonConfig.hSpacingMd],
   /// )
   EdgeInsets? _warningPaddingSm;
 
@@ -176,9 +176,9 @@ class SantoDialogConfig extends SantoBaseConfig {
   /// warning 当顶部无 title/icon/content 时的边距
   ///
   /// EdgeInsets.only(
-  ///   top: 28,
-  ///   left: [SantoCommonConfig.hSpacingXl],
-  ///   right: [SantoCommonConfig.hSpacingXl],
+  ///   top: [SantoCommonConfig.vSpacingMd],
+  ///   left: [SantoCommonConfig.hSpacingMd],
+  ///   right: [SantoCommonConfig.hSpacingMd],
   /// )
   EdgeInsets? _warningPaddingLg;
 
@@ -208,7 +208,7 @@ class SantoDialogConfig extends SantoBaseConfig {
 
   /// action 顶部 divider 的上方边距
   ///
-  /// EdgeInsets.only(top: 28)
+  /// EdgeInsets.only(top: [SantoCommonConfig.vSpacingMd])
   EdgeInsets? _dividerPadding;
 
   EdgeInsets get dividerPadding =>
@@ -247,24 +247,11 @@ class SantoDialogConfig extends SantoBaseConfig {
 
     _dialogWidth ??= dialogConfig.dialogWidth;
     _radius ??= commonConfig.radiusLg;
-    _titlePaddingSm ??= EdgeInsets.only(
-      left: commonConfig.hSpacingXxl,
-      right: commonConfig.hSpacingXxl,
-      top: dialogConfig.titlePaddingSm.top,
-      bottom: dialogConfig.titlePaddingSm.bottom,
-    );
-    _titlePaddingLg ??= EdgeInsets.only(
-      left: commonConfig.hSpacingXxl,
-      right: commonConfig.hSpacingXxl,
-      top: dialogConfig.titlePaddingLg.top,
-      bottom: dialogConfig.titlePaddingLg.bottom,
-    );
-    _iconPadding ??= EdgeInsets.only(
-      left: dialogConfig.iconPadding.left,
-      top: commonConfig.vSpacingXxl,
-      right: dialogConfig.iconPadding.right,
-      bottom: dialogConfig.iconPadding.bottom,
-    );
+    // 内边距一律取主题 dialogConfig(默认值即规范档位 hSpacingMd / vSpacingMd),
+    // 不再按横向/纵向分别回退到不同的间距档
+    _titlePaddingSm ??= dialogConfig.titlePaddingSm;
+    _titlePaddingLg ??= dialogConfig.titlePaddingLg;
+    _iconPadding ??= dialogConfig.iconPadding;
     _titleTextStyle = dialogConfig.titleTextStyle.merge(
       SantoTextStyle(
         color: commonConfig.colorTextBase,
@@ -283,30 +270,10 @@ class SantoDialogConfig extends SantoBaseConfig {
         fontSize: commonConfig.fontSizeBase,
       ).merge(_warningTextStyle),
     );
-    _contentPaddingSm ??= EdgeInsets.only(
-      left: commonConfig.hSpacingXl,
-      right: commonConfig.hSpacingXl,
-      top: dialogConfig.contentPaddingSm.top,
-      bottom: dialogConfig.contentPaddingSm.bottom,
-    );
-    _contentPaddingSm ??= EdgeInsets.only(
-      left: commonConfig.hSpacingXl,
-      right: commonConfig.hSpacingXl,
-      top: dialogConfig.contentPaddingLg.top,
-      bottom: dialogConfig.contentPaddingLg.bottom,
-    );
-    _warningPaddingSm ??= EdgeInsets.only(
-      left: commonConfig.hSpacingXl,
-      right: commonConfig.hSpacingXl,
-      top: dialogConfig.warningPaddingSm.top,
-      bottom: dialogConfig.warningPaddingSm.bottom,
-    );
-    _warningPaddingLg ??= EdgeInsets.only(
-      left: commonConfig.hSpacingXl,
-      right: commonConfig.hSpacingXl,
-      top: dialogConfig.warningPaddingLg.top,
-      bottom: dialogConfig.warningPaddingLg.bottom,
-    );
+    _contentPaddingSm ??= dialogConfig.contentPaddingSm;
+    _contentPaddingLg ??= dialogConfig.contentPaddingLg;
+    _warningPaddingSm ??= dialogConfig.warningPaddingSm;
+    _warningPaddingLg ??= dialogConfig.warningPaddingLg;
     _titleTextAlign ??= dialogConfig.titleTextAlign;
     _contentTextAlign ??= dialogConfig.contentTextAlign;
     _warningTextAlign ??= dialogConfig.warningTextAlign;

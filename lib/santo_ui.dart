@@ -40,15 +40,7 @@ export 'src/components/layout/santo_bottom_safe_area.dart';
 export 'src/components/layout/santo_page_layout.dart';
 
 //弹框
-export 'src/components/dialog/santo_safe_dialog.dart';
-export 'src/components/dialog/santo_share_dialog.dart';
-export 'src/components/dialog/santo_enhance_operation_dialog.dart';
-export 'src/components/dialog/santo_scrollable_text_dialog.dart';
-export 'src/components/dialog/santo_content_export_dialog.dart';
 export 'src/components/dialog/santo_dialog.dart';
-export 'src/components/dialog/santo_middle_input_diaolg.dart';
-export 'src/components/dialog/santo_single_select.dart';
-export 'src/components/dialog/santo_multi_select_dialog.dart';
 
 //筛选
 export 'src/components/selection/bean/santo_selection_common_entity.dart';
@@ -340,3 +332,4 @@ export 'src/components/action_bar/santo_action_bar_button.dart';
 //图标
 export 'src/components/icon/santo_icon.dart';
 export 'src/components/icon/santo_icons.dart';
+export 'src/components/icon/santo_solid_icons.dart';

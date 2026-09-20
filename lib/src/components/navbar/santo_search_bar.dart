@@ -277,7 +277,8 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(right: commonConfig.hSpacingSm),
-                child: SantoIcon(SantoIcons.search, size: 16),
+                child: SantoIcon(SantoIcons.search,
+                    size: 16, color: _defaultHintTextColor),
               ),
               Expanded(
                 child: TextField(
@@ -351,7 +352,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                     padding: EdgeInsets.only(
                         right: commonConfig.hSpacingLg,
                         left: commonConfig.hSpacingLg),
-                    child: SantoIcon(SantoIcons.bin,
+                    child: SantoIcon(SantoIcons.xmarkCircle,
                         size: 16, color: _defaultClearIconColor),
                   ),
                 ),

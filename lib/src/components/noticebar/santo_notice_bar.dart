@@ -1,7 +1,7 @@
 import 'package:santo_ui/src/components/noticebar/santo_marquee_text.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:flutter/material.dart';
 
 /// 描述: 通知，默认最小高度36
@@ -158,73 +158,73 @@ class SantoNoticeBar extends StatelessWidget {
 class NoticeStyles {
   ///红色+失败+箭头
   static NoticeStyle failWithArrow = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeFail),
+      SantoIcon(SantoIcons.xmarkCircle, size: 14, color: const Color(0xFFFF4D4F)),
       Color(0xFFFF4D4F),
       Color(0xFFFFF2F0),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeArrowRed));
+      SantoIcon(SantoIcons.navArrowRight, size: 16, color: const Color(0xFFFF4D4F)));
 
   ///红色+失败+关闭
   static NoticeStyle failWithClose = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeFail),
+      SantoIcon(SantoIcons.xmarkCircle, size: 14, color: const Color(0xFFFF4D4F)),
       Color(0xFFFF4D4F),
       Color(0xFFFFF2F0),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeCloseRed));
+      SantoIcon(SantoIcons.xmark, size: 16, color: const Color(0xFFFF4D4F)));
 
   ///蓝色+进行中+箭头
   static NoticeStyle runningWithArrow = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeRunning),
+      SantoIcon(SantoIcons.hourglass, size: 14, color: const Color(0xFF1677FF)),
       Color(0xFF1677FF),
       Color(0xFFE6F4FF),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeArrowBlue));
+      SantoIcon(SantoIcons.navArrowRight, size: 16, color: const Color(0xFF1677FF)));
 
   ///蓝色+进行中+关闭
   static NoticeStyle runningWithClose = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeRunning),
+      SantoIcon(SantoIcons.hourglass, size: 14, color: const Color(0xFF1677FF)),
       Color(0xFF1677FF),
       Color(0xFFE6F4FF),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeCloseBlue));
+      SantoIcon(SantoIcons.xmark, size: 16, color: const Color(0xFF1677FF)));
 
   ///绿色+完成+箭头
   static NoticeStyle succeedWithArrow = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeSucceed),
+      SantoIcon(SantoIcons.checkCircle, size: 14, color: const Color(0xFF52C41A)),
       Color(0xFF52C41A),
       Color(0xFFF6FFED),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeArrowGreen));
+      SantoIcon(SantoIcons.navArrowRight, size: 16, color: const Color(0xFF52C41A)));
 
   ///绿色+完成+关闭
   static NoticeStyle succeedWithClose = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeSucceed),
+      SantoIcon(SantoIcons.checkCircle, size: 14, color: const Color(0xFF52C41A)),
       Color(0xFF52C41A),
       Color(0xFFF6FFED),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeCloseGreen));
+      SantoIcon(SantoIcons.xmark, size: 16, color: const Color(0xFF52C41A)));
 
   ///橘色+警告+箭头
   static NoticeStyle warningWithArrow = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeWarning),
+      SantoIcon(SantoIcons.warningTriangle, size: 14, color: const Color(0xFFFAAD14)),
       Color(0xFFFAAD14),
       Color(0xFFFFFBE6),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeArrowOrange));
+      SantoIcon(SantoIcons.navArrowRight, size: 16, color: const Color(0xFFFAAD14)));
 
   ///橘色+警告+关闭
   static NoticeStyle warningWithClose = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNoticeWarning),
+      SantoIcon(SantoIcons.warningTriangle, size: 14, color: const Color(0xFFFAAD14)),
       Color(0xFFFAAD14),
       Color(0xFFFFFBE6),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeCloseOrange));
+      SantoIcon(SantoIcons.xmark, size: 16, color: const Color(0xFFFAAD14)));
 
   ///橘色+通知+箭头
   static NoticeStyle normalNoticeWithArrow = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNotice),
+      SantoIcon(SantoIcons.megaphone, size: 14, color: const Color(0xFFFAAD14)),
       Color(0xFFFAAD14),
       Color(0xFFFFFBE6),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeArrowOrange));
+      SantoIcon(SantoIcons.navArrowRight, size: 16, color: const Color(0xFFFAAD14)));
 
   ///橘色+通知+关闭
   static NoticeStyle normalNoticeWithClose = NoticeStyle(
-      SantoTools.getAssetImage(SantoAsset.iconNotice),
+      SantoIcon(SantoIcons.megaphone, size: 14, color: const Color(0xFFFAAD14)),
       Color(0xFFFAAD14),
       Color(0xFFFFFBE6),
-      SantoTools.getAssetImage(SantoAsset.iconNoticeCloseOrange));
+      SantoIcon(SantoIcons.xmark, size: 16, color: const Color(0xFFFAAD14)));
 }
 
 /// 通知样式

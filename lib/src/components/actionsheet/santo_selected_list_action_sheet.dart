@@ -339,8 +339,11 @@ class _SantoActionSheetSelectedItemListState<T>
     if (widget.itemWidget.onClear == null) {
       // 如果没有实现 onClear，执行默认弹窗并删除的逻辑
       this.dismissContent(true);
-      SantoDialogManager.showConfirmDialog(context,
-          title: SantoIntl.of(context).localizedResource.confirmClearSelectedList, cancel: SantoIntl.of(context).localizedResource.cancel, confirm: SantoIntl.of(context).localizedResource.ok, onConfirm: () {
+      SantoDialog.confirm(context,
+          title: SantoIntl.of(context).localizedResource.confirmClearSelectedList,
+          okText: SantoIntl.of(context).localizedResource.ok,
+          cancelText: SantoIntl.of(context).localizedResource.cancel,
+          onOk: () {
         if (widget.itemWidget.onClearConfirmed != null) {
           widget.itemWidget.onClearConfirmed!();
         }

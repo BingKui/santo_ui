@@ -1,13 +1,15 @@
-/// Iconoir 常规图标名称清单(MIT, https://iconoir.com)
+/// Iconoir 常规(regular)图标名称清单(MIT, https://iconoir.com)
 ///
-/// 共 1383 个图标,取值即 `assets/icons/iconoir/<名称>.svg` 的文件名,
+/// 共 1383 个图标,取值即 `assets/iconoir/regular/<名称>.svg` 的文件名,
 /// 传给 [SantoIcon] 即可渲染对应图标:
 ///
 /// ```dart
 /// SantoIcon(SantoIcons.search, size: 16)
 /// ```
 ///
-/// 本文件由工具按 assets/icons/iconoir 目录自动生成,请勿手工修改。
+/// 实心风格(solid)只有 288 个,且只是本清单名称的子集,见 [SantoSolidIcons]。
+///
+/// 本文件由工具按 assets/iconoir/regular 目录自动生成,请勿手工修改。
 ///
 /// @since v2.0.0
 abstract final class SantoIcons {

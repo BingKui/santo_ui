@@ -277,7 +277,8 @@ class SantoButton extends StatelessWidget {
     this.width,
     this.alignment,
     this.decoration,
-  }) : assert(text != null || child != null || icon != null);
+  })  : assert(text != null || child != null || icon != null),
+        super(key: key);
 
   SantoCommonConfig get _commonConfig =>
       SantoThemeConfigurator.instance.getConfig().commonConfig;

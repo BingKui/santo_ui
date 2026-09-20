@@ -1,7 +1,7 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/configs/santo_selection_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:flutter/material.dart';
 
 /// 筛选菜单项
@@ -63,18 +63,20 @@ class SantoSelectionMenuItemWidget extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
                   child: isHighLight
-                      ? (active
-                          ? SantoTools.getAssetImageWithBandColor(
-                              SantoAsset.iconArrowUpSelect,
-                              configId: themeData.configId)
-                          : SantoTools.getAssetImageWithBandColor(
-                              SantoAsset.iconArrowDownSelect))
-                      : (active
-                          ? SantoTools.getAssetImageWithBandColor(
-                              SantoAsset.iconArrowUpSelect,
-                              configId: themeData.configId)
-                          : SantoTools.getAssetImage(
-                              SantoAsset.iconArrowDownUnSelect)))
+                      ? SantoIcon(
+                          active
+                              ? SantoIcons.navArrowUp
+                              : SantoIcons.navArrowDown,
+                          size: 12,
+                          color: commonConfig.brandPrimary)
+                      : SantoIcon(
+                          active
+                              ? SantoIcons.navArrowUp
+                              : SantoIcons.navArrowDown,
+                          size: 12,
+                          color: (isHighLight || active)
+                              ? commonConfig.brandPrimary
+                              : commonConfig.colorTextDisabled))
             ],
           ),
         ),

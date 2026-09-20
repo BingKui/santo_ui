@@ -62,8 +62,27 @@ void main() {
     final loader = tester
         .widget<SvgPicture>(find.byType(SvgPicture))
         .bytesLoader as SvgAssetLoader;
-    expect(loader.assetName, 'assets/icons/iconoir/check-circle.svg');
+    expect(loader.assetName, 'assets/iconoir/regular/check-circle.svg');
     expect(loader.packageName, 'santo_ui');
+  });
+
+  testWidgets('solid 为 true 时加载实心资源', (tester) async {
+    await tester.pumpWidget(
+      _host(const SantoIcon(SantoSolidIcons.star, solid: true)),
+    );
+    await tester.pumpAndSettle();
+
+    final loader = tester
+        .widget<SvgPicture>(find.byType(SvgPicture))
+        .bytesLoader as SvgAssetLoader;
+    expect(loader.assetName, 'assets/iconoir/solid/star.svg');
+  });
+
+  testWidgets('solid 名称为 regular 名称的子集且同名', (tester) async {
+    expect(SantoSolidIcons.star, 'star');
+    expect(SantoIcons.star, 'star');
+    expect(SantoSolidIcons.checkCircle, SantoIcons.checkCircle);
+    expect(SantoSolidIcons.warningTriangle, SantoIcons.warningTriangle);
   });
 
   testWidgets('semanticLabel 透出无障碍语义', (tester) async {

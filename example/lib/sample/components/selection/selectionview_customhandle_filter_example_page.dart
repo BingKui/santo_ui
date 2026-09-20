@@ -30,13 +30,10 @@ class _SelectionViewExamplePageState extends State<SelectionViewCustomHandleFilt
             onCustomSelectionMenuClick: (int index, SantoSelectionEntity customMenuItem,
                 SantoSetCustomSelectionParams customHandleCallBack) {
               /// 用户操作一段时间之后，将自定义参数回传，触发 onSelectionChanged回调。
-              SantoDialogManager.showConfirmDialog(context,
-                  cancel: '取消', confirm: '确定', message: '点击确定，回传自定义参数到筛选', onConfirm: () {
+              SantoDialog.confirm(context,
+                  cancelText: '取消', okText: '确定', message: '点击确定，回传自定义参数到筛选', onOk: () {
                 count++;
                 customHandleCallBack({"CKey": "CValue$count"});
-                Navigator.pop(context);
-              }, onCancel: () {
-                Navigator.pop(context);
               });
             },
             onSelectionChanged: (int menuIndex,

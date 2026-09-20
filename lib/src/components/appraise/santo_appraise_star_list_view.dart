@@ -1,6 +1,7 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 
 /// 描述: 星级评价列表，默认支持5个
@@ -30,11 +31,16 @@ class SantoAppraiseStarListView extends StatefulWidget {
 }
 
 class _SantoAppraiseStarListViewState extends State<SantoAppraiseStarListView> {
-  Image _star =
-      SantoTools.getAssetImage(SantoAsset.iconStarSize, gaplessPlayback: true);
+  final Widget _star = SantoIcon(SantoIcons.star,
+      size: 28, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextDisabled);
 
-  Image _selectedStar = SantoTools.getAssetImage(SantoAsset.iconStarSizeSelected,
-      gaplessPlayback: true);
+  final Widget _selectedStar = SantoIcon(SantoSolidIcons.star,
+      solid: true,
+      size: 28,
+      color: SantoThemeConfigurator.instance
+          .getConfig()
+          .commonConfig
+          .brandWarning);
 
   int _selectedIndex = -1;
 

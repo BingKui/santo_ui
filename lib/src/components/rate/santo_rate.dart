@@ -1,5 +1,7 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:flutter/material.dart';
 
 /// 星星视图的自定义构造器
@@ -131,12 +133,19 @@ class _SantoRateState extends State<SantoRate> {
   Widget _buildRating(RatingState state) {
     switch (state) {
       case RatingState.select:
-        return SantoTools.getAssetSizeImage(SantoAsset.iconStar, 16, 16);
+        return SantoIcon(SantoSolidIcons.star,
+            solid: true,
+            size: 16,
+            color: SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .brandWarning);
       case RatingState.half:
-        return SantoTools.getAssetSizeImage(SantoAsset.iconStarHalf, 16, 16);
+        return SantoIcon(SantoIcons.starHalfDashed,
+            size: 16, color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandWarning);
       default:
-        return SantoTools.getAssetSizeImage(SantoAsset.iconStar, 16, 16,
-            color: Color(0xFFE8EAEC));
+        return SantoIcon(SantoIcons.star,
+            size: 16, color: const Color(0xFFE8EAEC));
     }
   }
 }
