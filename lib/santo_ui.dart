@@ -215,8 +215,7 @@ export 'src/components/step/santo_step_line.dart';
 export 'src/components/step/santo_horizontal_steps.dart';
 
 //标签
-export 'src/components/tag/santo_tag_custom.dart';
-export 'src/components/tag/santo_state_tag.dart';
+export 'src/components/tag/santo_tag.dart';
 
 //气泡文本
 export 'src/components/card/bubble_card/santo_bubble_text.dart';

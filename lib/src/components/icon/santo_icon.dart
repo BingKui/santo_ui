@@ -26,7 +26,7 @@ const String _kIconRoot = 'assets/iconoir';
 /// 两种风格都是单色,颜色统一由 [color] 决定(默认取主题正文色),
 /// 无法保留多色;需要多色插画请继续使用图片资源。
 ///
-/// @since v2.0.0
+/// @since v1.1.0
 class SantoIcon extends StatelessWidget {
   /// 图标名称,取值见 [SantoIcons] 或 [SantoSolidIcons],即 SVG 文件名
   final String name;
@@ -36,7 +36,7 @@ class SantoIcon extends StatelessWidget {
   /// solid 仅 288 个图标,名称见 [SantoSolidIcons];传 [SantoIcons] 中不存在的
   /// solid 名称会取不到资源。
   ///
-  /// @since v2.0.0
+  /// @since v1.1.0
   final bool solid;
 
   /// 图标边长,默认取主题 `iconSizeMd`(16)

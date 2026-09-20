@@ -175,7 +175,7 @@ SantoThemeConfigurator.instance.register(
 
 ## 版本变更
 
-### v3.0.0
+### v1.1.0
 
 弹窗收拢为唯一入口 `SantoDialog`,**破坏性变更**。
 

@@ -105,8 +105,8 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 labelWidth: 80,
                 initialValue: '已完成',
                 readOnly: true,
-                suffix: SantoTagCustom(
-                  tagText: '已验证',
+                suffix: SantoTag(
+                  text: '已验证',
                   textColor: Color(0xFF07C160),
                   backgroundColor: Color(0x2407C160),
                 ),

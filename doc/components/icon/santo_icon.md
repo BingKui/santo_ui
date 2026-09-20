@@ -118,7 +118,7 @@ SantoIcon(SantoIcons.search, semanticLabel: '搜索')
 
 ## 五、版本变更
 
-### v2.0.0
+### v1.1.0
 
 - **新增**: `SantoIcon` 组件与 `SantoIcons` 图标名称常量
 - **新增**: 内置 Iconoir 图标 SVG 资源,常规(regular)1383 个

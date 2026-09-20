@@ -12,7 +12,7 @@
 ///
 /// 本文件由工具按 assets/iconoir/solid 目录自动生成,请勿手工修改。
 ///
-/// @since v2.0.0
+/// @since v1.1.0
 abstract final class SantoSolidIcons {
   static const String adobeAfterEffects = 'adobe-after-effects';
   static const String adobeIllustrator = 'adobe-illustrator';

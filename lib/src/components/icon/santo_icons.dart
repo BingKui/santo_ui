@@ -11,7 +11,7 @@
 ///
 /// 本文件由工具按 assets/iconoir/regular 目录自动生成,请勿手工修改。
 ///
-/// @since v2.0.0
+/// @since v1.1.0
 abstract final class SantoIcons {
   static const String accessibility = 'accessibility';
   static const String accessibilitySign = 'accessibility-sign';

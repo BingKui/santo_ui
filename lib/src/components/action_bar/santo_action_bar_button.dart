@@ -33,6 +33,8 @@ enum SantoActionBarButtonType {
 /// 位于整组按钮首位时左侧带圆角与外边距,末位时右侧带圆角与外边距,
 /// 中间的按钮保持直角,与相邻按钮拼成一组。
 ///
+/// @changed v1.1.0 改为基于 SantoButton 实现
+///
 /// 示例:
 /// ```dart
 /// SantoActionBar(children: [

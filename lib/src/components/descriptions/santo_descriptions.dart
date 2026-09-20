@@ -24,7 +24,7 @@ enum SantoDescriptionsSize {
 
 /// 描述列表的一项(对应 antd Descriptions.Item)
 ///
-/// @since v4.0.0
+/// @since v1.1.0
 class SantoDescriptionsItem {
   /// 标签文案
   final String? label;
@@ -64,7 +64,7 @@ class SantoDescriptionsItem {
 /// )
 /// ```
 ///
-/// @since v4.0.0
+/// @since v1.1.0
 class SantoDescriptions extends StatelessWidget {
   /// 标题文案
   final String? title;

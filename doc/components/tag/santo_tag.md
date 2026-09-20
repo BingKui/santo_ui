@@ -1,115 +1,89 @@
 ---
-title: SantoTagCustom / SantoStateTag
+title: SantoTag
 group:
   title: 标签
   order: 1
 ---
 
-# SantoTagCustom / SantoStateTag
+# SantoTag
 
-标签组件用于标记和分类,`SantoTagCustom` 支持自定义样式,`SantoStateTag` 提供五种预设状态。
+标签组件用于标记和分类,是库内唯一的标签入口,不同形态全部通过参数实现,参考 antd Tag。
 
 ## 一、效果总览
 
-**SantoTagCustom**:
-- 自适应内容宽度
-- 可自定义背景色、文字颜色、边框
-- 支持圆角和不同尺寸
+- 普通标签:主题色底 + 反白文字
+- 描边标签:`bordered` 为 true,透明底、文字与边框同色
+- 状态标签:`state` 传五态之一,底色为状态色 10% 透明度、文字为状态色
+- 多彩标签:`backgroundColor` / `textColor` / `borderColor` 自定义配色
 
-**SantoStateTag**:
-- 五种预设状态:default/primary/success/warning/error
-- 每种状态有默认配色
-- 简洁统一的视觉风格
+自适应内容宽度,`maxWidth` 限制最大宽度并省略。
 
 ## 二、描述
 
 ### 适用场景
 1. 分类标记(如商品标签、内容分类)
-2. 状态标识(如进行中、已完成)
+2. 状态标识(如进行中、已完成、失败)
 3. 筛选条件展示
 4. 关键词标签
 
 ### 使用规范
-- SantoTagCustom 不要设置 alignment,让标签自适应宽度
-- SantoStateTag 的状态选择应符合语义:success成功、error错误、warning警告、primary主要、default默认
+- 不要在外部包 alignment,让标签自适应内容宽度
+- 状态选择应符合语义:running 进行中、succeed 成功、failed 失败、waiting 等待、invalidate 失效
 - 标签文字不宜过长,建议简短明了
-- 多个标签之间应保持适当间距
+- 多个标签之间应保持适当间距(可用 SantoSpace 或 Wrap 的 spacing)
+
+### 与旧组件的关系
+v1.1.0 起 `SantoTagCustom`(含 `buildBorderTag` 命名构造)与 `SantoStateTag`(含 `TagState` 枚举)删除,统一由 `SantoTag` 参数承接。
 
 ## 三、构造函数及参数说明
 
-### SantoTagCustom
-
 | 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
 | --- | --- | --- | --- | --- |
-| text | String | 标签文本 | 是 | - |
-| backgroundColor | Color? | 背景色 | 否 | null |
-| textColor | Color? | 文字颜色 | 否 | null |
-| borderColor | Color? | 边框颜色 | 否 | null |
-| radius | double | 圆角半径 | 否 | 4 |
-| padding | EdgeInsets? | 内边距 | 否 | null |
-| textStyle | TextStyle? | 文字样式 | 否 | null |
-| onTap | VoidCallback? | 点击回调 | 否 | null |
-
-### SantoStateTag
-
-| 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
-| --- | --- | --- | --- | --- |
-| text | String | 标签文本 | 是 | - |
-| state | SantoTagState | 标签状态(default/primary/success/warning/error) | 否 | default |
-| size | SantoTagSize | 标签尺寸(small/medium/large) | 否 | medium |
-| onTap | VoidCallback? | 点击回调 | 否 | null |
+| text | String | 标签文本 | 是 | 无 |
+| state | SantoTagState? | 标签状态 waiting/invalidate/running/failed/succeed,按状态取预设配色 | 否 | null |
+| backgroundColor | Color? | 背景色,优先级高于 state 预设配色 | 否 | null |
+| textColor | Color? | 文字颜色,优先级高于 state 预设配色与默认反白文字 | 否 | null |
+| bordered | bool | 是否为描边标签 | 否 | false |
+| borderColor | Color? | 边框颜色,默认取状态色或主题品牌色 | 否 | null |
+| borderWidth | double | 边框宽度 | 否 | 1 |
+| borderRadius | BorderRadius | 标签圆角 | 否 | 12 |
+| padding | EdgeInsetsGeometry | 内边距 | 否 | 横 4 纵 2 |
+| fontSize | double | 文字大小 | 否 | 11 |
+| fontWeight | FontWeight | 文字粗细 | 否 | normal |
+| maxWidth | double? | 最大宽度,超出省略 | 否 | null |
 
 ## 四、示例代码
 
-### SantoTagCustom 基础用法
-
 ```dart
-SantoTagCustom(text: '新品')
-```
+// 普通标签
+SantoTag(text: '标签')
 
-### 自定义样式
+// 描边标签
+SantoTag(text: '已盘点', bordered: true)
 
-```dart
-SantoTagCustom(
-  text: '自定义',
-  backgroundColor: Colors.purple.shade50,
-  textColor: Colors.purple,
-  borderColor: Colors.purple,
-  radius: 8,
-)
-```
-
-### SantoStateTag 五种状态
-
-```dart
+// 状态标签
 Wrap(
   spacing: 8,
   children: [
-    SantoStateTag(text: '默认', state: SantoTagState.default),
-    SantoStateTag(text: '主要', state: SantoTagState.primary),
-    SantoStateTag(text: '成功', state: SantoTagState.success),
-    SantoStateTag(text: '警告', state: SantoTagState.warning),
-    SantoStateTag(text: '错误', state: SantoTagState.error),
+    SantoTag(text: '待进行', state: SantoTagState.waiting),
+    SantoTag(text: '失效态', state: SantoTagState.invalidate),
+    SantoTag(text: '进行中', state: SantoTagState.running),
+    SantoTag(text: '失败态', state: SantoTagState.failed),
+    SantoTag(text: '成功态', state: SantoTagState.succeed),
   ],
 )
+
+// 多彩标签与自定义配色
+SantoTag(text: '红色标签', backgroundColor: Color(0xFFFF4D4F))
+SantoTag(text: '描边彩色', bordered: true, textColor: Colors.red)
+
+// 限制最大宽度
+SantoTag(text: '限制最大宽度', maxWidth: 90)
 ```
 
-### 不同尺寸
+## 版本变更
 
-```dart
-SantoStateTag(
-  text: '大标签',
-  size: SantoTagSize.large,
-)
-```
-
-### 可点击标签
-
-```dart
-SantoTagCustom(
-  text: '点击我',
-  onTap: () {
-    print('Tag tapped');
-  },
-)
-```
+### v1.1.0
+- **变更(破坏性)**: `SantoTagCustom`、`SantoStateTag` 收敛为唯一入口 `SantoTag`,不同形态(普通/描边/状态/多彩)全部通过参数实现
+- **删除**: `SantoTagCustom`(含 `buildBorderTag` 命名构造)、`SantoStateTag`
+- **变更**: `TagState` 枚举更名为 `SantoTagState`,成员不变(waiting/invalidate/running/failed/succeed)

@@ -24,7 +24,7 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 /// )
 /// ```
 ///
-/// @since v4.0.0
+/// @since v1.1.0
 class SantoCard extends StatelessWidget {
   /// 标题文案
   final String? title;

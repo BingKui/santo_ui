@@ -29,6 +29,8 @@ const double kSantoActionBarIconFontSize = 10;
 /// ```
 class SantoActionBarIcon extends StatelessWidget {
   /// 图标名称,取值见 [SantoIcons] 或 [SantoSolidIcons],内部用 [SantoIcon] 渲染
+  ///
+  /// @changed v1.1.0 类型由 Widget 改为图标名称
   final String icon;
 
   /// 图标下方的文案

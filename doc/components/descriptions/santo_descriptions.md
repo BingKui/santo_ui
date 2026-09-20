@@ -210,7 +210,7 @@ SantoDescriptions(
 
 ## 五、版本变更
 
-### v4.0.0
+### v1.1.0
 
 - **新增**: `SantoDescriptions` 描述列表组件,对标 antd Descriptions
 - **新增**: `SantoDescriptionsItem` 列表项,支持 `span` 跨列与 `filled` 占满剩余列

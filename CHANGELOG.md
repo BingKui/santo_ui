@@ -4,33 +4,25 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [4.0.0] - 未发布
+## [1.1.0] - 2026-09-20
 
-ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复与从属入口;Card 补齐标题/操作/元信息插槽并新增 Descriptions。**破坏性变更。**
-
-### 💥 破坏性变更
-
-- **变更(破坏性)**: `SantoActionBarIcon` 的 `icon` 参数类型由 `Widget` 改为 `String` 图标名称(取值见 `SantoIcons` / `SantoSolidIcons`),内部统一用 `SantoIcon` 渲染,颜色与尺寸由组件掌控
-- **删除**: `SantoInsertInfo`(与 `SantoBubbleText` 重复,气泡文本统一用 `SantoBubbleText`)
-- **删除**: `SantoFollowPairInfo`、`SantoAlignPairInfo`(由 `SantoPairInfoTable` 的 `isValueAlign` 覆盖,两者转为库内私有实现)
-
-### 变更
-
-- **变更**: `SantoActionBarButton` 改为基于 `SantoButton` 实现,不再自绘容器与按压反馈;禁用态由透明度 0.4 改为 `SantoButton` 标准禁用样式(置灰),文字字重改为 `SantoButton` 默认 w500,并接入全局防连点
-- **变更**: ActionBar 示例与文档中的 Material 图标全部替换为 SantoIcon 图标
-
-### 🧩 Card 与 Descriptions
-
-- **变更**: `SantoShadowCard` 改名为 `SantoCard`,并新增 `title` / `titleWidget` / `extra` / `meta` 参数,默认背景改为主题 `fillBase`(白)
-- **新增**: `SantoCardMeta`(头像 + 标题 + 描述)与 `SantoDescriptions` / `SantoDescriptionsItem`,对标 antd Descriptions,支持 `column` / `layout` / `bordered` / `size` / `colon` / `labelWidth` / `span`
-- **变更**: 原「CardContent 卡片内容」入口改名为「Descriptions 描述列表」,示例重写为单页
-- 新增组件文档 `doc/components/card/santo_card.md`、`doc/components/descriptions/santo_descriptions.md`
-
-## [3.0.0] - 2026-09-18
-
-弹窗收拢为唯一入口 `SantoDialog`,六个组成部分参数化,常见业务形态改为命名构造。**破坏性变更。**
+按钮、加载、弹窗、Card 与 Tag 多类组件收敛为唯一入口,图标统一为 SantoIcon,组件间距统一取主题 token。**破坏性变更。**
 
 ### 💥 破坏性变更
+
+#### 按钮收拢为唯一入口 SantoButton
+
+- **新增**: `SantoButton` 统一按钮组件,新增 `color` / `variant` / `size` / `shape` / `ghost` / `iconSize` 参数
+- **新增**: `SantoButtonColor` 语义色 neutral / primary / danger / success / warning / info,分别取主题的 `colorTextBase` / `brandPrimary` / `brandError` / `brandSuccess` / `brandWarning` / `brandAuxiliary`
+- **新增**: `SantoButtonSize` 三档尺寸 large(48/16)、middle(32/14,默认,最小宽 84)、small(24/12)
+- **删除**: `SantoNormalButton`(含 `SantoNormalButton.outline`)、`SantoBigMainButton`、`SantoBigOutlineButton`、`SantoBigGhostButton`、`SantoSmallMainButton`、`SantoSmallOutlineButton`、`SantoSmallGhostButton`
+- **删除**: `SantoIconButton`、`SantoVerticalIconButton`(图文按钮并入 `SantoButton` 的 `icon` + `iconPlacement`,`Direction` 枚举移入引导组件)、`SantoButtonConstant`
+- **删除**: `SantoButtonPanel`、`SantoButtonPanelConfig`、`SantoBottomButtonPanel`、`SantoTextButtonPanel`、`SantoMultipleBottomButton`;按钮组合改由调用方用 `Row` / `Expanded` / `SantoSpace` 拼装
+- **变更**: `SantoButtonConfig` 的 `bigButton*` / `smallButton*` 重命名为 `largeButton*` / `middleButton*`,并新增 `smallButton*`
+- **变更**: 按钮文本默认字号与高度统一由 `size` 决定,默认尺寸为 middle
+- **变更**: 去掉各按钮组件的 `themeData` 与 `maxWidth` 参数,改用全局 `SantoButtonConfig` 与 `fontSize` / `width` 等参数
+
+#### 弹窗收拢为唯一入口 SantoDialog
 
 - **新增**: `SantoDialog` 统一弹窗入口,六项配置全部参数化 —— 图标 `icon` / `iconType`、标题 `title` / `titleWidget`、辅助文案 `message` / `messageWidget`、输入框 `showInput` 及 `input*` 一组参数、底部两个按钮 `okText` / `cancelText`、右上角关闭 `closable`
 - **新增**: 输入框内部渲染 `SantoInputText`;`messageMaxHeight` 限定辅助文案区高度,超出后在文案区内滚动
@@ -54,46 +46,18 @@ ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复
 - **变更**: 弹窗宽度恢复为屏幕宽的 85%(与收拢前的 `SantoDialog` 一致;收拢中曾误用主题里未被使用的 `dialogWidth` 300),需要固定宽度时传 `width`
 - **变更**: 弹窗内部不再有重复的灰色底/Scaffold,统一为一层白色圆角 `Material`,内容超出可用高度时整体可滚动
 
-### 🎨 图标统一为 SantoIcon
+#### ActionBar 图标与按钮接入统一体系
 
-- **变更**: 组件内的图标统一改用 `SantoIcon`(语义色;弹窗预设图标与选中/点亮态用 `SantoSolidIcons` 的 solid 实心变体),替换掉此前的多色 PNG:
-  选择指示器(单选/多选/已选状态)、评分星(评分组件/表单星级/评价星级)、筛选重置、选择菜单上下箭头、表单必填星、NoticeBar 的十种状态图标
-- **保留**: 评价表情、分享渠道品牌图标、步骤数字徽标,以及插画类图片(`SantoEmpty` 的 no_data / network_error、城市选择空态)
+- **变更(破坏性)**: `SantoActionBarIcon` 的 `icon` 参数类型由 `Widget` 改为 `String` 图标名称(取值见 `SantoIcons` / `SantoSolidIcons`),内部统一用 `SantoIcon` 渲染,颜色与尺寸由组件掌控
+- **变更**: `SantoActionBarButton` 改为基于 `SantoButton` 实现,不再自绘容器与按压反馈;禁用态由透明度 0.4 改为 `SantoButton` 标准禁用样式(置灰),文字字重改为 `SantoButton` 默认 w500,并接入全局防连点
 
-### 🧩 Table 支持滚动与固定列
+#### Card 收敛与 Descriptions
 
-- **新增**: `SantoTable.height` 内容区高度,数据超出时在内容区内纵向滚动,表头固定(对标 antd `scroll.y`)
-- **新增**: 横向滚动,列宽和超出容器宽度时自动开启,所有列按定宽渲染,未定宽列取默认宽 120
-- **新增**: `SantoTableColumn.fixed`(left / right)固定列,横向滚动时钉在两侧,可与纵向滚动组合(对标 `column.fixed`)
-- **删除**: `SantoTable.pinnedHeader`,由 `height` 取代
-- **变更**: 全部列定宽且超出容器时由"按比例压缩"改为横向滚动
-
-### 📝 示例与文档
-
-- 弹窗示例页按 antd Modal 分组重写:基础用法/图标/辅助文案/输入框/警示文案/右上角关闭/自定义底部/强提示弹窗/语义弹窗/长文本/单选列表/多选列表/分享渠道/按 tag 关闭
-- 新增组件文档 `doc/components/dialog/santo_dialog.md`(含旧的 9 个弹窗类到新 API 的迁移对照)
-
-## [2.0.0] - 2026-09-18
-
-按钮收拢为唯一入口 `SantoButton`,对标 antd Button,类型/尺寸/颜色/形状/图标/状态全部参数化。**破坏性变更。**
-
-### 💥 破坏性变更
-
-- **新增**: `SantoButton` 统一按钮组件,新增 `color` / `variant` / `size` / `shape` / `ghost` / `iconSize` 参数
-- **新增**: `SantoButtonColor` 语义色 neutral / primary / danger / success / warning / info,分别取主题的 `colorTextBase` / `brandPrimary` / `brandError` / `brandSuccess` / `brandWarning` / `brandAuxiliary`
-- **新增**: `SantoButtonSize` 三档尺寸 large(48/16)、middle(32/14,默认,最小宽 84)、small(24/12)
-- **删除**: `SantoNormalButton`(含 `SantoNormalButton.outline`)、`SantoBigMainButton`、`SantoBigOutlineButton`、`SantoBigGhostButton`、`SantoSmallMainButton`、`SantoSmallOutlineButton`、`SantoSmallGhostButton`
-- **删除**: `SantoIconButton`、`SantoVerticalIconButton`(图文按钮并入 `SantoButton` 的 `icon` + `iconPlacement`,`Direction` 枚举移入引导组件)、`SantoButtonConstant`
-- **删除**: `SantoButtonPanel`、`SantoButtonPanelConfig`、`SantoBottomButtonPanel`、`SantoTextButtonPanel`、`SantoMultipleBottomButton`;按钮组合改由调用方用 `Row` / `Expanded` / `SantoSpace` 拼装
-- **变更**: `SantoButtonConfig` 的 `bigButton*` / `smallButton*` 重命名为 `largeButton*` / `middleButton*`,并新增 `smallButton*`
-- **变更**: 按钮文本默认字号与高度统一由 `size` 决定,默认尺寸为 middle
-- **变更**: 去掉各按钮组件的 `themeData` 与 `maxWidth` 参数,改用全局 `SantoButtonConfig` 与 `fontSize` / `width` 等参数
-
-### 📝 示例与文档
-
-- 按钮示例页按 antd Button 文档分组重写:类型/幽灵/危险/图标/图标位置/加载中/多种尺寸/禁用/block/颜色与变体/形状/自定义禁用底色/按钮组合
-- 全库调用点(对话框、选择器、标签选择、评价、选择筛选等)与示例统一迁移到 `SantoButton`
-- 新增组件文档 `doc/components/button/santo_button.md`
+- **变更(破坏性)**: `SantoShadowCard` 改名为 `SantoCard`,并新增 `title` / `titleWidget` / `extra` / `meta` 参数,默认背景改为主题 `fillBase`(白)
+- **新增**: `SantoCardMeta`(头像 + 标题 + 描述)与 `SantoDescriptions` / `SantoDescriptionsItem`,对标 antd Descriptions,支持 `column` / `layout` / `bordered` / `size` / `colon` / `labelWidth` / `span`
+- **删除**: `SantoInsertInfo`(与 `SantoBubbleText` 重复,气泡文本统一用 `SantoBubbleText`)
+- **删除**: `SantoFollowPairInfo`、`SantoAlignPairInfo`(由 `SantoPairInfoTable` 的 `isValueAlign` 覆盖,两者转为库内私有实现)
+- **变更(破坏性)**: Tag 收敛为唯一入口 `SantoTag`,普通/描边/状态/多彩形态全部通过参数实现;`SantoTagCustom`(含 `buildBorderTag`)与 `SantoStateTag` 删除,`TagState` 枚举更名为 `SantoTagState`
 
 ### ⏳ Loading 收拢
 
@@ -103,16 +67,38 @@ ActionBar 图标与按钮接入库内统一体系;Card 分类收敛,删除重复
 - **删除**: `SantoPageLoading`、`SantoLoadingDialog`,由 `SantoLoading` 与 `SantoLoading.show` / `dismiss` 承接
 - **变更**: 浮层文案参数由 `content` 改为 `tip`
 
-### 🎨 图标体系
+### 🎨 图标统一为 SantoIcon
 
 - **新增**: `SantoIcon` 统一图标组件,按名称取用图标;`SantoIcons` 提供全部 1383 个常规图标名称常量
 - **新增**: 内置开源图标库 [Iconoir](https://github.com/iconoir-icons/iconoir)(MIT)的图标 SVG 资源,存于 `assets/iconoir/`,分 regular(1383 个)与 solid(288 个)两种风格
 - **新增**: `solid` 参数支持实心风格,配套 `SantoSolidIcons` 名称常量
 - **变更**: 新增依赖 `flutter_svg ^2.3.0`
-- **变更**: 搜索、关闭、右/上/下箭头、三角、增删、问号、日历翻月等线图标由 PNG 资源统一换为 `SantoIcon`,涉及 43 个组件文件
+- **变更**: 搜索、关闭、右/上/下箭头、三角、增删、问号、日历翻月等线图标由 PNG 资源统一换为 `SantoIcon`,涉及 43 个组件文件;组件内的多色 PNG 图标(选择指示器、评分星、筛选重置、选择菜单上下箭头、表单必填星、NoticeBar 的十种状态图标)同步替换,弹窗预设图标与选中/点亮态用 `SantoSolidIcons` 的 solid 实心变体
+- **保留**: 评价表情、分享渠道品牌图标、步骤数字徽标,以及插画类图片(`SantoEmpty` 的 no_data / network_error、城市选择空态)
 - **变更**: 步进器增删按钮的可用/禁用态改用主题色 `colorTextSecondary` / `colorTextDisabled` 区分
 - **删除**: `SantoAsset` 中 56 个已无引用的常量;`assets/` 下 63 个无引用资源文件(含 `assets/icons/radio/` 整个目录)
-- 新增组件文档 `doc/components/icon/santo_icon.md`
+
+### 🧩 Table 支持滚动与固定列
+
+- **新增**: `SantoTable.height` 内容区高度,数据超出时在内容区内纵向滚动,表头固定(对标 antd `scroll.y`)
+- **新增**: 横向滚动,列宽和超出容器宽度时自动开启,所有列按定宽渲染,未定宽列取默认宽 120
+- **新增**: `SantoTableColumn.fixed`(left / right)固定列,横向滚动时钉在两侧,可与纵向滚动组合(对标 `column.fixed`)
+- **删除**: `SantoTable.pinnedHeader`,由 `height` 取代
+- **变更**: 全部列定宽且超出容器时由"按比例压缩"改为横向滚动
+
+### 📏 间距统一取主题 token
+
+- **变更**: `SantoSpace` 三档间距由硬编码 8/16/24 改为取主题 token(水平 `hSpacingSm/Md/Lg`、垂直 `vSpacingSm/Md/Lg`,默认 10/15/20)
+- **变更**: `SantoDividerSize` 枚举注释修正为与实现一致(取主题 `vSpacingSm/Md/Lg`),行为不变
+
+### 📝 示例与文档
+
+- 按钮示例页按 antd Button 文档分组重写:类型/幽灵/危险/图标/图标位置/加载中/多种尺寸/禁用/block/颜色与变体/形状/自定义禁用底色/按钮组合
+- 全库调用点(对话框、选择器、标签选择、评价、选择筛选等)与示例统一迁移到 `SantoButton`
+- 弹窗示例页按 antd Modal 分组重写:基础用法/图标/辅助文案/输入框/警示文案/右上角关闭/自定义底部/强提示弹窗/语义弹窗/长文本/单选列表/多选列表/分享渠道/按 tag 关闭
+- 原「CardContent 卡片内容」入口改名为「Descriptions 描述列表」,示例重写为单页
+- ActionBar 示例与文档中的 Material 图标全部替换为 SantoIcon 图标
+- 新增组件文档 `doc/components/button/santo_button.md`、`doc/components/icon/santo_icon.md`、`doc/components/dialog/santo_dialog.md`(含旧的 9 个弹窗类到新 API 的迁移对照)、`doc/components/card/santo_card.md`、`doc/components/descriptions/santo_descriptions.md`
 
 ## [1.0.1] - 2026-09-18
 

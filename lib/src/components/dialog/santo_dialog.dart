@@ -109,7 +109,7 @@ typedef SantoDialogShareCustomIcon = Widget? Function(int index);
 /// [warning] / [error],以及按 tag 精确关闭的 [SantoDialog.show] / [SantoDialog.dismiss]。
 ///
 /// @since v1.0.0
-/// @changed v3.0.0 收拢为唯一入口:`SantoDialogManager`、`SantoEnhanceOperationDialog`、
+/// @changed v1.1.0 收拢为唯一入口:`SantoDialogManager`、`SantoEnhanceOperationDialog`、
 /// `SantoContentExportWidget`、`SantoScrollableTextDialog`、`SantoMiddleInputDialog`、
 /// `SantoSingleSelectDialog`、`SantoMultiSelectDialog`、`SantoShareDialog`、
 /// `SantoSafeDialog` 与 `SantoDialogUtils` 全部并入本组件
@@ -209,7 +209,7 @@ class SantoDialog extends StatelessWidget {
   ///
   /// 主按钮为整行实心主色按钮,次要按钮为主色文字链;两者点击后弹窗关闭。
   ///
-  /// @changed v3.0.0 原 `SantoEnhanceOperationDialog`
+  /// @changed v1.1.0 原 `SantoEnhanceOperationDialog`
   factory SantoDialog.alert({
     Key? key,
     SantoDialogIconType iconType = SantoDialogIconType.warning,
@@ -248,7 +248,7 @@ class SantoDialog extends StatelessWidget {
   ///
   /// [isShowOperateWidget] 为 false 时不展示底部提交按钮。
   ///
-  /// @changed v3.0.0 原 `SantoScrollableTextDialog`
+  /// @changed v1.1.0 原 `SantoScrollableTextDialog`
   factory SantoDialog.richText({
     Key? key,
     String? title,
@@ -293,7 +293,7 @@ class SantoDialog extends StatelessWidget {
   /// [customWidget] 会跟在列表尾部;[isCustomFollowScroll] 为 true 时列表跟随
   /// 整体滚动(选项少时用),为 false 时列表自身在最高 300 内滚动。
   ///
-  /// @changed v3.0.0 原 `SantoSingleSelectDialog`
+  /// @changed v1.1.0 原 `SantoSingleSelectDialog`
   factory SantoDialog.singleSelect({
     Key? key,
     String? title,
@@ -340,7 +340,7 @@ class SantoDialog extends StatelessWidget {
   ///
   /// [onSubmit] 返回 false 时不关闭弹窗;[isShowOperateWidget] 为 false 时不展示提交按钮。
   ///
-  /// @changed v3.0.0 原 `SantoMultiSelectDialog`
+  /// @changed v1.1.0 原 `SantoMultiSelectDialog`
   factory SantoDialog.multiSelect({
     Key? key,
     String? title,
@@ -389,7 +389,7 @@ class SantoDialog extends StatelessWidget {
   /// 自定义渠道(值为 [SantoShareItemConstants.shareCustom])的名称与图标由
   /// [getCustomChannelTitle] 与 [getCustomChannelWidget] 按下标提供。
   ///
-  /// @changed v3.0.0 原 `SantoShareDialog`;面板形态的分享请继续使用 `SantoShare`
+  /// @changed v1.1.0 原 `SantoShareDialog`;面板形态的分享请继续使用 `SantoShare`
   factory SantoDialog.share({
     Key? key,
     String? title,

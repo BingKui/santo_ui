@@ -172,7 +172,7 @@ SantoThemeConfigurator.instance.register(
 
 ## 版本变更
 
-### v2.0.0
+### v1.1.0
 
 - **新增**: `SantoButton` 统一按钮入口,新增 `color` / `variant` / `size` / `shape` / `ghost` / `iconSize` 参数
 - **变更**: `SantoButtonType.normal` 对应 antd 的 default;`size` 默认 `middle`(高 32、字号 14)

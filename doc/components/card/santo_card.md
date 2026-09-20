@@ -136,7 +136,7 @@ SantoCard(
 
 ## 五、版本变更
 
-### v4.0.0
+### v1.1.0
 
 - **变更**: 由 `SantoShadowCard` 改名为 `SantoCard`
 - **新增**: `title` / `titleWidget` / `extra` / `meta` 参数

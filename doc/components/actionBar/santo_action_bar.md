@@ -114,7 +114,7 @@ Scaffold(
 
 ## 版本变更
 
-### v4.0.0(未发布)
+### v1.1.0
 - **变更(破坏性)**: `SantoActionBarIcon` 的 `icon` 参数类型由 `Widget` 改为 `String` 图标名称,内部统一用 `SantoIcon` 渲染,颜色/尺寸由组件掌控(取值见 `SantoIcons` / `SantoSolidIcons`)
 - **变更**: `SantoActionBarButton` 改为基于 `SantoButton` 实现,禁用态由透明度 0.4 改为 `SantoButton` 标准禁用样式(置灰),文字字重由 bold 改为 `SantoButton` 默认 w500,并接入全局防连点
 - **变更**: 示例与文档中的 Material 图标全部替换为 SantoIcon 图标

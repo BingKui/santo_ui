@@ -44,17 +44,16 @@ class _TagExampleState extends State<TagExample> {
   Widget _buildBasicSection() {
     return SantoSection(
       title: '基础用法',
-      description: 'SantoTagCustom 默认样式：文字 11 号、内边距 3、圆角 2；'
-          'buildBorderTag 生成描边标签',
+      description: '默认主题色底反白文字，文字 11 号；bordered 生成描边标签',
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: <Widget>[
-          SantoTagCustom(tagText: '标签'),
-          SantoTagCustom(tagText: '自定义标签'),
-          SantoTagCustom.buildBorderTag(tagText: '已盘点'),
-          SantoTagCustom.buildBorderTag(tagText: '标签1'),
+          SantoTag(text: '标签'),
+          SantoTag(text: '自定义标签'),
+          SantoTag(text: '已盘点', bordered: true),
+          SantoTag(text: '标签1', bordered: true),
         ],
       ),
     );
@@ -70,31 +69,32 @@ class _TagExampleState extends State<TagExample> {
         runSpacing: 8,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: <Widget>[
-          SantoTagCustom(
-            tagText: '默认主题色',
+          SantoTag(
+            text: '默认主题色',
           ),
-          SantoTagCustom(
-            tagText: '红色标签',
+          SantoTag(
+            text: '红色标签',
             backgroundColor: Color(0xFFFF4D4F),
           ),
-          SantoTagCustom(
-            tagText: '绿色标签',
+          SantoTag(
+            text: '绿色标签',
             backgroundColor: Color(0xFF52C41A),
           ),
-          SantoTagCustom(
-            tagText: '橙色标签',
+          SantoTag(
+            text: '橙色标签',
             backgroundColor: Color(0xFFFAAD14),
           ),
-          SantoTagCustom.buildBorderTag(
-            tagText: '描边彩色',
+          SantoTag(
+            text: '描边彩色',
+            bordered: true,
             textColor: Colors.red,
             borderColor: Colors.red,
             borderWidth: 2,
             fontSize: 16,
-            textPadding: EdgeInsets.all(6),
+            padding: EdgeInsets.all(6),
           ),
-          SantoTagCustom(
-            tagText: '限制最大宽度',
+          SantoTag(
+            text: '限制最大宽度',
             maxWidth: 90,
           ),
         ],
@@ -273,11 +273,11 @@ class _TagExampleState extends State<TagExample> {
             runSpacing: 12,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
-              SantoStateTag(tagText: '待进行', tagState: TagState.waiting),
-              SantoStateTag(tagText: '失效态', tagState: TagState.invalidate),
-              SantoStateTag(tagText: '进行中', tagState: TagState.running),
-              SantoStateTag(tagText: '失败态', tagState: TagState.failed),
-              SantoStateTag(tagText: '成功态', tagState: TagState.succeed),
+              SantoTag(text: '待进行', state: SantoTagState.waiting),
+              SantoTag(text: '失效态', state: SantoTagState.invalidate),
+              SantoTag(text: '进行中', state: SantoTagState.running),
+              SantoTag(text: '失败态', state: SantoTagState.failed),
+              SantoTag(text: '成功态', state: SantoTagState.succeed),
             ],
           ),
           SizedBox(height: 16),
@@ -286,14 +286,14 @@ class _TagExampleState extends State<TagExample> {
             runSpacing: 12,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
-              SantoStateTag(
+              SantoTag(
                 backgroundColor: Colors.green,
                 textColor: Colors.white,
-                tagText: '自定义配色',
+                text: '自定义配色',
               ),
-              SantoStateTag(
-                tagState: TagState.running,
-                tagText: '自定义标签自定义标签自定义标标别长特别签自定义标签',
+              SantoTag(
+                state: SantoTagState.running,
+                text: '自定义标签自定义标签自定义标标别长特别签自定义标签',
               ),
             ],
           ),
@@ -313,17 +313,17 @@ class _TagExampleState extends State<TagExample> {
         alignment: WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: <Widget>[
-          SantoTagCustom(tagText: '自定义标签'),
-          SantoTagCustom(tagText: '标签'),
-          SantoTagCustom.buildBorderTag(tagText: '标签1'),
-          SantoTagCustom.buildBorderTag(tagText: '标签2'),
-          SantoTagCustom.buildBorderTag(tagText: '特长长长长长长的标签'),
-          SantoTagCustom(tagText: '一级标签'),
-          SantoTagCustom(tagText: '二级标签'),
-          SantoTagCustom(tagText: '其他标签'),
-          SantoTagCustom(tagText: '二级标签'),
-          SantoTagCustom(tagText: '一级标签'),
-          SantoTagCustom(tagText: '二级标签'),
+          SantoTag(text: '自定义标签'),
+          SantoTag(text: '标签'),
+          SantoTag(text: '标签1', bordered: true),
+          SantoTag(text: '标签2', bordered: true),
+          SantoTag(text: '特长长长长长长的标签', bordered: true),
+          SantoTag(text: '一级标签'),
+          SantoTag(text: '二级标签'),
+          SantoTag(text: '其他标签'),
+          SantoTag(text: '二级标签'),
+          SantoTag(text: '一级标签'),
+          SantoTag(text: '二级标签'),
         ],
       ),
     );
@@ -337,13 +337,13 @@ class _TagExampleState extends State<TagExample> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SantoTagCustom(
-            tagText:
+          SantoTag(
+            text:
                 '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',
           ),
           SizedBox(height: 16),
-          SantoStateTag(
-            tagText:
+          SantoTag(
+            text:
                 '标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长标题特别长特别长特别长特别长特别长特别长特别长特别长',
           ),
         ],

@@ -16,7 +16,7 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 /// )
 /// ```
 ///
-/// @since v4.0.0
+/// @since v1.1.0
 class SantoCardMeta extends StatelessWidget {
   /// 头像或图标
   final Widget? avatar;

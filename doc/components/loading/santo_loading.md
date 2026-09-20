@@ -99,7 +99,7 @@ SantoLoading.dismiss(context);
 
 ## 版本变更
 
-### v2.0.0
+### v1.1.0
 
 - **新增**: `SantoLoading` 统一加载组件,新增 `size` / `tip` / `spinning` / `delay` / `indicator` / `percent` / `fullscreen` / `color` / `overlayColor` 参数
 - **新增**: 三档尺寸 `SantoLoadingSize`,指示器 14 / 20 / 32
