@@ -164,7 +164,7 @@ santo_ui/
 
 ```yaml
 dependencies:
-  santo_ui: ^1.1.0
+  santo_ui: ^1.1.1
 ```
 
 ```dart

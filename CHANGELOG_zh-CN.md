@@ -6,6 +6,16 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.1.1] - 2026-09-21
+
+### 🧩 Segmented 角标
+
+- **新增**: `SantoSegmentedOption.badgeCount` 在文案右侧展示计数角标(内部用 `SantoBadge` 渲染,超 99 显示 99+),`SantoSegmentedOption.dot` 展示红点角标,对标 antd Segmented 的选项角标;示例页新增「带角标」演示
+
+### 🖼 Empty 图片参数
+
+- **变更**: `SantoEmpty` 新增 `imageType` 参数(`SantoEmptyImageType` —— noData / networkError),配置不同类型展示不同内置插画;`imageType` 与 `img` 都不配置时不展示图片;`img` 自定义图片优先级最高;`SantoAbnormalStateUtils` 改为通过 `imageType` 提供预设插画
+
 ## [1.1.0] - 2026-09-20
 
 按钮、加载、弹窗、Card 与 Tag 多类组件收敛为唯一入口,图标统一为 SantoIcon,组件间距统一取主题 token。**破坏性变更。**

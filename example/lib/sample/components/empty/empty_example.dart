@@ -30,6 +30,7 @@ class EmptyExample extends StatelessWidget {
         _buildSingleButtonSection(context),
         _buildDoubleButtonSection(context),
         _buildSmallModuleSection(context),
+        _buildCustomImageSection(context),
       ],
     );
   }
@@ -42,10 +43,7 @@ class EmptyExample extends StatelessWidget {
       child: _centerDemoBox(
         context,
         SantoEmpty(
-          img: Image.asset(
-            'assets/image/content_failed.png',
-            scale: 3.0,
-          ),
+          imageType: SantoEmptyImageType.networkError,
           isCenterVertical: true,
           title: '获取数据失败，请重试',
           operateTexts: <String>['请点击页面重试'],
@@ -67,10 +65,7 @@ class EmptyExample extends StatelessWidget {
         context,
         SantoEmpty(
           isCenterVertical: true,
-          img: Image.asset(
-            'assets/image/no_data.png',
-            scale: 3.0,
-          ),
+          imageType: SantoEmptyImageType.noData,
           title: SantoIntl.of(context).localizedResource.noDataTip,
         ),
       ),
@@ -83,10 +78,7 @@ class EmptyExample extends StatelessWidget {
       title: '异常信息默认展示',
       description: '不设置 isCenterVertical 时按内容高度从上往下排列',
       child: SantoEmpty(
-        img: Image.asset(
-          'assets/image/network_error.png',
-          scale: 3.0,
-        ),
+        imageType: SantoEmptyImageType.networkError,
         title: '网络数据异常',
       ),
     );
@@ -96,12 +88,9 @@ class EmptyExample extends StatelessWidget {
   Widget _buildLargeModuleSection(BuildContext context) {
     return SantoSection(
       title: '大模块空态',
-      description: '只传 content 时展示纯文字空态',
+      description: 'imageType 为 noData 时展示内置插画，配置不同 imageType 展示不同图片',
       child: SantoEmpty(
-        img: Image.asset(
-          'assets/image/no_data.png',
-          scale: 3.0,
-        ),
+        imageType: SantoEmptyImageType.noData,
         content: '您的门店暂无用户',
       ),
     );
@@ -113,10 +102,7 @@ class EmptyExample extends StatelessWidget {
       title: '单按钮效果',
       description: 'operateAreaType 为 singleButton 时展示一个主操作按钮',
       child: SantoEmpty(
-        img: Image.asset(
-          'assets/image/no_data.png',
-          scale: 3.0,
-        ),
+        imageType: SantoEmptyImageType.noData,
         title: '这是副标题内容这是副标题内容这是副标',
         content: '您的门店暂无用户',
         operateAreaType: OperateAreaType.singleButton,
@@ -134,10 +120,7 @@ class EmptyExample extends StatelessWidget {
       title: '双按钮效果',
       description: 'operateAreaType 为 doubleButton 时展示主次两个按钮',
       child: SantoEmpty(
-        img: Image.asset(
-          'assets/image/no_data.png',
-          scale: 3.0,
-        ),
+        imageType: SantoEmptyImageType.noData,
         title: '暂无',
         content: '您还没有在维护的信息哦',
         operateAreaType: OperateAreaType.doubleButton,
@@ -152,9 +135,25 @@ class EmptyExample extends StatelessWidget {
   /// 小模块空态
   Widget _buildSmallModuleSection(BuildContext context) {
     return SantoSection(
-      title: '小模块空态',
-      description: '不传 img 时只展示文字，适用于卡片内的小面积空态',
+      title: '无图片空态',
+      description: '不传 imageType 与 img 时不展示图片，只展示文字，适用于小面积空态',
       child: SantoEmpty(
+        content: '您的门店暂无用户',
+      ),
+    );
+  }
+
+  /// 自定义图片
+  Widget _buildCustomImageSection(BuildContext context) {
+    return SantoSection(
+      title: '自定义图片',
+      description: 'img 传任意 Image 时展示自定义图片，优先级高于 imageType',
+      child: SantoEmpty(
+        img: Image.asset(
+          'assets/images/no_data.png',
+          package: 'santo_ui',
+          scale: 3.0,
+        ),
         content: '您的门店暂无用户',
       ),
     );

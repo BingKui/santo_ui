@@ -57,6 +57,8 @@ group:
 | icon | IconData? | 图标 | 否 | null |
 | disabled | bool | 是否禁用该选项 | 否 | false |
 | tooltip | String? | 提示文本 | 否 | null |
+| badgeCount | int? | 文案右侧的计数角标,大于 0 时展示,超 99 显示 99+ | 否 | null |
+| dot | bool | 是否展示红点角标,与 badgeCount 同时设置时以红点为准 | 否 | false |
 
 ## 四、示例代码
 
@@ -125,3 +127,9 @@ SantoSegmented<String>(
   onChanged: (value) {},
 )
 ```
+
+## 版本变更
+
+### v1.1.1
+- **新增**: `SantoSegmentedOption.badgeCount` 参数,文案右侧展示计数角标(内部用 `SantoBadge` 渲染,超 99 显示 99+)
+- **新增**: `SantoSegmentedOption.dot` 参数,展示红点角标,与 `badgeCount` 同时设置时以红点为准

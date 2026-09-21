@@ -5,6 +5,15 @@ import 'package:santo_ui/src/theme/configs/santo_abnormal_state_config.dart';
 import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
+/// 内置插画类型,对应包内插画资源,配置不同的类型展示不同的图片
+enum SantoEmptyImageType {
+  /// 暂无数据
+  noData,
+
+  /// 网络连接异常
+  networkError,
+}
+
 /// 页面状态
 enum AbnormalState {
   /// 获取数据异常
@@ -29,7 +38,8 @@ class SantoAbnormalStateUtils {
       {Image? img, SantoEmptyStatusIndexedActionClickCallback? action}) {
     if (AbnormalState.getDataFailed == status) {
       return SantoEmpty(
-        img: img ?? SantoTools.getAssetImage(SantoAsset.noData),
+        img: img,
+        imageType: SantoEmptyImageType.noData,
         title: SantoIntl.of(context).localizedResource.fetchErrorAndRetry,
         operateTexts: <String>[
           SantoIntl.of(context).localizedResource.clickPageAndRetry
@@ -38,7 +48,8 @@ class SantoAbnormalStateUtils {
       );
     } else if (AbnormalState.networkConnectError == status) {
       return SantoEmpty(
-        img: img ?? SantoTools.getAssetImage(SantoAsset.networkError),
+        img: img,
+        imageType: SantoEmptyImageType.networkError,
         title: SantoIntl.of(context).localizedResource.netErrorAndRetryLater,
         operateTexts: <String>[
           SantoIntl.of(context).localizedResource.clickPageAndRetry
@@ -47,7 +58,8 @@ class SantoAbnormalStateUtils {
       );
     } else if (AbnormalState.noData == status) {
       return SantoEmpty(
-          img: img ?? SantoTools.getAssetImage(SantoAsset.noData),
+          img: img,
+          imageType: SantoEmptyImageType.noData,
           title: SantoIntl.of(context).localizedResource.noDataTip);
     } else {
       return const SizedBox.shrink();
@@ -74,8 +86,14 @@ typedef SantoEmptyStatusIndexedActionClickCallback = void Function(int index);
 /// 异常页面展示一般用于网络错误、数据为空的提示和引导
 // ignore: must_be_immutable
 class SantoEmpty extends StatelessWidget {
-  /// 图片
+  /// 自定义图片,优先级高于 [imageType];[img] 与 [imageType] 都为空时不展示图片
   final Image? img;
+
+  /// 内置插画类型,配置不同的类型展示不同的插画;
+  /// [img] 存在时以 [img] 为准,两者都为空时不展示图片
+  ///
+  /// @since v1.1.1
+  final SantoEmptyImageType? imageType;
 
   /// 标题
   final String? title;
@@ -116,6 +134,7 @@ class SantoEmpty extends StatelessWidget {
 
   SantoEmpty({
     this.img,
+    this.imageType,
     this.title,
     this.content,
     this.operateAreaType = OperateAreaType.textButton,
@@ -165,12 +184,20 @@ class SantoEmpty extends StatelessWidget {
   _buildImageWidget(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final height = size.height;
-    return img != null
+    final Image? resolvedImg = img ??
+        (imageType == null
+            ? null
+            : SantoTools.getAssetImage(
+                imageType == SantoEmptyImageType.noData
+                    ? SantoAsset.noData
+                    : SantoAsset.networkError,
+              ));
+    return resolvedImg != null
         ? Container(
             padding: isCenterVertical
                 ? null
                 : EdgeInsets.only(top: topOffset ?? height * topPercent),
-            child: img,
+            child: resolvedImg,
           )
         : const SizedBox.shrink();
   }

@@ -19,6 +19,7 @@ class _SegmentedExampleState extends State<SegmentedExample> {
   String _iconValue = 'map';
   String _customValue = 'spring';
   String _dynamicValue = 'a';
+  String _badgeValue = 'todo';
   SantoSegmentedSize _sizeValue = SantoSegmentedSize.medium;
   List<SantoSegmentedOption<String>> _dynamicOptions = _baseDynamicOptions;
 
@@ -189,6 +190,20 @@ class _SegmentedExampleState extends State<SegmentedExample> {
               )),
             ],
           ),
+        ),
+        SantoSection(
+          title: '带角标',
+          description: 'badgeCount 展示数字角标（超 99 显示 99+），dot 展示红点',
+          child: _center(SantoSegmented<String>(
+            value: _badgeValue,
+            options: const [
+              SantoSegmentedOption(value: 'todo', label: '待办', badgeCount: 8),
+              SantoSegmentedOption(value: 'doing', label: '进行中', badgeCount: 120),
+              SantoSegmentedOption(value: 'notice', label: '通知', dot: true),
+              SantoSegmentedOption(value: 'done', label: '已完成'),
+            ],
+            onChanged: (value) => setState(() => _badgeValue = value),
+          )),
         ),
         SantoSection(
           title: '自定义选项内容',

@@ -37,7 +37,8 @@ group:
 
 | 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
 | --- | --- | --- | --- | --- |
-| img | Image? | 图片 | 否 | null |
+| imageType | SantoEmptyImageType? | 内置插画类型 noData / networkError,配置不同类型展示不同插画 | 否 | null(不展示图片) |
+| img | Image? | 自定义图片,优先级高于 imageType;两者都不传时不展示图片 | 否 | null |
 | title | String? | 标题 | 否 | null |
 | content | String? | 内容 | 否 | null |
 | operateAreaType | OperateAreaType | 操作区类型(singleButton/doubleButton/textButton) | 否 | textButton |
@@ -111,3 +112,10 @@ SantoEmpty(
   action: (_) => navigateToShop(),
 )
 ```
+
+## 版本变更
+
+### v1.1.1
+- **新增**: `SantoEmptyImageType` 枚举与 `SantoEmpty.imageType` 参数,配置不同类型展示包内内置插画(noData / networkError)
+- **变更**: 不配置 `imageType` 与 `img` 时默认不展示图片,只展示文字
+- **变更**: `SantoAbnormalStateUtils` 内部改用 `imageType` 提供预设插画,`img` 自定义参数继续生效且优先级最高

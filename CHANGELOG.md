@@ -6,6 +6,16 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] - 2026-09-21
+
+### 🧩 Segmented badge
+
+- **Added**: `SantoSegmentedOption.badgeCount` renders a count badge to the right of the label (via `SantoBadge`, capped at 99+) and `SantoSegmentedOption.dot` renders a dot badge, aligned with the antd Segmented item badge; comes with a new "badge" example section
+
+### 🖼 Empty image parameter
+
+- **Changed**: `SantoEmpty` supports the new `imageType` parameter (`SantoEmptyImageType` — noData / networkError) to show different built-in illustrations; when neither `imageType` nor `img` is set no image is rendered; `img` keeps the highest priority; `SantoAbnormalStateUtils` now presets illustrations via `imageType`
+
 ## [1.1.0] - 2026-09-20
 
 Buttons, loading, dialogs, Card and Tag converged into single entries, icons unified on SantoIcon, and widget spacings moved to theme tokens. **Breaking changes.**

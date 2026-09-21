@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:santo_ui/src/components/badge/santo_badge.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
@@ -55,6 +56,16 @@ class SantoSegmentedOption<T> {
   /// 长按提示文案
   final String? tooltip;
 
+  /// 角标数字,大于 0 时展示在文案右侧,对标 antd Segmented 的 badge.count
+  ///
+  /// @since v1.1.1
+  final int? badgeCount;
+
+  /// 是否展示红点,与 [badgeCount] 同时设置时以红点为准
+  ///
+  /// @since v1.1.1
+  final bool dot;
+
   const SantoSegmentedOption({
     required this.value,
     this.label,
@@ -62,6 +73,8 @@ class SantoSegmentedOption<T> {
     this.icon,
     this.disabled = false,
     this.tooltip,
+    this.badgeCount,
+    this.dot = false,
   }) : assert(
           label != null || labelWidget != null || icon != null,
           'SantoSegmentedOption 至少需要 label、labelWidget、icon 之一',
@@ -73,6 +86,12 @@ const double kSantoSegmentedTrackPadding = 2;
 
 /// 图标与文案之间的间距
 const double kSantoSegmentedIconGap = 4;
+
+/// 文案与角标之间的间距
+const double kSantoSegmentedBadgeGap = 6;
+
+/// 角标边长(红点直径为其一半)
+const double kSantoSegmentedBadgeSize = 16;
 
 /// 分段选择器:在多个选项中选择一个,切换时白色滑块在选项间滑动
 ///
@@ -380,6 +399,7 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
         : commonConfig.fontSizeBase;
 
     final hasLabel = option.label != null || option.labelWidget != null;
+    final hasBadge = option.dot || (option.badgeCount ?? 0) > 0;
     // 高度交给 minHeight 约束,不用 Center/Align 包裹:宽松约束下它们会撑满可用高度
     Widget content = Row(
       mainAxisSize: MainAxisSize.min,
@@ -402,6 +422,14 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
           ),
+        if (hasBadge) ...[
+          const SizedBox(width: kSantoSegmentedBadgeGap),
+          SantoBadge(
+            count: option.badgeCount,
+            isDot: option.dot,
+            badgeSize: kSantoSegmentedBadgeSize,
+          ),
+        ],
       ],
     );
 
