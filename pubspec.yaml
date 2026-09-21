@@ -1,5 +1,8 @@
 name: santo_ui
-description: Santo(云上先途)企业级 Flutter 组件库,整合优化多个开源项目,用于内部应用开发。
+description: >-
+  Santo UI is an enterprise-grade Flutter widget library with a built-in
+  theming system and 60+ production-ready components, following the design
+  language of Ant Design, TDesign and Vant.
 version: 1.1.0
 repository: https://github.com/BingKui/santo_ui
 homepage: https://github.com/BingKui/santo_ui
@@ -13,7 +16,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  xml: ^6.1.0
+  xml: ">=6.1.0 <8.0.0"
   lpinyin: ^2.0.3
   path_drawing: ^1.0.0
   intl: ">=0.18.0 <2.0.0"
