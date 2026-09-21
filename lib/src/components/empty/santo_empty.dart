@@ -1,17 +1,69 @@
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_abnormal_state_config.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
-import 'package:flutter/material.dart';
 
-/// 内置插画类型,对应包内插画资源,配置不同的类型展示不同的图片
+/// 内置插画宽度,插画 SVG 原始比例为 400:300
+const double kSantoEmptyImageWidth = 220;
+
+/// 内置插画类型,对应 `assets/empty/` 下的 SVG 插画,配置不同的类型展示不同的图片
 enum SantoEmptyImageType {
-  /// 暂无数据
-  noData,
+  /// 页面不存在(404)
+  notFound,
 
-  /// 网络连接异常
-  networkError,
+  /// 内容为空
+  contentEmpty,
+
+  /// 导入加载中
+  importLoading,
+
+  /// 列表为空
+  listEmpty,
+
+  /// 加载失败
+  loadFail,
+
+  /// 无访问权限
+  noAccess,
+
+  /// 未开通支付方式
+  notOpenPayType,
+
+  /// 网络未连接
+  offline,
+
+  /// 订单为空
+  orderEmpty,
+
+  /// 搜索无结果
+  searchEmpty,
+
+  /// 账号未绑定
+  unbindAccount,
+
+  /// 敬请期待
+  wait;
+
+  /// 对应的包内 SVG 资源路径
+  String get assetPath {
+    const paths = <SantoEmptyImageType, String>{
+      SantoEmptyImageType.notFound: 'empty/404.svg',
+      SantoEmptyImageType.contentEmpty: 'empty/content_empty.svg',
+      SantoEmptyImageType.importLoading: 'empty/import_loading.svg',
+      SantoEmptyImageType.listEmpty: 'empty/list_empty.svg',
+      SantoEmptyImageType.loadFail: 'empty/load_fail.svg',
+      SantoEmptyImageType.noAccess: 'empty/no_access.svg',
+      SantoEmptyImageType.notOpenPayType: 'empty/not_open_paytype.svg',
+      SantoEmptyImageType.offline: 'empty/offline.svg',
+      SantoEmptyImageType.orderEmpty: 'empty/order_empty.svg',
+      SantoEmptyImageType.searchEmpty: 'empty/search_empty.svg',
+      SantoEmptyImageType.unbindAccount: 'empty/unbind_account.svg',
+      SantoEmptyImageType.wait: 'empty/wait.svg',
+    };
+    return 'assets/${paths[this]!}';
+  }
 }
 
 /// 页面状态
@@ -35,11 +87,11 @@ class SantoAbnormalStateUtils {
   /// status: 页面状态类型为[EmptyState]
   static Widget getEmptyWidgetByState(
       BuildContext context, AbnormalState status,
-      {Image? img, SantoEmptyStatusIndexedActionClickCallback? action}) {
+      {Widget? img, SantoEmptyStatusIndexedActionClickCallback? action}) {
     if (AbnormalState.getDataFailed == status) {
       return SantoEmpty(
         img: img,
-        imageType: SantoEmptyImageType.noData,
+        imageType: SantoEmptyImageType.loadFail,
         title: SantoIntl.of(context).localizedResource.fetchErrorAndRetry,
         operateTexts: <String>[
           SantoIntl.of(context).localizedResource.clickPageAndRetry
@@ -49,7 +101,7 @@ class SantoAbnormalStateUtils {
     } else if (AbnormalState.networkConnectError == status) {
       return SantoEmpty(
         img: img,
-        imageType: SantoEmptyImageType.networkError,
+        imageType: SantoEmptyImageType.offline,
         title: SantoIntl.of(context).localizedResource.netErrorAndRetryLater,
         operateTexts: <String>[
           SantoIntl.of(context).localizedResource.clickPageAndRetry
@@ -59,7 +111,7 @@ class SantoAbnormalStateUtils {
     } else if (AbnormalState.noData == status) {
       return SantoEmpty(
           img: img,
-          imageType: SantoEmptyImageType.noData,
+          imageType: SantoEmptyImageType.listEmpty,
           title: SantoIntl.of(context).localizedResource.noDataTip);
     } else {
       return const SizedBox.shrink();
@@ -86,13 +138,18 @@ typedef SantoEmptyStatusIndexedActionClickCallback = void Function(int index);
 /// 异常页面展示一般用于网络错误、数据为空的提示和引导
 // ignore: must_be_immutable
 class SantoEmpty extends StatelessWidget {
-  /// 自定义图片,优先级高于 [imageType];[img] 与 [imageType] 都为空时不展示图片
-  final Image? img;
+  /// 自定义图片组件,优先级高于 [imageType];[img] 与 [imageType] 都为空时不展示图片
+  ///
+  /// 可传任意图片组件(如 Image / SvgPicture),尺寸自行控制
+  ///
+  /// @changed v1.2.0 类型从 Image? 放宽为 Widget?
+  final Widget? img;
 
-  /// 内置插画类型,配置不同的类型展示不同的插画;
+  /// 内置插画类型,配置不同的类型展示不同的插画,见 [SantoEmptyImageType];
   /// [img] 存在时以 [img] 为准,两者都为空时不展示图片
   ///
   /// @since v1.1.1
+  /// @changed v1.2.0 插画替换为 assets/empty 下的 SVG,枚举值按新插画重新定义
   final SantoEmptyImageType? imageType;
 
   /// 标题
@@ -184,13 +241,13 @@ class SantoEmpty extends StatelessWidget {
   _buildImageWidget(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final height = size.height;
-    final Image? resolvedImg = img ??
+    final Widget? resolvedImg = img ??
         (imageType == null
             ? null
-            : SantoTools.getAssetImage(
-                imageType == SantoEmptyImageType.noData
-                    ? SantoAsset.noData
-                    : SantoAsset.networkError,
+            : SvgPicture.asset(
+                imageType!.assetPath,
+                package: 'santo_ui',
+                width: kSantoEmptyImageWidth,
               ));
     return resolvedImg != null
         ? Container(

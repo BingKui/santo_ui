@@ -12,91 +12,6 @@ class _CascaderExampleState extends State<CascaderExample> {
   String _selectedRegion = '请选择地区';
   String _selectedAddress = '请选择地址';
 
-  /// 省/市/区 三级数据
-  final List<SantoCascaderItem> _regionData = [
-    SantoCascaderItem(
-      label: '北京市',
-      value: 'beijing',
-      children: [
-        SantoCascaderItem(
-          label: '北京市',
-          value: 'beijing_city',
-          children: [
-            SantoCascaderItem(label: '东城区', value: 'dongcheng'),
-            SantoCascaderItem(label: '西城区', value: 'xicheng'),
-            SantoCascaderItem(label: '朝阳区', value: 'chaoyang'),
-            SantoCascaderItem(label: '海淀区', value: 'haidian'),
-            SantoCascaderItem(label: '丰台区', value: 'fengtai'),
-          ],
-        ),
-      ],
-    ),
-    SantoCascaderItem(
-      label: '上海市',
-      value: 'shanghai',
-      children: [
-        SantoCascaderItem(
-          label: '上海市',
-          value: 'shanghai_city',
-          children: [
-            SantoCascaderItem(label: '黄浦区', value: 'huangpu'),
-            SantoCascaderItem(label: '徐汇区', value: 'xuhui'),
-            SantoCascaderItem(label: '长宁区', value: 'changning'),
-            SantoCascaderItem(label: '静安区', value: 'jingan'),
-            SantoCascaderItem(label: '浦东新区', value: 'pudong'),
-          ],
-        ),
-      ],
-    ),
-    SantoCascaderItem(
-      label: '广东省',
-      value: 'guangdong',
-      children: [
-        SantoCascaderItem(
-          label: '广州市',
-          value: 'guangzhou',
-          children: [
-            SantoCascaderItem(label: '天河区', value: 'tianhe'),
-            SantoCascaderItem(label: '越秀区', value: 'yuexiu'),
-            SantoCascaderItem(label: '荔湾区', value: 'liwan'),
-          ],
-        ),
-        SantoCascaderItem(
-          label: '深圳市',
-          value: 'shenzhen',
-          children: [
-            SantoCascaderItem(label: '南山区', value: 'nanshan'),
-            SantoCascaderItem(label: '福田区', value: 'futian'),
-            SantoCascaderItem(label: '罗湖区', value: 'luohu'),
-          ],
-        ),
-      ],
-    ),
-    SantoCascaderItem(
-      label: '浙江省',
-      value: 'zhejiang',
-      children: [
-        SantoCascaderItem(
-          label: '杭州市',
-          value: 'hangzhou',
-          children: [
-            SantoCascaderItem(label: '西湖区', value: 'xihu'),
-            SantoCascaderItem(label: '上城区', value: 'shangcheng'),
-            SantoCascaderItem(label: '拱墅区', value: 'gongshu'),
-          ],
-        ),
-        SantoCascaderItem(
-          label: '宁波市',
-          value: 'ningbo',
-          children: [
-            SantoCascaderItem(label: '海曙区', value: 'haishu'),
-            SantoCascaderItem(label: '鄞州区', value: 'yinzhou'),
-          ],
-        ),
-      ],
-    ),
-  ];
-
   /// 两级数据（如大类/小类）
   final List<SantoCascaderItem> _categoryData = [
     SantoCascaderItem(
@@ -133,21 +48,23 @@ class _CascaderExampleState extends State<CascaderExample> {
     return SantoPageLayout(      title: 'Cascader 级联选择器示例',
       children: <Widget>[
         ExampleIntro('cascader'),
-        // 场景1：省/市/区三级选择
+        // 场景1：内置省/市/区数据选择
         SantoSection(
-          title: '省/市/区 三级联动',
-          description: 'columnCount 为 3，onConfirm 回传选中项并拼接展示',
+          title: '省/市/区 三级联动（内置数据）',
+          description:
+              'showArea 使用内置 vant 行政区划数据，onConfirm 回传 SantoAreaResult（codes/names/text）',
           child: GestureDetector(
             onTap: () {
-              SantoCascader.show(
+              SantoCascader.showArea(
                 context: context,
                 title: '请选择地区',
-                data: _regionData,
-                columnCount: 3,
-                onConfirm: (selectedItems, selectedValues) {
+                onConfirm: (result) {
                   setState(() {
-                    _selectedRegion = selectedItems.map((e) => e.label).join(' / ');
+                    _selectedRegion = result.text;
                   });
+                  SantoToast.show(
+                      'code: ${result.codes.join(" / ")}\nname: ${result.names.join(" / ")}',
+                      context);
                 },
               );
             },
@@ -169,6 +86,8 @@ class _CascaderExampleState extends State<CascaderExample> {
                             ? Color(0xFF808695)
                             : Color(0xFF17233D),
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFF808695)),
@@ -226,18 +145,16 @@ class _CascaderExampleState extends State<CascaderExample> {
         // 场景3：带初始值的选择
         SantoSection(
           title: '带初始值的选择',
-          description: 'initialValues 预置广东省、深圳市、南山区为默认选中',
+          description: 'initialValues 传行政区划码，预置广东省(440000)、深圳市(440300)、南山区(440305)',
           child: GestureDetector(
             onTap: () {
-              SantoCascader.show(
+              SantoCascader.showArea(
                 context: context,
                 title: '请选择地区',
-                data: _regionData,
-                columnCount: 3,
-                initialValues: ['guangdong', 'shenzhen', 'nanshan'],
-                onConfirm: (selectedItems, selectedValues) {
+                initialValues: ['440000', '440300', '440305'],
+                onConfirm: (result) {
                   SantoToast.show(
-                      '选择了: ${selectedValues.join(" / ")}', context);
+                      '选择了: ${result.text}\n${result.codes.join(" / ")}', context);
                 },
               );
             },

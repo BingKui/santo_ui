@@ -26,6 +26,60 @@ Future<void> _pullDown(WidgetTester tester, double distance) async {
 }
 
 void main() {
+  testWidgets('下拉刷新头部带圆角', (tester) async {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+
+    await tester.pumpWidget(_host(SantoRefresh(
+      onRefresh: () async {},
+      child: ListView(children: _items(10)),
+    )));
+
+    // 下拉但不松手,让头部保持展示
+    final gesture =
+        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    await gesture.moveBy(const Offset(0, 40));
+    await tester.pump();
+
+    final BoxDecoration header = tester
+        .widgetList<Container>(find.byType(Container))
+        .map((Container container) => container.decoration)
+        .whereType<BoxDecoration>()
+        .firstWhere(
+          (BoxDecoration decoration) =>
+              decoration.color == commonConfig.fillBody,
+          orElse: () => const BoxDecoration(),
+        );
+
+    expect(header.borderRadius, BorderRadius.circular(commonConfig.radiusMd));
+
+    await gesture.up();
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('拖拽过程中头部高度跟随下拉距离', (tester) async {
+    await tester.pumpWidget(_host(SantoRefresh(
+      onRefresh: () async {},
+      child: ListView(children: _items(10)),
+    )));
+
+    final gesture =
+        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    await gesture.moveBy(const Offset(0, 40));
+    await tester.pump();
+
+    // 头部高度 = 下拉距离(40 未达触发阈值,仍是拉动态)
+    final List<double> heights = tester
+        .widgetList<Container>(find.byType(Container))
+        .map((Container container) => container.constraints?.maxHeight)
+        .whereType<double>()
+        .toList();
+    expect(heights, contains(40));
+
+    await gesture.up();
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('下拉松手触发刷新并走完四态', (tester) async {
     final List<SantoRefreshState> states = <SantoRefreshState>[];
     int refreshCount = 0;

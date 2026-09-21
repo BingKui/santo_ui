@@ -289,6 +289,7 @@ export 'src/components/swipe_cell/santo_swipe_cell.dart';
 export 'src/components/swiper/santo_swiper.dart';
 
 //级联选择器
+export 'src/components/cascader/santo_area_data.dart';
 export 'src/components/cascader/santo_cascader.dart';
 
 //下拉菜单

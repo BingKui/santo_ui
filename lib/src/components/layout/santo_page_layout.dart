@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:santo_ui/src/components/layout/santo_app_layout_scope.dart';
 import 'package:santo_ui/src/components/layout/santo_bottom_safe_area.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
+import 'package:santo_ui/src/components/refresh/santo_refresh.dart';
 import 'package:santo_ui/src/components/space/santo_space.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -12,7 +14,12 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 /// * 导航栏可配置:传 [appBar] 可使用任意自定义导航栏(如 [SantoAppBar]),
 ///   只传 [title] 时用 [SantoAppBar] 快速构建,两者都不传则不显示导航栏,
 ///   此时内容区自动避开状态栏;
-/// * 内容区固定内边距取 [iGapAllMiddle],不可单独调整;
+/// * 内容区内边距默认取 [iGapAllMiddle],可用 [padding] 覆盖(顶部状态栏
+///   避让始终由布局叠加,不需要业务自己计算);
+/// * [header] 是标题下方的固定区域(不随内容滚动),用于放搜索框、
+///   筛选组件等,撑满宽度、高度自适应、不加内边距;
+/// * [enableRefresh] 开启后内置滚动容器由 [SantoRefresh] 承载,
+///   下拉刷新回调见 [onRefresh];
 /// * [children] 是页面的内容块,块之间由 [SantoSpace] 统一加 `gapMd` 间距,
 ///   页面不用自己写分隔间距;
 /// * 内容默认可滚动([scrollable]),滚动容器自带该内边距(可用 [scrollController]
@@ -79,8 +86,89 @@ class SantoPageLayout extends StatelessWidget {
   /// 叠在内容区之上的控件,直接作为 Stack 子节点插入
   final Widget? overlay;
 
-  /// 内容滚动控制器,仅 [scrollable] 为 true 时生效(如回顶按钮、锚点联动)
+  /// 内容区滚动控制器,仅 [scrollable] 为 true 时生效(如回顶按钮、锚点联动)
   final ScrollController? scrollController;
+
+  /// 内容区内边距,默认取 [iGapAllMiddle]
+  ///
+  /// 顶部状态栏避让([header] 为 null 时)始终由布局在传入值之上叠加,
+  /// 无需业务自己计算;[header] 不受该内边距影响
+  ///
+  /// @since v1.2.0
+  final EdgeInsetsGeometry? padding;
+
+  /// 页面标题下方的固定区域(不随内容滚动),用于放搜索框、筛选组件等
+  ///
+  /// 不做任何内边距,直接撑满宽度,高度由内容自适应,
+  /// 与滚动内容之间的间距由内容区内边距提供
+  ///
+  /// @since v1.2.0
+  final Widget? header;
+
+  /// 是否支持下拉刷新,默认 false
+  ///
+  /// 开启后内置滚动容器由 [SantoRefresh] 承载,[onRefresh] 必须同时提供;
+  /// [scrollable] 为 false 时内容自带滚动组件,也可开启,由内容承接刷新手势
+  ///
+  /// @since v1.2.0
+  final bool enableRefresh;
+
+  /// 下拉刷新回调,[enableRefresh] 为 true 时必传
+  ///
+  /// @since v1.2.0
+  final Future<void> Function()? onRefresh;
+
+  /// 导航栏左侧活动区域,透传给 [SantoAppBar];仅 [title] 简写构建时生效,
+  /// 传 [appBar] 时请在 [appBar] 上自行配置
+  ///
+  /// @since v1.2.0
+  final Widget? appBarLeading;
+
+  /// 导航栏右侧操作区,透传给 [SantoAppBar](Widget 或 List&lt;Widget&gt;);
+  /// 仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final dynamic appBarActions;
+
+  /// 导航栏背景色,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final Color? appBarBackgroundColor;
+
+  /// 导航栏阴影高度,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final double appBarElevation;
+
+  /// 导航栏阴影颜色,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final Color? appBarShadowColor;
+
+  /// 导航栏形状,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final ShapeBorder? appBarShape;
+
+  /// 导航栏图标主题,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final IconThemeData? appBarIconTheme;
+
+  /// 导航栏操作区图标主题,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final IconThemeData? appBarActionsIconTheme;
+
+  /// 导航栏系统 UI 样式(状态栏),透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final SystemUiOverlayStyle? appBarSystemOverlayStyle;
+
+  /// 导航栏返回按钮点击回调,透传给 [SantoAppBar];仅 [title] 简写构建时生效
+  ///
+  /// @since v1.2.0
+  final VoidCallback? appBarBackLeadCallback;
 
   const SantoPageLayout({
     Key? key,
@@ -96,7 +184,28 @@ class SantoPageLayout extends StatelessWidget {
     this.bottomNavigationBar,
     this.overlay,
     this.scrollController,
-  }) : super(key: key);
+    this.padding,
+    this.header,
+    this.enableRefresh = false,
+    this.onRefresh,
+    this.appBarLeading,
+    this.appBarActions,
+    this.appBarBackgroundColor,
+    this.appBarElevation = 0,
+    this.appBarShadowColor,
+    this.appBarShape,
+    this.appBarIconTheme,
+    this.appBarActionsIconTheme,
+    this.appBarSystemOverlayStyle,
+    this.appBarBackLeadCallback,
+  })  : assert(!enableRefresh || onRefresh != null,
+            'enableRefresh 为 true 时必须提供 onRefresh'),
+        assert(
+            appBarActions == null ||
+                appBarActions is Widget ||
+                appBarActions is List<Widget>,
+            'appBarActions 必须是 Widget 或 List<Widget>'),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +213,7 @@ class SantoPageLayout extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: appBar ?? (title == null ? null : SantoAppBar(title: title)),
+      appBar: appBar ?? _buildAppBar(),
       floatingActionButton: floatingActionButton,
       floatingActionButtonLocation: floatingActionButtonLocation,
       bottomNavigationBar: bottomNavigationBar,
@@ -115,14 +224,15 @@ class SantoPageLayout extends StatelessWidget {
           final bottomAreaInset = (bottomSafeArea ? media.padding.bottom : 0.0) +
               bottomInset +
               SantoAppLayoutScope.bottomBarInsetOf(context);
-          final contentPadding =
-              iGapAllMiddle + EdgeInsets.only(top: media.padding.top);
+          // header 区域不加内边距,滚动内容不再叠加状态栏避让
+          final contentPadding = (padding ?? iGapAllMiddle)
+              .add(EdgeInsets.only(top: header == null ? media.padding.top : 0));
 
           // 内容自带滚动:把底部安全区并入内容的 MediaQuery,
           // 由内容自己的滚动避让,不在视口底部切出空白
-          Widget content;
+          Widget scrollArea;
           if (!scrollable) {
-            content = Padding(
+            scrollArea = Padding(
               padding: contentPadding,
               child: MediaQuery(
                 data: media.copyWith(
@@ -132,8 +242,17 @@ class SantoPageLayout extends StatelessWidget {
               ),
             );
           } else {
-            content = SingleChildScrollView(
+            scrollArea = SingleChildScrollView(
               controller: scrollController,
+              // 内容不满一屏时 ClampingScrollPhysics 不接受拖动,
+              // 下拉刷新需要 AlwaysScrollableScrollPhysics 才能拉出刷新头;
+              // 必须把平台物理挂到 parent 上,否则没有边界约束与回弹模拟,
+              // 松手后 pixels 会停在负值,刷新头反复弹出(页面持续抖动)
+              physics: enableRefresh
+                  ? AlwaysScrollableScrollPhysics(
+                      parent: ScrollConfiguration.of(context)
+                          .getScrollPhysics(context))
+                  : null,
               padding: contentPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -147,12 +266,46 @@ class SantoPageLayout extends StatelessWidget {
               ),
             );
           }
+          if (enableRefresh) {
+            scrollArea = SantoRefresh(onRefresh: onRefresh, child: scrollArea);
+          }
+
+          Widget content;
+          if (header != null) {
+            content = Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                header!,
+                Expanded(child: scrollArea),
+              ],
+            );
+          } else {
+            content = scrollArea;
+          }
 
           if (overlay == null) return content;
           // 挂件自己决定定位方式(Align / Positioned),所以直接作为 Stack 子节点
           return Stack(children: <Widget>[content, overlay!]);
         },
       ),
+    );
+  }
+
+  /// [title] 简写构建导航栏,透传 appBar 系列配置
+  PreferredSizeWidget? _buildAppBar() {
+    if (title == null) return null;
+    return SantoAppBar(
+      title: title,
+      leading: appBarLeading,
+      actions: appBarActions,
+      backgroundColor: appBarBackgroundColor,
+      elevation: appBarElevation,
+      shadowColor: appBarShadowColor,
+      shape: appBarShape,
+      iconTheme: appBarIconTheme,
+      actionsIconTheme: appBarActionsIconTheme,
+      systemOverlayStyle: appBarSystemOverlayStyle,
+      backLeadCallback: appBarBackLeadCallback,
     );
   }
 

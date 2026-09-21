@@ -7,9 +7,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   SantoIntl.add(ResourceDe.locale, ResourceDe());
-  // 全局导航栏使用炭灰深色背景
+  // 全局导航栏使用浅色背景
   SantoThemeConfigurator.instance.register(
-    SantoAllThemeConfig(appBarConfig: SantoAppBarConfig.dark()),
+    SantoAllThemeConfig(appBarConfig: SantoAppBarConfig.light()),
   );
   runApp(MyApp());
 }

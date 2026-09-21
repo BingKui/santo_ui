@@ -1,6 +1,6 @@
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
-import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/theme/base/santo_base_config.dart';
 import 'package:santo_ui/src/theme/base/santo_default_config_utils.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
@@ -59,12 +59,10 @@ class SantoAppBarConfig extends SantoBaseConfig {
         _iconSize = iconSize,
         super(configId: configId) {
     _backgroundColor = Color(0xff2E313B);
-    _leadIconBuilder = () => Image.asset(
-          SantoAsset.iconBackWhite,
-          package: SantoStrings.flutterPackageName,
-          width: SantoAppBarTheme.iconSize,
-          height: SantoAppBarTheme.iconSize,
-          fit: BoxFit.fitHeight,
+    _leadIconBuilder = () => SantoIcon(
+          SantoIcons.arrowLeft,
+          size: SantoAppBarTheme.iconSize,
+          color: SantoAppBarTheme.darkTextColor,
         );
     _titleStyle = SantoTextStyle(
       fontSize: SantoAppBarTheme.titleFontSize,
@@ -95,12 +93,10 @@ class SantoAppBarConfig extends SantoBaseConfig {
         _iconSize = iconSize,
         super(configId: configId) {
     _backgroundColor = Colors.white;
-    _leadIconBuilder = () => Image.asset(
-          SantoAsset.iconBackBlack,
-          package: SantoStrings.flutterPackageName,
-          width: SantoAppBarTheme.iconSize,
-          height: SantoAppBarTheme.iconSize,
-          fit: BoxFit.fitHeight,
+    _leadIconBuilder = () => SantoIcon(
+          SantoIcons.arrowLeft,
+          size: SantoAppBarTheme.iconSize,
+          color: SantoAppBarTheme.lightTextColor,
         );
     _titleStyle = SantoTextStyle(
       fontSize: SantoAppBarTheme.titleFontSize,

@@ -41,7 +41,7 @@ group:
 - SantoDrawer 需指定方向,左右方向用 width,上下方向用 height
 - SantoBottomDrawer 默认处理底部安全区域
 - barrierDismissible 为 false 时需显式提供关闭方式
-- 内容过多时建议在 child 中使用可滚动组件
+- 内容区**自动可滚动**:高度自适应时最多顶到 `maxHeight`(默认屏幕 85%),超出后内容区滚动,长内容不会溢出,调用方无需自己套滚动控件
 
 ## 三、构造函数及参数说明
 

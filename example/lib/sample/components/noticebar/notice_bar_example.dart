@@ -146,10 +146,10 @@ class SantoNoticeBarExample extends StatelessWidget {
             // 通知颜色
             backgroundColor: Colors.grey,
             // 背景色
-            leftWidget: SantoTools.getAssetImage(SantoAsset.iconMore),
+            leftWidget: const SantoIcon(SantoIcons.moreHoriz),
 
             ///左侧图标
-            rightWidget: SantoTools.getAssetImage(SantoAsset.iconMore),
+            rightWidget: const SantoIcon(SantoIcons.moreHoriz),
 
             ///右侧图标
             onNoticeTap: () {

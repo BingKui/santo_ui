@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/components/cascader/santo_area_data.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
@@ -115,6 +116,44 @@ class SantoCascader extends StatefulWidget {
           activeColor: activeColor,
         );
       },
+    );
+  }
+
+  /// 弹出省市区选择器（内置 vant 行政区划数据）
+  ///
+  /// [initialValues] 传行政区划码列表（如 `['440000', '440300', '440305']`），
+  /// [onConfirm] 回传 [SantoAreaResult]，包含每一级的 code 与 name。
+  ///
+  /// @since v1.2.0
+  static void showArea({
+    required BuildContext context,
+    String? title,
+    int columnCount = 3,
+    List<String>? initialValues,
+    void Function(SantoAreaResult result)? onConfirm,
+    SantoCascaderCancelCallback? onCancel,
+    String confirmText = '确认',
+    String cancelText = '取消',
+    Color? activeColor,
+  }) {
+    show(
+      context: context,
+      title: title,
+      data: SantoAreaData.cascaderItems,
+      columnCount: columnCount,
+      initialValues: initialValues,
+      onConfirm: onConfirm == null
+          ? null
+          : (selectedItems, selectedValues) {
+              onConfirm(SantoAreaResult(
+                codes: selectedValues,
+                names: selectedItems.map((e) => e.label).toList(),
+              ));
+            },
+      onCancel: onCancel,
+      confirmText: confirmText,
+      cancelText: cancelText,
+      activeColor: activeColor,
     );
   }
 

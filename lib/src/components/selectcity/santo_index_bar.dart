@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// IndexBar touch callback IndexModel.
@@ -50,11 +51,10 @@ class IndexBar extends StatefulWidget {
       this.width = 30,
       this.itemHeight = 16,
       this.color = Colors.transparent,
-      this.textStyle =
-          const TextStyle(fontSize: 12.0, color: Color(0xFF101D37)),
+      this.currentTag = '',
       this.touchDownColor = const Color(0xffeeeeee),
-      this.touchDownTextStyle =
-          const TextStyle(fontSize: 12.0, color: Colors.black)});
+      this.textStyle =
+          const TextStyle(fontSize: 12.0, color: Color(0xFF101D37))});
 
   /// index data.
   final List<String> data;
@@ -68,13 +68,14 @@ class IndexBar extends StatefulWidget {
   /// Background color
   final Color color;
 
+  /// 当前选中的字母(常驻高亮,跟随列表滚动所在分组)
+  final String currentTag;
+
   /// IndexBar touch down color.
   final Color touchDownColor;
 
   /// IndexBar text style.
   final TextStyle textStyle;
-
-  final TextStyle touchDownTextStyle;
 
   /// Item touch callback.
   final IndexBarTouchCallback onTouch;
@@ -85,26 +86,20 @@ class IndexBar extends StatefulWidget {
 }
 
 class _SuspensionListViewIndexBarState extends State<IndexBar> {
-  bool _isTouchDown = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: _isTouchDown ? widget.touchDownColor : widget.color,
+      color: widget.color,
       width: widget.width.toDouble(),
       child: _IndexBar(
         data: widget.data,
         width: widget.width,
         itemHeight: widget.itemHeight,
         textStyle: widget.textStyle,
-        touchDownTextStyle: widget.touchDownTextStyle,
+        touchDownColor: widget.touchDownColor,
+        currentTag: widget.currentTag,
         onTouch: (details) {
-          if (_isTouchDown != details.isTouchDown) {
-            setState(() {
-              _isTouchDown = details.isTouchDown;
-            });
-          }
           widget.onTouch(details);
         },
       ),
@@ -126,7 +121,11 @@ class _IndexBar extends StatefulWidget {
   /// IndexBar text style.
   final TextStyle? textStyle;
 
-  final TextStyle? touchDownTextStyle;
+  /// 按下字母的圆角底色
+  final Color touchDownColor;
+
+  /// 当前选中的字母(常驻高亮,跟随列表滚动所在分组)
+  final String currentTag;
 
   /// Item touch callback.
   final IndexBarTouchCallback onTouch;
@@ -138,7 +137,8 @@ class _IndexBar extends StatefulWidget {
       this.width = 30,
       this.itemHeight = 16,
       this.textStyle,
-      this.touchDownTextStyle})
+      this.touchDownColor = const Color(0xffeeeeee),
+      this.currentTag = ''})
       : super(key: key);
 
   @override
@@ -181,20 +181,51 @@ class _IndexBarState extends State<_IndexBar> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? _style = widget.textStyle;
-    if (_indexModel.isTouchDown == true) {
-      _style = widget.touchDownTextStyle;
-    }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     _init();
 
     List<Widget> children = [];
-    widget.data.forEach((v) {
+    for (int i = 0; i < widget.data.length; i++) {
+      final v = widget.data[i];
+      final bool active = _indexModel.isTouchDown && _indexModel.position == i;
+      // 常驻选中:当前列表分组对应的字母,品牌色圆底白字
+      final bool selected = !active && v == widget.currentTag;
       children.add(SizedBox(
         width: widget.width.toDouble(),
         height: widget.itemHeight.toDouble(),
-        child: Text(v, textAlign: TextAlign.center, style: _style),
+        child: Center(
+          child: active || selected
+              ? Container(
+                  width: 22,
+                  height: 22,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: active
+                        ? widget.touchDownColor
+                        : commonConfig.brandPrimary,
+                  ),
+                  child: Text(
+                    v,
+                    textAlign: TextAlign.center,
+                    style: active
+                        ? TextStyle(
+                            fontSize: widget.textStyle?.fontSize ?? 12.0,
+                            color: commonConfig.brandPrimary,
+                            fontWeight: FontWeight.w600,
+                          )
+                        : TextStyle(
+                            fontSize: widget.textStyle?.fontSize ?? 12.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                  ),
+                )
+              : Text(v, textAlign: TextAlign.center, style: widget.textStyle),
+        ),
       ));
-    });
+    }
 
     return GestureDetector(
       onVerticalDragDown: (DragDownDetails details) {

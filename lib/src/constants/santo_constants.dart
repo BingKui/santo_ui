@@ -2,30 +2,30 @@ class SantoShareItemConstants {
 
   /// 分享渠道图片地址列表
   static const List<String> shareItemImagePathList = [
-    "images/icon_share_weChat.png",
-    "images/icon_share_moments.png",
-    "images/icon_share_qq.png",
-    "images/icon_share_zone.png",
-    "images/icon_share_weibo.png",
-    "images/icon_share_shareLink.png",
-    "images/icon_share_message.png",
-    "images/icon_share_copy.png",
-    "images/icon_share_browser.png",
-    "images/icon_share_save_image.png",
+    "share/icon_share_weChat.png",
+    "share/icon_share_moments.png",
+    "share/icon_share_qq.png",
+    "share/icon_share_zone.png",
+    "share/icon_share_weibo.png",
+    "share/icon_share_shareLink.png",
+    "share/icon_share_message.png",
+    "share/icon_share_copy.png",
+    "share/icon_share_browser.png",
+    "share/icon_share_save_image.png",
   ];
 
   /// 不可点击的分享渠道图片地址列表
   static const List<String> disableShareItemImagePathList = [
-    "images/icon_share_wechat_disable.png",
-    "images/icon_share_moments_disable.png",
-    "images/icon_share_qq_disable.png",
-    "images/icon_share_zone_disable.png",
-    "images/icon_share_weibo_disable.png",
-    "images/icon_share_shareLink_disable.png",
-    "images/icon_share_message_disable.png",
-    "images/icon_share_copy_disable.png",
-    "images/icon_share_browser_disable.png",
-    "images/icon_share_save_image_disable.png",
+    "share/icon_share_wechat_disable.png",
+    "share/icon_share_moments_disable.png",
+    "share/icon_share_qq_disable.png",
+    "share/icon_share_zone_disable.png",
+    "share/icon_share_weibo_disable.png",
+    "share/icon_share_shareLink_disable.png",
+    "share/icon_share_message_disable.png",
+    "share/icon_share_copy_disable.png",
+    "share/icon_share_browser_disable.png",
+    "share/icon_share_save_image_disable.png",
   ];
 
   /// 微信

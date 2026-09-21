@@ -118,7 +118,6 @@ class _SantoScrollAnchorTabWidgetState extends State<SantoAnchorTab>
         SantoTabBar(
           indicatorColor: widget.tabBarStyle.indicatorColor,
           indicatorWeight: widget.tabBarStyle.indicatorWeight,
-          indicatorPadding: widget.tabBarStyle.indicatorPadding,
           labelColor: widget.tabBarStyle.labelColor,
           labelStyle: widget.tabBarStyle.labelStyle,
           labelPadding: widget.tabBarStyle.labelPadding ?? EdgeInsets.zero,
@@ -238,8 +237,6 @@ class SantoAnchorTabBarStyle {
 
   final double indicatorWeight;
 
-  final EdgeInsetsGeometry indicatorPadding;
-
   final Color? labelColor;
 
   final Color? unselectedLabelColor;
@@ -255,7 +252,6 @@ class SantoAnchorTabBarStyle {
   const SantoAnchorTabBarStyle({
     this.indicatorColor,
     this.indicatorWeight = 2.0,
-    this.indicatorPadding = EdgeInsets.zero,
     this.labelColor,
     this.labelStyle,
     this.labelPadding,

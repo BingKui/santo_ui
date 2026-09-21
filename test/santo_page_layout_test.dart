@@ -200,4 +200,95 @@ void main() {
     expect((scroll.padding as EdgeInsets).bottom, kContentGap);
     expect(tester.getSize(find.byType(SantoBottomSafeArea)).height, 64 + 12);
   });
+
+  testWidgets('PageLayout enableRefresh:内容不满一屏也能下拉触发刷新', (tester) async {
+    bool refreshed = false;
+    await tester.pumpWidget(MaterialApp(
+      home: SantoPageLayout(
+        title: '下拉刷新',
+        enableRefresh: true,
+        onRefresh: () async {
+          refreshed = true;
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+        },
+        children: <Widget>[
+          SantoSection(
+            title: '区块',
+            description: '内容不足一屏',
+            child: const SizedBox(height: 100, child: Text('内容')),
+          ),
+        ],
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.drag(find.byType(SingleChildScrollView), const Offset(0, 150));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(refreshed, true, reason: '内容不满一屏时也应能下拉触发刷新');
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('PageLayout enableRefresh:刷新完成后滚动位置归零,二次下拉不抖动', (tester) async {
+    int refreshCount = 0;
+    await tester.pumpWidget(MaterialApp(
+      home: SantoPageLayout(
+        title: '下拉刷新',
+        enableRefresh: true,
+        onRefresh: () async {
+          refreshCount++;
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+        },
+        children: <Widget>[
+          SantoSection(
+            title: '区块',
+            description: '内容不足一屏',
+            child: const SizedBox(height: 100, child: Text('内容')),
+          ),
+        ],
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.drag(find.byType(SingleChildScrollView), const Offset(0, 150));
+    // 显式推进时钟:刷新回调(100ms) → 完成态(500ms) → 回弹动画
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pumpAndSettle();
+
+    final position =
+        tester.state<ScrollableState>(find.byType(Scrollable)).position;
+    expect(position.pixels, 0,
+        reason: '松手回弹后滚动位置必须归零;若残留负值,刷新头会反复弹出(页面一直抖)');
+  });
+
+  testWidgets('PageLayout enableRefresh:下拉过程不改变滚动视口高度', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: SantoPageLayout(
+        title: '下拉刷新',
+        enableRefresh: true,
+        onRefresh: () async {},
+        children: <Widget>[
+          SantoSection(
+            title: '区块',
+            child: const SizedBox(height: 300, child: Text('内容')),
+          ),
+        ],
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final before = tester.getSize(find.byType(Scrollable)).height;
+    final gesture = await tester.startGesture(
+        tester.getCenter(find.byType(Scrollable)));
+    await gesture.moveBy(const Offset(0, 60));
+    await tester.pump();
+    final during = tester.getSize(find.byType(Scrollable)).height;
+    await gesture.up();
+    await tester.pumpAndSettle();
+
+    expect(during, before,
+        reason: '刷新头应为覆盖式(平移内容),不能每帧挤压列表视口(抖动/内容被压缩的根源)');
+  });
 }

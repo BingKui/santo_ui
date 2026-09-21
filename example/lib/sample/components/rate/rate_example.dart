@@ -90,17 +90,27 @@ class _RateExampleState extends State<RateExample> {
     );
   }
 
-  // 自定义图片，大小，颜色
+  // 自定义图标，大小，颜色
   Widget _buildRating(RatingState state) {
     switch (state) {
       case RatingState.select:
-        return SantoTools.getAssetSizeImage(SantoAsset.iconStar, 16, 16,
-            color: Color(0xFF3571DC));
+        return const SantoIcon(
+          SantoSolidIcons.star,
+          size: 16,
+          color: Color(0xFF3571DC),
+        );
       case RatingState.half:
-        return SantoTools.getAssetSizeImage(SantoAsset.iconStarHalf, 16, 16);
+        return const SantoIcon(
+          SantoIcons.starHalfDashed,
+          size: 16,
+          color: Color(0xFFE8EAEC),
+        );
       default:
-        return SantoTools.getAssetSizeImage(SantoAsset.iconStar, 16, 16,
-            color: Color(0xFFE8EAEC));
+        return const SantoIcon(
+          SantoIcons.star,
+          size: 16,
+          color: Color(0xFFE8EAEC),
+        );
     }
   }
 }

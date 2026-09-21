@@ -11,8 +11,6 @@ class SwipeCellExample extends StatefulWidget {
 }
 
 class _SwipeCellExampleState extends State<SwipeCellExample> {
-  final List<String> _items = List.generate(10, (index) => '列表项 $index');
-
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(      title: 'SwipeCell 示例',

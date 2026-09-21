@@ -98,14 +98,32 @@ class SantoMenuBar extends StatefulWidget {
   /// floating 样式每个标签项的圆角,默认与容器圆角一致
   final double? itemRadius;
 
-  /// floating 样式选中项背景色,默认主色
+  /// 选中项背景色
+  ///
+  /// floating 样式默认主色;docked 样式默认无背景,设置后展示同款滑动选中背景
   final Color? itemSelectedBgColor;
 
   /// 选中文字颜色,默认主色(docked)/白色(floating)
+  ///
+  /// 同时作为选中图标的着色(图标自带 color 时以图标为准)
   final Color? selectedTextColor;
 
   /// 未选中文字颜色,默认次要文字色
+  ///
+  /// 同时作为未选中图标的着色(图标自带 color 时以图标为准)
   final Color? unselectedTextColor;
+
+  /// 选中文字样式,提供时覆盖默认字号/字重/颜色;颜色缺省时回退
+  /// [selectedTextColor]
+  ///
+  /// @since v1.2.0
+  final TextStyle? selectedTextStyle;
+
+  /// 未选中文字样式,提供时覆盖默认字号/字重/颜色;颜色缺省时回退
+  /// [unselectedTextColor]
+  ///
+  /// @since v1.2.0
+  final TextStyle? unselectedTextStyle;
 
   /// 是否使用底部安全区域,默认 true
   final bool useSafeArea;
@@ -135,6 +153,8 @@ class SantoMenuBar extends StatefulWidget {
     this.itemSelectedBgColor,
     this.selectedTextColor,
     this.unselectedTextColor,
+    this.selectedTextStyle,
+    this.unselectedTextStyle,
     this.useSafeArea = true,
     this.duration = const Duration(milliseconds: 200),
     this.showMoreMenu = false,
@@ -249,12 +269,41 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           top: Radius.circular(widget.topRadius),
         ),
       ),
-      child: Row(
-        children: [
-          for (int i = 0; i < widget.effectiveItems.length; i++)
-            Expanded(child: _buildItem(context, i)),
-        ],
-      ),
+      child: widget.itemSelectedBgColor == null
+          ? Row(
+              children: [
+                for (int i = 0; i < widget.effectiveItems.length; i++)
+                  Expanded(child: _buildItem(context, i)),
+              ],
+            )
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                final count = widget.effectiveItems.length;
+                final itemWidth = constraints.maxWidth / count;
+                return Stack(
+                  children: [
+                    // 选中背景:滑动动画,与悬浮样式同款
+                    AnimatedPositioned(
+                      duration: widget.duration,
+                      curve: Curves.easeOutCubic,
+                      left: _currentIndex.clamp(0, count - 1) * itemWidth,
+                      top: 0,
+                      width: itemWidth,
+                      height: _barHeight,
+                      child: Container(
+                        color: widget.itemSelectedBgColor,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        for (int i = 0; i < count; i++)
+                          Expanded(child: _buildItem(context, i)),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
     );
     if (widget.showTopDivider) {
       bar = Column(
@@ -396,6 +445,19 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
   Widget _attachBadge(Widget child, SantoMenuBarItem item) =>
       _hasBadge(item) ? _badgeOnCorner(child, _badgeWidget(item)) : child;
 
+  /// 文字样式:默认字号取 fontSizeCaption、选中加粗,
+  /// selectedTextStyle / unselectedTextStyle 提供时逐项覆盖
+  TextStyle _labelStyle(bool selected, Color color) {
+    final TextStyle style = TextStyle(
+      fontSize: _commonConfig.fontSizeCaption,
+      fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
+      color: color,
+    );
+    final TextStyle? custom =
+        selected ? widget.selectedTextStyle : widget.unselectedTextStyle;
+    return custom == null ? style : style.merge(custom);
+  }
+
   /// 图标文案区:图标优先带徽标,无图标时文字带徽标
   List<Widget> _buildItemChildren(
       SantoMenuBarItem item, Widget? icon, bool selected, Color color) {
@@ -405,11 +467,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
             item.text!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: _commonConfig.fontSizeCaption,
-              fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-              color: color,
-            ),
+            style: _labelStyle(selected, color),
           );
 
     if (icon != null) {
@@ -437,6 +495,13 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       icon = item.unselectedIcon;
     } else {
       icon = item.selectedIcon;
+    }
+    if (icon != null) {
+      // 图标颜色跟随选中/未选中状态,图标自带 color 时以图标为准
+      icon = IconTheme.merge(
+        data: IconThemeData(color: color),
+        child: icon,
+      );
     }
 
     return GestureDetector(

@@ -116,9 +116,9 @@ void main() {
     final Size inkSize = tester.getSize(find
         .descendant(of: find.byType(TabBar), matching: find.byType(InkWell))
         .first);
-    // 宽度完全一致,高度只多出底部指示器那一线
+    // 宽高完全一致:底部 border 画在圆角底色层内部,TabBar 不再额外加指示器高度
     expect(inkSize.width, cellSize.width);
-    expect(inkSize.height - cellSize.height, 2);
+    expect(inkSize.height - cellSize.height, 0);
   });
 
   testWidgets('SantoTabBar 徽标固定在 tab 项右上角，不压到相邻 tab', (tester) async {

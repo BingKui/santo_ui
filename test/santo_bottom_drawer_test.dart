@@ -3,6 +3,51 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:santo_ui/santo_ui.dart';
 
 void main() {
+  testWidgets('长内容不溢出,内容区自动可滚动', (tester) async {
+    tester.view.devicePixelRatio = 1.0;
+    tester.view.physicalSize = const Size(400, 800);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (context) => Center(
+            child: TextButton(
+              onPressed: () {
+                SantoBottomDrawer.show<void>(
+                  context: context,
+                  title: '长内容',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      for (int i = 1; i <= 30; i++) Text('列表项 $i'),
+                    ],
+                  ),
+                );
+              },
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ),
+    ));
+
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    // 高度自适应时最多顶到屏幕 85%,不再竖向溢出
+    expect(tester.takeException(), isNull);
+
+    // 多出来的内容靠内容区滚动消化
+    final ScrollableState scrollable = tester.state<ScrollableState>(
+      find.descendant(
+        of: find.byType(SantoBottomDrawer),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    expect(scrollable.position.maxScrollExtent, greaterThan(0));
+  });
+
   testWidgets('键盘弹起时弹窗整体上移到键盘上方', (tester) async {
     tester.view.devicePixelRatio = 1.0;
     tester.view.physicalSize = const Size(400, 800);

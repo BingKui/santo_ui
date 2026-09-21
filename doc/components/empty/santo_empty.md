@@ -37,8 +37,8 @@ group:
 
 | 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
 | --- | --- | --- | --- | --- |
-| imageType | SantoEmptyImageType? | 内置插画类型 noData / networkError,配置不同类型展示不同插画 | 否 | null(不展示图片) |
-| img | Image? | 自定义图片,优先级高于 imageType;两者都不传时不展示图片 | 否 | null |
+| imageType | SantoEmptyImageType? | 内置插画类型,对应 assets/empty 下的 12 张 SVG 插画(notFound/contentEmpty/importLoading/listEmpty/loadFail/noAccess/notOpenPayType/offline/orderEmpty/searchEmpty/unbindAccount/wait) | 否 | null(不展示图片) |
+| img | Widget? | 自定义图片组件(Image / SvgPicture 等任意图片组件),优先级高于 imageType;两者都不传时不展示图片 | 否 | null |
 | title | String? | 标题 | 否 | null |
 | content | String? | 内容 | 否 | null |
 | operateAreaType | OperateAreaType | 操作区类型(singleButton/doubleButton/textButton) | 否 | textButton |
@@ -114,6 +114,12 @@ SantoEmpty(
 ```
 
 ## 版本变更
+
+### v1.2.0
+- **变更**: 内置插画整体替换为 `assets/empty` 下的 12 张 SVG 插画,`SantoEmptyImageType` 枚举值重新定义为 notFound / contentEmpty / importLoading / listEmpty / loadFail / noAccess / notOpenPayType / offline / orderEmpty / searchEmpty / unbindAccount / wait(原 noData / networkError 移除)
+- **变更**: `img` 参数类型从 `Image?` 放宽为 `Widget?`,支持传入任意图片组件(含 SVG)
+- **变更**: `SantoAbnormalStateUtils` 预设映射更新:加载失败 → loadFail、网络未连接 → offline、暂无数据 → listEmpty
+- **删除**: 包内老插画 `assets/images/no_data.png`、`assets/images/network_error.png` 及 `SantoAsset.noData`、`SantoAsset.networkError` 常量
 
 ### v1.1.1
 - **新增**: `SantoEmptyImageType` 枚举与 `SantoEmpty.imageType` 参数,配置不同类型展示包内内置插画(noData / networkError)

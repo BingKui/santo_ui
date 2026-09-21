@@ -150,7 +150,7 @@ class _SantoCardExampleState extends State<SantoCardExample> {
           description: 'SantoEnhanceNumberCard 的用法:主数字用 Bebas 字体放大,'
               'rowCount 控制每行列数,preDesc / lastDesc 在数字前后补单位,numberInfoIcon 展示跳转箭头',
           child: SantoEnhanceNumberCard(
-            rowCount: 3,
+            rowCount: 2,
             itemChildren: [
               SantoNumberInfoItemModel(
                 title: '待办事项',

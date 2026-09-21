@@ -142,6 +142,18 @@ class SantoAppLayout extends StatefulWidget {
   /// 未选中文字颜色,默认次要文字色
   final Color? unselectedTextColor;
 
+  /// 选中文字样式,提供时覆盖默认字号/字重/颜色;颜色缺省时回退
+  /// [selectedTextColor]
+  ///
+  /// @since v1.2.0
+  final TextStyle? selectedTextStyle;
+
+  /// 未选中文字样式,提供时覆盖默认字号/字重/颜色;颜色缺省时回退
+  /// [unselectedTextColor]
+  ///
+  /// @since v1.2.0
+  final TextStyle? unselectedTextStyle;
+
   /// 是否使用底部安全区域,默认 true
   final bool useSafeArea;
 
@@ -162,6 +174,8 @@ class SantoAppLayout extends StatefulWidget {
     this.itemSelectedBgColor,
     this.selectedTextColor,
     this.unselectedTextColor,
+    this.selectedTextStyle,
+    this.unselectedTextStyle,
     this.useSafeArea = true,
     this.duration = const Duration(milliseconds: 200),
   })  : assert(items.length > 0, 'items 不能为空'),
@@ -252,6 +266,8 @@ class _SantoAppLayoutState extends State<SantoAppLayout> {
       itemSelectedBgColor: widget.itemSelectedBgColor,
       selectedTextColor: widget.selectedTextColor,
       unselectedTextColor: widget.unselectedTextColor,
+      selectedTextStyle: widget.selectedTextStyle,
+      unselectedTextStyle: widget.unselectedTextStyle,
       useSafeArea: widget.useSafeArea,
       duration: widget.duration,
       showMoreMenu: _moreEnabled,

@@ -6,6 +6,52 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### 🔄 PageLayout pull-to-refresh jitter
+
+- **Fixed**: the refresh header used to be a `Column` sibling above the scroll view, so its growing height squeezed the list viewport on every frame — the page jittered while pulling and very little content stayed visible. The header is now an overlay on top of the list and the list content is moved with `Transform.translate` (paint-only, no relayout), so the viewport stays constant during the whole pull; the translate offset subtracts the negative scroll pixels so Bouncing physics (iOS) does not double-shift the content
+- **Fixed**: `SantoPageLayout.enableRefresh` chained a bare `AlwaysScrollableScrollPhysics` (no parent physics) onto the built-in `SingleChildScrollView`, which removed boundary conditions and the ballistic settle simulation — the scroll position stayed negative after release and every subsequent scroll re-opened the refresh header. The platform physics (`ScrollConfiguration.of(context).getScrollPhysics(context)`) is now chained as the parent
+- **Added**: regression tests asserting the scroll position returns to 0 after a refresh and the scroll viewport height stays constant while pulling
+
+### 🏙 City selection
+
+- **Fixed**: the white `DecoratedBox` between the list `ListTile`s and the nearest `Material` hid ink splashes and triggered the framework's "ListTile background color or ink splashes may be invisible" assertion; the body now uses a white `Material` directly
+- **Changed**: the hot-city chips get rounded corners (`radiusXs`), keep a fixed 36px height and a transparent background
+- **Changed**: the search bar padding is uniform (`hSpacingMd`) instead of left/right 20 / top/bottom 10, and the divider under the search bar follows the standard 0.5 hairline spec
+- **Changed**: the A-Z index bar shows a persistent selected style — the letter of the current list section renders as a brand-colored circle with a white letter (`IndexBar.currentTag`, driven by `AzListView`); while pressing, the touched letter keeps a grey circle highlight; the unused `IndexBar.touchDownTextStyle` was removed
+
+### 🗺 Area cascader
+
+- **Added**: `SantoCascader.showArea()` opens a province/city/district picker backed by the built-in area data ported from `@vant/area-data` (34 provinces / 369 cities / 3478 counties, 6-digit national administrative codes)
+- **Added**: `SantoAreaData` exposes `provinceList` / `cityList` / `countyList` flat code-to-name maps and `cascaderItems` (a province/city/county tree derived from code prefixes, values are codes and labels are names) for use with the generic `SantoCascader.show()`
+- **Added**: the `showArea` confirm callback returns a `SantoAreaResult` with `codes` / `names` / `text` (names joined by "/") and per-level getters `provinceCode` / `provinceName` / `cityCode` / `cityName` / `districtCode` / `districtName`; `initialValues` accepts administrative codes for echo display
+
+### 🖼 Empty illustrations
+
+- **Changed**: the built-in illustrations of `SantoEmpty` are replaced by 12 SVG assets under `assets/empty`; the `SantoEmptyImageType` values are redefined as notFound / contentEmpty / importLoading / listEmpty / loadFail / noAccess / notOpenPayType / offline / orderEmpty / searchEmpty / unbindAccount / wait (the old noData / networkError values are removed)
+- **Changed**: the `img` parameter is widened from `Image?` to `Widget?`, so any image widget (including SVG) can be passed; custom images still take priority over `imageType`
+- **Changed**: the preset mapping of `SantoAbnormalStateUtils` is updated: getDataFailed → loadFail, networkConnectError → offline, noData → listEmpty
+- **Removed**: the legacy illustrations `assets/images/no_data.png` and `assets/images/network_error.png` and the `SantoAsset.noData` / `SantoAsset.networkError` constants
+
+### 🧭 TabBar indicator
+
+- **Changed**: the selected tab indicator of `SantoTabBar` is now the bottom border of the rounded selected area (full item width, clipped to the rounded corners), following the same switch animation as the selected background; the built-in `TabBar` indicator is disabled
+- **Removed**: `SantoTabBar.indicatorWidth` and `SantoTabBar.indicatorPadding` (no longer meaningful); `indicatorWeight` still controls the border thickness and `indicatorColor` the border color; `SantoAnchorTabBarStyle.indicatorPadding` removed accordingly
+- **Fixed**: the "more" button container passed tight constraints down to the icon, so the arrow SVG rendered ~25px regardless of `SantoIcon.size`; it now centers a 20px icon (the chevron glyph spans half of its viewBox, ~10px visually)
+
+### 📜 Drawer long content
+
+- **Fixed**: the `SantoBottomDrawer` content area is now scrollable, so long content scrolls within `maxHeight` (default 85% of the screen height) instead of overflowing vertically; the drawer example gained a "long content auto scroll" case
+
+### 🔄 Refresh header radius
+
+- **Fixed**: the default pull-to-refresh header is now rounded (theme `radiusMd`) instead of a square full-bleed band
+
+### 🗑 Legacy bitmap cleanup
+
+- **Removed**: 28 obsolete `SantoAsset` constants (single/multi selected boxes, alert/warning/success, star_size, arrow_up/down, require_red, star_select, the notice family) and their PNG assets; component icons are now fully provided by SantoIcon, trimming `assets/images` from 50 to 40 files and `assets/icons` from 33 to 12
+
 ## [1.1.1] - 2026-09-21
 
 ### 🧩 Segmented badge

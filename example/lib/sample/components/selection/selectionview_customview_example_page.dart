@@ -180,11 +180,10 @@ class _SelectionViewExamplePageState
               padding: EdgeInsets.only(left: 12, right: 20),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: 24,
-                    width: 24,
-                    child:
-                        SantoTools.getAssetImage(SantoAsset.iconSelectionReset),
+                  const SantoIcon(
+                    SantoIcons.refresh,
+                    size: 24,
+                    color: Color(0xFF808695),
                   ),
                   Text(
                     '重置',

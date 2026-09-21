@@ -6,10 +6,8 @@ import 'package:santo_ui/src/components/selectcity/santo_az_common.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_listview.dart';
 import 'package:santo_ui/src/components/selectcity/santo_select_city_model.dart';
 import 'package:santo_ui/src/components/sugsearch/santo_search_text.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -171,14 +169,16 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.all(0),
                   side: BorderSide(color: Color(0xFFF5F5F5), width: .5),
-                  backgroundColor: Color(0xFFF5F5F5),
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(commonConfig.radiusXs),
+                  ),
                 ),
                 child: Container(
                   alignment: Alignment.center,
                   height: 36.0,
                   width: width,
                   padding: EdgeInsets.all(0),
-                  color: Color(0xFFF5F5F5),
                   child: Text(
                     e.name,
                     textAlign: TextAlign.center,
@@ -249,7 +249,11 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
   }
 
   Widget _buildSearchBar() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoSearchText(
+      // 四周统一取 hSpacingMd，避免左右 20 / 上下 10 不一致
+      innerPadding: EdgeInsets.all(commonConfig.hSpacingMd),
       searchController: _santoSearchTextController,
       hintText: SantoIntl.of(context).localizedResource.inputSearchTip,
       onTextChange: (text) {
@@ -298,16 +302,20 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: SantoAppBar(title: widget.appBarTitle ?? SantoIntl.of(context).localizedResource.selectCity),
-        body: Container(
-          decoration: BoxDecoration(color: Colors.white),
+        // 用 Material 承载白色背景，保证列表 ListTile 的墨水涟漪画在最近的 Material 上，
+        // 避免中间的 DecoratedBox 把水波纹盖住（ListTile debug 断言会报错）
+        body: Material(
+          color: Colors.white,
           child: Column(
             children: <Widget>[
               widget.locationText.isEmpty
                   ? const SizedBox.shrink()
                   : _buildLocationBar(widget.locationText),
               widget.showSearchBar ? _buildSearchBar() : const SizedBox.shrink(),
-              Divider(
-                height: .0,
+              const Divider(
+                height: 0.5,
+                thickness: 0.5,
+                color: Color(0xFFE8EAEC),
               ),
               _showCityStack
                   ? _buildCityList()
@@ -387,7 +395,7 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
   Widget _noDataWidget() {
     return Container(
       child: SantoEmpty(
-        img: SantoTools.getAssetImage(SantoAsset.noData),
+        imageType: SantoEmptyImageType.listEmpty,
         title: SantoIntl.of(context).localizedResource.noSearchData,
       ),
     );

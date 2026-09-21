@@ -32,15 +32,13 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/images/
+    - assets/appraise/
+    - assets/share/
     - assets/icons/
     - assets/iconoir/regular/
     - assets/iconoir/solid/
-    - assets/iconoir/LICENSE
-    - assets/images/no_data.png
-    - assets/images/two_line_bubble.png
+    - assets/empty/
     - assets/json/
-    - assets/json/china.json
   fonts:
     - family: Bebas
       fonts:

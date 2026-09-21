@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/popup/santo_measure_size.dart';
-import 'package:santo_ui/src/components/tabbar/indicator/santo_custom_width_indicator.dart';
 import 'package:santo_ui/src/components/tabbar/normal/santo_tabbar_controller.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/gestures.dart';
@@ -56,13 +55,8 @@ class SantoTabBar extends StatefulWidget {
   /// 指示器的颜色
   final Color? indicatorColor;
 
-  /// 指示器的高度
+  /// 指示器的高度,即选中项底部 border 的粗细
   final double? indicatorWeight;
-
-  /// 指示器的宽度
-  final double? indicatorWidth;
-
-  final EdgeInsetsGeometry indicatorPadding;
 
   /// 选中Tab文本的颜色
   final Color? labelColor;
@@ -127,8 +121,6 @@ class SantoTabBar extends StatefulWidget {
     this.backgroundColor = const Color(0xffffffff),
     this.indicatorColor,
     this.indicatorWeight,
-    this.indicatorWidth,
-    this.indicatorPadding = EdgeInsets.zero,
     this.labelColor,
     this.labelStyle,
     this.labelPadding = EdgeInsets.zero,
@@ -157,7 +149,6 @@ class SantoTabBar extends StatefulWidget {
           backgroundColor: backgroundColor,
           tabHeight: tabHeight,
           indicatorHeight: indicatorWeight,
-          indicatorWidth: indicatorWidth,
           labelStyle: SantoTextStyle.withStyle(labelStyle),
           unselectedLabelStyle: SantoTextStyle.withStyle(unselectedLabelStyle),
           tagSpacing: tagSpacing,
@@ -244,7 +235,7 @@ class SantoTabBarState extends State<SantoTabBar> {
         final double availableWidth = constraints.maxWidth.isFinite
             ? constraints.maxWidth
             : MediaQuery.of(context).size.width;
-        // tab 项底色跟随控制器的动画进度,与下划线指示器取同一个数据源
+        // tab 项底色与底部 border 跟随控制器的动画进度,取同一个数据源
         final TabController? controller =
             widget.controller ?? DefaultTabController.maybeOf(context);
         return widget.showMore
@@ -296,14 +287,11 @@ class SantoTabBarState extends State<SantoTabBar> {
             _santoTabbarController.entry = null;
           }
         },
-        indicator: CustomWidthUnderlineTabIndicator(
-          insets: widget.indicatorPadding,
-          borderSide: BorderSide(
-            width: widget.themeData!.indicatorHeight,
-            color: widget.indicatorColor ?? widget.themeData!.labelStyle.color!,
-          ),
-          width: widget.themeData!.indicatorWidth,
-        ));
+        // 选中样式由 tab 项自己的圆角底色 + 底部 border 绘制,
+        // 内置指示器连同其撑高一并关闭(indicatorWeight 由 border 层消费)
+        indicator: const BoxDecoration(),
+        indicatorWeight: 0,
+      );
   }
 
   // 展开更多Widget
@@ -327,6 +315,7 @@ class SantoTabBarState extends State<SantoTabBar> {
           }
         },
         child: Container(
+            alignment: Alignment.center,
             width: _moreSpacing,
             height: widget.themeData!.tabHeight,
             decoration: BoxDecoration(
@@ -338,9 +327,11 @@ class SantoTabBarState extends State<SantoTabBar> {
                     spreadRadius: -1)
               ],
             ),
+            // chevron 在 24 viewBox 里只占一半宽度,盒子取 20 视觉线宽才约 10px
             child: !_santoTabbarController.isShow
-                ? SantoIcon(SantoIcons.navArrowDown)
+                ? const SantoIcon(SantoIcons.navArrowDown, size: 20)
                 : SantoIcon(SantoIcons.navArrowUp,
+                    size: 20,
                     color: SantoThemeConfigurator.instance
                         .getConfig()
                         .commonConfig
@@ -407,16 +398,26 @@ class SantoTabBarState extends State<SantoTabBar> {
     );
   }
 
+  /// 选中进度:无动画时按初始索引,否则按控制器插值取 [0, 1]
+  double _selectedRate(Animation<double>? animation, int index) {
+    if (animation == null) {
+      return index == 0 ? 1.0 : 0.0;
+    }
+    return 1 - math.min(1, (animation.value - index).abs());
+  }
+
   /// tab 项:内容居中,徽标固定在 tab 项右上角
   ///
-  /// 选中底色跟随 [animation] 插值,与下划线指示器取同一个数据源,
-  /// 因此不会出现底色与指示器落在不同 tab 上的情况。
+  /// 选中底色与底部 border 跟随 [animation] 插值,取同一个数据源,
+  /// 因此不会出现选中样式落在不同 tab 上的情况。
   Widget _tabItemContent(
       BadgeTab badgeTab, int index, Animation<double>? animation) {
     final Color selectedColor = (widget.labelColor ??
             widget.themeData!.labelStyle.color ??
             widget.themeData!.commonConfig.brandPrimary)
         .withAlpha(_tabItemSelectedAlpha);
+    final Color indicatorColor =
+        widget.indicatorColor ?? widget.themeData!.labelStyle.color!;
     final Widget? badge = _buildBadge(badgeTab);
 
     return Container(
@@ -425,20 +426,38 @@ class SantoTabBarState extends State<SantoTabBar> {
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: <Widget>[
-          // 选中底色(未选中为全透明)
+          // 选中圆角底色(未选中为全透明)
           Positioned.fill(
             child: AnimatedBuilder(
               animation: animation ?? const AlwaysStoppedAnimation<double>(0),
               builder: (BuildContext context, Widget? child) {
-                final double selectedRate = animation == null
-                    ? (index == 0 ? 1.0 : 0.0)
-                    : 1 - math.min(1, (animation.value - index).abs());
                 return DecoratedBox(
                   decoration: BoxDecoration(
                     color: selectedColor.withAlpha(
-                        (_tabItemSelectedAlpha * selectedRate).round()),
+                        (_tabItemSelectedAlpha * _selectedRate(animation, index))
+                            .round()),
                     borderRadius:
                         BorderRadius.all(Radius.circular(_tabItemRadius)),
+                  ),
+                );
+              },
+            ),
+          ),
+          // 选中项底部 border:通栏宽,裁切进圆角区域内,与底色同源插值
+          Positioned.fill(
+            child: AnimatedBuilder(
+              animation: animation ?? const AlwaysStoppedAnimation<double>(0),
+              builder: (BuildContext context, Widget? child) {
+                return ClipRRect(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(_tabItemRadius)),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: widget.themeData!.indicatorHeight,
+                      color: indicatorColor.withAlpha(
+                          (255 * _selectedRate(animation, index)).round()),
+                    ),
                   ),
                 );
               },

@@ -102,6 +102,9 @@ class _AzListViewState extends State<AzListView> {
   bool _isShowIndexBarHint = false;
   String _indexBarHint = "";
 
+  /// 当前列表滚动所在分组,用于索引条常驻选中样式
+  String _currentTag = "";
+
   late ScrollController _scrollController;
 
   @override
@@ -151,6 +154,9 @@ class _AzListViewState extends State<AzListView> {
     } else {
       _indexTagList.addAll(INDEX_DATA_DEF);
     }
+    if (_currentTag.isEmpty && _indexTagList.isNotEmpty) {
+      _currentTag = _indexTagList.first;
+    }
   }
 
   @override
@@ -177,7 +183,14 @@ class _AzListViewState extends State<AzListView> {
         controller: _scrollController,
         suspensionHeight: widget.suspensionHeight,
         itemHeight: widget.itemHeight,
-        onSusTagChanged: widget.onSusTagChanged,
+        onSusTagChanged: (tag) {
+          if (_currentTag != tag) {
+            setState(() {
+              _currentTag = tag;
+            });
+          }
+          widget.onSusTagChanged?.call(tag);
+        },
         header: widget.header,
         onSusSectionInited: (Map<String, int> map) =>
             _suspensionSectionMap = map,
@@ -189,6 +202,7 @@ class _AzListViewState extends State<AzListView> {
       indexBar = IndexBar(
         data: _indexTagList,
         width: 36,
+        currentTag: _currentTag,
         onTouch: _onIndexBarTouch,
       );
     } else {

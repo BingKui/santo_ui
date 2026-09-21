@@ -1,9 +1,13 @@
 import 'package:bindings_compatible/bindings_compatible.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
+import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+/// 返回按钮点击区的圆角半径
+const double _kBackLeadingRadius = 12;
 
 /// AppBar组件,基于[AppBar]封装。为了解决原生的AppBar对Leading宽度的限制
 /// 在1.21版本之后，Flutter放开了宽度的限制[https://github.com/flutter/flutter/blob/flutter-1.21-candidate.0/packages/flutter/lib/src/material/app_bar.dart]
@@ -254,6 +258,7 @@ class SantoAppBar extends PreferredSize {
       centerTitle: true,
       elevation: elevation,
       backgroundColor: _defaultConfig.backgroundColor,
+      surfaceTintColor: Colors.transparent,
       actions: _wrapActions(_defaultConfig),
       bottom: _buildBarBottom(_defaultConfig),
       systemOverlayStyle: _defaultConfig.systemOverlayStyle,
@@ -293,7 +298,7 @@ class SantoAppBar extends PreferredSize {
     if (leading == null && !automaticallyImplyLeading) {
       return 0;
     }
-    return themeData.leftAndRightPadding + themeData.iconSize;
+    return themeData.leftAndRightPadding + SantoAppBarTheme.iconFullSize;
   }
 
   // 对[actions]进行包装: 单一的Widget会添加右边距
@@ -351,19 +356,12 @@ class SantoAppBar extends PreferredSize {
     return realTitle;
   }
 
-  // 如果leading是SantoBackLeading 需要添加左边距
   Widget? _wrapLeading(SantoAppBarConfig barConfig) {
     Widget? realLeading = leading;
     if (leading == null && automaticallyImplyLeading) {
       realLeading = SantoBackLeading(
         iconPressed: backLeadCallback,
         themeData: barConfig,
-      );
-    }
-    if (realLeading is SantoBackLeading) {
-      return Container(
-        padding: EdgeInsets.only(left: barConfig.leftAndRightPadding),
-        child: realLeading,
       );
     }
     return realLeading;
@@ -397,22 +395,31 @@ class SantoBackLeading extends StatelessWidget {
         .appBarConfig
         .merge(_defaultThemeData);
 
-    return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(
-          width: _defaultThemeData.iconSize +
-              _defaultThemeData.leftAndRightPadding,
-          height: _defaultThemeData.appBarHeight),
-      child: IconButton(
-        alignment: Alignment.centerRight,
-        icon: child ?? _defaultThemeData.leadIconBuilder(),
-        onPressed: iconPressed ??
-            () {
-              /// 默认处理了返回按钮，flutter的pop，如果是native打开的话，可能需要单独处理,否则会出现白屏
-              /// backLeadCallback是默认的处理回调
-              /// DefaultLeadingCallBack 也可以通过改方法参数 设置统一的返回处理，该参数是静态的
-              Navigator.maybePop(context);
-            },
-        padding: EdgeInsets.zero,
+    return Container(
+      width: SantoAppBarTheme.iconFullSize +
+          _defaultThemeData.leftAndRightPadding,
+      height: _defaultThemeData.appBarHeight,
+      padding: EdgeInsets.only(left: _defaultThemeData.leftAndRightPadding),
+      alignment: Alignment.centerLeft,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(_kBackLeadingRadius),
+          onTap: iconPressed ??
+              () {
+                /// 默认处理了返回按钮，flutter的pop，如果是native打开的话，可能需要单独处理,否则会出现白屏
+                /// backLeadCallback是默认的处理回调
+                /// DefaultLeadingCallBack 也可以通过改方法参数 设置统一的返回处理，该参数是静态的
+                Navigator.maybePop(context);
+              },
+          child: SizedBox(
+            width: SantoAppBarTheme.iconFullSize,
+            height: SantoAppBarTheme.iconFullSize,
+            child: Center(
+              child: child ?? _defaultThemeData.leadIconBuilder(),
+            ),
+          ),
+        ),
       ),
     );
   }

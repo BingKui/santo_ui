@@ -1,7 +1,7 @@
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
-import 'package:santo_ui/src/utils/santo_tools.dart';
 import 'package:flutter/material.dart';
 
 const double _kItemSidePadding = 5;
@@ -191,25 +191,11 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
   }
 
   Widget _getIndexIcon(int index) {
-    Widget icon;
-    switch (index) {
-      case 1:
-        icon = SantoTools.getAssetSizeImage(SantoAsset.iconStep2, 20, 20);
-        break;
-      case 2:
-        icon = SantoTools.getAssetSizeImage(SantoAsset.iconStep3, 20, 20);
-        break;
-      case 3:
-        icon = SantoTools.getAssetSizeImage(SantoAsset.iconStep4, 20, 20);
-        break;
-      case 4:
-        icon = SantoTools.getAssetSizeImage(SantoAsset.iconStep5, 20, 20);
-        break;
-      default:
-        icon = SantoTools.getAssetSizeImage(SantoAsset.iconStepDoing, 20, 20);
-        break;
-    }
-    return icon;
+    return _StepDot(
+      type: _StepDotType.wait,
+      number: index + 1,
+      activeColor: _primary,
+    );
   }
 
   Widget _applyStepContent(SantoStep step, int index) {
@@ -249,8 +235,7 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
     }
 
     /// 使用组件默认的icon
-    return SantoTools.getAssetSizeImage(SantoAsset.iconStepCompleted, 20, 20,
-        color: _primary);
+    return _StepDot(type: _StepDotType.completed, activeColor: _primary);
   }
 
   Widget _getDoingIcon(SantoStep step) {
@@ -265,8 +250,97 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
       return doingIcon;
     }
     // 使用组件默认的icon
-    return SantoTools.getAssetSizeImage(SantoAsset.iconStepDoing, 20, 20,
-        color: _primary);
+    return _StepDot(type: _StepDotType.doing, activeColor: _primary);
+  }
+}
+
+const Color _kStepWaitColor = Color(0xFFCCCCCC);
+
+enum _StepDotType {
+  /// 等待态:灰圈 + 序号
+  wait,
+
+  /// 进行态:主色实心 + 三点
+  doing,
+
+  /// 完成态:主色实心 + 对勾
+  completed,
+}
+
+/// 步骤条节点圆点,代码绘制,替代原 PNG 图标
+class _StepDot extends StatelessWidget {
+  const _StepDot({
+    Key? key,
+    required this.type,
+    this.number = 1,
+    required this.activeColor,
+  }) : super(key: key);
+
+  final _StepDotType type;
+
+  /// 等待态显示的序号,从 1 开始
+  final int number;
+
+  /// 进行态/完成态的实心圆颜色
+  final Color activeColor;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (type) {
+      case _StepDotType.wait:
+        return Container(
+          width: 20,
+          height: 20,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: _kStepWaitColor, width: 1.5),
+          ),
+          child: Text(
+            '$number',
+            style: const TextStyle(
+              fontSize: 11,
+              height: 1,
+              color: _kStepWaitColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        );
+      case _StepDotType.doing:
+        return Container(
+          width: 20,
+          height: 20,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: activeColor),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List<Widget>.generate(
+              3,
+              (i) => Container(
+                width: 2,
+                height: 2,
+                margin: EdgeInsets.only(left: i == 0 ? 0 : 2),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        );
+      case _StepDotType.completed:
+        return Container(
+          width: 20,
+          height: 20,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: activeColor),
+          child: const SantoIcon(
+            SantoIcons.check,
+            size: 11,
+            color: Colors.white,
+          ),
+        );
+    }
   }
 }
 

@@ -160,7 +160,6 @@ class _SantoTabExampleState extends State<SantoTabExample>
       mode: SantoTabBarBadgeMode.origin,
       isScroll: false,
       labelPadding: EdgeInsets.only(left: 20, right: 12),
-      indicatorPadding: EdgeInsets.only(left: 10),
       onTap: (state, index) {
         SantoToast.show("点击了", context);
       },
@@ -301,7 +300,6 @@ class _SantoTabExampleState extends State<SantoTabExample>
       mode: SantoTabBarBadgeMode.origin,
       isScroll: false,
       labelPadding: EdgeInsets.only(left: 20, right: 12),
-      indicatorPadding: EdgeInsets.only(left: 10),
       onTap: (state, index) {},
     );
   }

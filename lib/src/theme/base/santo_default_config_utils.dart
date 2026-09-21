@@ -1,7 +1,7 @@
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_constants.dart';
-import 'package:santo_ui/src/constants/santo_asset_constants.dart';
-import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart'
     show SANTO_CONFIG_ID;
@@ -407,12 +407,10 @@ class SantoDefaultConfigUtils {
   static SantoAppBarConfig defaultAppBarConfig = SantoAppBarConfig(
     backgroundColor: Colors.white,
     appBarHeight: SantoAppBarTheme.appBarHeight,
-    leadIconBuilder: () => Image.asset(
-      SantoAsset.iconBackBlack,
-      package: SantoStrings.flutterPackageName,
-      width: SantoAppBarTheme.iconSize,
-      height: SantoAppBarTheme.iconSize,
-      fit: BoxFit.fitHeight,
+    leadIconBuilder: () => SantoIcon(
+      SantoIcons.arrowLeft,
+      size: SantoAppBarTheme.iconSize,
+      color: SantoAppBarTheme.lightTextColor,
     ),
     titleStyle: SantoTextStyle(
       fontSize: SantoAppBarTheme.titleFontSize,
@@ -425,7 +423,7 @@ class SantoDefaultConfigUtils {
       fontWeight: FontWeight.w500,
     ),
     titleMaxLength: SantoAppBarTheme.maxLength,
-    leftAndRightPadding: 20.0,
+    leftAndRightPadding: 10.0,
     itemSpacing: SantoAppBarTheme.iconMargin,
     titlePadding: EdgeInsets.zero,
     iconSize: SantoAppBarTheme.iconSize,

@@ -167,9 +167,14 @@ class SantoBottomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveMaxHeight =
         maxHeight ?? MediaQuery.of(context).size.height * 0.85;
-    final bottomPadding = contentPadding.bottom +
-        (bottomSafeArea ? MediaQuery.of(context).padding.bottom : 0);
-    final content = Padding(
+    final safeAreaBottom =
+        bottomSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
+    // 内容区底部安全区处理方式与 SantoFloatingPanel 一致:
+    // - 背景铺满到屏幕底部(包含安全区)
+    // - 内容区通过 MediaQuery 传递底部安全区,由可滚动内容自身消费
+    // - contentPadding 仅应用到左/上/右三边,底部由安全区或 contentPadding.bottom 处理
+    final bottomPadding = bottomSafeArea ? 0.0 : contentPadding.bottom;
+    Widget content = Padding(
       padding: EdgeInsets.fromLTRB(
         contentPadding.left,
         contentPadding.top,
@@ -178,6 +183,14 @@ class SantoBottomDrawer extends StatelessWidget {
       ),
       child: child,
     );
+    if (safeAreaBottom > 0) {
+      content = MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          padding: EdgeInsets.only(bottom: safeAreaBottom),
+        ),
+        child: content,
+      );
+    }
     // 键盘弹起时整体上移到键盘上方,避免输入区域被键盘遮挡
     final keyboardInset = MediaQuery.of(context).viewInsets.bottom;
     return AnimatedPadding(
@@ -210,7 +223,7 @@ class SantoBottomDrawer extends StatelessWidget {
                     if (height != null)
                       Expanded(child: content)
                     else
-                      content,
+                      Flexible(child: content),
                   ],
                 ),
               ),

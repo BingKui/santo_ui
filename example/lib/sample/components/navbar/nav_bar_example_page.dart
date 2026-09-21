@@ -185,7 +185,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
           width: 20,
         ),
       ),
-      themeData: SantoAppBarConfig.dark(),
+      themeData: SantoAppBarConfig.light(),
       title: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +264,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
   //文字标题 下拉框
   SantoAppBar _getBlackBar6() {
     return SantoAppBar(
-      themeData: SantoAppBarConfig.dark(),
+      themeData: SantoAppBarConfig.light(),
       title: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -371,7 +371,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
   //多icon的bar hei
   SantoAppBar _getBlackBar12() {
     return SantoAppBar(
-      themeData: SantoAppBarConfig.dark(),
+      themeData: SantoAppBarConfig.light(),
       automaticallyImplyLeading: true,
       title: "天通苑天通苑天通苑天通苑天通苑天通苑天通苑天通苑天通苑",
       actions: <Widget>[
@@ -657,7 +657,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
       ],
     );
     return SantoAppBar(
-      themeData: SantoAppBarConfig.dark(),
+      themeData: SantoAppBarConfig.light(),
       automaticallyImplyLeading: false,
       //自定义leading
       leading: SantoBackLeading(

@@ -23,10 +23,10 @@ class EmptyExample extends StatelessWidget {
       title: 'Empty 空状态',
       children: <Widget>[
         ExampleIntro('empty'),
-        _buildErrorWithActionSection(context),
-        _buildErrorCenterSection(context),
-        _buildErrorDefaultSection(context),
-        _buildLargeModuleSection(context),
+        _buildLoadFailSection(context),
+        _buildOfflineSection(context),
+        _buildListEmptySection(context),
+        _buildImageTypesSection(),
         _buildSingleButtonSection(context),
         _buildDoubleButtonSection(context),
         _buildSmallModuleSection(context),
@@ -35,15 +35,15 @@ class EmptyExample extends StatelessWidget {
     );
   }
 
-  /// 异常信息 + 操作
-  Widget _buildErrorWithActionSection(BuildContext context) {
+  /// 加载失败 + 操作
+  Widget _buildLoadFailSection(BuildContext context) {
     return SantoSection(
-      title: '异常信息+操作',
-      description: 'operateAreaType 为 textButton 时展示文字操作，action 回调返回按钮下标',
+      title: '加载失败+操作',
+      description: 'imageType 为 loadFail 时展示加载失败插画，operateAreaType 为 textButton 时展示文字操作',
       child: _centerDemoBox(
         context,
         SantoEmpty(
-          imageType: SantoEmptyImageType.networkError,
+          imageType: SantoEmptyImageType.loadFail,
           isCenterVertical: true,
           title: '获取数据失败，请重试',
           operateTexts: <String>['请点击页面重试'],
@@ -56,44 +56,82 @@ class EmptyExample extends StatelessWidget {
     );
   }
 
-  /// 异常信息居中展示
-  Widget _buildErrorCenterSection(BuildContext context) {
+  /// 网络未连接居中展示
+  Widget _buildOfflineSection(BuildContext context) {
     return SantoSection(
-      title: '异常信息居中展示',
-      description: 'isCenterVertical 为 true 时内容在可用空间内垂直居中',
+      title: '网络未连接居中展示',
+      description: 'imageType 为 offline 时展示断网插画，isCenterVertical 为 true 时内容在可用空间内垂直居中',
       child: _centerDemoBox(
         context,
         SantoEmpty(
           isCenterVertical: true,
-          imageType: SantoEmptyImageType.noData,
-          title: SantoIntl.of(context).localizedResource.noDataTip,
+          imageType: SantoEmptyImageType.offline,
+          title: SantoIntl.of(context).localizedResource.netErrorAndRetryLater,
         ),
       ),
     );
   }
 
-  /// 异常信息默认展示
-  Widget _buildErrorDefaultSection(BuildContext context) {
+  /// 列表为空默认展示
+  Widget _buildListEmptySection(BuildContext context) {
     return SantoSection(
-      title: '异常信息默认展示',
-      description: '不设置 isCenterVertical 时按内容高度从上往下排列',
+      title: '列表为空默认展示',
+      description: 'imageType 为 listEmpty 时展示列表为空插画，不设置 isCenterVertical 时按内容高度从上往下排列',
       child: SantoEmpty(
-        imageType: SantoEmptyImageType.networkError,
-        title: '网络数据异常',
+        imageType: SantoEmptyImageType.listEmpty,
+        title: '暂无数据',
       ),
     );
   }
 
-  /// 大模块空态
-  Widget _buildLargeModuleSection(BuildContext context) {
+  /// 全部内置插画
+  Widget _buildImageTypesSection() {
     return SantoSection(
-      title: '大模块空态',
-      description: 'imageType 为 noData 时展示内置插画，配置不同 imageType 展示不同图片',
-      child: SantoEmpty(
-        imageType: SantoEmptyImageType.noData,
-        content: '您的门店暂无用户',
+      title: '全部内置插画',
+      description:
+          'imageType 对应 assets/empty 下的 12 张 SVG 插画，配置不同 imageType 展示不同图片',
+      child: Column(
+        children: <Widget>[
+          for (final row in _typeRows)
+            Row(
+              children: <Widget>[
+                for (final (label, type) in row)
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        SantoEmpty(imageType: type),
+                        const SizedBox(height: 8),
+                        Text(label, style: const TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+        ],
       ),
     );
+  }
+
+  /// 12 张插画按每行 4 个分组
+  static List<List<(String, SantoEmptyImageType)>> get _typeRows {
+    const types = <(String, SantoEmptyImageType)>[
+      ('404', SantoEmptyImageType.notFound),
+      ('内容为空', SantoEmptyImageType.contentEmpty),
+      ('导入加载中', SantoEmptyImageType.importLoading),
+      ('列表为空', SantoEmptyImageType.listEmpty),
+      ('加载失败', SantoEmptyImageType.loadFail),
+      ('无访问权限', SantoEmptyImageType.noAccess),
+      ('未开通支付方式', SantoEmptyImageType.notOpenPayType),
+      ('网络未连接', SantoEmptyImageType.offline),
+      ('订单为空', SantoEmptyImageType.orderEmpty),
+      ('搜索无结果', SantoEmptyImageType.searchEmpty),
+      ('账号未绑定', SantoEmptyImageType.unbindAccount),
+      ('敬请期待', SantoEmptyImageType.wait),
+    ];
+    return [
+      for (int i = 0; i < types.length; i += 4)
+        types.sublist(i, (i + 4).clamp(0, types.length)),
+    ];
   }
 
   /// 单按钮效果
@@ -102,7 +140,7 @@ class EmptyExample extends StatelessWidget {
       title: '单按钮效果',
       description: 'operateAreaType 为 singleButton 时展示一个主操作按钮',
       child: SantoEmpty(
-        imageType: SantoEmptyImageType.noData,
+        imageType: SantoEmptyImageType.orderEmpty,
         title: '这是副标题内容这是副标题内容这是副标',
         content: '您的门店暂无用户',
         operateAreaType: OperateAreaType.singleButton,
@@ -120,7 +158,7 @@ class EmptyExample extends StatelessWidget {
       title: '双按钮效果',
       description: 'operateAreaType 为 doubleButton 时展示主次两个按钮',
       child: SantoEmpty(
-        imageType: SantoEmptyImageType.noData,
+        imageType: SantoEmptyImageType.searchEmpty,
         title: '暂无',
         content: '您还没有在维护的信息哦',
         operateAreaType: OperateAreaType.doubleButton,
@@ -132,7 +170,7 @@ class EmptyExample extends StatelessWidget {
     );
   }
 
-  /// 小模块空态
+  /// 无图片空态
   Widget _buildSmallModuleSection(BuildContext context) {
     return SantoSection(
       title: '无图片空态',
@@ -147,11 +185,10 @@ class EmptyExample extends StatelessWidget {
   Widget _buildCustomImageSection(BuildContext context) {
     return SantoSection(
       title: '自定义图片',
-      description: 'img 传任意 Image 时展示自定义图片，优先级高于 imageType',
+      description: 'img 传任意图片组件(Image / SvgPicture)时展示自定义图片，优先级高于 imageType',
       child: SantoEmpty(
         img: Image.asset(
-          'assets/images/no_data.png',
-          package: 'santo_ui',
+          'assets/image/content_failed.png',
           scale: 3.0,
         ),
         content: '您的门店暂无用户',

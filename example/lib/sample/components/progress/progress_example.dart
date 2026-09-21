@@ -12,7 +12,6 @@ class ProgressExample extends StatefulWidget {
 
 class _ProgressExampleState extends State<ProgressExample> {
   double _progressValue = 0.3;
-  double _circularValue = 0.6;
 
   @override
   Widget build(BuildContext context) {

@@ -86,7 +86,7 @@ class ShareExample extends StatelessWidget {
     ));
     firstRowList.add(SantoShareItem(
       SantoShareItemConstants.shareCustom,
-      customImage: SantoTools.getAssetImage("images/icon_custom_share.png"),
+      customImage: SantoTools.getAssetImage("share/icon_custom_share.png"),
       customTitle: "自定义",
       canClick: true,
     ));
@@ -170,7 +170,7 @@ class ShareExample extends StatelessWidget {
     ));
     secondRowList.add(SantoShareItem(
       SantoShareItemConstants.shareCustom,
-      customImage: SantoTools.getAssetImage("images/icon_custom_share.png"),
+      customImage: SantoTools.getAssetImage("share/icon_custom_share.png"),
       customTitle: "自定义",
       canClick: true,
     ));

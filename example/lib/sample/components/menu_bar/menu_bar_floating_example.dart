@@ -49,6 +49,8 @@ class _MenuBarFloatingExampleState extends State<MenuBarFloatingExample> {
             gap: 12,
             currentIndex: _index,
             onChanged: (i) => setState(() => _index = i),
+            itemSelectedBgColor: const Color(0xFFF0F0F0),
+            selectedTextColor: const Color(0xFF1677FF),
             showMoreMenu: true,
             moreMenu: SantoMenuBarMoreMenu(
               title: '更多',

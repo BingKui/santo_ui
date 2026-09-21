@@ -6,6 +6,52 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [未发布]
+
+### 🔄 PageLayout 下拉刷新抖动
+
+- **修复**: 刷新头原先是滚动视图上方的 `Column` 兄弟节点,高度增长会逐帧挤压列表视口——下拉时页面抖动、可见内容被压得很少。现在改为覆盖式头部:列表内容用 `Transform.translate` 下移(纯绘制不触发布局),整个下拉过程视口高度恒定;平移量会扣除负向 pixels,iOS Bouncing 物理下内容不会双重位移
+- **修复**: `SantoPageLayout.enableRefresh` 之前挂了没有 parent 的裸 `AlwaysScrollableScrollPhysics`,没有边界约束和松手回弹模拟——刷新后滚动位置残留负值,之后任何滚动都会把刷新头重新拉出来。现在把平台物理(`ScrollConfiguration.of(context).getScrollPhysics(context)`)作为 parent 挂接
+- **新增**: 回归测试断言刷新完成后滚动位置归零、下拉过程中滚动视口高度恒定
+
+### 🏙 城市选择
+
+- **修复**: 列表 ListTile 与最近 Material 之间的白色 DecoratedBox 会盖住水波纹并触发框架 "ListTile background color or ink splashes may be invisible" 断言,页面 body 改为直接用白色 Material 承载
+- **变更**: 推荐城市按钮增加 `radiusXs` 圆角、固定 36 高度、背景改为透明
+- **变更**: 搜索框 padding 统一为 `hSpacingMd`(不再左右 20 / 上下 10),搜索框下分割线按 0.5 细线规范
+- **变更**: A-Z 索引条增加常驻选中样式——当前列表分组对应的字母显示为品牌色圆形底 + 白色字母(`IndexBar.currentTag`,由 AzListView 传入);按下的字母保持灰色圆形高亮;移除无用的 `IndexBar.touchDownTextStyle`
+
+### 🗺 省市区级联
+
+- **新增**: `SantoCascader.showArea()` 快捷弹出省/市/区三级选择器,内置数据移植自 `@vant/area-data`(34 省 / 369 市 / 3478 区县,行政区划码为国家标准 6 位码)
+- **新增**: `SantoAreaData` 暴露 `provinceList` / `cityList` / `countyList` 三个码到名称的扁平映射,以及 `cascaderItems`(按码前缀推导的省/市/区三级树,value 为码、label 为名称),可配合通用 `SantoCascader.show()` 使用
+- **新增**: `showArea` 确认回调回传 `SantoAreaResult`,包含 `codes` / `names` / `text`(名称以 "/" 拼接)与省/市/区分项取值 `provinceCode` / `provinceName` / `cityCode` / `cityName` / `districtCode` / `districtName`;`initialValues` 支持传行政区划码回显
+
+### 🖼 Empty 插画
+
+- **变更**: `SantoEmpty` 内置插画整体替换为 `assets/empty` 下的 12 张 SVG 插画,`SantoEmptyImageType` 枚举值重新定义为 notFound / contentEmpty / importLoading / listEmpty / loadFail / noAccess / notOpenPayType / offline / orderEmpty / searchEmpty / unbindAccount / wait(原 noData / networkError 移除)
+- **变更**: `img` 参数类型从 `Image?` 放宽为 `Widget?`,支持传入任意图片组件(含 SVG);自定义图片仍优先于 `imageType`
+- **变更**: `SantoAbnormalStateUtils` 预设映射更新:加载失败 → loadFail、网络未连接 → offline、暂无数据 → listEmpty
+- **删除**: 包内老插画 `assets/images/no_data.png`、`assets/images/network_error.png` 及 `SantoAsset.noData`、`SantoAsset.networkError` 常量
+
+### 🧭 TabBar 指示器
+
+- **变更**: `SantoTabBar` 选中指示器改为选中圆角区域自身的底部 border(通栏宽、随圆角裁切),与选中底色共用同一套切换动画;TabBar 内置指示器已关闭
+- **删除**: `SantoTabBar.indicatorWidth` 与 `SantoTabBar.indicatorPadding`(不再有意义);`indicatorWeight` 仍控制粗细、`indicatorColor` 仍控制颜色;`SantoAnchorTabBarStyle.indicatorPadding` 同步删除
+- **修复**: 更多按钮的 Container 此前把 tight 约束直接传给图标,导致箭头 SVG 无论 `SantoIcon.size` 多少都按约 25px 渲染;现已居中放置 20px 图标(chevron 字形只占 viewBox 一半,视觉线宽约 10px)
+
+### 📜 Drawer 长内容
+
+- **修复**: `SantoBottomDrawer` 内容区改为自动可滚动,长内容超过 `maxHeight`(默认屏幕高度 85%)时由内容区滚动消化,不再竖向溢出;抽屉示例新增「长内容自动滚动」演示
+
+### 🔄 刷新头部圆角
+
+- **修复**: 默认下拉刷新头部改为圆角(主题 `radiusMd`),不再是直角满宽色块
+
+### 🗑 遗留位图资源清理
+
+- **删除**: `SantoAsset` 中 28 个已废弃常量(选中/未选中框、alert/warning/success、star_size、arrow_up/down、require_red、star_select、notice 系列)及其对应 PNG 资源;组件图标已统一由 SantoIcon 提供,`assets/images` 由 50 个文件精简到 40 个、`assets/icons` 由 33 个精简到 12 个
+
 ## [1.1.1] - 2026-09-21
 
 ### 🧩 Segmented 角标

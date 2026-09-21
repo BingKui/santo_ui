@@ -172,6 +172,10 @@ class _SantoRefreshState extends State<SantoRefresh>
   /// 当前下拉距离
   double _pullExtent = 0;
 
+  /// 最近一次滚动位置中的负向部分(Bouncing 物理松手回弹期间 < 0)。
+  /// 弹性物理下列表自身会平移,平移量需从头部位移中扣除,避免内容双重位移
+  double _negativePixels = 0;
+
   /// 当前状态
   SantoRefreshState _state = SantoRefreshState.inactive;
 
@@ -252,6 +256,9 @@ class _SantoRefreshState extends State<SantoRefresh>
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification.depth != 0) return false;
 
+    final px = notification.metrics.pixels;
+    _negativePixels = px < 0 ? px : 0.0;
+
     final bool refreshing = _state == SantoRefreshState.refreshing ||
         _state == SantoRefreshState.done;
     if (widget.onRefresh != null && !refreshing) {
@@ -259,9 +266,9 @@ class _SantoRefreshState extends State<SantoRefresh>
           notification.overscroll < 0) {
         _updatePull(_pullExtent - notification.overscroll);
       } else if (notification is ScrollUpdateNotification &&
-          notification.dragDetails != null &&
           notification.metrics.extentBefore == 0 &&
           notification.metrics.pixels < 0) {
+        // 不要求 dragDetails:松手后的回弹阶段也要跟随,否则位移会对不上
         _updatePull(-notification.metrics.pixels);
       } else if (notification is ScrollEndNotification &&
           _state != SantoRefreshState.inactive) {
@@ -369,11 +376,34 @@ class _SantoRefreshState extends State<SantoRefresh>
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        if (widget.onRefresh != null) _buildRefreshHeader(),
         Expanded(
-          child: NotificationListener<ScrollNotification>(
-            onNotification: _handleScrollNotification,
-            child: widget.child,
+          child: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                // 头部高度变化只平移内容(纯绘制不触发布局),
+                // 避免每帧改变视口高度导致列表抖动、可见内容被压缩;
+                // 扣除负向 pixels,Bouncing 物理下内容不会双重位移
+                child: Transform.translate(
+                  offset: Offset(
+                      0,
+                      widget.onRefresh != null
+                          ? _pullExtent + _negativePixels
+                          : 0.0),
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: _handleScrollNotification,
+                    child: widget.child,
+                  ),
+                ),
+              ),
+              if (widget.onRefresh != null && _pullExtent > 0)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: _pullExtent,
+                  child: _buildRefreshHeader(),
+                ),
+            ],
           ),
         ),
         if (widget.onLoadMore != null) _buildLoadMoreFooter(),
@@ -381,9 +411,8 @@ class _SantoRefreshState extends State<SantoRefresh>
     );
   }
 
-  /// 刷新头部:紧贴列表上方占位,高度随下拉距离变化(不上浮覆盖列表内容)
+  /// 刷新头部:覆盖在列表顶部,随下拉距离露出(不挤压列表视口)
   Widget _buildRefreshHeader() {
-    if (_pullExtent <= 0) return const SizedBox.shrink();
     if (widget.refreshHeader != null) {
       return widget.refreshHeader!(_state, _pullExtent);
     }
@@ -392,7 +421,10 @@ class _SantoRefreshState extends State<SantoRefresh>
     return Container(
       height: _pullExtent,
       alignment: Alignment.center,
-      color: commonConfig.fillBody,
+      decoration: BoxDecoration(
+        color: commonConfig.fillBody,
+        borderRadius: BorderRadius.circular(commonConfig.radiusMd),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

@@ -209,20 +209,98 @@ class DrawerExample extends StatelessWidget {
                   SantoBottomDrawer.show(
                     context: context,
                     title: '长内容滚动',
-                    desc: '内容超过最大高度(屏幕 85%)时请使用可滚动控件',
-                    child: ListView.builder(
-                      shrinkWrap: true,
+                    desc: '内容使用 ListView,底部安全区由 MediaQuery 传递给 ListView 自动避让',
+                    child: ListView.separated(
                       itemCount: 30,
-                      itemBuilder: (context, index) =>
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8),
-                            child: Text('列表项 ${index + 1}'),
-                          ),
+                      separatorBuilder: (_, _) => const Divider(height: 1),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Text('列表项 ${index + 1}'),
+                        );
+                      },
                     ),
                   );
                 },
-                text: '长内容 + 底部安全区域',
+                text: '长内容自动滚动(30 项)',
+              ),
+              const SizedBox(height: 16),
+              SantoButton(
+                onTap: () {
+                  SantoBottomDrawer.show(
+                    context: context,
+                    title: '内容充满整个抽屉',
+                    desc: '设置 height 后内容区通过 Expanded 撑满,子控件可自由使用 Expanded/Flexible',
+                    height: 500,
+                    contentPadding: EdgeInsets.zero,
+                    child: Container(
+                      color: const Color(0xFFF5F6FA),
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 18,
+                                  backgroundColor:
+                                      Color(0xFF1677FF).withOpacity(0.1),
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: const TextStyle(
+                                      color: Color(0xFF1677FF),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '标题项 ${index + 1}',
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '这是第 ${index + 1} 行的描述文案',
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Color(0xFF808695),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: Color(0xFFC0C4CC),
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
+                text: '内容充满整个抽屉(height: 500)',
               ),
             ],
           ),
