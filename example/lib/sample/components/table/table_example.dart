@@ -11,7 +11,8 @@ class TableExample extends StatefulWidget {
 class _TableExampleState extends State<TableExample> {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: 'Table 表格示例',
+    return SantoPageLayout(
+      title: 'Table 表格示例',
       children: <Widget>[
         ExampleIntro('table'),
         // 基础用法
@@ -62,10 +63,7 @@ class _TableExampleState extends State<TableExample> {
                     width: 60,
                     align: SantoTableAlign.center,
                   ),
-                  SantoTableColumn(
-                    title: '产品名称',
-                    align: SantoTableAlign.left,
-                  ),
+                  SantoTableColumn(title: '产品名称', align: SantoTableAlign.left),
                   SantoTableColumn(
                     title: '价格',
                     width: 80,
@@ -105,8 +103,11 @@ class _TableExampleState extends State<TableExample> {
                 columns: [
                   SantoTableColumn(title: '日期', width: 100),
                   SantoTableColumn(title: '项目', align: SantoTableAlign.left),
-                  SantoTableColumn(title: '金额', width: 100,
-                      align: SantoTableAlign.right),
+                  SantoTableColumn(
+                    title: '金额',
+                    width: 100,
+                    align: SantoTableAlign.right,
+                  ),
                   SantoTableColumn(title: '状态', width: 80),
                 ],
                 data: [
@@ -130,8 +131,7 @@ class _TableExampleState extends State<TableExample> {
           child: SantoTable(
             columns: [
               SantoTableColumn(title: '序号', width: 60),
-              SantoTableColumn(title: '任务名称',
-                  align: SantoTableAlign.left),
+              SantoTableColumn(title: '任务名称', align: SantoTableAlign.left),
               SantoTableColumn(title: '负责人', width: 80),
               SantoTableColumn(title: '进度', width: 80),
             ],
@@ -191,8 +191,7 @@ class _TableExampleState extends State<TableExample> {
                           SizedBox(width: 4),
                           Text(
                             data.toString(),
-                            style: TextStyle(
-                                color: statusColor, fontSize: 13),
+                            style: TextStyle(color: statusColor, fontSize: 13),
                           ),
                         ],
                       );
@@ -246,6 +245,102 @@ class _TableExampleState extends State<TableExample> {
           ),
         ),
 
+        SantoSection(
+          title: '合并单元格',
+          description: 'spanBuilder 通过 rowSpan / colSpan 合并纵向或横向单元格',
+          child: SantoTable(
+            columns: [
+              SantoTableColumn(
+                title: '部门',
+                width: 100,
+                spanBuilder: (data, row, col) => row == 0
+                    ? SantoTableCellSpan(rowSpan: 2)
+                    : SantoTableCellSpan(),
+              ),
+              SantoTableColumn(
+                title: '项目',
+                width: 120,
+                spanBuilder: (data, row, col) => row == 2
+                    ? SantoTableCellSpan(colSpan: 2)
+                    : SantoTableCellSpan(),
+              ),
+              SantoTableColumn(title: '金额', width: 100),
+            ],
+            data: [
+              ['研发部', '客户端', '¥32万'],
+              ['研发部', '服务端', '¥28万'],
+              ['市场部', '全年汇总', '¥46万'],
+            ],
+          ),
+        ),
+
+        SantoSection(
+          title: '选择与排序',
+          description: 'selection 支持单选/多选，sorter 点击表头循环切换排序方向',
+          child: SantoTable(
+            rowKey: (row, index) => row.first,
+            selection: SantoTableSelection(
+              onChanged: (keys, rows) {
+                _showSnackBar('已选择 ${keys.length} 项');
+              },
+            ),
+            columns: [
+              SantoTableColumn(title: '姓名', align: SantoTableAlign.left),
+              SantoTableColumn(
+                title: '年龄',
+                width: 90,
+                sorter: (left, right) => (left as int).compareTo(right as int),
+              ),
+              SantoTableColumn(title: '城市', width: 100),
+            ],
+            data: [
+              ['张三', 25, '北京'],
+              ['李四', 30, '上海'],
+              ['王五', 28, '广州'],
+            ],
+          ),
+        ),
+
+        SantoSection(
+          title: '展开与折叠',
+          description: 'expandable 在首列增加展开按钮，显示当前行的补充内容',
+          child: SantoTable(
+            rowKey: (row, index) => row.first,
+            expandable: SantoTableExpandable(
+              expandedHeight: 72,
+              builder: (context, row, index) =>
+                  Text('${row.first}：这里可放置描述、表单或自定义组件'),
+            ),
+            columns: [
+              SantoTableColumn(title: '任务', align: SantoTableAlign.left),
+              SantoTableColumn(title: '负责人', width: 100),
+            ],
+            data: [
+              ['订单页优化', '张三'],
+              ['支付链路升级', '李四'],
+            ],
+          ),
+        ),
+
+        SantoSection(
+          title: '分页',
+          description: 'pagination 设置当前页、每页条数和可选的每页条数',
+          child: SantoTable(
+            pagination: SantoTablePagination(
+              pageSize: 5,
+              pageSizeOptions: [5, 10, 20],
+            ),
+            columns: [
+              SantoTableColumn(title: '序号', width: 70),
+              SantoTableColumn(title: '名称', align: SantoTableAlign.left),
+            ],
+            data: List<List<dynamic>>.generate(
+              18,
+              (index) => [index + 1, '数据项 ${index + 1}'],
+            ),
+          ),
+        ),
+
         // 无边框表格
         SantoSection(
           title: '无边框表格',
@@ -289,8 +384,11 @@ class _TableExampleState extends State<TableExample> {
                 columns: [
                   SantoTableColumn(title: '日期', width: 100),
                   SantoTableColumn(title: '项目', align: SantoTableAlign.left),
-                  SantoTableColumn(title: '金额', width: 100,
-                      align: SantoTableAlign.right),
+                  SantoTableColumn(
+                    title: '金额',
+                    width: 100,
+                    align: SantoTableAlign.right,
+                  ),
                 ],
                 data: List<List<dynamic>>.generate(20, (int i) {
                   return [
@@ -320,12 +418,21 @@ class _TableExampleState extends State<TableExample> {
                 columns: [
                   SantoTableColumn(title: '日期', width: 100),
                   SantoTableColumn(title: '渠道', width: 110),
-                  SantoTableColumn(title: '曝光', width: 110,
-                      align: SantoTableAlign.right),
-                  SantoTableColumn(title: '点击', width: 110,
-                      align: SantoTableAlign.right),
-                  SantoTableColumn(title: '转化率', width: 130,
-                      align: SantoTableAlign.right),
+                  SantoTableColumn(
+                    title: '曝光',
+                    width: 110,
+                    align: SantoTableAlign.right,
+                  ),
+                  SantoTableColumn(
+                    title: '点击',
+                    width: 110,
+                    align: SantoTableAlign.right,
+                  ),
+                  SantoTableColumn(
+                    title: '转化率',
+                    width: 130,
+                    align: SantoTableAlign.right,
+                  ),
                 ],
                 data: [
                   ['09-18', '信息流', '128,400', '3,210', '2.5%'],
@@ -340,7 +447,8 @@ class _TableExampleState extends State<TableExample> {
         // 固定列
         SantoSection(
           title: '固定列',
-          description: 'fixed 把列钉在左侧/右侧,横向滚动时固定列不随内容滚走;'
+          description:
+              'fixed 把列钉在左侧/右侧,横向滚动时固定列不随内容滚走;'
               '横向滚动模式下未定宽列取默认宽 120',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,14 +462,20 @@ class _TableExampleState extends State<TableExample> {
                 height: 180,
                 striped: true,
                 columns: [
-                  SantoTableColumn(title: '姓名', width: 90,
-                      fixed: SantoTableColumnFixed.left),
+                  SantoTableColumn(
+                    title: '姓名',
+                    width: 90,
+                    fixed: SantoTableColumnFixed.left,
+                  ),
                   SantoTableColumn(title: '部门', width: 110),
                   SantoTableColumn(title: '职位', width: 120),
                   SantoTableColumn(title: '工龄', width: 90),
                   SantoTableColumn(title: '城市', width: 110),
-                  SantoTableColumn(title: '操作', width: 90,
-                      fixed: SantoTableColumnFixed.right),
+                  SantoTableColumn(
+                    title: '操作',
+                    width: 90,
+                    fixed: SantoTableColumnFixed.right,
+                  ),
                 ],
                 data: List<List<dynamic>>.generate(12, (int i) {
                   return [
@@ -384,10 +498,7 @@ class _TableExampleState extends State<TableExample> {
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 1),
-      ),
+      SnackBar(content: Text(message), duration: Duration(seconds: 1)),
     );
   }
 }

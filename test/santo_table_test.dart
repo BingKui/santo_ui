@@ -17,36 +17,55 @@ Widget _wrap(Widget child, {double width = 390}) {
 final Finder _cells = find.byWidgetPredicate(
   (widget) =>
       widget is Container &&
-      widget.padding ==
-          const EdgeInsets.symmetric(horizontal: iDefaultGap * 3),
+      widget.padding == const EdgeInsets.symmetric(horizontal: iDefaultGap * 3),
 );
 
 void main() {
-  testWidgets('fixed columns keep width, auto column takes the rest',
-      (tester) async {
-    await tester.pumpWidget(_wrap(SantoTable(
-      columns: [
-        SantoTableColumn(
-            title: '排名', width: 60, align: SantoTableAlign.center),
-        SantoTableColumn(title: '产品名称', align: SantoTableAlign.left),
-        SantoTableColumn(
-            title: '价格', width: 80, align: SantoTableAlign.right),
-        SantoTableColumn(
-            title: '销量', width: 80, align: SantoTableAlign.right),
-      ],
-      data: [
-        ['1', 'iPhone 15 Pro', '¥8999', '12,580'],
-      ],
-    )));
+  testWidgets('fixed columns keep width, auto column takes the rest', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(
+              title: '排名',
+              width: 60,
+              align: SantoTableAlign.center,
+            ),
+            SantoTableColumn(title: '产品名称', align: SantoTableAlign.left),
+            SantoTableColumn(
+              title: '价格',
+              width: 80,
+              align: SantoTableAlign.right,
+            ),
+            SantoTableColumn(
+              title: '销量',
+              width: 80,
+              align: SantoTableAlign.right,
+            ),
+          ],
+          data: [
+            ['1', 'iPhone 15 Pro', '¥8999', '12,580'],
+          ],
+        ),
+      ),
+    );
 
     // 表头四列：60 / 170 / 80 / 80
     expect(tester.getSize(_cells.at(0)).width, 60);
-    expect(tester.getSize(_cells.at(1)).width, moreOrLessEquals(170, epsilon: 1));
+    expect(
+      tester.getSize(_cells.at(1)).width,
+      moreOrLessEquals(170, epsilon: 1),
+    );
     expect(tester.getSize(_cells.at(2)).width, 80);
     expect(tester.getSize(_cells.at(3)).width, 80);
     // 数据行同宽
     expect(tester.getSize(_cells.at(4)).width, 60);
-    expect(tester.getSize(_cells.at(5)).width, moreOrLessEquals(170, epsilon: 1));
+    expect(
+      tester.getSize(_cells.at(5)).width,
+      moreOrLessEquals(170, epsilon: 1),
+    );
 
     // 自动列的表头与内容不被挤压成空列
     expect(tester.getSize(find.text('产品名称')).width, greaterThan(40));
@@ -54,57 +73,80 @@ void main() {
   });
 
   testWidgets('columns without width split space evenly', (tester) async {
-    await tester.pumpWidget(_wrap(
-      SantoTable(
-        columns: [
-          SantoTableColumn(title: '姓名'),
-          SantoTableColumn(title: '年龄'),
-          SantoTableColumn(title: '城市'),
-        ],
-        data: [
-          ['张三', '25', '北京'],
-        ],
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(title: '姓名'),
+            SantoTableColumn(title: '年龄'),
+            SantoTableColumn(title: '城市'),
+          ],
+          data: [
+            ['张三', '25', '北京'],
+          ],
+        ),
+        width: 300,
       ),
-      width: 300,
-    ));
+    );
 
-    expect(tester.getSize(_cells.at(0)).width, moreOrLessEquals(100, epsilon: 1));
-    expect(tester.getSize(_cells.at(1)).width, moreOrLessEquals(100, epsilon: 1));
-    expect(tester.getSize(_cells.at(2)).width, moreOrLessEquals(100, epsilon: 1));
+    expect(
+      tester.getSize(_cells.at(0)).width,
+      moreOrLessEquals(100, epsilon: 1),
+    );
+    expect(
+      tester.getSize(_cells.at(1)).width,
+      moreOrLessEquals(100, epsilon: 1),
+    );
+    expect(
+      tester.getSize(_cells.at(2)).width,
+      moreOrLessEquals(100, epsilon: 1),
+    );
   });
 
-  testWidgets('all fixed columns share the table width proportionally',
-      (tester) async {
-    await tester.pumpWidget(_wrap(
-      SantoTable(
-        columns: [
-          SantoTableColumn(title: 'A', width: 100),
-          SantoTableColumn(title: 'B', width: 100),
-        ],
-        data: [
-          ['a1', 'b1'],
-        ],
+  testWidgets('all fixed columns share the table width proportionally', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(title: 'A', width: 100),
+            SantoTableColumn(title: 'B', width: 100),
+          ],
+          data: [
+            ['a1', 'b1'],
+          ],
+        ),
+        width: 350,
       ),
-      width: 350,
-    ));
+    );
 
-    expect(tester.getSize(_cells.at(0)).width, moreOrLessEquals(175, epsilon: 1));
-    expect(tester.getSize(_cells.at(1)).width, moreOrLessEquals(175, epsilon: 1));
+    expect(
+      tester.getSize(_cells.at(0)).width,
+      moreOrLessEquals(175, epsilon: 1),
+    );
+    expect(
+      tester.getSize(_cells.at(1)).width,
+      moreOrLessEquals(175, epsilon: 1),
+    );
   });
 
-  testWidgets('all fixed columns wider than the table scroll horizontally',
-      (tester) async {
-    await tester.pumpWidget(_wrap(
-      SantoTable(
-        columns: [
-          SantoTableColumn(title: 'A', width: 300),
-          SantoTableColumn(title: 'B', width: 300),
-        ],
-        data: [
-          ['a1', 'b1'],
-        ],
+  testWidgets('all fixed columns wider than the table scroll horizontally', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(title: 'A', width: 300),
+            SantoTableColumn(title: 'B', width: 300),
+          ],
+          data: [
+            ['a1', 'b1'],
+          ],
+        ),
       ),
-    ));
+    );
 
     // 列宽和 600 > 容器 390,进入横向滚动模式,列按定宽渲染
     expect(tester.getSize(_cells.at(0)).width, 300);
@@ -112,19 +154,24 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('height pins the header and scrolls the body vertically',
-      (tester) async {
-    await tester.pumpWidget(_wrap(
-      SantoTable(
-        height: 120,
-        columns: [
-          SantoTableColumn(title: '姓名', width: 100),
-          SantoTableColumn(title: '年龄', width: 100),
-        ],
-        data: List<List<dynamic>>.generate(
-            20, (int i) => <dynamic>['用户$i', '$i']),
+  testWidgets('height pins the header and scrolls the body vertically', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          height: 120,
+          columns: [
+            SantoTableColumn(title: '姓名', width: 100),
+            SantoTableColumn(title: '年龄', width: 100),
+          ],
+          data: List<List<dynamic>>.generate(
+            20,
+            (int i) => <dynamic>['用户$i', '$i'],
+          ),
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     // 表头仍在,内容区按 height 限高滚动
@@ -133,9 +180,7 @@ void main() {
     expect(find.text('用户0'), findsOneWidget);
 
     // 一路向下滚直到最后一行可见,表头始终固定
-    for (int i = 0;
-        i < 10 && find.text('用户19').evaluate().isEmpty;
-        i++) {
+    for (int i = 0; i < 10 && find.text('用户19').evaluate().isEmpty; i++) {
       await tester.drag(find.byType(SantoTable), const Offset(0, -200));
       await tester.pumpAndSettle();
     }
@@ -143,69 +188,349 @@ void main() {
     expect(find.text('姓名'), findsOneWidget);
   });
 
-  testWidgets('fixed columns stay outside the scrollable middle area',
-      (tester) async {
-    await tester.pumpWidget(_wrap(
-      SantoTable(
-        columns: [
-          SantoTableColumn(title: '姓名', width: 100,
-              fixed: SantoTableColumnFixed.left),
-          SantoTableColumn(title: '年龄', width: 90),
-          SantoTableColumn(title: '城市', width: 120),
-          SantoTableColumn(title: '操作', width: 100,
-              fixed: SantoTableColumnFixed.right),
-        ],
-        data: [
-          ['张三', '25', '北京', '详情'],
-        ],
+  testWidgets('fixed columns stay outside the scrollable middle area', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(
+              title: '姓名',
+              width: 100,
+              fixed: SantoTableColumnFixed.left,
+            ),
+            SantoTableColumn(title: '年龄', width: 90),
+            SantoTableColumn(title: '城市', width: 120),
+            SantoTableColumn(
+              title: '操作',
+              width: 100,
+              fixed: SantoTableColumnFixed.right,
+            ),
+          ],
+          data: [
+            ['张三', '25', '北京', '详情'],
+          ],
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     // 单元格取带内边距的 Container 矩形,表头与数据行逐列对齐
-    Rect headerCell(String title) => tester.getRect(find
-        .ancestor(of: find.text(title), matching: _cells)
-        .first);
-    Rect dataCell(String text) => tester.getRect(find
-        .ancestor(of: find.text(text).first, matching: _cells)
-        .first);
+    Rect headerCell(String title) => tester.getRect(
+      find.ancestor(of: find.text(title), matching: _cells).first,
+    );
+    Rect dataCell(String text) => tester.getRect(
+      find.ancestor(of: find.text(text).first, matching: _cells).first,
+    );
 
-    expect(headerCell('姓名').left, moreOrLessEquals(dataCell('张三').left, epsilon: 0.5));
-    expect(headerCell('姓名').width, moreOrLessEquals(dataCell('张三').width, epsilon: 0.5));
-    expect(headerCell('年龄').left, moreOrLessEquals(dataCell('25').left, epsilon: 0.5));
-    expect(headerCell('年龄').width, moreOrLessEquals(dataCell('25').width, epsilon: 0.5));
-    expect(headerCell('城市').left, moreOrLessEquals(dataCell('北京').left, epsilon: 0.5));
+    expect(
+      headerCell('姓名').left,
+      moreOrLessEquals(dataCell('张三').left, epsilon: 0.5),
+    );
+    expect(
+      headerCell('姓名').width,
+      moreOrLessEquals(dataCell('张三').width, epsilon: 0.5),
+    );
+    expect(
+      headerCell('年龄').left,
+      moreOrLessEquals(dataCell('25').left, epsilon: 0.5),
+    );
+    expect(
+      headerCell('年龄').width,
+      moreOrLessEquals(dataCell('25').width, epsilon: 0.5),
+    );
+    expect(
+      headerCell('城市').left,
+      moreOrLessEquals(dataCell('北京').left, epsilon: 0.5),
+    );
 
     // 姓名固定在表格左缘,操作固定在表格右缘
     final Rect tableRect = tester.getRect(find.byType(SantoTable));
-    expect(headerCell('姓名').left, moreOrLessEquals(tableRect.left, epsilon: 0.5));
-    expect(headerCell('操作').right, moreOrLessEquals(tableRect.right, epsilon: 0.5));
-    expect(dataCell('详情').right, moreOrLessEquals(tableRect.right, epsilon: 0.5));
+    expect(
+      headerCell('姓名').left,
+      moreOrLessEquals(tableRect.left, epsilon: 0.5),
+    );
+    expect(
+      headerCell('操作').right,
+      moreOrLessEquals(tableRect.right, epsilon: 0.5),
+    );
+    expect(
+      dataCell('详情').right,
+      moreOrLessEquals(tableRect.right, epsilon: 0.5),
+    );
   });
 
-  testWidgets('auto columns fall back to the default width in scroll mode',
-      (tester) async {
-    await tester.pumpWidget(_wrap(
-      SantoTable(
-        columns: [
-          SantoTableColumn(title: '姓名', width: 100,
-              fixed: SantoTableColumnFixed.left),
-          SantoTableColumn(title: '备注'),
-        ],
-        data: [
-          ['张三', '备注内容'],
-        ],
+  testWidgets('auto columns fall back to the default width in scroll mode', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(
+              title: '姓名',
+              width: 100,
+              fixed: SantoTableColumnFixed.left,
+            ),
+            SantoTableColumn(title: '备注'),
+          ],
+          data: [
+            ['张三', '备注内容'],
+          ],
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     // 未定宽列在横向滚动模式下取默认宽 120
-    final Rect cell = tester.getRect(find
-        .ancestor(
+    final Rect cell = tester.getRect(
+      find
+          .ancestor(
             of: find.text('备注内容'),
-            matching: find.byWidgetPredicate((Widget w) => w is Container))
-        .first);
+            matching: find.byWidgetPredicate((Widget w) => w is Container),
+          )
+          .first,
+    );
     expect(cell.width, 120);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('uses a light header and supports custom cell widgets', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(
+              title: '状态',
+              cellBuilder: (value, rowIndex, colIndex) =>
+                  Chip(label: Text('$value')),
+            ),
+          ],
+          data: const [
+            ['已完成'],
+          ],
+        ),
+      ),
+    );
+
+    expect(find.byType(Chip), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is Container &&
+            widget.constraints?.maxHeight == 48 &&
+            widget.color == const Color(0xFFF5F5F5),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('merges cells horizontally and vertically', (tester) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(
+              title: '项目',
+              width: 100,
+              spanBuilder: (value, rowIndex, colIndex) => rowIndex == 0
+                  ? const SantoTableCellSpan(rowSpan: 2, colSpan: 2)
+                  : const SantoTableCellSpan(),
+            ),
+            SantoTableColumn(title: '一月', width: 100),
+            SantoTableColumn(title: '二月', width: 100),
+          ],
+          data: const [
+            ['合并区域', '隐藏', '100'],
+            ['隐藏', '隐藏', '200'],
+          ],
+        ),
+        width: 300,
+      ),
+    );
+
+    final Finder merged = find.byKey(
+      const ValueKey<String>('santo_table_cell_0_0'),
+    );
+    expect(tester.getSize(merged).width, moreOrLessEquals(200, epsilon: 1));
+    expect(tester.getSize(merged).height, 96);
+    expect(
+      find.byKey(const ValueKey<String>('santo_table_cell_0_1')),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('santo_table_cell_1_0')),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('santo_table_cell_1_1')),
+      findsNothing,
+    );
+    expect(find.text('100'), findsOneWidget);
+    expect(find.text('200'), findsOneWidget);
+  });
+
+  testWidgets('supports multiple row selection and select all', (tester) async {
+    Set<Object> selectedKeys = <Object>{};
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          rowKey: (row, sourceIndex) => row.first as String,
+          selection: SantoTableSelection(
+            onChanged: (keys, rows) => selectedKeys = keys,
+          ),
+          columns: const [SantoTableColumn(title: '姓名')],
+          data: const [
+            ['张三'],
+            ['李四'],
+          ],
+        ),
+      ),
+    );
+
+    await tester.tap(
+      find.byKey(const ValueKey<String>('santo_table_select_张三')),
+    );
+    await tester.pump();
+    expect(selectedKeys, <Object>{'张三'});
+
+    await tester.tap(
+      find.byKey(const ValueKey<String>('santo_table_select_all')),
+    );
+    await tester.pump();
+    expect(selectedKeys, <Object>{'张三', '李四'});
+  });
+
+  testWidgets('single selection keeps only one row selected', (tester) async {
+    Set<Object> selectedKeys = <Object>{};
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          rowKey: (row, sourceIndex) => row.first as String,
+          selection: SantoTableSelection(
+            mode: SantoTableSelectionMode.single,
+            onChanged: (keys, rows) => selectedKeys = keys,
+          ),
+          columns: const [SantoTableColumn(title: '姓名')],
+          data: const [
+            ['张三'],
+            ['李四'],
+          ],
+        ),
+      ),
+    );
+
+    await tester.tap(
+      find.byKey(const ValueKey<String>('santo_table_select_张三')),
+    );
+    await tester.pump();
+    await tester.tap(
+      find.byKey(const ValueKey<String>('santo_table_select_李四')),
+    );
+    await tester.pump();
+    expect(selectedKeys, <Object>{'李四'});
+  });
+
+  testWidgets('sorter cycles ascending descending and original order', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          columns: [
+            SantoTableColumn(
+              title: '分数',
+              sorter: (left, right) => (left as int).compareTo(right as int),
+            ),
+          ],
+          data: const [
+            [30],
+            [10],
+            [20],
+          ],
+        ),
+      ),
+    );
+
+    double topOf(String text) => tester.getTopLeft(find.text(text)).dy;
+
+    await tester.tap(find.byKey(const ValueKey<String>('santo_table_sort_0')));
+    await tester.pump();
+    expect(topOf('10'), lessThan(topOf('20')));
+    expect(topOf('20'), lessThan(topOf('30')));
+
+    await tester.tap(find.byKey(const ValueKey<String>('santo_table_sort_0')));
+    await tester.pump();
+    expect(topOf('30'), lessThan(topOf('20')));
+    expect(topOf('20'), lessThan(topOf('10')));
+
+    await tester.tap(find.byKey(const ValueKey<String>('santo_table_sort_0')));
+    await tester.pump();
+    expect(topOf('30'), lessThan(topOf('10')));
+  });
+
+  testWidgets('expandable rows show and hide custom content', (tester) async {
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          rowKey: (row, sourceIndex) => row.first as String,
+          expandable: SantoTableExpandable(
+            expandedHeight: 60,
+            builder: (context, row, rowIndex) => Text('${row.first}详情'),
+          ),
+          columns: const [SantoTableColumn(title: '姓名')],
+          data: const [
+            ['张三'],
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('张三详情'), findsNothing);
+    await tester.tap(
+      find.byKey(const ValueKey<String>('santo_table_expand_张三')),
+    );
+    await tester.pump();
+    expect(find.text('张三详情'), findsOneWidget);
+    await tester.tap(
+      find.byKey(const ValueKey<String>('santo_table_expand_张三')),
+    );
+    await tester.pump();
+    expect(find.text('张三详情'), findsNothing);
+  });
+
+  testWidgets('pagination limits rows and changes pages', (tester) async {
+    int currentPage = 1;
+    await tester.pumpWidget(
+      _wrap(
+        SantoTable(
+          pagination: SantoTablePagination(
+            pageSize: 2,
+            pageSizeOptions: const <int>[2, 4],
+            onPageChanged: (page) => currentPage = page,
+          ),
+          columns: const [SantoTableColumn(title: '姓名')],
+          data: const [
+            ['用户甲'],
+            ['用户乙'],
+            ['用户丙'],
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('用户甲'), findsOneWidget);
+    expect(find.text('用户乙'), findsOneWidget);
+    expect(find.text('用户丙'), findsNothing);
+
+    await tester.tap(find.text('下一页'));
+    await tester.pump();
+    expect(currentPage, 2);
+    expect(find.text('用户甲'), findsNothing);
+    expect(find.text('用户丙'), findsOneWidget);
+    expect(find.text('2 条/页'), findsOneWidget);
   });
 }

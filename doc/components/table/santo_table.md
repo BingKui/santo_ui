@@ -7,169 +7,200 @@ group:
 
 # SantoTable
 
-数据表格组件,支持自定义列配置、表头固定、单元格自定义内容、边框、斑马纹、空数据占位。
+数据表格组件,API 参考 Ant Design Table,支持自定义渲染、横向/纵向合并、单选/多选、排序、展开折叠、分页、固定高度滚动、固定列和边框控制。
 
-## 一、效果总览
+## 一、能力概览
 
-- 支持自定义列配置
-- 表头可固定(吸顶)
-- 支持边框和斑马纹样式
-- 单元格支持自定义内容
-- 空数据自动显示占位提示
+- 默认使用浅灰表头和深色文字,也可通过 `headerColor` / `headerTextColor` 覆盖
+- `cellBuilder` / `headerBuilder` 支持任意 Widget
+- `spanBuilder` 支持 `rowSpan` 和 `colSpan`
+- `selection` 支持单选、多选、全选、禁选和受控状态
+- `sorter` 支持本地升序、降序和取消排序
+- `expandable` 支持展开/折叠自定义行内容
+- `pagination` 支持分页及切换每页条数
+- `height` 支持固定表头和内容区纵向滚动
+- `border` 控制外框及单元格分割线
+- 列宽超出容器时自动横向滚动,`fixed` 可固定左右列
 
-## 二、描述
+## 二、使用规范
 
-### 适用场景
-1. 数据列表展示(如订单列表、用户列表)
-2. 统计报表展示
-3. 对比数据表格
-4. 需要行列对齐的数据展示
+- `columns` 定义列,`data` 使用二维数组;缺失的单元格按空字符串展示。
+- 启用选择或展开时建议提供稳定的 `rowKey`;未提供时使用原始数据下标。
+- `spanBuilder` 的 `rowIndex` 基于排序、分页后的当前页数据;超出当前页或列范围的合并会自动裁剪。
+- 合并单元格时,起始单元格返回大于 1 的跨度即可,被覆盖单元格会自动隐藏;返回 0 可主动隐藏当前单元格。
+- `height` 只限制内容区高度,表头和分页区不计入该高度。
+- 列宽和超出容器宽度,或任一列配置 `fixed` 时,表格进入横向滚动模式;未定宽列按 120 展示。
+- 合并单元格与固定列都可独立使用;当前合并布局不启用固定列吸附,请勿让 `spanBuilder` 与 `fixed` 同时配置。
 
-### 使用规范
-- columns 定义列的数量和属性,data 为二维数组
-- data 中每个子数组的长度应与 columns 长度一致
-- cellBuilder 可自定义单元格的渲染逻辑
-- height 设置内容区高度,数据超出时在内容区内纵向滚动,表头固定在顶部
-- 列宽和超出容器宽度,或任一列配置 fixed 时,表格横向滚动,所有列按定宽渲染(未定宽列取默认宽 120)
-- fixed 取 SantoTableColumnFixed.left / right,横向滚动时把列钉在左侧/右侧
-- striped 为 true 时奇偶行显示不同背景色
+## 三、API 参考
 
-## 三、构造函数及参数说明
+### SantoTable
 
-| 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
+| 参数名 | 参数类型 | 描述 | 必填 | 默认值 |
 | --- | --- | --- | --- | --- |
-| columns | List\<SantoTableColumn\> | 列配置列表 | 是 | - |
-| data | List\<List\<dynamic\>\> | 表格数据 | 是 | - |
-| border | bool | 是否显示边框 | 否 | true |
-| borderColor | Color? | 边框颜色 | 否 | null(分割线颜色) |
+| columns | List\<SantoTableColumn\> | 列配置 | 是 | - |
+| data | List\<List\<dynamic\>\> | 二维数组数据源 | 是 | - |
+| border | bool | 是否展示外框和单元格分割线 | 否 | true |
+| borderColor | Color? | 边框颜色 | 否 | 主题分割线色 |
 | borderWidth | double | 边框宽度 | 否 | 0.5 |
-| headerColor | Color? | 表头背景色 | 否 | null(brandPrimary) |
-| headerTextColor | Color? | 表头文字颜色 | 否 | null(白色) |
+| headerColor | Color? | 表头背景色 | 否 | `commonConfig.fillBody` |
+| headerTextColor | Color? | 表头文字颜色 | 否 | `commonConfig.colorTextBase` |
 | headerTextStyle | TextStyle? | 表头文字样式 | 否 | null |
 | cellTextStyle | TextStyle? | 单元格文字样式 | 否 | null |
-| cellTextColor | Color? | 单元格文字颜色 | 否 | null |
-| rowHeight | double | 行高 | 否 | 48 |
+| cellTextColor | Color? | 单元格文字颜色 | 否 | 主题主文字色 |
+| rowHeight | double | 数据行高度 | 否 | 48 |
 | headerHeight | double | 表头高度 | 否 | 48 |
-| cellPadding | EdgeInsets? | 单元格内边距 | 否 | null |
-| oddRowColor | Color? | 奇数行背景色 | 否 | null(白色) |
-| evenRowColor | Color? | 偶数行背景色 | 否 | null(#F5F5F5) |
-| striped | bool | 是否显示斑马纹 | 否 | false |
-| height | double? | 内容区高度,超出纵向滚动且表头固定 | 否 | null(不限高) |
-| tableWidth | double? | 表格总宽度 | 否 | null(自适应) |
-| empty | Widget? | 数据为空时的占位内容 | 否 | null("暂无数据") |
+| cellPadding | EdgeInsets? | 单元格内边距 | 否 | 水平 `hSpacingMd` |
+| oddRowColor | Color? | 奇数行背景色 | 否 | 白色 |
+| evenRowColor | Color? | 偶数行背景色 | 否 | `commonConfig.fillBody` |
+| striped | bool | 是否展示斑马纹 | 否 | false |
+| height | double? | 内容区固定高度,超出后滚动 | 否 | null |
+| tableWidth | double? | 表格总宽度 | 否 | 自适应父容器 |
+| empty | Widget? | 空数据占位 | 否 | “暂无数据” |
+| rowKey | SantoTableRowKeyBuilder? | 生成稳定行标识 | 否 | 原始数据下标 |
+| selection | SantoTableSelection? | 行选择配置 | 否 | null |
+| expandable | SantoTableExpandable? | 展开行配置 | 否 | null |
+| pagination | SantoTablePagination? | 分页配置 | 否 | null |
+| onSortChanged | ValueChanged\<SantoTableSortState\>? | 排序变化回调 | 否 | null |
 
 ### SantoTableColumn
 
-| 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
+| 参数名 | 参数类型 | 描述 | 必填 | 默认值 |
 | --- | --- | --- | --- | --- |
 | title | String | 列标题 | 是 | - |
-| width | double? | 列宽度 | 否 | null(均分) |
-| align | SantoTableAlign | 对齐方式(left/center/right) | 否 | center |
-| cellBuilder | Widget Function(dynamic)? | 自定义单元格内容 | 否 | null |
-| headerBuilder | Widget Function()? | 自定义表头内容 | 否 | null |
+| width | double? | 列宽 | 否 | null(均分) |
+| align | SantoTableAlign | 对齐方式 | 否 | center |
+| fixed | SantoTableColumnFixed? | 固定到左侧或右侧 | 否 | null |
+| cellBuilder | Widget Function(dynamic, int, int)? | 自定义单元格 Widget | 否 | null |
+| headerBuilder | Widget Function(String)? | 自定义表头 Widget | 否 | null |
+| sorter | Comparator\<dynamic\>? | 单元格值比较器 | 否 | null |
+| defaultSortOrder | SantoTableSortOrder? | 初始排序方向 | 否 | null |
+| spanBuilder | SantoTableCellSpan Function(dynamic, int, int)? | 单元格合并范围 | 否 | null |
 
-## 四、示例代码
+### SantoTableSelection
 
-### 基础用法
+| 参数名 | 参数类型 | 描述 | 默认值 |
+| --- | --- | --- | --- |
+| mode | SantoTableSelectionMode | `multiple` / `single` | multiple |
+| selectedRowKeys | Set\<Object\>? | 受控选中项 | null |
+| defaultSelectedRowKeys | Set\<Object\> | 非受控初始选中项 | 空集合 |
+| rowSelectable | SantoTableRowSelectable? | 行是否可选 | null |
+| onChanged | SantoTableSelectionChanged? | 返回选中 key 与数据行 | null |
+| showSelectAll | bool | 多选时展示全选 | true |
+| columnWidth | double | 选择列宽度 | 48 |
 
-```dart
-SantoTable(
-  columns: const [
-    SantoTableColumn(title: '姓名', width: 100),
-    SantoTableColumn(title: '年龄', width: 80),
-    SantoTableColumn(title: '城市', width: 120),
-  ],
-  data: [
-    ['张三', 25, '北京'],
-    ['李四', 30, '上海'],
-    ['王五', 28, '广州'],
-  ],
-)
-```
+### SantoTableExpandable
 
-### 自定义单元格内容
+| 参数名 | 参数类型 | 描述 | 默认值 |
+| --- | --- | --- | --- |
+| builder | SantoTableExpandedBuilder | 展开内容构建器 | 必填 |
+| expandedRowKeys | Set\<Object\>? | 受控展开项 | null |
+| defaultExpandedRowKeys | Set\<Object\> | 非受控初始展开项 | 空集合 |
+| rowExpandable | SantoTableRowSelectable? | 行是否允许展开 | null |
+| onChanged | ValueChanged\<Set\<Object\>\>? | 展开项变化 | null |
+| expandedHeight | double | 展开区域高度 | 96 |
+
+### SantoTablePagination
+
+| 参数名 | 参数类型 | 描述 | 默认值 |
+| --- | --- | --- | --- |
+| currentPage | int | 初始/外部同步页码 | 1 |
+| pageSize | int | 每页条数 | 10 |
+| pageSizeOptions | List\<int\> | 每页条数选项 | [10, 20, 50] |
+| showPageSizeSelector | bool | 是否展示每页条数选择 | true |
+| onPageChanged | ValueChanged\<int\>? | 页码变化 | null |
+| onPageSizeChanged | ValueChanged\<int\>? | 每页条数变化 | null |
+
+## 四、示例
+
+### 自定义单元格与排序
 
 ```dart
 SantoTable(
   columns: [
-    const SantoTableColumn(title: '商品', width: 150),
-    const SantoTableColumn(title: '价格', width: 100, align: SantoTableAlign.right),
+    const SantoTableColumn(title: '商品'),
     SantoTableColumn(
-      title: '操作',
-      width: 120,
-      cellBuilder: (value) => TextButton(
-        onPressed: () {},
-        child: const Text('删除'),
-      ),
+      title: '价格',
+      sorter: (left, right) => (left as num).compareTo(right as num),
+      cellBuilder: (value, rowIndex, colIndex) => Text('¥$value'),
     ),
   ],
-  data: [
-    ['iPhone 15', '¥7999'],
-    ['MacBook Pro', '¥12999'],
+  data: const [
+    ['手机', 6999],
+    ['电脑', 12999],
   ],
 )
 ```
 
-### 斑马纹样式
+### 横向与纵向合并
 
 ```dart
 SantoTable(
-  columns: const [...],
-  data: [...],
-  striped: true,
-  oddRowColor: Colors.white,
-  evenRowColor: const Color(0xFFF5F5F5),
-)
-```
-
-### 固定表头与纵向滚动
-
-```dart
-SantoTable(
-  columns: const [...],
-  data: largeData, // 大量数据
-  height: 300, // 内容区高度,超出纵向滚动,表头固定
-  rowHeight: 44,
-)
-```
-
-### 横向滚动与固定列
-
-```dart
-SantoTable(
-  columns: const [
-    SantoTableColumn(title: '姓名', width: 90, fixed: SantoTableColumnFixed.left),
-    SantoTableColumn(title: '部门', width: 110),
-    SantoTableColumn(title: '城市', width: 120),
-    SantoTableColumn(title: '操作', width: 90, fixed: SantoTableColumnFixed.right),
+  columns: [
+    SantoTableColumn(
+      title: '部门',
+      spanBuilder: (value, row, col) => row == 0
+          ? const SantoTableCellSpan(rowSpan: 2)
+          : const SantoTableCellSpan(),
+    ),
+    SantoTableColumn(
+      title: '项目',
+      spanBuilder: (value, row, col) => row == 2
+          ? const SantoTableCellSpan(colSpan: 2)
+          : const SantoTableCellSpan(),
+    ),
+    const SantoTableColumn(title: '金额'),
   ],
-  data: largeData,
-  height: 300, // 可与固定列、纵向滚动组合使用
+  data: const [
+    ['研发部', '客户端', '32万'],
+    ['研发部', '服务端', '28万'],
+    ['市场部', '全年汇总', '46万'],
+  ],
 )
 ```
 
-### 自定义空数据提示
+### 选择、展开与分页
 
 ```dart
 SantoTable(
-  columns: const [...],
-  data: [],
-  empty: Column(
-    children: [
-      Icon(Icons.inbox, size: 48, color: Colors.grey),
-      const SizedBox(height: 8),
-      const Text('暂无数据', style: TextStyle(color: Colors.grey)),
-    ],
+  rowKey: (row, sourceIndex) => row.first,
+  selection: SantoTableSelection(
+    mode: SantoTableSelectionMode.multiple,
+    onChanged: (keys, rows) {},
   ),
+  expandable: SantoTableExpandable(
+    builder: (context, row, rowIndex) => Text('详情: ${row.first}'),
+  ),
+  pagination: const SantoTablePagination(
+    pageSize: 10,
+    pageSizeOptions: [10, 20, 50],
+  ),
+  height: 300,
+  columns: const [
+    SantoTableColumn(title: '名称'),
+    SantoTableColumn(title: '状态'),
+  ],
+  data: rows,
 )
 ```
 
 ## 版本变更
 
+### v1.4.0
+
+- **新增**: `SantoTableColumn.sorter` / `defaultSortOrder`,支持升序、降序和取消排序
+- **新增**: `SantoTableColumn.spanBuilder` 与 `SantoTableCellSpan`,支持横向/纵向合并
+- **新增**: `selection`,支持单选、多选、全选、禁选和受控状态
+- **新增**: `expandable`,支持展开/折叠自定义行内容
+- **新增**: `pagination`,支持分页及每页条数切换
+- **新增**: `rowKey` 和 `onSortChanged`
+- **变更**: 默认表头背景由品牌色改为 `commonConfig.fillBody`,文字由反色改为主文字色
+- **变更**: 默认单元格水平内边距统一使用 `commonConfig.hSpacingMd`
+
 ### v1.1.0
 
-- **新增**: `height` 内容区高度,数据超出时纵向滚动且表头固定(对标 antd Table 的 `scroll.y`)
-- **新增**: 横向滚动,列宽和超出容器宽度时自动开启,所有列按定宽渲染(未定宽列取默认宽 120)
-- **新增**: `SantoTableColumn.fixed` 固定列(left / right),横向滚动时钉在两侧,支持与纵向滚动组合(对标 `column.fixed`)
+- **新增**: `height` 内容区高度,数据超出时纵向滚动且表头固定
+- **新增**: 横向滚动,列宽和超出容器宽度时自动开启
+- **新增**: `SantoTableColumn.fixed` 固定列(left / right)
 - **删除**: `pinnedHeader` 参数,由 `height` 取代
-- **变更**: 全部列定宽且列宽和超出容器时,由"按比例压缩分摊"改为横向滚动
+- **变更**: 全部列定宽且列宽和超出容器时改为横向滚动

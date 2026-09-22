@@ -1,70 +1,178 @@
 import 'package:flutter/material.dart';
+import 'package:santo_ui/src/components/pagination/santo_pagination.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 表格列对齐方式
-enum SantoTableAlign {
-  /// 左对齐
-  left,
-
-  /// 居中
-  center,
-
-  /// 右对齐
-  right,
-}
+enum SantoTableAlign { left, center, right }
 
 /// 列的固定位置,对标 antd Table 的 `column.fixed`
-///
-/// 固定列在表格横向滚动时钉在左侧/右侧,只在横向滚动模式下生效。
-enum SantoTableColumnFixed {
-  /// 固定在左侧
-  left,
+enum SantoTableColumnFixed { left, right }
 
-  /// 固定在右侧
-  right,
+/// 行选择模式
+///
+/// @since v1.4.0
+enum SantoTableSelectionMode { multiple, single }
+
+/// 排序方向
+///
+/// @since v1.4.0
+enum SantoTableSortOrder { ascending, descending }
+
+/// 单元格合并范围
+///
+/// `rowSpan` 为纵向合并行数,`colSpan` 为横向合并列数。设置为 0 时隐藏
+/// 当前单元格;大于 1 时,后续被覆盖的单元格会自动隐藏。
+///
+/// @since v1.4.0
+class SantoTableCellSpan {
+  final int rowSpan;
+  final int colSpan;
+
+  const SantoTableCellSpan({this.rowSpan = 1, this.colSpan = 1})
+    : assert(rowSpan >= 0),
+      assert(colSpan >= 0);
+}
+
+/// 当前排序状态
+///
+/// @since v1.4.0
+class SantoTableSortState {
+  final int columnIndex;
+  final SantoTableSortOrder? order;
+
+  const SantoTableSortState({required this.columnIndex, required this.order});
+}
+
+typedef SantoTableRowKeyBuilder = Object Function(
+  List<dynamic> row,
+  int sourceIndex,
+);
+typedef SantoTableRowSelectable = bool Function(
+  List<dynamic> row,
+  int sourceIndex,
+);
+typedef SantoTableSelectionChanged = void Function(
+  Set<Object> selectedRowKeys,
+  List<List<dynamic>> selectedRows,
+);
+typedef SantoTableExpandedBuilder = Widget Function(
+  BuildContext context,
+  List<dynamic> row,
+  int rowIndex,
+);
+
+/// 表格行选择配置
+///
+/// [selectedRowKeys] 不为 null 时为受控模式;否则组件维护内部状态,并以
+/// [defaultSelectedRowKeys] 作为初始值。
+///
+/// @since v1.4.0
+class SantoTableSelection {
+  final SantoTableSelectionMode mode;
+  final Set<Object>? selectedRowKeys;
+  final Set<Object> defaultSelectedRowKeys;
+  final SantoTableRowSelectable? rowSelectable;
+  final SantoTableSelectionChanged? onChanged;
+  final bool showSelectAll;
+  final double columnWidth;
+
+  const SantoTableSelection({
+    this.mode = SantoTableSelectionMode.multiple,
+    this.selectedRowKeys,
+    this.defaultSelectedRowKeys = const <Object>{},
+    this.rowSelectable,
+    this.onChanged,
+    this.showSelectAll = true,
+    this.columnWidth = 48,
+  }) : assert(columnWidth > 0);
+}
+
+/// 表格展开行配置
+///
+/// 展开按钮显示在首个数据列中,展开内容显示在当前行下方。
+///
+/// @since v1.4.0
+class SantoTableExpandable {
+  final SantoTableExpandedBuilder builder;
+  final Set<Object>? expandedRowKeys;
+  final Set<Object> defaultExpandedRowKeys;
+  final SantoTableRowSelectable? rowExpandable;
+  final ValueChanged<Set<Object>>? onChanged;
+  final double expandedHeight;
+
+  const SantoTableExpandable({
+    required this.builder,
+    this.expandedRowKeys,
+    this.defaultExpandedRowKeys = const <Object>{},
+    this.rowExpandable,
+    this.onChanged,
+    this.expandedHeight = 96,
+  }) : assert(expandedHeight > 0);
+}
+
+/// 表格分页配置
+///
+/// @since v1.4.0
+class SantoTablePagination {
+  final int currentPage;
+  final int pageSize;
+  final List<int> pageSizeOptions;
+  final bool showPageSizeSelector;
+  final ValueChanged<int>? onPageChanged;
+  final ValueChanged<int>? onPageSizeChanged;
+
+  const SantoTablePagination({
+    this.currentPage = 1,
+    this.pageSize = 10,
+    this.pageSizeOptions = const <int>[10, 20, 50],
+    this.showPageSizeSelector = true,
+    this.onPageChanged,
+    this.onPageSizeChanged,
+  }) : assert(currentPage > 0),
+       assert(pageSize > 0);
 }
 
 /// 表格列配置
 ///
-/// 定义表格中每一列的属性。
-///
-/// 使用示例：
-/// ```dart
-/// SantoTableColumn(
-///   title: '姓名',
-///   width: 100,
-///   align: SantoTableAlign.center,
-/// )
-/// ```
+/// @since v1.0.0
+/// @changed v1.4.0 新增排序和单元格合并能力
 class SantoTableColumn {
-  /// 列标题
   final String title;
-
-  /// 列宽度
-  ///
-  /// 为 null 时与其他未定宽列均分剩余空间；全部列都定宽时，
-  /// 按各列定宽值等比例分摊表格宽度。
-  /// 表格进入横向滚动模式后,未定宽列取默认宽 120
   final double? width;
-
-  /// 列对齐方式，默认居中
   final SantoTableAlign align;
-
-  /// 列固定位置,为 null 时不固定
-  ///
-  /// 配置了 [SantoTableColumnFixed] 的列会让表格进入横向滚动模式:
-  /// 所有列按定宽渲染(未定宽列取默认宽 120),固定列钉在左侧/右侧
   final SantoTableColumnFixed? fixed;
 
   /// 自定义单元格内容构建器
-  /// 参数：cellData 为当前单元格数据，rowIndex 为行索引，colIndex 为列索引
   final Widget Function(dynamic cellData, int rowIndex, int colIndex)?
-      cellBuilder;
+  cellBuilder;
 
   /// 自定义表头内容构建器
   final Widget Function(String title)? headerBuilder;
 
+  /// 单元格值比较器;不为 null 时点击表头可切换升序、降序和取消排序
+  ///
+  /// @since v1.4.0
+  final Comparator<dynamic>? sorter;
+
+  /// 初始排序方向
+  ///
+  /// @since v1.4.0
+  final SantoTableSortOrder? defaultSortOrder;
+
+  /// 单元格合并配置构建器
+  ///
+  /// @since v1.4.0
+  final SantoTableCellSpan Function(
+    dynamic cellData,
+    int rowIndex,
+    int colIndex,
+  )?
+  spanBuilder;
+
   /// 创建表格列配置
+  ///
+  /// @since v1.0.0
+  /// @changed v1.4.0 新增 sorter、defaultSortOrder、spanBuilder
   const SantoTableColumn({
     required this.title,
     this.width,
@@ -72,6 +180,9 @@ class SantoTableColumn {
     this.fixed,
     this.cellBuilder,
     this.headerBuilder,
+    this.sorter,
+    this.defaultSortOrder,
+    this.spanBuilder,
   });
 }
 
@@ -80,87 +191,69 @@ const double kSantoTableDefaultColumnWidth = 120;
 
 /// Table 数据表格组件
 ///
-/// 支持自定义列数和行数,支持固定表头、横向/纵向滚动、固定列、
-/// 单元格自定义内容、边框和分割线,对标 antd Table 的
-/// `scroll.x`(横向滚动)/`scroll.y`(内容区高度)/`column.fixed`(固定列)。
+/// 支持自定义渲染、单元格合并、行选择、排序、展开行、分页、固定高度滚动、
+/// 横向滚动、固定列与边框控制。
 ///
-/// 使用示例：
-/// ```dart
-/// SantoTable(
-///   height: 300, // 内容区高度,超出纵向滚动且表头固定
-///   columns: [
-///     SantoTableColumn(title: '姓名', width: 100, fixed: SantoTableColumnFixed.left),
-///     SantoTableColumn(title: '年龄', width: 80),
-///     SantoTableColumn(title: '操作', width: 100, fixed: SantoTableColumnFixed.right),
-///   ],
-///   data: [
-///     ['张三', 25, '详情'],
-///     ['李四', 30, '详情'],
-///   ],
-/// )
-/// ```
+/// @since v1.0.0
+/// @changed v1.4.0 新增合并、选择、排序、展开行和分页
 class SantoTable extends StatefulWidget {
-  /// 列配置列表
   final List<SantoTableColumn> columns;
-
-  /// 表格数据，每行为一个 List<dynamic>
   final List<List<dynamic>> data;
 
-  /// 是否显示边框，默认true
+  /// 是否显示外框与单元格分割线
   final bool border;
-
-  /// 边框颜色，默认使用主题分割线颜色
   final Color? borderColor;
-
-  /// 边框宽度，默认0.5
   final double borderWidth;
 
-  /// 表头背景色，默认使用主题品牌色
+  /// 表头背景色;默认使用主题浅填充色
   final Color? headerColor;
 
-  /// 表头文字颜色，默认白色
+  /// 表头文字颜色;默认使用主题主文字色
   final Color? headerTextColor;
-
-  /// 表头文字样式
   final TextStyle? headerTextStyle;
-
-  /// 单元格文字样式
   final TextStyle? cellTextStyle;
-
-  /// 单元格文字颜色，默认使用主题文字颜色
   final Color? cellTextColor;
-
-  /// 行高，默认48
   final double rowHeight;
-
-  /// 表头高度，默认48
   final double headerHeight;
-
-  /// 单元格内边距,默认水平 gapMd
   final EdgeInsets? cellPadding;
-
-  /// 奇数行背景色，默认白色
   final Color? oddRowColor;
-
-  /// 偶数行背景色，默认浅灰色
   final Color? evenRowColor;
-
-  /// 是否显示斑马纹，默认false
   final bool striped;
 
-  /// 内容区高度
-  ///
-  /// 不为 null 时表头固定,内容超出该高度在内容区内纵向滚动
-  /// (对标 antd Table 的 `scroll.y`)
+  /// 内容区固定高度,超出后纵向滚动且表头固定
   final double? height;
-
-  /// 表格总宽度，为 null 时自适应父容器
   final double? tableWidth;
-
-  /// 数据为空时展示的占位内容，为 null 时使用默认"暂无数据"
   final Widget? empty;
 
-  /// 创建表格组件
+  /// 数据行唯一标识;选择和展开功能建议显式设置
+  ///
+  /// @since v1.4.0
+  final SantoTableRowKeyBuilder? rowKey;
+
+  /// 行选择配置
+  ///
+  /// @since v1.4.0
+  final SantoTableSelection? selection;
+
+  /// 展开行配置
+  ///
+  /// @since v1.4.0
+  final SantoTableExpandable? expandable;
+
+  /// 分页配置;为 null 时不分页
+  ///
+  /// @since v1.4.0
+  final SantoTablePagination? pagination;
+
+  /// 排序变化回调
+  ///
+  /// @since v1.4.0
+  final ValueChanged<SantoTableSortState>? onSortChanged;
+
+  /// 创建表格
+  ///
+  /// @since v1.0.0
+  /// @changed v1.4.0 新增 rowKey、selection、expandable、pagination、onSortChanged
   const SantoTable({
     Key? key,
     required this.columns,
@@ -182,459 +275,855 @@ class SantoTable extends StatefulWidget {
     this.height,
     this.tableWidth,
     this.empty,
-  }) : super(key: key);
+    this.rowKey,
+    this.selection,
+    this.expandable,
+    this.pagination,
+    this.onSortChanged,
+  }) : assert(borderWidth >= 0),
+       assert(rowHeight > 0),
+       assert(headerHeight > 0),
+       super(key: key);
 
   @override
   State<SantoTable> createState() => _SantoTableState();
 }
 
 class _SantoTableState extends State<SantoTable> {
-  /// 内容区(中间滚动区)的纵向控制器,左右固定区由它驱动
   ScrollController? _verticalController;
-
-  /// 左固定区的纵向控制器,固定区不响应手势,由中间区同步
   ScrollController? _leftVerticalController;
   ScrollController? _rightVerticalController;
-
+  ScrollController? _selectionVerticalController;
   bool _syncingVertical = false;
   bool _verticalListenerAttached = false;
+
+  int? _sortColumnIndex;
+  SantoTableSortOrder? _sortOrder;
+  late int _currentPage;
+  late int _pageSize;
+  late Set<Object> _selectedRowKeys;
+  late Set<Object> _expandedRowKeys;
+
+  ScrollController get _mainVerticalController =>
+      _verticalController ??= ScrollController();
+  ScrollController get _leftFixedVerticalController =>
+      _leftVerticalController ??= ScrollController();
+  ScrollController get _rightFixedVerticalController =>
+      _rightVerticalController ??= ScrollController();
+  ScrollController get _selectionFixedVerticalController =>
+      _selectionVerticalController ??= ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPage = widget.pagination?.currentPage ?? 1;
+    _pageSize = widget.pagination?.pageSize ?? 10;
+    _selectedRowKeys = Set<Object>.of(
+      widget.selection?.defaultSelectedRowKeys ?? const <Object>{},
+    );
+    _expandedRowKeys = Set<Object>.of(
+      widget.expandable?.defaultExpandedRowKeys ?? const <Object>{},
+    );
+    for (int index = 0; index < widget.columns.length; index += 1) {
+      if (widget.columns[index].defaultSortOrder != null) {
+        _sortColumnIndex = index;
+        _sortOrder = widget.columns[index].defaultSortOrder;
+        break;
+      }
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant SantoTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.pagination?.currentPage != oldWidget.pagination?.currentPage) {
+      _currentPage = widget.pagination?.currentPage ?? 1;
+    }
+    if (widget.pagination?.pageSize != oldWidget.pagination?.pageSize) {
+      _pageSize = widget.pagination?.pageSize ?? 10;
+    }
+  }
 
   @override
   void dispose() {
     _verticalController?.dispose();
     _leftVerticalController?.dispose();
     _rightVerticalController?.dispose();
+    _selectionVerticalController?.dispose();
     super.dispose();
   }
 
-  ScrollController get _mainVerticalController =>
-      _verticalController ??= ScrollController();
-
-  ScrollController get _leftFixedVerticalController =>
-      _leftVerticalController ??= ScrollController();
-
-  ScrollController get _rightFixedVerticalController =>
-      _rightVerticalController ??= ScrollController();
-
   @override
   Widget build(BuildContext context) {
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
-
-    final bColor = widget.borderColor ?? commonConfig.dividerColorBase;
-    final hTextColor = widget.headerTextColor ?? commonConfig.colorTextBaseInverse;
-    final cTextColor = widget.cellTextColor ?? commonConfig.colorTextBase;
-    final oColor = widget.oddRowColor ?? Colors.white;
-    final eColor = widget.evenRowColor ?? const Color(0xFFF5F5F5);
-
-    final defaultHeaderStyle = widget.headerTextStyle ??
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
+    final Color borderColor =
+        widget.borderColor ?? commonConfig.dividerColorBase;
+    final Color headerTextColor =
+        widget.headerTextColor ?? commonConfig.colorTextBase;
+    final Color cellTextColor =
+        widget.cellTextColor ?? commonConfig.colorTextBase;
+    final Color oddColor = widget.oddRowColor ?? Colors.white;
+    final Color evenColor = widget.evenRowColor ?? commonConfig.fillBody;
+    final TextStyle headerStyle =
+        widget.headerTextStyle ??
         TextStyle(
-          color: hTextColor,
+          color: headerTextColor,
           fontSize: commonConfig.fontSizeBase,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
         );
+    final TextStyle cellStyle =
+        widget.cellTextStyle ??
+        TextStyle(color: cellTextColor, fontSize: commonConfig.fontSizeBase);
+    final List<_TableRowEntry> sortedRows = _sortedRows();
+    final List<_TableRowEntry> visibleRows = _pagedRows(sortedRows);
 
-    final defaultCellStyle = widget.cellTextStyle ??
-        TextStyle(
-          color: cTextColor,
-          fontSize: commonConfig.fontSizeBase,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final double containerWidth = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : (widget.tableWidth ?? 0);
+        final _TableLayout layout = _resolveLayout(containerWidth);
+        final Widget table =
+            widget.columns.any((column) => column.spanBuilder != null)
+            ? _buildMergedTable(
+                rows: visibleRows,
+                layout: layout,
+                containerWidth: containerWidth,
+                borderColor: borderColor,
+                oddColor: oddColor,
+                evenColor: evenColor,
+                headerStyle: headerStyle,
+                cellStyle: cellStyle,
+              )
+            : layout.scroll
+            ? _buildScrollTable(
+                rows: visibleRows,
+                layout: layout,
+                borderColor: borderColor,
+                oddColor: oddColor,
+                evenColor: evenColor,
+                headerStyle: headerStyle,
+                cellStyle: cellStyle,
+              )
+            : _buildFlexTable(
+                rows: visibleRows,
+                borderColor: borderColor,
+                oddColor: oddColor,
+                evenColor: evenColor,
+                headerStyle: headerStyle,
+                cellStyle: cellStyle,
+              );
+        if (widget.pagination == null) return table;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            table,
+            SizedBox(height: commonConfig.vSpacingMd),
+            _buildPagination(sortedRows.length),
+          ],
         );
-
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-      final double containerWidth = constraints.maxWidth.isFinite
-          ? constraints.maxWidth
-          : (widget.tableWidth ?? 0);
-      final _TableLayout layout = _resolveLayout(containerWidth);
-
-      if (widget.data.isEmpty) {
-        return _buildEmptyTable(layout, bColor, defaultHeaderStyle, oColor);
-      }
-      if (layout.scroll) {
-        return _buildScrollTable(
-          layout: layout,
-          bColor: bColor,
-          oColor: oColor,
-          eColor: eColor,
-          defaultHeaderStyle: defaultHeaderStyle,
-          defaultCellStyle: defaultCellStyle,
-        );
-      }
-      return _buildFlexTable(
-        bColor: bColor,
-        oColor: oColor,
-        eColor: eColor,
-        defaultHeaderStyle: defaultHeaderStyle,
-        defaultCellStyle: defaultCellStyle,
-      );
-    });
-  }
-
-  /// 解析列宽与布局模式
-  ///
-  /// - 任一列配置了 fixed,或全部定宽但列宽和超出容器 → 横向滚动模式,
-  ///   所有列按定宽渲染(未定宽列取默认宽)
-  /// - 其余情况为弹性模式:未定宽列均分剩余空间,全定宽按比例分摊
-  _TableLayout _resolveLayout(double containerWidth) {
-    final bool hasFixed = widget.columns.any((c) => c.fixed != null);
-    final List<double?> widths =
-        widget.columns.map((c) => c.width).toList();
-    final double fixedSum =
-        widths.fold<double>(0, (double sum, double? w) => sum + (w ?? 0));
-    final int autoCount = widths.where((w) => w == null).length;
-
-    final bool scroll = hasFixed ||
-        (autoCount == 0 && fixedSum > containerWidth + 0.1);
-    if (!scroll) {
-      return _TableLayout(scroll: false);
-    }
-    final List<double> resolved =
-        widths.map((w) => w ?? kSantoTableDefaultColumnWidth).toList();
-    return _TableLayout(
-      scroll: true,
-      widths: resolved,
-      contentWidth: resolved.fold<double>(0, (double sum, double w) => sum + w),
+      },
     );
   }
 
-  // ==================== 弹性模式(现状行为) ====================
+  List<_TableRowEntry> _sortedRows() {
+    final List<_TableRowEntry> rows = List<_TableRowEntry>.generate(
+      widget.data.length,
+      (int index) => _TableRowEntry(
+        data: widget.data[index],
+        sourceIndex: index,
+        key: widget.rowKey?.call(widget.data[index], index) ?? index,
+      ),
+    );
+    final int? columnIndex = _sortColumnIndex;
+    final SantoTableSortOrder? order = _sortOrder;
+    if (columnIndex == null ||
+        order == null ||
+        columnIndex >= widget.columns.length) {
+      return rows;
+    }
+    final Comparator<dynamic>? comparator = widget.columns[columnIndex].sorter;
+    if (comparator == null) return rows;
+    rows.sort((_TableRowEntry left, _TableRowEntry right) {
+      final dynamic leftValue = columnIndex < left.data.length
+          ? left.data[columnIndex]
+          : null;
+      final dynamic rightValue = columnIndex < right.data.length
+          ? right.data[columnIndex]
+          : null;
+      final int result = comparator(leftValue, rightValue);
+      if (result == 0) return left.sourceIndex.compareTo(right.sourceIndex);
+      return order == SantoTableSortOrder.ascending ? result : -result;
+    });
+    return rows;
+  }
+
+  List<_TableRowEntry> _pagedRows(List<_TableRowEntry> rows) {
+    if (widget.pagination == null) return rows;
+    final int pageCount = (rows.length / _pageSize).ceil().clamp(1, 1 << 30);
+    final int page = _currentPage.clamp(1, pageCount);
+    final int start = (page - 1) * _pageSize;
+    if (start >= rows.length) return const <_TableRowEntry>[];
+    return rows.sublist(start, (start + _pageSize).clamp(0, rows.length));
+  }
+
+  _TableLayout _resolveLayout(double containerWidth) {
+    final double selectionWidth = widget.selection?.columnWidth ?? 0;
+    final double availableWidth = (containerWidth - selectionWidth).clamp(
+      0,
+      double.infinity,
+    );
+    final bool hasFixed = widget.columns.any((column) => column.fixed != null);
+    final List<double?> widths = widget.columns
+        .map((column) => column.width)
+        .toList();
+    final double fixedSum = widths.fold<double>(
+      0,
+      (double sum, double? width) => sum + (width ?? 0),
+    );
+    final int autoCount = widths.where((double? width) => width == null).length;
+    final bool scroll =
+        hasFixed || (autoCount == 0 && fixedSum > availableWidth + 0.1);
+    if (scroll) {
+      final List<double> resolved = widths
+          .map((double? width) => width ?? kSantoTableDefaultColumnWidth)
+          .toList();
+      return _TableLayout(
+        scroll: true,
+        widths: resolved,
+        contentWidth: resolved.fold<double>(
+          0,
+          (double sum, double width) => sum + width,
+        ),
+      );
+    }
+    return const _TableLayout(scroll: false);
+  }
 
   Widget _buildFlexTable({
-    required Color bColor,
-    required Color oColor,
-    required Color eColor,
-    required TextStyle defaultHeaderStyle,
-    required TextStyle defaultCellStyle,
+    required List<_TableRowEntry> rows,
+    required Color borderColor,
+    required Color oddColor,
+    required Color evenColor,
+    required TextStyle headerStyle,
+    required TextStyle cellStyle,
   }) {
+    Widget body;
+    if (rows.isEmpty) {
+      body = _buildEmptyPlaceholder(oddColor);
+    } else if (widget.height != null) {
+      body = SizedBox(
+        height: widget.height,
+        child: ListView.builder(
+          controller: _mainVerticalController,
+          padding: EdgeInsets.zero,
+          itemCount: rows.length,
+          itemBuilder: (BuildContext context, int index) => _buildFlexDataItem(
+            rows[index],
+            index,
+            borderColor,
+            cellStyle,
+            _rowBgColor(index, oddColor, evenColor),
+          ),
+        ),
+      );
+    } else {
+      body = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: List<Widget>.generate(
+          rows.length,
+          (int index) => _buildFlexDataItem(
+            rows[index],
+            index,
+            borderColor,
+            cellStyle,
+            _rowBgColor(index, oddColor, evenColor),
+          ),
+        ),
+      );
+    }
     return _buildTableShell(
+      borderColor: borderColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildHeaderRow(
-            columns: _allIndices(),
-            bColor: bColor,
-            style: defaultHeaderStyle,
-            widths: null,
-            hasAutoColumns: widget.columns.any((c) => c.width == null),
-          ),
-          if (widget.data.isEmpty) _buildEmptyPlaceholder(oColor)
-          else if (widget.height != null)
-            SizedBox(
-              height: widget.height!,
-              child: ListView.builder(
-                controller: _mainVerticalController,
-                itemCount: widget.data.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    _buildFlexDataRow(index, bColor, defaultCellStyle,
-                        _rowBgColor(index, oColor, eColor)),
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              if (widget.selection != null)
+                _buildSelectionHeader(rows, borderColor),
+              Expanded(
+                child: _buildHeaderRow(
+                  columns: _allIndices(),
+                  rows: rows,
+                  borderColor: borderColor,
+                  style: headerStyle,
+                  widths: null,
+                  hasAutoColumns: widget.columns.any(
+                    (column) => column.width == null,
+                  ),
+                ),
               ),
-            )
-          else
-            for (int index = 0; index < widget.data.length; index++)
-              _buildFlexDataRow(index, bColor, defaultCellStyle,
-                  _rowBgColor(index, oColor, eColor)),
+            ],
+          ),
+          body,
         ],
       ),
     );
   }
 
-  Widget _buildFlexDataRow(
-      int index, Color bColor, TextStyle defaultCellStyle, Color bgColor) {
-    return Container(
+  Widget _buildFlexDataItem(
+    _TableRowEntry entry,
+    int rowIndex,
+    Color borderColor,
+    TextStyle style,
+    Color backgroundColor,
+  ) {
+    final bool hasAutoColumns = widget.columns.any(
+      (column) => column.width == null,
+    );
+    final Widget row = SizedBox(
       height: widget.rowHeight,
-      decoration: BoxDecoration(
-        color: bgColor,
-        border: widget.border
-            ? Border(
-                bottom: BorderSide(color: bColor, width: widget.borderWidth),
-              )
-            : null,
-      ),
-      child: Row(
-        children: List.generate(widget.columns.length, (colIndex) {
-          final col = widget.columns[colIndex];
-          return _wrapColumnWidth(
-            col,
-            _buildCell(
-              col: col,
-              cellData: colIndex < widget.data[index].length
-                  ? widget.data[index][colIndex]
-                  : '',
-              rowIndex: index,
-              colIndex: colIndex,
-              style: defaultCellStyle,
-              bColor: bColor,
-              showRightBorder: colIndex < widget.columns.length - 1,
+      child: DecoratedBox(
+        decoration: _rowDecoration(backgroundColor, borderColor),
+        child: Row(
+          children: <Widget>[
+            if (widget.selection != null)
+              _buildSelectionCell(entry, borderColor),
+            Expanded(
+              child: Row(
+                children: List<Widget>.generate(widget.columns.length, (
+                  int columnIndex,
+                ) {
+                  final SantoTableColumn column = widget.columns[columnIndex];
+                  return _wrapColumnWidth(
+                    column,
+                    _buildCell(
+                      entry: entry,
+                      column: column,
+                      rowIndex: rowIndex,
+                      columnIndex: columnIndex,
+                      style: style,
+                      borderColor: borderColor,
+                      showRightBorder: columnIndex < widget.columns.length - 1,
+                    ),
+                    hasAutoColumns: hasAutoColumns,
+                  );
+                }),
+              ),
             ),
-            hasAutoColumns:
-                widget.columns.any((c) => c.width == null),
-          );
-        }),
+          ],
+        ),
       ),
     );
+    return _wrapExpandedRow(entry, rowIndex, row, null);
   }
 
-  // ==================== 滚动模式(横向滚动 + 固定列) ====================
-
   Widget _buildScrollTable({
+    required List<_TableRowEntry> rows,
     required _TableLayout layout,
-    required Color bColor,
-    required Color oColor,
-    required Color eColor,
-    required TextStyle defaultHeaderStyle,
-    required TextStyle defaultCellStyle,
+    required Color borderColor,
+    required Color oddColor,
+    required Color evenColor,
+    required TextStyle headerStyle,
+    required TextStyle cellStyle,
   }) {
     final List<int> leftIndices = <int>[];
     final List<int> middleIndices = <int>[];
     final List<int> rightIndices = <int>[];
-    for (int i = 0; i < widget.columns.length; i += 1) {
-      final SantoTableColumnFixed? fixed = widget.columns[i].fixed;
-      if (fixed == SantoTableColumnFixed.left) {
-        leftIndices.add(i);
-      } else if (fixed == SantoTableColumnFixed.right) {
-        rightIndices.add(i);
-      } else {
-        middleIndices.add(i);
+    for (int index = 0; index < widget.columns.length; index += 1) {
+      switch (widget.columns[index].fixed) {
+        case SantoTableColumnFixed.left:
+          leftIndices.add(index);
+        case SantoTableColumnFixed.right:
+          rightIndices.add(index);
+        case null:
+          middleIndices.add(index);
       }
     }
-    double widthOf(List<int> indices) =>
-        indices.fold<double>(0, (double sum, int i) => sum + layout.widths![i]);
-
+    double widthOf(List<int> indices) => indices.fold<double>(
+      0,
+      (double sum, int index) => sum + layout.widths![index],
+    );
     final double leftWidth = widthOf(leftIndices);
-    final double rightWidth = widthOf(rightIndices);
     final double middleWidth = widthOf(middleIndices);
+    final double rightWidth = widthOf(rightIndices);
 
-    final bool vertical = widget.height != null;
-    if (vertical && !_verticalListenerAttached) {
+    if (widget.height != null && !_verticalListenerAttached) {
       _mainVerticalController.addListener(_syncFixedAreas);
       _verticalListenerAttached = true;
     }
 
-    Widget areaBody(List<int> indices, ScrollController? controller) {
-      final Widget rows = widget.height != null
-          ? SizedBox(
-              height: widget.height,
-              child: ListView.builder(
-                controller: controller,
-                // 固定区不响应手势,统一由中间区驱动
-                physics: identical(controller, _verticalController)
-                    ? null
-                    : const NeverScrollableScrollPhysics(),
-                itemCount: widget.data.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    _buildScrollRow(
-                  indices: indices,
-                  widths: layout.widths!,
-                  rowData: widget.data[index],
-                  rowIndex: index,
-                  bColor: bColor,
-                  style: defaultCellStyle,
-                  bgColor: _rowBgColor(index, oColor, eColor),
-                ),
-              ),
-            )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (int index = 0; index < widget.data.length; index++)
-                  _buildScrollRow(
-                    indices: indices,
-                    widths: layout.widths!,
-                    rowData: widget.data[index],
-                    rowIndex: index,
-                    bColor: bColor,
-                    style: defaultCellStyle,
-                    bgColor: _rowBgColor(index, oColor, eColor),
-                  ),
-              ],
-            );
-      return rows;
+    Widget areaBody(
+      List<int> indices,
+      double width,
+      ScrollController? controller,
+      bool showExpandedContent,
+    ) {
+      if (rows.isEmpty) return _buildEmptyPlaceholder(oddColor);
+      Widget item(int index) => _buildScrollDataItem(
+        entry: rows[index],
+        rowIndex: index,
+        indices: indices,
+        widths: layout.widths!,
+        width: width,
+        borderColor: borderColor,
+        style: cellStyle,
+        backgroundColor: _rowBgColor(index, oddColor, evenColor),
+        showExpandedContent: showExpandedContent,
+      );
+      if (widget.height != null) {
+        return SizedBox(
+          height: widget.height,
+          child: ListView.builder(
+            controller: controller,
+            padding: EdgeInsets.zero,
+            physics: identical(controller, _verticalController)
+                ? null
+                : const NeverScrollableScrollPhysics(),
+            itemCount: rows.length,
+            itemBuilder: (BuildContext context, int index) => item(index),
+          ),
+        );
+      }
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: List<Widget>.generate(rows.length, item),
+      );
     }
 
-    Widget area(List<int> indices, double width, ScrollController? controller) {
+    Widget area(
+      List<int> indices,
+      double width,
+      ScrollController? controller, {
+      bool showExpandedContent = false,
+    }) {
       return SizedBox(
         width: width,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             _buildHeaderRow(
               columns: indices,
-              bColor: bColor,
-              style: defaultHeaderStyle,
+              rows: rows,
+              borderColor: borderColor,
+              style: headerStyle,
               widths: layout.widths,
               hasAutoColumns: false,
             ),
-            areaBody(indices, controller),
+            areaBody(indices, width, controller, showExpandedContent),
           ],
         ),
       );
     }
 
+    final bool expandedInMiddle = middleIndices.isNotEmpty;
     return _buildTableShell(
+      borderColor: borderColor,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (widget.selection != null)
+            SizedBox(
+              width: widget.selection!.columnWidth,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _buildSelectionHeader(rows, borderColor),
+                  _buildSelectionAreaBody(
+                    rows,
+                    borderColor,
+                    oddColor,
+                    evenColor,
+                  ),
+                ],
+              ),
+            ),
+          if (leftIndices.isNotEmpty)
+            area(
+              leftIndices,
+              leftWidth,
+              _leftFixedVerticalController,
+              showExpandedContent: !expandedInMiddle,
+            ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: middleWidth,
+                child: area(
+                  middleIndices,
+                  middleWidth,
+                  _mainVerticalController,
+                  showExpandedContent: expandedInMiddle,
+                ),
+              ),
+            ),
+          ),
+          if (rightIndices.isNotEmpty)
+            area(rightIndices, rightWidth, _rightFixedVerticalController),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScrollDataItem({
+    required _TableRowEntry entry,
+    required int rowIndex,
+    required List<int> indices,
+    required List<double> widths,
+    required double width,
+    required Color borderColor,
+    required TextStyle style,
+    required Color backgroundColor,
+    required bool showExpandedContent,
+  }) {
+    final Widget row = SizedBox(
+      height: widget.rowHeight,
+      child: DecoratedBox(
+        decoration: _rowDecoration(backgroundColor, borderColor),
+        child: Row(
+          children: <Widget>[
+            for (final int columnIndex in indices)
+              SizedBox(
+                width: widths[columnIndex],
+                child: _buildCell(
+                  entry: entry,
+                  column: widget.columns[columnIndex],
+                  rowIndex: rowIndex,
+                  columnIndex: columnIndex,
+                  style: style,
+                  borderColor: borderColor,
+                  showRightBorder: columnIndex < widget.columns.length - 1,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+    return _wrapExpandedRow(
+      entry,
+      rowIndex,
+      row,
+      showExpandedContent ? width : 0,
+    );
+  }
+
+  Widget _buildSelectionAreaBody(
+    List<_TableRowEntry> rows,
+    Color borderColor,
+    Color oddColor,
+    Color evenColor,
+  ) {
+    if (rows.isEmpty) return _buildEmptyPlaceholder(oddColor);
+    Widget item(int index) {
+      final _TableRowEntry entry = rows[index];
+      final Widget row = SizedBox(
+        height: widget.rowHeight,
+        child: DecoratedBox(
+          decoration: _rowDecoration(
+            _rowBgColor(index, oddColor, evenColor),
+            borderColor,
+          ),
+          child: _buildSelectionCell(entry, borderColor),
+        ),
+      );
+      return _wrapExpandedRow(entry, index, row, 0);
+    }
+
+    if (widget.height != null) {
+      return SizedBox(
+        height: widget.height,
+        child: ListView.builder(
+          controller: _selectionFixedVerticalController,
+          padding: EdgeInsets.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: rows.length,
+          itemBuilder: (BuildContext context, int index) => item(index),
+        ),
+      );
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: List<Widget>.generate(rows.length, item),
+    );
+  }
+
+  Widget _buildMergedTable({
+    required List<_TableRowEntry> rows,
+    required _TableLayout layout,
+    required double containerWidth,
+    required Color borderColor,
+    required Color oddColor,
+    required Color evenColor,
+    required TextStyle headerStyle,
+    required TextStyle cellStyle,
+  }) {
+    final double selectionWidth = widget.selection?.columnWidth ?? 0;
+    final double availableWidth = (containerWidth - selectionWidth).clamp(
+      0,
+      double.infinity,
+    );
+    final List<double> widths =
+        layout.widths ?? _resolveFlexWidths(availableWidth);
+    final double dataWidth = widths.fold<double>(
+      0,
+      (double sum, double width) => sum + width,
+    );
+    final double totalWidth = dataWidth + selectionWidth;
+    final Widget header = Row(
+      children: <Widget>[
+        if (widget.selection != null) _buildSelectionHeader(rows, borderColor),
+        SizedBox(
+          width: dataWidth,
+          child: _buildHeaderRow(
+            columns: _allIndices(),
+            rows: rows,
+            borderColor: borderColor,
+            style: headerStyle,
+            widths: widths,
+            hasAutoColumns: false,
+          ),
+        ),
+      ],
+    );
+    final Widget body = rows.isEmpty
+        ? _buildEmptyPlaceholder(oddColor)
+        : _buildMergedBody(
+            rows: rows,
+            widths: widths,
+            selectionWidth: selectionWidth,
+            totalWidth: totalWidth,
+            borderColor: borderColor,
+            oddColor: oddColor,
+            evenColor: evenColor,
+            cellStyle: cellStyle,
+          );
+    Widget table = SizedBox(
+      width: totalWidth,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (leftIndices.isNotEmpty)
-                area(leftIndices, leftWidth, _leftFixedVerticalController),
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SizedBox(
-                    width: middleWidth,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildHeaderRow(
-                          columns: middleIndices,
-                          bColor: bColor,
-                          style: defaultHeaderStyle,
-                          widths: layout.widths,
-                          hasAutoColumns: false,
-                        ),
-                        areaBody(middleIndices, _mainVerticalController),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              if (rightIndices.isNotEmpty)
-                area(rightIndices, rightWidth, _rightFixedVerticalController),
-            ],
-          ),
-        ],
+        children: <Widget>[header, body],
       ),
     );
+    if (layout.scroll) {
+      table = SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: table,
+      );
+    }
+    return _buildTableShell(borderColor: borderColor, child: table);
   }
 
-  /// 把中间内容区的纵向偏移同步到左右固定区
-  void _syncFixedAreas() {
-    if (_syncingVertical || !_mainVerticalController.hasClients) {
-      return;
+  Widget _buildMergedBody({
+    required List<_TableRowEntry> rows,
+    required List<double> widths,
+    required double selectionWidth,
+    required double totalWidth,
+    required Color borderColor,
+    required Color oddColor,
+    required Color evenColor,
+    required TextStyle cellStyle,
+  }) {
+    final int rowCount = rows.length;
+    final int columnCount = widget.columns.length;
+    final List<List<bool>> covered = List<List<bool>>.generate(
+      rowCount,
+      (_) => List<bool>.filled(columnCount, false),
+    );
+    final List<double> leftOffsets = List<double>.filled(columnCount + 1, 0);
+    for (int index = 0; index < columnCount; index += 1) {
+      leftOffsets[index + 1] = leftOffsets[index] + widths[index];
     }
-    _syncingVertical = true;
-    final double offset = _mainVerticalController.offset;
-    for (final ScrollController? controller
-        in <ScrollController?>[_leftVerticalController, _rightVerticalController]) {
-      if (controller != null && controller.hasClients) {
-        controller.jumpTo(offset.clamp(0.0, controller.position.maxScrollExtent));
+    final List<double> rowOffsets = List<double>.filled(rowCount + 1, 0);
+    for (int index = 0; index < rowCount; index += 1) {
+      rowOffsets[index + 1] =
+          rowOffsets[index] +
+          widget.rowHeight +
+          (_expandedKeys.contains(rows[index].key)
+              ? widget.expandable?.expandedHeight ?? 0
+              : 0);
+    }
+    final List<Widget> cells = <Widget>[];
+    final List<Widget> expandedRows = <Widget>[];
+    for (int rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+      final _TableRowEntry entry = rows[rowIndex];
+      if (widget.selection != null) {
+        cells.add(
+          Positioned(
+            left: 0,
+            top: rowOffsets[rowIndex],
+            width: selectionWidth,
+            height: widget.rowHeight,
+            child: ColoredBox(
+              color: _rowBgColor(rowIndex, oddColor, evenColor),
+              child: _buildSelectionCell(entry, borderColor),
+            ),
+          ),
+        );
+      }
+      for (int columnIndex = 0; columnIndex < columnCount; columnIndex += 1) {
+        if (covered[rowIndex][columnIndex]) continue;
+        final dynamic cellData = _cellData(entry, columnIndex);
+        final SantoTableCellSpan requested =
+            widget.columns[columnIndex].spanBuilder?.call(
+              cellData,
+              rowIndex,
+              columnIndex,
+            ) ??
+            const SantoTableCellSpan();
+        if (requested.rowSpan == 0 || requested.colSpan == 0) continue;
+        final int rowSpan = requested.rowSpan.clamp(1, rowCount - rowIndex);
+        final int colSpan = requested.colSpan.clamp(
+          1,
+          columnCount - columnIndex,
+        );
+        for (
+          int coveredRow = rowIndex;
+          coveredRow < rowIndex + rowSpan;
+          coveredRow += 1
+        ) {
+          for (
+            int coveredColumn = columnIndex;
+            coveredColumn < columnIndex + colSpan;
+            coveredColumn += 1
+          ) {
+            if (coveredRow != rowIndex || coveredColumn != columnIndex) {
+              covered[coveredRow][coveredColumn] = true;
+            }
+          }
+        }
+        cells.add(
+          Positioned(
+            left: selectionWidth + leftOffsets[columnIndex],
+            top: rowOffsets[rowIndex],
+            width:
+                leftOffsets[columnIndex + colSpan] - leftOffsets[columnIndex],
+            height:
+                rowOffsets[rowIndex + rowSpan - 1] +
+                widget.rowHeight -
+                rowOffsets[rowIndex],
+            child: Container(
+              key: ValueKey<String>(
+                'santo_table_cell_${rowIndex}_$columnIndex',
+              ),
+              padding: widget.cellPadding ?? _defaultCellPadding(),
+              alignment: _getAlignment(widget.columns[columnIndex].align),
+              decoration: BoxDecoration(
+                color: _rowBgColor(rowIndex, oddColor, evenColor),
+                border: widget.border
+                    ? Border(
+                        right: BorderSide(
+                          color: borderColor,
+                          width: widget.borderWidth,
+                        ),
+                        bottom: BorderSide(
+                          color: borderColor,
+                          width: widget.borderWidth,
+                        ),
+                      )
+                    : null,
+              ),
+              child: _buildCellContent(
+                entry: entry,
+                column: widget.columns[columnIndex],
+                rowIndex: rowIndex,
+                columnIndex: columnIndex,
+                style: cellStyle,
+              ),
+            ),
+          ),
+        );
+      }
+      if (_expandedKeys.contains(entry.key) && widget.expandable != null) {
+        expandedRows.add(
+          Positioned(
+            left: 0,
+            top: rowOffsets[rowIndex] + widget.rowHeight,
+            width: totalWidth,
+            height: widget.expandable!.expandedHeight,
+            child: Container(
+              color: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .fillBody,
+              alignment: Alignment.centerLeft,
+              padding: widget.cellPadding ?? _defaultCellPadding(),
+              child: widget.expandable!.builder(context, entry.data, rowIndex),
+            ),
+          ),
+        );
       }
     }
-    _syncingVertical = false;
-  }
-
-  /// 滚动模式下的数据行:按区给定的列下标与定宽渲染
-  Widget _buildScrollRow({
-    required List<int> indices,
-    required List<double> widths,
-    required List<dynamic> rowData,
-    required int rowIndex,
-    required Color bColor,
-    required TextStyle style,
-    required Color bgColor,
-  }) {
-    return Container(
-      height: widget.rowHeight,
-      decoration: BoxDecoration(
-        color: bgColor,
-        border: widget.border
-            ? Border(
-                bottom: BorderSide(color: bColor, width: widget.borderWidth),
-              )
-            : null,
-      ),
-      child: Row(
-        children: [
-          for (int i = 0; i < indices.length; i += 1)
-            _buildCell(
-              col: widget.columns[indices[i]],
-              cellData: indices[i] < rowData.length
-                  ? rowData[indices[i]]
-                  : '',
-              rowIndex: rowIndex,
-              colIndex: indices[i],
-              style: style,
-              bColor: bColor,
-              width: widths[indices[i]],
-              showRightBorder: indices[i] < widget.columns.length - 1,
-            ),
-        ],
-      ),
+    final Widget stack = SizedBox(
+      height: rowOffsets.last,
+      child: Stack(children: <Widget>[...cells, ...expandedRows]),
+    );
+    if (widget.height == null) return stack;
+    return SizedBox(
+      height: widget.height,
+      child: SingleChildScrollView(child: stack),
     );
   }
 
-  // ==================== 公共部分 ====================
-
-  List<int> _allIndices() =>
-      List<int>.generate(widget.columns.length, (int i) => i);
-
-  Color _rowBgColor(int index, Color oColor, Color eColor) =>
-      widget.striped ? (index.isEven ? oColor : eColor) : oColor;
-
-
-  /// 表格外框
-  ///
-  /// 用 foregroundDecoration 在前景绘制：单元格背景是直角矩形，
-  /// 若边框画在背景下层，圆角处的边线会被背景盖住
-  BoxDecoration? _tableBorder(Color bColor) {
-    if (!widget.border) {
-      return null;
+  List<double> _resolveFlexWidths(double availableWidth) {
+    final int autoCount = widget.columns
+        .where((column) => column.width == null)
+        .length;
+    final double fixedSum = widget.columns.fold<double>(
+      0,
+      (double sum, SantoTableColumn column) => sum + (column.width ?? 0),
+    );
+    if (autoCount > 0) {
+      final double autoWidth = ((availableWidth - fixedSum) / autoCount).clamp(
+        0,
+        double.infinity,
+      );
+      return widget.columns.map((column) => column.width ?? autoWidth).toList();
     }
-    return BoxDecoration(
-      border: Border.all(color: bColor, width: widget.borderWidth),
-      borderRadius: BorderRadius.circular(
-          SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs),
-    );
+    if (fixedSum <= 0) {
+      return List<double>.filled(
+        widget.columns.length,
+        widget.columns.isEmpty ? 0 : availableWidth / widget.columns.length,
+      );
+    }
+    return widget.columns
+        .map((column) => availableWidth * column.width! / fixedSum)
+        .toList();
   }
 
-  Widget _buildTableShell({required Widget child}) {
-    return Container(
-      width: widget.tableWidth,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-            SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs),
-      ),
-      foregroundDecoration: _tableBorder(
-          widget.borderColor ??
-              SantoThemeConfigurator.instance.getConfig().commonConfig.dividerColorBase),
-      child: child,
-    );
-  }
-
-  /// 表头行,columns 为该区包含的列下标
-  ///
-  /// 滚动模式按 [widths] 定宽渲染,与数据行对齐;弹性模式走 [_wrapColumnWidth]
   Widget _buildHeaderRow({
     required List<int> columns,
-    required Color bColor,
+    required List<_TableRowEntry> rows,
+    required Color borderColor,
     required TextStyle style,
     required List<double>? widths,
     required bool hasAutoColumns,
   }) {
+    final Color headerColor =
+        widget.headerColor ??
+        SantoThemeConfigurator.instance.getConfig().commonConfig.fillBody;
     return Container(
       height: widget.headerHeight,
-      color: widget.headerColor ??
-          SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary,
+      color: headerColor,
       child: Row(
-        children: [
-          for (final int colIndex in columns)
+        children: <Widget>[
+          for (final int columnIndex in columns)
             _wrapCellWidth(
-              widget.columns[colIndex],
-              widths?[colIndex],
+              widget.columns[columnIndex],
+              widths?[columnIndex],
               _buildHeaderCell(
-                col: widget.columns[colIndex],
-                colIndex: colIndex,
+                column: widget.columns[columnIndex],
+                columnIndex: columnIndex,
                 style: style,
-                bColor: bColor,
-                showRightBorder: widths != null ||
-                    colIndex < widget.columns.length - 1,
+                borderColor: borderColor,
+                showRightBorder:
+                    widths != null || columnIndex < widget.columns.length - 1,
               ),
               hasAutoColumns: hasAutoColumns,
             ),
@@ -643,151 +1132,506 @@ class _SantoTableState extends State<SantoTable> {
     );
   }
 
-  /// 单元格宽度包装:滚动模式按给定宽度定宽,弹性模式按列配置伸缩
-  Widget _wrapCellWidth(
-      SantoTableColumn col, double? width, Widget child,
-      {required bool hasAutoColumns}) {
-    if (width != null) {
-      return SizedBox(width: width, child: child);
-    }
-    return _wrapColumnWidth(col, child, hasAutoColumns: hasAutoColumns);
-  }
-
   Widget _buildHeaderCell({
-    required SantoTableColumn col,
-    required int colIndex,
+    required SantoTableColumn column,
+    required int columnIndex,
     required TextStyle style,
-    required Color bColor,
-    double? width,
+    required Color borderColor,
     required bool showRightBorder,
   }) {
-    final Widget cell = Container(
-      width: width,
+    final double spacing = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig
+        .hSpacingXs;
+    Widget content =
+        column.headerBuilder?.call(column.title) ??
+        Text(
+          column.title,
+          style: style,
+          textAlign: _getTextAlign(column.align),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        );
+    if (column.sorter != null) {
+      final bool active = _sortColumnIndex == columnIndex && _sortOrder != null;
+      final IconData icon = !active
+          ? Icons.unfold_more
+          : _sortOrder == SantoTableSortOrder.ascending
+          ? Icons.arrow_upward
+          : Icons.arrow_downward;
+      content = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Flexible(child: content),
+          SizedBox(width: spacing),
+          Icon(icon, size: 14, color: style.color),
+        ],
+      );
+    }
+    Widget cell = Container(
+      key: ValueKey<String>('santo_table_header_$columnIndex'),
       padding: widget.cellPadding ?? _defaultCellPadding(),
-      alignment: _getAlignment(col.align),
+      alignment: _getAlignment(column.align),
       decoration: widget.border
           ? BoxDecoration(
               border: Border(
                 right: showRightBorder
-                    ? BorderSide(color: bColor, width: widget.borderWidth)
+                    ? BorderSide(color: borderColor, width: widget.borderWidth)
                     : BorderSide.none,
+                bottom: BorderSide(
+                  color: borderColor,
+                  width: widget.borderWidth,
+                ),
               ),
             )
           : null,
-      child: col.headerBuilder != null
-          ? col.headerBuilder!(col.title)
-          : Text(
-              col.title,
-              style: style,
-              textAlign: _getTextAlign(col.align),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+      child: content,
     );
+    if (column.sorter != null) {
+      cell = InkWell(
+        key: ValueKey<String>('santo_table_sort_$columnIndex'),
+        onTap: () => _changeSort(columnIndex),
+        child: cell,
+      );
+    }
     return cell;
   }
 
-  EdgeInsets _defaultCellPadding() => EdgeInsets.symmetric(
-      horizontal:
-          SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd);
-
-  /// 单元格
   Widget _buildCell({
-    required SantoTableColumn col,
-    required dynamic cellData,
+    required _TableRowEntry entry,
+    required SantoTableColumn column,
     required int rowIndex,
-    required int colIndex,
+    required int columnIndex,
     required TextStyle style,
-    required Color bColor,
-    double? width,
+    required Color borderColor,
     required bool showRightBorder,
   }) {
     return Container(
-      width: width,
+      key: ValueKey<String>('santo_table_cell_${rowIndex}_$columnIndex'),
       padding: widget.cellPadding ?? _defaultCellPadding(),
-      alignment: _getAlignment(col.align),
+      alignment: _getAlignment(column.align),
       decoration: widget.border
           ? BoxDecoration(
               border: Border(
                 right: showRightBorder
-                    ? BorderSide(color: bColor, width: widget.borderWidth)
+                    ? BorderSide(color: borderColor, width: widget.borderWidth)
                     : BorderSide.none,
               ),
             )
           : null,
-      child: col.cellBuilder != null
-          ? col.cellBuilder!(cellData, rowIndex, colIndex)
-          : Text(
-              cellData.toString(),
-              style: style,
-              textAlign: _getTextAlign(col.align),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+      child: _buildCellContent(
+        entry: entry,
+        column: column,
+        rowIndex: rowIndex,
+        columnIndex: columnIndex,
+        style: style,
+      ),
     );
   }
 
-  /// 构建空数据占位
-  Widget _buildEmptyPlaceholder(Color bgColor) {
-    final hintColor =
-        SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextHint;
+  Widget _buildCellContent({
+    required _TableRowEntry entry,
+    required SantoTableColumn column,
+    required int rowIndex,
+    required int columnIndex,
+    required TextStyle style,
+  }) {
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
+    final dynamic cellData = _cellData(entry, columnIndex);
+    Widget content =
+        column.cellBuilder?.call(cellData, rowIndex, columnIndex) ??
+        Text(
+          cellData?.toString() ?? '',
+          style: style,
+          textAlign: _getTextAlign(column.align),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        );
+    if (columnIndex == 0 &&
+        widget.expandable != null &&
+        _rowExpandable(entry)) {
+      content = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          InkWell(
+            key: ValueKey<String>('santo_table_expand_${entry.key}'),
+            onTap: () => _toggleExpanded(entry),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: commonConfig.hSpacingXs,
+                vertical: commonConfig.vSpacingXs,
+              ),
+              child: Icon(
+                _expandedKeys.contains(entry.key)
+                    ? Icons.keyboard_arrow_down
+                    : Icons.keyboard_arrow_right,
+                size: 18,
+              ),
+            ),
+          ),
+          SizedBox(width: commonConfig.hSpacingXs),
+          Flexible(child: content),
+        ],
+      );
+    }
+    return content;
+  }
+
+  Widget _wrapExpandedRow(
+    _TableRowEntry entry,
+    int rowIndex,
+    Widget row,
+    double? contentWidth,
+  ) {
+    final SantoTableExpandable? expandable = widget.expandable;
+    if (expandable == null || !_expandedKeys.contains(entry.key)) return row;
+    final Widget expanded = Container(
+      height: expandable.expandedHeight,
+      width: contentWidth == 0 ? null : contentWidth,
+      color: SantoThemeConfigurator.instance.getConfig().commonConfig.fillBody,
+      alignment: Alignment.centerLeft,
+      padding: widget.cellPadding ?? _defaultCellPadding(),
+      child: contentWidth == 0
+          ? null
+          : expandable.builder(context, entry.data, rowIndex),
+    );
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[row, expanded],
+    );
+  }
+
+  Widget _buildSelectionHeader(List<_TableRowEntry> rows, Color borderColor) {
+    final SantoTableSelection selection = widget.selection!;
+    final Color headerColor =
+        widget.headerColor ??
+        SantoThemeConfigurator.instance.getConfig().commonConfig.fillBody;
+    Widget? control;
+    if (selection.mode == SantoTableSelectionMode.multiple &&
+        selection.showSelectAll) {
+      final List<_TableRowEntry> selectable = rows
+          .where(_rowSelectable)
+          .toList();
+      final int selectedCount = selectable
+          .where((entry) => _selectedKeys.contains(entry.key))
+          .length;
+      final bool? value = selectedCount == 0
+          ? false
+          : selectedCount == selectable.length
+          ? true
+          : null;
+      control = Checkbox(
+        key: const ValueKey<String>('santo_table_select_all'),
+        value: value,
+        tristate: true,
+        onChanged: selectable.isEmpty
+            ? null
+            : (bool? checked) =>
+                  _toggleAll(selectable, selectedCount != selectable.length),
+      );
+    }
+    return Container(
+      width: selection.columnWidth,
+      height: widget.headerHeight,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: headerColor,
+        border: widget.border
+            ? Border(
+                right: BorderSide(
+                  color: borderColor,
+                  width: widget.borderWidth,
+                ),
+                bottom: BorderSide(
+                  color: borderColor,
+                  width: widget.borderWidth,
+                ),
+              )
+            : null,
+      ),
+      child: control,
+    );
+  }
+
+  Widget _buildSelectionCell(_TableRowEntry entry, Color borderColor) {
+    final SantoTableSelection selection = widget.selection!;
+    final bool enabled = _rowSelectable(entry);
+    final bool selected = _selectedKeys.contains(entry.key);
+    final Widget control = selection.mode == SantoTableSelectionMode.multiple
+        ? Checkbox(
+            key: ValueKey<String>('santo_table_select_${entry.key}'),
+            value: selected,
+            onChanged: enabled
+                ? (bool? checked) => _toggleSelected(entry, checked == true)
+                : null,
+          )
+        : Radio<Object>(
+            key: ValueKey<String>('santo_table_select_${entry.key}'),
+            value: entry.key,
+            groupValue: selected ? entry.key : null,
+            onChanged: enabled
+                ? (Object? value) => _toggleSelected(entry, value != null)
+                : null,
+          );
+    return Container(
+      width: selection.columnWidth,
+      alignment: Alignment.center,
+      decoration: widget.border
+          ? BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  color: borderColor,
+                  width: widget.borderWidth,
+                ),
+              ),
+            )
+          : null,
+      child: control,
+    );
+  }
+
+  Widget _buildPagination(int totalItems) {
+    final SantoTablePagination pagination = widget.pagination!;
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
+    final List<int> options = <int>{
+      ...pagination.pageSizeOptions.where((int value) => value > 0),
+      _pageSize,
+    }.toList()..sort();
+    return Wrap(
+      alignment: WrapAlignment.end,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: commonConfig.hSpacingMd,
+      runSpacing: commonConfig.vSpacingMd,
+      children: <Widget>[
+        if (pagination.showPageSizeSelector)
+          DropdownButtonHideUnderline(
+            child: DropdownButton<int>(
+              key: const ValueKey<String>('santo_table_page_size'),
+              value: _pageSize,
+              items: options
+                  .map(
+                    (int value) => DropdownMenuItem<int>(
+                      value: value,
+                      child: Text('$value 条/页'),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (int? value) {
+                if (value == null || value == _pageSize) return;
+                setState(() {
+                  _pageSize = value;
+                  _currentPage = 1;
+                });
+                pagination.onPageSizeChanged?.call(value);
+                pagination.onPageChanged?.call(1);
+              },
+            ),
+          ),
+        SantoPagination(
+          current: _currentPage,
+          totalItems: totalItems,
+          itemsPerPage: _pageSize,
+          onChanged: (int page) {
+            setState(() => _currentPage = page);
+            pagination.onPageChanged?.call(page);
+          },
+        ),
+      ],
+    );
+  }
+
+  void _changeSort(int columnIndex) {
+    setState(() {
+      if (_sortColumnIndex != columnIndex || _sortOrder == null) {
+        _sortColumnIndex = columnIndex;
+        _sortOrder = SantoTableSortOrder.ascending;
+      } else if (_sortOrder == SantoTableSortOrder.ascending) {
+        _sortOrder = SantoTableSortOrder.descending;
+      } else {
+        _sortColumnIndex = null;
+        _sortOrder = null;
+      }
+      _currentPage = 1;
+    });
+    widget.onSortChanged?.call(
+      SantoTableSortState(columnIndex: columnIndex, order: _sortOrder),
+    );
+  }
+
+  Set<Object> get _selectedKeys =>
+      widget.selection?.selectedRowKeys ?? _selectedRowKeys;
+
+  Set<Object> get _expandedKeys =>
+      widget.expandable?.expandedRowKeys ?? _expandedRowKeys;
+
+  bool _rowSelectable(_TableRowEntry entry) =>
+      widget.selection?.rowSelectable?.call(entry.data, entry.sourceIndex) ??
+      true;
+
+  bool _rowExpandable(_TableRowEntry entry) =>
+      widget.expandable?.rowExpandable?.call(entry.data, entry.sourceIndex) ??
+      true;
+
+  void _toggleSelected(_TableRowEntry entry, bool selected) {
+    final SantoTableSelection selection = widget.selection!;
+    final Set<Object> keys = Set<Object>.of(_selectedKeys);
+    if (selection.mode == SantoTableSelectionMode.single) {
+      keys
+        ..clear()
+        ..add(entry.key);
+    } else if (selected) {
+      keys.add(entry.key);
+    } else {
+      keys.remove(entry.key);
+    }
+    _commitSelection(keys);
+  }
+
+  void _toggleAll(List<_TableRowEntry> rows, bool selected) {
+    final Set<Object> keys = Set<Object>.of(_selectedKeys);
+    for (final _TableRowEntry entry in rows) {
+      selected ? keys.add(entry.key) : keys.remove(entry.key);
+    }
+    _commitSelection(keys);
+  }
+
+  void _commitSelection(Set<Object> keys) {
+    if (widget.selection?.selectedRowKeys == null) {
+      setState(() => _selectedRowKeys = keys);
+    }
+    final List<List<dynamic>> selectedRows = <List<dynamic>>[];
+    for (int index = 0; index < widget.data.length; index += 1) {
+      final Object key =
+          widget.rowKey?.call(widget.data[index], index) ?? index;
+      if (keys.contains(key)) selectedRows.add(widget.data[index]);
+    }
+    widget.selection?.onChanged?.call(
+      Set<Object>.unmodifiable(keys),
+      List<List<dynamic>>.unmodifiable(selectedRows),
+    );
+  }
+
+  void _toggleExpanded(_TableRowEntry entry) {
+    final Set<Object> keys = Set<Object>.of(_expandedKeys);
+    keys.contains(entry.key) ? keys.remove(entry.key) : keys.add(entry.key);
+    if (widget.expandable?.expandedRowKeys == null) {
+      setState(() => _expandedRowKeys = keys);
+    }
+    widget.expandable?.onChanged?.call(Set<Object>.unmodifiable(keys));
+  }
+
+  void _syncFixedAreas() {
+    if (_syncingVertical || !_mainVerticalController.hasClients) return;
+    _syncingVertical = true;
+    final double offset = _mainVerticalController.offset;
+    for (final ScrollController? controller in <ScrollController?>[
+      _leftVerticalController,
+      _rightVerticalController,
+      _selectionVerticalController,
+    ]) {
+      if (controller != null && controller.hasClients) {
+        controller.jumpTo(
+          offset.clamp(0.0, controller.position.maxScrollExtent),
+        );
+      }
+    }
+    _syncingVertical = false;
+  }
+
+  dynamic _cellData(_TableRowEntry entry, int columnIndex) =>
+      columnIndex < entry.data.length ? entry.data[columnIndex] : '';
+
+  List<int> _allIndices() =>
+      List<int>.generate(widget.columns.length, (int index) => index);
+
+  Color _rowBgColor(int index, Color oddColor, Color evenColor) =>
+      widget.striped && index.isOdd ? evenColor : oddColor;
+
+  BoxDecoration _rowDecoration(Color backgroundColor, Color borderColor) =>
+      BoxDecoration(
+        color: backgroundColor,
+        border: widget.border
+            ? Border(
+                bottom: BorderSide(
+                  color: borderColor,
+                  width: widget.borderWidth,
+                ),
+              )
+            : null,
+      );
+
+  Widget _buildEmptyPlaceholder(Color backgroundColor) {
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
     return Container(
       height: 56,
-      color: bgColor,
+      color: backgroundColor,
       alignment: Alignment.center,
-      child: widget.empty ??
+      child:
+          widget.empty ??
           Text(
             '暂无数据',
             style: TextStyle(
-              color: hintColor,
-              fontSize: SantoThemeConfigurator.instance
-                  .getConfig()
-                  .commonConfig
-                  .fontSizeCaption),
+              color: commonConfig.colorTextHint,
+              fontSize: commonConfig.fontSizeCaption,
+            ),
           ),
     );
   }
 
-  /// 空数据表格
-  Widget _buildEmptyTable(_TableLayout layout, Color bColor,
-      TextStyle defaultHeaderStyle, Color oColor) {
-    Widget table = Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _buildHeaderRow(
-          columns: _allIndices(),
-          bColor: bColor,
-          style: defaultHeaderStyle,
-          widths: layout.widths,
-          hasAutoColumns: false,
-        ),
-        _buildEmptyPlaceholder(oColor),
-      ],
+  Widget _buildTableShell({required Color borderColor, required Widget child}) {
+    final double radius = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig
+        .radiusXs;
+    return Container(
+      width: widget.tableWidth,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius)),
+      foregroundDecoration: widget.border
+          ? BoxDecoration(
+              border: Border.all(color: borderColor, width: widget.borderWidth),
+              borderRadius: BorderRadius.circular(radius),
+            )
+          : null,
+      child: child,
     );
-    if (layout.scroll) {
-      table = SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SizedBox(width: layout.contentWidth, child: table),
-      );
-    }
-    return _buildTableShell(child: table);
   }
 
-  /// 定宽列按 [SantoTableColumn.width] 固定宽度，未定宽列均分剩余空间；
-  /// 全部列都定宽时，按定宽值等比例分摊表格宽度，避免溢出或留白
-  Widget _wrapColumnWidth(SantoTableColumn col, Widget child,
-      {required bool hasAutoColumns}) {
-    if (col.width != null) {
-      if (hasAutoColumns) {
-        return SizedBox(width: col.width, child: child);
-      }
-      return Expanded(flex: col.width!.round(), child: child);
+  EdgeInsets _defaultCellPadding() {
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
+    return EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd);
+  }
+
+  Widget _wrapCellWidth(
+    SantoTableColumn column,
+    double? width,
+    Widget child, {
+    required bool hasAutoColumns,
+  }) {
+    if (width != null) return SizedBox(width: width, child: child);
+    return _wrapColumnWidth(column, child, hasAutoColumns: hasAutoColumns);
+  }
+
+  Widget _wrapColumnWidth(
+    SantoTableColumn column,
+    Widget child, {
+    required bool hasAutoColumns,
+  }) {
+    if (column.width != null) {
+      if (hasAutoColumns) return SizedBox(width: column.width, child: child);
+      return Expanded(flex: column.width!.round(), child: child);
     }
     return Expanded(child: child);
   }
 
-  /// 获取对齐方式
   TextAlign _getTextAlign(SantoTableAlign align) {
     switch (align) {
       case SantoTableAlign.left:
@@ -799,7 +1643,6 @@ class _SantoTableState extends State<SantoTable> {
     }
   }
 
-  /// 获取对齐方式
   Alignment _getAlignment(SantoTableAlign align) {
     switch (align) {
       case SantoTableAlign.left:
@@ -812,16 +1655,22 @@ class _SantoTableState extends State<SantoTable> {
   }
 }
 
-/// 表格的布局模式
+class _TableRowEntry {
+  final List<dynamic> data;
+  final int sourceIndex;
+  final Object key;
+
+  const _TableRowEntry({
+    required this.data,
+    required this.sourceIndex,
+    required this.key,
+  });
+}
+
 class _TableLayout {
-  const _TableLayout({required this.scroll, this.widths, this.contentWidth});
-
-  /// 是否进入横向滚动模式
   final bool scroll;
-
-  /// 滚动模式下每列的渲染宽度(与 columns 一一对应)
   final List<double>? widths;
-
-  /// 滚动模式下的内容总宽
   final double? contentWidth;
+
+  const _TableLayout({required this.scroll, this.widths, this.contentWidth});
 }

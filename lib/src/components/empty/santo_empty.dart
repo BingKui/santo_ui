@@ -75,7 +75,7 @@ enum AbnormalState {
   networkConnectError,
 
   /// 暂无数据
-  noData
+  noData,
 }
 
 /// /// /// /// /// /// /// /// /// /
@@ -86,15 +86,18 @@ class SantoAbnormalStateUtils {
   /// 通过状态获取对应空页面widget
   /// status: 页面状态类型为[EmptyState]
   static Widget getEmptyWidgetByState(
-      BuildContext context, AbnormalState status,
-      {Widget? img, SantoEmptyStatusIndexedActionClickCallback? action}) {
+    BuildContext context,
+    AbnormalState status, {
+    Widget? img,
+    SantoEmptyStatusIndexedActionClickCallback? action,
+  }) {
     if (AbnormalState.getDataFailed == status) {
       return SantoEmpty(
         img: img,
         imageType: SantoEmptyImageType.loadFail,
         title: SantoIntl.of(context).localizedResource.fetchErrorAndRetry,
         operateTexts: <String>[
-          SantoIntl.of(context).localizedResource.clickPageAndRetry
+          SantoIntl.of(context).localizedResource.clickPageAndRetry,
         ],
         action: action,
       );
@@ -104,15 +107,16 @@ class SantoAbnormalStateUtils {
         imageType: SantoEmptyImageType.offline,
         title: SantoIntl.of(context).localizedResource.netErrorAndRetryLater,
         operateTexts: <String>[
-          SantoIntl.of(context).localizedResource.clickPageAndRetry
+          SantoIntl.of(context).localizedResource.clickPageAndRetry,
         ],
         action: action,
       );
     } else if (AbnormalState.noData == status) {
       return SantoEmpty(
-          img: img,
-          imageType: SantoEmptyImageType.listEmpty,
-          title: SantoIntl.of(context).localizedResource.noDataTip);
+        img: img,
+        imageType: SantoEmptyImageType.listEmpty,
+        title: SantoIntl.of(context).localizedResource.noDataTip,
+      );
     } else {
       return const SizedBox.shrink();
     }
@@ -128,7 +132,7 @@ enum OperateAreaType {
   doubleButton,
 
   /// 文本按钮
-  textButton
+  textButton,
 }
 
 /// 空页面操作区域按钮的点击回调
@@ -136,6 +140,8 @@ enum OperateAreaType {
 typedef SantoEmptyStatusIndexedActionClickCallback = void Function(int index);
 
 /// 异常页面展示一般用于网络错误、数据为空的提示和引导
+///
+/// @changed v1.4.0 新增 [height] 参数,设置后内容在指定高度内垂直居中
 // ignore: must_be_immutable
 class SantoEmpty extends StatelessWidget {
   /// 自定义图片组件,优先级高于 [imageType];[img] 与 [imageType] 都为空时不展示图片
@@ -187,8 +193,16 @@ class SantoEmpty extends StatelessWidget {
   /// 默认 false
   final bool isCenterVertical;
 
+  /// 组件高度;设置后内容会在该高度内垂直居中
+  ///
+  /// @since v1.4.0
+  final double? height;
+
   SantoAbnormalStateConfig? themeData;
 
+  /// 创建空状态组件
+  ///
+  /// @changed v1.4.0 新增 [height] 参数
   SantoEmpty({
     this.img,
     this.imageType,
@@ -201,9 +215,10 @@ class SantoEmpty extends StatelessWidget {
     this.topOffset,
     this.backgroundColor = Colors.white,
     this.isCenterVertical = false,
+    this.height,
     this.topPercent = 0.08,
     this.themeData,
-  }) {
+  }) : assert(height == null || height >= 0, 'height 不能小于 0') {
     this.themeData ??= SantoAbnormalStateConfig();
     this.themeData = SantoThemeConfigurator.instance
         .getConfig(configId: this.themeData!.configId)
@@ -214,34 +229,37 @@ class SantoEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          if (this.enablePageTap && action != null) {
-            action!(0);
-          }
-        },
-        child: Container(
-          color: backgroundColor,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: isCenterVertical
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.start,
-            children: <Widget>[
-              _buildImageWidget(context),
-              _buildTextWidget(),
-              _buildContentWidget(),
-              _buildOperateWidget(),
-            ],
-          ),
-        ));
+      onTap: () {
+        if (this.enablePageTap && action != null) {
+          action!(0);
+        }
+      },
+      child: Container(
+        height: height,
+        color: backgroundColor,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: height != null || isCenterVertical
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.start,
+          children: <Widget>[
+            _buildImageWidget(context),
+            _buildTextWidget(),
+            _buildContentWidget(),
+            _buildOperateWidget(),
+          ],
+        ),
+      ),
+    );
   }
 
   ///图片区域
   ///要求顶部距离是父布局的8%
   _buildImageWidget(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final height = size.height;
-    final Widget? resolvedImg = img ??
+    final screenHeight = size.height;
+    final Widget? resolvedImg =
+        img ??
         (imageType == null
             ? null
             : SvgPicture.asset(
@@ -251,9 +269,9 @@ class SantoEmpty extends StatelessWidget {
               ));
     return resolvedImg != null
         ? Container(
-            padding: isCenterVertical
+            padding: height != null || isCenterVertical
                 ? null
-                : EdgeInsets.only(top: topOffset ?? height * topPercent),
+                : EdgeInsets.only(top: topOffset ?? screenHeight * topPercent),
             child: resolvedImg,
           )
         : const SizedBox.shrink();
@@ -261,15 +279,18 @@ class SantoEmpty extends StatelessWidget {
 
   ///文案区域：标题
   _buildTextWidget() {
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
     return title != null
         ? Container(
             alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(60, commonConfig.vSpacingLg, 60, 0),
-            child: Text(title!,
-                textAlign: TextAlign.center,
-                style: themeData!.titleTextStyle.generateTextStyle()),
+            child: Text(
+              title!,
+              textAlign: TextAlign.center,
+              style: themeData!.titleTextStyle.generateTextStyle(),
+            ),
           )
         : const SizedBox.shrink();
   }
@@ -280,9 +301,11 @@ class SantoEmpty extends StatelessWidget {
         ? Container(
             alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(60, 12, 60, 0),
-            child: Text(content!,
-                textAlign: TextAlign.center,
-                style: themeData!.contentTextStyle.generateTextStyle()),
+            child: Text(
+              content!,
+              textAlign: TextAlign.center,
+              style: themeData!.contentTextStyle.generateTextStyle(),
+            ),
           )
         : const SizedBox.shrink();
   }
@@ -299,8 +322,9 @@ class SantoEmpty extends StatelessWidget {
 
   ///操作区按钮
   _buildOperateContentWidget() {
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
     if (OperateAreaType.singleButton == operateAreaType) {
       return GestureDetector(
         onTap: () {
@@ -309,14 +333,22 @@ class SantoEmpty extends StatelessWidget {
         child: Container(
           constraints: BoxConstraints(minWidth: themeData!.singleMinWidth),
           padding: EdgeInsets.fromLTRB(
-              48, commonConfig.vSpacingMd, 48, commonConfig.vSpacingMd),
+            48,
+            commonConfig.vSpacingMd,
+            48,
+            commonConfig.vSpacingMd,
+          ),
           decoration: BoxDecoration(
-              color: themeData!.commonConfig.brandPrimary,
-              borderRadius:
-                  BorderRadius.all(Radius.circular(themeData!.btnRadius))),
-          child: Text(operateTexts![0],
-              textAlign: TextAlign.center,
-              style: themeData!.singleTextStyle.generateTextStyle()),
+            color: themeData!.commonConfig.brandPrimary,
+            borderRadius: BorderRadius.all(
+              Radius.circular(themeData!.btnRadius),
+            ),
+          ),
+          child: Text(
+            operateTexts![0],
+            textAlign: TextAlign.center,
+            style: themeData!.singleTextStyle.generateTextStyle(),
+          ),
         ),
       );
     } else if (OperateAreaType.doubleButton == operateAreaType) {
@@ -330,20 +362,25 @@ class SantoEmpty extends StatelessWidget {
             child: Container(
               constraints: BoxConstraints(minWidth: themeData!.doubleMinWidth),
               padding: EdgeInsets.fromLTRB(
-                  36, commonConfig.vSpacingMd, 36, commonConfig.vSpacingMd),
+                36,
+                commonConfig.vSpacingMd,
+                36,
+                commonConfig.vSpacingMd,
+              ),
               decoration: BoxDecoration(
-                  color: themeData!.commonConfig.brandPrimary.withAlpha(0x14),
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(themeData!.btnRadius))),
-              child: Text(operateTexts![0],
-                  textAlign: TextAlign.center,
-                  style: themeData!.doubleTextStyle.generateTextStyle()),
+                color: themeData!.commonConfig.brandPrimary.withAlpha(0x14),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(themeData!.btnRadius),
+                ),
+              ),
+              child: Text(
+                operateTexts![0],
+                textAlign: TextAlign.center,
+                style: themeData!.doubleTextStyle.generateTextStyle(),
+              ),
             ),
           ),
-          Container(
-            width: 12,
-            color: Colors.transparent,
-          ),
+          Container(width: 12, color: Colors.transparent),
           GestureDetector(
             onTap: () {
               if (action != null) action!(1);
@@ -351,25 +388,36 @@ class SantoEmpty extends StatelessWidget {
             child: Container(
               constraints: BoxConstraints(minWidth: themeData!.doubleMinWidth),
               padding: EdgeInsets.fromLTRB(
-                  36, commonConfig.vSpacingMd, 36, commonConfig.vSpacingMd),
+                36,
+                commonConfig.vSpacingMd,
+                36,
+                commonConfig.vSpacingMd,
+              ),
               decoration: BoxDecoration(
-                  color: themeData!.commonConfig.brandPrimary.withAlpha(0x14),
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(themeData!.btnRadius))),
-              child: Text(operateTexts![1],
-                  textAlign: TextAlign.center,
-                  style: themeData!.doubleTextStyle.generateTextStyle()),
+                color: themeData!.commonConfig.brandPrimary.withAlpha(0x14),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(themeData!.btnRadius),
+                ),
+              ),
+              child: Text(
+                operateTexts![1],
+                textAlign: TextAlign.center,
+                style: themeData!.doubleTextStyle.generateTextStyle(),
+              ),
             ),
           ),
         ],
       );
     } else if (OperateAreaType.textButton == operateAreaType) {
       return GestureDetector(
-          onTap: () {
-            if (action != null) action!(0);
-          },
-          child: Text(operateTexts![0],
-              style: themeData!.operateTextStyle.generateTextStyle()));
+        onTap: () {
+          if (action != null) action!(0);
+        },
+        child: Text(
+          operateTexts![0],
+          style: themeData!.operateTextStyle.generateTextStyle(),
+        ),
+      );
     }
     return const SizedBox.shrink();
   }

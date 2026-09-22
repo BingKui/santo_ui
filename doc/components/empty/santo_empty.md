@@ -30,6 +30,7 @@ group:
 - operateAreaType 决定操作区布局:singleButton/doubleButton/textButton
 - operateTexts 长度应与按钮数量匹配
 - isCenterVertical 为 true 时内容垂直居中,适合短页面
+- height 设置后组件使用指定高度,内容自动在该高度内垂直居中
 - topPercent 控制内容距顶部的百分比位置
 - enablePageTap 开启后整个页面可点击,常用于点击空白处重试
 
@@ -48,6 +49,7 @@ group:
 | topOffset | double? | 顶部距离 | 否 | null(父视图8%) |
 | backgroundColor | Color | 背景色 | 否 | white |
 | isCenterVertical | bool | 内容垂直居中 | 否 | false |
+| height | double? | 组件高度;设置后内容在该高度内垂直居中 | 否 | null(自适应) |
 | topPercent | double | 距顶部高度百分比 | 否 | 0.08 |
 | themeData | SantoAbnormalStateConfig? | 主题配置 | 否 | null |
 
@@ -100,6 +102,16 @@ SantoEmpty(
 )
 ```
 
+### 指定高度并居中
+
+```dart
+SantoEmpty(
+  height: 240,
+  imageType: SantoEmptyImageType.listEmpty,
+  title: '暂无数据',
+)
+```
+
 ### 自定义图片
 
 ```dart
@@ -114,6 +126,9 @@ SantoEmpty(
 ```
 
 ## 版本变更
+
+### v1.4.0
+- **新增**: `height` 参数,设置后组件使用指定高度,内容在该高度内垂直居中
 
 ### v1.2.0
 - **变更**: 内置插画整体替换为 `assets/empty` 下的 12 张 SVG 插画,`SantoEmptyImageType` 枚举值重新定义为 notFound / contentEmpty / importLoading / listEmpty / loadFail / noAccess / notOpenPayType / offline / orderEmpty / searchEmpty / unbindAccount / wait(原 noData / networkError 移除)

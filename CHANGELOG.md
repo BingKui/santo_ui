@@ -6,6 +6,19 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-09-22
+
+### 🗂️ SantoEmpty fixed-height layout
+
+- **Added**: `height` for rendering the empty state at a fixed height and vertically centering its content within that area
+
+### 📊 SantoTable feature expansion
+
+- **Added**: horizontal and vertical cell merging, single/multiple row selection, client-side sorting, expandable rows, pagination, and page-size selection
+- **Added**: stable `rowKey` plus controlled selection and expansion state; existing custom rendering, fixed-height scrolling, fixed columns, and border control continue to work with the new table pipeline
+- **Changed**: the default header now uses the theme's light fill color and primary text color instead of a brand-color background with inverse text
+- **Changed**: default cell padding now reads `commonConfig.hSpacingMd`
+
 ## [1.3.0] - 2026-09-22
 
 ### 🧭 AppBar action icon alignment
