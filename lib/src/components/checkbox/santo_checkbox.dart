@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:santo_ui/src/components/checkbox/santo_checkbox_group.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -138,7 +140,7 @@ class SantoCheckbox extends StatefulWidget {
   /// 尺寸
   final SantoCheckBoxSize size;
 
-  /// 卡片模式
+  /// 卡片模式,选中显示品牌色边框与右上角选中图标
   final bool cardMode;
 
   /// 是否显示底部分割线;卡片模式不显示
@@ -167,7 +169,7 @@ class SantoCheckbox extends StatefulWidget {
       BuildContext context, SantoCheckboxGroupState? groupState, bool isChecked) {
     final style =
         this.style ?? groupState?.widget.style ?? SantoCheckboxStyle.circle;
-    // 卡片模式不显示指示器,选中态由卡片边框与角标表达
+    // 卡片模式不显示指示器,选中态由卡片边框与右上角选中图标表达
     if (cardMode) return const SizedBox.shrink();
 
     final commonConfig = _commonConfig();
@@ -214,8 +216,11 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   /// 卡片圆角
   static const double cardRadius = 12;
 
-  /// 卡片左上角角标尺寸
-  static const double cornerLength = 28;
+  /// 卡片模式选中背景图标高度占卡片高度的比例
+  static const double cardBadgeHeightFactor = 0.4;
+
+  /// 卡片模式内容区上下内边距(减去边框宽度后距卡片外沿 16)
+  static const double cardPaddingVertical = 16 - 1.5;
 
   /// 当前勾选状态;分组内由分组维护
   bool checked = false;
@@ -245,10 +250,11 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   double _contentMinHeight() =>
       widget.size == SantoCheckBoxSize.large ? 56 : 48;
 
-  /// 组件内边距:左右为 insetSpacing,上下按尺寸;卡片模式只留顶部
+  /// 组件内边距:左右为 insetSpacing,上下按尺寸;卡片模式只留上下
   EdgeInsets _contentPadding(double insetSpacing) {
     if (widget.cardMode) {
-      return EdgeInsets.symmetric(horizontal: insetSpacing, vertical: 16 - 1.5);
+      return EdgeInsets.symmetric(
+          horizontal: insetSpacing, vertical: cardPaddingVertical);
     }
     return EdgeInsets.symmetric(
       horizontal: insetSpacing,
@@ -380,7 +386,7 @@ class SantoCheckboxState extends State<SantoCheckbox> {
                     ? [iconBox, SizedBox(width: gap), contentBox]
                     : [contentBox, SizedBox(width: gap), iconBox],
               ),
-              _buildSubTitle(direction, insetSpacing),
+              _buildSubTitle(direction, gap),
             ],
           );
         },
@@ -388,7 +394,7 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     );
   }
 
-  Widget _buildSubTitle(SantoContentDirection direction, double insetSpacing) {
+  Widget _buildSubTitle(SantoContentDirection direction, double gap) {
     final subTitle = widget.subTitle;
     if (subTitle == null || subTitle == '') return const SizedBox.shrink();
     final subTitleStyle = (widget.subTitleStyle ??
@@ -400,15 +406,12 @@ class SantoCheckboxState extends State<SantoCheckbox> {
           ? _commonConfig.colorTextDisabled
           : (widget.subTitleColor ?? _commonConfig.colorTextSecondary),
     );
-    // 非卡片且指示器在左时,副标题与内容左对齐
-    final left = widget.cardMode
-        ? insetSpacing
-        : (direction == SantoContentDirection.right
-            ? insetSpacing + indicatorSize + (widget.spacing ?? _commonConfig.hSpacingSm)
-            : 0.0);
+    // 容器内边距已含左右留白,这里只补指示器占位,保证描述与标题左对齐
+    final left = widget.cardMode || direction == SantoContentDirection.left
+        ? 0.0
+        : indicatorSize + gap;
     return Padding(
-      padding: EdgeInsets.only(
-          top: _commonConfig.vSpacingXs, left: left, right: insetSpacing),
+      padding: EdgeInsets.only(top: _commonConfig.vSpacingXs, left: left),
       child: Text(
         subTitle,
         maxLines: widget.subTitleMaxLine,
@@ -418,9 +421,10 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     );
   }
 
-  /// 卡片模式:背景 + 选中描边 + 左上角勾选角标
+  /// 卡片模式:背景 + 选中描边 + 选中背景图标
   Widget _buildCardWrapper(Widget child) {
     final selectColor = widget.selectColor ?? _commonConfig.brandPrimary;
+    final insetSpacing = widget.insetSpacing ?? _commonConfig.hSpacingMd;
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
@@ -433,18 +437,24 @@ class SantoCheckboxState extends State<SantoCheckbox> {
         borderRadius: BorderRadius.circular(cardRadius),
       ),
       child: Stack(
+        // 选中图标是背景层,压在内容之下;边长取卡片高度的一半
         children: [
-          child,
           if (checked)
-            Positioned(
-              top: 0,
-              left: 0,
-              child: _CornerCheck(
-                length: cornerLength,
-                radius: cardRadius - 1.5,
-                color: selectColor,
+            Positioned.fill(
+              right: insetSpacing,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: LayoutBuilder(
+                  builder: (context, constraints) => SantoIcon(
+                    SantoSolidIcons.checkCircle,
+                    solid: true,
+                    size: constraints.maxHeight * cardBadgeHeightFactor,
+                    color: selectColor,
+                  ),
+                ),
               ),
             ),
+          child,
         ],
       ),
     );
@@ -495,70 +505,4 @@ class SantoCheckboxState extends State<SantoCheckbox> {
       style: titleStyle,
     );
   }
-}
-
-/// 卡片模式左上角的三角勾选角标
-class _CornerCheck extends StatelessWidget {
-  const _CornerCheck({
-    required this.length,
-    required this.radius,
-    required this.color,
-  });
-
-  final double length;
-  final double radius;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: length,
-      height: length,
-      child: Stack(
-        children: [
-          CustomPaint(
-            size: Size(length, length),
-            painter: _CornerCheckPainter(radius: radius, color: color),
-          ),
-          const Positioned(
-            top: 5,
-            left: 4,
-            child: Icon(Icons.check, size: 14, color: Colors.white),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CornerCheckPainter extends CustomPainter {
-  const _CornerCheckPainter({required this.radius, required this.color});
-
-  final double radius;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..isAntiAlias = true
-      ..color = color
-      ..style = PaintingStyle.fill;
-    final path = Path()
-      ..moveTo(0, radius)
-      ..arcTo(
-        Rect.fromCircle(center: Offset(radius, radius), radius: radius),
-        3.1415,
-        3.1415 / 2,
-        false,
-      )
-      ..lineTo(size.width, 0)
-      ..lineTo(0, size.height)
-      ..lineTo(0, radius)
-      ..close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _CornerCheckPainter oldDelegate) =>
-      oldDelegate.color != color || oldDelegate.radius != radius;
 }

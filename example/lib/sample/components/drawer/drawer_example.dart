@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class DrawerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: 'Drawer 示例',
+    return SantoPageLayout(
+      title: 'Drawer 示例',
       children: <Widget>[
         ExampleIntro('drawer'),
         SantoSection(
@@ -41,7 +42,7 @@ class DrawerExample extends StatelessWidget {
         ),
         SantoSection(
           title: '顶部 / 底部抽屉',
-          description: 'direction 为 top 或 bottom 时，通过 height 指定抽屉高度',
+          description: 'direction 为 top 或 bottom 时，通过 height 指定抽屉高度；内容为 ListView 时安全区由列表自动消费',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -73,7 +74,7 @@ class DrawerExample extends StatelessWidget {
         ),
         SantoSection(
           title: '自定义宽度',
-          description: 'width 分别设为 200 与 400，对比抽屉的宽窄表现',
+          description: 'width 分别设为 200 与 400；宽度上限为屏幕的 95%，超出自动收敛',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -125,7 +126,7 @@ class DrawerExample extends StatelessWidget {
         ),
         SantoSection(
           title: '筛选面板场景',
-          description: '底部弹出 420 高度的抽屉，内部为筛选表单的组合场景',
+          description: '底部弹出 420 高度的抽屉；固定底部的按钮行把安全区算进自身 padding，停在手势条之上',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -135,7 +136,10 @@ class DrawerExample extends StatelessWidget {
                     context: context,
                     direction: SantoDrawerDirection.bottom,
                     height: 420,
-                    child: _buildFilterContent(context),
+                    // Builder 让内容在抽屉子树内取到改写后的安全区
+                    child: Builder(
+                      builder: (context) => _buildFilterContent(context),
+                    ),
                   );
                 },
                 text: '打开筛选面板（底部弹出）',
@@ -155,7 +159,16 @@ class DrawerExample extends StatelessWidget {
                     context: context,
                     title: '标题左对齐',
                     desc: '这是描述文案,标题和描述默认左对齐',
-                    child: const Text('底部 Drawer 内容'),
+                    // 静态内容不消费 MediaQuery,需在抽屉子树内读取
+                    // 改写后的安全区,算进自身 padding
+                    child: Builder(
+                      builder: (context) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).padding.bottom,
+                        ),
+                        child: const Text('底部 Drawer 内容'),
+                      ),
+                    ),
                   );
                 },
                 text: '标题+描述(左对齐,自适应高度)',
@@ -182,7 +195,16 @@ class DrawerExample extends StatelessWidget {
                     title: '无关闭按钮',
                     desc: 'showCloseButton: false',
                     showCloseButton: false,
-                    child: const Text('只能通过遮罩或内容区操作关闭'),
+                    // 静态内容不消费 MediaQuery,需在抽屉子树内读取
+                    // 改写后的安全区,算进自身 padding
+                    child: Builder(
+                      builder: (context) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).padding.bottom,
+                        ),
+                        child: const Text('只能通过遮罩或内容区操作关闭'),
+                      ),
+                    ),
                   );
                 },
                 text: '隐藏右侧关闭按钮',
@@ -195,9 +217,16 @@ class DrawerExample extends StatelessWidget {
                     title: '点击遮罩不关闭',
                     desc: 'barrierDismissible: false',
                     barrierDismissible: false,
-                    child: SantoButton(
-                      onTap: () => Navigator.of(context).pop(),
-                      text: '点我关闭',
+                    child: Builder(
+                      builder: (context) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).padding.bottom,
+                        ),
+                        child: SantoButton(
+                          onTap: () => Navigator.of(context).pop(),
+                          text: '点我关闭',
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -233,69 +262,75 @@ class DrawerExample extends StatelessWidget {
                     desc: '设置 height 后内容区通过 Expanded 撑满,子控件可自由使用 Expanded/Flexible',
                     height: 500,
                     contentPadding: EdgeInsets.zero,
-                    child: Container(
-                      color: const Color(0xFFF5F6FA),
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 12,
-                        ),
-                        itemCount: 20,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 18,
-                                  backgroundColor:
-                                      Color(0xFF1677FF).withOpacity(0.1),
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF1677FF),
-                                      fontWeight: FontWeight.w600,
+                    child: Builder(
+                      builder: (context) => Container(
+                        color: const Color(0xFFF5F6FA),
+                        child: ListView.builder(
+                          // 显式 padding 会覆盖 MediaQuery 安全区,
+                          // 底部用安全区兜底
+                          padding: EdgeInsets.only(
+                            left: 20,
+                            top: 12,
+                            right: 20,
+                            bottom: MediaQuery.of(context).padding.bottom + 12,
+                          ),
+                          itemCount: 20,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 18,
+                                    backgroundColor: Color(0xFF1677FF)
+                                        .withOpacity(0.1),
+                                    child: Text(
+                                      '${index + 1}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF1677FF),
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '标题项 ${index + 1}',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '标题项 ${index + 1}',
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        '这是第 ${index + 1} 行的描述文案',
-                                        style: const TextStyle(
-                                          fontSize: 13,
-                                          color: Color(0xFF808695),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          '这是第 ${index + 1} 行的描述文案',
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Color(0xFF808695),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.chevron_right,
-                                  color: Color(0xFFC0C4CC),
-                                  size: 20,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Color(0xFFC0C4CC),
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   );
@@ -310,42 +345,44 @@ class DrawerExample extends StatelessWidget {
   }
 
   /// 构建抽屉内容
+  ///
+  /// 内容直接是 ListView 且不传 padding:抽屉改写后的安全区由列表自动
+  /// 消费为滚动内边距,滚动区铺满整个抽屉,滚到底时最后一项停在安全区
+  /// 之上,不在内容外额外加一块空白区域
   Widget _buildDrawerContent(String title) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 24),
-          Expanded(
-            child: ListView(
-              children: List.generate(
-                10,
-                (index) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    children: [
-                      Icon(Icons.circle, size: 8, color: Colors.grey[400]),
-                      const SizedBox(width: 12),
-                      Text('列表项 ${index + 1}', style: TextStyle(fontSize: 15)),
-                    ],
-                  ),
-                ),
-              ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
           ),
+          for (int i = 1; i <= 10; i++)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+              child: Row(
+                children: [
+                  Icon(Icons.circle, size: 8, color: Colors.grey[400]),
+                  const SizedBox(width: 12),
+                  Text('列表项 $i', style: TextStyle(fontSize: 15)),
+                ],
+              ),
+            ),
         ],
       ),
     );
   }
 
   /// 构建筛选面板内容
+  ///
+  /// 固定的底部按钮行读取抽屉改写后的 MediaQuery 安全区,把安全区算进
+  /// 自身 padding 停在手势条之上;背景仍铺满整个抽屉
   Widget _buildFilterContent(BuildContext context) {
+    final double safeBottom = MediaQuery.of(context).padding.bottom;
     return Container(
       color: Colors.white,
       child: Column(
@@ -399,7 +436,7 @@ class DrawerExample extends StatelessWidget {
           ),
           Divider(height: 1),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + safeBottom),
             child: Row(
               children: [
                 Expanded(

@@ -41,7 +41,7 @@ group:
 | gap | double | floating 与屏幕边缘距离 | 否 | 12 |
 | containerRadius | double | floating 容器圆角 | 否 | 28 |
 | itemRadius | double | floating 标签项圆角 | 否 | 20 |
-| itemSelectedBgColor | Color? | 选中项背景色;floating 默认主色,docked 默认无背景(设置后展示同款滑动选中背景) | 否 | null |
+| itemSelectedBgColor | Color? | floating 样式选中项背景色,默认主色 | 否 | null |
 | selectedTextColor | Color? | 选中文字颜色(同时作为选中图标着色,图标自带 color 时以图标为准),默认主色(docked)/白色(floating) | 否 | null |
 | unselectedTextColor | Color? | 未选中文字颜色(同时作为未选中图标着色),默认次要文字色 | 否 | null |
 | selectedTextStyle | TextStyle? | 选中文字样式,覆盖默认字号/字重/颜色,颜色缺省时回退 selectedTextColor | 否 | null |
@@ -76,5 +76,4 @@ SantoMenuBar(
 
 ### v1.2.0
 - **新增**: `selectedTextStyle` / `unselectedTextStyle` 参数,自定义选中/未选中文字的字号、字重、颜色
-- **新增**: docked 停靠样式支持 `itemSelectedBgColor` 选中背景(滑动动画,与悬浮样式同款),默认不展示
 - **修复**: docked 停靠样式的图标颜色此前不随选中状态变化,现与悬浮样式一致跟随 `selectedTextColor` / `unselectedTextColor` 着色(图标自带 color 时以图标为准)

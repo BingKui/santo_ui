@@ -164,7 +164,7 @@ class _RadioExampleState extends State<RadioExample> {
         ),
         SantoSection(
           title: '纵向卡片样式',
-          description: 'cardMode 为 true 时展示为卡片,选中显示边框与左上角勾选角标',
+          description: 'cardMode 为 true 时展示为卡片,选中显示边框与右侧同色 check-circle 图标',
           child: SantoRadioGroup(
             selectId: 'index:1',
             cardMode: true,

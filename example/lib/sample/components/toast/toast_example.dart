@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class ToastExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: 'SantoToast 示例',
+    return SantoPageLayout(
+      title: 'SantoToast 示例',
       children: <Widget>[
         ExampleIntro('toast'),
         SantoSection(
@@ -38,7 +39,7 @@ class ToastExample extends StatelessWidget {
         ),
         SantoSection(
           title: '带图标 Toast',
-          description: 'preIcon 传入图片作为前置图标，与文案同行展示',
+          description: 'preIcon 传入图标组件(如 SantoIcon),与文案同行展示',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,10 +48,11 @@ class ToastExample extends StatelessWidget {
                   SantoToast.show(
                     '失败图标 Toast',
                     context,
-                    preIcon: Image.asset(
-                      'assets/image/icon_toast_fail.png',
-                      width: 24,
-                      height: 24,
+                    preIcon: SantoIcon(
+                      SantoSolidIcons.xmarkCircle,
+                      solid: true,
+                      size: 24,
+                      color: Colors.white,
                     ),
                     duration: SantoDuration.short,
                   );
@@ -63,10 +65,11 @@ class ToastExample extends StatelessWidget {
                   SantoToast.show(
                     '成功图标 Toast',
                     context,
-                    preIcon: Image.asset(
-                      'assets/image/icon_toast_success.png',
-                      width: 24,
-                      height: 24,
+                    preIcon: SantoIcon(
+                      SantoSolidIcons.checkCircle,
+                      solid: true,
+                      size: 24,
+                      color: Colors.white,
                     ),
                     duration: SantoDuration.short,
                   );

@@ -423,12 +423,12 @@ class SantoDefaultConfigUtils {
       fontWeight: FontWeight.w500,
     ),
     titleMaxLength: SantoAppBarTheme.maxLength,
-    leftAndRightPadding: 10.0,
+    leftAndRightPadding: 15.0,
     itemSpacing: SantoAppBarTheme.iconMargin,
     titlePadding: EdgeInsets.zero,
     iconSize: SantoAppBarTheme.iconSize,
     configId: SANTO_CONFIG_ID,
-    systemUiOverlayStyle: SystemUiOverlayStyle.dark,
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
     showDefaultBottom: false,
   );
 

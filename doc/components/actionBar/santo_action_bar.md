@@ -7,12 +7,14 @@ group:
 
 # SantoActionBar
 
-底部操作栏:一行承载若干图标入口与按钮,为页面底部的常用操作提供入口,参考 Vant ActionBar。
+底部操作栏:一行承载若干图标入口与按钮,为页面底部的常用操作提供入口。
 
 ## 一、效果总览
 
-操作栏高 50px,默认适配底部安全区;`SantoActionBarIcon` 保持固定宽度,
-`SantoActionBarButton` 平分剩余宽度,并自动按位置处理首尾圆角与外边距。
+操作栏内容区高 50px(另含顶部 0.5px 分割线),默认适配底部安全区;
+`SantoActionBarIcon` 保持固定宽度靠左排列,`SantoActionBarButton` 靠右排列,
+与栏右缘保持主题 `gapMd`(15)间距,相邻按钮间距相同,按钮用 `SantoButton`
+默认尺寸(middle)。
 
 ## 二、描述
 
@@ -23,11 +25,11 @@ group:
 ### 使用规范
 - 使用方式:作为 `Scaffold.bottomNavigationBar`,或作为页面 Column 的最后一个子节点。
 - `safeAreaInsetBottom` 默认 true,操作栏自身在底部预留安全区高度,页面无需再处理。
+- 布局:图标区靠左、按钮区靠右,按钮区与栏右缘保持主题 `gapMd`(15)间距,相邻按钮间距相同。
 - 按钮类型:normal(白底描边)、primary、success、warning、danger;`color` 可覆盖背景色。
-- `SantoActionBarButton` 基于 `SantoButton` 实现,禁用态/加载态/按压反馈与防连点均由 `SantoButton` 提供。
+- `SantoActionBarButton` 基于 `SantoButton` 实现并使用其默认尺寸(middle,高 32),
+  禁用态/加载态/按压反馈与防连点均由 `SantoButton` 提供。
 - 图标用 `SantoIcon` 渲染:`icon` 传图标名称,尺寸固定 18,颜色默认基础文字色,可用 `color` 覆盖。
-- 首个按钮左侧、末个按钮右侧各留 5px 外边距并收 12px 圆角,中间按钮保持直角,
-  位置由 SantoActionBar 自动计算,无需手动传入。
 
 ### 与 Vant 的对应关系
 Vant 的 `placeholder` 用于给 `position: fixed` 的 DOM 补占位高度,Flutter 中操作栏
@@ -68,8 +70,6 @@ Vant 的 `placeholder` 用于给 `position: fixed` 的 DOM 补占位高度,Flutt
 | loading | bool | 是否加载中 | 否 | false |
 | disabled | bool | 是否禁用 | 否 | false |
 | onTap | VoidCallback? | 点击回调 | 否 | null |
-| first | bool | 是否为整组按钮的首个,由 SantoActionBar 自动计算 | 否 | true |
-| last | bool | 是否为整组按钮的末个,由 SantoActionBar 自动计算 | 否 | true |
 
 ## 四、示例代码
 
@@ -113,6 +113,12 @@ Scaffold(
 ```
 
 ## 版本变更
+
+### v1.2.0
+- **新增**: 操作栏顶部 0.5px 分割线(主题 dividerColorBase)
+- **变更(破坏性)**: 按钮不再平分剩余宽度、不再按首尾位置拼接圆角,改为靠右排列、
+  与栏右缘保持主题 `gapMd`(15)间距,相邻按钮间距相同,并使用 `SantoButton` 默认尺寸
+  (middle,高 32);`SantoActionBarButton` 的 `first` / `last` 参数随之删除
 
 ### v1.1.0
 - **变更(破坏性)**: `SantoActionBarIcon` 的 `icon` 参数类型由 `Widget` 改为 `String` 图标名称,内部统一用 `SantoIcon` 渲染,颜色/尺寸由组件掌控(取值见 `SantoIcons` / `SantoSolidIcons`)

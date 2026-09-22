@@ -14,7 +14,7 @@ group:
 - 三种勾选样式:圆形(circle,默认)、方形(square)、无背景对号(check)
 - 两种尺寸:small 行高 48、large 行高 56
 - 主标题 + 副标题,内容可置于指示器左侧或右侧
-- 卡片模式:选中显示品牌色边框与左上角勾选角标
+- 卡片模式:选中显示品牌色边框与实心 check-circle 图标(与边框同色,占卡片高度 40%)
 - 普通模式默认显示底部分割线,可通过 `showDivider` 关闭
 - 支持完全自定义指示器(`customIconBuilder`)与内容(`customContentBuilder`)
 
@@ -27,7 +27,8 @@ group:
 ### 使用规范
 - 嵌入 `SantoCheckboxGroup` / `SantoCheckboxGroupContainer` 时必须设置 `id`,否则不纳入分组管理。
 - 分组内 `maxChecked` 限制超出时回调 `onOverloadChecked`,超出的项保持原状态。
-- 卡片模式不显示指示器与分割线,选中态由边框和角标表达。
+- 卡片模式不显示指示器与分割线,选中态由品牌色边框与右侧同色实心 check-circle 图标表达;图标边长取卡片高度的 40%。
+- 副标题左对齐标题:指示器在左侧时,副标题与主标题文字左边缘对齐。
 - 半选态用 `customIconBuilder` 自行绘制(分组内根据已勾选数量计算)。
 
 ## 三、构造函数及参数说明
@@ -158,3 +159,9 @@ SantoCheckboxGroupContainer(
   ),
 )
 ```
+
+## 版本变更
+
+### v1.2.0
+- **变更**: 卡片模式(`cardMode`)选中态由左上角品牌色三角 + 白色对号改为右侧实心 `check-circle` 图标(与卡片描边同色,边长取卡片高度的 50%)
+- **修复**: 卡片描述(`subTitle`)与主标题左对齐,此前多缩进了一份 `insetSpacing`

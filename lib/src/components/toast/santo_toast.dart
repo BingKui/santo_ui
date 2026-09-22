@@ -58,7 +58,7 @@ class SantoToast {
     Color? backgroundColor,
     TextStyle textStyle = const TextStyle(fontSize: 16, color: Colors.white),
     double? radius,
-    Image? preIcon,
+    Widget? preIcon,
     double? verticalOffset,
     VoidCallback? onDismiss,
     SantoToastGravity? gravity,
@@ -196,7 +196,7 @@ class ToastChild extends StatelessWidget {
   final double verticalOffset;
   final Color? backgroundColor;
   final double? radius;
-  final Image? leading;
+  final Widget? leading;
   final SantoToastGravity? gravity;
   final TextStyle? textStyle;
 

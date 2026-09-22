@@ -131,8 +131,8 @@ void main() {
       _decorationOf(tester, '立即购买').borderRadius,
       const BorderRadius.only(topRight: _r12, bottomRight: _r12),
     );
-    expect(_leftOf(tester, '加入购物车'), 5);
-    expect(800 - _rightOf(tester, '立即购买'), 5);
+    expect(_leftOf(tester, '加入购物车'), 10);
+    expect(800 - _rightOf(tester, '立即购买'), 10);
   });
 
   testWidgets('SantoActionBar 只有单个按钮时两侧都收圆角', (tester) async {
@@ -148,8 +148,8 @@ void main() {
       _decorationOf(tester, '确 定').borderRadius,
       const BorderRadius.all(_r12),
     );
-    expect(_leftOf(tester, '确 定'), 5);
-    expect(800 - _rightOf(tester, '确 定'), 5);
+    expect(_leftOf(tester, '确 定'), 10);
+    expect(800 - _rightOf(tester, '确 定'), 10);
   });
 
   testWidgets('SantoActionBar 按钮类型决定背景与描边', (tester) async {
@@ -262,7 +262,7 @@ void main() {
           .first,
     );
     expect(root.padding, const EdgeInsets.only(bottom: 34));
-    expect(tester.getSize(find.byType(SantoActionBar)).height, 84);
+    expect(tester.getSize(find.byType(SantoActionBar)).height, 84.5);
   });
 
   testWidgets('SantoActionBar 关闭安全区适配后不预留高度', (tester) async {
@@ -284,6 +284,6 @@ void main() {
           .first,
     );
     expect(root.padding, EdgeInsets.zero);
-    expect(tester.getSize(find.byType(SantoActionBar)).height, 50);
+    expect(tester.getSize(find.byType(SantoActionBar)).height, 50.5);
   });
 }

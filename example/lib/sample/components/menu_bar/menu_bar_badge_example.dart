@@ -50,7 +50,6 @@ class _MenuBarBadgeExampleState extends State<MenuBarBadgeExample> {
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
         onChanged: (i) => setState(() => _index = i),
-        itemSelectedBgColor: const Color(0xFFF0F0F0),
         selectedTextColor: const Color(0xFF1677FF),
         items: [
           SantoMenuBarItem(

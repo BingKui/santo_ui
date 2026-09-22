@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:santo_ui/src/components/button/santo_button.dart';
 
-/// 操作栏按钮高度
-const double kSantoActionBarButtonHeight = 40;
-
 /// 操作栏按钮外侧(首个左侧、末个右侧)留白
-const double kSantoActionBarButtonMargin = 5;
+const double kSantoActionBarButtonMargin = 10;
+
+/// 操作栏按钮上下留白
+const double kSantoActionBarButtonVerticalPadding = 5;
 
 /// 操作栏圆角,统一 12
 const double kSantoActionBarRadius = 12;
@@ -125,9 +125,10 @@ class SantoActionBarButton extends StatelessWidget {
       padding: EdgeInsets.only(
         left: first ? kSantoActionBarButtonMargin : 0,
         right: last ? kSantoActionBarButtonMargin : 0,
+        top: kSantoActionBarButtonVerticalPadding,
+        bottom: kSantoActionBarButtonVerticalPadding,
       ),
       child: SizedBox(
-        height: kSantoActionBarButtonHeight,
         width: double.infinity,
         child: SantoButton(
           text: text,

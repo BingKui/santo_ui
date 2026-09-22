@@ -1,9 +1,6 @@
 name: santo_ui
-description: >-
-  Santo UI is an enterprise-grade Flutter widget library with a built-in
-  theming system and 60+ production-ready components, following the design
-  language of Ant Design, TDesign and Vant.
-version: 1.1.1
+description: Enterprise-grade Flutter UI library with 60+ production-ready widgets and a built-in theming system.
+version: 1.2.0
 repository: https://github.com/BingKui/santo_ui
 homepage: https://github.com/BingKui/santo_ui
 issue_tracker: https://github.com/BingKui/santo_ui/issues

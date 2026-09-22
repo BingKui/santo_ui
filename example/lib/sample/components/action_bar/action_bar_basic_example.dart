@@ -25,7 +25,7 @@ class _ActionBarBasicExampleState extends State<ActionBarBasicExample> {
         ExampleIntro('action_bar'),
         SantoSection(
           title: '基础用法',
-          description: 'children 混排图标与按钮，按钮平分剩余宽度，图标保持固定宽度',
+          description: 'children 混排图标与按钮，图标区靠左，按钮区靠右（默认尺寸，与栏右缘留 gapMd 间距）',
           child: SantoActionBar(
             backgroundColor: _demoBackground,
             children: [

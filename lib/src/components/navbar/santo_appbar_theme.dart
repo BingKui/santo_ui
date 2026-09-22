@@ -15,6 +15,12 @@ class SantoAppBarTheme {
   /// [LeadingIcon]的大小
   static const double iconFullSize = 40;
 
+  /// 返回键(SantoBackLeading)图标操作区域的固定边长
+  static const double leadingSize = 32;
+
+  /// [SantoDoubleLeading] 中两个操作区之间的间距
+  static const double leadingSpacing = 5;
+
   /// [SantoAppBar] 标题的文字大小
   static const double titleFontSize = 18;
 

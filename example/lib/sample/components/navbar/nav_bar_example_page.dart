@@ -39,19 +39,37 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
     valueNotifier = ValueNotifier(false);
 
     selectedHeiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600);
+      fontSize: 18,
+      color: Color(0xFFFFFFFF),
+      fontWeight: FontWeight.w600,
+    );
     selectedBaiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFF17233D), fontWeight: FontWeight.w600);
+      fontSize: 18,
+      color: Color(0xFF17233D),
+      fontWeight: FontWeight.w600,
+    );
 
     unSelectedHeiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFF808695), fontWeight: FontWeight.w600);
+      fontSize: 18,
+      color: Color(0xFF808695),
+      fontWeight: FontWeight.w600,
+    );
     unSelectedBaiStyle = TextStyle(
-        fontSize: 18, color: Color(0xFF808695), fontWeight: FontWeight.w600);
+      fontSize: 18,
+      color: Color(0xFF808695),
+      fontWeight: FontWeight.w600,
+    );
 
     commonHeiStyle = TextStyle(
-        fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white);
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+    );
     commonBaiStyle = TextStyle(
-        fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF17233D));
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFF17233D),
+    );
 
     focusNode = FocusNode();
     focusNode!.addListener(() {
@@ -65,7 +83,8 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      appBar: buildBarByIndex(context),
+    return SantoPageLayout(
+      appBar: buildBarByIndex(context),
       scrollable: false,
       children: <Widget>[
         ExampleIntro('navbar'),
@@ -152,8 +171,10 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
     switch (this.widget.index) {
       case 0:
         widget = Center(
-            child: Text(
-                '1. 左上角的返回按钮图标支持自定义，本例改成了搜索图标\n2.切换类型的导航栏\n3.顶部模块切换可不限于两个，可多个'));
+          child: Text(
+            '1. 左上角的返回按钮图标支持自定义，本例改成了搜索图标\n2.切换类型的导航栏\n3.顶部模块切换可不限于两个，可多个',
+          ),
+        );
         break;
       case 4:
         widget = Center(child: Text('多Actions'));
@@ -161,11 +182,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
       case 13:
         widget = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: 20,
-            ),
-          ],
+          children: <Widget>[SizedBox(height: 20)],
         );
         break;
       default:
@@ -177,14 +194,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
   //2个文字模块切换 左右两个icon hei
   SantoAppBar _getBlackBar1() {
     return SantoAppBar(
-      leading: SantoBackLeading(
-        child: Image.asset(
-          'assets/image/icon_navbar_sousuo_bai.png',
-          scale: 3.0,
-          height: 20,
-          width: 20,
-        ),
-      ),
+      leading: SantoBackLeading(child: SantoIcon(SantoIcons.search, size: 20)),
       themeData: SantoAppBarConfig.light(),
       title: Row(
         mainAxisSize: MainAxisSize.min,
@@ -200,9 +210,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
               style: currentIndex == 0 ? selectedHeiStyle : unSelectedHeiStyle,
             ),
           ),
-          SizedBox(
-            width: 24,
-          ),
+          SizedBox(width: 24),
           GestureDetector(
             onTap: () {
               currentIndex = 1;
@@ -212,16 +220,11 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
               '新房',
               style: currentIndex == 1 ? selectedHeiStyle : unSelectedHeiStyle,
             ),
-          )
+          ),
         ],
       ),
       actions: SantoIconAction(
-        child: Image.asset(
-          'assets/image/icon_navbar_add_bai.png',
-          scale: 3.0,
-          width: 20,
-          height: 20,
-        ),
+        child: SantoIcon(SantoIcons.plus, size: 20),
         iconPressed: () {
           SantoToast.show('点击了右上角的+号', context);
         },
@@ -235,27 +238,30 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
       title: '标题名称',
       leading: SantoDoubleLeading(
         first: SantoBackLeading(),
-        second: SantoBackLeading(
-          child: Image.asset(
-            'assets/image/icon_navbar_close_bai.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
-        ),
+        second: SantoBackLeading(child: SantoIcon(SantoIcons.xmark, size: 20)),
       ),
       actions: SantoTextAction(
         '弹出菜单',
         key: actionKey,
         iconPressed: () {
-          SantoPopupListWindow.showPopListWindow(context, actionKey,
-              offset: 10, data: ["aaaa", "bbbbb"], onItemClick: (index, item){
-                SantoDialog.confirm(context,
-                    cancelText: 'cancel', okText: 'confirm', message: 'message');
-                return true;
-              }, onDismiss: (){
-                SantoToast.show('onDismiss', context);
-              });
+          SantoPopupListWindow.showPopListWindow(
+            context,
+            actionKey,
+            offset: 10,
+            data: ["aaaa", "bbbbb"],
+            onItemClick: (index, item) {
+              SantoDialog.confirm(
+                context,
+                cancelText: 'cancel',
+                okText: 'confirm',
+                message: 'message',
+              );
+              return true;
+            },
+            onDismiss: () {
+              SantoToast.show('onDismiss', context);
+            },
+          );
         },
       ),
     );
@@ -269,19 +275,11 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "标题名称",
-            style: commonHeiStyle,
-          ),
+          Text("标题名称", style: commonHeiStyle),
           Padding(
             padding: const EdgeInsets.only(left: 4),
-            child: Image.asset(
-              'assets/image/icon_navbar_xiala_bai.png',
-              scale: 3.0,
-              width: 20,
-              height: 20,
-            ),
-          )
+            child: SantoIcon(SantoIcons.navArrowDown, size: 20),
+          ),
         ],
       ),
     );
@@ -291,12 +289,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
   SantoAppBar _getBlackBar9() {
     return SantoAppBar(
       themeData: SantoAppBarConfig.light(),
-      leading: Image.asset(
-        'assets/image/icon_navbar_sousuo_hei.png',
-        scale: 3.0,
-        width: 20,
-        height: 20,
-      ),
+      leading: SantoIcon(SantoIcons.search, size: 20),
       title: '标题名称',
     );
   }
@@ -305,12 +298,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
   SantoAppBar _getBlackBar10() {
     return SantoAppBar(
       themeData: SantoAppBarConfig.light(),
-      leading: Image.asset(
-        'assets/image/icon_navbar_sousuo_hei.png',
-        scale: 3.0,
-        width: 20,
-        height: 20,
-      ),
+      leading: SantoIcon(SantoIcons.search, size: 20),
       title: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -318,29 +306,32 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
           Text(
             '标题名称',
             style: TextStyle(
-                fontSize: 18,
-                height: 1,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF17233D)),
+              fontSize: 18,
+              height: 1,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF17233D),
+            ),
           ),
           Container(
-              height: 17,
-              padding: EdgeInsets.only(left: 3, right: 3),
-              margin: EdgeInsets.only(left: 6),
-              decoration:
-                  BoxDecoration(color: Color(0xff8E8E8E).withOpacity(0.15)),
-              child: Center(
-                child: Text(
-                  '住宅',
-                  overflow: TextOverflow.ellipsis,
-                  textScaleFactor: 1,
-                  style: TextStyle(
-                    fontSize: 11,
-                    height: 1,
-                    color: Color(0xFF17233D),
-                  ),
+            height: 17,
+            padding: EdgeInsets.only(left: 3, right: 3),
+            margin: EdgeInsets.only(left: 6),
+            decoration: BoxDecoration(
+              color: Color(0xff8E8E8E).withOpacity(0.15),
+            ),
+            child: Center(
+              child: Text(
+                '住宅',
+                overflow: TextOverflow.ellipsis,
+                textScaleFactor: 1,
+                style: TextStyle(
+                  fontSize: 11,
+                  height: 1,
+                  color: Color(0xFF17233D),
                 ),
-              ))
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -353,18 +344,9 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
       title: '标题名称',
       leading: SantoDoubleLeading(
         first: SantoBackLeading(),
-        second: SantoBackLeading(
-          child: Image.asset(
-            'assets/image/icon_navbar_close_hei.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
-        ),
+        second: SantoBackLeading(child: SantoIcon(SantoIcons.xmark, size: 20)),
       ),
-      actions: SantoTextAction(
-        '文本按钮',
-      ),
+      actions: SantoTextAction('文本按钮'),
     );
   }
 
@@ -377,30 +359,15 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
       actions: <Widget>[
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_share_bai.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.shareIos, size: 20),
         ),
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_pin_bai.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.group, size: 20),
         ),
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_focus_bai.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.heart, size: 20),
         ),
       ],
     );
@@ -415,39 +382,19 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
       actions: <Widget>[
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_im_hei.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.chatLines, size: 20),
         ),
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_share_hei.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.shareIos, size: 20),
         ),
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_pin_hei.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.group, size: 20),
         ),
         SantoIconAction(
           iconPressed: () {},
-          child: Image.asset(
-            'assets/image/icon_navbar_focus_hei.png',
-            scale: 3.0,
-            height: 20,
-            width: 20,
-          ),
+          child: SantoIcon(SantoIcons.heart, size: 20),
         ),
       ],
     );
@@ -496,19 +443,20 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
           children: <Widget>[
             Text(
               '类型1',
-              style:
-                  TextStyle(color: Color(0xFF17233D), height: 1, fontSize: 16),
+              style: TextStyle(
+                color: Color(0xFF17233D),
+                height: 1,
+                fontSize: 16,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5),
-              child: Image.asset(
-                'assets/image/icon_triangle.png',
+              child: SantoIcon(
+                SantoIcons.navArrowDown,
+                size: 12,
                 color: Colors.grey,
-                scale: 3.0,
-                height: 7,
-                width: 7,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -521,11 +469,15 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
           keyLeading,
           data: ["aaaa", "bbbbb"],
           onItemClick: (index, data) {
-            SantoDialog.confirm(context,
-                cancelText: 'cancel', okText: 'confirm', message: 'message');
+            SantoDialog.confirm(
+              context,
+              cancelText: 'cancel',
+              okText: 'confirm',
+              message: 'message',
+            );
             return true;
           },
-          onDismiss: (){
+          onDismiss: () {
             SantoToast.show('onDismiss', context);
           },
         );
@@ -572,13 +524,12 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5),
-              child: Image.asset(
-                'assets/image/icon_triangle.png',
-                scale: 3.0,
-                height: 7,
-                width: 7,
+              child: SantoIcon(
+                SantoIcons.navArrowDown,
+                size: 12,
+                color: Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -590,7 +541,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
           context,
           keyLeading,
           data: ["aaaa", "bbbbb"],
-          offset: 10
+          offset: 10,
         );
       },
       //输入框 文本内容变化的监听
@@ -628,9 +579,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
             style: currentIndex == 0 ? selectedHeiStyle : unSelectedHeiStyle,
           ),
         ),
-        SizedBox(
-          width: 24,
-        ),
+        SizedBox(width: 24),
         GestureDetector(
           onTap: () {
             currentIndex = 1;
@@ -641,9 +590,7 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
             style: currentIndex == 1 ? selectedHeiStyle : unSelectedHeiStyle,
           ),
         ),
-        SizedBox(
-          width: 24,
-        ),
+        SizedBox(width: 24),
         GestureDetector(
           onTap: () {
             currentIndex = 2;
@@ -653,21 +600,14 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
             '类型',
             style: currentIndex == 2 ? selectedHeiStyle : unSelectedHeiStyle,
           ),
-        )
+        ),
       ],
     );
     return SantoAppBar(
       themeData: SantoAppBarConfig.light(),
       automaticallyImplyLeading: false,
       //自定义leading
-      leading: SantoBackLeading(
-        child: Image.asset(
-          'assets/image/icon_navbar_sousuo_bai.png',
-          scale: 3.0,
-          height: 20,
-          width: 20,
-        ),
-      ),
+      leading: SantoBackLeading(child: SantoIcon(SantoIcons.search, size: 20)),
       //自定义title
       title: Container(
         height: 44,
@@ -694,19 +634,12 @@ class _NavBarPageState extends State<NavBarPage> with TickerProviderStateMixin {
             );
           },
           separatorBuilder: (context, index) {
-            return SizedBox(
-              width: 24,
-            );
+            return SizedBox(width: 24);
           },
         ),
       ),
       actions: SantoIconAction(
-        child: Image.asset(
-          'assets/image/icon_navbar_add_bai.png',
-          scale: 3.0,
-          height: 20,
-          width: 20,
-        ),
+        child: SantoIcon(SantoIcons.plus, size: 20),
         iconPressed: () {},
       ),
     );

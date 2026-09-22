@@ -4,11 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santo_ui/santo_ui.dart';
 
-Widget _host(Widget child, {double height = 400}) => MaterialApp(
+Widget _host(Widget child, {double height = 400, bool bouncing = false}) =>
+    MaterialApp(
       home: Scaffold(
-        body: SizedBox(height: height, child: child),
+        body: SizedBox(
+          height: height,
+          child: bouncing
+              ? ScrollConfiguration(
+                  behavior: const _BouncingBehavior(),
+                  child: child,
+                )
+              : child,
+        ),
       ),
     );
+
+/// 强制 Bouncing 物理,复现 iOS 松手回弹路径
+class _BouncingBehavior extends ScrollBehavior {
+  const _BouncingBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) =>
+      const BouncingScrollPhysics();
+}
 
 List<Widget> _items(int count) => List.generate(
       count,
@@ -25,11 +43,23 @@ Future<void> _pullDown(WidgetTester tester, double distance) async {
   await tester.pump();
 }
 
-void main() {
-  testWidgets('下拉刷新头部带圆角', (tester) async {
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
+/// 头部覆盖层高度:0 表示头部已收起(未构建)
+double? _refreshHeaderHeight(WidgetTester tester) {
+  for (final Positioned positioned in tester.widgetList<Positioned>(
+    find.descendant(
+      of: find.byType(SantoRefresh),
+      matching: find.byType(Positioned),
+    ),
+  )) {
+    if (positioned.height != null) {
+      return positioned.height;
+    }
+  }
+  return null;
+}
 
+void main() {
+  testWidgets('下拉刷新头部背景透明', (tester) async {
     await tester.pumpWidget(_host(SantoRefresh(
       onRefresh: () async {},
       child: ListView(children: _items(10)),
@@ -41,17 +71,11 @@ void main() {
     await gesture.moveBy(const Offset(0, 40));
     await tester.pump();
 
-    final BoxDecoration header = tester
+    final Container header = tester
         .widgetList<Container>(find.byType(Container))
-        .map((Container container) => container.decoration)
-        .whereType<BoxDecoration>()
-        .firstWhere(
-          (BoxDecoration decoration) =>
-              decoration.color == commonConfig.fillBody,
-          orElse: () => const BoxDecoration(),
-        );
-
-    expect(header.borderRadius, BorderRadius.circular(commonConfig.radiusMd));
+        .firstWhere((Container container) =>
+            container.constraints?.maxHeight == 40);
+    expect(header.decoration, isNull, reason: '刷新区域不应有背景色,保持透明');
 
     await gesture.up();
     await tester.pumpAndSettle();
@@ -100,8 +124,19 @@ void main() {
     expect(states, contains(SantoRefreshState.ready));
     expect(states, contains(SantoRefreshState.refreshing));
 
-    await tester.pumpAndSettle();
+    // 回调(50ms)结束后进入完成态,展示成功图标(完成态窗口 successDuration 50ms)
+    await tester.pump(const Duration(milliseconds: 60));
     expect(states, contains(SantoRefreshState.done));
+    final SantoIcon doneIcon = tester.widget<SantoIcon>(
+      find.descendant(
+        of: find.byType(SantoRefresh),
+        matching: find.byType(SantoIcon),
+      ),
+    );
+    expect(doneIcon.name, SantoIcons.checkCircle,
+        reason: '刷新完成态应展示成功图标');
+
+    await tester.pumpAndSettle();
     expect(states.last, SantoRefreshState.inactive);
   });
 
@@ -117,6 +152,75 @@ void main() {
     await _pullDown(tester, 20);
     await tester.pumpAndSettle();
     expect(refreshCount, 0);
+  });
+
+  testWidgets('Bouncing 回弹:松手后收缩到刷新高度并保持,完成后归零', (tester) async {
+    final Completer<void> refresh = Completer<void>();
+    await tester.pumpWidget(_host(
+      SantoRefresh(
+        onRefresh: () => refresh.future,
+        successDuration: const Duration(milliseconds: 50),
+        child: ListView(children: _items(30)),
+      ),
+      bouncing: true,
+    ));
+
+    final gesture =
+        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    await gesture.moveBy(const Offset(0, 90));
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(_refreshHeaderHeight(tester), 80,
+        reason: '下拉距离被钳制在 maxBarHeight');
+
+    await gesture.up();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(
+      _refreshHeaderHeight(tester),
+      allOf(greaterThanOrEqualTo(50), lessThanOrEqualTo(80)),
+      reason: '松手后高度应收缩到刷新高度(50)停下,不能先全部收完再弹出 Loading 区',
+    );
+
+    // 回弹与收缩动画结束后,刷新期间头部稳定停在刷新高度
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(_refreshHeaderHeight(tester), 50);
+
+    refresh.complete();
+    await tester.pump();
+    // successDuration(50ms)到点,收起动画(200ms)启动
+    await tester.pump(const Duration(milliseconds: 50));
+    // 收起动画进行中:头部尚未关完,成功态必须保持
+    await tester.pump(const Duration(milliseconds: 60));
+    final SantoIcon collapsingIcon = tester.widget<SantoIcon>(
+      find.descendant(
+        of: find.byType(SantoRefresh),
+        matching: find.byType(SantoIcon),
+      ),
+    );
+    expect(collapsingIcon.name, SantoIcons.checkCircle,
+        reason: '成功图标/文案应保持到头部完全关闭');
+    expect(_refreshHeaderHeight(tester), allOf(greaterThan(0), lessThan(50)));
+
+    await tester.pumpAndSettle();
+    expect(_refreshHeaderHeight(tester), isNull, reason: '刷新完成后高度收到 0');
+  });
+
+  testWidgets('Bouncing 回弹:未达阈值松手跟随回弹收起,不触发刷新', (tester) async {
+    int refreshCount = 0;
+    await tester.pumpWidget(_host(
+      SantoRefresh(
+        onRefresh: () async {
+          refreshCount++;
+        },
+        child: ListView(children: _items(30)),
+      ),
+      bouncing: true,
+    ));
+
+    await _pullDown(tester, 20);
+    await tester.pumpAndSettle();
+    expect(refreshCount, 0);
+    expect(_refreshHeaderHeight(tester), isNull);
   });
 
   testWidgets('controller.refresh() 可从外部触发刷新', (tester) async {

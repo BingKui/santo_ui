@@ -54,7 +54,12 @@ class SantoActionBar extends StatelessWidget {
         safeAreaInsetBottom ? MediaQuery.paddingOf(context).bottom : 0;
 
     return Container(
-      color: backgroundColor ?? common.fillBase,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? common.fillBase,
+        border: Border(
+          top: BorderSide(width: 0.5, color: common.dividerColorBase),
+        ),
+      ),
       padding: EdgeInsets.only(bottom: safeAreaBottom),
       child: SizedBox(
         height: kSantoActionBarHeight,

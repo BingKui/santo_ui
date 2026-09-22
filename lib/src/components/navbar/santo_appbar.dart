@@ -3,6 +3,7 @@ import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
+import 'package:santo_ui/src/theme/base/santo_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -233,7 +234,36 @@ class SantoAppBar extends PreferredSize {
     _defaultConfig = _defaultConfig.merge(SantoAppBarConfig(
         backgroundColor: this.backgroundColor,
         showDefaultBottom: this.showDefaultBottom,
-        systemUiOverlayStyle: this.systemOverlayStyle));
+        systemOverlayStyle: this.systemOverlayStyle));
+
+    // 模式:背景亮度 < 0.5 视为深色(深色模式或自定义背景色),
+    // 内容(标题/操作文字)默认白色,可自行设置其他颜色;
+    // 浅色背景内容默认黑色,不允许设置为白色(自动回退为黑色)
+    final Color effectiveBackground = _defaultConfig.backgroundColor;
+    final bool darkBackground = effectiveBackground.computeLuminance() < 0.5;
+    _defaultConfig = _defaultConfig.copyWith(
+      titleStyle:
+          _resolveContentStyle(_defaultConfig.titleStyle, darkBackground),
+      actionsStyle:
+          _resolveContentStyle(_defaultConfig.actionsStyle, darkBackground),
+      systemOverlayStyle: this.systemOverlayStyle ??
+          (darkBackground
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark),
+    );
+
+    // 默认返回箭头颜色跟随模式;调用方自定义 builder 时不干预
+    final SantoAppBarConfig globalConfig = SantoThemeConfigurator.instance
+        .getConfig(configId: _defaultConfig.configId)
+        .appBarConfig;
+    if (identical(_defaultConfig.leadIconBuilder,
+        globalConfig.leadIconBuilder)) {
+      _defaultConfig = _defaultConfig.copyWith(
+        leadIconBuilder: darkBackground
+            ? SantoAppBarConfig.dark().leadIconBuilder
+            : SantoAppBarConfig.light().leadIconBuilder,
+      );
+    }
 
     useWidgetsBinding().addPostFrameCallback((item) {
       SystemChrome.setSystemUIOverlayStyle(_defaultConfig.systemOverlayStyle);
@@ -267,11 +297,40 @@ class SantoAppBar extends PreferredSize {
       flexibleSpace: flexibleSpace,
       shadowColor: shadowColor,
       shape: shape,
-      iconTheme: iconTheme,
-      actionsIconTheme: actionsIconTheme,
+      iconTheme: iconTheme ??
+          IconThemeData(
+            color: darkBackground
+                ? Colors.white
+                : SantoAppBarTheme.lightTextColor,
+          ),
+      actionsIconTheme: actionsIconTheme ??
+          IconThemeData(
+            color: darkBackground
+                ? Colors.white
+                : SantoAppBarTheme.lightTextColor,
+          ),
       primary: primary,
       excludeHeaderSemantics: excludeHeaderSemantics,
     );
+  }
+
+  /// 根据背景亮度解析内容文字样式
+  ///
+  /// * 深色背景(深色模式/自定义背景色):未自定义颜色时默认白色,自定义其他颜色保留
+  /// * 浅色背景:内容默认黑色,不允许设置为白色(自动回退为黑色)
+  SantoTextStyle _resolveContentStyle(
+      SantoTextStyle style, bool darkBackground) {
+    final Color? color = style.color;
+    if (darkBackground) {
+      if (color == null || color == SantoAppBarTheme.lightTextColor) {
+        return style.merge(SantoTextStyle(color: SantoAppBarTheme.darkTextColor));
+      }
+      return style;
+    }
+    if (color == null || color.computeLuminance() > 0.9) {
+      return style.merge(SantoTextStyle(color: SantoAppBarTheme.lightTextColor));
+    }
+    return style;
   }
 
   PreferredSizeWidget? _buildBarBottom(SantoAppBarConfig defaultConfig) {
@@ -290,15 +349,16 @@ class SantoAppBar extends PreferredSize {
       return leadingWidth!;
     }
     if (leading is SantoDoubleLeading) {
-      return themeData.leftAndRightPadding +
-          themeData.itemSpacing +
-          themeData.iconSize * 2;
+      // 左边距 15 + 32 + 间距 5 + 32,与 SantoDoubleLeading 的宽度保持一致
+      return SantoAppBarTheme.leadingSize * 2 +
+          SantoAppBarTheme.leadingSpacing +
+          themeData.leftAndRightPadding;
     }
 
     if (leading == null && !automaticallyImplyLeading) {
       return 0;
     }
-    return themeData.leftAndRightPadding + SantoAppBarTheme.iconFullSize;
+    return themeData.leftAndRightPadding + SantoAppBarTheme.leadingSize;
   }
 
   // 对[actions]进行包装: 单一的Widget会添加右边距
@@ -314,7 +374,9 @@ class SantoAppBar extends PreferredSize {
         return actionList;
       }
       List<Widget> tmp = (actions as List<Widget>).map((item) {
-        return (item is SantoTextAction) ? _warpRealAction(item) : item;
+        return (item is SantoTextAction)
+            ? _warpRealAction(item, themeData)
+            : item;
       }).toList();
 
       for (int i = 0, n = tmp.length; i < n; i++) {
@@ -322,18 +384,22 @@ class SantoAppBar extends PreferredSize {
         if (i != n - 1) actionList.add(SizedBox(width: themeData.itemSpacing));
       }
     } else {
-      Widget realAction =
-          (actions is SantoTextAction) ? _warpRealAction(actions) : actions;
+      Widget realAction = (actions is SantoTextAction)
+          ? _warpRealAction(actions, themeData)
+          : actions;
       actionList.add(realAction);
     }
     return actionList..add(SizedBox(width: themeData.leftAndRightPadding));
   }
 
-  SantoTextAction _warpRealAction(SantoTextAction textAction) {
+  // 透传 AppBar 解析后的配置(含深色背景自动切换的配色),
+  // 之前原样传的是 widget.themeData(通常为 null),AppBar 级配置对文字操作不生效
+  SantoTextAction _warpRealAction(
+      SantoTextAction textAction, SantoAppBarConfig? barThemeData) {
     return SantoTextAction(
       textAction.text,
       iconPressed: textAction.iconPressed,
-      themeData: themeData,
+      themeData: barThemeData,
       key: textAction.key,
     );
   }
@@ -369,7 +435,7 @@ class SantoAppBar extends PreferredSize {
 }
 
 /// [SantoAppBar]中leading的默认实现
-/// 宽度范围是40
+/// 图标操作区域固定 [SantoAppBarTheme.leadingSize](32)
 class SantoBackLeading extends StatelessWidget {
   final Widget? child;
   final VoidCallback? iconPressed;
@@ -396,11 +462,11 @@ class SantoBackLeading extends StatelessWidget {
         .merge(_defaultThemeData);
 
     return Container(
-      width: SantoAppBarTheme.iconFullSize +
-          _defaultThemeData.leftAndRightPadding,
+      // 返回键操作区域固定 32,不随主题 iconSize/padding 变化,
+      // 避免在 AppBar leading 槽位中溢出
+      width: SantoAppBarTheme.leadingSize,
       height: _defaultThemeData.appBarHeight,
-      padding: EdgeInsets.only(left: _defaultThemeData.leftAndRightPadding),
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -413,8 +479,8 @@ class SantoBackLeading extends StatelessWidget {
                 Navigator.maybePop(context);
               },
           child: SizedBox(
-            width: SantoAppBarTheme.iconFullSize,
-            height: SantoAppBarTheme.iconFullSize,
+            width: SantoAppBarTheme.leadingSize,
+            height: SantoAppBarTheme.leadingSize,
             child: Center(
               child: child ?? _defaultThemeData.leadIconBuilder(),
             ),
@@ -426,7 +492,9 @@ class SantoBackLeading extends StatelessWidget {
 }
 
 /// 支持在[SantoAppBar.leading]添加两个元素的Leading实现
-/// 宽度范围是80
+///
+/// 每个操作区固定 [SantoAppBarTheme.leadingSize](32x32),间距
+/// [SantoAppBarTheme.leadingSpacing](5),左侧距屏幕边缘 leftAndRightPadding(15)
 class SantoDoubleLeading extends StatelessWidget {
   final Widget first;
   final Widget second;
@@ -447,13 +515,18 @@ class SantoDoubleLeading extends StatelessWidget {
     return Container(
       constraints: BoxConstraints.tightFor(
           height: _defaultThemeData.appBarHeight,
-          width: _defaultThemeData.leftAndRightPadding +
-              _defaultThemeData.itemSpacing +
-              _defaultThemeData.iconSize * 2),
+          width: SantoAppBarTheme.leadingSize * 2 +
+              SantoAppBarTheme.leadingSpacing +
+              _defaultThemeData.leftAndRightPadding),
+      padding: EdgeInsets.only(left: _defaultThemeData.leftAndRightPadding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[first, second],
+        children: <Widget>[
+          first,
+          const SizedBox(width: SantoAppBarTheme.leadingSpacing),
+          second,
+        ],
       ),
     );
   }

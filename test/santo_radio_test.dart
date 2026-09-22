@@ -110,8 +110,10 @@ void main() {
       ]),
     )));
 
-    // 卡片模式不显示指示器,选中卡片显示勾选角标
-    expect(find.byIcon(Icons.check), findsOneWidget);
+    // 卡片模式不显示指示器,选中卡片右侧显示选中背景图标
+    final badge = tester.widget<SantoIcon>(find.byType(SantoIcon));
+    expect(badge.name, SantoSolidIcons.checkCircle);
+    expect(badge.solid, true);
     expect(find.byIcon(Icons.radio_button_unchecked), findsNothing);
   });
 

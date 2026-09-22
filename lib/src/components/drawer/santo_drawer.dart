@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// 抽屉方向
@@ -20,6 +22,18 @@ enum SantoDrawerDirection {
 /// 支持左/右/上/下方向滑出，支持自定义宽度和内容，支持遮罩层。
 /// 通过 [SantoDrawer.show] 静态方法打开。
 ///
+/// 安全区处理与 [SantoBottomDrawer] 一致,固定生效、不可配置:内容区的
+/// MediaQuery 安全区按方向改写后交给内容消费——顶部抽屉只保留顶部安全区,
+/// 底部抽屉只保留底部安全区,左右抽屉(整屏高)上下都保留。安全区放在
+/// 内容中,而不是在内容外额外加一块空白区域:可滚动内容(如 [ListView])
+/// 不传 padding 时自动把安全区消费为滚动内边距,滚动区铺满整个抽屉,
+/// 滚到底时最后一项停在安全区之上;带固定头尾的内容读取
+/// `MediaQuery.of(context).padding` 把安全区算进自身 padding。
+///
+/// 左右方向的宽度上限为屏幕宽度的 95%,超出时收敛到上限。
+///
+/// @changed v1.2.0 内容区按方向避让顶部/底部安全区域(安全区由内容自身消费,不加空白块);左右方向宽度上限收敛为屏幕宽度的 95%
+///
 /// 使用示例：
 /// ```dart
 /// SantoDrawer.show(
@@ -36,7 +50,9 @@ class SantoDrawer extends StatefulWidget {
   /// 抽屉方向
   final SantoDrawerDirection direction;
 
-  /// 抽屉宽度(左右方向生效)
+  /// 抽屉宽度(左右方向生效),上限为屏幕宽度的 95%
+  ///
+  /// @changed v1.2.0 超出屏幕宽度 95% 时收敛到上限
   final double width;
 
   /// 抽屉高度(上下方向生效)
@@ -61,7 +77,7 @@ class SantoDrawer extends StatefulWidget {
   ///
   /// * [context] 上下文
   /// * [direction] 抽屉方向，默认右侧
-  /// * [width] 抽屉宽度(左右方向)，默认 300
+  /// * [width] 抽屉宽度(左右方向)，默认 300，上限为屏幕宽度的 95%
   /// * [height] 抽屉高度(上下方向)，默认 300
   /// * [maskColor] 遮罩层颜色，默认半透明黑色
   /// * [child] 抽屉内容
@@ -133,10 +149,9 @@ class _SantoDrawerState extends State<SantoDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     final isLeft =
         widget.direction == SantoDrawerDirection.left;
-    // final isRight =
-    //     widget.direction == SantoDrawerDirection.right;
     final isTop = widget.direction == SantoDrawerDirection.top;
     final isBottom = widget.direction == SantoDrawerDirection.bottom;
     final isVertical = isTop || isBottom;
@@ -145,6 +160,31 @@ class _SantoDrawerState extends State<SantoDrawer> {
     if (isLeft) alignment = Alignment.centerLeft;
     if (isTop) alignment = Alignment.topCenter;
     if (isBottom) alignment = Alignment.bottomCenter;
+
+    // 安全区按方向保留:顶部抽屉避让状态栏、底部抽屉避让手势条、
+    // 左右抽屉(整屏高)上下都避让。改写内容的 MediaQuery 后交给内容
+    // 消费,背景仍由 child 铺满整个抽屉,不产生透明带
+    final EdgeInsets safePadding;
+    switch (widget.direction) {
+      case SantoDrawerDirection.left:
+      case SantoDrawerDirection.right:
+        safePadding = EdgeInsets.only(
+          top: mediaQuery.padding.top,
+          bottom: mediaQuery.padding.bottom,
+        );
+        break;
+      case SantoDrawerDirection.top:
+        safePadding = EdgeInsets.only(top: mediaQuery.padding.top);
+        break;
+      case SantoDrawerDirection.bottom:
+        safePadding = EdgeInsets.only(bottom: mediaQuery.padding.bottom);
+        break;
+    }
+
+    // 左右抽屉宽度上限为屏幕宽度的 95%
+    final double effectiveWidth = isVertical
+        ? double.infinity
+        : math.min(widget.width, mediaQuery.size.width * 0.95);
 
     return Align(
       alignment: alignment,
@@ -155,13 +195,16 @@ class _SantoDrawerState extends State<SantoDrawer> {
           child: GestureDetector(
             onTap: () {}, // 阻止事件穿透
             child: SizedBox(
-              width: isVertical ? double.infinity : widget.width,
+              width: effectiveWidth,
               height: isVertical
                   ? widget.height
-                  : MediaQuery.of(context).size.height,
+                  : mediaQuery.size.height,
               child: Material(
                 color: Colors.transparent,
-                child: widget.child,
+                child: MediaQuery(
+                  data: mediaQuery.copyWith(padding: safePadding),
+                  child: widget.child,
+                ),
               ),
             ),
           ),

@@ -6,10 +6,44 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.2.0] - 2026-09-21
+
+## [1.2.0] - 2026-09-21
+
+### 🧭 AppBar redesign
+
+- **Changed**: the back button and each slot of `SantoDoubleLeading` now use a fixed 32×32 tap area (`SantoAppBarTheme.leadingSize`), with 5 spacing between the two leading ops and 15 edge padding on both sides of the app bar; the double-leading width and the reserved leading slot are computed from the same formula, so the previous horizontal overflow is gone
+- **Changed**: the title is always centered on the bar (`centerTitle` fixed)
+- **Added**: light/dark content modes — when the background luminance < 0.5 (dark mode or a custom background color), title / action texts / back arrow / icon theme default to white while custom colors are preserved; on a light background the content defaults to black and a custom white is automatically clamped back to black (invisible on white)
+- **Fixed**: `SantoAppBarConfig.copyWith` / constructor parameter renamed from `systemUiOverlayStyle` to `systemOverlayStyle`, consistent with Flutter's `AppBar`
+
+### 🧭 MenuBar select styling
+
+- **Added**: `selectedTextStyle` / `unselectedTextStyle` for full control of the selected / unselected label font (size, weight, color; falls back to the color params)
+- **Added**: docked style now supports `itemSelectedBgColor` (sliding animated selection background, same as floating; not rendered by default)
+- **Fixed**: docked-style icon colors now follow the selected / unselected colors via `IconTheme` (icons with an explicit color still win)
+
+### 📐 PageLayout extensions
+
+- **Added**: `header` — a fixed area right below the title (search bar, filters, tabs, steps, calendar…), full-width, no padding, auto height and not scrolling with content
+- **Added**: `enableRefresh` / `onRefresh` — the built-in scroll container is hosted by `SantoRefresh`; `AlwaysScrollableScrollPhysics` is applied so short content can still be pulled
+- **Added**: `padding` to override the default content inset (top safe-area avoidance is still applied by the layout)
+- **Added**: `appBar*` passthrough parameters (`appBarLeading` / `appBarActions` / `appBarBackgroundColor` / `appBarElevation` / `appBarShadowColor` / `appBarShape` / `appBarIconTheme` / `appBarActionsIconTheme` / `appBarSystemOverlayStyle` / `appBarBackLeadCallback`) for the title-only construction path
+
+### 🧭 ActionBar spacing & divider
+
+- **Changed**: the action bar button area now uses 10 horizontal outer padding (first / last button) and 5 vertical padding; the button height is stretched to the remaining bar height instead of a fixed 40
+- **Added**: a 0.5px hairline divider on top of the action bar
+
+Pull-to-refresh rework, TabBar indicator, Empty illustrations, Checkbox/Radio card style, city selection and the area cascader. **Breaking changes** to `SantoEmptyImageType` values, `SantoTabBar` indicator parameters and some legacy `SantoAsset` constants.
 
 ### 🔄 PageLayout pull-to-refresh jitter
 
+- **Fixed**: after releasing a pull past the threshold, the header used to collapse all the way to 0 following the iOS bounce rebound (the `ScrollEndNotification` is delayed until the rebound simulation finishes) and only then pop the loading area back to the loading height. Release is now detected on the first post-drag scroll update: the header smoothly shrinks from the pull distance to `loadingBarHeight` and holds there while refreshing, then shrinks to 0 after the done state — the same sequence as Vant's PullRefresh
+- **Changed**: the default refresh header no longer paints the theme `fillBody` rounded background; it is now transparent and only shows the loading icon and status text
+- **Changed**: the done state of the default refresh header now shows the success icon (`check-circle`, theme `brandSuccess` color) instead of the pull arrow
+- **Changed**: the done state (success icon and "refresh complete" text) now persists through the whole collapse animation — the state only returns to inactive after the header has fully closed, instead of flipping back to the pull arrow as soon as the collapse starts
+- **Added**: regression tests forcing Bouncing physics asserting the header settles at the loading height (never below it) during refresh and returns to 0 after completion
 - **Fixed**: the refresh header used to be a `Column` sibling above the scroll view, so its growing height squeezed the list viewport on every frame — the page jittered while pulling and very little content stayed visible. The header is now an overlay on top of the list and the list content is moved with `Transform.translate` (paint-only, no relayout), so the viewport stays constant during the whole pull; the translate offset subtracts the negative scroll pixels so Bouncing physics (iOS) does not double-shift the content
 - **Fixed**: `SantoPageLayout.enableRefresh` chained a bare `AlwaysScrollableScrollPhysics` (no parent physics) onto the built-in `SingleChildScrollView`, which removed boundary conditions and the ballistic settle simulation — the scroll position stayed negative after release and every subsequent scroll re-opened the refresh header. The platform physics (`ScrollConfiguration.of(context).getScrollPhysics(context)`) is now chained as the parent
 - **Added**: regression tests asserting the scroll position returns to 0 after a refresh and the scroll viewport height stays constant while pulling
@@ -44,6 +78,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); versioning foll
 
 - **Fixed**: the `SantoBottomDrawer` content area is now scrollable, so long content scrolls within `maxHeight` (default 85% of the screen height) instead of overflowing vertically; the drawer example gained a "long content auto scroll" case
 
+### 📜 Drawer safe areas & width cap
+
+- **Added**: the content area of `SantoDrawer` now avoids the top status bar and bottom home indicator according to the slide direction — top drawers keep the top inset, bottom drawers keep the bottom inset, left/right full-height drawers keep both. Like `SantoBottomDrawer` / `SantoFloatingPanel`, the inset is delivered by rewriting the content `MediaQuery` padding (not configurable) so it lives inside the content instead of an extra blank region: scrollable content (e.g. a `ListView` without explicit padding) consumes it as its own scroll padding — the scroll area spans the full drawer and the last item settles above the home indicator when scrolled to the end; fixed headers/footers read `MediaQuery.of(context).padding` inside the drawer subtree and fold the inset into their own padding. The drawer example was restructured to demonstrate both patterns (title as the first list item with auto-consumed padding; pinned action row with inset-aware padding)
+- **Changed**: the width of left/right drawers is now capped at 95% of the screen width; larger values are clamped to the cap
+
 ### 🔄 Refresh header radius
 
 - **Fixed**: the default pull-to-refresh header is now rounded (theme `radiusMd`) instead of a square full-bleed band
@@ -51,6 +90,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); versioning foll
 ### 🗑 Legacy bitmap cleanup
 
 - **Removed**: 28 obsolete `SantoAsset` constants (single/multi selected boxes, alert/warning/success, star_size, arrow_up/down, require_red, star_select, the notice family) and their PNG assets; component icons are now fully provided by SantoIcon, trimming `assets/images` from 50 to 40 files and `assets/icons` from 33 to 12
+- **Removed**: 10 unused example assets — `example/assets/image`: arrow_up / icon_clear_grey / icon_navbar_add_hei / icon_navbar_im_bai / icon_navbar_xiala_hei / icon_refresh / icon_theme / network_error / no_data, and `example/assets/icons`: navbar_house. The now-empty `assets/icons/` entry was dropped from the example pubspec. `assets/icons/grey_place_holder.png` is kept: the gallery config and two ActionSheet examples resolve it from the package (`SantoTools.getAssetImage` adds `package: santo_ui`)
+
+### 🧭 Example icons de-picturized
+
+- **Changed**: the NavBar and Toast examples no longer load PNG icons — the search / plus / close / dropdown / share / group / heart / message glyphs now come from `SantoIcon` (`SantoIcons.search` / `plus` / `xmark` / `navArrowDown` / `shareIos` / `group` / `heart` / `chatLines`), the Toast pre-icons use the solid `check-circle` / `xmark-circle`, and the 16 converted PNGs are deleted
+- **Changed**: `SantoToast.show`'s `preIcon` and `ToastChild.leading` are widened from `Image?` to `Widget?`, so any widget (including `SantoIcon`) can be passed as the pre-icon
+
+### ☑️ Checkbox & Radio card style
+
+- **Changed**: the selected state of a `cardMode` card is now a solid `check-circle` icon on the right of the card — same color as the card border, side length 50% of the card height — replacing the brand triangle with a white check that used to sit in the top-left corner; the triangle painter (`_CornerCheck`) is removed
+- **Fixed**: the card description (`subTitle`) was indented by one extra `insetSpacing` because the container padding was counted twice, so it did not line up with the title; the description now left-aligns with the title for every combination of `cardMode` and `contentDirection`
 
 ## [1.1.1] - 2026-09-21
 

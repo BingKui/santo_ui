@@ -98,9 +98,7 @@ class SantoMenuBar extends StatefulWidget {
   /// floating 样式每个标签项的圆角,默认与容器圆角一致
   final double? itemRadius;
 
-  /// 选中项背景色
-  ///
-  /// floating 样式默认主色;docked 样式默认无背景,设置后展示同款滑动选中背景
+  /// floating 样式选中项背景色,默认主色
   final Color? itemSelectedBgColor;
 
   /// 选中文字颜色,默认主色(docked)/白色(floating)
@@ -269,41 +267,12 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           top: Radius.circular(widget.topRadius),
         ),
       ),
-      child: widget.itemSelectedBgColor == null
-          ? Row(
-              children: [
-                for (int i = 0; i < widget.effectiveItems.length; i++)
-                  Expanded(child: _buildItem(context, i)),
-              ],
-            )
-          : LayoutBuilder(
-              builder: (context, constraints) {
-                final count = widget.effectiveItems.length;
-                final itemWidth = constraints.maxWidth / count;
-                return Stack(
-                  children: [
-                    // 选中背景:滑动动画,与悬浮样式同款
-                    AnimatedPositioned(
-                      duration: widget.duration,
-                      curve: Curves.easeOutCubic,
-                      left: _currentIndex.clamp(0, count - 1) * itemWidth,
-                      top: 0,
-                      width: itemWidth,
-                      height: _barHeight,
-                      child: Container(
-                        color: widget.itemSelectedBgColor,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        for (int i = 0; i < count; i++)
-                          Expanded(child: _buildItem(context, i)),
-                      ],
-                    ),
-                  ],
-                );
-              },
-            ),
+      child: Row(
+        children: [
+          for (int i = 0; i < widget.effectiveItems.length; i++)
+            Expanded(child: _buildItem(context, i)),
+        ],
+      ),
     );
     if (widget.showTopDivider) {
       bar = Column(

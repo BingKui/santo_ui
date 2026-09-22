@@ -6,10 +6,44 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [未发布]
+## [1.2.0] - 2026-09-21
+
+## [1.2.0] - 2026-09-21
+
+### 🧭 AppBar 重设计
+
+- **变更**: 返回键与 `SantoDoubleLeading` 每个操作位固定 32×32 点击区(`SantoAppBarTheme.leadingSize`),两个操作位间距 5,导航栏左右缘留白 15;双 leading 宽度与预留槽位由同一公式计算,此前的横向溢出不再出现
+- **变更**: 标题始终相对整条导航栏居中(`centerTitle` 固定)
+- **新增**: 浅色/深色内容模式 —— 背景亮度 < 0.5(深色模式或自定义背景色)时标题/操作文字/返回箭头/图标主题默认白色,自定义其他颜色保留;浅色背景内容默认黑色,自定义白色自动回退为黑色(白底不可见)
+- **修复**: `SantoAppBarConfig.copyWith` 与构造函数参数 `systemUiOverlayStyle` 统一更名为 `systemOverlayStyle`,与 Flutter `AppBar` 一致
+
+### 🧭 MenuBar 选中样式
+
+- **新增**: `selectedTextStyle` / `unselectedTextStyle`,完整定制选中/未选中文字的字号、字重、颜色(缺省回退到颜色参数)
+- **新增**: 停靠样式支持 `itemSelectedBgColor` 选中背景(滑动动画,与悬浮样式同款),默认不展示
+- **修复**: 停靠样式图标颜色此前不随选中状态变化,现通过 `IconTheme` 跟随选中/未选中色(图标自带 color 时以图标为准)
+
+### 📐 PageLayout 扩展
+
+- **新增**: `header` —— 标题下方固定区域(搜索框/筛选/Tab/步骤条/日历等),撑满宽度、不加内边距、高度自适应且不随内容滚动
+- **新增**: `enableRefresh` / `onRefresh` —— 内置滚动容器由 `SantoRefresh` 承载,并施加 `AlwaysScrollableScrollPhysics`,内容不满一屏也能下拉
+- **新增**: `padding` 覆盖默认内容区内边距(顶部状态栏避让仍由布局叠加)
+- **新增**: `appBar*` 透传参数(`appBarLeading` / `appBarActions` / `appBarBackgroundColor` / `appBarElevation` / `appBarShadowColor` / `appBarShape` / `appBarIconTheme` / `appBarActionsIconTheme` / `appBarSystemOverlayStyle` / `appBarBackLeadCallback`),作用于仅传 title 的简写构建
+
+### 🧭 ActionBar 边距与分割线
+
+- **变更**: 操作栏按钮区左右外边距 10(首/末按钮)、上下留白 5,按钮高度改为占满栏内剩余高度,不再固定 40
+- **新增**: 操作栏顶部增加 0.5px 分割线
+
+下拉刷新重构、TabBar 选中指示条、Empty 插画、Checkbox/Radio 卡片选中样式、城市选择与省市区级联。**含破坏性变更**:`SantoEmptyImageType` 枚举值重定义、`SantoTabBar` 指示条参数移除、部分遗留 `SantoAsset` 常量移除。
 
 ### 🔄 PageLayout 下拉刷新抖动
 
+- **修复**: 松手后刷新头先一路收到 0、再突然弹出 Loading 区的问题:iOS Bouncing 物理下 `ScrollEndNotification` 要等回弹模拟结束才发出,之前回弹阶段持续跟随 pixels 把头部收完才触发刷新。现在在松手后第一条滚动通知处立即判定:已过阈值就直接平滑收缩到 `loadingBarHeight` 并保持,刷新完成后再收到 0(与 Vant PullRefresh 一致)
+- **变更**: 默认刷新头去掉主题 `fillBody` 圆角底色,改为透明背景,仅展示加载图标与提示文案
+- **变更**: 默认刷新头的完成态改为成功图标(`check-circle`,主题 `brandSuccess` 色),不再是下拉箭头
+- **变更**: 完成态(成功图标与「刷新完成」文案)保持到头部完全收起——收起动画结束才回到初始态,不再动画一启动就切回下拉箭头
+- **新增**: 强制 Bouncing 物理的回归测试,断言刷新期间头部稳定停在刷新高度(不低于它)、完成后归零
 - **修复**: 刷新头原先是滚动视图上方的 `Column` 兄弟节点,高度增长会逐帧挤压列表视口——下拉时页面抖动、可见内容被压得很少。现在改为覆盖式头部:列表内容用 `Transform.translate` 下移(纯绘制不触发布局),整个下拉过程视口高度恒定;平移量会扣除负向 pixels,iOS Bouncing 物理下内容不会双重位移
 - **修复**: `SantoPageLayout.enableRefresh` 之前挂了没有 parent 的裸 `AlwaysScrollableScrollPhysics`,没有边界约束和松手回弹模拟——刷新后滚动位置残留负值,之后任何滚动都会把刷新头重新拉出来。现在把平台物理(`ScrollConfiguration.of(context).getScrollPhysics(context)`)作为 parent 挂接
 - **新增**: 回归测试断言刷新完成后滚动位置归零、下拉过程中滚动视口高度恒定
@@ -44,6 +78,11 @@
 
 - **修复**: `SantoBottomDrawer` 内容区改为自动可滚动,长内容超过 `maxHeight`(默认屏幕高度 85%)时由内容区滚动消化,不再竖向溢出;抽屉示例新增「长内容自动滚动」演示
 
+### 📜 抽屉安全区与宽度上限
+
+- **新增**: `SantoDrawer` 内容区按滑出方向自动避让安全区——顶部抽屉避让状态栏、底部抽屉避让手势条、左右整屏高抽屉上下都避让。与 `SantoBottomDrawer` / `SantoFloatingPanel` 一致,通过改写内容区 MediaQuery padding 交给内容消费(不可配置),安全区放在内容中而不是额外加一块空白区域:可滚动内容(如不传 padding 的 ListView)自动把安全区消费为滚动内边距,滚动区铺满整个抽屉,滚到底最后一项停在安全区之上;固定头尾在抽屉子树内读取 `MediaQuery.of(context).padding` 把安全区算进自身 padding。抽屉示例同步改为此写法(标题作为列表首项自动消费、底部按钮行内联合入安全区)
+- **变更**: 左右方向抽屉宽度上限为屏幕宽度的 95%,超出时收敛到上限
+
 ### 🔄 刷新头部圆角
 
 - **修复**: 默认下拉刷新头部改为圆角(主题 `radiusMd`),不再是直角满宽色块
@@ -51,6 +90,17 @@
 ### 🗑 遗留位图资源清理
 
 - **删除**: `SantoAsset` 中 28 个已废弃常量(选中/未选中框、alert/warning/success、star_size、arrow_up/down、require_red、star_select、notice 系列)及其对应 PNG 资源;组件图标已统一由 SantoIcon 提供,`assets/images` 由 50 个文件精简到 40 个、`assets/icons` 由 33 个精简到 12 个
+- **删除**: 示例工程中 10 个无引用资源——`example/assets/image`:arrow_up / icon_clear_grey / icon_navbar_add_hei / icon_navbar_im_bai / icon_navbar_xiala_hei / icon_refresh / icon_theme / network_error / no_data,以及 `example/assets/icons`:navbar_house;同时移除示例 pubspec 中已空掉的 `assets/icons/` 条目。`assets/icons/grey_place_holder.png` 保留:相册配置与两个 ActionSheet 示例会从包内取它(`SantoTools.getAssetImage` 会加 `package: santo_ui`)
+
+### 🧭 示例图标去图片化
+
+- **变更**: 导航栏与 Toast 示例不再加载 PNG 图标——搜索 / 加号 / 关闭 / 下拉 / 分享 / 拼团 / 关注 / 消息 改为 `SantoIcon`(`SantoIcons.search` / `plus` / `xmark` / `navArrowDown` / `shareIos` / `group` / `heart` / `chatLines`),Toast 前置图标改用实心 `check-circle` / `xmark-circle`,对应的 16 张 PNG 已删除
+- **变更**: `SantoToast.show` 的 `preIcon` 与 `ToastChild.leading` 由 `Image?` 放宽为 `Widget?`,可传任意组件(含 `SantoIcon`)作为前置图标
+
+### ☑️ Checkbox / Radio 卡片选中样式
+
+- **变更**: `cardMode` 卡片的选中态改为卡片右侧一颗实心 `check-circle` 图标——与卡片描边同色、边长取卡片高度的 50%,替换原先左上角的品牌色三角 + 白色对号,三角绘制类 `_CornerCheck` 已删除
+- **修复**: 卡片描述(`subTitle`)多缩进了一份 `insetSpacing`(容器内边距被重复计算),与标题不对齐;现在 `cardMode` × `contentDirection` 四种组合下描述都与标题左对齐
 
 ## [1.1.1] - 2026-09-21
 

@@ -15,6 +15,9 @@ Future<void> _tap(WidgetTester tester, Finder finder) async {
   await tester.pumpAndSettle();
 }
 
+/// 取卡片模式的选中背景图标
+SantoIcon _cardBadge(WidgetTester tester) =>
+    tester.widget<SantoIcon>(find.byType(SantoIcon));
 void main() {
   testWidgets('SantoCheckbox 点击切换勾选状态', (tester) async {
     final changed = <bool>[];
@@ -77,6 +80,24 @@ void main() {
     expect(find.text('描述信息'), findsOneWidget);
   });
 
+  testWidgets('SantoCheckbox 副标题与标题左对齐', (tester) async {
+    for (final direction in SantoContentDirection.values) {
+      for (final cardMode in [false, true]) {
+        await tester.pumpWidget(_wrap(SantoCheckbox(
+          title: '多选',
+          subTitle: '描述信息',
+          contentDirection: direction,
+          cardMode: cardMode,
+        )));
+        expect(
+          tester.getTopLeft(find.text('描述信息')).dx,
+          tester.getTopLeft(find.text('多选')).dx,
+          reason: 'direction=$direction cardMode=$cardMode',
+        );
+      }
+    }
+  });
+
   testWidgets('SantoCheckbox 分割线与卡片模式', (tester) async {
     await tester.pumpWidget(_wrap(SantoCheckbox(title: '多选')));
     expect(find.byType(SantoLine), findsOneWidget);
@@ -89,10 +110,30 @@ void main() {
       cardMode: true,
       checked: true,
     )));
-    // 卡片模式:无指示器、无分割线,左上角显示勾选角标
+    // 卡片模式:无指示器、无分割线,右侧显示选中背景图标
     expect(find.byType(SantoLine), findsNothing);
     expect(find.byIcon(Icons.radio_button_unchecked), findsNothing);
-    expect(find.byIcon(Icons.check), findsOneWidget);
+    final badge = _cardBadge(tester);
+    expect(badge.name, SantoSolidIcons.checkCircle);
+    expect(badge.solid, true);
+
+    await tester.pumpWidget(_wrap(SantoCheckbox(title: '多选', cardMode: true)));
+    expect(find.byType(SantoIcon), findsNothing);
+  });
+
+  testWidgets('SantoCheckbox 卡片选中图标占卡片高度 40%', (tester) async {
+    await tester.pumpWidget(_wrap(SizedBox(
+      height: 82,
+      child: SantoCheckbox(title: '多选', cardMode: true, checked: true),
+    )));
+
+    final card = tester.getRect(find.byType(SantoCheckbox));
+    final badge = tester.getRect(find.byType(SantoIcon));
+    // 卡片左右上下各有 1.5 的边框,内容区高度为 82 - 3
+    expect(badge.height, closeTo((card.height - 3) * 0.4, 0.5));
+    // 居右居中,不超出卡片
+    expect(badge.right, lessThan(card.right));
+    expect(badge.center.dy, closeTo(card.center.dy, 0.5));
   });
 
   testWidgets('SantoCheckbox 支持自定义指示器与内容', (tester) async {

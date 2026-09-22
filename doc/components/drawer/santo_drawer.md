@@ -39,7 +39,9 @@ group:
 
 ### 使用规范
 - SantoDrawer 需指定方向,左右方向用 width,上下方向用 height
-- SantoBottomDrawer 默认处理底部安全区域
+- 左右方向抽屉宽度上限为屏幕宽度的 95%,超出自动收敛到上限
+- SantoDrawer 内容区按方向自动避让安全区(不可配置):顶部抽屉避让状态栏、底部抽屉避让手势条、左右整屏高抽屉上下都避让。安全区放在**内容中**而不是额外加一块空白区域:可滚动内容(如 ListView)不传 padding 时自动把安全区消费为滚动内边距,滚动区铺满整个抽屉,滚到底最后一项停在安全区之上;带固定头尾的内容在抽屉子树内读取 `MediaQuery.of(context).padding`,把安全区算进自身 padding
+- SantoBottomDrawer 默认处理底部安全区域,机制同上(改写内容区 MediaQuery 交给内容消费):可滚动内容不传 padding 时自动避让;静态内容在抽屉子树内读取 `MediaQuery.of(context).padding` 把安全区算进自身 padding
 - barrierDismissible 为 false 时需显式提供关闭方式
 - 内容区**自动可滚动**:高度自适应时最多顶到 `maxHeight`(默认屏幕 85%),超出后内容区滚动,长内容不会溢出,调用方无需自己套滚动控件
 
@@ -51,7 +53,7 @@ group:
 | --- | --- | --- | --- | --- |
 | context | BuildContext | 上下文 | 是 | - |
 | direction | SantoDrawerDirection | 抽屉方向(left/right/top/bottom) | 否 | right |
-| width | double | 抽屉宽度(左右方向) | 否 | 300 |
+| width | double | 抽屉宽度(左右方向),上限为屏幕宽度的 95% | 否 | 300 |
 | height | double | 抽屉高度(上下方向) | 否 | 300 |
 | maskColor | Color? | 遮罩层颜色 | 否 | null(半透明黑色) |
 | child | Widget | 抽屉内容 | 是 | - |
@@ -137,3 +139,9 @@ SantoBottomDrawer.show(
   ),
 )
 ```
+
+## 版本变更
+
+### v1.2.0
+- **变更**: `SantoDrawer` 内容区按抽屉方向自动避让顶部/底部安全区域(顶部抽屉避让状态栏、底部抽屉避让手势条、左右整屏高抽屉上下都避让),不可配置;安全区放在内容中——可滚动内容不传 padding 时自动消费为滚动内边距,带固定头尾的内容读取 MediaQuery 把安全区算进自身 padding
+- **变更**: 左右方向抽屉宽度上限为屏幕宽度的 95%,超出时收敛到上限

@@ -171,9 +171,10 @@ class SantoBottomDrawer extends StatelessWidget {
         bottomSafeArea ? MediaQuery.of(context).padding.bottom : 0.0;
     // 内容区底部安全区处理方式与 SantoFloatingPanel 一致:
     // - 背景铺满到屏幕底部(包含安全区)
-    // - 内容区通过 MediaQuery 传递底部安全区,由可滚动内容自身消费
-    // - contentPadding 仅应用到左/上/右三边,底部由安全区或 contentPadding.bottom 处理
-    final bottomPadding = bottomSafeArea ? 0.0 : contentPadding.bottom;
+    // - contentPadding 完整应用到四边(底部含 contentPadding.bottom,
+    //   非滚动内容不会贴到屏幕底)
+    // - 底部安全区通过 MediaQuery 传递,由可滚动内容自身消费
+    final bottomPadding = contentPadding.bottom;
     Widget content = Padding(
       padding: EdgeInsets.fromLTRB(
         contentPadding.left,
@@ -223,7 +224,10 @@ class SantoBottomDrawer extends StatelessWidget {
                     if (height != null)
                       Expanded(child: content)
                     else
-                      Flexible(child: content),
+                      Flexible(
+                        // 自适应高度时长内容由内容区滚动消化,最多顶到 maxHeight
+                        child: SingleChildScrollView(child: content),
+                      ),
                   ],
                 ),
               ),

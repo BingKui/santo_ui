@@ -26,7 +26,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
     double? itemSpacing,
     EdgeInsets? titlePadding,
     double? iconSize,
-    SystemUiOverlayStyle? systemUiOverlayStyle,
+    SystemUiOverlayStyle? systemOverlayStyle,
     bool? showDefaultBottom,
     String configId = GLOBAL_CONFIG_ID,
   })  : _backgroundColor = backgroundColor,
@@ -39,7 +39,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
         _itemSpacing = itemSpacing,
         _titlePadding = titlePadding,
         _iconSize = iconSize,
-        _systemOverlayStyle = systemUiOverlayStyle,
+        _systemOverlayStyle = systemOverlayStyle,
         _showDefaultBottom = showDefaultBottom,
         super(configId: configId);
 
@@ -242,7 +242,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
     double? itemSpacing,
     EdgeInsets? titlePadding,
     double? iconSize,
-    SystemUiOverlayStyle? systemUiOverlayStyle,
+    SystemUiOverlayStyle? systemOverlayStyle,
     bool? showDefaultBottom,
   }) {
     return SantoAppBarConfig(
@@ -256,7 +256,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
       itemSpacing: itemSpacing ?? _itemSpacing,
       titlePadding: titlePadding ?? _titlePadding,
       iconSize: iconSize ?? _iconSize,
-      systemUiOverlayStyle: systemUiOverlayStyle ?? _systemOverlayStyle,
+      systemOverlayStyle: systemOverlayStyle ?? _systemOverlayStyle,
       showDefaultBottom: showDefaultBottom ?? _showDefaultBottom,
     );
   }
@@ -274,7 +274,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
       itemSpacing: other._itemSpacing,
       titlePadding: other._titlePadding,
       iconSize: other._iconSize,
-      systemUiOverlayStyle: other._systemOverlayStyle,
+      systemOverlayStyle: other._systemOverlayStyle,
       showDefaultBottom: other._showDefaultBottom,
     );
   }

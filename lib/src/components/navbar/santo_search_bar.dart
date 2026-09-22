@@ -99,7 +99,7 @@ class SantoSearchAppbar extends PreferredSize {
         .getConfig(configId: this.themeData!.configId)
         .appBarConfig
         .merge(this.themeData)
-        .merge(SantoAppBarConfig(systemUiOverlayStyle: systemOverlayStyle));
+        .merge(SantoAppBarConfig(systemOverlayStyle: systemOverlayStyle));
   }
 
   @override
