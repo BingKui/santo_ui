@@ -18,6 +18,7 @@ group:
 - 可自定义刷新头部和加载底部
 - 默认刷新头部为透明背景,仅展示加载图标与提示文案,不遮挡页面底色
 - 刷新完成态展示成功图标(主题 `brandSuccess` 色)与「刷新完成」文案,并保持到头部完全收起
+- 下拉存在安全区域:下拉距离未达 `triggerDistance` 时不展示任何提示、松手也不触发刷新
 
 ## 二、描述
 
@@ -30,6 +31,7 @@ group:
 ### 使用规范
 - child 必须为可滚动组件(ListView/CustomScrollView等)
 - onRefresh 和 onLoadMore 至少实现一个
+- 下拉距离未达 triggerDistance 时既不展示提示也不触发刷新;达到后才展示「松手刷新」,松手才发起刷新
 - hasMore 用于控制是否还有更多数据,为 false 时不再触发加载
 - controller 可用于外部代码触发刷新(如点击刷新按钮)
 - refreshTimeout 为 null 时关闭超时机制
@@ -43,7 +45,8 @@ group:
 | onRefresh | Future\<void\> Function()? | 下拉刷新回调 | 否 | null |
 | onLoadMore | Future\<void\> Function()? | 触底加载回调 | 否 | null |
 | onStateChanged | ValueChanged\<SantoRefreshState\>? | 刷新状态变化回调 | 否 | null |
-| loadingBarHeight | double | 触发刷新阈值 | 否 | 50 |
+| loadingBarHeight | double | 刷新头部高度(刷新进行中头部停留高度) | 否 | 50 |
+| triggerDistance | double | 触发刷新所需的下拉距离(安全区域高度),未达不展示提示、松手不刷新;不能大于 maxBarHeight | 否 | 50 |
 | maxBarHeight | double | 最大下拉高度 | 否 | 80 |
 | lowerThreshold | double | 触底加载触发距离 | 否 | 50 |
 | refreshTimeout | Duration? | 刷新超时时长,null 关闭超时 | 否 | 3秒 |
@@ -66,6 +69,20 @@ SantoRefresh(
     itemCount: items.length,
     itemBuilder: (context, index) => ListTile(title: Text(items[index])),
   ),
+)
+```
+
+### 自定义触发距离(安全区域)
+
+```dart
+SantoRefresh(
+  // 下拉 100 以内不展示提示、松手也不刷新
+  triggerDistance: 100,
+  maxBarHeight: 140,
+  onRefresh: () async {
+    await fetchData();
+  },
+  child: ListView.builder(...),
 )
 ```
 
@@ -133,3 +150,15 @@ SantoRefresh(
   child: ListView(...),
 )
 ```
+
+## 五、版本变更
+
+### v1.3.0
+
+- **新增**: `triggerDistance` 参数,指定触发刷新所需的下拉距离(安全区域高度),默认 50。未达该距离时头部不展示任何提示、松手也不触发刷新;达到后才展示「松手刷新」,松手即刷新
+- **变更**: `loadingBarHeight` 不再兼作触发阈值,只表示刷新头部高度(刷新进行中头部停留的高度),是否可触发改由 `triggerDistance` 判定
+- **注意事项**: `triggerDistance` 不能大于 `maxBarHeight`,否则下拉永远到不了触发距离(已加断言)
+
+### v1.0.0
+
+- 初始版本发布

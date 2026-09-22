@@ -71,6 +71,11 @@ class SantoDivider extends StatelessWidget {
   /// 水平分割线的上下间距，默认[SantoDividerSize.medium]
   final SantoDividerSize size;
 
+  /// 自定义上下间距，优先于 [size]；传 0 可完全去掉上下留白
+  ///
+  /// @since v1.3.0
+  final double? spacing;
+
   /// 分割线颜色，默认使用主题分割线颜色
   final Color? color;
 
@@ -92,6 +97,7 @@ class SantoDivider extends StatelessWidget {
     this.plain = false,
     this.titleMargin,
     this.size = SantoDividerSize.medium,
+    this.spacing,
     this.color,
     this.thickness = 1,
     this.verticalHeight = 16,
@@ -101,6 +107,7 @@ class SantoDivider extends StatelessWidget {
   static const double _titleHorizontalPadding = 12;
 
   double get _verticalSpacing {
+    if (spacing != null) return spacing!;
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     switch (size) {

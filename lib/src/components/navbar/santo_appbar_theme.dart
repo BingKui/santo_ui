@@ -9,8 +9,10 @@ class SantoAppBarTheme {
   /// AppBar中添加的leading或actionItem的边长
   static const double iconSize = 20;
 
-  /// [SantoIconAction]之间的间距
-  static const double iconMargin = 20;
+  /// AppBar 右侧 actions 之间的间距,图标与文字操作共用
+  ///
+  /// 取值与左侧 [leadingSpacing] 一致,保证左右两侧操作区间距相同
+  static const double iconMargin = 5;
 
   /// [LeadingIcon]的大小
   static const double iconFullSize = 40;

@@ -31,6 +31,9 @@ enum SantoRefreshState {
 /// 下拉刷新四态提示语,未设置时使用默认文案
 class SantoRefreshTexts {
   /// 下拉未达阈值时的提示语,默认「下拉刷新」
+  ///
+  /// 默认头部在未达 [SantoRefresh.triggerDistance] 时不展示任何内容,
+  /// 该文案仅在自定义 `refreshHeader` 时按需取用
   final String pullToRefresh;
 
   /// 下拉已达阈值、松手即刷新的提示语,默认「松手刷新」
@@ -80,6 +83,9 @@ class SantoRefreshController {
 /// 对齐 TDesign PullDownRefresh 的行为:下拉 → 松手 → 刷新 → 完成四态,
 /// 支持触底加载、刷新超时、四态文案自定义与外部主动刷新
 ///
+/// 下拉距离未达 [triggerDistance] 时不展示任何提示、松手也不触发刷新;
+/// 达到该距离即进入可触发状态并展示「松手刷新」,松手后才真正发起刷新
+///
 /// [child] 必须是**可滚动**内容(如 ListView / GridView / CustomScrollView),
 /// 否则下拉与触底手势无法生效
 ///
@@ -112,8 +118,16 @@ class SantoRefresh extends StatefulWidget {
   /// 刷新状态变化回调,仅在状态跳变时触发
   final ValueChanged<SantoRefreshState>? onStateChanged;
 
-  /// 头部容器高度,即触发刷新阈值,默认 50
+  /// 刷新头部高度,即刷新进行中头部停留的高度,默认 50
   final double loadingBarHeight;
+
+  /// 触发刷新所需的下拉距离(安全区域高度),默认 50
+  ///
+  /// 下拉距离未达到该值时头部不展示任何提示、松手也不触发刷新;
+  /// 达到后才进入可触发状态并展示「松手刷新」,松手即刷新
+  ///
+  /// @since v1.3.0
+  final double triggerDistance;
 
   /// 最大下拉高度,默认 80
   final double maxBarHeight;
@@ -151,6 +165,7 @@ class SantoRefresh extends StatefulWidget {
     this.onLoadMore,
     this.onStateChanged,
     this.loadingBarHeight = 50,
+    this.triggerDistance = 50,
     this.maxBarHeight = 80,
     this.lowerThreshold = 50,
     this.refreshTimeout = const Duration(milliseconds: 3000),
@@ -160,6 +175,9 @@ class SantoRefresh extends StatefulWidget {
     this.refreshHeader,
     this.loadMoreFooter,
   })  : assert(loadingBarHeight >= 0, 'loadingBarHeight 不能为负'),
+        assert(triggerDistance >= 0, 'triggerDistance 不能为负'),
+        assert(triggerDistance <= maxBarHeight,
+            'triggerDistance 不能大于 maxBarHeight,否则下拉永远到不了触发距离'),
         assert(maxBarHeight >= 0, 'maxBarHeight 不能为负'),
         assert(refreshTimeout == null || refreshTimeout >= Duration.zero,
             'refreshTimeout 不能为负'),
@@ -268,7 +286,7 @@ class _SantoRefreshState extends State<SantoRefresh>
     _settleController.stop();
     final double value = extent.clamp(0.0, widget.maxBarHeight).toDouble();
     setState(() => _pullExtent = value);
-    _notifyState(value >= widget.loadingBarHeight
+    _notifyState(value >= widget.triggerDistance
         ? SantoRefreshState.ready
         : SantoRefreshState.dragging);
   }
@@ -292,16 +310,16 @@ class _SantoRefreshState extends State<SantoRefresh>
           notification.overscroll < 0) {
         // Clamping 物理(默认 Android):pixels 不越界,过界量走 overscroll 通知
         _updatePull(_pullExtent - notification.overscroll);
-        _pastThreshold = _pullExtent >= widget.loadingBarHeight;
+        _pastThreshold = _pullExtent >= widget.triggerDistance;
       } else if (notification is ScrollUpdateNotification &&
           notification.metrics.extentBefore == 0 &&
           notification.metrics.pixels < 0) {
         if (notification.dragDetails != null) {
           // 拖拽中(Bouncing 物理:pixels 直接为负)
           _updatePull(-notification.metrics.pixels);
-          _pastThreshold = _pullExtent >= widget.loadingBarHeight;
+          _pastThreshold = _pullExtent >= widget.triggerDistance;
         } else if (_pastThreshold ||
-            _pullExtent >= widget.loadingBarHeight) {
+            _pullExtent >= widget.triggerDistance) {
           // 松手瞬间:回弹 ballistic 已启动,而 ScrollEnd 要等回弹结束才发出;
           // 若继续跟随 pixels,头部会一路收到 0 再弹出 Loading 区。
           // 已过阈值时立即锁定刷新高度(平滑收缩到 loadingBarHeight)
@@ -312,7 +330,7 @@ class _SantoRefreshState extends State<SantoRefresh>
         }
       } else if (notification is ScrollEndNotification &&
           _state != SantoRefreshState.inactive) {
-        if (_pastThreshold || _pullExtent >= widget.loadingBarHeight) {
+        if (_pastThreshold || _pullExtent >= widget.triggerDistance) {
           _triggerRefresh();
         } else {
           _settleTo(0);
@@ -422,6 +440,18 @@ class _SantoRefreshState extends State<SantoRefresh>
     }
   }
 
+  /// 是否展示刷新头部
+  ///
+  /// 刷新中与完成态始终展示:头部高度由收起动画收尾,中途隐藏会凭空消失;
+  /// 拖拽阶段只有下拉距离达到 [SantoRefresh.triggerDistance] 才展示,
+  /// 未达则该区域不出现任何提示
+  bool get _headerVisible {
+    if (widget.onRefresh == null || _pullExtent <= 0) return false;
+    return _state == SantoRefreshState.refreshing ||
+        _state == SantoRefreshState.done ||
+        _pullExtent >= widget.triggerDistance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -445,7 +475,7 @@ class _SantoRefreshState extends State<SantoRefresh>
                   ),
                 ),
               ),
-              if (widget.onRefresh != null && _pullExtent > 0)
+              if (_headerVisible)
                 Positioned(
                   top: 0,
                   left: 0,

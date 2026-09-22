@@ -491,16 +491,17 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
       ExampleIntroPoint('居中提示', '轻量提示浮在页面中部'),
     ],
   ),
-  'navbar': ExampleIntroData(
-    title: 'NavBar 导航栏',
-    description: '导航栏展示页面标题与返回操作。',
-    widgets: <String>['SantoAppBar'],
+  'appbar': ExampleIntroData(
+    title: 'AppBar 导航栏',
+    description: '导航栏展示页面标题、返回与操作入口。',
+    widgets: <String>['SantoAppBar', 'SantoSearchAppbar'],
     whenToUseDesc: '页面需要标题与返回入口时使用。',
     whenToUse: <ExampleIntroPoint>[
-      ExampleIntroPoint('标题', '支持单标题、双标题与自定义标题控件'),
-      ExampleIntroPoint('返回', '默认返回按钮可替换或隐藏'),
-      ExampleIntroPoint('搜索栏', '可嵌入搜索输入框'),
-      ExampleIntroPoint('分割线', '底部可选分割线'),
+      ExampleIntroPoint('标题', '支持字符串、自定义 Widget 与模块切换'),
+      ExampleIntroPoint('返回', '默认返回按钮可替换、隐藏或放两个操作区'),
+      ExampleIntroPoint('操作区', '右侧放多个图标或文字操作'),
+      ExampleIntroPoint('深浅色', '按背景色自动切换内容与图标颜色'),
+      ExampleIntroPoint('搜索栏', '可嵌入搜索输入框与左侧类型下拉'),
     ],
   ),
   'noticebar': ExampleIntroData(

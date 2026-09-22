@@ -291,4 +291,65 @@ void main() {
     expect(during, before,
         reason: '刷新头应为覆盖式(平移内容),不能每帧挤压列表视口(抖动/内容被压缩的根源)');
   });
+
+  testWidgets('PageLayout 传 header 且不传导航栏:内容不再重复避让状态栏', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(
+        builder: (context) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            padding: const EdgeInsets.only(top: 47, bottom: 34),
+          ),
+          child: SantoPageLayout(
+            header: const SizedBox(
+              key: ValueKey<String>('header'),
+              height: 60,
+              child: ColoredBox(color: Colors.blue),
+            ),
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            scrollable: false,
+            children: <Widget>[
+              Builder(
+                builder: (innerContext) => Text(
+                  'top=${MediaQuery.of(innerContext).padding.top}',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
+
+    // 顶部安全区由 header 自身避让,内容区不应再拿到一次
+    expect(find.text('top=0.0'), findsOneWidget);
+  });
+
+  testWidgets('PageLayout 传 header:头部与首块内容之间只有 padding', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(
+        builder: (context) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            padding: const EdgeInsets.only(top: 47),
+          ),
+          child: const SantoPageLayout(
+            header: SizedBox(
+              key: ValueKey<String>('header'),
+              height: 60,
+              child: ColoredBox(color: Colors.blue),
+            ),
+            padding: EdgeInsets.fromLTRB(12, 12, 12, 0),
+            children: <Widget>[
+              SizedBox(key: ValueKey<String>('content'), height: 100),
+            ],
+          ),
+        ),
+      ),
+    ));
+
+    final headerBottom =
+        tester.getRect(find.byKey(const ValueKey<String>('header'))).bottom;
+    final contentTop =
+        tester.getRect(find.byKey(const ValueKey<String>('content'))).top;
+    // 修复前这里是 12 + 47(状态栏高度被内容重复避让,头部下方多出一条空白)
+    expect(contentTop - headerBottom, 12);
+  });
 }

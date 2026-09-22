@@ -1,4 +1,6 @@
 import 'package:bindings_compatible/bindings_compatible.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -7,8 +9,8 @@ import 'package:santo_ui/src/theme/base/santo_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// 返回按钮点击区的圆角半径
-const double _kBackLeadingRadius = 12;
+/// AppBar 内图标操作区(InkWell)的圆角半径,leading 与 action 共用
+const double _kAppBarIconRadius = 12;
 
 /// AppBar组件,基于[AppBar]封装。为了解决原生的AppBar对Leading宽度的限制
 /// 在1.21版本之后，Flutter放开了宽度的限制[https://github.com/flutter/flutter/blob/flutter-1.21-candidate.0/packages/flutter/lib/src/material/app_bar.dart]
@@ -86,7 +88,10 @@ const double _kBackLeadingRadius = 12;
 ///       )
 ///      ],
 ///    ),
-///  actions: SantoIconAction()
+///  actions: SantoIconAction(
+///    icon: SantoIcons.shareIos,
+///    iconPressed: () {},
+///  ),
 ///
 /// 相关组件如下:
 ///  * [SantoBackLeading], 自定义leading，单个文本或按钮
@@ -470,7 +475,7 @@ class SantoBackLeading extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(_kBackLeadingRadius),
+          borderRadius: BorderRadius.circular(_kAppBarIconRadius),
           onTap: iconPressed ??
               () {
                 /// 默认处理了返回按钮，flutter的pop，如果是native打开的话，可能需要单独处理,否则会出现白屏
@@ -563,19 +568,39 @@ class SantoAppBarTitle extends StatelessWidget {
 
 /// 在往[SantoAppBar.actions]中添加带icon的action时所使用的包装Widget
 /// 此Widget中实现了大小约束，和点击实现，添加带icon类型的action时必须使用此类包裹
+///
+/// 几何与 [SantoBackLeading] 保持一致:点击区固定
+/// [SantoAppBarTheme.leadingSize](32x32)、水波圆角 [_kAppBarIconRadius](12)、
+/// 图标默认取主题 [SantoAppBarConfig.iconSize](20),左右两侧视觉对齐
 class SantoIconAction extends StatelessWidget {
-  final Widget child;
+  /// 图标名,取值见 [SantoIcons];传入后由组件按主题图标大小构建 [SantoIcon],
+  /// 建议优先使用(尺寸/颜色随 AppBar 深浅色自动对齐)
+  ///
+  /// @since v1.3.0
+  final String? icon;
+
+  /// 自定义图标 widget,与 [icon] 二选一;两者同时传时以 [icon] 为准
+  ///
+  /// 注意:自定义 widget 的尺寸由调用方负责(`SantoIcon` 不读 `IconTheme`,
+  /// 需自行传 `size`),`Icon` 类图标会跟随 [size]
+  final Widget? child;
+
   final VoidCallback iconPressed;
+
+  /// 图标边长,默认取主题 [SantoAppBarConfig.iconSize](20)
   final double? size;
+
   final SantoAppBarConfig? themeData;
 
   SantoIconAction({
     Key? key,
     required this.iconPressed,
-    required this.child,
+    this.icon,
+    this.child,
     this.size,
     this.themeData,
-  }) : super(key: key);
+  })  : assert(icon != null || child != null, 'SantoIconAction 的 icon 与 child 至少传一个'),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -583,16 +608,36 @@ class SantoIconAction extends StatelessWidget {
     _defaultThemeData = SantoThemeConfigurator.instance
         .getConfig(configId: _defaultThemeData.configId)
         .appBarConfig
-        .merge(_defaultThemeData)
-        .merge(SantoAppBarConfig(iconSize: this.size));
-    return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(
-          width: _defaultThemeData.iconSize,
-          height: _defaultThemeData.iconSize),
-      child: IconButton(
-        icon: child,
-        onPressed: iconPressed,
-        padding: EdgeInsets.zero,
+        .merge(_defaultThemeData);
+
+    final double iconDimension = size ?? _defaultThemeData.iconSize;
+    // AppBar 已按背景深浅解析好内容色(深色底白、浅色底黑),与 IconTheme 取齐
+    final Color? iconColor = IconTheme.of(context).color;
+
+    final Widget iconWidget = icon != null
+        ? SantoIcon(icon!, size: iconDimension, color: iconColor)
+        : child!;
+
+    return Container(
+      width: SantoAppBarTheme.leadingSize,
+      height: _defaultThemeData.appBarHeight,
+      alignment: Alignment.center,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(_kAppBarIconRadius),
+          onTap: iconPressed,
+          child: SizedBox(
+            width: SantoAppBarTheme.leadingSize,
+            height: SantoAppBarTheme.leadingSize,
+            child: Center(
+              child: IconTheme.merge(
+                data: IconThemeData(size: iconDimension, color: iconColor),
+                child: iconWidget,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

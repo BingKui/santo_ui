@@ -6,7 +6,29 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [1.2.0] - 2026-09-21
+## [1.3.0] - 2026-09-22
+
+### 🧭 AppBar 右侧图标操作对齐
+
+- **新增**: `SantoIconAction.icon`(图标名)——由组件按主题图标大小构建图标,与左侧返回箭头同尺寸,颜色随 AppBar 深浅色自动对齐;`child` 保留给自定义 widget(未指定 size 的 `SantoIcon` 仍是它自己的默认值);`size` 语义由「点击区尺寸」改为「图标边长」
+- **修复**: 右侧图标操作原先点击区只有 20×20 且用 Material 默认圆形水波,左侧 `SantoBackLeading` 是 32×32 + 12 圆角;现在两侧共用 `SantoAppBarTheme.leadingSize`(32×32)与同一个 12 圆角 `InkWell`
+- **修复**: `Icon` 类图标原先被 20×20 的紧约束挤住、实际按 24 绘制溢出;现在统一按解析出的 20 渲染
+- **变更**: 右侧操作区之间的间距(`SantoAppBarConfig.itemSpacing`,默认取 `SantoAppBarTheme.iconMargin`)由 20 改为 5,与左侧 `leadingSpacing` 一致;两侧距屏幕边缘仍为 15,整条导航栏左右对称
+
+### 🔄 SantoRefresh 下拉安全区域
+
+- **新增**: `triggerDistance` 参数——触发刷新所需的下拉距离(安全区域高度),默认 50。未达该距离时头部不展示任何提示、松手也不触发刷新;达到后才展示「松手刷新」,松手即刷新
+- **变更**: `loadingBarHeight` 不再兼作触发阈值,只表示刷新头部高度(刷新进行中头部停留的高度),是否可触发改由 `triggerDistance` 判定
+- **新增**: `triggerDistance <= maxBarHeight` 断言,避免下拉永远到不了触发距离
+
+### 📐 PageLayout 顶部安全区
+
+- **修复**: 传 `header` 且不传 `appBar`(如整页自定义品牌头部)时,内容区的 `MediaQuery.padding.top` 仍是状态栏高度。自带滚动且未显式传 `padding` 的 `ListView` 会把它当成顶部内边距消费,`header` 下方因此多出一条状态栏高度的空白。现在内容区的 `MediaQuery.padding.top` 统一置 0 —— 顶部避让始终由布局承担(无 `header` 时并入 `padding`、有 `header` 时由 header 自身的 `SafeArea` 处理),滚动态与非滚动态行为一致
+- **新增**: 两条回归测试(传 `header` 时内容区顶部安全区为 0;头部与首块内容的间距只含 `padding`,不含状态栏高度)
+
+### ➖ Divider 自定义间距
+
+- **新增**: `spacing` 参数——水平分割线的自定义上下间距,优先于 `size`;传 `0` 可完全去掉上下留白(如外层行内边距已足够时)
 
 ## [1.2.0] - 2026-09-21
 

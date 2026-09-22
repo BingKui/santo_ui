@@ -6,7 +6,29 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
-## [1.2.0] - 2026-09-21
+## [1.3.0] - 2026-09-22
+
+### 🧭 AppBar action icon alignment
+
+- **Added**: `icon` (icon name) on `SantoIconAction` — the icon is then built by the component at the theme icon size, so it matches the leading arrow in size and follows the AppBar-resolved content color; `child` is kept for custom widgets (an unsized `SantoIcon` still renders at its own default), and `size` now sets the icon dimension instead of the tap area
+- **Fixed**: the right-side icon actions had a 20×20 tap target with Material's circular ink splash while `SantoBackLeading` used a 32×32 target with a 12-radius rounded rect; both sides now share `SantoAppBarTheme.leadingSize` (32×32) and the same 12-radius `InkWell`
+- **Fixed**: `Icon`-based children were squeezed into the 20×20 box and drawn overflowing at 24; action icons now render at the resolved 20
+- **Changed**: the gap between actions (`SantoAppBarConfig.itemSpacing`, defaulting to `SantoAppBarTheme.iconMargin`) is now 5 instead of 20, matching `leadingSpacing` on the left — both sides keep 15 edge padding, so the whole bar reads symmetrically
+
+### 🔄 SantoRefresh pull safety zone
+
+- **Added**: `triggerDistance` — the pull distance required to trigger a refresh (the "safety zone" height), default 50. Below it the header shows nothing and releasing does not refresh; once reached the header shows "release to refresh" and releasing triggers the refresh
+- **Changed**: `loadingBarHeight` no longer doubles as the trigger threshold — it now only defines the header height (the height the header holds while refreshing); whether the pull is ready is decided by `triggerDistance`
+- **Added**: an assertion for `triggerDistance <= maxBarHeight`, otherwise the pull could never reach the trigger distance
+
+### 📐 PageLayout top safe area
+
+- **Fixed**: with a `header` and no `appBar` (e.g. a full-page custom brand header), the content area's `MediaQuery.padding.top` still carried the status-bar height. A `ListView` that owns its own scrolling and does not pass an explicit `padding` consumed it as top padding, leaving a status-bar-height blank strip below the `header`. The content area's `MediaQuery.padding.top` is now always zeroed — the top inset is owned solely by the layout (merged into `padding` when there is no `header`, or handled by the header's own `SafeArea` when there is one), consistently across the scrolling and non-scrolling modes
+- **Added**: two regression tests (content top inset is 0 with a `header`; the gap between the header and the first content block contains only `padding`, not the status-bar height)
+
+### ➖ Divider custom spacing
+
+- **Added**: `spacing` — a custom vertical spacing for horizontal dividers that takes precedence over `size`; pass `0` to remove the vertical whitespace entirely (e.g. when the surrounding rows already carry their own padding)
 
 ## [1.2.0] - 2026-09-21
 

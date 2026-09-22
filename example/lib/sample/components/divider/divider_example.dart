@@ -107,6 +107,24 @@ class _DividerExampleState extends State<DividerExample> {
           ),
         ),
         SantoSection(
+          title: '自定义间距（spacing）',
+          description: 'spacing 直接指定上下间距并优先于 size：传 0 完全去掉上下留白'
+              '（适合外层行内边距已足够的场景），也可传任意值精细控制',
+          child: Column(
+            children: const [
+              Text('上方文本'),
+              SantoDivider(spacing: 0),
+              Text('spacing: 0：紧贴上下文本，无留白'),
+              SantoDivider(spacing: 4),
+              Text('spacing: 4：紧凑'),
+              SantoDivider(spacing: 30),
+              Text('spacing: 30：宽松'),
+              SantoDivider(size: SantoDividerSize.large, spacing: 6),
+              Text('size: large + spacing: 6：spacing 生效，实际 6 而非 large 档的 20'),
+            ],
+          ),
+        ),
+        SantoSection(
           title: '自定义颜色和粗细',
           description: 'color 与 thickness 自定义线条颜色和粗细，可与 dashed 组合',
           child: Column(

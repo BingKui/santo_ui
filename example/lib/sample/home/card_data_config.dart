@@ -38,7 +38,7 @@ import 'package:example/sample/components/highlight/highlight_example.dart';
 import 'package:example/sample/components/text_ellipsis/text_ellipsis_example.dart';
 import 'package:example/sample/components/action_bar/action_bar_example.dart';
 import 'package:example/sample/components/loading/loading_widget_example.dart';
-import 'package:example/sample/components/navbar/appbar_entry_page.dart';
+import 'package:example/sample/components/appbar/appbar_example.dart';
 import 'package:example/sample/components/noticebar/santo_notice_bar_example.dart';
 import 'package:example/sample/components/picker/picker_entry_page.dart';
 import 'package:example/sample/components/tooltip/tooltip_example.dart';
@@ -175,7 +175,7 @@ class CardDataConfig {
   // ========== 导航 ==========
   static GroupInfo _getNavigationGroup() {
     List<GroupInfo> children = [
-      _item("AppBar 导航栏", "页面顶部导航", AppbarEntryPage()),
+      _item("AppBar 导航栏", "页面顶部导航", const AppBarExample()),
       _item("Tabs 标签页", "内容分类切换", SantoTabExample()),
       _item("MenuBar 菜单栏", "默认/悬浮两种样式", MenuBarExample()),
       _item("Sidebar 侧边栏", "侧边导航菜单", SidebarExample()),

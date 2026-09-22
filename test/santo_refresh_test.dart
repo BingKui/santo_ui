@@ -65,23 +65,23 @@ void main() {
       child: ListView(children: _items(10)),
     )));
 
-    // 下拉但不松手,让头部保持展示
+    // 下拉超过触发距离但不松手,让头部保持展示
     final gesture =
         await tester.startGesture(tester.getCenter(find.byType(ListView)));
-    await gesture.moveBy(const Offset(0, 40));
+    await gesture.moveBy(const Offset(0, 60));
     await tester.pump();
 
     final Container header = tester
         .widgetList<Container>(find.byType(Container))
         .firstWhere((Container container) =>
-            container.constraints?.maxHeight == 40);
+            container.constraints?.maxHeight == 60);
     expect(header.decoration, isNull, reason: '刷新区域不应有背景色,保持透明');
 
     await gesture.up();
     await tester.pumpAndSettle();
   });
 
-  testWidgets('拖拽过程中头部高度跟随下拉距离', (tester) async {
+  testWidgets('下拉距离未达 triggerDistance 时不展示头部提示', (tester) async {
     await tester.pumpWidget(_host(SantoRefresh(
       onRefresh: () async {},
       child: ListView(children: _items(10)),
@@ -92,15 +92,56 @@ void main() {
     await gesture.moveBy(const Offset(0, 40));
     await tester.pump();
 
-    // 头部高度 = 下拉距离(40 未达触发阈值,仍是拉动态)
-    final List<double> heights = tester
-        .widgetList<Container>(find.byType(Container))
-        .map((Container container) => container.constraints?.maxHeight)
-        .whereType<double>()
-        .toList();
-    expect(heights, contains(40));
+    // 40 未达默认触发距离 50:头部不渲染,页面不出现任何提示
+    expect(_refreshHeaderHeight(tester), isNull);
+    expect(find.text('松手刷新'), findsNothing);
+    expect(find.text('下拉刷新'), findsNothing);
 
     await gesture.up();
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('下拉距离达到 triggerDistance 后头部高度跟随下拉距离', (tester) async {
+    await tester.pumpWidget(_host(SantoRefresh(
+      onRefresh: () async {},
+      child: ListView(children: _items(10)),
+    )));
+
+    final gesture =
+        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    await gesture.moveBy(const Offset(0, 60));
+    await tester.pump();
+
+    // 进入安全区域:头部高度 = 下拉距离,文案为松手刷新
+    expect(_refreshHeaderHeight(tester), 60);
+    expect(find.text('松手刷新'), findsOneWidget);
+
+    await gesture.up();
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('triggerDistance 可自定义,未达触发距离不刷新', (tester) async {
+    int refreshCount = 0;
+
+    await tester.pumpWidget(_host(SantoRefresh(
+      triggerDistance: 120,
+      maxBarHeight: 160,
+      onRefresh: () async {
+        refreshCount++;
+      },
+      child: ListView(children: _items(30)),
+    )));
+
+    await _pullDown(tester, 90);
+    await tester.pumpAndSettle();
+    expect(refreshCount, 0, reason: '90 未达自定义触发距离 120,不应触发刷新');
+
+    await _pullDown(tester, 140);
+    await tester.pump(const Duration(milliseconds: 10));
+    expect(refreshCount, 1, reason: '140 已达自定义触发距离 120,松手应触发刷新');
+
+    // 走完完成态与收起动画,避免遗留计时器
+    await tester.pump(const Duration(milliseconds: 600));
     await tester.pumpAndSettle();
   });
 

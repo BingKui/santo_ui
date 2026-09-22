@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
@@ -100,6 +102,89 @@ void main() {
     expect(leadingRight, 84);
     expect(screenWidth, greaterThan(leadingRight));
   });
+
+  testWidgets('右侧图标操作与左侧同款:点击区 32×32、水波圆角 12、图标 20', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        appBar: SantoAppBar(
+          title: '标题名称',
+          leading: SantoBackLeading(iconPressed: () {}),
+          actions: <Widget>[
+            SantoIconAction(icon: SantoIcons.heart, iconPressed: () {}),
+          ],
+        ),
+        body: const SizedBox.shrink(),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final leadingArea = find.descendant(
+      of: find.byType(SantoBackLeading),
+      matching: find.byType(InkWell),
+    );
+    final actionArea = find.descendant(
+      of: find.byType(SantoIconAction),
+      matching: find.byType(InkWell),
+    );
+
+    expect(tester.getSize(actionArea), const Size(32, 32),
+        reason: '点击区应与返回键一致,固定 leadingSize');
+    expect(tester.getSize(actionArea), tester.getSize(leadingArea));
+    expect(_inkRadius(tester, actionArea), _inkRadius(tester, leadingArea),
+        reason: '水波圆角应与返回键一致');
+    expect(
+      tester.getSize(find.descendant(
+        of: find.byType(SantoIconAction),
+        matching: find.byType(SantoIcon),
+      )),
+      const Size(20, 20),
+      reason: 'icon 入参按主题图标大小(20)构建,与返回箭头一致',
+    );
+  });
+
+  testWidgets('左右操作区间距一致(5),距屏幕边缘均 15', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        appBar: SantoAppBar(
+          title: '标题名称',
+          leading: SantoDoubleLeading(
+            first: SantoBackLeading(iconPressed: () {}),
+            second: SantoBackLeading(iconPressed: () {}),
+          ),
+          actions: <Widget>[
+            SantoIconAction(icon: SantoIcons.heart, iconPressed: () {}),
+            SantoIconAction(icon: SantoIcons.group, iconPressed: () {}),
+          ],
+        ),
+        body: const SizedBox.shrink(),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final leads = find.byType(SantoBackLeading);
+    final actions = find.byType(SantoIconAction);
+    final double leadingGap =
+        tester.getRect(leads.at(1)).left - tester.getRect(leads.at(0)).right;
+    final double actionGap =
+        tester.getRect(actions.at(1)).left - tester.getRect(actions.at(0)).right;
+
+    expect(leadingGap, SantoAppBarTheme.leadingSpacing);
+    expect(actionGap, leadingGap, reason: '右侧操作区间距应与左侧一致');
+    expect(tester.getRect(leads.at(0)).left, 15,
+        reason: '左侧操作区距屏幕边缘 15');
+    expect(
+      tester.getSize(find.byType(AppBar)).width -
+          tester.getRect(actions.at(1)).right,
+      15,
+      reason: '右侧操作区距屏幕边缘 15',
+    );
+  });
+}
+
+/// 取 InkWell 的圆角半径
+double _inkRadius(WidgetTester tester, Finder inkWell) {
+  final InkWell ink = tester.widget<InkWell>(inkWell);
+  return ink.borderRadius!.topLeft.x;
 }
 
 class SantoDoubleLeadingBar extends StatelessWidget

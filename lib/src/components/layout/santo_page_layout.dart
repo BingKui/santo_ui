@@ -15,7 +15,10 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 ///   只传 [title] 时用 [SantoAppBar] 快速构建,两者都不传则不显示导航栏,
 ///   此时内容区自动避开状态栏;
 /// * 内容区内边距默认取 [iGapAllMiddle],可用 [padding] 覆盖(顶部状态栏
-///   避让始终由布局叠加,不需要业务自己计算);
+///   避让始终由布局叠加,不需要业务自己计算:无 [header] 时并入
+///   [padding] 的顶部,有 [header] 时由 header 自行避让)。因此内容区的
+///   `MediaQuery.padding.top` 统一置 0,避免内容自带的滚动组件(未显式传
+///   padding 时)或 `SafeArea` 把状态栏高度再避让一次;
 /// * [header] 是标题下方的固定区域(不随内容滚动),用于放搜索框、
 ///   筛选组件等,撑满宽度、高度自适应、不加内边距;
 /// * [enableRefresh] 开启后内置滚动容器由 [SantoRefresh] 承载,
@@ -235,8 +238,13 @@ class SantoPageLayout extends StatelessWidget {
             scrollArea = Padding(
               padding: contentPadding,
               child: MediaQuery(
+                // top 置 0:顶部避让已由 contentPadding(无 header)或 header
+                // 自身承担,内容自带的滚动组件再把状态栏高度算一次会多出一条空白
                 data: media.copyWith(
-                  padding: media.padding.copyWith(bottom: bottomAreaInset),
+                  padding: media.padding.copyWith(
+                    top: 0,
+                    bottom: bottomAreaInset,
+                  ),
                 ),
                 child: _buildBlocks(gap),
               ),
@@ -254,15 +262,19 @@ class SantoPageLayout extends StatelessWidget {
                           .getScrollPhysics(context))
                   : null,
               padding: contentPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  _buildBlocks(gap),
-                  SantoBottomSafeArea(
-                    safeArea: false,
-                    extra: bottomAreaInset,
-                  ),
-                ],
+              child: MediaQuery(
+                // 同非滚动态:顶部避让由 contentPadding / header 承担
+                data: media.copyWith(padding: media.padding.copyWith(top: 0)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildBlocks(gap),
+                    SantoBottomSafeArea(
+                      safeArea: false,
+                      extra: bottomAreaInset,
+                    ),
+                  ],
+                ),
               ),
             );
           }

@@ -39,6 +39,7 @@ class _RefreshExampleState extends State<RefreshExample> {
       children: <Widget>[
         ExampleIntro('refresh'),
         _buildBasicSection(),
+        _buildTriggerDistanceSection(),
         _buildControllerSection(),
         _buildTextsAndStateSection(),
         _buildTimeoutSection(),
@@ -50,7 +51,8 @@ class _RefreshExampleState extends State<RefreshExample> {
   Widget _buildBasicSection() {
     return SantoSection(
       title: '基础用法',
-      description: '下拉松手触发 onRefresh；滚动到距底部 50 内触发 onLoadMore，'
+      description: '下拉未达触发距离（默认 50）时不展示任何提示，达到后展示「松手刷新」，'
+          '松手触发 onRefresh；滚动到距底部 50 内触发 onLoadMore，'
           '没有更多数据时底部展示提示',
       child: SizedBox(
         height: _demoHeight,
@@ -63,6 +65,33 @@ class _RefreshExampleState extends State<RefreshExample> {
             itemCount: _items.length,
             itemBuilder: (context, index) => _listItem(
               title: _items[index],
+              badge: '${index + 1}',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 自定义触发距离:安全区域高度可配
+  Widget _buildTriggerDistanceSection() {
+    return SantoSection(
+      title: '自定义触发距离',
+      description: 'triggerDistance 即安全区域高度：未拉到该距离不展示提示、松手也不刷新；'
+          '达到后才出现「松手刷新」并松手生效。此处设为 100，最大下拉高度同步放大到 140',
+      child: SizedBox(
+        height: _demoHeight,
+        child: SantoRefresh(
+          triggerDistance: 100,
+          maxBarHeight: 140,
+          onRefresh: () async {
+            await Future<void>.delayed(const Duration(seconds: 1));
+          },
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: 12,
+            itemBuilder: (context, index) => _listItem(
+              title: '安全区域演示项 ${index + 1}',
               badge: '${index + 1}',
             ),
           ),

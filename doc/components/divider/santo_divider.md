@@ -15,6 +15,7 @@ group:
 - 支持实线和虚线两种样式
 - 可带标题文本,标题位置支持左/中/右
 - 支持多种尺寸档位(small/medium/large)
+- 支持用 `spacing` 自定义上下间距(优先于 size,传 0 去掉留白)
 
 ## 二、描述
 
@@ -41,6 +42,7 @@ group:
 | plain | bool | 标题是否使用弱化样式 | 否 | false |
 | titleMargin | double? | start/end 位置时标题与边缘的距离 | 否 | null(12) |
 | size | SantoDividerSize | 水平分割线的上下间距 | 否 | medium |
+| spacing | double? | 自定义上下间距,优先于 `size`;传 0 可完全去掉上下留白 | 否 | null |
 | color | Color? | 分割线颜色 | 否 | null(主题分割线颜色) |
 | thickness | double | 分割线粗细 | 否 | 1 |
 | verticalHeight | double | 垂直分割线的高度 | 否 | 16 |
@@ -92,3 +94,22 @@ Row(
 ```dart
 SantoDivider(size: SantoDividerSize.large)
 ```
+
+### 自定义间距
+
+```dart
+// 上下各留 30
+SantoDivider(spacing: 30)
+
+// 去掉上下留白,线紧贴上下内容(外层行内边距已足够时用)
+SantoDivider(spacing: 0)
+
+// spacing 优先于 size:实际间距为 6,而不是 large 档的 20
+SantoDivider(size: SantoDividerSize.large, spacing: 6)
+```
+
+## 五、版本变更
+
+### v1.3.0
+
+- **新增**: `spacing` 参数,自定义水平分割线的上下间距,优先于 `size`;传 0 可完全去掉上下留白
