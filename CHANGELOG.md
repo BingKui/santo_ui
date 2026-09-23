@@ -6,6 +6,16 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.3] - 2026-09-23
+
+### 🧭 SantoAppBar examples
+
+- **Added**: standalone light and dark custom-background pages for verifying status-bar icon brightness
+
+### 🔄 Pull-to-refresh
+
+- **Changed**: keep scroll content stationary while refreshing; the refresh header now overlays the content instead of translating it down and back.
+
 ## [1.4.2] - 2026-09-23
 
 ### 🗂️ SantoEmpty layout

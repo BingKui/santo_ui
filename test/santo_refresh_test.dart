@@ -29,14 +29,15 @@ class _BouncingBehavior extends ScrollBehavior {
 }
 
 List<Widget> _items(int count) => List.generate(
-      count,
-      (index) => SizedBox(height: 48, child: Text('item $index')),
-    );
+  count,
+  (index) => SizedBox(height: 48, child: Text('item $index')),
+);
 
 /// 下拉到指定距离并松手
 Future<void> _pullDown(WidgetTester tester, double distance) async {
-  final gesture =
-      await tester.startGesture(tester.getCenter(find.byType(ListView)));
+  final gesture = await tester.startGesture(
+    tester.getCenter(find.byType(ListView)),
+  );
   await gesture.moveBy(Offset(0, distance));
   await tester.pump();
   await gesture.up();
@@ -59,36 +60,53 @@ double? _refreshHeaderHeight(WidgetTester tester) {
 }
 
 void main() {
-  testWidgets('下拉刷新头部背景透明', (tester) async {
-    await tester.pumpWidget(_host(SantoRefresh(
-      onRefresh: () async {},
-      child: ListView(children: _items(10)),
-    )));
+  testWidgets('下拉刷新头部背景透明且不平移内容', (tester) async {
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () async {},
+          child: ListView(children: _items(10)),
+        ),
+      ),
+    );
 
     // 下拉超过触发距离但不松手,让头部保持展示
-    final gesture =
-        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    final itemTopBeforePull = tester.getTopLeft(find.text('item 0')).dy;
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(ListView)),
+    );
     await gesture.moveBy(const Offset(0, 60));
     await tester.pump();
 
     final Container header = tester
         .widgetList<Container>(find.byType(Container))
-        .firstWhere((Container container) =>
-            container.constraints?.maxHeight == 60);
+        .firstWhere(
+          (Container container) => container.constraints?.maxHeight == 60,
+        );
     expect(header.decoration, isNull, reason: '刷新区域不应有背景色,保持透明');
+    expect(
+      tester.getTopLeft(find.text('item 0')).dy,
+      itemTopBeforePull,
+      reason: '刷新头部不应通过平移内容腾出空间',
+    );
 
     await gesture.up();
     await tester.pumpAndSettle();
   });
 
   testWidgets('下拉距离未达 triggerDistance 时不展示头部提示', (tester) async {
-    await tester.pumpWidget(_host(SantoRefresh(
-      onRefresh: () async {},
-      child: ListView(children: _items(10)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () async {},
+          child: ListView(children: _items(10)),
+        ),
+      ),
+    );
 
-    final gesture =
-        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(ListView)),
+    );
     await gesture.moveBy(const Offset(0, 40));
     await tester.pump();
 
@@ -102,13 +120,18 @@ void main() {
   });
 
   testWidgets('下拉距离达到 triggerDistance 后头部高度跟随下拉距离', (tester) async {
-    await tester.pumpWidget(_host(SantoRefresh(
-      onRefresh: () async {},
-      child: ListView(children: _items(10)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () async {},
+          child: ListView(children: _items(10)),
+        ),
+      ),
+    );
 
-    final gesture =
-        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(ListView)),
+    );
     await gesture.moveBy(const Offset(0, 60));
     await tester.pump();
 
@@ -123,14 +146,18 @@ void main() {
   testWidgets('triggerDistance 可自定义,未达触发距离不刷新', (tester) async {
     int refreshCount = 0;
 
-    await tester.pumpWidget(_host(SantoRefresh(
-      triggerDistance: 120,
-      maxBarHeight: 160,
-      onRefresh: () async {
-        refreshCount++;
-      },
-      child: ListView(children: _items(30)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          triggerDistance: 120,
+          maxBarHeight: 160,
+          onRefresh: () async {
+            refreshCount++;
+          },
+          child: ListView(children: _items(30)),
+        ),
+      ),
+    );
 
     await _pullDown(tester, 90);
     await tester.pumpAndSettle();
@@ -149,15 +176,19 @@ void main() {
     final List<SantoRefreshState> states = <SantoRefreshState>[];
     int refreshCount = 0;
 
-    await tester.pumpWidget(_host(SantoRefresh(
-      onRefresh: () async {
-        refreshCount++;
-        await Future<void>.delayed(const Duration(milliseconds: 50));
-      },
-      successDuration: const Duration(milliseconds: 50),
-      onStateChanged: states.add,
-      child: ListView(children: _items(30)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () async {
+            refreshCount++;
+            await Future<void>.delayed(const Duration(milliseconds: 50));
+          },
+          successDuration: const Duration(milliseconds: 50),
+          onStateChanged: states.add,
+          child: ListView(children: _items(30)),
+        ),
+      ),
+    );
 
     await _pullDown(tester, 90);
     await tester.pump(const Duration(milliseconds: 10));
@@ -174,8 +205,7 @@ void main() {
         matching: find.byType(SantoIcon),
       ),
     );
-    expect(doneIcon.name, SantoIcons.checkCircle,
-        reason: '刷新完成态应展示成功图标');
+    expect(doneIcon.name, SantoIcons.checkCircle, reason: '刷新完成态应展示成功图标');
 
     await tester.pumpAndSettle();
     expect(states.last, SantoRefreshState.inactive);
@@ -183,12 +213,16 @@ void main() {
 
   testWidgets('下拉距离不足时不触发刷新', (tester) async {
     int refreshCount = 0;
-    await tester.pumpWidget(_host(SantoRefresh(
-      onRefresh: () async {
-        refreshCount++;
-      },
-      child: ListView(children: _items(30)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () async {
+            refreshCount++;
+          },
+          child: ListView(children: _items(30)),
+        ),
+      ),
+    );
 
     await _pullDown(tester, 20);
     await tester.pumpAndSettle();
@@ -197,21 +231,23 @@ void main() {
 
   testWidgets('Bouncing 回弹:松手后收缩到刷新高度并保持,完成后归零', (tester) async {
     final Completer<void> refresh = Completer<void>();
-    await tester.pumpWidget(_host(
-      SantoRefresh(
-        onRefresh: () => refresh.future,
-        successDuration: const Duration(milliseconds: 50),
-        child: ListView(children: _items(30)),
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () => refresh.future,
+          successDuration: const Duration(milliseconds: 50),
+          child: ListView(children: _items(30)),
+        ),
+        bouncing: true,
       ),
-      bouncing: true,
-    ));
+    );
 
-    final gesture =
-        await tester.startGesture(tester.getCenter(find.byType(ListView)));
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(ListView)),
+    );
     await gesture.moveBy(const Offset(0, 90));
     await tester.pump(const Duration(milliseconds: 50));
-    expect(_refreshHeaderHeight(tester), 80,
-        reason: '下拉距离被钳制在 maxBarHeight');
+    expect(_refreshHeaderHeight(tester), 80, reason: '下拉距离被钳制在 maxBarHeight');
 
     await gesture.up();
     await tester.pump();
@@ -238,8 +274,11 @@ void main() {
         matching: find.byType(SantoIcon),
       ),
     );
-    expect(collapsingIcon.name, SantoIcons.checkCircle,
-        reason: '成功图标/文案应保持到头部完全关闭');
+    expect(
+      collapsingIcon.name,
+      SantoIcons.checkCircle,
+      reason: '成功图标/文案应保持到头部完全关闭',
+    );
     expect(_refreshHeaderHeight(tester), allOf(greaterThan(0), lessThan(50)));
 
     await tester.pumpAndSettle();
@@ -248,15 +287,17 @@ void main() {
 
   testWidgets('Bouncing 回弹:未达阈值松手跟随回弹收起,不触发刷新', (tester) async {
     int refreshCount = 0;
-    await tester.pumpWidget(_host(
-      SantoRefresh(
-        onRefresh: () async {
-          refreshCount++;
-        },
-        child: ListView(children: _items(30)),
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          onRefresh: () async {
+            refreshCount++;
+          },
+          child: ListView(children: _items(30)),
+        ),
+        bouncing: true,
       ),
-      bouncing: true,
-    ));
+    );
 
     await _pullDown(tester, 20);
     await tester.pumpAndSettle();
@@ -268,14 +309,18 @@ void main() {
     final controller = SantoRefreshController();
     int refreshCount = 0;
 
-    await tester.pumpWidget(_host(SantoRefresh(
-      controller: controller,
-      onRefresh: () async {
-        refreshCount++;
-        await Future<void>.delayed(const Duration(milliseconds: 50));
-      },
-      child: ListView(children: _items(30)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          controller: controller,
+          onRefresh: () async {
+            refreshCount++;
+            await Future<void>.delayed(const Duration(milliseconds: 50));
+          },
+          child: ListView(children: _items(30)),
+        ),
+      ),
+    );
 
     unawaited(controller.refresh());
     await tester.pump(const Duration(milliseconds: 10));
@@ -288,16 +333,20 @@ void main() {
     final controller = SantoRefreshController();
     final List<SantoRefreshState> states = <SantoRefreshState>[];
 
-    await tester.pumpWidget(_host(SantoRefresh(
-      controller: controller,
-      refreshTimeout: const Duration(milliseconds: 80),
-      successDuration: const Duration(milliseconds: 20),
-      onRefresh: () async {
-        await Future<void>.delayed(const Duration(milliseconds: 300));
-      },
-      onStateChanged: states.add,
-      child: ListView(children: _items(30)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          controller: controller,
+          refreshTimeout: const Duration(milliseconds: 80),
+          successDuration: const Duration(milliseconds: 20),
+          onRefresh: () async {
+            await Future<void>.delayed(const Duration(milliseconds: 300));
+          },
+          onStateChanged: states.add,
+          child: ListView(children: _items(30)),
+        ),
+      ),
+    );
 
     unawaited(controller.refresh());
     await tester.pump();
@@ -319,26 +368,34 @@ void main() {
     int loadMoreCount = 0;
     bool hasMore = true;
 
-    await tester.pumpWidget(_host(SantoRefresh(
-      hasMore: hasMore,
-      onLoadMore: () async {
-        loadMoreCount++;
-      },
-      child: ListView(children: _items(60)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          hasMore: hasMore,
+          onLoadMore: () async {
+            loadMoreCount++;
+          },
+          child: ListView(children: _items(60)),
+        ),
+      ),
+    );
 
     await tester.drag(find.byType(ListView), const Offset(0, -5000));
     await tester.pumpAndSettle();
     expect(loadMoreCount, 1);
 
     hasMore = false;
-    await tester.pumpWidget(_host(SantoRefresh(
-      hasMore: hasMore,
-      onLoadMore: () async {
-        loadMoreCount++;
-      },
-      child: ListView(children: _items(60)),
-    )));
+    await tester.pumpWidget(
+      _host(
+        SantoRefresh(
+          hasMore: hasMore,
+          onLoadMore: () async {
+            loadMoreCount++;
+          },
+          child: ListView(children: _items(60)),
+        ),
+      ),
+    );
     await tester.drag(find.byType(ListView), const Offset(0, -5000));
     await tester.pumpAndSettle();
     expect(loadMoreCount, 1);

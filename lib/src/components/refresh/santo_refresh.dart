@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -174,14 +175,18 @@ class SantoRefresh extends StatefulWidget {
     this.hasMore = true,
     this.refreshHeader,
     this.loadMoreFooter,
-  })  : assert(loadingBarHeight >= 0, 'loadingBarHeight 不能为负'),
-        assert(triggerDistance >= 0, 'triggerDistance 不能为负'),
-        assert(triggerDistance <= maxBarHeight,
-            'triggerDistance 不能大于 maxBarHeight,否则下拉永远到不了触发距离'),
-        assert(maxBarHeight >= 0, 'maxBarHeight 不能为负'),
-        assert(refreshTimeout == null || refreshTimeout >= Duration.zero,
-            'refreshTimeout 不能为负'),
-        super(key: key);
+  }) : assert(loadingBarHeight >= 0, 'loadingBarHeight 不能为负'),
+       assert(triggerDistance >= 0, 'triggerDistance 不能为负'),
+       assert(
+         triggerDistance <= maxBarHeight,
+         'triggerDistance 不能大于 maxBarHeight,否则下拉永远到不了触发距离',
+       ),
+       assert(maxBarHeight >= 0, 'maxBarHeight 不能为负'),
+       assert(
+         refreshTimeout == null || refreshTimeout >= Duration.zero,
+         'refreshTimeout 不能为负',
+       ),
+       super(key: key);
 
   @override
   State<SantoRefresh> createState() => _SantoRefreshState();
@@ -191,10 +196,6 @@ class _SantoRefreshState extends State<SantoRefresh>
     with SingleTickerProviderStateMixin {
   /// 当前下拉距离
   double _pullExtent = 0;
-
-  /// 最近一次滚动位置中的负向部分(Bouncing 物理松手回弹期间 < 0)。
-  /// 弹性物理下列表自身会平移,平移量需从头部位移中扣除,避免内容双重位移
-  double _negativePixels = 0;
 
   /// 当前状态
   SantoRefreshState _state = SantoRefreshState.inactive;
@@ -216,17 +217,18 @@ class _SantoRefreshState extends State<SantoRefresh>
   @override
   void initState() {
     super.initState();
-    _settleController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    )
-      ..addListener(() {
-        final animation = _settleAnimation;
-        if (animation != null) {
-          setState(() => _pullExtent = animation.value);
-        }
-      })
-      ..addStatusListener(_handleSettleStatus);
+    _settleController =
+        AnimationController(
+            vsync: this,
+            duration: const Duration(milliseconds: 200),
+          )
+          ..addListener(() {
+            final animation = _settleAnimation;
+            if (animation != null) {
+              setState(() => _pullExtent = animation.value);
+            }
+          })
+          ..addStatusListener(_handleSettleStatus);
     widget.controller?._attach(this);
   }
 
@@ -256,10 +258,23 @@ class _SantoRefreshState extends State<SantoRefresh>
     super.dispose();
   }
 
+  /// 布局阶段收到滚动通知(如 applyNewDimensions 中回弹启动派发的滚动结束)
+  /// 时不能同步 setState,值立即生效、重建顺延到本帧结束
+  void _safeSetState(VoidCallback fn) {
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (mounted) setState(fn);
+      });
+    } else {
+      setState(fn);
+    }
+  }
+
   /// 状态跳变时通知外部(异步调度,不在 build 期间同步回调)
   void _notifyState(SantoRefreshState state) {
     if (_state == state) return;
-    setState(() => _state = state);
+    _safeSetState(() => _state = state);
     final callback = widget.onStateChanged;
     if (callback != null) {
       scheduleMicrotask(() {
@@ -285,25 +300,20 @@ class _SantoRefreshState extends State<SantoRefresh>
     // 新一轮拖拽优先于进行中的收起/收缩动画
     _settleController.stop();
     final double value = extent.clamp(0.0, widget.maxBarHeight).toDouble();
-    setState(() => _pullExtent = value);
-    _notifyState(value >= widget.triggerDistance
-        ? SantoRefreshState.ready
-        : SantoRefreshState.dragging);
+    _safeSetState(() => _pullExtent = value);
+    _notifyState(
+      value >= widget.triggerDistance
+          ? SantoRefreshState.ready
+          : SantoRefreshState.dragging,
+    );
   }
 
   /// 滚动通知:处理下拉刷新与触底加载
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification.depth != 0) return false;
 
-    final px = notification.metrics.pixels;
-    final double negativePixels = px < 0 ? px : 0.0;
-    if (negativePixels != _negativePixels) {
-      // 回弹尾段收缩动画已结束,但平移量仍要跟随 pixels 重绘,
-      // 否则 translate 残留旧值、内容会从刷新高度漂移
-      setState(() => _negativePixels = negativePixels);
-    }
-
-    final bool refreshing = _state == SantoRefreshState.refreshing ||
+    final bool refreshing =
+        _state == SantoRefreshState.refreshing ||
         _state == SantoRefreshState.done;
     if (widget.onRefresh != null && !refreshing) {
       if (notification is OverscrollNotification &&
@@ -318,8 +328,7 @@ class _SantoRefreshState extends State<SantoRefresh>
           // 拖拽中(Bouncing 物理:pixels 直接为负)
           _updatePull(-notification.metrics.pixels);
           _pastThreshold = _pullExtent >= widget.triggerDistance;
-        } else if (_pastThreshold ||
-            _pullExtent >= widget.triggerDistance) {
+        } else if (_pastThreshold || _pullExtent >= widget.triggerDistance) {
           // 松手瞬间:回弹 ballistic 已启动,而 ScrollEnd 要等回弹结束才发出;
           // 若继续跟随 pixels,头部会一路收到 0 再弹出 Loading 区。
           // 已过阈值时立即锁定刷新高度(平滑收缩到 loadingBarHeight)
@@ -417,12 +426,14 @@ class _SantoRefreshState extends State<SantoRefresh>
     try {
       await callback;
     } catch (error, stack) {
-      FlutterError.reportError(FlutterErrorDetails(
-        exception: error,
-        stack: stack,
-        library: 'santo_ui',
-        context: ErrorDescription('SantoRefresh 回调执行失败'),
-      ));
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stack,
+          library: 'santo_ui',
+          context: ErrorDescription('SantoRefresh 回调执行失败'),
+        ),
+      );
     }
   }
 
@@ -460,19 +471,9 @@ class _SantoRefreshState extends State<SantoRefresh>
           child: Stack(
             children: <Widget>[
               Positioned.fill(
-                // 头部高度变化只平移内容(纯绘制不触发布局),
-                // 避免每帧改变视口高度导致列表抖动、可见内容被压缩;
-                // 扣除负向 pixels,Bouncing 物理下内容不会双重位移
-                child: Transform.translate(
-                  offset: Offset(
-                      0,
-                      widget.onRefresh != null
-                          ? _pullExtent + _negativePixels
-                          : 0.0),
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: _handleScrollNotification,
-                    child: widget.child,
-                  ),
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: widget.child,
                 ),
               ),
               if (_headerVisible)
@@ -496,8 +497,9 @@ class _SantoRefreshState extends State<SantoRefresh>
     if (widget.refreshHeader != null) {
       return widget.refreshHeader!(_state, _pullExtent);
     }
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
     return Container(
       height: _pullExtent,
       alignment: Alignment.center,
@@ -510,22 +512,23 @@ class _SantoRefreshState extends State<SantoRefresh>
             child: _state == SantoRefreshState.refreshing
                 ? CircularProgressIndicator(
                     strokeWidth: 2,
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(commonConfig.brandPrimary),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      commonConfig.brandPrimary,
+                    ),
                   )
                 : _state == SantoRefreshState.done
-                    ? SantoIcon(
-                        SantoIcons.checkCircle,
-                        size: 18,
-                        color: commonConfig.brandSuccess,
-                      )
-                    : Icon(
-                        _state == SantoRefreshState.ready
-                            ? Icons.arrow_upward
-                            : Icons.arrow_downward,
-                        size: 18,
-                        color: commonConfig.brandPrimary,
-                      ),
+                ? SantoIcon(
+                    SantoIcons.checkCircle,
+                    size: 18,
+                    color: commonConfig.brandSuccess,
+                  )
+                : Icon(
+                    _state == SantoRefreshState.ready
+                        ? Icons.arrow_upward
+                        : Icons.arrow_downward,
+                    size: 18,
+                    color: commonConfig.brandPrimary,
+                  ),
           ),
           SizedBox(width: commonConfig.hSpacingSm),
           Text(
@@ -561,8 +564,9 @@ class _SantoRefreshState extends State<SantoRefresh>
     if (widget.loadMoreFooter != null) {
       return widget.loadMoreFooter!(widget.hasMore);
     }
-    final commonConfig =
-        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
     if (!widget.hasMore) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: commonConfig.vSpacingMd),
@@ -590,8 +594,9 @@ class _SantoRefreshState extends State<SantoRefresh>
             height: 14,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(commonConfig.brandPrimary),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                commonConfig.brandPrimary,
+              ),
             ),
           ),
           SizedBox(width: commonConfig.hSpacingSm),

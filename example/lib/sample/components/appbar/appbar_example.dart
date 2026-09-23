@@ -54,6 +54,7 @@ class _AppBarExampleState extends State<AppBarExample> {
         _buildTextActionSection(),
         _buildIconActionsSection(),
         _buildDarkSection(),
+        _buildCustomBackgroundSection(),
         _buildSearchBarSection(),
         _buildSearchBarLeadingSection(),
         _buildSearchResultSection(),
@@ -67,9 +68,7 @@ class _AppBarExampleState extends State<AppBarExample> {
       title: '基础用法',
       description: '默认展示返回按钮与居中标题,title 直接传字符串',
       contentPadding: EdgeInsets.zero,
-      child: _barStage(<PreferredSizeWidget>[
-        SantoAppBar(title: '标题名称'),
-      ]),
+      child: _barStage(<PreferredSizeWidget>[SantoAppBar(title: '标题名称')]),
     );
   }
 
@@ -363,6 +362,49 @@ class _AppBarExampleState extends State<AppBarExample> {
     );
   }
 
+  /// 自定义背景色的全屏导航栏
+  Widget _buildCustomBackgroundSection() {
+    return SantoSection(
+      title: '自定义背景色',
+      description: '进入单页查看浅色背景的黑色状态栏图标与深色背景的白色状态栏图标',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          SantoButton(
+            text: '浅色背景',
+            onTap: () => _openThemeExample(
+              title: '浅色导航栏',
+              backgroundColor: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 12),
+          SantoButton(
+            text: '深色背景',
+            type: SantoButtonType.primary,
+            onTap: () => _openThemeExample(
+              title: '深色导航栏',
+              backgroundColor: const Color(0xFF17233D),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openThemeExample({
+    required String title,
+    required Color backgroundColor,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => _AppBarThemeExamplePage(
+          title: title,
+          backgroundColor: backgroundColor,
+        ),
+      ),
+    );
+  }
+
   /// 搜索栏
   Widget _buildSearchBarSection() {
     return SantoSection(
@@ -378,8 +420,10 @@ class _AppBarExampleState extends State<AppBarExample> {
               SantoToast.show(input, context),
           searchBarInputSubmitCallback: (String input) =>
               SantoToast.show(input, context),
-          dismissClickCallback: (TextEditingController controller, VoidCallback update) =>
-              SantoToast.show('点击了取消', context),
+          dismissClickCallback: (
+            TextEditingController controller,
+            VoidCallback update,
+          ) => SantoToast.show('点击了取消', context),
         ),
       ]),
     );
@@ -396,9 +440,10 @@ class _AppBarExampleState extends State<AppBarExample> {
           autoFocus: false,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
           leading: _buildLeadType(Colors.white, _leadDarkKey),
-          leadClickCallback:
-              (TextEditingController controller, VoidCallback update) =>
-                  _showLeadPopList(_leadDarkKey),
+          leadClickCallback: (
+            TextEditingController controller,
+            VoidCallback update,
+          ) => _showLeadPopList(_leadDarkKey),
           searchBarInputChangeCallback: (String input) =>
               SantoToast.show(input, context),
         ),
@@ -406,9 +451,10 @@ class _AppBarExampleState extends State<AppBarExample> {
           themeData: SantoAppBarConfig.light(),
           autoFocus: false,
           leading: _buildLeadType(const Color(0xFF17233D), _leadLightKey),
-          leadClickCallback:
-              (TextEditingController controller, VoidCallback update) =>
-                  _showLeadPopList(_leadLightKey),
+          leadClickCallback: (
+            TextEditingController controller,
+            VoidCallback update,
+          ) => _showLeadPopList(_leadLightKey),
           searchBarInputSubmitCallback: (String input) =>
               SantoToast.show(input, context),
         ),
@@ -439,17 +485,10 @@ class _AppBarExampleState extends State<AppBarExample> {
         key: key,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            '类型1',
-            style: TextStyle(color: color, height: 1, fontSize: 16),
-          ),
+          Text('类型1', style: TextStyle(color: color, height: 1, fontSize: 16)),
           Padding(
             padding: const EdgeInsets.only(left: 5),
-            child: SantoIcon(
-              SantoIcons.navArrowDown,
-              size: 12,
-              color: color,
-            ),
+            child: SantoIcon(SantoIcons.navArrowDown, size: 12, color: color),
           ),
         ],
       ),
@@ -499,6 +538,30 @@ class _AppBarExampleState extends State<AppBarExample> {
           ],
         ],
       ),
+    );
+  }
+}
+
+class _AppBarThemeExamplePage extends StatelessWidget {
+  const _AppBarThemeExamplePage({
+    required this.title,
+    required this.backgroundColor,
+  });
+
+  final String title;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: SantoAppBar(
+        title: title,
+        backgroundColor: backgroundColor,
+        actions: <Widget>[
+          SantoIconAction(icon: SantoIcons.shareIos, iconPressed: () {}),
+        ],
+      ),
+      body: const ColoredBox(color: Color(0xFFF5F5F5)),
     );
   }
 }
