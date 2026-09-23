@@ -1,5 +1,3 @@
-
-
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
 
@@ -29,63 +27,75 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget._title)),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 20),
-            alignment: Alignment.center,
-            child: GestureDetector(
-              child: Text("点击关闭弹窗"),
-              onTap: () {
-                controller!.closeSelectionView();
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 20),
-            alignment: Alignment.center,
-            child: GestureDetector(
-              child: Text("点击刷新筛选 Title， 清除【双列】Filter 项"),
-              onTap: () {
-                widget._filterData![1].configRelationshipAndDefaultValue();
-                widget._filterData![1].clearChildSelection();
-                controller!.refreshSelectionTitle();
-              },
-            ),
-          ),
-          DropdownMenu(
-            selectionViewController: controller,
-            originalSelectionData: widget._filterData!,
-            onSelectionChanged: (int menuIndex,
-                Map<String, String> filterParams,
-                Map<String, String> customParams,
-                SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
-              SantoToast.show('选中 ${filterParams.toString()}，但筛选条件被清除了', context);
-              if (menuIndex == 1 && filterParams['two_list_key'] != null) {
-                widget._filterData![1].clearChildSelection();
-                widget._filterData![1].configRelationshipAndDefaultValue();
-                controller!.refreshSelectionTitle();
-              }
-            },
-            onMenuClickInterceptor: (index) {
-              if (index == 0) {
-                SantoToast.show('第$index个被拦截了', context);
-                return true;
-              } else {
-                return false;
-              }
-            },
-          ),
-          Expanded(
-            child: Container(
+    return SantoPageLayout(
+      title: widget._title,
+      scrollable: false,
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(top: 20),
               alignment: Alignment.center,
-              child: Text("背景内容区域"),
+              child: GestureDetector(
+                child: Text("点击关闭弹窗"),
+                onTap: () {
+                  controller!.closeSelectionView();
+                },
+              ),
             ),
-          ),
-        ],
-      ),
+            Container(
+              padding: EdgeInsets.only(top: 20),
+              alignment: Alignment.center,
+              child: GestureDetector(
+                child: Text("点击刷新筛选 Title， 清除【双列】Filter 项"),
+                onTap: () {
+                  widget._filterData![1].configRelationshipAndDefaultValue();
+                  widget._filterData![1].clearChildSelection();
+                  controller!.refreshSelectionTitle();
+                },
+              ),
+            ),
+            DropdownMenu(
+              selectionViewController: controller,
+              originalSelectionData: widget._filterData!,
+              onSelectionChanged:
+                  (
+                    int menuIndex,
+                    Map<String, String> filterParams,
+                    Map<String, String> customParams,
+                    SantoSetCustomSelectionMenuTitle setCustomTitleFunction,
+                  ) {
+                    SantoToast.show(
+                      '选中 ${filterParams.toString()}，但筛选条件被清除了',
+                      context,
+                    );
+                    if (menuIndex == 1 &&
+                        filterParams['two_list_key'] != null) {
+                      widget._filterData![1].clearChildSelection();
+                      widget._filterData![1]
+                          .configRelationshipAndDefaultValue();
+                      controller!.refreshSelectionTitle();
+                    }
+                  },
+              onMenuClickInterceptor: (index) {
+                if (index == 0) {
+                  SantoToast.show('第$index个被拦截了', context);
+                  return true;
+                } else {
+                  return false;
+                }
+              },
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text("背景内容区域"),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
 
@@ -25,34 +23,41 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget._title)),
-      body: Column(
-        children: <Widget>[
-          DropdownMenu(
-            originalSelectionData: widget._filters!,
-            onSelectionChanged: (int menuIndex,
-                Map<String, String> filterParams,
-                Map<String, String> customParams,
-                SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
-              SantoToast.show(filterParams.toString(), context);
-            },
-            onSelectionPreShow: (int index, SantoSelectionEntity entity) {
-              if (entity.key == "one_range_key" ||
-                  entity.key == "two_range_key") {
-                return SantoSelectionWindowType.range;
-              }
-              return entity.filterShowType!;
-            },
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text("背景内容区域"),
+    return SantoPageLayout(
+      title: widget._title,
+      scrollable: false,
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            DropdownMenu(
+              originalSelectionData: widget._filters!,
+              onSelectionChanged:
+                  (
+                    int menuIndex,
+                    Map<String, String> filterParams,
+                    Map<String, String> customParams,
+                    SantoSetCustomSelectionMenuTitle setCustomTitleFunction,
+                  ) {
+                    SantoToast.show(filterParams.toString(), context);
+                  },
+              onSelectionPreShow: (int index, SantoSelectionEntity entity) {
+                if (entity.key == "one_range_key" ||
+                    entity.key == "two_range_key") {
+                  return SantoSelectionWindowType.range;
+                }
+                return entity.filterShowType!;
+              },
             ),
-          )
-        ],
-      ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text("背景内容区域"),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

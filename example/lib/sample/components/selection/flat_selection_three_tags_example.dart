@@ -1,163 +1,153 @@
-
-
-import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
+import 'package:santo_ui/santo_ui.dart';
 
-class FlatSelectionThreeTagsExample extends StatefulWidget {
-  final String _title;
-  final List<SantoSelectionEntity> _filterData;
-
-  FlatSelectionThreeTagsExample(this._title, this._filterData);
-
-  @override
-  _SelectionViewExamplePageState createState() =>
-      _SelectionViewExamplePageState();
+class FlatSelectionThreeTagsExample extends FlatSelectionExample {
+  const FlatSelectionThreeTagsExample(
+    super.title,
+    super.filterData, {
+    super.key,
+  }) : super(preLineTagSize: 3);
 }
 
-class _SelectionViewExamplePageState
-    extends State<FlatSelectionThreeTagsExample> {
-  SantoSelectionEntity? entity;
+class FlatSelectionExample extends StatefulWidget {
+  const FlatSelectionExample(
+    this.title,
+    this.filterData, {
+    required this.preLineTagSize,
+    super.key,
+  });
 
-  SantoFlatSelectionController? controller;
+  final String title;
+  final List<SantoSelectionEntity> filterData;
+  final int preLineTagSize;
 
-  var selectionKey = GlobalKey();
+  @override
+  State<FlatSelectionExample> createState() => _FlatSelectionExampleState();
+}
 
-  bool _isShow = true;
+class _FlatSelectionExampleState extends State<FlatSelectionExample> {
+  late final SantoFlatSelectionController _controller;
+  var _isExpanded = true;
 
   @override
   void initState() {
     super.initState();
-
-    controller = SantoFlatSelectionController();
+    _controller = SantoFlatSelectionController();
   }
 
   @override
   void dispose() {
-    controller!.dispose();
-    controller = null;
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget._title)),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 20),
-            alignment: Alignment.center,
-            child: GestureDetector(
-              child: Text("点击关闭展开"),
-              onTap: () {
-                setState(() {
-                  _isShow = !_isShow;
-                });
-              },
+    return SantoPageLayout(
+      title: widget.title,
+      scrollable: false,
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SantoButton(
+                text: _isExpanded ? '收起筛选' : '展开筛选',
+                type: SantoButtonType.text,
+                onTap: () => setState(() => _isExpanded = !_isExpanded),
+              ),
             ),
-          ),
-          Expanded(
-            child: _isShow
-                ? Column(
-                    children: <Widget>[
-                      Container(
-                          color: Colors.white,
-                          width: double.infinity,
-                          height: 400,
-                          child: SantoFlatSelection(
-                              entityDataList: widget._filterData,
+            Expanded(
+              child: _isExpanded
+                  ? Column(
+                      children: [
+                        Expanded(
+                          child: ColoredBox(
+                            color: Colors.white,
+                            child: SantoFlatSelection(
+                              preLineTagSize: widget.preLineTagSize,
+                              entityDataList: widget.filterData,
+                              controller: _controller,
                               confirmCallback: (data) {
-                                var str = "";
-                                data.forEach(
-                                    (k, v) => str = str + " " + '$k: $v');
-                                SantoToast.show(str, context);
+                                SantoToast.show(
+                                  data.entries
+                                      .map(
+                                        (entry) =>
+                                            '${entry.key}: ${entry.value}',
+                                      )
+                                      .join(' '),
+                                  context,
+                                );
                               },
-                              controller: controller)),
-                      _bottomWidget(),
-                    ],
-                  )
-                : Container(),
-          ),
-        ],
-      ),
+                            ),
+                          ),
+                        ),
+                        _buildActions(),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
-  Widget _bottomWidget() {
-    return Column(
-      children: <Widget>[
-        Divider(
-          height: 0.3,
-          color: Color(0xFFE8EAEC),
-        ),
-        Container(
-          color: Colors.white,
-          padding: EdgeInsets.fromLTRB(8, 11, 20, 11),
-          child: Row(
-            children: <Widget>[
-              InkWell(
-                child: Container(
-                  padding: EdgeInsets.only(left: 12, right: 20),
-                  child: Column(
-                    children: <Widget>[
-                      const SantoIcon(
-                        SantoIcons.refresh,
-                        size: 24,
-                        color: Color(0xFF808695),
-                      ),
-                      Text(
-                        "重置",
-                        style:
-                            TextStyle(fontSize: 11, color: Color(0xFF808695)),
-                      )
-                    ],
-                  ),
+  Widget _buildActions() {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Color(0xFFE8EAEC))),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 11, 20, 11),
+        child: Row(
+          children: [
+            InkWell(
+              onTap: _controller.resetSelectedOptions,
+              child: const Padding(
+                padding: EdgeInsets.only(left: 12, right: 20),
+                child: Column(
+                  children: [
+                    SantoIcon(
+                      SantoIcons.refresh,
+                      size: 24,
+                      color: Color(0xFF808695),
+                    ),
+                    Text(
+                      '重置',
+                      style: TextStyle(fontSize: 11, color: Color(0xFF808695)),
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  if (controller != null) {
-                    controller!.resetSelectedOptions();
-                  }
-                },
               ),
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  SantoButton(
-                      width: 104,
-                      type: SantoButtonType.normal,
-                      size: SantoButtonSize.large,
-                      text: "取消",
-                      onTap: () {
-                        if (controller != null) {
-                          controller!.cancelSelectedOptions();
-                          setState(() {
-                            _isShow = false;
-                          });
-                        }
-                      }),
-                  Container(
-                    width: 20,
-                  ),
-                  SantoButton(
-                      width: 104,
-                      type: SantoButtonType.primary,
-                      size: SantoButtonSize.large,
-                      text: "确定",
-                      onTap: () {
-                        if (controller != null) {
-                          controller!.confirmSelectedOptions();
-                          setState(() {
-                            _isShow = false;
-                          });
-                        }
-                      }),
-                ],
-              ))
-            ],
-          ),
-        )
-      ],
+            ),
+            const Spacer(),
+            SantoButton(
+              width: 104,
+              type: SantoButtonType.normal,
+              size: SantoButtonSize.large,
+              text: '取消',
+              onTap: () {
+                _controller.cancelSelectedOptions();
+                setState(() => _isExpanded = false);
+              },
+            ),
+            const SizedBox(width: 20),
+            SantoButton(
+              width: 104,
+              type: SantoButtonType.primary,
+              size: SantoButtonSize.large,
+              text: '确定',
+              onTap: () {
+                _controller.confirmSelectedOptions();
+                setState(() => _isExpanded = false);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

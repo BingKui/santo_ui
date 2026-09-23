@@ -1,5 +1,3 @@
-
-
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/components/selection/filter_entity.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
@@ -26,30 +24,35 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget._title)),
-      body: Column(
-        children: <Widget>[
-          SantoSimpleSelection.checkbox(
-            menuName: widget._filterData.name,
-            menuKey: widget._filterData.key ?? 'defaultMenuKey',
-            items: widget._filterData.children,
-            maxSelectedCount: 4,
-            defaultValue: widget._filterData.defaultValue,
-            onSimpleSelectionChanged: (List<ItemEntity> filterParams) {
-              SantoToast.show(
+    return SantoPageLayout(
+      title: widget._title,
+      scrollable: false,
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            SantoSimpleSelection.checkbox(
+              menuName: widget._filterData.name,
+              menuKey: widget._filterData.key ?? 'defaultMenuKey',
+              items: widget._filterData.children,
+              maxSelectedCount: 4,
+              defaultValue: widget._filterData.defaultValue,
+              onSimpleSelectionChanged: (List<ItemEntity> filterParams) {
+                SantoToast.show(
                   filterParams.map((e) => e.value).toList().join(','),
-                  context);
-            },
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text("背景内容区域"),
+                  context,
+                );
+              },
             ),
-          )
-        ],
-      ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text("背景内容区域"),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

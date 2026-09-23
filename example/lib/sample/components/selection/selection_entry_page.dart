@@ -1,281 +1,226 @@
-
-
 import 'dart:convert';
 
-import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/example_intro.dart';
+import 'package:example/sample/components/selection/filter_entity.dart';
+import 'package:example/sample/components/selection/selection_flat_entry_page.dart';
 import 'package:example/sample/components/selection/selectionview_custom_floating_layer_example.dart';
 import 'package:example/sample/components/selection/selectionview_customhandle_filter_example_page.dart';
 import 'package:example/sample/components/selection/selectionview_customview_example_page.dart';
+import 'package:example/sample/components/selection/selectionview_date_filter_example_page.dart';
 import 'package:example/sample/components/selection/selectionview_date_range_example_page.dart';
+import 'package:example/sample/components/selection/selectionview_interceptor_example.dart';
 import 'package:example/sample/components/selection/selectionview_limit_max_selected_count_example.dart';
+import 'package:example/sample/components/selection/selectionview_more_filter_example_page.dart';
+import 'package:example/sample/components/selection/selectionview_multi_list_example_page.dart';
+import 'package:example/sample/components/selection/selectionview_multi_range_example_page.dart';
+import 'package:example/sample/components/selection/selectionview_simple_multi_check_example_page.dart';
+import 'package:example/sample/components/selection/selectionview_simple_single_list_example_page.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
-import 'package:example/sample/components/selection/selection_flat_entry_page.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
 import 'package:flutter/services.dart';
-
-import 'filter_entity.dart';
-import 'selectionview_simple_single_list_example_page.dart';
-import 'selectionview_simple_multi_check_example_page.dart';
-import 'selectionview_interceptor_example.dart';
-import 'selectionview_more_filter_example_page.dart';
-import 'selectionview_multi_list_example_page.dart';
-import 'selectionview_multi_range_example_page.dart';
+import 'package:santo_ui/santo_ui.dart';
 
 class SelectionEntryPage extends StatelessWidget {
+  const SelectionEntryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Selection 示例',
-        children: <Widget>[
-          ExampleIntro('selection'),
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-            child: Text(
-              "DropdownMenu 组件：",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.purple),
-            ),
+      title: 'Selection 复杂筛选示例',
+      children: [
+        ExampleIntro('selection'),
+        SantoSection(
+          title: '基础筛选',
+          description: '单列、组合条件及日期筛选',
+          child: Column(
+            children: [
+              ListItem(
+                title: '单列单选',
+                onPressed: () => _openSimpleFilter(
+                  context,
+                  (filter) =>
+                      SelectionViewSimpleSingleListExamplePage('单列单选', filter),
+                ),
+              ),
+              ListItem(
+                title: '单列多选',
+                onPressed: () => _openSimpleFilter(
+                  context,
+                  (filter) =>
+                      SelectionViewSimpleMultiCheckExamplePage('单列多选', filter),
+                ),
+              ),
+              ListItem(
+                title: '多列筛选',
+                describe: '一列、两列及三列筛选菜单',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/multi_list_filter.json',
+                  (filters) =>
+                      SelectionViewMultiListExamplePage('多列筛选', filters),
+                ),
+              ),
+              ListItem(
+                title: '范围筛选',
+                describe: '一个或两个 Range 的标签样式展示',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/multi_range_filter.json',
+                  (filters) =>
+                      SelectionViewMultiRangeExamplePage('范围筛选', filters),
+                ),
+              ),
+              ListItem(
+                title: '日期筛选',
+                describe: '日期与日期范围选择',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/date_range_filter.json',
+                  (filters) =>
+                      SelectionViewDateRangeExamplePage('日期筛选', filters),
+                ),
+              ),
+              ListItem(
+                title: '日期自定义筛选',
+                describe: '自定义日期筛选参数',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/date_range_filter.json',
+                  (filters) =>
+                      SelectionViewDateFilterExamplePage('日期自定义筛选', filters),
+                ),
+              ),
+            ],
           ),
-          Divider(indent: 15),
-          ListItem(
-            title: "简单筛选示例-单列单选",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/multi_list_filter.json')
-                  .then((data) {
-                var datas = SantoFilterEntity.fromJson(
-                    JsonDecoder().convert(data)["data"]['list'][0]);
-                var page = SelectionViewSimpleSingleListExamplePage(
-                    "简单筛选示例-单列单选", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
+        ),
+        SantoSection(
+          title: '更多与自定义筛选',
+          description: '更多面板、拦截回调及自定义内容',
+          child: Column(
+            children: [
+              ListItem(
+                title: '更多筛选',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/more_filter.json',
+                  (filters) =>
+                      SelectionViewMoreFilterExamplePage('更多筛选', filters),
+                ),
+              ),
+              ListItem(
+                title: 'customHandle 筛选',
+                describe: '拦截回调并设置参数',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/customhandle_filter.json',
+                  (filters) => SelectionViewCustomHandleFilterExamplePage(
+                    'customHandle 筛选',
+                    filters,
+                  ),
+                ),
+              ),
+              ListItem(
+                title: '自定义筛选弹层',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/customview_filter.json',
+                  (filters) =>
+                      SelectionViewCustomViewExamplePage('自定义筛选弹层', filters),
+                ),
+              ),
+              ListItem(
+                title: '弹层关闭与点击拦截',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/multi_list_filter.json',
+                  (filters) => SelectionViewCloseOrInterceptorExamplePage(
+                    '弹层关闭与点击拦截',
+                    filters,
+                  ),
+                ),
+              ),
+              ListItem(
+                title: '更多筛选跳转二级页面',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/more_custom_floating_layer_filter.json',
+                  (filters) => SelectionViewMoreCustomFloatLayerExamplePage(
+                    '更多筛选跳转二级页面',
+                    filters,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '选择限制与布局',
+          description: '最大选择数量及平铺标签布局',
+          child: Column(
+            children: [
+              ListItem(
+                title: '限制最大选择数量',
+                describe: '最多选择 5 项',
+                onPressed: () => _openFilterList(
+                  context,
+                  'assets/list_filter_maxcount_test.json',
+                  (filters) {
+                    filters.removeAt(0);
+                    filters.removeAt(1);
+                    _configureMaxSelectedCount(filters.first, 5);
+                    return SelectionViewLimitMaxSelectedCountExamplePage(
+                      '限制最大选择数量',
+                      filters,
+                    );
                   },
-                ));
-              });
-            },
+                ),
+              ),
+              ListItem(
+                title: '平铺筛选',
+                describe: '每行展示 3、4 或 5 个标签',
+                onPressed: () =>
+                    _openPage(context, const FlatSelectionEntryPage()),
+              ),
+            ],
           ),
-          ListItem(
-            title: "简单筛选示例-单列多选",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/multi_list_filter.json')
-                  .then((data) {
-                var datas = SantoFilterEntity.fromJson(
-                    JsonDecoder().convert(data)["data"]['list'][0]);
-                var page = SelectionViewSimpleMultiCheckExamplePage(
-                    "简单筛选示例-单列多选", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          SantoLine(
-            height: 10,
-          ),
-          ListItem(
-            title: "一列、两列、三列情况",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/multi_list_filter.json')
-                  .then((data) {
-                var page = SelectionViewMultiListExamplePage(
-                    "SelectionView示例(一列、两列、三列情况)",
-                    SantoSelectionEntityListBean.fromJson(
-                            JsonDecoder().convert(data)["data"])!
-                        .list);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "一个 Range, 两个 Range 时 Tag 样式展示情",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/multi_range_filter.json')
-                  .then((data) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SelectionViewMultiRangeExamplePage(
-                        "一个 Range, 两个 Range 时 Tag 展示情",
-                        SantoSelectionEntityListBean.fromJson(
-                                JsonDecoder().convert(data)["data"])!
-                            .list);
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "更多筛选",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle.loadString('assets/more_filter.json').then((data) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SelectionViewMoreFilterExamplePage(
-                        "更多筛选",
-                        SantoSelectionEntityListBean.fromJson(
-                                JsonDecoder().convert(data)["data"])!
-                            .list);
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "日期、日期范围选择",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/date_range_filter.json')
-                  .then((data) {
-                var page = SelectionViewDateRangeExamplePage(
-                    "日期、日期范围选择",
-                    SantoSelectionEntityListBean.fromJson(
-                            JsonDecoder().convert(data)["data"])!
-                        .list);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "customHandle 类型筛选，自定义拦截，设置参数",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/customhandle_filter.json')
-                  .then((data) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SelectionViewCustomHandleFilterExamplePage(
-                        "customHandle 类型筛选，自定义拦截，设置参数",
-                        SantoSelectionEntityListBean.fromJson(
-                                JsonDecoder().convert(data)["data"])!
-                            .list);
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "自定义筛选弹出 View",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/customview_filter.json')
-                  .then((data) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return SelectionViewCustomViewExamplePage(
-                      "自定义筛选弹出 View",
-                      SantoSelectionEntityListBean.fromJson(
-                              JsonDecoder().convert(data)["data"])!
-                          .list);
-                }));
-              });
-            },
-          ),
-          ListItem(
-            title: "手动关闭弹窗、拦截弹出的情况",
-            describe: "筛选项",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/multi_list_filter.json')
-                  .then((data) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SelectionViewCloseOrInterceptorExamplePage(
-                        "新SelectionView示例(手动关闭的情况)",
-                        SantoSelectionEntityListBean.fromJson(
-                                JsonDecoder().convert(data)["data"])!
-                            .list);
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "限制选择最大数量",
-            describe: "限制选择最大数量",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/list_filter_maxcount_test.json')
-                  .then((data) {
-                var datas = SantoSelectionEntityListBean.fromJson(
-                        JsonDecoder().convert(data)["data"])!
-                    .list!;
-                datas.removeAt(0);
-                datas.removeAt(1);
-                void _configMaxSelectedCount(
-                    SantoSelectionEntity entity, int maxCount) {
-                  entity.maxSelectedCount = maxCount;
-                  if (entity.children.length > 0) {
-                    for (SantoSelectionEntity child in entity.children) {
-                      _configMaxSelectedCount(child, maxCount);
-                    }
-                  }
-                }
-
-                _configMaxSelectedCount(datas[0], 5);
-                var page = SelectionViewLimitMaxSelectedCountExamplePage(
-                    "限制选择最大数量", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "更多筛选-跳转自定义二级页面",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/more_custom_floating_layer_filter.json')
-                  .then((data) {
-                List<SantoSelectionEntity>? datas =
-                    SantoSelectionEntityListBean.fromJson(
-                            JsonDecoder().convert(data)["data"])!
-                        .list;
-                var page = SelectionViewMoreCustomFloatLayerExamplePage(
-                    "更多筛选-跳转自定义二级页面", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "新筛选示例(更多里面抽出平级筛选)",
-            describe: "筛选项",
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return FlatSelectionEntryPage();
-                },
-              ));
-            },
-          ),
-        ],
+        ),
+      ],
     );
+  }
+
+  void _openSimpleFilter(
+    BuildContext context,
+    Widget Function(SantoFilterEntity filter) pageBuilder,
+  ) {
+    rootBundle.loadString('assets/multi_list_filter.json').then((data) {
+      final filter = SantoFilterEntity.fromJson(
+        (jsonDecode(data) as Map<String, dynamic>)['data']['list'][0],
+      );
+      _openPage(context, pageBuilder(filter));
+    });
+  }
+
+  void _openFilterList(
+    BuildContext context,
+    String asset,
+    Widget Function(List<SantoSelectionEntity> filters) pageBuilder,
+  ) {
+    rootBundle.loadString(asset).then((data) {
+      final filters = SantoSelectionEntityListBean.fromJson(
+        (jsonDecode(data) as Map<String, dynamic>)['data'],
+      )!.list!;
+      _openPage(context, pageBuilder(filters));
+    });
+  }
+
+  void _openPage(BuildContext context, Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => page));
+  }
+
+  void _configureMaxSelectedCount(SantoSelectionEntity entity, int maxCount) {
+    entity.maxSelectedCount = maxCount;
+    for (final child in entity.children) {
+      _configureMaxSelectedCount(child, maxCount);
+    }
   }
 }

@@ -1,125 +1,79 @@
-
-
 import 'dart:convert';
 
-import 'package:santo_ui/santo_ui.dart';
-import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/selection/flat_selection_five_tags_example.dart';
 import 'package:example/sample/components/selection/flat_selection_four_tags_example.dart';
 import 'package:example/sample/components/selection/flat_selection_three_tags_example.dart';
+import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
 import 'package:flutter/services.dart';
+import 'package:santo_ui/santo_ui.dart';
 
 class FlatSelectionEntryPage extends StatelessWidget {
+  const FlatSelectionEntryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SantoPageLayout(
-      title: 'Selection 示例',
-        children: <Widget>[
-          ExampleIntro('selection'),
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-            child: Text(
-              "DropdownMenu 组件：",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.purple),
-            ),
+      title: '平铺筛选示例',
+      children: [
+        ExampleIntro('selection'),
+        SantoSection(
+          title: '标签布局',
+          description: '将更多筛选中的条件平铺展示，并控制每行标签数量',
+          child: Column(
+            children: [
+              ListItem(
+                title: '每行 3 个标签',
+                onPressed: () => _openExample(
+                  context,
+                  (filters) =>
+                      FlatSelectionThreeTagsExample('每行 3 个标签', filters),
+                ),
+              ),
+              ListItem(
+                title: '每行 4 个标签',
+                onPressed: () => _openExample(
+                  context,
+                  (filters) =>
+                      FlatSelectionFourTagsExample('每行 4 个标签', filters),
+                ),
+              ),
+              ListItem(
+                title: '每行 5 个标签',
+                onPressed: () => _openExample(
+                  context,
+                  (filters) =>
+                      FlatSelectionFiveTagsExample('每行 5 个标签', filters),
+                ),
+              ),
+            ],
           ),
-          Divider(indent: 15),
-          ListItem(
-            title: "新筛选示例(更多里面抽出平级筛选+一行3个tag)",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/flat_selection_filter.json')
-                  .then((data) {
-                var datas = SantoSelectionEntityListBean.fromJson(
-                        JsonDecoder().convert(data)["data"])!
-                    .list!;
-                void _configMaxSelectedCount(
-                    SantoSelectionEntity entity, int maxCount) {
-                  entity.maxSelectedCount = maxCount;
-                  if (entity.children.length > 0) {
-                    for (SantoSelectionEntity child in entity.children) {
-                      _configMaxSelectedCount(child, maxCount);
-                    }
-                  }
-                }
-
-                _configMaxSelectedCount(datas[0].children[1], 5);
-                var page = FlatSelectionThreeTagsExample(
-                    "新筛选示例(更多里面抽出平级筛选+一行3个tag)", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "新筛选示例(更多里面抽出平级筛选+一行4个tag)",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/flat_selection_filter.json')
-                  .then((data) {
-                var datas = SantoSelectionEntityListBean.fromJson(
-                        JsonDecoder().convert(data)["data"])!
-                    .list!;
-                void _configMaxSelectedCount(
-                    SantoSelectionEntity entity, int maxCount) {
-                  entity.maxSelectedCount = maxCount;
-                  if (entity.children.length > 0) {
-                    for (SantoSelectionEntity child in entity.children) {
-                      _configMaxSelectedCount(child, maxCount);
-                    }
-                  }
-                }
-
-                _configMaxSelectedCount(datas[0].children[1], 5);
-                var page = FlatSelectionFourTagsExample(
-                    "新筛选示例(更多里面抽出平级筛选+一行4个tag)", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-          ListItem(
-            title: "新筛选示例(更多里面抽出平级筛选+一行5个tag)",
-            onPressed: () {
-              rootBundle
-                  .loadString('assets/flat_selection_filter.json')
-                  .then((data) {
-                var datas = SantoSelectionEntityListBean.fromJson(
-                        JsonDecoder().convert(data)["data"])!
-                    .list!;
-                void _configMaxSelectedCount(
-                    SantoSelectionEntity entity, int maxCount) {
-                  entity.maxSelectedCount = maxCount;
-                  if (entity.children.length > 0) {
-                    for (SantoSelectionEntity child in entity.children) {
-                      _configMaxSelectedCount(child, maxCount);
-                    }
-                  }
-                }
-
-                _configMaxSelectedCount(datas[0].children[1], 5);
-                var page = NewSelectionViewExamplePage23(
-                    "新筛选示例(更多里面抽出平级筛选+一行5个tag)", datas);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return page;
-                  },
-                ));
-              });
-            },
-          ),
-        ],
+        ),
+      ],
     );
+  }
+
+  void _openExample(
+    BuildContext context,
+    Widget Function(List<SantoSelectionEntity> filters) pageBuilder,
+  ) {
+    rootBundle.loadString('assets/flat_selection_filter.json').then((data) {
+      final filters = SantoSelectionEntityListBean.fromJson(
+        (jsonDecode(data) as Map<String, dynamic>)['data'],
+      )!.list!;
+      _configureMaxSelectedCount(filters[0].children[1], 5);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => pageBuilder(filters)),
+      );
+    });
+  }
+
+  void _configureMaxSelectedCount(SantoSelectionEntity entity, int maxCount) {
+    entity.maxSelectedCount = maxCount;
+    for (final child in entity.children) {
+      _configureMaxSelectedCount(child, maxCount);
+    }
   }
 }

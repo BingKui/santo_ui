@@ -1,5 +1,3 @@
-
-
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
@@ -37,68 +35,85 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget._title)),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 20),
-            alignment: Alignment.center,
-            child: GestureDetector(
-              child: Text("点击关闭弹窗"),
-              onTap: () {
-                controller!.closeSelectionView();
-              },
-            ),
-          ),
-          DropdownMenu(
-            key: selectionKey,
-            selectionViewController: controller,
-            originalSelectionData: widget._filterData!,
-            onMoreSelectionMenuClick:
-                (int index, SantoOpenMorePage openMorePage) {
-              openMorePage(updateData: false);
-            },
-            onCustomFloatingLayerClick: (int customFloatingLayerIndex,
-                SantoSelectionEntity customLayerEntity,
-                SantoSetCustomFloatingLayerSelectionParams resultCallBack) {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return BubbleTextExample();
-                },
-              )).then((data) {
-                Map<String, String> result = Map();
-                result['Key1'] = 'Value1';
-                result['Key2'] = 'Value2';
-                List<SantoSelectionEntity> resultEntity = [];
-                result.forEach((userId, userName) {
-                  resultEntity.add(SantoSelectionEntity(
-                      value: userId,
-                      title: userName,
-                      isSelected: true,
-                      type: 'radio'));
-                });
-                resultCallBack(resultEntity);
-              });
-            },
-            onSelectionChanged: (int menuIndex,
-                Map<String, String> filterParams,
-                Map<String, String> customParams,
-                SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
-              SantoToast.show(
-                  'filterParams : $filterParams'
-                      ',\n customParams : $customParams',
-                  context);
-            },
-          ),
-          Expanded(
-            child: Container(
+    return SantoPageLayout(
+      title: widget._title,
+      scrollable: false,
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(top: 20),
               alignment: Alignment.center,
-              child: Text("背景内容区域"),
+              child: GestureDetector(
+                child: Text("点击关闭弹窗"),
+                onTap: () {
+                  controller!.closeSelectionView();
+                },
+              ),
             ),
-          ),
-        ],
-      ),
+            DropdownMenu(
+              key: selectionKey,
+              selectionViewController: controller,
+              originalSelectionData: widget._filterData!,
+              onMoreSelectionMenuClick:
+                  (int index, SantoOpenMorePage openMorePage) {
+                    openMorePage(updateData: false);
+                  },
+              onCustomFloatingLayerClick:
+                  (
+                    int customFloatingLayerIndex,
+                    SantoSelectionEntity customLayerEntity,
+                    SantoSetCustomFloatingLayerSelectionParams resultCallBack,
+                  ) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return BubbleTextExample();
+                        },
+                      ),
+                    ).then((data) {
+                      Map<String, String> result = Map();
+                      result['Key1'] = 'Value1';
+                      result['Key2'] = 'Value2';
+                      List<SantoSelectionEntity> resultEntity = [];
+                      result.forEach((userId, userName) {
+                        resultEntity.add(
+                          SantoSelectionEntity(
+                            value: userId,
+                            title: userName,
+                            isSelected: true,
+                            type: 'radio',
+                          ),
+                        );
+                      });
+                      resultCallBack(resultEntity);
+                    });
+                  },
+              onSelectionChanged:
+                  (
+                    int menuIndex,
+                    Map<String, String> filterParams,
+                    Map<String, String> customParams,
+                    SantoSetCustomSelectionMenuTitle setCustomTitleFunction,
+                  ) {
+                    SantoToast.show(
+                      'filterParams : $filterParams'
+                      ',\n customParams : $customParams',
+                      context,
+                    );
+                  },
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text("背景内容区域"),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

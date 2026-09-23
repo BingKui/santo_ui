@@ -1,5 +1,3 @@
-
-
 import 'package:santo_ui/santo_ui.dart';
 import 'package:flutter/material.dart' hide DropdownMenu;
 
@@ -42,8 +40,9 @@ class _SelectionViewExamplePageState
 
   @override
   void initState() {
-    _currentCalendarSelectedDate =
-        ValueNotifier(DateTimeFormatter.convertStringToDate(_dateForamt, _filterSelectedDate));
+    _currentCalendarSelectedDate = ValueNotifier(
+      DateTimeFormatter.convertStringToDate(_dateForamt, _filterSelectedDate),
+    );
     super.initState();
   }
 
@@ -56,61 +55,77 @@ class _SelectionViewExamplePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget._title)),
-      body: Column(
-        children: <Widget>[
-          DropdownMenu(
-            key: selectionKey,
-            selectionViewController: _selectionViewController,
-            originalSelectionData: _filterData!,
-            onCustomSelectionMenuClick: (int index,
-                SantoSelectionEntity customMenuItem,
-                SantoSetCustomSelectionParams customHandleCallBack) {
-              if (isCustomFilterViewShow) {
-                closeCustomFilterView();
-              } else {
-                filterViewEntry = getCustomFilterView();
-                Overlay.of(context).insert(filterViewEntry!);
-                isCustomFilterViewShow = true;
-              }
-              _customHandleCallBack = customHandleCallBack;
-            },
-            onSelectionChanged: (int menuIndex,
-                Map<String, String> filterParams,
-                Map<String, String> customParams,
-                SantoSetCustomSelectionMenuTitle setCustomTitleFunction) {
-              SantoToast.show(
-                  'filterParams : $filterParams'
+    return SantoPageLayout(
+      title: widget._title,
+      scrollable: false,
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            DropdownMenu(
+              key: selectionKey,
+              selectionViewController: _selectionViewController,
+              originalSelectionData: _filterData!,
+              onCustomSelectionMenuClick:
+                  (
+                    int index,
+                    SantoSelectionEntity customMenuItem,
+                    SantoSetCustomSelectionParams customHandleCallBack,
+                  ) {
+                    if (isCustomFilterViewShow) {
+                      closeCustomFilterView();
+                    } else {
+                      filterViewEntry = getCustomFilterView();
+                      Overlay.of(context).insert(filterViewEntry!);
+                      isCustomFilterViewShow = true;
+                    }
+                    _customHandleCallBack = customHandleCallBack;
+                  },
+              onSelectionChanged:
+                  (
+                    int menuIndex,
+                    Map<String, String> filterParams,
+                    Map<String, String> customParams,
+                    SantoSetCustomSelectionMenuTitle setCustomTitleFunction,
+                  ) {
+                    SantoToast.show(
+                      'filterParams : $filterParams'
                       ',\n customParams : $customParams',
-                  context);
-              _filterSelectedDate = customParams['date'];
-              if (customParams.isNotEmpty) {
-                setCustomTitleFunction(
-                    menuTitle: customParams.values.first,
-                    isMenuTitleHighLight: true);
-              } else {
-                setCustomTitleFunction(
-                    menuTitle: '自定义事件选择', isMenuTitleHighLight: false);
-              }
-            },
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text("背景内容区域"),
+                      context,
+                    );
+                    _filterSelectedDate = customParams['date'];
+                    if (customParams.isNotEmpty) {
+                      setCustomTitleFunction(
+                        menuTitle: customParams.values.first,
+                        isMenuTitleHighLight: true,
+                      );
+                    } else {
+                      setCustomTitleFunction(
+                        menuTitle: '自定义事件选择',
+                        isMenuTitleHighLight: false,
+                      );
+                    }
+                  },
             ),
-          )
-        ],
-      ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text("背景内容区域"),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
   OverlayEntry getCustomFilterView() {
     final RenderBox selectionRenderBox =
         selectionKey.currentContext!.findRenderObject() as RenderBox;
-    var position =
-        selectionRenderBox.localToGlobal(Offset.zero, ancestor: null);
+    var position = selectionRenderBox.localToGlobal(
+      Offset.zero,
+      ancestor: null,
+    );
     var size = selectionRenderBox.size;
     double topOffset = size.height + position.dy;
     SantoSelectionListViewController controller =
@@ -119,52 +134,58 @@ class _SelectionViewExamplePageState
     controller..screenHeight = MediaQuery.of(context).size.height;
 
     _currentCalendarSelectedDate = ValueNotifier(
-        DateTimeFormatter.convertStringToDate(
-            _dateForamt, _filterSelectedDate));
+      DateTimeFormatter.convertStringToDate(_dateForamt, _filterSelectedDate),
+    );
 
-    var content = Column(children: [
-      Flexible(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ValueListenableBuilder(
-                valueListenable: _currentCalendarSelectedDate,
-                builder: (context, dynamic value, widget) {
-                  return SantoCalendar.single(
+    var content = Column(
+      children: [
+        Flexible(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ValueListenableBuilder(
+                  valueListenable: _currentCalendarSelectedDate,
+                  builder: (context, dynamic value, widget) {
+                    return SantoCalendar.single(
                       initStartSelectedDate: _currentCalendarSelectedDate.value,
                       initEndSelectedDate: _currentCalendarSelectedDate.value,
                       dateChange: (date) {
                         _currentCalendarSelectedDate.value = date;
-                      });
-                },
-              ),
-            ],
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      _bottomWidget(),
-    ]);
+        _bottomWidget(),
+      ],
+    );
 
-    OverlayEntry entry = OverlayEntry(builder: (context) {
-      return GestureDetector(
-        onTap: () {
-          _currentCalendarSelectedDate.value = null;
-          closeCustomFilterView();
-        },
-        child: Container(
-          padding: EdgeInsets.only(
-            top: topOffset,
+    OverlayEntry entry = OverlayEntry(
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            _currentCalendarSelectedDate.value = null;
+            closeCustomFilterView();
+          },
+          child: Container(
+            padding: EdgeInsets.only(top: topOffset),
+            child: Stack(
+              children: <Widget>[
+                SantoSelectionAnimationWidget(
+                  controller: controller,
+                  view: content,
+                ),
+              ],
+            ),
           ),
-          child: Stack(
-            children: <Widget>[
-              SantoSelectionAnimationWidget(controller: controller, view: content)
-            ],
-          ),
-        ),
-      );
-    });
+        );
+      },
+    );
 
     return entry;
   }
@@ -188,7 +209,7 @@ class _SelectionViewExamplePageState
                   Text(
                     '重置',
                     style: TextStyle(fontSize: 11, color: Color(0xFF808695)),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -204,19 +225,21 @@ class _SelectionViewExamplePageState
               onTap: () {
                 /// 真正点击【确定】时，选中的参数才有意义
                 if (_customHandleCallBack != null)
-                  _customHandleCallBack(_currentCalendarSelectedDate.value ==
-                          null
-                      ? Map<String, String>()
-                      : {
-                          'date': _currentCalendarSelectedDate.value.toString()
-                        });
-                _filterSelectedDate =
-                    _currentCalendarSelectedDate.value?.toString();
+                  _customHandleCallBack(
+                    _currentCalendarSelectedDate.value == null
+                        ? Map<String, String>()
+                        : {
+                            'date': _currentCalendarSelectedDate.value
+                                .toString(),
+                          },
+                  );
+                _filterSelectedDate = _currentCalendarSelectedDate.value
+                    ?.toString();
                 closeCustomFilterView();
               },
               text: '确定',
             ),
-          )
+          ),
         ],
       ),
     );
