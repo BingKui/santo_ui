@@ -6,6 +6,13 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.4.2] - 2026-09-23
+
+### 🗂️ SantoEmpty 布局
+
+- **修复**: 空状态内容垂直居中，内置 SVG 插画按原始比例渲染并裁掉上下透明画布
+- **新增**: 带标题和固定展示高度的 `SantoPanel` 空状态示例
+
 ## [1.4.1] - 2026-09-23
 
 ### 🧭 Selection 示例

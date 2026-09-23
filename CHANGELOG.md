@@ -6,6 +6,13 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.2] - 2026-09-23
+
+### 🗂️ SantoEmpty layout
+
+- **Fixed**: vertically center empty-state content, constrain built-in SVG illustrations to their original aspect ratio, and trim their transparent top and bottom canvas space
+- **Added**: a titled `SantoPanel` empty-state example with a fixed display height
+
 ## [1.4.1] - 2026-09-23
 
 ### 🧭 Selection examples
