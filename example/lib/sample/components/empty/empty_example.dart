@@ -26,6 +26,7 @@ class EmptyExample extends StatelessWidget {
         _buildLoadFailSection(context),
         _buildOfflineSection(context),
         _buildListEmptySection(context),
+        _buildPanelWrappedSection(),
         _buildImageTypesSection(),
         _buildSingleButtonSection(context),
         _buildDoubleButtonSection(context),
@@ -39,7 +40,8 @@ class EmptyExample extends StatelessWidget {
   Widget _buildLoadFailSection(BuildContext context) {
     return SantoSection(
       title: '加载失败+操作',
-      description: 'imageType 为 loadFail 时展示加载失败插画，operateAreaType 为 textButton 时展示文字操作',
+      description:
+          'imageType 为 loadFail 时展示加载失败插画，operateAreaType 为 textButton 时展示文字操作',
       child: _centerDemoBox(
         context,
         SantoEmpty(
@@ -60,7 +62,8 @@ class EmptyExample extends StatelessWidget {
   Widget _buildOfflineSection(BuildContext context) {
     return SantoSection(
       title: '网络未连接居中展示',
-      description: 'imageType 为 offline 时展示断网插画，isCenterVertical 为 true 时内容在可用空间内垂直居中',
+      description:
+          'imageType 为 offline 时展示断网插画，isCenterVertical 为 true 时内容在可用空间内垂直居中',
       child: _centerDemoBox(
         context,
         SantoEmpty(
@@ -76,10 +79,28 @@ class EmptyExample extends StatelessWidget {
   Widget _buildListEmptySection(BuildContext context) {
     return SantoSection(
       title: '列表为空默认展示',
-      description: 'imageType 为 listEmpty 时展示列表为空插画，不设置 isCenterVertical 时按内容高度从上往下排列',
+      description:
+          'imageType 为 listEmpty 时展示列表为空插画，不设置 isCenterVertical 时按内容高度从上往下排列',
       child: SantoEmpty(
         imageType: SantoEmptyImageType.listEmpty,
         title: '暂无数据',
+      ),
+    );
+  }
+
+  /// Panel 包裹的空状态
+  Widget _buildPanelWrappedSection() {
+    return SantoSection(
+      title: 'Panel 包裹',
+      description: '使用 SantoPanel 包裹空状态，适用于卡片或模块内容为空的场景',
+      child: SantoPanel(
+        title: '内容列表',
+        contentPadding: false,
+        child: SantoEmpty(
+          height: _centerDemoHeight,
+          imageType: SantoEmptyImageType.contentEmpty,
+          title: '暂无内容',
+        ),
       ),
     );
   }
@@ -175,9 +196,7 @@ class EmptyExample extends StatelessWidget {
     return SantoSection(
       title: '无图片空态',
       description: '不传 imageType 与 img 时不展示图片，只展示文字，适用于小面积空态',
-      child: SantoEmpty(
-        content: '您的门店暂无用户',
-      ),
+      child: SantoEmpty(content: '您的门店暂无用户'),
     );
   }
 
@@ -187,10 +206,7 @@ class EmptyExample extends StatelessWidget {
       title: '自定义图片',
       description: 'img 传任意图片组件(Image / SvgPicture)时展示自定义图片，优先级高于 imageType',
       child: SantoEmpty(
-        img: Image.asset(
-          'assets/image/content_failed.png',
-          scale: 3.0,
-        ),
+        img: Image.asset('assets/image/content_failed.png', scale: 3.0),
         content: '您的门店暂无用户',
       ),
     );

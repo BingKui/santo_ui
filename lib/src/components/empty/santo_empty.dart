@@ -8,6 +8,8 @@ import 'package:santo_ui/src/theme/configs/santo_abnormal_state_config.dart';
 /// 内置插画宽度,插画 SVG 原始比例为 400:300
 const double kSantoEmptyImageWidth = 220;
 
+const double _kSantoEmptyImageVisibleHeightFactor = 0.75;
+
 /// 内置插画类型,对应 `assets/empty/` 下的 SVG 插画,配置不同的类型展示不同的图片
 enum SantoEmptyImageType {
   /// 页面不存在(404)
@@ -239,11 +241,9 @@ class SantoEmpty extends StatelessWidget {
         color: backgroundColor,
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: height != null || isCenterVertical
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _buildImageWidget(context),
+            _buildImageWidget(),
             _buildTextWidget(),
             _buildContentWidget(),
             _buildOperateWidget(),
@@ -254,27 +254,21 @@ class SantoEmpty extends StatelessWidget {
   }
 
   ///图片区域
-  ///要求顶部距离是父布局的8%
-  _buildImageWidget(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final screenHeight = size.height;
-    final Widget? resolvedImg =
-        img ??
-        (imageType == null
-            ? null
-            : SvgPicture.asset(
-                imageType!.assetPath,
-                package: 'santo_ui',
-                width: kSantoEmptyImageWidth,
-              ));
-    return resolvedImg != null
-        ? Container(
-            padding: height != null || isCenterVertical
-                ? null
-                : EdgeInsets.only(top: topOffset ?? screenHeight * topPercent),
-            child: resolvedImg,
-          )
-        : const SizedBox.shrink();
+  _buildImageWidget() {
+    if (img != null) return img!;
+    if (imageType == null) return const SizedBox.shrink();
+
+    return ClipRect(
+      child: Align(
+        heightFactor: _kSantoEmptyImageVisibleHeightFactor,
+        child: SvgPicture.asset(
+          imageType!.assetPath,
+          package: 'santo_ui',
+          width: kSantoEmptyImageWidth,
+          height: kSantoEmptyImageWidth * 3 / 4,
+        ),
+      ),
+    );
   }
 
   ///文案区域：标题
