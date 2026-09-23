@@ -334,3 +334,22 @@ export 'src/components/action_bar/santo_action_bar_button.dart';
 export 'src/components/icon/santo_icon.dart';
 export 'src/components/icon/santo_icons.dart';
 export 'src/components/icon/santo_solid_icons.dart';
+
+//会话
+export 'src/components/chat/model/santo_chat_conversation.dart';
+export 'src/components/chat/model/santo_chat_emoji.dart';
+export 'src/components/chat/model/santo_chat_message.dart';
+export 'src/components/chat/santo_chat.dart';
+export 'src/components/chat/santo_chat_bubble.dart';
+export 'src/components/chat/santo_chat_file.dart';
+export 'src/components/chat/santo_chat_image.dart';
+export 'src/components/chat/santo_chat_input.dart';
+export 'src/components/chat/santo_chat_list.dart';
+export 'src/components/chat/santo_chat_message_list.dart';
+export 'src/components/chat/santo_chat_quote_view.dart';
+export 'src/components/chat/santo_chat_reaction.dart';
+export 'src/components/chat/santo_chat_system_notice.dart';
+export 'src/components/chat/santo_chat_text.dart';
+export 'src/components/chat/santo_chat_typing_indicator.dart';
+export 'src/components/chat/santo_chat_video.dart';
+export 'src/components/chat/santo_chat_voice.dart';

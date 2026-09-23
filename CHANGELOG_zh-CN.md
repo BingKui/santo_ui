@@ -6,6 +6,16 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.5.0] - 2026-09-23
+
+### 💬 Chat 会话组件
+
+- **新增**: `SantoChat`(头部 + 消息列表 + 输入区)、`SantoChatMessageList`、`SantoChatBubble`、`SantoChatInput`、`SantoChatList`
+- **新增**: 消息内容组件 `SantoChatText`(@提及、表情注册表、链接)、`SantoChatQuoteView`、`SantoChatImage`、`SantoChatVideo`、`SantoChatVoice`、`SantoChatFile`、`SantoChatSystemNotice`、`SantoChatTypingIndicator`、`SantoChatReactionView`、`SantoChatReactionPicker`
+- **新增**: 消息模型(`SantoChatMessage` 及文本/图片/视频/语音/文件/系统消息子类,以及作者、@提及、引用、表情回应)、`SantoChatConversation` 与全局 `SantoChatEmojiRegistry`
+- **新增**: 消息列表能力 —— 时间分隔、同发送者分组、滑动引用回复、长按/双击表情回应、上拉加载更早消息、回到底部按钮
+- **新增**: `SantoChatConfig` 主题配置,并注册进 `SantoAllThemeConfig` 与 `SantoDefaultConfigUtils`
+
 ## [1.4.3] - 2026-09-23
 
 ### 🧭 SantoAppBar 示例

@@ -6,6 +6,16 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-09-23
+
+### 💬 Chat conversation widgets
+
+- **Added**: `SantoChat` (header + message list + input bar), `SantoChatMessageList`, `SantoChatBubble`, `SantoChatInput` and `SantoChatList`
+- **Added**: message content widgets `SantoChatText` (`@` mentions, emoji registry, links), `SantoChatQuoteView`, `SantoChatImage`, `SantoChatVideo`, `SantoChatVoice`, `SantoChatFile`, `SantoChatSystemNotice`, `SantoChatTypingIndicator`, `SantoChatReactionView` and `SantoChatReactionPicker`
+- **Added**: message models (`SantoChatMessage` with text/image/video/voice/file/system variants, plus author, mention, quote and reaction), `SantoChatConversation` and the global `SantoChatEmojiRegistry`
+- **Added**: message list features — date separators, sender grouping, swipe to reply, long-press/double-tap reactions, pull-up history loading and a scroll-to-bottom button
+- **Added**: `SantoChatConfig` theme config, registered in `SantoAllThemeConfig` and `SantoDefaultConfigUtils`
+
 ## [1.4.3] - 2026-09-23
 
 ### 🧭 SantoAppBar examples

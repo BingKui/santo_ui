@@ -10,6 +10,7 @@ export 'configs/santo_action_sheet_config.dart';
 export 'configs/santo_all_config.dart';
 export 'configs/santo_appbar_config.dart';
 export 'configs/santo_button_config.dart';
+export 'configs/santo_chat_config.dart';
 export 'configs/santo_common_config.dart';
 export 'configs/santo_dialog_config.dart';
 export 'configs/santo_abnormal_state_config.dart';

@@ -16,6 +16,7 @@ import 'package:example/sample/components/button/button_entry_page.dart';
 import 'package:example/sample/components/calendar/calendar_example.dart';
 import 'package:example/sample/components/card/santo_card_example.dart';
 import 'package:example/sample/components/bubble_text/bubble_text_example.dart';
+import 'package:example/sample/components/chat/chat_example.dart';
 import 'package:example/sample/components/descriptions/descriptions_example.dart';
 import 'package:example/sample/components/charts/chart_entry_example.dart';
 import 'package:example/sample/components/charts/doughnut_chart_example.dart';
@@ -251,6 +252,7 @@ class CardDataConfig {
       _item("Empty 空状态", "空数据提示", EmptyExample()),
       _item("Footer 页脚", "页面底部信息", FooterExample()),
       _item("Gallery 图片浏览", "大图预览", GalleryExample()),
+      _item("Chat 聊天", "消息列表/气泡/输入区/会话列表", ChatExample()),
     ];
     return GroupInfo(
       groupName: "数据展示",

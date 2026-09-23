@@ -10,6 +10,7 @@ import 'package:santo_ui/src/theme/configs/santo_action_sheet_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_all_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_button_config.dart';
+import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
@@ -48,6 +49,7 @@ class SantoDefaultConfigUtils {
     galleryDetailConfig: defaultGalleryDetailConfig,
     panelConfig: defaultPanelConfig,
     sectionConfig: defaultSectionConfig,
+    chatConfig: defaultChatConfig,
   );
 
   /// 面板配置
@@ -91,8 +93,67 @@ class SantoDefaultConfigUtils {
     ),
   );
 
-  /// 全局默认配置
-  /// 颜色/字号/间距对齐 DevOpsMobile lib/constants/constants.dart
+  /// 会话配置
+  static SantoChatConfig defaultChatConfig = SantoChatConfig(
+    backgroundColor: defaultCommonConfig.fillBody,
+    myBubbleColor:
+        defaultCommonConfig.brandPrimary.withOpacity(kSantoChatMyBubbleOpacity),
+    otherBubbleColor: defaultCommonConfig.fillBase,
+    myTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextBase,
+      fontSize: defaultCommonConfig.fontSizeBase,
+    ),
+    otherTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextBase,
+      fontSize: defaultCommonConfig.fontSizeBase,
+    ),
+    bubbleRadius: defaultCommonConfig.radiusMd,
+    bubblePadding: EdgeInsets.symmetric(
+      horizontal: defaultCommonConfig.hSpacingSm,
+      vertical: defaultCommonConfig.hSpacingSm,
+    ),
+    bubbleMaxWidthRatio: kSantoChatBubbleMaxWidthRatio,
+    myAccentColor: defaultCommonConfig.colorLink,
+    otherAccentColor: defaultCommonConfig.colorLink,
+    nameTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextSecondary,
+      fontSize: defaultCommonConfig.fontSizeCaption,
+    ),
+    timeTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextSecondary,
+      fontSize: defaultCommonConfig.fontSizeCaptionSm,
+    ),
+    systemTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextSecondary,
+      fontSize: defaultCommonConfig.fontSizeCaption,
+    ),
+    systemBackgroundColor: kSantoChatSystemBackgroundColor,
+    systemPadding: EdgeInsets.symmetric(
+      horizontal: defaultCommonConfig.hSpacingSm,
+      vertical: defaultCommonConfig.vSpacingXs,
+    ),
+    avatarSize: kSantoChatAvatarSize,
+    quoteBackgroundColor: defaultCommonConfig.fillBody,
+    quoteTitleTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextBase,
+      fontSize: defaultCommonConfig.fontSizeCaption,
+      fontWeight: FontWeight.w600,
+    ),
+    quotePreviewTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextSecondary,
+      fontSize: defaultCommonConfig.fontSizeCaption,
+    ),
+    inputBackgroundColor: defaultCommonConfig.fillBase,
+    inputTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextBase,
+      fontSize: defaultCommonConfig.fontSizeBase,
+    ),
+    inputHintTextStyle: SantoTextStyle(
+      color: defaultCommonConfig.colorTextHint,
+      fontSize: defaultCommonConfig.fontSizeBase,
+    ),
+    emojiSize: kSantoChatEmojiSize,
+  );
   static SantoCommonConfig defaultCommonConfig = SantoCommonConfig(
     /// 主题色相关
     ///

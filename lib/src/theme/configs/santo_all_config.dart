@@ -4,6 +4,7 @@ import 'package:santo_ui/src/theme/configs/santo_abnormal_state_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_action_sheet_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_button_config.dart';
+import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_dialog_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_enhance_number_card_config.dart';
@@ -43,6 +44,7 @@ class SantoAllThemeConfig {
     SantoGalleryDetailConfig? galleryDetailConfig,
     SantoPanelConfig? panelConfig,
     SantoSectionConfig? sectionConfig,
+    SantoChatConfig? chatConfig,
     String configId = GLOBAL_CONFIG_ID,
   })  : _commonConfig = commonConfig,
         _appBarConfig = appBarConfig,
@@ -60,7 +62,8 @@ class SantoAllThemeConfig {
         _selectionConfig = selectionConfig,
         _galleryDetailConfig = galleryDetailConfig,
         _panelConfig = panelConfig,
-        _sectionConfig = sectionConfig;
+        _sectionConfig = sectionConfig,
+        _chatConfig = chatConfig;
 
   SantoCommonConfig? _commonConfig;
 
@@ -149,6 +152,11 @@ class SantoAllThemeConfig {
   SantoSectionConfig get sectionConfig =>
       _sectionConfig ?? SantoDefaultConfigUtils.defaultSectionConfig;
 
+  SantoChatConfig? _chatConfig;
+
+  SantoChatConfig get chatConfig =>
+      _chatConfig ?? SantoDefaultConfigUtils.defaultChatConfig;
+
   void initThemeConfig(String configId) {
     this._commonConfig ??= SantoCommonConfig();
     this._appBarConfig ??= SantoAppBarConfig();
@@ -168,6 +176,7 @@ class SantoAllThemeConfig {
     this._galleryDetailConfig ??= SantoGalleryDetailConfig();
     this._panelConfig ??= SantoPanelConfig();
     this._sectionConfig ??= SantoSectionConfig();
+    this._chatConfig ??= SantoChatConfig();
 
     commonConfig.initThemeConfig(configId);
     appBarConfig.initThemeConfig(
@@ -231,6 +240,10 @@ class SantoAllThemeConfig {
       currentLevelCommonConfig: commonConfig,
     );
     sectionConfig.initThemeConfig(
+      configId,
+      currentLevelCommonConfig: commonConfig,
+    );
+    chatConfig.initThemeConfig(
       configId,
       currentLevelCommonConfig: commonConfig,
     );
