@@ -6,6 +6,13 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] - 2026-09-23
+
+### 🧭 Selection examples
+
+- **Changed**: reorganized complex-filter examples into grouped entry pages, migrated every third-level example page to `SantoPageLayout`, and consolidated the flat-filter demos into a shared implementation
+- **Fixed**: removed obsolete top-level close-panel placeholders from the date-range and selection-limit examples
+
 ## [1.4.0] - 2026-09-22
 
 ### 🗂️ SantoEmpty fixed-height layout

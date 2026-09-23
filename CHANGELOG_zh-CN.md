@@ -6,6 +6,13 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.4.1] - 2026-09-23
+
+### 🧭 Selection 示例
+
+- **变更**: 复杂筛选示例改为分组入口，全部三级演示页统一迁移至 `SantoPageLayout`，平铺筛选示例合并为共享实现
+- **修复**: 移除日期范围与选择数量限制示例中遗留的顶部关闭弹层占位内容
+
 ## [1.4.0] - 2026-09-22
 
 ### 🗂️ SantoEmpty 固定高度布局
