@@ -1,5 +1,5 @@
 import 'package:santo_ui/src/components/button/santo_button.dart';
-import 'package:santo_ui/src/components/input/santo_input_text.dart';
+import 'package:santo_ui/src/components/input/santo_input.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/santo_tags_common_picker.dart';
 import 'package:santo_ui/src/components/tag/santo_tag.dart';
@@ -375,7 +375,7 @@ class SantoTagsPicker extends CommonTagsPicker {
       color: commonConfig.fillBase,
       // 底边留白交给底部提交按钮,避免与按钮的间距翻倍
       padding: EdgeInsets.symmetric(horizontal: commonConfig.gapMd),
-      child: SantoInputText(
+      child: SantoInput(
         controller: textEditingController,
         initialValue:
             textEditingController == null ? (defaultText ?? '') : null,

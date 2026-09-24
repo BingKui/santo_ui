@@ -50,7 +50,7 @@ void main() {
     expect(find.text('标题文案'), findsOneWidget);
     expect(find.text('辅助文案'), findsOneWidget);
     expect(find.byIcon(Icons.star), findsOneWidget);
-    expect(find.byType(SantoInputText), findsOneWidget);
+    expect(find.byType(SantoInput), findsOneWidget);
     expect(find.text('请输入'), findsOneWidget);
     expect(find.byType(SantoButton), findsNWidgets(2));
     // 右上角关闭图标

@@ -1,3 +1,5 @@
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
@@ -119,10 +121,14 @@ class _SantoBackTopState extends State<SantoBackTop>
                     shape: BoxShape.circle,
                     boxShadow: commonConfig.shadowMd,
                   ),
-                  child: Icon(
-                    Icons.keyboard_arrow_up,
-                    size: 28,
-                    color: commonConfig.brandPrimary,
+                  // Center 给松约束:Container 的 tight 48 会把 SantoIcon
+                  // 的 SizedBox.square(size) 撑满,size 会失效
+                  child: Center(
+                    child: SantoIcon(
+                      SantoIcons.fastArrowUp,
+                      size: 20,
+                      color: commonConfig.brandPrimary,
+                    ),
                   ),
                 ),
           ),

@@ -349,6 +349,18 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
       ExampleIntroPoint('多档锚点', 'anchors 传入多档高度,在档位间吸附'),
     ],
   ),
+  'flex': ExampleIntroData(
+    title: 'Flex 弹性布局',
+    description: '弹性布局用于块级元素的排列与对齐。',
+    widgets: <String>['SantoFlex'],
+    whenToUseDesc: '需要对一组块级元素统一控制方向、间距与对齐时使用。',
+    whenToUse: <ExampleIntroPoint>[
+      ExampleIntroPoint('方向', '水平或垂直排列'),
+      ExampleIntroPoint('对齐', '主轴与交叉轴对齐方式可配'),
+      ExampleIntroPoint('间距', '三档预设间距取主题 token,也可自定义'),
+      ExampleIntroPoint('伸缩', 'flex 让子元素等分剩余空间'),
+    ],
+  ),
   'footer': ExampleIntroData(
     title: 'Footer 页脚',
     description: '页脚展示页面底部的说明与链接。',
@@ -382,6 +394,18 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
       ExampleIntroPoint('详情', '全屏滑动浏览,支持缩放'),
       ExampleIntroPoint('主题', '详情页可切换深浅色'),
       ExampleIntroPoint('底部卡片', '详情页底部承载说明与操作'),
+    ],
+  ),
+  'grid': ExampleIntroData(
+    title: 'Grid 栅格',
+    description: '栅格以 24 等分格子划分信息区域。',
+    widgets: <String>['SantoRow', 'SantoCol'],
+    whenToUseDesc: '需要按比例分栏排版,并支持换行、偏移与对齐时使用。',
+    whenToUse: <ExampleIntroPoint>[
+      ExampleIntroPoint('等分', 'span 控制 24 等分中的占比,超出自动换行'),
+      ExampleIntroPoint('区块间隔', 'gutter 控制列间距,verticalGutter 控制行间距'),
+      ExampleIntroPoint('偏移与排序', 'offset 左偏移,order 调整展示顺序'),
+      ExampleIntroPoint('伸缩', 'flex 列按比例分配剩余空间'),
     ],
   ),
   'guide': ExampleIntroData(
@@ -436,7 +460,7 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
   'input': ExampleIntroData(
     title: 'Input 输入框',
     description: '输入框用于录入文本。',
-    widgets: <String>['SantoInputText'],
+    widgets: <String>['SantoInput'],
     whenToUseDesc: '需要用户输入或编辑一行文本时使用。',
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('标签与必填', '左侧标签与必填星号,宽度可配'),
@@ -674,10 +698,10 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
       ExampleIntroPoint('自绘布局', '页面自绘时手动避让'),
     ],
   ),
-  'scroll_anchor': ExampleIntroData(
-    title: 'ScrollAnchor 锚点',
+  'anchor': ExampleIntroData(
+    title: 'Anchor 锚点',
     description: '锚点让长内容按分区快速定位。',
-    widgets: <String>['SantoAnchorTab'],
+    widgets: <String>['SantoAnchor'],
     whenToUseDesc: '页面内容很长且分成若干区块时使用。',
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('分区导航', '顶部标签对应下方分区'),

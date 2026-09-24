@@ -5,21 +5,30 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 /// 构建指定索引的Widget
-typedef AnchorTabWidgetIndexedBuilder = Widget Function(BuildContext context, int index);
+///
+/// @since v1.0.0
+/// @changed v2.0.0 原名 `AnchorTabWidgetIndexedBuilder`
+typedef AnchorWidgetIndexedBuilder = Widget Function(BuildContext context, int index);
 
 /// 构建指定索引的Tab
-typedef AnchorTabIndexedBuilder = BadgeTab Function(BuildContext context, int index);
+///
+/// @since v1.0.0
+/// @changed v2.0.0 原名 `AnchorTabIndexedBuilder`
+typedef AnchorIndexedTabBuilder = BadgeTab Function(BuildContext context, int index);
 
 /// 滑动锚点组件
-class SantoAnchorTab extends StatefulWidget {
+///
+/// @since v1.0.0
+/// @changed v2.0.0 由 `SantoAnchorTab` 改名,`SantoAnchorTabBarStyle` 同步改为 `SantoAnchorBarStyle`
+class SantoAnchor extends StatefulWidget {
   /// TabBar的样式
-  final SantoAnchorTabBarStyle tabBarStyle;
+  final SantoAnchorBarStyle tabBarStyle;
 
   /// 构建指定索引的Widget
-  final AnchorTabWidgetIndexedBuilder? widgetIndexedBuilder;
+  final AnchorWidgetIndexedBuilder? widgetIndexedBuilder;
 
   /// 构建指定索引的Tab
-  final AnchorTabIndexedBuilder tabIndexedBuilder;
+  final AnchorIndexedTabBuilder tabIndexedBuilder;
 
   /// Tab与内容之间的分割线
   final Widget? tabDivider;
@@ -27,18 +36,18 @@ class SantoAnchorTab extends StatefulWidget {
   /// 设置tab与widget的个数
   final int itemCount;
 
-  SantoAnchorTab(
+  SantoAnchor(
       {required this.widgetIndexedBuilder,
       required this.tabIndexedBuilder,
       required this.itemCount,
       this.tabDivider,
-      this.tabBarStyle = const SantoAnchorTabBarStyle()});
+      this.tabBarStyle = const SantoAnchorBarStyle()});
 
   @override
-  _SantoScrollAnchorTabWidgetState createState() => _SantoScrollAnchorTabWidgetState();
+  _SantoAnchorState createState() => _SantoAnchorState();
 }
 
-class _SantoScrollAnchorTabWidgetState extends State<SantoAnchorTab>
+class _SantoAnchorState extends State<SantoAnchor>
     with SingleTickerProviderStateMixin {
   /// 用于控制 滑动
   late ScrollController _scrollController;
@@ -91,7 +100,7 @@ class _SantoScrollAnchorTabWidgetState extends State<SantoAnchorTab>
   }
 
   @override
-  void didUpdateWidget(SantoAnchorTab oldWidget) {
+  void didUpdateWidget(SantoAnchor oldWidget) {
     super.didUpdateWidget(oldWidget);
     _cardOffsetList = List.filled(widget.itemCount, -1.0);
     int sub = widget.itemCount - oldWidget.itemCount;
@@ -232,7 +241,11 @@ class _SantoScrollAnchorTabWidgetState extends State<SantoAnchorTab>
   }
 }
 
-class SantoAnchorTabBarStyle {
+/// TabBar 的样式
+///
+/// @since v1.0.0
+/// @changed v2.0.0 原名 `SantoAnchorTabBarStyle`
+class SantoAnchorBarStyle {
   final Color? indicatorColor;
 
   final double indicatorWeight;
@@ -249,7 +262,7 @@ class SantoAnchorTabBarStyle {
 
   final DragStartBehavior dragStartBehavior;
 
-  const SantoAnchorTabBarStyle({
+  const SantoAnchorBarStyle({
     this.indicatorColor,
     this.indicatorWeight = 2.0,
     this.labelColor,

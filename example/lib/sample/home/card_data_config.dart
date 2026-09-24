@@ -31,6 +31,8 @@ import 'package:example/sample/components/gallery/gallery_example.dart';
 import 'package:example/sample/components/guide/guide_entry_page.dart';
 import 'package:example/sample/components/input/input_example.dart';
 import 'package:example/sample/components/divider/divider_example.dart';
+import 'package:example/sample/components/flex/flex_example.dart';
+import 'package:example/sample/components/grid/grid_example.dart';
 import 'package:example/sample/components/icon/icon_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_example.dart';
 import 'package:example/sample/components/layout/app_layout_example.dart';
@@ -45,7 +47,7 @@ import 'package:example/sample/components/picker/picker_entry_page.dart';
 import 'package:example/sample/components/tooltip/tooltip_example.dart';
 import 'package:example/sample/components/popup/overlay_window_example.dart';
 import 'package:example/sample/components/rate/rate_example.dart';
-import 'package:example/sample/components/scroll_anchor/scroll_actor_tab_example.dart';
+import 'package:example/sample/components/anchor/anchor_example.dart';
 import 'package:example/sample/components/selection/selection_entry_page.dart';
 import 'package:example/sample/components/step/step_example.dart';
 import 'package:example/sample/components/sugsearch/search_text_example.dart';
@@ -157,6 +159,8 @@ class CardDataConfig {
   static GroupInfo _getLayoutGroup() {
     List<GroupInfo> children = [
       _item("Divider 分割线", "实线分割", DividerExample()),
+      _item("Flex 弹性布局", "水平/垂直排列与对齐", FlexExample()),
+      _item("Grid 栅格", "24 等分栅格布局", GridExample()),
       _item("Space 间距", "元素间距 gap", SpaceExample()),
       _item("Masonry 瀑布流", "多列瀑布流布局", MasonryExample()),
       _item("Skeleton 骨架屏", "加载占位骨架", SkeletonExample()),
@@ -181,7 +185,7 @@ class CardDataConfig {
       _item("MenuBar 菜单栏", "默认/悬浮两种样式", MenuBarExample()),
       _item("Sidebar 侧边栏", "侧边导航菜单", SidebarExample()),
       _item("Steps 步骤条", "流程进度引导", StepExample()),
-      _item("AnchorTab 锚点", "锚点定位导航", ScrollActorTabExample()),
+      _item("Anchor 锚点", "锚点定位导航", AnchorExample()),
       _item("BackTop 返回顶部", "长列表快速回顶", BacktopExample()),
       _item("Drawer 抽屉", "侧边滑出面板", DrawerExample()),
       _item("Guide 引导", "新手操作引导", GuideEntryPage()),
@@ -199,7 +203,7 @@ class CardDataConfig {
   // ========== 数据录入 ==========
   static GroupInfo _getDataEntryGroup() {
     List<GroupInfo> children = [
-      _item("Input 输入框", "文本输入", SantoInputTextExample()),
+      _item("Input 输入框", "文本输入", SantoInputExample()),
       _item("Form 表单", "表单集合", AllFormItemStyleExamplePage()),
       _item("Radio 单选框", "单项选择", RadioExample()),
       _item("Checkbox 多选框", "多项选择", CheckboxExample()),

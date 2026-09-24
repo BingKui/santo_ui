@@ -1,5 +1,6 @@
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -199,31 +200,10 @@ class _CustomCalendarState extends State<SantoCalendar> {
         padding: EdgeInsets.only(bottom: commonConfig.vSpacingMd),
         child: Row(
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                if (!isPreIconEnable) return;
-                setState(() {
-                  if (_displayMode == DisplayMode.month) {
-                    _currentDate =
-                        DateTime(_currentDate.year, _currentDate.month, 0);
-                    _setListOfMonthDate(_currentDate);
-                  } else if (_displayMode == DisplayMode.week) {
-                    _currentDate = _currentDate.subtract(Duration(days: 7));
-                    _setListOfWeekDate(_currentDate);
-                  }
-                });
-              },
-              child: Container(
-                height: 25,
-                width: 40,
-                color: Colors.transparent,
-                padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
-                child: isPreIconEnable
-                    ? SantoIcon(SantoIcons.navArrowLeft)
-                    : SantoIcon(SantoIcons.navArrowLeft,
-                        color: commonConfig.colorTextHint),
-                alignment: Alignment.center,
-              ),
+            _navButton(
+              isPre: true,
+              enabled: isPreIconEnable,
+              onTap: _goPrevious,
             ),
             Expanded(
               child: Center(
@@ -239,37 +219,70 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                if (!isNextIconEnable) return;
-                setState(() {
-                  if (_displayMode == DisplayMode.month) {
-                    _currentDate =
-                        DateTime(_currentDate.year, _currentDate.month + 2, 0);
-                    _setListOfMonthDate(_currentDate);
-                  } else if (_displayMode == DisplayMode.week) {
-                    _currentDate = _currentDate.add(Duration(days: 7));
-                    _setListOfWeekDate(_currentDate);
-                  }
-                });
-              },
-              child: Container(
-                height: 25,
-                width: 40,
-                color: Colors.transparent,
-                padding: EdgeInsets.only(right: commonConfig.hSpacingMd),
-                child: isNextIconEnable
-                    ? SantoIcon(SantoIcons.navArrowRight)
-                    : SantoIcon(SantoIcons.navArrowRight,
-                        color: commonConfig.colorTextHint),
-                alignment: Alignment.center,
-              ),
+            _navButton(
+              isPre: false,
+              enabled: isNextIconEnable,
+              onTap: _goNext,
             )
           ],
         ),
       );
     }
     return const SizedBox.shrink();
+  }
+
+  /// 月份切换按钮:与 AppBar 返回键(SantoBackLeading)同款
+  ///
+  /// 32x32 操作区、InkWell 水波纹与圆角均来自该组件,箭头尺寸取 AppBar 的 iconSize
+  Widget _navButton({
+    required bool isPre,
+    required bool enabled,
+    required VoidCallback onTap,
+  }) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final appBarConfig =
+        SantoThemeConfigurator.instance.getConfig().appBarConfig;
+    final Widget button = SantoBackLeading(
+      iconPressed: onTap,
+      child: SantoIcon(
+        isPre ? SantoIcons.navArrowLeft : SantoIcons.navArrowRight,
+        size: appBarConfig.iconSize,
+        color:
+            enabled ? commonConfig.colorTextBase : commonConfig.colorTextHint,
+      ),
+    );
+    return Padding(
+      padding: EdgeInsets.only(
+          left: isPre ? commonConfig.hSpacingMd : 0,
+          right: isPre ? 0 : commonConfig.hSpacingMd),
+      // 禁用态不参与命中测试:置灰的箭头不该再有水波纹
+      child: enabled ? button : IgnorePointer(child: button),
+    );
+  }
+
+  void _goPrevious() {
+    setState(() {
+      if (_displayMode == DisplayMode.month) {
+        _currentDate = DateTime(_currentDate.year, _currentDate.month, 0);
+        _setListOfMonthDate(_currentDate);
+      } else if (_displayMode == DisplayMode.week) {
+        _currentDate = _currentDate.subtract(Duration(days: 7));
+        _setListOfWeekDate(_currentDate);
+      }
+    });
+  }
+
+  void _goNext() {
+    setState(() {
+      if (_displayMode == DisplayMode.month) {
+        _currentDate = DateTime(_currentDate.year, _currentDate.month + 2, 0);
+        _setListOfMonthDate(_currentDate);
+      } else if (_displayMode == DisplayMode.week) {
+        _currentDate = _currentDate.add(Duration(days: 7));
+        _setListOfWeekDate(_currentDate);
+      }
+    });
   }
 
   bool _isIconEnable(bool isPre) {
@@ -383,13 +396,13 @@ class _CustomCalendarState extends State<SantoCalendar> {
                                         .withOpacity(0.14)
                                     : Colors.transparent)
                                 : Colors.transparent,
-                            // 范围选择两端圆角
+                            // 范围选择两端圆角,与日历项默认圆角一致
                             borderRadius: BorderRadius.horizontal(
                               left: _isStartDateRadius(date)
-                                  ? const Radius.circular(24.0)
+                                  ? Radius.circular(commonConfig.radiusMd)
                                   : const Radius.circular(0.0),
                               right: _isEndDateRadius(date)
-                                  ? const Radius.circular(24.0)
+                                  ? Radius.circular(commonConfig.radiusMd)
                                   : const Radius.circular(0.0),
                             ),
                           ),
@@ -401,11 +414,11 @@ class _CustomCalendarState extends State<SantoCalendar> {
                       child: Material(
                         color: Colors.transparent,
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: commonConfig.vSpacingXs,
-                              bottom: commonConfig.vSpacingXs,
-                              left: commonConfig.hSpacingSm,
-                              right: commonConfig.hSpacingSm),
+                          // 日历项是正方形:左右与上下同距(3 + vSpacingXs),
+                          // 横向单独取 hSpacingSm 会变成竖向长方形
+                          padding: EdgeInsets.symmetric(
+                              vertical: commonConfig.vSpacingXs,
+                              horizontal: 3 + commonConfig.vSpacingXs),
                           child: Container(
                             decoration: BoxDecoration(
                               color: _getIsItStartAndEndDate(date)
@@ -414,9 +427,9 @@ class _CustomCalendarState extends State<SantoCalendar> {
                                       .commonConfig
                                       .brandPrimary
                                   : Colors.transparent,
-                              borderRadius:
-                                  // 选中色圆角
-                                  const BorderRadius.all(Radius.circular(32.0)),
+                              // 选中色圆角取默认圆角
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(commonConfig.radiusMd)),
                             ),
                           ),
                         ),

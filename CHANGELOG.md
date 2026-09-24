@@ -22,6 +22,28 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); versioning foll
 - **Changed (breaking)**: `SantoStepper` drops the public constant `kSantoStepperRadius` (the radius comes from `SantoCommonConfig.radiusMd`)
 - **Changed (breaking)**: `SantoShare.textColor` / `shareTextColor`, `SantoStepLine.lineWidth` and `SantoSearchText.outSideColor` / `innerPadding` / `borderRadius` are now nullable so the theme value applies when they are omitted
 
+### 🧭 `SantoAnchorTab` renamed `SantoAnchor`
+
+- **Changed (breaking)**: `SantoAnchorTab` is renamed `SantoAnchor` and `SantoAnchorTabBarStyle` is renamed `SantoAnchorBarStyle`, so no public symbol carries the old name — the builders become `AnchorWidgetIndexedBuilder` (was `AnchorTabWidgetIndexedBuilder`) and `AnchorIndexedTabBuilder` (was `AnchorTabIndexedBuilder`), and the component moves to `lib/src/components/anchor/santo_anchor.dart`
+- **Changed**: the example moves to `anchor/anchor_example.dart` (`AnchorExample`); the menu entry, page title and intro title are now all `Anchor 锚点`
+
+### 🧩 New layout components
+
+- **Added**: `SantoFlex` (lib/src/components/flex/santo_flex.dart) — a flex layout component modelled on antd Flex: `orientation` (horizontal/vertical), `wrap`, `justify` (main axis), `align` (cross axis, defaulting to start horizontally and stretch vertically), a uniform `flex` value that wraps every child in `Expanded`, and gap control via `gapSize` (the `SantoSpaceSize` small/middle/large tiers, resolved from theme spacing tokens) or a custom `gap` value
+- **Added**: `SantoGrid` — `SantoRow` + `SantoCol` (lib/src/components/grid/santo_grid.dart), a 24-column grid modelled on antd Grid: `span` / `offset` / `order` / `push` / `pull` / `flex` per column, `gutter` column spacing (first/last column content flush with the row edges), `verticalGutter` row spacing, automatic wrapping when spans exceed 24, plus `justify` / `align`. antd's responsive breakpoints (xs–xxl) are not ported — they are specific to CSS media queries
+
+### 📝 `SantoInputText` renamed `SantoInput`
+
+- **Changed (breaking)**: `SantoInputText` is renamed `SantoInput` and moves to `lib/src/components/input/santo_input.dart`; the example class becomes `SantoInputExample`
+- **Added**: `type` parameter switches the unified entry between modes, modelled on antd Input — `SantoInputMode.text` (single-line, default), `SantoInputMode.search` (built-in leading search icon unless a custom `prefix` is given), `SantoInputMode.textarea` (multi-line, `minLines` defaults to 4 and the height grows with content). The enum is `SantoInputMode` (the name `SantoInputType` was already taken by the form system)
+- **Changed**: the single-line content height drops from 44 to 32; the border width is pinned to 1 (no longer follows the `borderWidthMd` theme tier)
+- **Changed**: `SantoSearchText` gains an optional `height` for the inner field; the default is now 32, aligned with the new single-line standard (previously the field auto-sized to the content)
+
+### 🏙️ City selection refresh
+
+- **Changed**: the hot-city chips in `SantoCitySelection` now render a selectable `SantoTag` group (uniform 15 outer padding, 10 gaps, three equal-width tags per row); tapping a tag returns the city and closes the page
+- **Changed**: the search bar keeps `SantoSearchText` but renders the inner field at the standard 32 height with a uniform 15 padding; the header height estimate is now derived from the real layout so no blank gap is left below the chips
+
 ## [1.5.1] - 2026-09-24
 
 ### 💬 Chat custom messages

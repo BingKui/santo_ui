@@ -203,7 +203,7 @@ class DialogEntryPage extends StatelessWidget {
   Widget _buildInputSection(BuildContext context) {
     return SantoSection(
       title: '输入框',
-      description: 'showInput 展示内置的 SantoInputText,input* 一组参数透传给它;'
+      description: 'showInput 展示内置的 SantoInput,input* 一组参数透传给它;'
           '确定时从 inputController 取值,输入框在键盘弹起时不会被遮挡',
       child: Wrap(
         spacing: 12,

@@ -2,15 +2,15 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
-/// SantoInputText 输入框示例
-class SantoInputTextExample extends StatefulWidget {
-  const SantoInputTextExample({Key? key}) : super(key: key);
+/// SantoInput 输入框示例
+class SantoInputExample extends StatefulWidget {
+  const SantoInputExample({Key? key}) : super(key: key);
 
   @override
-  State<SantoInputTextExample> createState() => _SantoInputTextExampleState();
+  State<SantoInputExample> createState() => _SantoInputExampleState();
 }
 
-class _SantoInputTextExampleState extends State<SantoInputTextExample> {
+class _SantoInputExampleState extends State<SantoInputExample> {
   final TextEditingController _clearController = TextEditingController();
   final TextEditingController _counterController = TextEditingController();
 
@@ -30,9 +30,31 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         ExampleIntro('input'),
         SantoPanel(
           title: '基础输入框',
-          child: SantoInputText(
+          child: SantoInput(
             hintText: '请输入文字',
             onChanged: (text) {},
+          ),
+        ),
+        SantoPanel(
+          title: '输入模式',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SantoInput(
+                type: SantoInputMode.search,
+                hintText: '请输入关键词搜索',
+                onSubmitted: (text) {},
+                onChanged: (text) {},
+              ),
+              SizedBox(height: 16),
+              SantoInput(
+                type: SantoInputMode.textarea,
+                hintText: '请输入多行文字（默认最小 4 行，高度随内容增长）',
+                maxLength: 100,
+                indicator: true,
+                onChanged: (text) {},
+              ),
+            ],
           ),
         ),
         SantoPanel(
@@ -40,14 +62,14 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 label: '标签文字',
                 labelWidth: 80,
                 hintText: '请输入文字',
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '手机号',
                 labelWidth: 80,
                 required: true,
@@ -63,7 +85,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 label: '金额',
                 labelWidth: 80,
                 hintText: '请输入金额',
@@ -72,7 +94,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '账号',
                 labelWidth: 80,
                 hintText: '请输入账号',
@@ -80,7 +102,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '验证码',
                 labelWidth: 80,
                 hintText: '请输入验证码',
@@ -88,19 +110,18 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 maxLength: 6,
                 suffixButton: SantoButton(
                   type: SantoButtonType.normal,
+                  size: SantoButtonSize.small,
                   text: '获取',
                   width: 56,
-                  fontSize: 12,
                   lineColor: brandPrimary,
                   textColor: brandPrimary,
-                  insertPadding:
-                      EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  insertPadding: EdgeInsets.symmetric(horizontal: 8),
                   onTap: () {},
                 ),
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '状态',
                 labelWidth: 80,
                 initialValue: '已完成',
@@ -120,7 +141,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 label: '纯数字',
                 labelWidth: 80,
                 hintText: '只能输入数字',
@@ -128,7 +149,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '数字',
                 labelWidth: 80,
                 hintText: '可输入小数和负号',
@@ -136,7 +157,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '身份证',
                 labelWidth: 80,
                 hintText: '数字与 X',
@@ -145,7 +166,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 label: '邮箱',
                 labelWidth: 80,
                 hintText: '请输入邮箱',
@@ -160,14 +181,14 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 hintText: '最大 10 个字符（indicator 展示计数）',
                 maxLength: 10,
                 indicator: true,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 hintText: '最大 20 字符权重（中文算 2）',
                 maxCharacter: 20,
                 indicator: true,
@@ -178,7 +199,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         ),
         SantoPanel(
           title: '带操作输入框',
-          child: SantoInputText(
+          child: SantoInput(
             controller: _clearController,
             hintText: '输入内容后展示清除按钮',
             clearButtonMode: SantoInputClearButtonMode.always,
@@ -190,14 +211,14 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 hintText: '搜索',
                 prefix: Icon(Icons.search),
                 clearButtonMode: SantoInputClearButtonMode.always,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 hintText: '带后缀',
                 suffix: Icon(Icons.apps),
                 onChanged: (text) {},
@@ -210,14 +231,14 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 hintText: '请输入密码',
                 obscureText: true,
                 showPasswordToggle: true,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 hintText: '请输入数字',
                 inputType: TextInputType.number,
                 onChanged: (text) {},
@@ -230,21 +251,21 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 hintText: '成功状态',
                 initialValue: '成功状态',
                 status: SantoInputStatus.success,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 hintText: '警告状态',
                 initialValue: '警告状态',
                 status: SantoInputStatus.warning,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 hintText: '错误状态',
                 initialValue: '错误状态',
                 status: SantoInputStatus.error,
@@ -257,7 +278,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         ),
         SantoPanel(
           title: '信息超长状态',
-          child: SantoInputText(
+          child: SantoInput(
             initialValue:
                 '这是一段很长的信息这是一段很长的信息这是一段很长的信息这是一段很长的信息',
             maxLength: 20,
@@ -271,13 +292,13 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 hintText: '文字居中对齐',
                 textAlign: TextAlign.center,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 hintText: '文字右对齐',
                 textAlign: TextAlign.right,
                 onChanged: (text) {},
@@ -287,7 +308,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         ),
         SantoPanel(
           title: '竖排样式（多行）',
-          child: SantoInputText(
+          child: SantoInput(
             hintText: '请输入多行文字',
             maxLines: null,
             minLines: 3,
@@ -304,7 +325,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
               color: Color(0xFFF5F6FA),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: SantoInputText(
+            child: SantoInput(
               borderless: true,
               hintText: '无边框输入框',
               onChanged: (text) {},
@@ -316,13 +337,13 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 initialValue: '只读模式，可选择复制但不可编辑',
                 readOnly: true,
                 onChanged: (text) {},
               ),
               SizedBox(height: 16),
-              SantoInputText(
+              SantoInput(
                 initialValue: '禁用状态，不可交互',
                 enabled: false,
                 onChanged: (text) {},
@@ -332,7 +353,7 @@ class _SantoInputTextExampleState extends State<SantoInputTextExample> {
         ),
         SantoPanel(
           title: '自定义样式输入框',
-          child: SantoInputText(
+          child: SantoInput(
             hintText: '自定义文字样式与光标颜色',
             style: TextStyle(fontSize: 18, color: Color(0xFF0984F9)),
             cursorColor: Color(0xFF0984F9),

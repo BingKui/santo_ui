@@ -50,7 +50,8 @@ class TagViewExamplePageState extends State<CalendarExample> {
         ),
         SantoSection(
           title: '范围选-月视图',
-          description: 'range 模式下范围选择，可选区间为 2020 至 2023 年',
+          description: 'range 模式下的月视图范围选择，initStartSelectedDate / '
+              'initEndSelectedDate 给定初始区间，可选区间为 2020 至 2023 年',
           child: _calendarViewMonthRange(context),
         ),
       ],
@@ -113,6 +114,9 @@ class TagViewExamplePageState extends State<CalendarExample> {
 
   Widget _calendarViewMonthRange(context) {
     return SantoCalendar.range(
+      initDisplayDate: DateTime.parse('2020-06-01'),
+      initStartSelectedDate: DateTime.parse('2020-06-10'),
+      initEndSelectedDate: DateTime.parse('2020-06-18'),
       minDate: DateTime(2020),
       maxDate: DateTime(2023),
       rangeDateChange: (rangeDate) {

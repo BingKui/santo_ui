@@ -233,8 +233,13 @@ class SantoBottomDrawer extends StatelessWidget {
                       Expanded(child: content)
                     else
                       Flexible(
-                        // 自适应高度时长内容由内容区滚动消化,最多顶到 maxHeight
-                        child: SingleChildScrollView(child: content),
+                        // 自适应高度:内容本身是滚动控件(ScrollView)时直接交给
+                        // Flexible,由其自身在 maxHeight 内滚动(套
+                        // SingleChildScrollView 会让 ListView 拿到无界高度);
+                        // 普通内容由外层 SingleChildScrollView 兜底滚动
+                        child: child is ScrollView
+                            ? content
+                            : SingleChildScrollView(child: content),
                       ),
                   ],
                 ),

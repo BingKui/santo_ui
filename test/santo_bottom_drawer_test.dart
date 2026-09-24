@@ -123,7 +123,7 @@ void main() {
     tester.view.viewInsets = const FakeViewPadding(bottom: 300);
     await tester.pumpAndSettle();
 
-    final Rect input = tester.getRect(find.byType(SantoInputText));
+    final Rect input = tester.getRect(find.byType(SantoInput));
     debugPrint('评价弹窗内输入框底部 ${input.bottom}');
     expect(input.bottom, lessThanOrEqualTo(500));
     expect(tester.takeException(), isNull);

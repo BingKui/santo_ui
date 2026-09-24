@@ -41,6 +41,8 @@ Santo UI ships **81** widgets, grouped into 7 categories following the example a
 | Widget | Description |
 | --- | --- |
 | Divider | Solid and dashed dividers |
+| Flex | Block-level flex layout with orientation / wrap / justify / align / gap |
+| Grid | 24-grid system: Row + Col with span / offset / order / push / pull / flex / gutter |
 | Space | Gap between widgets |
 | Masonry | Multi-column masonry layout |
 | Skeleton | Loading placeholder skeleton |
@@ -57,7 +59,7 @@ Santo UI ships **81** widgets, grouped into 7 categories following the example a
 | MenuBar | Default and floating styles |
 | Sidebar | Side navigation menu |
 | Steps | Progress steps |
-| AnchorTab | Anchor navigation |
+| Anchor | Anchor navigation |
 | BackTop | Back to top for long lists |
 | Drawer | Side slide-out panel |
 | Guide | Onboarding guide |

@@ -22,6 +22,28 @@
 - **变更(破坏性)**: `SantoStepper` 移除公开常量 `kSantoStepperRadius`(圆角改取 `SantoCommonConfig.radiusMd`)
 - **变更(破坏性)**: `SantoShare.textColor` / `shareTextColor`、`SantoStepLine.lineWidth`、`SantoSearchText.outSideColor` / `innerPadding` / `borderRadius` 改为可空,不传时跟随主题值
 
+### 🧭 `SantoAnchorTab` 改名为 `SantoAnchor`
+
+- **变更(破坏性)**: `SantoAnchorTab` 改名为 `SantoAnchor`,`SantoAnchorTabBarStyle` 改名为 `SantoAnchorBarStyle`,公开符号里不再残留旧名 —— 两个 builder 同步改为 `AnchorWidgetIndexedBuilder`(原 `AnchorTabWidgetIndexedBuilder`)与 `AnchorIndexedTabBuilder`(原 `AnchorTabIndexedBuilder`),组件迁移到 `lib/src/components/anchor/santo_anchor.dart`
+- **变更**: 示例迁移到 `anchor/anchor_example.dart`(`AnchorExample`);菜单项、示例页标题与 intro 标题三处统一为 `Anchor 锚点`
+
+### 🧩 新增布局组件
+
+- **新增**: `SantoFlex`(lib/src/components/flex/santo_flex.dart)—— 弹性布局组件,参考 antd Flex:`orientation` 水平/垂直、`wrap` 换行、`justify` 主轴对齐、`align` 交叉轴对齐(不传时水平 start、垂直 stretch)、`flex` 让子元素统一包一层 `Expanded` 伸缩;间距用 `gapSize`(复用 `SantoSpaceSize` 三档,取主题间距 token)或 `gap` 自定义值
+- **新增**: `SantoGrid` —— `SantoRow` + `SantoCol`(lib/src/components/grid/santo_grid.dart),24 等分栅格,参考 antd Grid:列上 `span` / `offset` / `order` / `push` / `pull` / `flex`,`gutter` 列间距(首尾列内容与行边缘齐平)、`verticalGutter` 行间距、span 总和超出 24 自动换行,以及 `justify` / `align`。antd 的响应式断点(xs~xxl)未移植 —— 属 CSS 媒体查询专属能力
+
+### 📝 `SantoInputText` 改名为 `SantoInput`
+
+- **变更(破坏性)**: `SantoInputText` 改名为 `SantoInput`,迁移到 `lib/src/components/input/santo_input.dart`;示例类同步改为 `SantoInputExample`
+- **新增**: `type` 参数在统一入口下切换模式,参考 antd Input —— `SantoInputMode.text`(单行文本,默认)、`SantoInputMode.search`(搜索框,未传自定义 `prefix` 时自带前置搜索图标)、`SantoInputMode.textarea`(多行文本域,`minLines` 默认 4、高度随内容增长)。枚举名为 `SantoInputMode`(原名 `SantoInputType` 已被 form 体系占用)
+- **变更**: 单行内容区高度由 44 改为 32;边框宽度定稿 1(不再随 `borderWidthMd` 主题档位变化)
+- **变更**: `SantoSearchText` 新增可选 `height` 控制内部输入框高度,默认 32(与单行输入框新标准一致;原先按内容自适应)
+
+### 🏙️ 城市选择页改版
+
+- **变更**: `SantoCitySelection` 推荐城市改用可选择 `SantoTag` 标签组(四周 15 统一留白、间距 10、每行 3 个等宽标签);点标签回传城市并关页
+- **变更**: 搜索框保留 `SantoSearchText`,内部输入框取标准高度 32、四周统一 15 内边距;头部高度估算改为按真实排版逐项计算,标签下方不再留空白
+
 ## [1.5.1] - 2026-09-24
 
 ### 💬 Chat 自定义消息

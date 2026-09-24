@@ -405,7 +405,7 @@ class _HeaderInputExampleState extends State<HeaderInputExample> {
       header: Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-        child: SantoInputText(
+        child: SantoInput(
           hintText: '请输入关键字',
           onChanged: (text) => setState(() => _text = text),
         ),

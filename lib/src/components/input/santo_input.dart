@@ -1,12 +1,14 @@
 import 'dart:math' as math;
 
+import 'package:santo_ui/src/components/icon/santo_icon.dart';
+import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// 单行输入框的内容区高度，左右插槽在此高度内居中，不撑高输入框
-const double _singleLineHeight = 44;
+const double _singleLineHeight = 32;
 
 /// 输入框清除按钮的显示模式
 enum SantoInputClearButtonMode {
@@ -58,13 +60,30 @@ enum SantoInputFormat {
   email,
 }
 
+/// 输入框模式，对标 antd Input 的 Input / Input.Search / Input.TextArea
+enum SantoInputMode {
+  /// 单行文本输入（默认）
+  text,
+
+  /// 搜索框：默认带前置搜索图标，可用 [SantoInput.prefix] 覆盖
+  search,
+
+  /// 多行文本域：默认最小 4 行，高度随内容增长
+  textarea,
+}
+
 /// 基于 Flutter [TextField] 编辑内核的文本输入框
 ///
-/// API 参考 TDesign Flutter TInput
+/// API 参考 TDesign Flutter TInput 与 antd Input；统一入口，通过 [type]
+/// 切换模式：[SantoInputMode.text] 单行文本（默认）、[SantoInputMode.search]
+/// 搜索框、[SantoInputMode.textarea] 多行文本域；密码框用 [showPasswordToggle]。
 ///
 /// [controller] 是主控制路径；未传时由组件创建内部 controller，并使用
 /// [initialValue] 初始化一次。两者不能同时传入。
-class SantoInputText extends StatefulWidget {
+///
+/// @changed v2.0.0 由 SantoInputText 更名为 SantoInput，新增 [type] 模式，
+/// 边框宽度定稿 1
+class SantoInput extends StatefulWidget {
   /// 文本控制器
   final TextEditingController? controller;
 
@@ -129,6 +148,9 @@ class SantoInputText extends StatefulWidget {
   /// 是否隐藏输入框边框
   final bool borderless;
 
+  /// 输入框模式，默认 [SantoInputMode.text]
+  final SantoInputMode type;
+
   /// 最大行数，默认 1
   final int? maxLines;
 
@@ -181,7 +203,7 @@ class SantoInputText extends StatefulWidget {
   /// 光标颜色
   final Color? cursorColor;
 
-  const SantoInputText({
+  const SantoInput({
     Key? key,
     this.controller,
     this.initialValue,
@@ -204,6 +226,7 @@ class SantoInputText extends StatefulWidget {
     this.clearButtonMode,
     this.status = SantoInputStatus.normal,
     this.borderless = false,
+    this.type = SantoInputMode.text,
     this.maxLines = 1,
     this.minLines,
     this.maxLength,
@@ -227,13 +250,14 @@ class SantoInputText extends StatefulWidget {
         assert(maxCharacter == null || maxCharacter >= 0),
         super(key: key);
 
-  bool get _multiline => maxLines != 1 || minLines != null;
+  bool get _multiline =>
+      type == SantoInputMode.textarea || maxLines != 1 || minLines != null;
 
   @override
-  State<SantoInputText> createState() => _SantoInputTextState();
+  State<SantoInput> createState() => _SantoInputState();
 }
 
-class _SantoInputTextState extends State<SantoInputText> {
+class _SantoInputState extends State<SantoInput> {
   late final TextEditingController _internalController;
   late final FocusNode _internalFocusNode;
   late TextEditingController _controller;
@@ -257,7 +281,7 @@ class _SantoInputTextState extends State<SantoInputText> {
   }
 
   @override
-  void didUpdateWidget(covariant SantoInputText oldWidget) {
+  void didUpdateWidget(covariant SantoInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     _controller = _effectiveController;
     _focusNode = widget.focusNode ?? _internalFocusNode;
@@ -302,7 +326,7 @@ class _SantoInputTextState extends State<SantoInputText> {
       onEditingComplete: widget.onEditingComplete,
       enabled: widget.enabled,
       readOnly: widget.readOnly,
-      maxLines: widget.maxLines,
+      maxLines: _effectiveMaxLines,
       minLines: _effectiveMinLines,
       maxLength: null,
       autofocus: widget.autofocus,
@@ -335,7 +359,7 @@ class _SantoInputTextState extends State<SantoInputText> {
       controller: _controller,
       focusNode: _focusNode,
       editor: editor,
-      prefix: widget.prefix,
+      prefix: _effectivePrefix,
       suffix: widget.suffix,
       suffixText: widget.suffixText,
       suffixTextStyle: widget.suffixTextStyle,
@@ -423,6 +447,33 @@ class _SantoInputTextState extends State<SantoInputText> {
     return widget.maxLines == null
         ? minLines
         : minLines.clamp(1, widget.maxLines!);
+  }
+
+  /// textarea 模式下 maxLines 未显式指定时高度随内容增长
+  int? get _effectiveMaxLines {
+    if (widget.type == SantoInputMode.textarea && widget.maxLines == 1) {
+      return null;
+    }
+    return widget.maxLines;
+  }
+
+  /// search 模式未传自定义 prefix 时展示内置搜索图标
+  Widget? get _effectivePrefix {
+    if (widget.prefix != null) {
+      return widget.prefix;
+    }
+    if (widget.type == SantoInputMode.search) {
+      final commonConfig = _commonConfig;
+      return Padding(
+        padding: EdgeInsets.only(left: commonConfig.hSpacingSm),
+        child: SantoIcon(
+          SantoIcons.search,
+          size: commonConfig.iconSizeMd,
+          color: commonConfig.colorTextHint,
+        ),
+      );
+    }
+    return null;
   }
 
   List<TextInputFormatter>? _effectiveFormatters() {
@@ -662,7 +713,8 @@ class _SantoInputShellState extends State<_SantoInputShell> {
         : null;
     final borderSide = BorderSide(
       color: _borderColor(commonConfig),
-      width: commonConfig.borderWidthMd,
+      // 边框宽度定稿 1，不随 borderWidthMd 主题档位变化
+      width: 1,
     );
     final border = widget.borderless
         ? null

@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
-import 'package:santo_ui/src/components/input/santo_input_text.dart';
+import 'package:santo_ui/src/components/input/santo_input.dart';
 import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/constants/santo_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
@@ -80,7 +80,7 @@ typedef SantoDialogShareCustomIcon = Widget? Function(int index);
 /// 1. 图标 [SantoDialog.icon] / [SantoDialog.iconType](info / warning / error / success)
 /// 2. 标题 [SantoDialog.title] / [SantoDialog.titleWidget]
 /// 3. 辅助文案 [SantoDialog.message] / [SantoDialog.messageWidget]
-/// 4. 输入框 [SantoDialog.showInput] 及 `input*` 一组参数,内部渲染 [SantoInputText]
+/// 4. 输入框 [SantoDialog.showInput] 及 `input*` 一组参数,内部渲染 [SantoInput]
 /// 5. 底部两个按钮 [SantoDialog.okText] / [SantoDialog.cancelText],按钮点击默认关闭弹窗
 /// 6. 右上角关闭 [SantoDialog.closable]
 ///
@@ -1031,7 +1031,7 @@ class _GeneralDialog extends StatelessWidget {
         padding: (hasAbove || hasMessage)
             ? config.contentPaddingSm
             : config.contentPaddingLg,
-        child: SantoInputText(
+        child: SantoInput(
           controller: inputController,
           hintText: inputHintText,
           maxLength: inputMaxLength,

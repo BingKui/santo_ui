@@ -2,7 +2,7 @@ import 'package:santo_ui/src/components/gallery/config/santo_basic_gallery_confi
 import 'package:santo_ui/src/components/gallery/config/santo_controller.dart';
 import 'package:santo_ui/src/components/gallery/page/santo_gallery_detail_page.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
-import 'package:santo_ui/src/components/scroll_anchor/santo_scroll_anchor_tab.dart';
+import 'package:santo_ui/src/components/anchor/santo_anchor.dart';
 import 'package:santo_ui/src/components/tabbar/normal/santo_tab_bar.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -88,7 +88,7 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
     } else {
       return Padding(
         padding: EdgeInsets.only(bottom: commonConfig.vSpacingLg),
-        child: SantoAnchorTab(
+        child: SantoAnchor(
             widgetIndexedBuilder: (c, i) {
               return _buildItem(allConfig[i], i);
             },

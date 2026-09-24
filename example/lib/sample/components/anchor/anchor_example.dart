@@ -6,16 +6,16 @@ import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
-class ScrollActorTabExample extends StatelessWidget {
+class AnchorExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SantoPageLayout(      title: '锚点',
+    return SantoPageLayout(      title: 'Anchor 锚点',
       scrollable: false,
       children: <Widget>[
-        ExampleIntro('scroll_anchor'),
+        ExampleIntro('anchor'),
         // 锚点组件自带滚动,用 Expanded 给它一个有界高度
         Expanded(
-            child: SantoAnchorTab(
+            child: SantoAnchor(
           itemCount: 20,
           widgetIndexedBuilder: (context, index) {
             return StatefulBuilder(builder: (_, state) {

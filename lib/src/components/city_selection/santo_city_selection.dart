@@ -6,6 +6,7 @@ import 'package:santo_ui/src/components/selectcity/santo_az_common.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_listview.dart';
 import 'package:santo_ui/src/components/selectcity/santo_select_city_model.dart';
 import 'package:santo_ui/src/components/sugsearch/santo_search_text.dart';
+import 'package:santo_ui/src/components/tag/santo_tag.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -72,7 +73,7 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
   ///是否展示城市的stack
   bool _showCityStack = true;
 
-  ///搜索的文案
+  /// 搜索的文案
   String _searchText = "";
 
   /// search的TextController
@@ -135,73 +136,48 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<SantoSelectCityModel> hotCityList = widget.hotCityList;
-    double width = (MediaQuery.of(context).size.width - 70) / 3;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(
-              left: commonConfig.hSpacingLg,
-              right: commonConfig.hSpacingSm,
-              top: commonConfig.vSpacingLg,
-              bottom: 0),
-          child: Text(
-            widget.hotCityTitle ?? SantoIntl.of(context).localizedResource.recommandCity,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
+    double width = (MediaQuery.of(context).size.width -
+            commonConfig.hSpacingMd * 2 -
+            10 * 2) /
+        3;
+    return Container(
+      padding: EdgeInsets.all(commonConfig.hSpacingMd),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 24,
+            child: Text(
+              widget.hotCityTitle ??
+                  SantoIntl.of(context).localizedResource.recommandCity,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
-        ),
-        Container(
-          padding: EdgeInsets.only(
-              left: commonConfig.hSpacingLg,
-              right: commonConfig.hSpacingLg,
-              top: commonConfig.vSpacingSm,
-              bottom: 0),
-          child: Wrap(
-            alignment: WrapAlignment.start,
-            runAlignment: WrapAlignment.start,
-            spacing: commonConfig.hSpacingSm,
-            children: hotCityList.map((e) {
-              return OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  padding: EdgeInsets.all(0),
-                  side: BorderSide(
-                      color: commonConfig.fillBody,
-                      width: commonConfig.borderWidthSm),
-                  backgroundColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(commonConfig.radiusXs),
-                  ),
-                ),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 36.0,
-                  width: width,
-                  padding: EdgeInsets.all(0),
-                  child: Text(
-                    e.name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: commonConfig.colorTextBase,
-                      fontSize: commonConfig.fontSizeCaption,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  debugPrint("OnItemClick: $e");
-                  if (widget.onChanged != null) {
-                    widget.onChanged!(e);
-                  }
-                  Navigator.pop(context, e);
-                },
-              );
-            }).toList(),
+          SizedBox(height: commonConfig.vSpacingSm),
+          SantoTag(
+            tags: hotCityList
+                .map((SantoSelectCityModel e) => e.name)
+                .toList(),
+            selectable: true,
+            isSingleSelect: true,
+            tagWidth: width,
+            tagHeight: 36.0,
+            spacing: 10,
+            verticalSpacing: 10,
+            onChanged: (List<int> indexes) {
+              if (indexes.isEmpty) {
+                return;
+              }
+              final SantoSelectCityModel model = hotCityList[indexes.first];
+              widget.onChanged?.call(model);
+              Navigator.pop(context, model);
+            },
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 
@@ -332,11 +308,10 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
   Widget _buildCityList() {
     int num = widget.hotCityList.length ~/ 3;
     int rem = widget.hotCityList.length % 3;
-    int addRem = (rem > 0) ? 1 : 0;
-    int headerHeight = (num + addRem) * 38 + 20 + 42 + 10;
-    if (num == 0 && rem == 0) {
-      headerHeight = 0;
-    }
+    int rows = num + (rem > 0 ? 1 : 0);
+    // 头部实际高度 = 上下15 padding + 标题24 + 标题与标签间距10 +
+    // rows行标签(每行36,行间10),与 _buildHeader 保持一致
+    int headerHeight = rows > 0 ? 15 * 2 + 24 + 10 + rows * 36 + (rows - 1) * 10 : 0;
     if (_suspensionTag.isEmpty || _suspensionTag == '') {
       if (_cityList.isNotEmpty) {
         _suspensionTag = _cityList.first.tag;

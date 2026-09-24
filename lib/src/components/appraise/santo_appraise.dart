@@ -2,7 +2,7 @@ import 'package:santo_ui/src/components/appraise/santo_appraise_emoji_list_view.
 import 'package:santo_ui/src/components/appraise/santo_appraise_header.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_star_list_view.dart';
 import 'package:santo_ui/src/components/button/santo_button.dart';
-import 'package:santo_ui/src/components/input/santo_input_text.dart';
+import 'package:santo_ui/src/components/input/santo_input.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_config.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -212,7 +212,7 @@ class _SantoAppraiseState extends State<SantoAppraise> {
         child: ConstrainedBox(
           constraints: BoxConstraints(
               maxHeight: widget.config.inputMaxHeight, minHeight: 40),
-          child: SantoInputText(
+          child: SantoInput(
             maxLines: null,
             minLines: 3,
             maxLength: widget.config.maxLength,

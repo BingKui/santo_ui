@@ -87,7 +87,9 @@ class _SettingState extends State<Setting> {
         ListItem(
           title: "主题色",
           describe: "修改品牌色 brandPrimary，示例内容随之换色",
-          rightWidget: const _BrandColorPreview(),
+          // 不用 const:该 widget 读的是 ExampleThemeConfig.currentBrandPrimary,
+          // const 实例会被规范化复用,父级重建时 build 不会重跑,颜色会停在旧值
+          rightWidget: _BrandColorPreview(),
           onPressed: () => _showBrandColorPicker(context),
         ),
       ],

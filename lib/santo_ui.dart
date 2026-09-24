@@ -34,6 +34,8 @@ export 'src/components/actionsheet/santo_selected_list_action_sheet.dart';
 export 'src/components/menu_bar/santo_menu_bar.dart';
 
 //布局
+export 'src/components/flex/santo_flex.dart';
+export 'src/components/grid/santo_grid.dart';
 export 'src/components/layout/santo_app_layout.dart';
 export 'src/components/layout/santo_app_layout_scope.dart';
 export 'src/components/layout/santo_bottom_safe_area.dart';
@@ -165,7 +167,7 @@ export 'src/components/gallery/config/santo_controller.dart';
 
 // 红点组件
 
-export 'src/components/input/santo_input_text.dart';
+export 'src/components/input/santo_input.dart';
 export 'src/components/calendar/santo_calendar.dart';
 
 //新手引导
@@ -225,7 +227,7 @@ export 'src/components/highlight/santo_highlight.dart';
 //通知栏
 export 'src/components/notice/santo_notice.dart';
 
-export 'src/components/scroll_anchor/santo_scroll_anchor_tab.dart';
+export 'src/components/anchor/santo_anchor.dart';
 
 // 城市选择
 export 'src/components/city_selection/santo_city_selection.dart';

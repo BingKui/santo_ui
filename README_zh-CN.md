@@ -59,7 +59,7 @@ Santo UI 包含 **81** 组件,按示例菜单分为 7 个分组。
 | MenuBar 菜单栏 | 默认/悬浮两种样式 |
 | Sidebar 侧边栏 | 侧边导航菜单 |
 | Steps 步骤条 | 流程进度引导 |
-| AnchorTab 锚点 | 锚点定位导航 |
+| Anchor 锚点 | 锚点定位导航 |
 | BackTop 返回顶部 | 长列表快速回顶 |
 | Drawer 抽屉 | 侧边滑出面板 |
 | Guide 引导 | 新手操作引导 |

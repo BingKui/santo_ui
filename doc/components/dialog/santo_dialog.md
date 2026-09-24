@@ -39,7 +39,7 @@ group:
    横向与块间距取 `hSpacingMd` / `vSpacingMd`(默认 15);
    顶部留白单独一档 —— 图标距顶部 `vSpacingXxl`(40),无图标时(标题或正文顶在最上)`vSpacingXl`(20)
 5. 辅助文案过长时用 `messageMaxHeight` 限定文案区高度,超出后在文案区内滚动,避免弹窗撑满屏幕
-6. 输入框内部渲染 `SantoInputText`,`input*` 一组参数直接透传,不要在 `messageWidget` 里再塞输入框
+6. 输入框内部渲染 `SantoInput`,`input*` 一组参数直接透传,不要在 `messageWidget` 里再塞输入框
 
 ### 交互约定
 
@@ -184,7 +184,7 @@ SantoThemeConfigurator.instance.register(
 - **新增**: 静态方法 `SantoDialog.confirm` / `info` / `success` / `warning` / `error`
 - **新增**: `SantoDialog.show` / `SantoDialog.dismiss` 按 tag 精确关闭(原 `SantoSafeDialog`)
 - **新增**: `messageMaxHeight` 限定辅助文案区高度,超出后文案区内滚动
-- **新增**: 内部渲染 `SantoInputText` 作为输入框(`SantoInputText` 支持 `inputMaxLength` 等参数)
+- **新增**: 内部渲染 `SantoInput` 作为输入框(`SantoInput` 支持 `inputMaxLength` 等参数)
 - **删除**: `SantoDialogManager.showSingleButtonDialog` / `showConfirmDialog` / `showMoreButtonDialog`
 - **删除**: `SantoEnhanceOperationDialog`、`SantoDialogConstants`
 - **删除**: `SantoContentExportWidget`、`SantoScrollableTextDialog`、`SantoScrollableText`

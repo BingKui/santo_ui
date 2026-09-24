@@ -83,7 +83,7 @@ class _IconExampleState extends State<IconExample> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SantoInputText(
+              SantoInput(
                 hintText: '搜索图标名称，如 arrow、user、circle',
                 onChanged: (String value) {
                   setState(() {

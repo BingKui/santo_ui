@@ -44,6 +44,9 @@ class SantoSearchText extends StatefulWidget {
   /// 输入框最大高度，默认 60
   final double maxHeight;
 
+  /// 内部搜索框的高度,默认 32(与 SantoInput 单行标准一致)
+  final double? height;
+
   ///内部搜索框之外的 Padding。不传时取主题 vSpacingSm(上下) / hSpacingLg(左右)。
   ///设置该字段会导致显示区域变小。
   final EdgeInsets? innerPadding;
@@ -106,6 +109,7 @@ class SantoSearchText extends StatefulWidget {
     this.onActionTap,
     this.action,
     this.maxHeight = 60,
+    this.height = 32,
     this.innerPadding,
     this.outSideColor,
     this.innerColor,
@@ -204,6 +208,7 @@ class _SearchTextState extends State<SantoSearchText> {
           children: <Widget>[
             Expanded(
               child: Container(
+                height: widget.height,
                 decoration: BoxDecoration(
                   color: _innerColor,
                   border: border,

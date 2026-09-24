@@ -171,7 +171,7 @@ class SantoNotice extends StatelessWidget {
         borderRadius: BorderRadius.circular(commonConfig.radiusXs),
       ),
       padding: this.padding ??
-          EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
+          EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd),
       constraints: BoxConstraints(minHeight: minHeight),
       child: GestureDetector(
         onTap: onNoticeTap,

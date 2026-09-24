@@ -18,7 +18,7 @@ Santo 是一套企业级 Flutter 组件库,提供 70+ 组件,覆盖表单、导�
 
 - **基础组件**:Badge 徽标、Avatar 头像、Button 按钮、Icon 图标、Link 链接、Image 图片
 - **布局组件**:Cell 单元格、Divider 分割线、Space 间距、Section 区块、SafeArea 安全区域、Panel 面板
-- **导航组件**:AppBar 导航栏、TabBar 标签栏、Sidebar 侧边栏、MenuBar 底部菜单栏、Pagination 分页、ScrollAnchor 锚点
+- **导航组件**:AppBar 导航栏、TabBar 标签栏、Sidebar 侧边栏、MenuBar 底部菜单栏、Pagination 分页、Anchor 锚点
 - **表单组件**:Input 输入框、Checkbox 复选框、Radio 单选框、Switch 开关、Slider 滑块、Stepper 步进器、Segmented 分段选择器、SearchText 搜索框
 - **反馈组件**:Toast 轻提示、Message 消息、Dialog 对话框、Loading 加载、Result 结果页、Empty 空状态、Progress 进度条、Refresh 下拉刷新
 - **数据展示**:Table 表格、Tree 树形控件、Collapse 折叠面板、Statistic 统计数值、Swiper 轮播图、Masonry 瀑布流、Skeleton 骨架屏、Gallery 大图预览

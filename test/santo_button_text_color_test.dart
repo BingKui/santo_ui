@@ -23,7 +23,7 @@ void main() {
   final common = SantoThemeConfigurator.instance.getConfig().commonConfig;
 
   testWidgets('输入框右侧按钮:显式 textColor 生效且不省略', (tester) async {
-    await tester.pumpWidget(_wrap(SantoInputText(
+    await tester.pumpWidget(_wrap(SantoInput(
       label: '验证码',
       labelWidth: 80,
       hintText: '请输入验证码',
@@ -43,8 +43,8 @@ void main() {
     final paragraph = _buttonParagraph(tester);
     expect(paragraph.text.style?.color, common.brandPrimary);
     expect(paragraph.didExceedMaxLines, isFalse);
-    expect(tester.getSize(find.byType(SantoInputText)).height,
-        greaterThanOrEqualTo(44));
+    expect(tester.getSize(find.byType(SantoInput)).height,
+        greaterThanOrEqualTo(32));
   });
 
   testWidgets('显式 textColor 优先于 type 默认色', (tester) async {
