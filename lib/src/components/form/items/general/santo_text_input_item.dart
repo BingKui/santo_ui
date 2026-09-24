@@ -237,7 +237,7 @@ class SantoTextInputFormItemState extends State<SantoTextInputFormItem> {
                       child: Text(
                         widget.unit ?? "",
                         style: TextStyle(
-                          color: Color(0xFF17233D),
+                          color: commonConfig.colorTextBase,
                           fontSize: SantoFonts.f16,
                         ),
                       )),

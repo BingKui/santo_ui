@@ -291,14 +291,13 @@ class _SantoTimeCounterState extends State<SantoTimeCounter> {
       return widget.builder!(_currentTime);
     }
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final defaultStyle = widget.textStyle ??
         TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w500,
-          color: SantoThemeConfigurator.instance
-              .getConfig()
-              .commonConfig
-              .colorTextBase,
+          color: commonConfig.colorTextBase,
         );
 
     return Text(

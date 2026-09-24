@@ -95,6 +95,11 @@ class _ChatExampleState extends State<ChatExample> {
     ValueChanged<SantoChatMessage>? onRetry,
     ValueChanged<SantoChatQuote>? onQuoteTap,
     ValueChanged<SantoChatDocMessage>? onDocTap,
+    ValueChanged<SantoChatApprovalMessage>? onApprovalTap,
+    ValueChanged<SantoChatApprovalMessage>? onApprove,
+    ValueChanged<SantoChatApprovalMessage>? onReject,
+    ValueChanged<SantoChatNoticeMessage>? onNoticeTap,
+    ValueChanged<SantoChatMessage>? onReadReceiptTap,
     bool withMenu = false,
     bool withManyMenu = false,
     bool withSelection = false,
@@ -108,6 +113,11 @@ class _ChatExampleState extends State<ChatExample> {
         onRetry: onRetry,
         onQuoteTap: onQuoteTap,
         onDocTap: onDocTap,
+        onApprovalTap: onApprovalTap,
+        onApprove: onApprove,
+        onReject: onReject,
+        onNoticeTap: onNoticeTap,
+        onReadReceiptTap: onReadReceiptTap,
         selectionMode: withSelection && _selectedIds.isNotEmpty,
         selectedIds: _selectedIds,
         onSelectionToggle: withSelection ? _toggleSelection : null,
@@ -216,7 +226,8 @@ class _ChatExampleState extends State<ChatExample> {
         SantoSection(
           title: '完整会话',
           description:
-              'SantoChat 总装:消息状态(发送中/已发送/已送达/已读/失败)、长按菜单(表情回应+操作,可按类型自定义)、滑动引用、编辑、多选、扩展菜单与上拉加载都在这一份状态里;发送没有按钮,走输入法发送键',
+              'SantoChat 总装:消息状态(发送中/已发送/已送达/已读/失败)、长按菜单(表情回应+操作,可按类型自定义)、滑动引用、编辑、多选、扩展菜单与上拉加载都在这一份状态里;发送没有按钮,走输入法发送键。'
+              '顶部群公告直接复用 SantoNotice,不手写容器',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -282,7 +293,7 @@ class _ChatExampleState extends State<ChatExample> {
         SantoSection(
           title: '消息状态',
           description:
-              '我方消息左侧按 status 展示:发送中时钟、已发送单勾、已送达双勾、已读双勾取主题色;failed 展示可点击的重试图标',
+              '我方消息气泡下方展示状态文案:发送中/已发送/未读/已读;failed 在非头像一侧展示可点击的实心警示图标',
           child: _buildStaticList(
             height: 340,
             messages: <SantoChatMessage>[
@@ -311,6 +322,66 @@ class _ChatExampleState extends State<ChatExample> {
             ],
             onRetry: (SantoChatMessage message) =>
                 SantoToast.show('重发 ${message.id}', context),
+          ),
+        ),
+        SantoSection(
+          title: '已读回执',
+          description:
+              '只有自己发出的消息才有回执,展示在气泡下方、贴头像一侧:单聊是「已读/未读」,'
+              '群聊是「N人未读/全部已读」(对标钉钉);点击回执打开已读/未读人员列表',
+          child: _buildStaticList(
+            height: 320,
+            onReadReceiptTap: (SantoChatMessage message) =>
+                SantoChatReadReceiptSheet.show(
+              context: context,
+              receipt: message.readReceipt ?? const SantoChatReadReceipt(),
+            ),
+            messages: <SantoChatMessage>[
+              SantoChatTextMessage(
+                id: 'r1',
+                author: _me,
+                text: '单聊:对方已读',
+                status: SantoChatMessageStatus.read,
+                readReceipt: const SantoChatReadReceipt(readCount: 1),
+                createdAt: DateTime.now().subtract(const Duration(minutes: 12)),
+              ),
+              SantoChatTextMessage(
+                id: 'r2',
+                author: _me,
+                text: '单聊:对方还没读',
+                status: SantoChatMessageStatus.delivered,
+                readReceipt: const SantoChatReadReceipt(unreadCount: 1),
+                createdAt: DateTime.now().subtract(const Duration(minutes: 8)),
+              ),
+              SantoChatTextMessage(
+                id: 'r3',
+                author: _me,
+                text: '群聊:还有 2 个人没读,点下方看看是谁',
+                status: SantoChatMessageStatus.delivered,
+                readReceipt: const SantoChatReadReceipt(
+                  readCount: 3,
+                  unreadCount: 2,
+                  readMembers: <SantoChatAuthor>[
+                    SantoChatAuthor(id: 'u1', name: '张三'),
+                    SantoChatAuthor(id: 'u2', name: '李四'),
+                    SantoChatAuthor(id: 'u4', name: '赵六'),
+                  ],
+                  unreadMembers: <SantoChatAuthor>[
+                    SantoChatAuthor(id: 'u3', name: '王五'),
+                    SantoChatAuthor(id: 'u5', name: '钱七'),
+                  ],
+                ),
+                createdAt: DateTime.now().subtract(const Duration(minutes: 4)),
+              ),
+              SantoChatTextMessage(
+                id: 'r4',
+                author: _me,
+                text: '群聊:所有人都读完了',
+                status: SantoChatMessageStatus.read,
+                readReceipt: const SantoChatReadReceipt(readCount: 6),
+                createdAt: DateTime.now(),
+              ),
+            ],
           ),
         ),
         SantoSection(
@@ -444,6 +515,126 @@ class _ChatExampleState extends State<ChatExample> {
                 spaceId: 'space_1',
                 status: SantoChatMessageStatus.read,
                 createdAt: DateTime.now(),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '审批消息',
+          description:
+              '审批卡片自带容器、不套气泡:单号 + 状态标签 + 标题 + 审批流信息;'
+              '状态为审批中且 canApprove 为 true 时才展示「通过/驳回」,点击回调 onApprove / onReject',
+          child: _buildStaticList(
+            height: 340,
+            onApprovalTap: (SantoChatApprovalMessage message) =>
+                SantoToast.show('打开审批 ${message.taskNo}', context),
+            onApprove: (SantoChatApprovalMessage message) =>
+                SantoToast.show('通过 ${message.taskId}', context),
+            onReject: (SantoChatApprovalMessage message) =>
+                SantoToast.show('驳回 ${message.taskId}', context),
+            messages: <SantoChatMessage>[
+              SantoChatApprovalMessage(
+                id: 'a1',
+                author: _zhang,
+                taskId: 'task_1001',
+                taskNo: 'SP20260924001',
+                title: '双十一大促扩容申请',
+                flowName: '资源申请审批流',
+                applicatorName: '张三',
+                currentNodeName: '技术负责人审批',
+                canApprove: true,
+                createdAt: DateTime.now().subtract(const Duration(minutes: 10)),
+              ),
+              SantoChatApprovalMessage(
+                id: 'a2',
+                author: _me,
+                taskId: 'task_1002',
+                taskNo: 'SP20260924002',
+                title: '测试环境数据库权限申请',
+                approvalStatus: SantoChatApprovalStatus.approved,
+                flowName: '权限申请审批流',
+                applicatorName: '我',
+                status: SantoChatMessageStatus.read,
+                createdAt: DateTime.now(),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '通知消息',
+          description:
+              '通知卡片:类型图标 + 未读红点 + 标题 + 正文 + 时间,点击回调 onNoticeTap;'
+              '同一张卡片也能直接当通知中心的列表项用',
+          child: _buildStaticList(
+            height: 300,
+            onNoticeTap: (SantoChatNoticeMessage message) =>
+                SantoToast.show('打开通知 ${message.title}', context),
+            messages: <SantoChatMessage>[
+              SantoChatNoticeMessage(
+                id: 'n1',
+                author: _zhang,
+                title: '你被 @ 了',
+                content: '张三在「产品需求群」提到了你:记得看下双十一方案',
+                noticeType: SantoChatNoticeType.mention,
+                targetId: 'conversation_1',
+                createdAt: DateTime.now().subtract(const Duration(minutes: 6)),
+              ),
+              SantoChatNoticeMessage(
+                id: 'n2',
+                author: _zhang,
+                title: '审批已通过',
+                content: '你提交的「双十一大促扩容申请」已通过技术负责人审批',
+                noticeType: SantoChatNoticeType.approval,
+                read: true,
+                status: SantoChatMessageStatus.read,
+                createdAt: DateTime.now().subtract(const Duration(hours: 2)),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '表情消息与撤回',
+          description:
+              '表情消息展示单个大表情([表情名] 命中图片时渲染图片,否则用 Unicode 字符);'
+              'recalled 为 true 的消息本体不再渲染,撤回提示由服务端下发的系统消息展示',
+          child: _buildStaticList(
+            height: 260,
+            messages: <SantoChatMessage>[
+              SantoChatEmojiMessage(
+                id: 'e1',
+                author: _me,
+                symbol: '[赞]',
+                status: SantoChatMessageStatus.read,
+                createdAt: DateTime.now().subtract(const Duration(minutes: 4)),
+              ),
+              SantoChatEmojiMessage(
+                id: 'e2',
+                author: _zhang,
+                symbol: '🎉',
+                createdAt: DateTime.now().subtract(const Duration(minutes: 2)),
+              ),
+              SantoChatTextMessage(
+                id: 'e3',
+                author: _zhang,
+                text: '这条消息已撤回',
+                recalled: true,
+                createdAt: DateTime.now(),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '自定义消息',
+          description:
+              '业务卡片(如审批单)通过 SantoChatCustomMessage 传入 builder,组件只负责分栏、头像、昵称与状态;内容自带容器,同样不套气泡',
+          child: _buildStaticList(
+            height: 260,
+            messages: <SantoChatMessage>[
+              SantoChatCustomMessage(
+                id: 'c1',
+                author: _zhang,
+                createdAt: DateTime.now().subtract(const Duration(minutes: 3)),
+                builder: (BuildContext context) => const DemoApprovalCard(),
               ),
             ],
           ),

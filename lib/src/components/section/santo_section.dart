@@ -74,8 +74,9 @@ class SantoSection extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor ?? config.backgroundColor,
-        // 圆角固定 12
-        borderRadius: BorderRadius.all(Radius.circular(kSantoSectionRadius)),
+        // 圆角取主题圆角令牌
+        borderRadius:
+            BorderRadius.all(Radius.circular(config.commonConfig.radiusXs)),
         border: Border.all(
           color: config.borderColor,
           width: config.borderWidth,

@@ -131,9 +131,13 @@ class SantoPadThemeConfig {
     itemSpacing: 24,
     titleMaxLength: 20,
     titleStyle: SantoTextStyle(
-        color: Color(0xFF17233D), fontWeight: FontWeight.w500, fontSize: 24),
+        color: commonConfig.colorTextBase,
+        fontWeight: FontWeight.w500,
+        fontSize: 24),
     actionsStyle: SantoTextStyle(
-        color: Color(0xFF1677FF), fontWeight: FontWeight.w500, fontSize: 18),
+        color: commonConfig.brandPrimary,
+        fontWeight: FontWeight.w500,
+        fontSize: 18),
   );
 
   static SantoButtonConfig buttonConfig = SantoButtonConfig(

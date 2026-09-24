@@ -15,6 +15,11 @@ enum SantoMenuBarStyle {
   floating,
 }
 
+/// 悬浮样式选中项默认背景色:中性浅灰
+///
+/// 品牌色只落在选中图标与文字上,底色保持中性,避免大面积色块
+const Color _kFloatingSelectedBgColor = Color(0xFFF0F0F0);
+
 /// 底部标签项
 class SantoMenuBarItem {
   /// 标签文本
@@ -98,12 +103,16 @@ class SantoMenuBar extends StatefulWidget {
   /// floating 样式每个标签项的圆角,默认与容器圆角一致
   final double? itemRadius;
 
-  /// floating 样式选中项背景色,默认主色
+  /// floating 样式选中项背景色,默认中性浅灰
+  ///
+  /// @changed v1.5.1 默认值由主色改为中性浅灰,品牌色只用于选中图标与文字
   final Color? itemSelectedBgColor;
 
-  /// 选中文字颜色,默认主色(docked)/白色(floating)
+  /// 选中文字颜色,默认主色
   ///
   /// 同时作为选中图标的着色(图标自带 color 时以图标为准)
+  ///
+  /// @changed v1.5.1 floating 样式默认值由白色改为主色
   final Color? selectedTextColor;
 
   /// 未选中文字颜色,默认次要文字色
@@ -232,10 +241,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
   }
 
   Color get _selectedColor =>
-      widget.selectedTextColor ??
-      (widget.style == SantoMenuBarStyle.floating
-          ? Colors.white
-          : _commonConfig.brandPrimary);
+      widget.selectedTextColor ?? _commonConfig.brandPrimary;
 
   Color get _unselectedColor =>
       widget.unselectedTextColor ?? _commonConfig.colorTextSecondary;
@@ -326,8 +332,8 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
                   height: itemHeight,
                   child: Container(
                     decoration: BoxDecoration(
-                      color:
-                          widget.itemSelectedBgColor ?? _commonConfig.brandPrimary,
+                      color: widget.itemSelectedBgColor ??
+                          _kFloatingSelectedBgColor,
                       borderRadius: BorderRadius.circular(_itemRadius),
                     ),
                   ),

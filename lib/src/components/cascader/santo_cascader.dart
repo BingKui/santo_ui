@@ -264,7 +264,7 @@ class _SantoCascaderState extends State<SantoCascader> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: commonConfig.fillBase,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(commonConfig.radiusXs),
           topRight: Radius.circular(commonConfig.radiusXs),
@@ -303,7 +303,7 @@ class _SantoCascaderState extends State<SantoCascader> {
                 widget.cancelText,
                 style: TextStyle(
                   fontSize: commonConfig.fontSizeBase,
-                  color: Color(0xFF515A6E),
+                  color: commonConfig.colorTextImportant,
                 ),
               ),
             ),
@@ -315,7 +315,7 @@ class _SantoCascaderState extends State<SantoCascader> {
                 style: TextStyle(
                   fontSize: commonConfig.fontSizeSubHead,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF17233D),
+                  color: commonConfig.colorTextBase,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -347,10 +347,12 @@ class _SantoCascaderState extends State<SantoCascader> {
 
   /// 构建分割线
   Widget _buildDivider() {
-    return const Divider(
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    return Divider(
       height: 0.5,
       thickness: 0.5,
-      color: Color(0xFFE8EAEC),
+      color: commonConfig.dividerColorBase,
     );
   }
 
@@ -392,7 +394,7 @@ class _SantoCascaderState extends State<SantoCascader> {
               items[index].label,
               style: TextStyle(
                 fontSize: commonConfig.fontSizeBase,
-                color: isSelected ? _activeColor : const Color(0xFF17233D),
+                color: isSelected ? _activeColor : commonConfig.colorTextBase,
                 fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
               ),
               maxLines: 1,

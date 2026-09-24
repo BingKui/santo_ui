@@ -62,17 +62,17 @@ class SantoBottomDrawer extends StatelessWidget {
   /// 自适应内容时的最大高度,默认屏幕高度的 85%
   final double? maxHeight;
 
-  /// 顶部圆角,默认 12
-  final double radius;
+  /// 顶部圆角,不传时取主题 radiusMd
+  final double? radius;
 
-  /// 抽屉背景色,默认白色
+  /// 抽屉背景色,不传时取主题 fillBase
   final Color? backgroundColor;
 
   /// 内容区是否处理底部安全区域,默认 true
   final bool bottomSafeArea;
 
-  /// 内容区内边距,默认四周 20(不含安全区)
-  final EdgeInsets contentPadding;
+  /// 内容区内边距,不传时四周取主题 hSpacingLg / vSpacingLg(不含安全区)
+  final EdgeInsets? contentPadding;
 
   /// 内容区控件
   final Widget child;
@@ -89,10 +89,10 @@ class SantoBottomDrawer extends StatelessWidget {
     this.maskColor,
     this.height,
     this.maxHeight,
-    this.radius = 12,
+    this.radius,
     this.backgroundColor,
     this.bottomSafeArea = true,
-    this.contentPadding = const EdgeInsets.all(20),
+    this.contentPadding,
     required this.child,
   }) : super(key: key);
 
@@ -112,10 +112,10 @@ class SantoBottomDrawer extends StatelessWidget {
     Color? maskColor,
     double? height,
     double? maxHeight,
-    double radius = 12,
+    double? radius,
     Color? backgroundColor,
     bool bottomSafeArea = true,
-    EdgeInsets contentPadding = const EdgeInsets.all(20),
+    EdgeInsets? contentPadding,
     required Widget child,
   }) {
     return Navigator.of(context).push<T>(
@@ -165,6 +165,8 @@ class SantoBottomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final effectiveMaxHeight =
         maxHeight ?? MediaQuery.of(context).size.height * 0.85;
     final safeAreaBottom =
@@ -174,12 +176,17 @@ class SantoBottomDrawer extends StatelessWidget {
     // - contentPadding 完整应用到四边(底部含 contentPadding.bottom,
     //   非滚动内容不会贴到屏幕底)
     // - 底部安全区通过 MediaQuery 传递,由可滚动内容自身消费
-    final bottomPadding = contentPadding.bottom;
+    final EdgeInsets resolvedContentPadding = contentPadding ??
+        EdgeInsets.symmetric(
+          horizontal: commonConfig.hSpacingLg,
+          vertical: commonConfig.vSpacingLg,
+        );
+    final bottomPadding = resolvedContentPadding.bottom;
     Widget content = Padding(
       padding: EdgeInsets.fromLTRB(
-        contentPadding.left,
-        contentPadding.top,
-        contentPadding.right,
+        resolvedContentPadding.left,
+        resolvedContentPadding.top,
+        resolvedContentPadding.right,
         bottomPadding,
       ),
       child: child,
@@ -203,9 +210,9 @@ class SantoBottomDrawer extends StatelessWidget {
         child: GestureDetector(
           onTap: () {}, // 阻止事件穿透到遮罩
           child: Material(
-            color: backgroundColor ?? Colors.white,
+            color: backgroundColor ?? commonConfig.fillBase,
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(radius),
+              top: Radius.circular(radius ?? commonConfig.radiusMd),
             ),
             clipBehavior: Clip.antiAlias,
             child: GestureDetector(
@@ -259,7 +266,7 @@ class SantoBottomDrawer extends StatelessWidget {
           style: TextStyle(
             fontSize: commonConfig.fontSizeHead,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF17233D),
+            color: commonConfig.colorTextBase,
           ),
           child: titleContent,
         ),
@@ -269,7 +276,7 @@ class SantoBottomDrawer extends StatelessWidget {
             desc!,
             style: TextStyle(
               fontSize: commonConfig.fontSizeCaption,
-              color: Color(0xFF808695),
+              color: commonConfig.colorTextSecondary,
             ),
           ),
         ],
@@ -282,7 +289,8 @@ class SantoBottomDrawer extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Padding(
               padding: EdgeInsets.all(commonConfig.vSpacingSm),
-              child: Icon(Icons.close, size: 20, color: Color(0xFF808695)),
+              child: Icon(Icons.close,
+                  size: 20, color: commonConfig.colorTextSecondary),
             ),
           )
         : null;

@@ -227,7 +227,8 @@ class SantoRichGridInfo {
           child: Padding(
             padding: EdgeInsets.only(
                 left: isKey ? 0 : themeData!.commonConfig.hSpacingXs),
-            child: SantoIcon(SantoIcons.helpCircle, size: 14),
+            child: SantoIcon(SantoIcons.helpCircle,
+                size: themeData!.commonConfig.iconSizeSm),
           ));
     }
 

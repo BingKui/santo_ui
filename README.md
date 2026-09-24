@@ -105,13 +105,13 @@ Santo UI ships **81** widgets, grouped into 7 categories following the example a
 | TextEllipsis | Multi-line ellipsis with expand/collapse |
 | Popover | Anchor-anchored popover |
 | SwipeCell | Swipe actions on list items |
-| NoticeBar | Scrolling notice bar |
+| Notice | Notice / announcement bar |
 | Progress | Linear / circular progress |
 | TimeCounter | Countdown / count-up timer |
 | Empty | Empty state placeholder |
 | Footer | Page footer info |
 | Gallery | Large image preview |
-| Chat | Chat window: message list, bubbles, long-press menu, input bar with emoji/extension panels, doc cards and conversations |
+| Chat | Chat window: message list, bubbles, long-press menu, input bar with emoji/extension panels, text/image/voice/file/doc/approval/notice/emoji messages and conversations |
 
 ### Feedback
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:santo_ui/src/components/picker/base/santo_picker_constants.dart';
-
 class SantoPickerTitleConfig {
   /// DateTimePicker theme.
   ///
@@ -14,7 +12,7 @@ class SantoPickerTitleConfig {
     this.cancel,
     this.confirm,
     this.title,
-    this.showTitle = pickerShowTitleDefault,
+    this.showTitle = true,
     this.titleContent,
   });
 

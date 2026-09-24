@@ -139,7 +139,7 @@ class _SantoSwitchTitleState extends State<SantoSwitchTitle>
     );
 
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       child: TabBar(
         isScrollable: true,
         tabs: widgetChildren,

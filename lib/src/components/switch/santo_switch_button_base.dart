@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 
 const double _borderWidth = 1.5;
 const Duration _animationDuration = Duration(milliseconds: 180);
@@ -22,17 +23,18 @@ class SantoBaseSwitchButton extends StatelessWidget {
   /// Called when the user toggles the switch on or off.
   final ValueChanged<bool>? onChanged;
 
-  /// 未选中时的轨道颜色
-  final Color trackOffColor;
+  /// 未选中时的轨道颜色,不传取主题 fillBody
+  final Color? trackOffColor;
 
-  /// 选中时的轨道颜色
-  final Color trackOnColor;
+  /// 选中时的轨道颜色,不传取主题 brandPrimary
+  final Color? trackOnColor;
 
   /// 未选中时边框的颜色
-  final Color borderColor;
+  /// 未选中时边框颜色,不传取主题 dividerColorBase
+  final Color? borderColor;
 
-  /// The color to use on the thumb.
-  final Color thumbColor;
+  /// The color to use on the thumb,不传取主题 fillBase
+  final Color? thumbColor;
 
   /// 开启文案，不传则不展示文案
   final String? openText;
@@ -40,31 +42,45 @@ class SantoBaseSwitchButton extends StatelessWidget {
   /// 关闭文案，不传则不展示文案
   final String? closeText;
 
-  /// 开启文案颜色
-  final Color openTextColor;
+  /// 开启文案颜色,不传取主题反色文字
+  final Color? openTextColor;
 
-  /// 关闭文案颜色
-  final Color closeTextColor;
+  /// 关闭文案颜色,不传取主题次要文字色
+  final Color? closeTextColor;
 
   const SantoBaseSwitchButton({
     Key? key,
     required this.value,
     required this.onChanged,
     required this.size,
-    this.thumbColor = Colors.white,
-    this.trackOnColor = const Color(0xFF1677FF),
-    this.trackOffColor = const Color(0xFFF5F5F5),
-    this.borderColor = const Color(0xffeeeeee),
+    this.thumbColor,
+    this.trackOnColor,
+    this.trackOffColor,
+    this.borderColor,
     this.enabled = false,
     this.loading = false,
     this.openText,
     this.closeText,
-    this.openTextColor = Colors.white,
-    this.closeTextColor = const Color(0xFF808695),
+    this.openTextColor,
+    this.closeTextColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final Color resolvedTrackOnColor =
+        trackOnColor ?? commonConfig.brandPrimary;
+    final Color resolvedTrackOffColor = trackOffColor ?? commonConfig.fillBody;
+    final Color resolvedThumbColor = thumbColor ?? commonConfig.fillBase;
+    final Color resolvedOpenTextColor =
+        openTextColor ?? commonConfig.colorTextBaseInverse;
+    final Color resolvedCloseTextColor =
+        closeTextColor ?? commonConfig.colorTextSecondary;
+    // 加载指示器取与滑块相反的颜色,保证在滑块上有对比度
+    final Color spinnerColor = resolvedThumbColor == commonConfig.fillBase
+        ? commonConfig.colorTextSecondary
+        : commonConfig.fillBase;
     final bool interactive = enabled && !loading;
     final double thumbDiameter = size.height - 2 * _borderWidth;
     final bool hasText = openText != null || closeText != null;
@@ -91,9 +107,15 @@ class SantoBaseSwitchButton extends StatelessWidget {
             height: size.height,
             width: trackWidth,
             decoration: BoxDecoration(
-              color: value ? trackOnColor : trackOffColor,
+              color: value ? resolvedTrackOnColor : resolvedTrackOffColor,
               border: Border.all(
-                color: value ? Colors.transparent : borderColor,
+                color: value
+                    ? Colors.transparent
+                    : (borderColor ??
+                        SantoThemeConfigurator.instance
+                            .getConfig()
+                            .commonConfig
+                            .dividerColorBase),
                 width: _borderWidth,
               ),
               borderRadius: BorderRadius.all(Radius.circular(size.height / 2)),
@@ -109,7 +131,11 @@ class SantoBaseSwitchButton extends StatelessWidget {
                     alignment: value
                         ? Alignment.centerLeft
                         : Alignment.centerRight,
-                    child: _buildTextSlot(thumbDiameter),
+                    child: _buildTextSlot(
+                      thumbDiameter,
+                      resolvedOpenTextColor,
+                      resolvedCloseTextColor,
+                    ),
                   ),
                 AnimatedAlign(
                   duration: _animationDuration,
@@ -119,7 +145,12 @@ class SantoBaseSwitchButton extends StatelessWidget {
                       : Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.all(_borderWidth),
-                    child: _buildThumb(thumbDiameter),
+                    child: _buildThumb(
+                      thumbDiameter,
+                      resolvedThumbColor,
+                      spinnerColor,
+                      commonConfig.shadowSm,
+                    ),
                   ),
                 ),
               ],
@@ -131,18 +162,22 @@ class SantoBaseSwitchButton extends StatelessWidget {
   }
 
   /// 文案槽：宽度固定，开关状态切换时轨道宽度不变
-  Widget _buildTextSlot(double thumbDiameter) {
+  Widget _buildTextSlot(
+    double thumbDiameter,
+    Color openColor,
+    Color closeColor,
+  ) {
     return SizedBox(
       width: thumbDiameter + 6,
       child: Stack(
         alignment: Alignment.center,
         children: [
           if (openText != null)
-            _buildText(openText!, openTextColor, thumbDiameter, value ? 1 : 0),
+            _buildText(openText!, openColor, thumbDiameter, value ? 1 : 0),
           if (closeText != null)
             _buildText(
               closeText!,
-              closeTextColor,
+              closeColor,
               thumbDiameter,
               value ? 0 : 1,
             ),
@@ -174,7 +209,12 @@ class SantoBaseSwitchButton extends StatelessWidget {
     );
   }
 
-  Widget _buildThumb(double thumbDiameter) {
+  Widget _buildThumb(
+    double thumbDiameter,
+    Color resolvedThumbColor,
+    Color spinnerColor,
+    List<BoxShadow> shadow,
+  ) {
     Widget? child;
     if (loading) {
       child = SizedBox(
@@ -182,9 +222,7 @@ class SantoBaseSwitchButton extends StatelessWidget {
         height: 12,
         child: CircularProgressIndicator(
           strokeWidth: 1.5,
-          valueColor: AlwaysStoppedAnimation<Color>(
-            thumbColor == Colors.white ? const Color(0xFF808695) : Colors.white,
-          ),
+          valueColor: AlwaysStoppedAnimation<Color>(spinnerColor),
         ),
       );
     }
@@ -192,15 +230,9 @@ class SantoBaseSwitchButton extends StatelessWidget {
       height: thumbDiameter,
       width: thumbDiameter,
       decoration: BoxDecoration(
-        color: thumbColor,
+        color: resolvedThumbColor,
         shape: BoxShape.circle,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 2,
-            offset: Offset(0, 1),
-          ),
-        ],
+        boxShadow: shadow,
       ),
       alignment: Alignment.center,
       child: child,

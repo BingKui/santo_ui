@@ -107,22 +107,8 @@ enum SantoButtonIconPlacement {
   bottom,
 }
 
-/// 按钮内边距
-const EdgeInsets _kLargePadding = EdgeInsets.symmetric(
-  horizontal: 15,
-  vertical: 10,
-);
-const EdgeInsets _kMiddlePadding = EdgeInsets.symmetric(
-  horizontal: 10,
-  vertical: 5,
-);
-const EdgeInsets _kSmallPadding = EdgeInsets.symmetric(horizontal: 5);
-
 /// 中号按钮的最小宽度
 const double _kMiddleMinWidth = 84;
-
-/// 实心按钮的默认置灰底色
-const Color _kDisableBackgroundColor = Color(0xFFCCCCCC);
 
 /// 通用按钮,库内唯一的按钮入口
 ///
@@ -210,7 +196,7 @@ class SantoButton extends StatelessWidget {
   /// 按钮不可用的文字颜色
   final Color? disableTextColor;
 
-  /// 按钮不可用的背景色,默认实心按钮为 [_kDisableBackgroundColor],
+  /// 按钮不可用的背景色,默认实心按钮为 [SantoCommonConfig.colorTextHint],
   /// 描边/虚线按钮为该色的 10% 透明度
   final Color? disableBackgroundColor;
 
@@ -352,13 +338,20 @@ class SantoButton extends StatelessWidget {
   }
 
   EdgeInsetsGeometry get _defaultPadding {
+    final SantoCommonConfig cfg = _commonConfig;
     switch (size) {
       case SantoButtonSize.large:
-        return _kLargePadding;
+        return EdgeInsets.symmetric(
+          horizontal: cfg.hSpacingMd,
+          vertical: cfg.vSpacingSm,
+        );
       case SantoButtonSize.middle:
-        return _kMiddlePadding;
+        return EdgeInsets.symmetric(
+          horizontal: cfg.hSpacingSm,
+          vertical: cfg.vSpacingXs,
+        );
       case SantoButtonSize.small:
-        return _kSmallPadding;
+        return EdgeInsets.symmetric(horizontal: cfg.hSpacingXs);
     }
   }
 
@@ -449,7 +442,10 @@ class SantoButton extends StatelessWidget {
       color: palette.background,
       borderRadius: _effectiveBorderRadius,
       border: drawSolidBorder
-          ? Border.all(color: palette.borderColor!, width: 1)
+          ? Border.all(
+              color: palette.borderColor!,
+              width: _commonConfig.borderWidthMd,
+            )
           : null,
     );
   }
@@ -516,14 +512,13 @@ class SantoButton extends StatelessWidget {
     if (!isEnable) {
       final bool filled = buttonVariant == SantoButtonVariant.solid;
       if (filled) {
-        background =
-            disableBackgroundColor ?? _kDisableBackgroundColor;
+        background = disableBackgroundColor ?? cfg.colorTextHint;
         foreground =
             disableTextColor ?? cfg.colorTextBaseInverse.withOpacity(0.7);
       } else {
         background = buttonVariant == SantoButtonVariant.outlined ||
                 buttonVariant == SantoButtonVariant.dashed
-            ? (disableBackgroundColor ?? _kDisableBackgroundColor)
+            ? (disableBackgroundColor ?? cfg.colorTextHint)
                 .withOpacity(0.1)
             : Colors.transparent;
         if (borderColor != null) borderColor = cfg.borderColorBase;
@@ -607,7 +602,7 @@ class SantoButton extends StatelessWidget {
         width: dimension,
         height: dimension,
         child: CircularProgressIndicator(
-          strokeWidth: 2,
+          strokeWidth: _commonConfig.borderWidthLg,
           valueColor: AlwaysStoppedAnimation<Color>(palette.foreground),
         ),
       );

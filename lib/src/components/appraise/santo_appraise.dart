@@ -92,7 +92,7 @@ class _SantoAppraiseState extends State<SantoAppraise> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(commonConfig.radiusXs),
-        color: Colors.white,
+        color: commonConfig.fillBase,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -324,12 +324,8 @@ class _AppraiseTagSelectorState extends State<_AppraiseTagSelector> {
             constraints: BoxConstraints(minWidth: 75),
             decoration: BoxDecoration(
               color: isSelected
-                  ? SantoThemeConfigurator.instance
-                      .getConfig()
-                      .commonConfig
-                      .brandPrimary
-                      .withAlpha(0x14)
-                  : const Color(0xFFF5F5F5),
+                  ? commonConfig.brandPrimary.withAlpha(0x14)
+                  : commonConfig.fillBody,
               borderRadius: BorderRadius.circular(commonConfig.radiusXs),
             ),
             padding: EdgeInsets.symmetric(
@@ -344,14 +340,8 @@ class _AppraiseTagSelectorState extends State<_AppraiseTagSelector> {
                 fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
                 fontSize: commonConfig.fontSizeCaption,
                 color: isSelected
-                    ? SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .brandPrimary
-                    : SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .colorTextBase,
+                    ? commonConfig.brandPrimary
+                    : commonConfig.colorTextBase,
               ),
             ),
           ),

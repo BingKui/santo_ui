@@ -81,15 +81,20 @@ class SantoSlider extends StatelessWidget {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     final Color active = activeColor ?? _brandPrimary;
-    final Color inactive = inactiveColor ?? const Color(0xFFE0E0E0);
+    final Color inactive = inactiveColor ?? commonConfig.borderColorBase;
+    final double indicatorFontSize = commonConfig.fontSizeCaption;
+    final Color indicatorTextColor = commonConfig.colorTextBaseInverse;
 
     if (_isRange) {
-      return _buildRangeSlider(active, inactive, commonConfig.fontSizeCaption);
+      return _buildRangeSlider(
+          active, inactive, indicatorFontSize, indicatorTextColor);
     }
-    return _buildSingleSlider(active, inactive, commonConfig.fontSizeCaption);
+    return _buildSingleSlider(
+        active, inactive, indicatorFontSize, indicatorTextColor);
   }
 
-  Widget _buildSingleSlider(Color active, Color inactive, double indicatorFontSize) {
+  Widget _buildSingleSlider(Color active, Color inactive,
+      double indicatorFontSize, Color indicatorTextColor) {
     return SliderTheme(
       data: SliderThemeData(
         activeTrackColor: active,
@@ -105,7 +110,7 @@ class SantoSlider extends StatelessWidget {
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
         valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
         valueIndicatorTextStyle: TextStyle(
-          color: Colors.white,
+          color: indicatorTextColor,
           fontSize: indicatorFontSize,
         ),
       ),
@@ -127,7 +132,8 @@ class SantoSlider extends StatelessWidget {
     );
   }
 
-  Widget _buildRangeSlider(Color active, Color inactive, double indicatorFontSize) {
+  Widget _buildRangeSlider(Color active, Color inactive,
+      double indicatorFontSize, Color indicatorTextColor) {
     return SliderTheme(
       data: SliderThemeData(
         activeTrackColor: active,
@@ -143,7 +149,7 @@ class SantoSlider extends StatelessWidget {
             ? ShowValueIndicator.always
             : ShowValueIndicator.never,
         valueIndicatorTextStyle: TextStyle(
-          color: Colors.white,
+          color: indicatorTextColor,
           fontSize: indicatorFontSize,
         ),
       ),

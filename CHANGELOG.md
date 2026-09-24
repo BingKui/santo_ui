@@ -6,6 +6,59 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.0.0] - 2026-09-24
+
+### 🎨 Every style token lives in the theme
+
+- **Added (breaking)**: shadow tokens — `shadowColor`, `shadowSm` / `shadowMd` / `shadowLg` (`List<BoxShadow>`); components default to a preset and can override it
+- **Added (breaking)**: semantic tint tokens — `brandPrimaryBg` / `brandSuccessBg` / `brandWarningBg` / `brandErrorBg`, plus `fillBaseInverse` (inverse surface, e.g. the image viewer) and `appBarDarkBackgroundColor`
+- **Added (breaking)**: chart tokens — `chartPalette` (categorical series colours), `chartAxisColor`, `chartAxisTextColor`, `chartGridColor`
+- **Added (breaking)**: `SantoAppBarConfig.leadingSize` / `leadingSpacing` / `doubleLeadingSize`
+- **Changed (breaking)**: `lib/src/components/picker/base/santo_picker_constants.dart` is removed from the public API — the symbols `pickerBackgroundColor`, `pickerShowTitleDefault`, `pickerHeight`, `pickerTitleHeight`, `pickerItemHeight`, `datetimePickerItemTextStyle` and `pickerItemTextStyle` are gone. Use `SantoPickerConfig` (heights, background) and `SantoCommonConfig` (colours) instead
+- **Changed (breaking)**: `SantoAppBarTheme` (the private `navbar/santo_appbar_theme.dart`) is removed — its colours and font sizes now come from `SantoCommonConfig`, its geometry from `SantoAppBarConfig`
+- **Changed**: components no longer hard-code colours; `tree`, `cascader`, `dropdown_menu`, `drawer`, `sidebar`, `tag`, `switch`, `form`, `picker`, `charts` and the default configs now read `colorTextBase` / `colorTextSecondary` / `fillBase` / `dividerColorBase` / `brand*` and friends, so a custom theme reaches them
+- **Changed**: the chart defaults are theme-derived — `SantoProgressChart.colors` / `backgroundColor`, `SantoProgressBarBundle.colors` / `hintColors`, `SantoProgressBarChartPainter.unselectedColor` / `selectedHintTextColor` / `selectedHintTextBackgroundColor` and `SantoRadarChart.axisLineColor` are nullable and fall back to the theme; `SantoRadarChart.defaultRadarChartStyles` and `SantoFunnelChart.defaultLayerColors` are now derived from `brandPrimary` / `chartPalette`
+- **Changed**: `SantoPickerTitleConfig.showTitle` keeps its `true` default, now expressed as a literal instead of the removed constant
+- **Changed (breaking)**: `SantoStepper` drops the public constant `kSantoStepperRadius` (the radius comes from `SantoCommonConfig.radiusMd`)
+- **Changed (breaking)**: `SantoShare.textColor` / `shareTextColor`, `SantoStepLine.lineWidth` and `SantoSearchText.outSideColor` / `innerPadding` / `borderRadius` are now nullable so the theme value applies when they are omitted
+
+## [1.5.1] - 2026-09-24
+
+### 💬 Chat custom messages
+
+- **Added**: `SantoChatCustomMessage` — a message whose content is supplied by the host app through a `builder`, rendered in a **bare bubble** (no bubble background or padding, the content brings its own container), the same treatment as document messages. This closes the gap where the closed message hierarchy could not carry business cards such as an approval card.
+
+### 💬 More chat message types
+
+- **Added**: `SantoChatApprovalMessage` + `SantoChatApprovalCard` — an approval card (task no, status tag, title, flow / applicant / current node) that shows 通过 / 驳回 when the task is pending and `canApprove` is true; the taps call `onApprove` / `onReject`, and the card itself calls `onApprovalTap`. `SantoChatApprovalStatus` plus `kSantoChatApprovalStatusText` / `santoChatApprovalTagState` cover the status label and tag colour
+- **Added**: `SantoChatNoticeMessage` + `SantoChatNoticeCard` — a notification card (type icon, unread dot, title, body, time). `SantoChatNoticeType` decides the icon and colour (`kSantoChatNoticeIcons` / `santoChatNoticeColor`), the tap calls `onNoticeTap`, and the card also works standalone as a notification-centre row
+- **Added**: `SantoChatEmojiMessage` + `SantoChatEmojiView` — a single emoji message; a `[name]` token registered in `SantoChatEmojiRegistry` renders as an image, otherwise the built-in Unicode character is used
+- **Added**: `recalled` on `SantoChatMessage` — a recalled message renders nothing (the recall notice is expected to arrive as a system message), matching DevOpsMobile
+- **Changed**: group announcements reuse `SantoNotice` through the `header` slot instead of a hand-rolled container
+- **Changed**: the close button of the input bar's reply / edit banner is now a solid `xmark-circle` in the error colour and slightly larger (20, `kSantoChatBannerCloseSize`)
+
+- **Changed**: message status is now text instead of icons — outgoing messages show 发送中 / 已发送 / 未读 / 已读 **below the bubble**, aligned with the avatar side (unread states take the primary colour), and only the failed warning icon stays next to the bubble
+- **Added**: read receipts — `SantoChatReadReceipt` (`readCount` / `unreadCount` plus optional `readMembers` / `unreadMembers`) renders DingTalk-style text: 已读 / 未读 for a 1:1 chat and 「N人未读 / 全部已读」 for a group. Tapping the text calls `onReadReceiptTap`, and `SantoChatReadReceiptSheet.show` opens the read / unread member list
+- **Fixed**: messages from the same sender in one run now keep the avatar slot even when the avatar itself is hidden, so bubbles and their receipt line up on the same right edge
+
+
+### 🧭 MenuBar selected state
+
+- **Changed**: the floating `SantoMenuBar` / `SantoAppLayout` selected item now takes a neutral light-grey background (`0xFFF0F0F0`) with the theme colour on the selected icon and label, instead of a primary-coloured pill with white text. Pass `itemSelectedBgColor` / `selectedTextColor` to bring back a custom look
+- **Changed**: `selectedTextColor` now defaults to the theme colour for both styles, so the selected icon and label follow `brandPrimary`
+
+- **Fixed**: with a custom theme colour the outgoing bubble stayed the default blue — `SantoDefaultConfigUtils.defaultChatConfig` no longer pins any colour or text style, so every chat colour is derived from the live `SantoCommonConfig` at read time
+
+### 🔔 One SantoNotice for every notice
+
+- **Changed (breaking)**: `SantoNoticeBar` and `SantoNoticeBarWithButton` are gone — both are merged into `SantoNotice`, the single notice-bar entry point. The left slot is either a status icon or a tag (`leftTagText`), the right slot is either a status icon or a button (`rightButtonText` + `onRightButtonTap`), and `minHeight` defaults to 54 when a tag or a button is present, 36 otherwise
+- **Changed**: the ten built-in `NoticeStyles` presets now resolve their colour from the live `SantoCommonConfig` — 进行中 / 通知 take the theme colour (`brandPrimary`), 完成 `brandSuccess`, 警告 `brandWarning`, 失败 `brandError`, with the background as that colour at 10% opacity, so a custom theme colour reaches the notice bar too. The colours stored on `NoticeStyle` stay as fallbacks for hand-rolled styles, and the 通知 preset is no longer orange
+- **Added**: `SantoNoticeStyleType` and `SantoNoticeRightIconKind` describe a preset; `kSantoNoticeStyleIcons` / `santoNoticeStyleColor` expose the icon and colour used for it
+
+### ⭐ Rate follows the theme colour
+
+- **Changed**: the selected / half star now takes `brandPrimary` instead of `brandWarning`, the unselected star takes `dividerColorBase` instead of a hard-coded grey, and the star size follows `iconSizeMd` — so a custom theme colour reaches the rating too. Pass `starBuilder` when a fixed look is needed
+
 ## [1.5.0] - 2026-09-24
 
 ### 💬 Chat conversation widgets
@@ -14,7 +67,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); versioning foll
 - **Added**: message content widgets `SantoChatText` (`@` mentions, emoji registry, links), `SantoChatQuoteView`, `SantoChatImage`, `SantoChatVideo`, `SantoChatVoice`, `SantoChatFile`, `SantoChatDocCard`, `SantoChatSystemNotice`, `SantoChatTypingIndicator`, `SantoChatReactionView` and `SantoChatMessageMenu`
 - **Added**: message models (`SantoChatMessage` with text/image/video/voice/file/doc/system variants, plus author, mention, quote and reaction), `SantoChatConversation`, the global `SantoChatEmojiRegistry`, `SantoChatMenuItem` and `SantoChatExtension`
 - **Added**: message list features — date separators, sender grouping, swipe to reply, a long-press menu (reactions plus per-type and custom actions, wrapping 5 per row), pull-up history loading and a scroll-to-bottom button
-- **Added**: message status indicators (`delivered` / `read` added to `SantoChatMessageStatus`, drawn on the avatar side of outgoing bubbles) and the `isEdited` flag; when a message fails, a solid warning icon (`warning-square-solid`) is drawn on the opposite (non-avatar) side of the bubble, vertically centered against it, and tapping it retries via `onRetry`
+- **Added**: message status indicators (`delivered` / `read` added to `SantoChatMessageStatus`, drawn on the avatar side of outgoing bubbles) and the `isEdited` flag; when a message fails, a solid warning icon (`warning-circle-solid`) is drawn on the opposite (non-avatar) side of the bubble, vertically centered against it, and tapping it retries via `onRetry`
 - **Added**: message editing through the input bar, and multi-select with a checkbox per row plus a bottom action bar
 - **Added**: input bar extension menu (photo / camera / file by default, customizable) that swaps with the keyboard below the input row, plus a built-in emoji panel (32 emojis, `[name]` tokens) sharing the same fixed 230 panel height — both panels are top-left grids with fixed cells and kept empty slots, paged 2 rows (`kSantoChatMenuItemRows`) × 5 columns for the extension menu and 4 rows (`kSantoChatEmojiRows`) × 8 columns for emojis, overflowing pages reached by swiping left/right with a page indicator at the bottom
 - **Added**: document messages — `SantoChatDocMessage` renders as a `SantoChatDocCard` (doc title, optional note, 「点击查看文档」 hint) inside a **bare bubble** (`SantoChatBubble.bare`: no bubble background or padding, the card brings its own container); tapping it calls `onDocTap` so the host app can check permissions and open the doc (mirrors DevOpsMobile)

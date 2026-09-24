@@ -176,15 +176,39 @@ void main() {
       expect(bubbles.last.isMine, isFalse);
     });
 
-    testWidgets('我方气泡是浅色底深色字,对方是白底', (tester) async {
+    testWidgets('换自定义主题色后气泡底色跟着变', (tester) async {
+      // 先铺基座,再叠加只带主题色的配置(与示例 App / 业务 App 的注册方式一致)
+      addTearDown(
+        () => SantoThemeConfigurator.instance
+            .register(SantoDefaultConfigUtils.defaultAllConfig),
+      );
+      SantoThemeConfigurator.instance
+          .register(SantoDefaultConfigUtils.defaultAllConfig);
+      const Color pink = Color(0xFFEB2F96);
+      SantoThemeConfigurator.instance.register(SantoAllThemeConfig(
+        commonConfig: SantoCommonConfig(
+          brandPrimary: pink,
+          brandPrimaryTap: Color(0x19EB2F96),
+          colorLink: pink,
+        ),
+      ));
+
       final SantoChatConfig chatConfig =
           SantoThemeConfigurator.instance.getConfig().chatConfig;
-      // 对齐 DevOpsMobile:我方浅品牌底(主题色 10% 透明)+ 深色文字,不再用品牌色实心
+      expect(chatConfig.myBubbleColor, pink.withOpacity(kSantoChatMyBubbleOpacity));
+      expect(chatConfig.myAccentColor, pink);
+    });
+
+    testWidgets('我方气泡是主题色的透明底、对方是白底', (tester) async {
+      final SantoChatConfig chatConfig =
+          SantoThemeConfigurator.instance.getConfig().chatConfig;
+      // 主题色 + 透明度派生,深色文字
       expect(
         chatConfig.myBubbleColor,
         commonConfig.brandPrimary.withOpacity(kSantoChatMyBubbleOpacity),
       );
       expect(chatConfig.myTextStyle.color, commonConfig.colorTextBase);
+      expect(chatConfig.otherBubbleColor, commonConfig.fillBase);
 
       await tester.pumpWidget(_host(_list(<SantoChatMessage>[
         SantoChatTextMessage(
@@ -625,6 +649,204 @@ void main() {
       expect(find.text('点击查看文档'), findsOneWidget);
     });
 
+    testWidgets('自定义消息渲染业务内容、不套气泡且回调可用', (tester) async {
+      int approved = 0;
+      await tester.pumpWidget(_host(SantoChatMessageList(
+        messages: <SantoChatMessage>[
+          SantoChatCustomMessage(
+            id: 'c1',
+            author: _other,
+            createdAt: DateTime(2026, 9, 23, 10),
+            builder: (BuildContext context) => Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('审批单 A-1'),
+                  SantoButton(
+                    text: '通过',
+                    type: SantoButtonType.primary,
+                    autoInsertSpace: false,
+                    onTap: () => approved++,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+        currentUserId: 'me',
+      )));
+
+      expect(find.text('审批单 A-1'), findsOneWidget);
+      // 内容自带容器,不再套气泡
+      expect(_bubbleContainer, findsNothing);
+
+      await tester.tap(find.text('通过'));
+      expect(approved, 1);
+    });
+
+    testWidgets('审批消息展示卡片、操作按钮与回调', (tester) async {
+      final List<String> approved = <String>[];
+      final List<String> rejected = <String>[];
+      SantoChatApprovalMessage? opened;
+      await tester.pumpWidget(_host(SantoChatMessageList(
+        messages: <SantoChatMessage>[
+          SantoChatApprovalMessage(
+            id: 'a1',
+            author: _other,
+            taskId: 'task_1001',
+            taskNo: 'SP20260924001',
+            title: '双十一大促扩容申请',
+            flowName: '资源申请审批流',
+            applicatorName: '张三',
+            currentNodeName: '技术负责人审批',
+            canApprove: true,
+            createdAt: DateTime(2026, 9, 23, 10),
+          ),
+        ],
+        currentUserId: 'me',
+        onApprovalTap: (SantoChatApprovalMessage m) => opened = m,
+        onApprove: (SantoChatApprovalMessage m) => approved.add(m.taskId),
+        onReject: (SantoChatApprovalMessage m) => rejected.add(m.taskId),
+      )));
+
+      expect(find.byType(SantoChatApprovalCard), findsOneWidget);
+      expect(find.text('SP20260924001'), findsOneWidget);
+      expect(find.text('双十一大促扩容申请'), findsOneWidget);
+      expect(find.text('审批中'), findsOneWidget);
+      expect(find.text('资源申请审批流'), findsOneWidget);
+      expect(find.text('张三'), findsOneWidget);
+      expect(find.text('技术负责人审批'), findsOneWidget);
+      // 卡片自带容器,不再套气泡
+      expect(_bubbleContainer, findsNothing);
+
+      // SantoButton 全局防连点,连续点击前要重置
+      SantoMultiClickUtils.reset();
+      await tester.tap(find.text('通过'));
+      expect(approved, <String>['task_1001']);
+      SantoMultiClickUtils.reset();
+      await tester.tap(find.text('驳回'));
+      expect(rejected, <String>['task_1001']);
+
+      await tester.tap(find.byType(SantoChatApprovalCard));
+      expect(opened?.taskId, 'task_1001');
+    });
+
+    testWidgets('审批已通过或不可审批时不展示操作按钮', (tester) async {
+      await tester.pumpWidget(_host(_list(<SantoChatMessage>[
+        SantoChatApprovalMessage(
+          id: 'a1',
+          author: _me,
+          taskId: 'task_1',
+          title: '已通过的审批',
+          approvalStatus: SantoChatApprovalStatus.approved,
+          canApprove: true,
+          createdAt: DateTime(2026, 9, 23, 10),
+        ),
+        SantoChatApprovalMessage(
+          id: 'a2',
+          author: _me,
+          taskId: 'task_2',
+          title: '无权审批的审批',
+          canApprove: false,
+          createdAt: DateTime(2026, 9, 23, 10, 1),
+        ),
+      ])));
+
+      expect(find.text('已通过'), findsOneWidget);
+      expect(find.text('通过'), findsNothing);
+      expect(find.text('驳回'), findsNothing);
+    });
+
+    testWidgets('通知消息展示类型图标、未读红点与时间,点击回调', (tester) async {
+      SantoChatNoticeMessage? opened;
+      await tester.pumpWidget(_host(SantoChatMessageList(
+        messages: <SantoChatMessage>[
+          SantoChatNoticeMessage(
+            id: 'n1',
+            author: _other,
+            title: '你被 @ 了',
+            content: '张三在群里提到了你',
+            noticeType: SantoChatNoticeType.mention,
+            createdAt: DateTime(2026, 9, 23, 10),
+          ),
+        ],
+        currentUserId: 'me',
+        onNoticeTap: (SantoChatNoticeMessage m) => opened = m,
+      )));
+
+      expect(find.byType(SantoChatNoticeCard), findsOneWidget);
+      expect(find.text('你被 @ 了'), findsOneWidget);
+      expect(find.text('张三在群里提到了你'), findsOneWidget);
+      expect(_iconNamed(SantoIcons.userPlus), findsOneWidget);
+      // 时间取消息的 createdAt(与列表上方的时间分隔同名文案,这里查组件参数)
+      final SantoChatNoticeCard notice =
+          tester.widget<SantoChatNoticeCard>(find.byType(SantoChatNoticeCard));
+      expect(notice.timeText, formatChatTime(DateTime(2026, 9, 23, 10)));
+      expect(notice.message.read, isFalse);
+      expect(_bubbleContainer, findsNothing);
+
+      await tester.tap(find.byType(SantoChatNoticeCard));
+      expect(opened?.id, 'n1');
+    });
+
+    testWidgets('通知已读时不展示红点,图标按类型取', (tester) async {
+      await tester.pumpWidget(_host(_list(<SantoChatMessage>[
+        SantoChatNoticeMessage(
+          id: 'n1',
+          author: _other,
+          title: '审批已通过',
+          content: '你的申请已通过',
+          noticeType: SantoChatNoticeType.approval,
+          read: true,
+          createdAt: DateTime(2026, 9, 23, 10),
+        ),
+      ])));
+
+      expect(_iconNamed(SantoIcons.checkCircle), findsOneWidget);
+      final SantoChatNoticeCard card =
+          tester.widget<SantoChatNoticeCard>(find.byType(SantoChatNoticeCard));
+      expect(card.message.read, isTrue);
+    });
+
+    testWidgets('表情消息展示单个大表情,token 命中内置表时取字符', (tester) async {
+      await tester.pumpWidget(_host(_list(<SantoChatMessage>[
+        SantoChatEmojiMessage(
+          id: 'e1',
+          author: _other,
+          symbol: '[赞]',
+          createdAt: DateTime(2026, 9, 23, 10),
+        ),
+        SantoChatEmojiMessage(
+          id: 'e2',
+          author: _other,
+          symbol: '🎉',
+          createdAt: DateTime(2026, 9, 23, 10, 1),
+        ),
+      ])));
+
+      expect(find.text('👍'), findsOneWidget);
+      expect(find.text('🎉'), findsOneWidget);
+    });
+
+    testWidgets('撤回的消息不渲染本体', (tester) async {
+      await tester.pumpWidget(_host(_list(<SantoChatMessage>[
+        SantoChatTextMessage(
+          id: 'm1',
+          author: _me,
+          text: '这条已经撤回了',
+          recalled: true,
+          createdAt: DateTime(2026, 9, 23, 10),
+        ),
+      ])));
+
+      expect(find.byType(SantoChatBubble), findsNothing);
+      expect(find.text('这条已经撤回了'), findsNothing);
+    });
+
     testWidgets('发送失败展示重试图标并回调', (tester) async {
       SantoChatMessage? retried;
       await tester.pumpWidget(_host(_list(
@@ -728,26 +950,62 @@ void main() {
       ])));
     }
 
-    testWidgets('已发送单勾,已送达双勾,已读双勾取主题色', (tester) async {
-      final SantoChatConfig chatConfig =
-          SantoThemeConfigurator.instance.getConfig().chatConfig;
+    testWidgets('我方消息在气泡下方展示发送状态文案', (tester) async {
+      await pumpMine(tester, SantoChatMessageStatus.sending);
+      expect(find.text('发送中'), findsOneWidget);
 
       await pumpMine(tester, SantoChatMessageStatus.sent);
-      expect(_iconNamed(SantoIcons.check), findsOneWidget);
+      expect(find.text('已发送'), findsOneWidget);
 
+      // 已送达(对方未读)取主题色
       await pumpMine(tester, SantoChatMessageStatus.delivered);
-      expect(_iconNamed(SantoIcons.doubleCheck), findsOneWidget);
+      final Text delivered = tester.widget<Text>(find.text('未读'));
+      expect(
+        delivered.style?.color,
+        SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary,
+      );
 
       await pumpMine(tester, SantoChatMessageStatus.read);
-      final SantoIcon icon =
-          tester.widget<SantoIcon>(_iconNamed(SantoIcons.doubleCheck));
-      expect(icon.color, chatConfig.myBubbleColor);
+      expect(find.text('已读'), findsOneWidget);
     });
 
-    testWidgets('发送中展示时钟,失败展示可重试图标', (tester) async {
-      await pumpMine(tester, SantoChatMessageStatus.sending);
-      expect(_iconNamed(SantoIcons.clock), findsOneWidget);
+    testWidgets('状态文案在气泡下方、贴头像一侧(我方靠右)', (tester) async {
+      await tester.pumpWidget(_host(SantoChatMessageList(
+        messages: <SantoChatMessage>[
+          SantoChatTextMessage(
+            id: 'm1',
+            author: _me,
+            text: '我的消息',
+            status: SantoChatMessageStatus.read,
+            createdAt: DateTime(2026, 9, 23, 10),
+          ),
+        ],
+        currentUserId: 'me',
+      )));
 
+      final Rect label = tester.getRect(find.text('已读'));
+      final Rect bubble = tester.getRect(_bubbleContainer.first);
+      expect(label.top, greaterThanOrEqualTo(bubble.bottom));
+      expect(label.right, closeTo(bubble.right, 0.01));
+    });
+
+    testWidgets('对方消息不展示状态文案与回执', (tester) async {
+      await tester.pumpWidget(_host(_list(<SantoChatMessage>[
+        SantoChatTextMessage(
+          id: 'm1',
+          author: _other,
+          text: '对方消息',
+          status: SantoChatMessageStatus.read,
+          readReceipt: const SantoChatReadReceipt(readCount: 1),
+          createdAt: DateTime(2026, 9, 23, 10),
+        ),
+      ])));
+
+      expect(find.text('已读'), findsNothing);
+      expect(find.text('未读'), findsNothing);
+    });
+
+    testWidgets('失败展示可点击的实心警示图标', (tester) async {
       SantoChatMessage? retried;
       await tester.pumpWidget(_host(_list(
         <SantoChatMessage>[
@@ -761,10 +1019,131 @@ void main() {
         ],
         onRetry: (SantoChatMessage message) => retried = message,
       )));
-      final Finder icon = _solidIconNamed(SantoSolidIcons.warningSquare);
+      final Finder icon = _solidIconNamed(SantoSolidIcons.warningCircle);
       expect(icon, findsOneWidget);
+      // 失败不再展示文案
+      expect(find.text('发送中'), findsNothing);
       await tester.tap(icon);
       expect(retried?.id, 'm1');
+    });
+
+    testWidgets('已读回执:单聊展示已读/未读,群聊展示 N 人未读/全部已读', (tester) async {
+      Future<void> pumpReceipt(SantoChatReadReceipt receipt) => tester.pumpWidget(
+            _host(_list(<SantoChatMessage>[
+              SantoChatTextMessage(
+                id: 'm1',
+                author: _me,
+                text: '带回执的消息',
+                status: SantoChatMessageStatus.delivered,
+                readReceipt: receipt,
+                createdAt: DateTime(2026, 9, 23, 10),
+              ),
+            ])),
+          );
+
+      await pumpReceipt(const SantoChatReadReceipt(readCount: 1));
+      expect(find.text('已读'), findsOneWidget);
+
+      await pumpReceipt(const SantoChatReadReceipt(unreadCount: 1));
+      expect(find.text('未读'), findsOneWidget);
+
+      await pumpReceipt(
+        const SantoChatReadReceipt(readCount: 3, unreadCount: 2),
+      );
+      final Text group = tester.widget<Text>(find.text('2人未读'));
+      expect(
+        group.style?.color,
+        SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary,
+      );
+
+      await pumpReceipt(const SantoChatReadReceipt(readCount: 6));
+      expect(find.text('全部已读'), findsOneWidget);
+    });
+
+    testWidgets('同组连续消息的气泡与回执右边缘对齐', (tester) async {
+      await tester.pumpWidget(_host(SantoChatMessageList(
+        messages: <SantoChatMessage>[
+          SantoChatTextMessage(
+            id: 'm1',
+            author: _me,
+            text: '第一条',
+            status: SantoChatMessageStatus.read,
+            readReceipt: const SantoChatReadReceipt(readCount: 1),
+            createdAt: DateTime(2026, 9, 23, 10),
+          ),
+          SantoChatTextMessage(
+            id: 'm2',
+            author: _me,
+            text: '第二条比第一条长很多很多很多',
+            status: SantoChatMessageStatus.delivered,
+            readReceipt: const SantoChatReadReceipt(unreadCount: 1),
+            createdAt: DateTime(2026, 9, 23, 10, 1),
+          ),
+        ],
+        currentUserId: 'me',
+        showAvatar: true,
+      )));
+
+      // 第二条不带头像,但气泡与回执的右边缘都要和第一条对齐
+      final List<Rect> bubbles = <Rect>[
+        for (int i = 0; i < 2; i++) tester.getRect(_bubbleContainer.at(i)),
+      ];
+      expect(bubbles[1].right, closeTo(bubbles[0].right, 0.01));
+      expect(
+        tester.getRect(find.text('未读')).right,
+        closeTo(tester.getRect(find.text('已读')).right, 0.01),
+      );
+    });
+
+    testWidgets('已读回执面板按已读/未读分组列出人员', (tester) async {
+      await tester.pumpWidget(_host(SantoChatReadReceiptSheet(
+        receipt: const SantoChatReadReceipt(
+          readCount: 2,
+          unreadCount: 1,
+          readMembers: <SantoChatAuthor>[
+            SantoChatAuthor(id: 'u1', name: '张三'),
+            SantoChatAuthor(id: 'u2', name: '李四'),
+          ],
+          unreadMembers: <SantoChatAuthor>[SantoChatAuthor(id: 'u3', name: '王五')],
+        ),
+      )));
+
+      expect(find.text('消息已读'), findsOneWidget);
+      expect(find.text('已读 2'), findsOneWidget);
+      expect(find.text('未读 1'), findsOneWidget);
+      expect(find.text('张三'), findsOneWidget);
+      expect(find.text('李四'), findsOneWidget);
+      expect(find.text('王五'), findsOneWidget);
+      expect(find.byType(SantoAvatar), findsNWidgets(3));
+    });
+
+    testWidgets('已读回执面板没有人员信息时展示空状态', (tester) async {
+      await tester.pumpWidget(_host(SantoChatReadReceiptSheet(
+        receipt: const SantoChatReadReceipt(),
+      )));
+
+      expect(find.text('暂无人员信息'), findsOneWidget);
+    });
+
+    testWidgets('点已读回执回调,业务可打开人员列表', (tester) async {
+      SantoChatMessage? tapped;
+      await tester.pumpWidget(_host(SantoChatMessageList(
+        messages: <SantoChatMessage>[
+          SantoChatTextMessage(
+            id: 'm1',
+            author: _me,
+            text: '带回执的消息',
+            status: SantoChatMessageStatus.read,
+            readReceipt: const SantoChatReadReceipt(readCount: 1),
+            createdAt: DateTime(2026, 9, 23, 10),
+          ),
+        ],
+        currentUserId: 'me',
+        onReadReceiptTap: (SantoChatMessage message) => tapped = message,
+      )));
+
+      await tester.tap(find.text('已读'));
+      expect(tapped?.id, 'm1');
     });
 
     testWidgets('失败警示在非头像一侧,点击重发', (tester) async {
@@ -784,7 +1163,7 @@ void main() {
         onRetry: (SantoChatMessage message) => retried = message,
       )));
 
-      final Finder icon = _solidIconNamed(SantoSolidIcons.warningSquare);
+      final Finder icon = _solidIconNamed(SantoSolidIcons.warningCircle);
       expect(icon, findsOneWidget);
 
       // 我方消息头像在右侧,警示图标要落在气泡左侧,并相对气泡上下居中
@@ -1106,8 +1485,13 @@ void main() {
 
       expect(find.byType(SantoChatQuoteView), findsOneWidget);
       expect(find.text('被回复的内容'), findsOneWidget);
+      // 关闭按钮是实心 xmark-circle、取失败色,尺寸 20
+      final SantoIcon closeIcon =
+          tester.widget<SantoIcon>(_solidIconNamed(SantoSolidIcons.xmarkCircle));
+      expect(closeIcon.color,
+          SantoThemeConfigurator.instance.getConfig().commonConfig.brandError);
 
-      await tester.tap(_iconNamed(SantoIcons.xmark));
+      await tester.tap(_solidIconNamed(SantoSolidIcons.xmarkCircle));
       await tester.pump();
       expect(cancelled, isTrue);
     });
@@ -1489,7 +1873,7 @@ void main() {
         height: 160,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.xmark));
+      await tester.tap(_solidIconNamed(SantoSolidIcons.xmarkCircle));
       await tester.pump();
       expect(cancelled, isTrue);
     });

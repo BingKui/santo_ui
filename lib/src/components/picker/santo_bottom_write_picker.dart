@@ -138,7 +138,7 @@ class _BottomWritePickerState extends State<SantoBottomWritePicker> {
             left: commonConfig.hSpacingLg,
             right: commonConfig.hSpacingLg,
             bottom: commonConfig.vSpacingSm),
-        color: Colors.white,
+        color: commonConfig.fillBase,
         child: TextField(
             style: TextStyle(
                 fontSize: commonConfig.fontSizeSubHead,

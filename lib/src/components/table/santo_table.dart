@@ -203,7 +203,9 @@ class SantoTable extends StatefulWidget {
   /// 是否显示外框与单元格分割线
   final bool border;
   final Color? borderColor;
-  final double borderWidth;
+
+  /// 单元格边框宽度,不传时取主题 borderWidthSm
+  final double? borderWidth;
 
   /// 表头背景色;默认使用主题浅填充色
   final Color? headerColor;
@@ -260,7 +262,7 @@ class SantoTable extends StatefulWidget {
     required this.data,
     this.border = true,
     this.borderColor,
-    this.borderWidth = 0.5,
+    this.borderWidth,
     this.headerColor,
     this.headerTextColor,
     this.headerTextStyle,
@@ -280,7 +282,7 @@ class SantoTable extends StatefulWidget {
     this.expandable,
     this.pagination,
     this.onSortChanged,
-  }) : assert(borderWidth >= 0),
+  }) : assert(borderWidth == null || borderWidth >= 0),
        assert(rowHeight > 0),
        assert(headerHeight > 0),
        super(key: key);
@@ -290,6 +292,11 @@ class SantoTable extends StatefulWidget {
 }
 
 class _SantoTableState extends State<SantoTable> {
+  /// 单元格边框宽度,未显式指定时取主题 borderWidthSm
+  double get _borderWidth =>
+      widget.borderWidth ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.borderWidthSm;
+
   ScrollController? _verticalController;
   ScrollController? _leftVerticalController;
   ScrollController? _rightVerticalController;
@@ -364,7 +371,7 @@ class _SantoTableState extends State<SantoTable> {
         widget.headerTextColor ?? commonConfig.colorTextBase;
     final Color cellTextColor =
         widget.cellTextColor ?? commonConfig.colorTextBase;
-    final Color oddColor = widget.oddRowColor ?? Colors.white;
+    final Color oddColor = widget.oddRowColor ?? commonConfig.fillBase;
     final Color evenColor = widget.evenRowColor ?? commonConfig.fillBody;
     final TextStyle headerStyle =
         widget.headerTextStyle ??
@@ -1020,11 +1027,11 @@ class _SantoTableState extends State<SantoTable> {
                     ? Border(
                         right: BorderSide(
                           color: borderColor,
-                          width: widget.borderWidth,
+                          width: _borderWidth,
                         ),
                         bottom: BorderSide(
                           color: borderColor,
-                          width: widget.borderWidth,
+                          width: _borderWidth,
                         ),
                       )
                     : null,
@@ -1139,10 +1146,10 @@ class _SantoTableState extends State<SantoTable> {
     required Color borderColor,
     required bool showRightBorder,
   }) {
-    final double spacing = SantoThemeConfigurator.instance
+    final commonConfig = SantoThemeConfigurator.instance
         .getConfig()
-        .commonConfig
-        .hSpacingXs;
+        .commonConfig;
+    final double spacing = commonConfig.hSpacingXs;
     Widget content =
         column.headerBuilder?.call(column.title) ??
         Text(
@@ -1164,7 +1171,7 @@ class _SantoTableState extends State<SantoTable> {
         children: <Widget>[
           Flexible(child: content),
           SizedBox(width: spacing),
-          Icon(icon, size: 14, color: style.color),
+          Icon(icon, size: commonConfig.iconSizeSm, color: style.color),
         ],
       );
     }
@@ -1176,11 +1183,11 @@ class _SantoTableState extends State<SantoTable> {
           ? BoxDecoration(
               border: Border(
                 right: showRightBorder
-                    ? BorderSide(color: borderColor, width: widget.borderWidth)
+                    ? BorderSide(color: borderColor, width: _borderWidth)
                     : BorderSide.none,
                 bottom: BorderSide(
                   color: borderColor,
-                  width: widget.borderWidth,
+                  width: _borderWidth,
                 ),
               ),
             )
@@ -1214,7 +1221,7 @@ class _SantoTableState extends State<SantoTable> {
           ? BoxDecoration(
               border: Border(
                 right: showRightBorder
-                    ? BorderSide(color: borderColor, width: widget.borderWidth)
+                    ? BorderSide(color: borderColor, width: _borderWidth)
                     : BorderSide.none,
               ),
             )
@@ -1342,11 +1349,11 @@ class _SantoTableState extends State<SantoTable> {
             ? Border(
                 right: BorderSide(
                   color: borderColor,
-                  width: widget.borderWidth,
+                  width: _borderWidth,
                 ),
                 bottom: BorderSide(
                   color: borderColor,
-                  width: widget.borderWidth,
+                  width: _borderWidth,
                 ),
               )
             : null,
@@ -1383,7 +1390,7 @@ class _SantoTableState extends State<SantoTable> {
               border: Border(
                 right: BorderSide(
                   color: borderColor,
-                  width: widget.borderWidth,
+                  width: _borderWidth,
                 ),
               ),
             )
@@ -1558,7 +1565,7 @@ class _SantoTableState extends State<SantoTable> {
             ? Border(
                 bottom: BorderSide(
                   color: borderColor,
-                  width: widget.borderWidth,
+                  width: _borderWidth,
                 ),
               )
             : null,
@@ -1595,7 +1602,7 @@ class _SantoTableState extends State<SantoTable> {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius)),
       foregroundDecoration: widget.border
           ? BoxDecoration(
-              border: Border.all(color: borderColor, width: widget.borderWidth),
+              border: Border.all(color: borderColor, width: _borderWidth),
               borderRadius: BorderRadius.circular(radius),
             )
           : null,

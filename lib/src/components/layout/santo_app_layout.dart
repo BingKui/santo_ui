@@ -133,10 +133,14 @@ class SantoAppLayout extends StatefulWidget {
   /// 菜单栏背景色;悬浮样式默认半透明白毛玻璃
   final Color? barBackgroundColor;
 
-  /// 悬浮样式选中项背景色,默认主色
+  /// 悬浮样式选中项背景色,默认中性浅灰
+  ///
+  /// @changed v1.5.1 默认值由主色改为中性浅灰
   final Color? itemSelectedBgColor;
 
-  /// 选中文字颜色
+  /// 选中文字颜色,默认主色
+  ///
+  /// @changed v1.5.1 悬浮样式默认值由白色改为主色
   final Color? selectedTextColor;
 
   /// 未选中文字颜色,默认次要文字色

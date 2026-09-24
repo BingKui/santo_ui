@@ -6,6 +6,59 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.0.0] - 2026-09-24
+
+### 🎨 所有样式令牌收进主题
+
+- **新增(破坏性)**: 阴影令牌 —— `shadowColor`、`shadowSm` / `shadowMd` / `shadowLg`(`List<BoxShadow>`);组件默认取预设,也可单独覆盖
+- **新增(破坏性)**: 语义色淡底令牌 —— `brandPrimaryBg` / `brandSuccessBg` / `brandWarningBg` / `brandErrorBg`;另有 `fillBaseInverse`(反色组件底,如大图查看)与 `appBarDarkBackgroundColor`
+- **新增(破坏性)**: 图表令牌 —— `chartPalette`(多系列分类色板)、`chartAxisColor`、`chartAxisTextColor`、`chartGridColor`
+- **新增(破坏性)**: `SantoAppBarConfig.leadingSize` / `leadingSpacing` / `doubleLeadingSize`
+- **变更(破坏性)**: `lib/src/components/picker/base/santo_picker_constants.dart` 移出公开 API —— `pickerBackgroundColor`、`pickerShowTitleDefault`、`pickerHeight`、`pickerTitleHeight`、`pickerItemHeight`、`datetimePickerItemTextStyle`、`pickerItemTextStyle` 全部删除,改用 `SantoPickerConfig`(高度、背景)与 `SantoCommonConfig`(颜色)
+- **变更(破坏性)**: 删除组件内私有主题文件 `navbar/santo_appbar_theme.dart`(`SantoAppBarTheme`)—— 颜色与字号改由 `SantoCommonConfig` 提供,几何尺寸改由 `SantoAppBarConfig` 提供
+- **变更**: 组件不再写死颜色,`tree`、`cascader`、`dropdown_menu`、`drawer`、`sidebar`、`tag`、`switch`、`form`、`picker`、`charts` 及各默认配置改为读取 `colorTextBase` / `colorTextSecondary` / `fillBase` / `dividerColorBase` / `brand*` 等令牌,自定义主题色可覆盖到这些组件
+- **变更**: 图表默认值改为按主题派生 —— `SantoProgressChart.colors` / `backgroundColor`、`SantoProgressBarBundle.colors` / `hintColors`、`SantoProgressBarChartPainter.unselectedColor` / `selectedHintTextColor` / `selectedHintTextBackgroundColor`、`SantoRadarChart.axisLineColor` 均可空并回退主题;`SantoRadarChart.defaultRadarChartStyles` 与 `SantoFunnelChart.defaultLayerColors` 改为由 `brandPrimary` / `chartPalette` 派生
+- **变更**: `SantoPickerTitleConfig.showTitle` 默认值仍为 `true`,改为字面量表达,不再引用已删除的常量
+- **变更(破坏性)**: `SantoStepper` 移除公开常量 `kSantoStepperRadius`(圆角改取 `SantoCommonConfig.radiusMd`)
+- **变更(破坏性)**: `SantoShare.textColor` / `shareTextColor`、`SantoStepLine.lineWidth`、`SantoSearchText.outSideColor` / `innerPadding` / `borderRadius` 改为可空,不传时跟随主题值
+
+## [1.5.1] - 2026-09-24
+
+### 💬 Chat 自定义消息
+
+- **新增**: `SantoChatCustomMessage` —— 内容由业务方通过 `builder` 提供,走**裸气泡**渲染(不画气泡底色与内边距,内容自带容器),与文档消息同一处理方式。补齐封闭消息体系无法承载审批卡片等业务卡片的缺口。
+
+### 💬 Chat 消息类型扩展
+
+- **新增**: `SantoChatApprovalMessage` + `SantoChatApprovalCard` —— 审批卡片(单号、状态标签、标题、审批流/申请人/当前节点),审批中且 `canApprove` 为 true 时展示「通过/驳回」,点击回调 `onApprove` / `onReject`,点卡片走 `onApprovalTap`;`SantoChatApprovalStatus` 与 `kSantoChatApprovalStatusText` / `santoChatApprovalTagState` 提供状态文案与标签色
+- **新增**: `SantoChatNoticeMessage` + `SantoChatNoticeCard` —— 通知卡片(类型图标、未读红点、标题、正文、时间)。`SantoChatNoticeType` 决定图标与取色(`kSantoChatNoticeIcons` / `santoChatNoticeColor`),点击回调 `onNoticeTap`;同一张卡片也能直接当通知中心的列表项
+- **新增**: `SantoChatEmojiMessage` + `SantoChatEmojiView` —— 单个大表情消息,`[表情名]` 命中 `SantoChatEmojiRegistry` 时渲染图片,否则用内置 Unicode 字符
+- **新增**: `SantoChatMessage.recalled` —— 撤回的消息本体不再渲染(撤回提示由服务端下发的系统消息展示),与 DevOpsMobile 一致
+- **变更**: 群公告改用现成的 `SantoNotice`,通过 `header` 插槽传入,不再手写容器
+- **变更**: 输入区引用/编辑条右侧的关闭按钮改为实心 `xmark-circle` 并改用失败色,尺寸加大到 20(`kSantoChatBannerCloseSize`)
+
+- **变更**: 消息状态由图标改为文案 —— 我方消息在**气泡下方**、贴头像一侧展示「发送中 / 已发送 / 未读 / 已读」(未读态取主题色),只有失败保留气泡旁的实心警示图标
+- **新增**: 已读回执 —— `SantoChatReadReceipt`(`readCount` / `unreadCount`,可选 `readMembers` / `unreadMembers`)按钉钉的方式出文案:单聊「已读 / 未读」、群聊「N人未读 / 全部已读」;点文案回调 `onReadReceiptTap`,可用 `SantoChatReadReceiptSheet.show` 打开已读/未读人员列表
+- **修复**: 同一发送者连续消息里不带头像的那几条会占住头像位置,气泡与下方回执对齐到同一条右边缘
+
+
+### 🧭 MenuBar 选中态
+
+- **变更**: 悬浮样式的 `SantoMenuBar` / `SantoAppLayout` 选中项改为中性浅灰底(`0xFFF0F0F0`)+ 选中图标文字取主题色,不再是主色药丸配反白文字。需要原来的观感就显式传 `itemSelectedBgColor` / `selectedTextColor`
+- **变更**: `selectedTextColor` 两种样式的默认值统一为主题色,选中图标与文字跟随 `brandPrimary`
+
+- **修复**: 换自定义主题色后我方气泡仍是默认蓝色 —— `SantoDefaultConfigUtils.defaultChatConfig` 不再写死任何颜色与文字样式,气泡等颜色改为读取时从当前生效的 `SantoCommonConfig` 实时派生
+
+### 🔔 通知栏收敛为 SantoNotice
+
+- **变更(破坏性)**: `SantoNoticeBar` 与 `SantoNoticeBarWithButton` 已删除 —— 两者合并为 `SantoNotice`,通知栏的唯一入口。左侧插槽是状态图标或标签(`leftTagText`),右侧插槽是状态图标或按钮(`rightButtonText` + `onRightButtonTap`);`minHeight` 不传时,带标签或按钮取 54,否则取 36
+- **变更**: 十种内置 `NoticeStyles` 预置样式的取色改为实时读 `SantoCommonConfig` —— 进行中/通知跟随主题色 `brandPrimary`,完成 `brandSuccess`,警告 `brandWarning`,失败 `brandError`,底色统一取该色 10% 透明,换自定义主题色后通知条一并跟随。`NoticeStyle` 上的颜色降级为兜底值(供手写样式使用),「橘色 + 通知」不再固定橘色
+- **新增**: `SantoNoticeStyleType` 与 `SantoNoticeRightIconKind` 描述预置样式;`kSantoNoticeStyleIcons` / `santoNoticeStyleColor` 对外暴露对应的图标与取色
+
+### ⭐ Rate 评分跟随主题色
+
+- **变更**: 选中/半颗星由 `brandWarning` 改为取品牌主色 `brandPrimary`,未选星由写死的 `0xFFE8EAEC` 改为取 `dividerColorBase`,星星尺寸由写死的 16 改为取 `iconSizeMd` —— 换自定义主题色后评分星星一并跟随;需要固定配色时用 `starBuilder` 自定义
+
 ## [1.5.0] - 2026-09-24
 
 ### 💬 Chat 会话组件
@@ -14,7 +67,7 @@
 - **新增**: 消息内容组件 `SantoChatText`(@提及、表情注册表、链接)、`SantoChatQuoteView`、`SantoChatImage`、`SantoChatVideo`、`SantoChatVoice`、`SantoChatFile`、`SantoChatDocCard`、`SantoChatSystemNotice`、`SantoChatTypingIndicator`、`SantoChatReactionView`、`SantoChatMessageMenu`
 - **新增**: 消息模型(`SantoChatMessage` 及文本/图片/视频/语音/文件/文档/系统消息子类,以及作者、@提及、引用、表情回应)、`SantoChatConversation`、全局 `SantoChatEmojiRegistry`、`SantoChatMenuItem` 与 `SantoChatExtension`
 - **新增**: 消息列表能力 —— 时间分隔、同发送者分组、滑动引用回复、长按菜单(表情回应 + 按类型/自定义操作项,一排 5 个、多出换行)、上拉加载更早消息、回到底部按钮
-- **新增**: 消息状态指示器(`SantoChatMessageStatus` 增加 `delivered`/`read`,贴在我方气泡的头像一侧展示)与 `isEdited` 标记;发送失败时在**非头像一侧**(气泡左侧)展示实心警示图标(`warning-square-solid`)并相对气泡上下居中,点它通过 `onRetry` 重发
+- **新增**: 消息状态指示器(`SantoChatMessageStatus` 增加 `delivered`/`read`,贴在我方气泡的头像一侧展示)与 `isEdited` 标记;发送失败时在**非头像一侧**(气泡左侧)展示实心警示图标(`warning-circle-solid`)并相对气泡上下居中,点它通过 `onRetry` 重发
 - **新增**: 经输入区长按「编辑」修改消息;多选态每行带勾选框 + 底部操作栏(已选条数、转发/删除、取消)
 - **新增**: 输入区扩展菜单(默认照片/拍摄/文件,可自定义),在输入框下方与输入法换位;并内置表情面板(32 个,插入 `[名称]` token),两个面板共用固定高 230,内容按网格布局、左上角起排、单元格固定、空位保留:扩展菜单每页 2 排(`kSantoChatMenuItemRows`)× 5 列、表情面板每页 4 排(`kSantoChatEmojiRows`)× 8 列,超出一页的左右滑动翻页并在底部显示分页指示点
 - **新增**: 文档消息 —— `SantoChatDocMessage` 渲染成 `SantoChatDocCard`(文档标题 + 可选附言 + 「点击查看文档」),走**裸气泡**(`SantoChatBubble.bare`:不画气泡底色与内边距,卡片自带容器),点击回调 `onDocTap` 由业务方校验权限后打开文档(对标 DevOpsMobile)

@@ -95,7 +95,10 @@ class SantoCell extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (topLine)
-            Divider(height: 0.5, thickness: 0.5, color: dividerColor),
+            Divider(
+                height: commonConfig.borderWidthSm,
+                thickness: commonConfig.borderWidthSm,
+                color: dividerColor),
           Container(
             constraints: BoxConstraints(minHeight: minHeight),
             padding: padding ??
@@ -176,7 +179,9 @@ class SantoCell extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
               child: Divider(
-                  height: 0.5, thickness: 0.5, color: dividerColor),
+                  height: commonConfig.borderWidthSm,
+                  thickness: commonConfig.borderWidthSm,
+                  color: dividerColor),
             ),
         ],
       ),
@@ -228,7 +233,7 @@ class SantoCellGroup extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
 
     return Container(
-      color: backgroundColor ?? Colors.white,
+      color: backgroundColor ?? commonConfig.fillBase,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

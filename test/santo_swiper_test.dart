@@ -95,6 +95,6 @@ void main() {
     ));
 
     final ClipRRect clip = tester.widget<ClipRRect>(find.byType(ClipRRect));
-    expect(clip.borderRadius, BorderRadius.circular(kSantoSwiperRadius));
+    expect(clip.borderRadius, BorderRadius.circular(12));
   });
 }

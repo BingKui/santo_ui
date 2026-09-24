@@ -113,7 +113,7 @@ class _SantoMoreSelectionPageState extends State<SantoMoreSelectionPage>
               },
               child: Container(
                 width: 300,
-                color: Colors.white,
+                color: commonConfig.fillBase,
                 child: Column(
                   children: <Widget>[
                     SantoLine(),
@@ -166,9 +166,11 @@ class _SantoMoreSelectionPageState extends State<SantoMoreSelectionPage>
 
   /// 右侧为内容区域：标题+更多+筛选项的列表 + 底部按钮区域
   Widget _buildRightSlide(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       width: 300,
-      color: Colors.white,
+      color: commonConfig.fillBase,
       child: Padding(
         padding: EdgeInsets.only(top: 0),
         child: _buildSelectionListView(),
@@ -316,7 +318,7 @@ class MoreBottomSelectionWidget extends StatelessWidget {
                   height: 24,
                   width: 24,
                   child: SantoIcon(SantoIcons.refresh,
-                      size: 24, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase),
+                      size: 24, color: commonConfig.colorTextBase),
                 ),
                 Text(
                   SantoIntl.of(context).localizedResource.reset,

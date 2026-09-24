@@ -10,6 +10,62 @@ void main() {
   _floatingTests();
   _moreMenuTests();
   _badgeTests();
+  _selectedColorTests();
+}
+
+void _selectedColorTests() {
+  testWidgets('SantoMenuBar docked 选中态默认取主题色', (tester) async {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    await tester.pumpWidget(_wrap(SantoMenuBar(
+      items: const [
+        SantoMenuBarItem(text: '首页', selectedIcon: Icon(Icons.home_filled)),
+        SantoMenuBarItem(text: '我的'),
+      ],
+    )));
+
+    // 未显式传色时,选中文字与选中图标都取品牌色
+    expect(tester.widget<Text>(find.text('首页')).style?.color,
+        commonConfig.brandPrimary);
+    final iconTheme = tester.widget<IconTheme>(find
+        .ancestor(
+            of: find.byIcon(Icons.home_filled), matching: find.byType(IconTheme))
+        .first);
+    expect(iconTheme.data.color, commonConfig.brandPrimary);
+    // 未选中项用次要文字色
+    expect(tester.widget<Text>(find.text('我的')).style?.color,
+        commonConfig.colorTextSecondary);
+  });
+
+  testWidgets('SantoMenuBar floating 选中态默认灰底 + 主题色图标文字', (tester) async {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    await tester.pumpWidget(_wrap(SantoMenuBar(
+      style: SantoMenuBarStyle.floating,
+      items: const [
+        SantoMenuBarItem(text: '首页', selectedIcon: Icon(Icons.home_filled)),
+        SantoMenuBarItem(text: '我的'),
+      ],
+    )));
+    await tester.pumpAndSettle();
+
+    // 选中底色为中性浅灰,不是品牌色
+    final pill = tester.widget<Container>(find
+        .descendant(
+            of: find.byType(AnimatedPositioned),
+            matching: find.byType(Container))
+        .first);
+    expect((pill.decoration as BoxDecoration).color,
+        const Color(0xFFF0F0F0));
+    // 选中图标与文字取主题色
+    expect(tester.widget<Text>(find.text('首页')).style?.color,
+        commonConfig.brandPrimary);
+    final iconTheme = tester.widget<IconTheme>(find
+        .ancestor(
+            of: find.byIcon(Icons.home_filled), matching: find.byType(IconTheme))
+        .first);
+    expect(iconTheme.data.color, commonConfig.brandPrimary);
+  });
 }
 
 void _dockedTests() {

@@ -8,7 +8,6 @@ import 'package:santo_ui/src/components/selectcity/santo_select_city_model.dart'
 import 'package:santo_ui/src/components/sugsearch/santo_search_text.dart';
 import 'package:santo_ui/src/constants/santo_strings_constants.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
-import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -168,7 +167,9 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
               return OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.all(0),
-                  side: BorderSide(color: Color(0xFFF5F5F5), width: .5),
+                  side: BorderSide(
+                      color: commonConfig.fillBody,
+                      width: commonConfig.borderWidthSm),
                   backgroundColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(commonConfig.radiusXs),
@@ -183,8 +184,8 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
                     e.name,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF17233D),
-                      fontSize: SantoFonts.f12,
+                      color: commonConfig.colorTextBase,
+                      fontSize: commonConfig.fontSizeCaption,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -210,14 +211,14 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
     return Container(
       height: _suspensionHeight.toDouble(),
       padding: EdgeInsets.only(left: commonConfig.hSpacingMd),
-      color: Color(0xfff3f4f5),
+      color: commonConfig.fillBody,
       alignment: Alignment.centerLeft,
       child: Text(
         '$susTag',
         softWrap: false,
         style: TextStyle(
           fontSize: commonConfig.fontSizeBase,
-          color: Color(0xff808695),
+          color: commonConfig.colorTextSecondary,
         ),
       ),
     );
@@ -299,23 +300,25 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: SantoAppBar(title: widget.appBarTitle ?? SantoIntl.of(context).localizedResource.selectCity),
         // 用 Material 承载白色背景，保证列表 ListTile 的墨水涟漪画在最近的 Material 上，
         // 避免中间的 DecoratedBox 把水波纹盖住（ListTile debug 断言会报错）
         body: Material(
-          color: Colors.white,
+          color: commonConfig.fillBase,
           child: Column(
             children: <Widget>[
               widget.locationText.isEmpty
                   ? const SizedBox.shrink()
                   : _buildLocationBar(widget.locationText),
               widget.showSearchBar ? _buildSearchBar() : const SizedBox.shrink(),
-              const Divider(
-                height: 0.5,
-                thickness: 0.5,
-                color: Color(0xFFE8EAEC),
+              Divider(
+                height: commonConfig.borderWidthSm,
+                thickness: commonConfig.borderWidthSm,
+                color: commonConfig.dividerColorBase,
               ),
               _showCityStack
                   ? _buildCityList()
@@ -357,19 +360,20 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
                 return _buildHeader();
               }),
           indexHintBuilder: (context, hint) {
+            final commonConfig =
+                SantoThemeConfigurator.instance.getConfig().commonConfig;
             return Container(
               alignment: Alignment.center,
               width: 40.0,
               height: 40.0,
               decoration: BoxDecoration(
                   color: Color(0x2217233D),
-                  borderRadius: BorderRadius.circular(
-                      SantoThemeConfigurator.instance
-                          .getConfig()
-                          .commonConfig
-                          .radiusXs)),
+                  borderRadius:
+                      BorderRadius.circular(commonConfig.radiusXs)),
               child: Text(hint,
-                  style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                  style: TextStyle(
+                      color: commonConfig.colorTextBaseInverse,
+                      fontSize: 20.0)),
             );
           },
         ));

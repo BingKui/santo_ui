@@ -67,13 +67,13 @@ class SantoSelectionMenuItemWidget extends StatelessWidget {
                           active
                               ? SantoIcons.navArrowUp
                               : SantoIcons.navArrowDown,
-                          size: 12,
+                          size: commonConfig.iconSizeXs,
                           color: commonConfig.brandPrimary)
                       : SantoIcon(
                           active
                               ? SantoIcons.navArrowUp
                               : SantoIcons.navArrowDown,
-                          size: 12,
+                          size: commonConfig.iconSizeXs,
                           color: (isHighLight || active)
                               ? commonConfig.brandPrimary
                               : commonConfig.colorTextDisabled))

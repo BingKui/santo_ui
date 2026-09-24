@@ -67,11 +67,11 @@ class SantoEnhanceNumberCard extends StatelessWidget {
   ///每一行显示的数量 默认为3
   final int rowCount;
 
-  ///背景色 默认为白色
-  final Color backgroundColor;
+  ///背景色 默认为主题 fillBase
+  final Color? backgroundColor;
 
-  ///左侧的间距 默认20
-  final EdgeInsets padding;
+  ///左侧的间距 默认取主题 hSpacingLg
+  final EdgeInsets? padding;
 
   /// 文本内容对齐方式
   final TextAlign itemTextAlign;
@@ -86,8 +86,8 @@ class SantoEnhanceNumberCard extends StatelessWidget {
     this.rowCount = 3,
     this.runningSpace,
     this.itemRunningSpace,
-    this.padding = const EdgeInsets.only(left: 20, right: 20),
-    this.backgroundColor = Colors.white,
+    this.padding,
+    this.backgroundColor,
     this.itemTextAlign = TextAlign.left,
     this.themeData,
   }) : super(key: key);
@@ -103,6 +103,13 @@ class SantoEnhanceNumberCard extends StatelessWidget {
         .getConfig(configId: defaultConfig.configId)
         .enhanceNumberCardConfig
         .merge(defaultConfig);
+
+    final commonConfig = defaultConfig.commonConfig;
+    final EdgeInsets padding = this.padding ??
+        EdgeInsets.only(
+          left: commonConfig.hSpacingLg,
+          right: commonConfig.hSpacingLg,
+        );
 
     if (itemChildren == null || itemChildren!.isEmpty) {
       return const SizedBox.shrink();
@@ -169,7 +176,7 @@ class SantoEnhanceNumberCard extends StatelessWidget {
         return Container(
           padding: padding,
           child: contentWidget,
-          color: backgroundColor,
+          color: backgroundColor ?? commonConfig.fillBase,
         );
       },
     );
@@ -247,10 +254,12 @@ class SantoEnhanceNumberCard extends StatelessWidget {
     );
     Widget? icon;
     if (model.iconTapCallBack != null) {
-      icon = SantoIcon(SantoIcons.helpCircle, size: 14);
+      icon = SantoIcon(SantoIcons.helpCircle,
+          size: config.commonConfig.iconSizeSm);
 
       if (model.numberInfoIcon == SantoNumberInfoIcon.arrow) {
-        icon = SantoIcon(SantoIcons.navArrowRight, size: 14);
+        icon = SantoIcon(SantoIcons.navArrowRight,
+            size: config.commonConfig.iconSizeSm);
       }
       debugPrint('${tp.height}');
       debugPrint(model.title);

@@ -99,7 +99,8 @@ class SantoResult extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 48),
+        padding: EdgeInsets.symmetric(
+            horizontal: commonConfig.gapXxl, vertical: 48),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

@@ -1,5 +1,6 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/home/example_intro.dart';
+import 'package:example/sample/components/menu_bar/menu_bar_custom_color_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_default_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_floating_example.dart';
 import 'package:example/sample/components/menu_bar/menu_bar_badge_example.dart';
@@ -25,6 +26,12 @@ class MenuBarExample extends StatelessWidget {
             title: '悬浮样式',
             describe: '毛玻璃圆角容器,与屏幕边缘保持 gap 间距',
             onPressed: () => _push(context, const MenuBarFloatingExample()),
+          ),
+          ListItem(
+            title: '自定义选中颜色',
+            describe: '选中底色与选中图标文字色都可由外部指定',
+            onPressed: () =>
+                _push(context, const MenuBarCustomColorExample()),
           ),
           ListItem(
             title: '红点与徽标',

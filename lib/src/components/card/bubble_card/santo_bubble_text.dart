@@ -53,8 +53,8 @@ class SantoBubbleText extends StatelessWidget {
   ///展开收起回调
   final TextExpandedCallback? onExpanded;
 
-  /// 气泡的圆角 默认是12
-  final double radius;
+  /// 气泡的圆角 默认取主题 `radiusMd`
+  final double? radius;
 
   /// 气泡贴齐侧上角的小圆角 默认是2
   ///
@@ -64,8 +64,8 @@ class SantoBubbleText extends StatelessWidget {
   /// 气泡贴齐方向 默认[SantoBubblePlacement.start]
   final SantoBubblePlacement placement;
 
-  /// 气泡背景色  默认是 Color(0xFFF5F5F5)
-  final Color backgroundColor;
+  /// 气泡背景色  默认取主题 `fillBody`
+  final Color? backgroundColor;
 
   /// 内容文字颜色，优先级低于[textStyle]
   final Color? textColor;
@@ -79,10 +79,10 @@ class SantoBubbleText extends StatelessWidget {
       this.text = '',
       this.maxLines,
       this.onExpanded,
-      this.radius = 12,
+      this.radius,
       this.cornerRadius = 2,
       this.placement = SantoBubblePlacement.start,
-      this.backgroundColor = const Color(0xFFF5F5F5),
+      this.backgroundColor,
       this.textColor,
       this.textStyle})
       : super(key: key);
@@ -96,6 +96,9 @@ class SantoBubbleText extends StatelessWidget {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     final isStart = placement == SantoBubblePlacement.start;
+    final double radius = this.radius ?? commonConfig.radiusMd;
+    final Color backgroundColor =
+        this.backgroundColor ?? commonConfig.fillBody;
     return Align(
       alignment: isStart ? Alignment.centerLeft : Alignment.centerRight,
       child: Container(
@@ -121,11 +124,7 @@ class SantoBubbleText extends StatelessWidget {
               TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: commonConfig.fontSizeBase,
-                color: textColor ??
-                    SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .colorTextBase,
+                color: textColor ?? commonConfig.colorTextBase,
               ),
         ),
       ),

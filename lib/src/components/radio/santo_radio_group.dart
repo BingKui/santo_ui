@@ -101,13 +101,8 @@ class SantoRadioGroup extends SantoCheckboxGroup {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: directionalRadios.length,
-        separatorBuilder: (context, index) => cardMode
-            ? SizedBox(
-                height: SantoThemeConfigurator.instance
-                    .getConfig()
-                    .commonConfig
-                    .gapMd)
-            : const SizedBox.shrink(),
+        separatorBuilder: (context, index) =>
+            cardMode ? SizedBox(height: commonConfig.gapMd) : const SizedBox.shrink(),
         itemBuilder: (context, index) => Container(
           margin: cardMode
               ? EdgeInsets.symmetric(horizontal: commonConfig.hSpacingMd)
@@ -124,14 +119,8 @@ class SantoRadioGroup extends SantoCheckboxGroup {
           // 三等分去掉两个列间距,避免按屏幕宽度硬编码卡片宽
           final itemWidth = (constraints.maxWidth - 24) / 3;
           return Wrap(
-            spacing: SantoThemeConfigurator.instance
-                .getConfig()
-                .commonConfig
-                .gapMd,
-            runSpacing: SantoThemeConfigurator.instance
-                .getConfig()
-                .commonConfig
-                .gapMd,
+            spacing: commonConfig.gapMd,
+            runSpacing: commonConfig.gapMd,
             children: directionalRadios
                 .map((e) => SizedBox(width: itemWidth, height: 56, child: e))
                 .toList(),

@@ -899,8 +899,8 @@ class SantoInfoModal {
     if (headIcon != null) {
       keyGen.addIcon(
           SizedBox(
-            height: 12,
-            width: 12,
+            height: themeData.commonConfig.iconSizeXs,
+            width: themeData.commonConfig.iconSizeXs,
             child: headIcon,
           ),
           alignment: PlaceholderAlignment.top);

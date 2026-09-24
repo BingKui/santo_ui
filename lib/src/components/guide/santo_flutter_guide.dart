@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:santo_ui/src/components/guide/santo_pulse_widget.dart';
 import 'package:santo_ui/src/components/guide/santo_tip_widget.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 part 'santo_delay_rendered_widget.dart';
@@ -40,7 +41,10 @@ class SantoGuide {
   late Widget _stepWidget;
   List<Map> _configMap = [];
   List<GlobalKey> _globalKeys = [];
-  final Color _maskColor = Colors.black.withOpacity(.6);
+
+  /// 引导蒙层色,取主题 fillMask(与原先的 60% 黑一致)
+  Color get _maskColor =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillMask;
   final Duration _animationDuration = Duration(milliseconds: 300);
   final _th = _Throttling(duration: Duration(milliseconds: 500));
   late Size _lastScreenSize;

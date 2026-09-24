@@ -1,6 +1,7 @@
 
 
 import 'package:santo_ui/src/components/charts/santo_progress_chart/santo_progress_chart_painter.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -22,17 +23,17 @@ class SantoProgressChart extends StatefulWidget {
   /// 进度条上自定义Widget的左侧padding，默认值10
   final double indicatorLeftPadding;
 
-  /// 展示默认进度indicator的时候的文本样式，默认 TextStyle(color: Colors.white)
-  final TextStyle textStyle;
+  /// 展示默认进度indicator的时候的文本样式,不传取主题 colorTextBaseInverse
+  final TextStyle? textStyle;
 
   /// 自定义进度条上面的Widget，默认显示为文本
   final SantoProgressIndicatorBuilder? santoProgressIndicatorBuilder;
 
-  /// 背景色，默认 Colors.lightBlueAccent
-  final Color backgroundColor;
+  /// 背景色，不传取主题 brandPrimary 淡色
+  final Color? backgroundColor;
 
-  /// 进度条颜色，默认 [Colors.blueAccent, Colors.blue]
-  final List<Color> colors;
+  /// 进度条颜色，不传取主题 brandPrimary
+  final List<Color>? colors;
 
   /// 是否展示动画，默认 false
   final bool showAnimation;
@@ -49,10 +50,10 @@ class SantoProgressChart extends StatefulWidget {
       this.height = 0,
       this.value = 0.2,
       this.indicatorLeftPadding = 10,
-      this.textStyle = const TextStyle(color: Colors.white),
+      this.textStyle,
       this.santoProgressIndicatorBuilder,
-      this.colors = const [Colors.blueAccent, Colors.blue],
-      this.backgroundColor = Colors.lightBlueAccent,
+      this.colors,
+      this.backgroundColor,
       this.showAnimation = false,
       this.isFromLastValue = false,
       this.duration = const Duration(milliseconds: 250),})
@@ -111,6 +112,8 @@ class SantoProgressChartState extends State<SantoProgressChart>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     final double _value = widget.value;
     return Stack(
       children: <Widget>[
@@ -131,7 +134,8 @@ class SantoProgressChartState extends State<SantoProgressChart>
           child: IndicatorWidgetBuilder(
             notifier: _animation,
             value: _value,
-            textStyle: widget.textStyle,
+            textStyle: widget.textStyle ??
+                TextStyle(color: commonConfig.colorTextBaseInverse),
             santoProgressIndicatorBuilder: widget.santoProgressIndicatorBuilder,
           ),
         )

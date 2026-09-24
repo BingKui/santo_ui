@@ -18,8 +18,6 @@ class AppLayoutExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SantoAppLayout(
-      itemSelectedBgColor: const Color(0xFFF0F0F0),
-      selectedTextColor: const Color(0xFF1677FF),
       moreMenu: const SantoAppLayoutMoreMenu(
         title: '更多',
         items: <SantoAppLayoutMoreItem>[

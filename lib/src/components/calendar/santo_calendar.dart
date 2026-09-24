@@ -221,7 +221,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 child: isPreIconEnable
                     ? SantoIcon(SantoIcons.navArrowLeft)
                     : SantoIcon(SantoIcons.navArrowLeft,
-                        color: Color(0xFFCCCCCC)),
+                        color: commonConfig.colorTextHint),
                 alignment: Alignment.center,
               ),
             ),
@@ -261,7 +261,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
                 child: isNextIconEnable
                     ? SantoIcon(SantoIcons.navArrowRight)
                     : SantoIcon(SantoIcons.navArrowRight,
-                        color: Color(0xFFCCCCCC)),
+                        color: commonConfig.colorTextHint),
                 alignment: Alignment.center,
               ),
             )
@@ -455,7 +455,7 @@ class _CustomCalendarState extends State<SantoCalendar> {
                                 style: TextStyle(
                                     color: _displayMode == DisplayMode.month
                                         ? (_getIsItStartAndEndDate(date)
-                                            ? Colors.white
+                                            ? commonConfig.colorTextBaseInverse
                                             : _currentDate.month ==
                                                         date.month &&
                                                     0 <=
@@ -463,27 +463,15 @@ class _CustomCalendarState extends State<SantoCalendar> {
                                                             _minDate) &&
                                                     date.compareTo(_maxDate) <=
                                                         0
-                                                ? SantoThemeConfigurator.instance
-                                                    .getConfig()
-                                                    .commonConfig
-                                                    .colorTextBase
-                                                : SantoThemeConfigurator.instance
-                                                    .getConfig()
-                                                    .commonConfig
-                                                    .colorTextHint)
+                                                ? commonConfig.colorTextBase
+                                                : commonConfig.colorTextHint)
                                         : (_getIsItStartAndEndDate(date)
-                                            ? Colors.white
+                                            ? commonConfig.colorTextBaseInverse
                                             : (0 <= date.compareTo(_minDate) &&
                                                     date.compareTo(_maxDate) <=
                                                         0
-                                                ? SantoThemeConfigurator.instance
-                                                    .getConfig()
-                                                    .commonConfig
-                                                    .colorTextBase
-                                                : SantoThemeConfigurator.instance
-                                                    .getConfig()
-                                                    .commonConfig
-                                                    .colorTextHint)),
+                                                ? commonConfig.colorTextBase
+                                                : commonConfig.colorTextHint)),
                                     fontSize: commonConfig.fontSizeBase,
                                     fontWeight: FontWeight.normal),
                               ),

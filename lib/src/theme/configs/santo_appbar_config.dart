@@ -1,6 +1,5 @@
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
-import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/theme/base/santo_base_config.dart';
 import 'package:santo_ui/src/theme/base/santo_default_config_utils.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
@@ -26,6 +25,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
     double? itemSpacing,
     EdgeInsets? titlePadding,
     double? iconSize,
+    double? leadingSize,
+    double? leadingSpacing,
+    double? doubleLeadingSize,
     SystemUiOverlayStyle? systemOverlayStyle,
     bool? showDefaultBottom,
     String configId = GLOBAL_CONFIG_ID,
@@ -39,6 +41,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
         _itemSpacing = itemSpacing,
         _titlePadding = titlePadding,
         _iconSize = iconSize,
+        _leadingSize = leadingSize,
+        _leadingSpacing = leadingSpacing,
+        _doubleLeadingSize = doubleLeadingSize,
         _systemOverlayStyle = systemOverlayStyle,
         _showDefaultBottom = showDefaultBottom,
         super(configId: configId);
@@ -50,6 +55,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
     double? itemSpacing,
     EdgeInsets? titlePadding,
     double? iconSize,
+    double? leadingSize,
+    double? leadingSpacing,
+    double? doubleLeadingSize,
     String configId = GLOBAL_CONFIG_ID,
   })  : _appBarHeight = appBarHeight,
         _titleMaxLength = titleMaxLength,
@@ -57,21 +65,27 @@ class SantoAppBarConfig extends SantoBaseConfig {
         _itemSpacing = itemSpacing,
         _titlePadding = titlePadding,
         _iconSize = iconSize,
+        _leadingSize = leadingSize,
+        _leadingSpacing = leadingSpacing,
+        _doubleLeadingSize = doubleLeadingSize,
         super(configId: configId) {
-    _backgroundColor = Color(0xff2E313B);
+    // 这里不能用 commonConfig(会经 SantoThemeConfigurator 取配置),
+    // 否则 defaultAllConfig 初始化 defaultGalleryDetailConfig 时形成回环栈溢出。
+    final commonConfig = SantoDefaultConfigUtils.defaultCommonConfig;
+    _backgroundColor = commonConfig.appBarDarkBackgroundColor;
     _leadIconBuilder = () => SantoIcon(
           SantoIcons.arrowLeft,
-          size: SantoAppBarTheme.iconSize,
-          color: SantoAppBarTheme.darkTextColor,
+          size: iconSize,
+          color: commonConfig.colorTextBaseInverse,
         );
     _titleStyle = SantoTextStyle(
-      fontSize: SantoAppBarTheme.titleFontSize,
+      fontSize: commonConfig.fontSizeHead,
       fontWeight: FontWeight.w500,
-      color: SantoAppBarTheme.darkTextColor,
+      color: commonConfig.colorTextBaseInverse,
     );
     _actionsStyle = SantoTextStyle(
-      color: SantoAppBarTheme.darkTextColor,
-      fontSize: SantoAppBarTheme.actionFontSize,
+      color: commonConfig.colorTextBaseInverse,
+      fontSize: commonConfig.fontSizeBase,
       fontWeight: FontWeight.w500,
     );
     _systemOverlayStyle = SystemUiOverlayStyle.light;
@@ -84,6 +98,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
     double? itemSpacing,
     EdgeInsets? titlePadding,
     double? iconSize,
+    double? leadingSize,
+    double? leadingSpacing,
+    double? doubleLeadingSize,
     String configId = GLOBAL_CONFIG_ID,
   })  : _appBarHeight = appBarHeight,
         _titleMaxLength = titleMaxLength,
@@ -91,21 +108,26 @@ class SantoAppBarConfig extends SantoBaseConfig {
         _itemSpacing = itemSpacing,
         _titlePadding = titlePadding,
         _iconSize = iconSize,
+        _leadingSize = leadingSize,
+        _leadingSpacing = leadingSpacing,
+        _doubleLeadingSize = doubleLeadingSize,
         super(configId: configId) {
-    _backgroundColor = Colors.white;
+    // 同 dark():避开配置回环,走文件级默认常量
+    final commonConfig = SantoDefaultConfigUtils.defaultCommonConfig;
+    _backgroundColor = commonConfig.fillBase;
     _leadIconBuilder = () => SantoIcon(
           SantoIcons.arrowLeft,
-          size: SantoAppBarTheme.iconSize,
-          color: SantoAppBarTheme.lightTextColor,
+          size: iconSize,
+          color: commonConfig.colorTextBase,
         );
     _titleStyle = SantoTextStyle(
-      fontSize: SantoAppBarTheme.titleFontSize,
+      fontSize: commonConfig.fontSizeHead,
       fontWeight: FontWeight.w500,
-      color: SantoAppBarTheme.lightTextColor,
+      color: commonConfig.colorTextBase,
     );
     _actionsStyle = SantoTextStyle(
-      color: SantoAppBarTheme.lightTextColor,
-      fontSize: SantoAppBarTheme.actionFontSize,
+      color: commonConfig.colorTextBase,
+      fontSize: commonConfig.fontSizeBase,
       fontWeight: FontWeight.w500,
     );
     _systemOverlayStyle = SystemUiOverlayStyle.dark;
@@ -145,7 +167,7 @@ class SantoAppBarConfig extends SantoBaseConfig {
   ///
   /// SantoTextStyle(
   ///   color: AppBarBrightness(brightness).textColor,
-  ///   fontSize: SantoAppBarTheme.actionFontSize,
+  ///   fontSize: SantoCommonConfig.fontSizeBase,
   ///   fontWeight: FontWeight.w500,
   /// )
   SantoTextStyle? _actionsStyle;
@@ -185,6 +207,29 @@ class SantoAppBarConfig extends SantoBaseConfig {
 
   double get iconSize =>
       _iconSize ?? SantoDefaultConfigUtils.defaultAppBarConfig.iconSize;
+
+  /// 返回键(SantoBackLeading)操作区域的固定边长
+  /// 默认为 32
+  double? _leadingSize;
+
+  double get leadingSize =>
+      _leadingSize ?? SantoDefaultConfigUtils.defaultAppBarConfig.leadingSize;
+
+  /// SantoDoubleLeading 中两个操作区之间的间距
+  /// 默认为 5
+  double? _leadingSpacing;
+
+  double get leadingSpacing =>
+      _leadingSpacing ??
+      SantoDefaultConfigUtils.defaultAppBarConfig.leadingSpacing;
+
+  /// SantoDoubleLeading 时的固定宽度
+  /// 默认为 80
+  double? _doubleLeadingSize;
+
+  double get doubleLeadingSize =>
+      _doubleLeadingSize ??
+      SantoDefaultConfigUtils.defaultAppBarConfig.doubleLeadingSize;
 
   /// statusBar 样式
   /// 默认为 [SystemUiOverlayStyle.dark]
@@ -227,6 +272,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
     _itemSpacing ??= appbarConfig._itemSpacing;
     _titlePadding ??= appbarConfig._titlePadding;
     _iconSize ??= appbarConfig._iconSize;
+    _leadingSize ??= appbarConfig._leadingSize;
+    _leadingSpacing ??= appbarConfig._leadingSpacing;
+    _doubleLeadingSize ??= appbarConfig._doubleLeadingSize;
     _systemOverlayStyle ??= appbarConfig._systemOverlayStyle;
     _showDefaultBottom ??= appbarConfig._showDefaultBottom;
   }
@@ -242,6 +290,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
     double? itemSpacing,
     EdgeInsets? titlePadding,
     double? iconSize,
+    double? leadingSize,
+    double? leadingSpacing,
+    double? doubleLeadingSize,
     SystemUiOverlayStyle? systemOverlayStyle,
     bool? showDefaultBottom,
   }) {
@@ -256,6 +307,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
       itemSpacing: itemSpacing ?? _itemSpacing,
       titlePadding: titlePadding ?? _titlePadding,
       iconSize: iconSize ?? _iconSize,
+      leadingSize: leadingSize ?? _leadingSize,
+      leadingSpacing: leadingSpacing ?? _leadingSpacing,
+      doubleLeadingSize: doubleLeadingSize ?? _doubleLeadingSize,
       systemOverlayStyle: systemOverlayStyle ?? _systemOverlayStyle,
       showDefaultBottom: showDefaultBottom ?? _showDefaultBottom,
     );
@@ -274,6 +328,9 @@ class SantoAppBarConfig extends SantoBaseConfig {
       itemSpacing: other._itemSpacing,
       titlePadding: other._titlePadding,
       iconSize: other._iconSize,
+      leadingSize: other._leadingSize,
+      leadingSpacing: other._leadingSpacing,
+      doubleLeadingSize: other._doubleLeadingSize,
       systemOverlayStyle: other._systemOverlayStyle,
       showDefaultBottom: other._showDefaultBottom,
     );

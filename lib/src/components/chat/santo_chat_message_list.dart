@@ -1,10 +1,13 @@
 import 'package:santo_ui/src/components/chat/model/santo_chat_menu_item.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_message.dart';
+import 'package:santo_ui/src/components/chat/santo_chat_approval.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_bubble.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_doc.dart';
+import 'package:santo_ui/src/components/chat/santo_chat_emoji_view.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_file.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_image.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_message_menu.dart';
+import 'package:santo_ui/src/components/chat/santo_chat_notice.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_reaction.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_system_notice.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_text.dart';
@@ -147,6 +150,31 @@ class SantoChatMessageList extends StatefulWidget {
   /// 点击文档卡片,由业务方校验权限后打开文档
   final ValueChanged<SantoChatDocMessage>? onDocTap;
 
+  /// 点击审批卡片(打开审批详情)
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatApprovalMessage>? onApprovalTap;
+
+  /// 点击审批卡片的「通过」
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatApprovalMessage>? onApprove;
+
+  /// 点击审批卡片的「驳回」
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatApprovalMessage>? onReject;
+
+  /// 点击通知卡片
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatNoticeMessage>? onNoticeTap;
+
+  /// 点击已读回执(我方消息气泡下方的「已读/未读」),业务方在这里拉人员列表
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatMessage>? onReadReceiptTap;
+
   const SantoChatMessageList({
     Key? key,
     required this.messages,
@@ -180,6 +208,11 @@ class SantoChatMessageList extends StatefulWidget {
     this.onQuoteTap,
     this.onRetry,
     this.onDocTap,
+    this.onApprovalTap,
+    this.onApprove,
+    this.onReject,
+    this.onNoticeTap,
+    this.onReadReceiptTap,
   }) : super(key: key);
 
   @override
@@ -422,10 +455,15 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
     required bool runStart,
   }) {
     final bool isMine = message.isMine(widget.currentUserId);
+    // 已撤回:本体不再渲染,撤回提示由服务端下发的系统消息展示
+    if (message.recalled) return const SizedBox.shrink();
     final bool isMedia = message is SantoChatImageMessage ||
         message is SantoChatVideoMessage;
-    // 文档卡片自带白底与描边,不再套气泡
-    final bool bare = message is SantoChatDocMessage;
+    // 文档、审批、通知卡片与自定义内容自带容器,不再套气泡
+    final bool bare = message is SantoChatDocMessage ||
+        message is SantoChatCustomMessage ||
+        message is SantoChatApprovalMessage ||
+        message is SantoChatNoticeMessage;
     final String? playingId = widget.playingMessageId;
     final bool selecting = widget.selectionMode;
     final bool selected = widget.selectedIds.contains(message.id);
@@ -445,6 +483,10 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
       quote: message.quote,
       status: message.status,
       isEdited: message.isEdited,
+      readReceipt: message.readReceipt,
+      onReadReceiptTap: widget.onReadReceiptTap == null
+          ? null
+          : () => widget.onReadReceiptTap!(message),
       reactions: message.reactions,
       onReactionTap: widget.onReaction == null
           ? null
@@ -647,6 +689,42 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
         message: message,
         onTap: onDocTap == null ? null : (SantoChatDocMessage m) => onDocTap(m),
       );
+    }
+    if (message is SantoChatCustomMessage) {
+      return message.builder(context);
+    }
+    if (message is SantoChatApprovalMessage) {
+      final ValueChanged<SantoChatApprovalMessage>? onApprovalTap =
+          widget.onApprovalTap;
+      final ValueChanged<SantoChatApprovalMessage>? onApprove = widget.onApprove;
+      final ValueChanged<SantoChatApprovalMessage>? onReject = widget.onReject;
+      return SantoChatApprovalCard(
+        message: message,
+        onTap: onApprovalTap == null
+            ? null
+            : (SantoChatApprovalMessage m) => onApprovalTap(m),
+        onApprove: onApprove == null
+            ? null
+            : (SantoChatApprovalMessage m) => onApprove(m),
+        onReject:
+            onReject == null ? null : (SantoChatApprovalMessage m) => onReject(m),
+      );
+    }
+    if (message is SantoChatNoticeMessage) {
+      final ValueChanged<SantoChatNoticeMessage>? onNoticeTap =
+          widget.onNoticeTap;
+      return SantoChatNoticeCard(
+        message: message,
+        timeText: message.createdAt == null
+            ? null
+            : formatChatTime(message.createdAt!),
+        onTap: onNoticeTap == null
+            ? null
+            : (SantoChatNoticeMessage m) => onNoticeTap(m),
+      );
+    }
+    if (message is SantoChatEmojiMessage) {
+      return SantoChatEmojiView(symbol: message.symbol);
     }
     return const SizedBox.shrink();
   }

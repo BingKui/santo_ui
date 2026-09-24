@@ -51,11 +51,11 @@ class SantoShare extends StatelessWidget {
   /// 取消按钮名称
   final String? cancelTitle;
 
-  /// 取消按钮的文本颜色，默认值为 Color(0xFF17233D)
-  final Color textColor;
+  /// 取消按钮的文本颜色，不传时取主题 colorTextBase
+  final Color? textColor;
 
-  /// 分享文本颜色，默认值为 Color(0xFF808695)
-  final Color shareTextColor;
+  /// 分享文本颜色，不传时取主题 colorTextSecondary
+  final Color? shareTextColor;
 
   /// 点击事件回调
   final SantoShareItemClickCallBack? clickCallBack;
@@ -70,8 +70,8 @@ class SantoShare extends StatelessWidget {
     this.clickCallBack,
     this.clickInterceptor,
     this.cancelTitle,
-    this.shareTextColor = const Color(0xFF808695),
-    this.textColor = const Color(0xFF17233D),
+    this.shareTextColor,
+    this.textColor,
   });
 
   @override
@@ -80,7 +80,7 @@ class SantoShare extends StatelessWidget {
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
         decoration: ShapeDecoration(
-          color: Color(0xFFFFFFFF),
+          color: commonConfig.fillBase,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(commonConfig.radiusXs),
@@ -162,7 +162,7 @@ class SantoShare extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: commonConfig.fontSizeCaption,
-                  color: shareTextColor),
+                  color: shareTextColor ?? commonConfig.colorTextSecondary),
             )
           ],
         ),
@@ -226,10 +226,7 @@ class SantoShare extends StatelessWidget {
         style: TextStyle(
             fontSize: commonConfig.fontSizeSubHead,
             fontWeight: FontWeight.w500,
-            color: SantoThemeConfigurator.instance
-                .getConfig()
-                .commonConfig
-                .colorTextBase),
+            color: commonConfig.colorTextBase),
       ),
     ));
 
@@ -289,7 +286,7 @@ class SantoShare extends StatelessWidget {
               style: TextStyle(
                   fontSize: commonConfig.fontSizeSubHead,
                   fontWeight: FontWeight.w500,
-                  color: textColor),
+                  color: textColor ?? commonConfig.colorTextBase),
             ),
           ),
         ),

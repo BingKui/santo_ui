@@ -115,15 +115,9 @@ class _SantoBackTopState extends State<SantoBackTop>
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: commonConfig.fillBase,
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(0x1A),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                    boxShadow: commonConfig.shadowMd,
                   ),
                   child: Icon(
                     Icons.keyboard_arrow_up,

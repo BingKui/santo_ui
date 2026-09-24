@@ -277,6 +277,8 @@ class SantoTitleSelectInputFormItemState
   }
 
   Widget _buildTriangle() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return StreamBuilder<bool>(
       stream: _showController.stream,
       initialData: false,
@@ -284,18 +286,17 @@ class SantoTitleSelectInputFormItemState
         return snapshot.data!
             ? SantoIcon(
                 SantoIcons.navArrowUp,
-                size: 14,
-                color: SantoThemeConfigurator.instance
-                    .getConfig()
-                    .commonConfig
-                    .brandPrimary,
+                size: commonConfig.iconSizeSm,
+                color: commonConfig.brandPrimary,
               )
-            : SantoIcon(SantoIcons.navArrowDown, size: 14);
+            : SantoIcon(SantoIcons.navArrowDown, size: commonConfig.iconSizeSm);
       },
     );
   }
 
   Widget _buildTextField() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return TextField(
       autofocus: widget.autofocus,
       inputFormatters: widget.inputFormatters,
@@ -311,7 +312,7 @@ class SantoTitleSelectInputFormItemState
       decoration: InputDecoration(
         border: InputBorder.none,
         hintStyle: TextStyle(
-            color: Color(0xFFCCCCCC),
+            color: commonConfig.colorTextHint,
             fontSize: SantoFonts.f16,
             textBaseline: TextBaseline.alphabetic),
         hintText:
@@ -376,16 +377,11 @@ class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
       padding: EdgeInsets.only(
           left: commonConfig.hSpacingMd, right: commonConfig.hSpacingMd),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2, //阴影范围
-            spreadRadius: 1, //阴影浓度
-            color: Colors.white.withOpacity(0.08), //阴影颜色
-          ),
-        ],
-        color: Colors.white,
+        boxShadow: commonConfig.shadowSm,
+        color: commonConfig.fillBase,
         border: Border.all(
-            color: widget.themeData!.commonConfig.dividerColorBase, width: 0.5),
+            color: widget.themeData!.commonConfig.dividerColorBase,
+            width: commonConfig.borderWidthSm),
         borderRadius: BorderRadius.all(Radius.circular(commonConfig.radiusXs)),
       ),
       child: Column(
@@ -424,7 +420,7 @@ class _TitleSelectPopWidgetState extends State<TitleSelectPopWidget> {
                     color: isLast
                         ? Colors.transparent
                         : widget.themeData!.commonConfig.dividerColorBase,
-                    width: 0.5)), // 也可控件一边圆角大小
+                    width: commonConfig.borderWidthSm)), // 也可控件一边圆角大小
           ),
           child: Text(
             item,

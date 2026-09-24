@@ -65,8 +65,8 @@ class SantoCommonActionSheet extends StatelessWidget {
   /// Action 之间分割线颜色，默认值 Color(0xFFE8EAEC)
   final Color? separatorLineColor;
 
-  /// 取消按钮与 Action 之间的分割线的颜色，默认值 Color(0xFFF5F5F5)
-  final Color spaceColor;
+  /// 取消按钮与 Action 之间的分割线的颜色，默认取主题 `fillBody`
+  final Color? spaceColor;
 
   /// 取消按钮文本
   final String? cancelTitle;
@@ -94,7 +94,7 @@ class SantoCommonActionSheet extends StatelessWidget {
     this.cancelTitle,
     this.clickCallBack,
     this.separatorLineColor,
-    this.spaceColor = const Color(0xFFF5F5F5),
+    this.spaceColor,
     this.maxTitleLines = 2,
     this.maxSheetHeight = 0,
     this.onItemClickInterceptor,
@@ -109,6 +109,8 @@ class SantoCommonActionSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     EdgeInsets padding = MediaQueryData.fromView(View.of(context)).padding;
     double maxHeight =
         MediaQuery.of(context).size.height - padding.top - padding.bottom;
@@ -121,7 +123,7 @@ class SantoCommonActionSheet extends StatelessWidget {
     return GestureDetector(
       child: Container(
           decoration: ShapeDecoration(
-            color: Colors.white,
+            color: commonConfig.fillBase,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(themeData!.topRadius),
@@ -151,7 +153,7 @@ class SantoCommonActionSheet extends StatelessWidget {
     widgets.add(_configListActions(context));
     // 添加间隔
     widgets.add(Divider(
-      color: spaceColor,
+      color: spaceColor ?? commonConfig.fillBody,
       thickness: commonConfig.vSpacingSm,
       height: commonConfig.vSpacingSm,
     ));
@@ -168,6 +170,8 @@ class SantoCommonActionSheet extends StatelessWidget {
 
   /// 构建标题widget
   Widget _configTitleActions() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     // 构建整体标题
     return Column(
       children: <Widget>[
@@ -184,8 +188,8 @@ class SantoCommonActionSheet extends StatelessWidget {
         ),
         Divider(
           //有标题则添加分割线
-          thickness: 1,
-          height: 1,
+          thickness: commonConfig.borderWidthMd,
+          height: commonConfig.borderWidthMd,
           color: separatorLineColor ?? themeData!.commonConfig.dividerColorBase,
         ),
       ],
@@ -194,6 +198,8 @@ class SantoCommonActionSheet extends StatelessWidget {
 
   /// 构建列表widget
   Widget _configListActions(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> tiles = [];
     //构建列表内容
     for (int index = 0; index < actions.length; index++) {
@@ -218,8 +224,8 @@ class SantoCommonActionSheet extends StatelessWidget {
         ),
       );
       tiles.add(Divider(
-        thickness: 1,
-        height: 1,
+        thickness: commonConfig.borderWidthMd,
+        height: commonConfig.borderWidthMd,
         color: separatorLineColor ?? themeData!.commonConfig.dividerColorBase,
       ));
     }
@@ -287,7 +293,7 @@ class SantoCommonActionSheet extends StatelessWidget {
         Navigator.of(context).pop();
       },
       child: Container(
-        color: Color(0xffffffff),
+        color: commonConfig.fillBase,
         padding: EdgeInsets.only(
             top: commonConfig.gapMd, bottom: commonConfig.gapMd),
         child: Center(

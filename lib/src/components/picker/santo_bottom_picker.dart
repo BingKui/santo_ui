@@ -34,6 +34,8 @@ class SantoBottomPicker {
     bool showTitle = true,
   }) {
     final ThemeData theme = Theme.of(context);
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
@@ -54,7 +56,7 @@ class SantoBottomPicker {
       },
       barrierDismissible: barrierDismissible,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-      barrierColor: Colors.black54,
+      barrierColor: commonConfig.fillMask,
       transitionDuration: const Duration(milliseconds: 150),
       transitionBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
@@ -102,6 +104,10 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
   late AnimationController _controller;
   late Animation _animation;
 
+  /// 弹窗遮罩色:取主题 fillMask
+  Color get _maskColor =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillMask;
+
   @override
   void initState() {
     super.initState();
@@ -121,7 +127,7 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
         return true;
       },
       child: Scaffold(
-        backgroundColor: Color(0x33808695),
+        backgroundColor: _maskColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -154,7 +160,8 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
               .cornerRadius),
         ),
         child: Container(
-          color: Colors.white,
+          color:
+              SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase,
           alignment: Alignment.bottomCenter,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -256,7 +263,7 @@ class SantoBottomPickerWidgetState extends State<SantoBottomPickerWidget>
         }
       },
       child: Container(
-        color: Color(0x33808695),
+        color: _maskColor,
       ),
     );
   }

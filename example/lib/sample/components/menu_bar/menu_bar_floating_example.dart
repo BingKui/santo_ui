@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 ///
 /// 悬浮样式的菜单栏悬浮在页面内容之上,
 /// 内容区域延伸到底部,滚动内容可从毛玻璃容器下方穿过。
+/// 选中态用默认样式:中性浅灰底 + 主题色图标文字。
 class MenuBarFloatingExample extends StatefulWidget {
   const MenuBarFloatingExample({Key? key}) : super(key: key);
 
@@ -49,8 +50,6 @@ class _MenuBarFloatingExampleState extends State<MenuBarFloatingExample> {
             gap: 12,
             currentIndex: _index,
             onChanged: (i) => setState(() => _index = i),
-            itemSelectedBgColor: const Color(0xFFF0F0F0),
-            selectedTextColor: const Color(0xFF1677FF),
             showMoreMenu: true,
             moreMenu: SantoMenuBarMoreMenu(
               title: '更多',

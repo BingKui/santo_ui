@@ -40,7 +40,7 @@ import 'package:example/sample/components/text_ellipsis/text_ellipsis_example.da
 import 'package:example/sample/components/action_bar/action_bar_example.dart';
 import 'package:example/sample/components/loading/loading_widget_example.dart';
 import 'package:example/sample/components/appbar/appbar_example.dart';
-import 'package:example/sample/components/noticebar/santo_notice_bar_example.dart';
+import 'package:example/sample/components/notice/santo_notice_example.dart';
 import 'package:example/sample/components/picker/picker_entry_page.dart';
 import 'package:example/sample/components/tooltip/tooltip_example.dart';
 import 'package:example/sample/components/popup/overlay_window_example.dart';
@@ -246,7 +246,7 @@ class CardDataConfig {
       _item("TextEllipsis 文本省略", "多行省略与展开收起", TextEllipsisExample()),
       _item("Popover 气泡卡片", "锚点弹出气泡", PopoverExample()),
       _item("SwipeCell 滑动单元格", "列表项滑动操作", SwipeCellExample()),
-      _item("NoticeBar 通知栏", "滚动通知条", SantoNoticeBarExample()),
+      _item("Notice 通知栏", "通知/公告条,可带标签与按钮", SantoNoticeExample()),
       _item("Progress 进度条", "线性/环形进度", ProgressExample()),
       _item("TimeCounter 计时器", "倒计时/正计时", TimeCounterExample()),
       _item("Empty 空状态", "空数据提示", EmptyExample()),

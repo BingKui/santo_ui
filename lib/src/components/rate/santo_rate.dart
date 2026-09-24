@@ -131,21 +131,21 @@ class _SantoRateState extends State<SantoRate> {
   }
 
   Widget _buildRating(RatingState state) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     switch (state) {
       case RatingState.select:
         return SantoIcon(SantoSolidIcons.star,
             solid: true,
-            size: 16,
-            color: SantoThemeConfigurator.instance
-                .getConfig()
-                .commonConfig
-                .brandWarning);
+            size: commonConfig.iconSizeMd,
+            color: commonConfig.brandPrimary);
       case RatingState.half:
         return SantoIcon(SantoIcons.starHalfDashed,
-            size: 16, color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandWarning);
+            size: commonConfig.iconSizeMd, color: commonConfig.brandPrimary);
       default:
         return SantoIcon(SantoIcons.star,
-            size: 16, color: const Color(0xFFE8EAEC));
+            size: commonConfig.iconSizeMd,
+            color: commonConfig.dividerColorBase);
     }
   }
 }

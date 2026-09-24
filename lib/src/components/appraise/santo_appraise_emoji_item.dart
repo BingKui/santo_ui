@@ -112,7 +112,7 @@ class _SantoAppraiseEmojiItemState extends State<SantoAppraiseEmojiItem>
                 style: TextStyle(
                   color: widget.index == widget.selectedIndex
                       ? Color(0xffffc300)
-                      : Color(0xff808695),
+                      : commonConfig.colorTextSecondary,
                   fontSize: commonConfig.fontSizeCaption,
                   fontWeight: FontWeight.w500,
                 ),

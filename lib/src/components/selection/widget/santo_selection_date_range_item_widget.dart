@@ -156,12 +156,12 @@ class _SantoSelectionDateRangeItemWidgetState
           hintText: (!isMax ? SantoIntl.of(context).localizedResource.startDate : SantoIntl.of(context).localizedResource.endDate),
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-            width: 1,
+            width: widget.themeData.commonConfig.borderWidthMd,
             color: widget.themeData.commonConfig.borderColorBase,
           )),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-            width: 1,
+            width: widget.themeData.commonConfig.borderWidthMd,
             color: widget.themeData.commonConfig.borderColorBase,
           )),
           contentPadding: EdgeInsets.all(0),

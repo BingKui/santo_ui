@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:santo_ui/src/components/charts/radar_chart.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -50,14 +51,19 @@ class SantoFunnelChart extends MultiChildRenderObjectWidget {
   ///用于每层layer的绘制，可以继承[SantoFunnelLayerPainter]对每层的绘制进行定制
   final SantoFunnelLayerPainter layerPainter;
 
-  ///Santo风格的每层layer预设的颜色值，按顺序使用颜色值。实际层数超过该数量需要自行定义。
-  static const List<Color> defaultLayerColors = [
-    Color(0xFF3575FC),
-    Color(0xFF1677FF),
-    Color(0xFF6BB7FF),
-    Color(0xFF93CAFF),
-    Color(0xFFB5DBFF),
-  ];
+  ///Santo风格的每层layer预设的颜色值，按顺序使用颜色值。
+  ///
+  ///由主题品牌色向 [SantoCommonConfig.fillBase] 逐级提亮派生，实际层数
+  ///超过该数量需要自行定义。
+  static List<Color> get defaultLayerColors {
+    final SantoCommonConfig commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    return List<Color>.generate(
+      5,
+      (int i) => Color.lerp(
+          commonConfig.brandPrimary, commonConfig.fillBase, i * 0.22)!,
+    );
+  }
 
   SantoFunnelChart({
     Key? key,
@@ -759,9 +765,11 @@ class SantoDefaultFunnelLayerPainter extends SantoFunnelLayerPainter {
 
   @override
   List<ui.Color> getLayerColors(int layerIndex) {
+    final SantoCommonConfig commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (layerIndex >= SantoFunnelChart.defaultLayerColors.length) {
       //超过最大支持的layer层数
-      return [Colors.white];
+      return [commonConfig.fillBase];
     }
     return [SantoFunnelChart.defaultLayerColors[layerIndex]];
   }

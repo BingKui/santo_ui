@@ -185,8 +185,8 @@ class SantoEmpty extends StatelessWidget {
   final double? topOffset;
 
   /// 背景色设置
-  /// 默认Colors.white
-  final Color backgroundColor;
+  /// 默认取主题 fillBase
+  final Color? backgroundColor;
 
   /// 距顶部高度百分比
   final double topPercent;
@@ -215,7 +215,7 @@ class SantoEmpty extends StatelessWidget {
     this.action,
     this.enablePageTap = false,
     this.topOffset,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.isCenterVertical = false,
     this.height,
     this.topPercent = 0.08,
@@ -230,6 +230,9 @@ class SantoEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig = SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig;
     return GestureDetector(
       onTap: () {
         if (this.enablePageTap && action != null) {
@@ -238,7 +241,7 @@ class SantoEmpty extends StatelessWidget {
       },
       child: Container(
         height: height,
-        color: backgroundColor,
+        color: backgroundColor ?? commonConfig.fillBase,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,

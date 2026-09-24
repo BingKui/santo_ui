@@ -1,6 +1,7 @@
 import 'package:santo_ui/src/components/selectcity/santo_az_common.dart';
 import 'package:santo_ui/src/components/selectcity/santo_index_bar.dart';
 import 'package:santo_ui/src/components/selectcity/santo_suspension_view.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
 /// Called to build children for the listView.
@@ -161,6 +162,8 @@ class _AzListViewState extends State<AzListView> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     _init();
     var children = <Widget>[
       SuspensionView(
@@ -230,7 +233,7 @@ class _AzListViewState extends State<AzListView> {
             '$_indexBarHint',
             style: TextStyle(
               fontSize: 32.0,
-              color: Colors.white,
+              color: commonConfig.colorTextBaseInverse,
             ),
           ),
         ),

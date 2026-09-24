@@ -12,10 +12,12 @@ group:
 
 ## 一、效果总览
 
-- **双方消息**:按 `currentUserId` 自动分列左右,我方是浅色底气泡(主题色 10% 透明),对方是白底气泡
-- **消息状态**:我方消息按 `status` 展示状态图标——发送中时钟、已发送单勾、已送达双勾、已读双勾(主题色)贴头像一侧;
-  失败时改在**非头像一侧**(我方气泡的左边)展示实心警示图标(`warning-square-solid`,相对气泡上下居中),
-  点它触发 `onRetry` 重发
+- **双方消息**:按 `currentUserId` 自动分列左右,我方是**主题色的透明底气泡**(`brandPrimary` 10% 透明),对方是白底气泡
+- **消息状态与已读回执**:只有自己发出的消息在**气泡下方、贴头像一侧**展示文案 ——
+  无回执时按 `status` 给「发送中 / 已发送 / 未读 / 已读」;
+  带 `readReceipt` 时按回执给文案(单聊「已读 / 未读」,群聊「N人未读 / 全部已读」,对标钉钉),
+  **未读/还有人未读时取主题色**,点文案走 `onReadReceiptTap`,可用 `SantoChatReadReceiptSheet.show` 打开人员列表;
+  失败时改在**非头像一侧**(气泡左边)展示实心警示图标(`warning-circle-solid`,相对气泡上下居中),点它 `onRetry` 重发
 - **@与表情**:`@展示名` 命中 `mentions` 时高亮可点,`[表情名]` 命中注册表时渲染成表情图,
   `http(s)://` 链接自动变色可点,`isEdited` 为 true 时在气泡内展示「已编辑」
 - **长按菜单**:气泡旁浮层,顶部一排表情回应、下面是操作区;表情与操作项都按**块级排列
@@ -27,10 +29,16 @@ group:
 - **语音/文件消息**:波形 + 时长、文件名 + 大小,播放、转文字与下载交给业务
 - **文档消息**:一张文档卡片(标题 + 附言 + 「点击查看文档」),**自带白底与描边、不套气泡**,
   点击回调 `onDocTap`,由业务方校验权限后打开文档(对标 DevOpsMobile 的文档链接卡片)
+- **审批消息**:一张审批卡片(单号 + 状态标签 + 标题 + 审批流/申请人/当前节点),
+  审批中且可审批时展示「通过/驳回」,回调 `onApprove` / `onReject`;点击卡片走 `onApprovalTap`
+- **通知消息**:一张通知卡片(类型图标 + 未读红点 + 标题 + 正文 + 时间),点击走 `onNoticeTap`,
+  同一张卡片也能直接当通知中心的列表项
+- **表情消息**:`SantoChatEmojiMessage` 展示单个大表情,`[表情名]` 命中图片时渲染图片
 - **消息列表**:时间分隔、同发送者分组、滑动引用回复、长按菜单、双击快捷回应、上拉加载更早消息、回到底部
 - **编辑消息**:长按「编辑」→ 输入区进入编辑态并预填内容 → 提交回调业务替换消息
 - **多选**:勾选框 + 底部操作栏(已选条数、转发/删除、取消)
 - **底部输入区**:白底铺满底部安全区域,**没有发送按钮**(发送走输入法发送键);
+  引用/编辑条右侧的关闭按钮是实心 `xmark-circle`、取失败色、边长 20(`kSantoChatBannerCloseSize`);
   点表情按钮展开**内置表情面板**(默认 32 个,点选把 `[表情名]` 插到光标处),
   点 `+` 展开**扩展菜单**(默认照片/拍摄/文件),点输入框收起面板唤起输入法;
   两个面板**共用固定高度 230**(`kSantoChatPanelHeight`),互相切换、与输入法切换时高度都不跳;
@@ -74,6 +82,10 @@ group:
 | `SantoChatImage` / `SantoChatVideo` | 图片、视频消息内容 |
 | `SantoChatVoice` / `SantoChatFile` | 语音、文件消息内容 |
 | `SantoChatDocCard` | 文档消息卡片:标题 + 附言 + 「点击查看文档」,自带容器不套气泡 |
+| `SantoChatApprovalCard` | 审批消息卡片:单号 + 状态标签 + 标题 + 审批流信息 + 通过/驳回 |
+| `SantoChatNoticeCard` | 通知消息卡片:类型图标 + 未读红点 + 标题 + 正文 + 时间 |
+| `SantoChatReadReceiptSheet` | 已读回执面板:按已读/未读分组列出人员 |
+| `SantoChatEmojiView` | 表情消息内容:单个大表情 |
 | `SantoChatSystemNotice` | 系统消息 |
 | `SantoChatTypingIndicator` | 对方正在输入 |
 | `SantoChatMessageMenu` | 长按浮层菜单(表情回应 + 操作列表) |
@@ -97,13 +109,22 @@ group:
 | `SantoChatVoiceMessage` | 语音消息,`url` / `duration` / 可选 `waveform` |
 | `SantoChatFileMessage` | 文件消息,`url` / `name` / `size` |
 | `SantoChatDocMessage` | 文档消息,`title` / `docId` / `spaceId` / `url` / 可选 `content`(附言) |
+| `SantoChatApprovalMessage` | 审批消息,`taskId` / `title` / `approvalStatus` / `taskNo` / `flowName` / `applicatorName` / `currentNodeName` / `canApprove` |
+| `SantoChatNoticeMessage` | 通知消息,`title` / `content` / `noticeType` / `read` / `targetId` |
+| `SantoChatEmojiMessage` | 表情消息,`symbol`(Unicode 表情或 `[表情名]`) |
+| `SantoChatReadReceipt` | 已读回执:`readCount` / `unreadCount` / `readMembers` / `unreadMembers`,文案取 `label` |
 | `SantoChatSystemMessage` | 系统消息,只有 `text`(`author` 为 null) |
 | `SantoChatConversation` | 会话行:`title` / `avatarUrl` / `preview` / `updatedAt` / `unreadCount` / `pinned` / `muted` |
 
 消息状态 `SantoChatMessageStatus` 取值:`sending`(发送中)、`sent`(已发送)、
-`delivered`(已送达)、`read`(已读)、`failed`(失败)。前四种在头像一侧展示对应图标;
-`failed` 改在**非头像一侧**展示实心警示图标(`SantoSolidIcons.warningSquare`,`solid: true`),
-相对气泡上下居中(与气泡同一行排布,不用额外的高度计算),点击回调 `onRetry` 重发。
+`delivered`(已送达)、`read`(已读)、`failed`(失败)。前四种在**我方气泡下方**展示文案
+(`发送中 / 已发送 / 未读 / 已读`,`delivered` 即对方未读、取主题色);
+`failed` 改在**非头像一侧**展示实心警示图标(`SantoSolidIcons.warningCircle`,`solid: true`),
+相对气泡上下居中,点击回调 `onRetry` 重发。对方的消息不展示状态与回执。
+
+`SantoChatReadReceipt` 是群聊的已读回执:`readCount` / `unreadCount` 给人数,
+`readMembers` / `unreadMembers` 给人员列表(不传则只展示人数),`label` 生成文案
+(单聊「已读 / 未读」,群聊「N人未读 / 全部已读」)。
 
 `SantoChatEmojiRegistry` 是全局表情注册表,App 启动时注册一次:
 
@@ -128,7 +149,7 @@ SantoChatEmojiRegistry.registerAll(<String, String>{
 | currentUserId | String | 当前登录用户 id | 是 | - |
 | onSend | ValueChanged\<String\>? | 提交回调(发送与编辑态提交共用),回调后输入框自动清空 | 否 | null |
 | showAvatar / showName | bool | 是否展示头像 / 对方昵称 | 否 | true / false |
-| empty / header | Widget? | 空状态 / 列表上方的固定区域(如群公告) | 否 | null |
+| empty / header | Widget? | 空状态 / 列表上方的固定区域;群公告请直接复用 `SantoNotice`(见使用示例) | 否 | null |
 | inputLeading / inputTrailing | Widget? | 输入区左右插槽(语音、表情) | 否 | null |
 | inputHintText | String | 输入框提示文案 | 否 | 请输入内容 |
 | inputEnabled | bool | 输入区是否可输入 | 否 | true |
@@ -164,6 +185,10 @@ SantoChatEmojiRegistry.registerAll(<String, String>{
 | onQuoteTap | ValueChanged\<SantoChatQuote\>? | 点击引用块 | 否 | null |
 | onRetry | ValueChanged\<SantoChatMessage\>? | 点击非头像一侧的失败警示图标重发 | 否 | null |
 | onDocTap | ValueChanged\<SantoChatDocMessage\>? | 点击文档卡片 | 否 | null |
+| onApprovalTap | ValueChanged\<SantoChatApprovalMessage\>? | 点击审批卡片(打开审批详情) | 否 | null |
+| onApprove / onReject | ValueChanged\<SantoChatApprovalMessage\>? | 点击审批卡片的「通过」/「驳回」 | 否 | null |
+| onNoticeTap | ValueChanged\<SantoChatNoticeMessage\>? | 点击通知卡片 | 否 | null |
+| onReadReceiptTap | ValueChanged\<SantoChatMessage\>? | 点击我方消息气泡下方的已读回执 | 否 | null |
 
 ### SantoChatMessageList
 
@@ -192,6 +217,12 @@ SantoChatEmojiRegistry.registerAll(<String, String>{
 - `SantoChatSystemMessage` 自动渲染成居中提示,不参与分组、头像与菜单逻辑
 - `SantoChatDocMessage` 自动渲染成 `SantoChatDocCard` 并切成**裸气泡**(`SantoChatBubble.bare`),
   卡片自带白底与描边;点击走 `onDocTap`
+- `SantoChatApprovalMessage` / `SantoChatNoticeMessage` 同样走裸气泡,分别渲染成
+  `SantoChatApprovalCard`(通过/驳回回调 `onApprove` / `onReject`)、`SantoChatNoticeCard`
+  (点击回调 `onNoticeTap`);`SantoChatEmojiMessage` 渲染成单个大表情
+- **群公告不要手写容器**:直接往 `header` 传 `SantoNotice` 即可
+- **同组消息对齐**:同一发送者的连续消息只有第一条带头像,不带头像的那些会占住头像宽度,
+  所以气泡与下方的已读回执始终对齐成一条竖线
 
 ### SantoChatBubble
 
@@ -208,6 +239,7 @@ SantoChatEmojiRegistry.registerAll(<String, String>{
 | reactions | List\<SantoChatReaction\> | 表情回应,展示在气泡下方 | 否 | 空 |
 | contentPadding | EdgeInsetsGeometry? | 内容区内边距,图片/视频传 `EdgeInsets.zero` 铺满气泡 | 否 | 主题气泡内边距 |
 | bare | bool | 内容自带容器(文档卡片):不画气泡底色与内边距 | 否 | false |
+| readReceipt / onReadReceiptTap | - | 已读回执与点击回调,只在 `isMine` 时展示 | 否 | null |
 | backgroundColor / textColor / avatar | - | 背景色、文字色、自定义头像 | 否 | 按主题 |
 | onTap / onLongPress / onDoubleTap / onRetry / onQuoteTap / onReactionTap | 回调 | 交互回调 | 否 | null |
 
@@ -270,6 +302,10 @@ SantoChatEmojiRegistry.registerAll(<String, String>{
 | `SantoChatVoice` | `message` / `isMine` / `isPlaying` / `onTap` |
 | `SantoChatFile` | `message` / `isMine` / `onTap`;`formatFileSize(bytes)` 静态方法格式化大小 |
 | `SantoChatDocCard` | `message` / `onTap`;卡片宽度 `kSantoChatDocWidth`(220),自带白底与描边 |
+| `SantoChatApprovalCard` | `message` / `onTap` / `onApprove` / `onReject`;宽度 `kSantoChatApprovalWidth`(258) |
+| `SantoChatNoticeCard` | `message` / `timeText` / `onTap`;宽度 `kSantoChatNoticeWidth`(280);`kSantoChatNoticeIcons` / `santoChatNoticeColor` 提供类型图标与取色 |
+| `SantoChatEmojiView` | `symbol` / `size`;token 命中注册表时渲染图片,否则用 Unicode 字符 |
+| `SantoChatReadReceiptSheet` | `receipt` / `title`;`show(context:, receipt:, title:)` 弹出面板 |
 | `SantoChatSystemNotice` | `text` / `margin` / `padding` |
 | `SantoChatTypingIndicator` | `author` / `showAvatar` / `showName` |
 | `SantoChatReactionView` | `reactions` / `isMine` / `onTap` |
@@ -286,6 +322,12 @@ Scaffold(
     currentUserId: 'me',
     showName: true,
     typingAuthor: isTyping ? other : null,
+    // 群公告直接复用通知条组件,不用手写容器
+    header: SantoNotice(
+      content: '群公告:周五前完成第三页数据核对',
+      noticeStyle: NoticeStyles.normalNoticeWithArrow,
+      onNoticeTap: openAnnouncement,
+    ),
     replyTo: replyTo,
     editingText: editing?.text,
     selectionMode: selectionMode,

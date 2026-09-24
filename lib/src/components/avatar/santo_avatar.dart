@@ -48,8 +48,8 @@ class SantoAvatar extends StatelessWidget {
   /// 边框颜色
   final Color? borderColor;
 
-  /// 圆角大小，仅在 [shape] 为 [SantoAvatarShape.round] 时生效，默认 4
-  final double radius;
+  /// 圆角大小，仅在 [shape] 为 [SantoAvatarShape.round] 时生效，默认取主题 `radiusMd`
+  final double? radius;
 
   /// 文字样式
   final TextStyle? textStyle;
@@ -67,18 +67,17 @@ class SantoAvatar extends StatelessWidget {
     this.shape = SantoAvatarShape.circle,
     this.backgroundColor,
     this.borderColor,
-    this.radius = 12,
+    this.radius,
     this.textStyle,
     this.iconColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = backgroundColor ??
-        SantoThemeConfigurator.instance
-            .getConfig()
-            .commonConfig
-            .colorTextSecondary;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final Color bgColor = backgroundColor ?? commonConfig.colorTextSecondary;
+    final double effectiveRadius = radius ?? commonConfig.radiusMd;
     // final ShapeBorder shapeBorder = shape == SantoAvatarShape.circle
     //     ? CircleBorder(side: BorderSide(color: borderColor ?? Colors.transparent))
     //     : RoundedRectangleBorder(
@@ -91,40 +90,33 @@ class SantoAvatar extends StatelessWidget {
       content = ClipPath(
         clipper: shape == SantoAvatarShape.circle
             ? _CircleClipper()
-            : _RoundRectClipper(radius),
+            : _RoundRectClipper(effectiveRadius),
         child: Image.network(
           imageUrl!,
           width: size,
           height: size,
           fit: BoxFit.cover,
-          errorBuilder: (_, _, _) => _buildFallback(bgColor),
+          errorBuilder: (_, _, _) => _buildFallback(bgColor, effectiveRadius),
         ),
       );
     } else if (text != null) {
-      content = _buildFallback(bgColor, child: Text(
+      content = _buildFallback(bgColor, effectiveRadius, child: Text(
         text!,
         style: textStyle ??
             TextStyle(
-              color: SantoThemeConfigurator.instance
-                  .getConfig()
-                  .commonConfig
-                  .colorTextBaseInverse,
+              color: commonConfig.colorTextBaseInverse,
               fontSize: size * 0.4,
               fontWeight: FontWeight.w500,
             ),
       ));
     } else if (icon != null) {
-      content = _buildFallback(bgColor, child: Icon(
+      content = _buildFallback(bgColor, effectiveRadius, child: Icon(
         icon,
         size: size * 0.5,
-        color: iconColor ??
-            SantoThemeConfigurator.instance
-                .getConfig()
-                .commonConfig
-                .colorTextBaseInverse,
+        color: iconColor ?? commonConfig.colorTextBaseInverse,
       ));
     } else {
-      content = _buildFallback(bgColor);
+      content = _buildFallback(bgColor, effectiveRadius);
     }
 
     return SizedBox(
@@ -135,7 +127,7 @@ class SantoAvatar extends StatelessWidget {
   }
 
   /// 构建带背景色的容器
-  Widget _buildFallback(Color bgColor, {Widget? child}) {
+  Widget _buildFallback(Color bgColor, double radius, {Widget? child}) {
     return Container(
       width: size,
       height: size,
@@ -214,8 +206,8 @@ class SantoAvatarGroup extends StatelessWidget {
   /// 头像列表
   final List<SantoAvatar> avatars;
 
-  /// 头像之间的重叠距离，默认 10
-  final double overlap;
+  /// 头像之间的重叠距离，默认取主题 `gapSm`
+  final double? overlap;
 
   /// 头像尺寸，默认 36
   final double size;
@@ -227,13 +219,16 @@ class SantoAvatarGroup extends StatelessWidget {
   const SantoAvatarGroup({
     Key? key,
     required this.avatars,
-    this.overlap = 10,
+    this.overlap,
     this.size = 36,
     this.maxCount,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final double overlap = this.overlap ?? commonConfig.gapSm;
     final List<Widget> children = [];
     final int displayCount =
         maxCount != null && avatars.length > maxCount! ? maxCount! : avatars.length;
@@ -246,8 +241,8 @@ class SantoAvatarGroup extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white,
-                width: 2,
+                color: commonConfig.fillBase,
+                width: commonConfig.borderWidthLg,
               ),
             ),
             child: SantoAvatar(
@@ -271,12 +266,12 @@ class SantoAvatarGroup extends StatelessWidget {
           left: displayCount * (size - overlap),
           child: Container(
             decoration: BoxDecoration(
-              color: SantoThemeConfigurator.instance
-                  .getConfig()
-                  .commonConfig
-                  .colorTextSecondary,
+              color: commonConfig.colorTextSecondary,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 2),
+              border: Border.all(
+                color: commonConfig.fillBase,
+                width: commonConfig.borderWidthLg,
+              ),
             ),
             child: SizedBox(
               width: size,
@@ -285,10 +280,7 @@ class SantoAvatarGroup extends StatelessWidget {
                 child: Text(
                   '+$remaining',
                   style: TextStyle(
-                    color: SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .colorTextBaseInverse,
+                    color: commonConfig.colorTextBaseInverse,
                     fontSize: size * 0.35,
                     fontWeight: FontWeight.w500,
                   ),

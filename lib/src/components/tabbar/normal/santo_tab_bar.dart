@@ -16,9 +16,6 @@ typedef SantoTabBarOnTap = Function(SantoTabBarState state, int index);
 const double _tagDefaultSize = 75.0;
 const int _scrollableLimitTabLength = 4;
 
-/// tab 项圆角底色的圆角
-const double _tabItemRadius = 12.0;
-
 /// tab 项圆角底色的左右内边距默认取 gapMd
 
 /// 选中 tab 项底色的透明度
@@ -49,8 +46,8 @@ class SantoTabBar extends StatefulWidget {
   /// 控制Tab的切换
   final TabController? controller;
 
-  /// TabBar背景颜色
-  final Color backgroundColor;
+  /// TabBar背景颜色,不传时取主题 fillBase
+  final Color? backgroundColor;
 
   /// 指示器的颜色
   final Color? indicatorColor;
@@ -118,7 +115,7 @@ class SantoTabBar extends StatefulWidget {
     this.tabHeight,
     this.padding = EdgeInsets.zero,
     this.controller,
-    this.backgroundColor = const Color(0xffffffff),
+    this.backgroundColor,
     this.indicatorColor,
     this.indicatorWeight,
     this.labelColor,
@@ -275,7 +272,8 @@ class SantoTabBarState extends State<SantoTabBar> {
         unselectedLabelStyle: widget.unselectedLabelStyle ??
             widget.themeData!.unselectedLabelStyle.generateTextStyle(),
         dragStartBehavior: widget.dragStartBehavior,
-        splashBorderRadius: BorderRadius.all(Radius.circular(_tabItemRadius)),
+        splashBorderRadius: BorderRadius.all(
+            Radius.circular(widget.themeData!.commonConfig.radiusMd)),
         dividerColor: Colors.transparent,
         dividerHeight: 0,
         onTap: (index) {
@@ -296,6 +294,8 @@ class SantoTabBarState extends State<SantoTabBar> {
 
   // 展开更多Widget
   Widget showMoreWidget(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Visibility(
       visible: widget.showMore,
       child: GestureDetector(
@@ -319,7 +319,7 @@ class SantoTabBarState extends State<SantoTabBar> {
             width: _moreSpacing,
             height: widget.themeData!.tabHeight,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: commonConfig.fillBase,
               boxShadow: [
                 BoxShadow(
                     color: Color(0x05000000),
@@ -331,11 +331,7 @@ class SantoTabBarState extends State<SantoTabBar> {
             child: !_santoTabbarController.isShow
                 ? const SantoIcon(SantoIcons.navArrowDown, size: 20)
                 : SantoIcon(SantoIcons.navArrowUp,
-                    size: 20,
-                    color: SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .brandPrimary)),
+                    size: 20, color: commonConfig.brandPrimary)),
       ),
     );
   }
@@ -436,8 +432,8 @@ class SantoTabBarState extends State<SantoTabBar> {
                     color: selectedColor.withAlpha(
                         (_tabItemSelectedAlpha * _selectedRate(animation, index))
                             .round()),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(_tabItemRadius)),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                        widget.themeData!.commonConfig.radiusMd)),
                   ),
                 );
               },
@@ -449,8 +445,8 @@ class SantoTabBarState extends State<SantoTabBar> {
               animation: animation ?? const AlwaysStoppedAnimation<double>(0),
               builder: (BuildContext context, Widget? child) {
                 return ClipRRect(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(_tabItemRadius)),
+                  borderRadius: BorderRadius.all(Radius.circular(
+                      widget.themeData!.commonConfig.radiusMd)),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
@@ -539,11 +535,11 @@ class SantoTabBarState extends State<SantoTabBar> {
     return Badge(
       largeSize: largeSize,
       padding: padding,
-      backgroundColor: Colors.red,
+      backgroundColor: commonConfig.brandImportant,
       label: Text(
         text,
         style: TextStyle(
-            color: Color(0xFFFFFFFF),
+            color: commonConfig.colorTextBaseInverse,
             fontSize: widget.themeData!.commonConfig.fontSizeCaptionSm,
             height: 1),
       ),
@@ -567,7 +563,10 @@ class SantoTabBarState extends State<SantoTabBar> {
           child: Container(
             width: 1,
             height: 20,
-            color: Color(0xffe4e6f0),
+            color: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .dividerColorBase,
           ),
         )
       ],
@@ -589,7 +588,10 @@ class SantoTabBarState extends State<SantoTabBar> {
             child: Container(
               width: 1,
               height: 20,
-              color: Color(0xffe4e6f0),
+              color: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .dividerColorBase,
             ),
           )
         ],
@@ -749,7 +751,7 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
                 width: MediaQuery.of(context).size.width,
                 padding:
                     EdgeInsets.all(widget.themeData.commonConfig.vSpacingLg),
-                color: Colors.white,
+                color: widget.themeData.commonConfig.fillBase,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -766,7 +768,8 @@ class _TabBarOverlayWidgetState extends State<_TabBarOverlayWidget> {
                             style: TextStyle(
                                 fontSize: widget
                                     .themeData.commonConfig.fontSizeSubHead,
-                                color: Color(0xff17233D),
+                                color:
+                                    widget.themeData.commonConfig.colorTextBase,
                                 fontWeight: FontWeight.w700),
                           ),
                         )),

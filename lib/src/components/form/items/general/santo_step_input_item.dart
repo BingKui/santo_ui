@@ -270,6 +270,8 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
   }
 
   Widget _buildValueWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.canManualInput) {
       return Container(
         alignment: Alignment.center,
@@ -285,13 +287,13 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
             RangeLimitedTextInputFormatter(minValue: widget.minLimit, maxValue: widget.maxLimit)
           ],
           style: TextStyle(
-            color: Color(0xFF17233D),
+            color: commonConfig.colorTextBase,
             fontSize: SantoFonts.f16,
           ),
           decoration: InputDecoration(
             hintText: '0',
             hintStyle: TextStyle(
-              color: Color(0xFFCCCCCC),
+              color: commonConfig.colorTextHint,
               fontSize: SantoFonts.f16,
             ),
             border: InputBorder.none,
@@ -307,7 +309,7 @@ class SantoStepInputFormItemState extends State<SantoStepInputFormItem> {
         child: Text(
           "$_value",
           style: TextStyle(
-            color: Color(0xFF17233D),
+            color: commonConfig.colorTextBase,
             fontSize: SantoFonts.f16,
           ),
         ),

@@ -284,9 +284,9 @@ class _SantoFloatingPanelState extends State<SantoFloatingPanel>
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(panelRadius),
                 ),
-                boxShadow: const <BoxShadow>[
+                boxShadow: <BoxShadow>[
                   BoxShadow(
-                    color: Color(0x14000000),
+                    color: config.shadowColor,
                     blurRadius: 12,
                     offset: Offset(0, -4),
                   ),

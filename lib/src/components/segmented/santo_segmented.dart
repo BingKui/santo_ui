@@ -219,13 +219,13 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
     }
   }
 
-  double _horizontalPadding() {
+  double _horizontalPadding(SantoCommonConfig commonConfig) {
     switch (widget.size) {
       case SantoSegmentedSize.small:
         return 7;
       case SantoSegmentedSize.large:
       case SantoSegmentedSize.medium:
-        return 15;
+        return commonConfig.hSpacingMd;
     }
   }
 
@@ -367,7 +367,7 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
         borderRadius: BorderRadius.circular(itemRadius),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(20),
+            color: commonConfig.shadowColor,
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -436,7 +436,7 @@ class _SantoSegmentedState<T> extends State<SantoSegmented<T>> {
     content = ConstrainedBox(
       constraints: BoxConstraints(minHeight: labelHeight),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: _horizontalPadding()),
+        padding: EdgeInsets.symmetric(horizontal: _horizontalPadding(commonConfig)),
         child: content,
       ),
     );

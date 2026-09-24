@@ -107,18 +107,14 @@ class _SantoExpandableTextState extends State<SantoExpandableText> {
   Widget _clickExpandTextWidget(context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
-    Color btnColor = widget.color ?? Colors.white;
+    Color btnColor = widget.color ?? commonConfig.fillBase;
 
     Text tx = Text(
       SantoIntl.of(context).localizedResource.more,
       style: TextStyle(
-          color: SantoThemeConfigurator.instance
-              .getConfig()
-              .commonConfig
-              .brandPrimary,
-          fontSize:
-              SantoThemeConfigurator.instance.getConfig().commonConfig.fontSizeBase,
-        ),
+        color: commonConfig.brandPrimary,
+        fontSize: commonConfig.fontSizeBase,
+      ),
     );
     Container cnt = Container(
       padding: EdgeInsets.only(left: commonConfig.hSpacingLg),

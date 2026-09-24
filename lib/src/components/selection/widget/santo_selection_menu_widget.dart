@@ -163,12 +163,14 @@ class _SantoSelectionMenuWidgetState extends State<SantoSelectionMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       height: widget.height,
       width: (widget.width != null)
           ? widget.width
           : MediaQuery.of(context).size.width,
-      color: Colors.white,
+      color: commonConfig.fillBase,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -182,7 +184,7 @@ class _SantoSelectionMenuWidgetState extends State<SantoSelectionMenuWidget> {
           Expanded(
             flex: 10,
             child: Container(
-              height: 0.5,
+              height: commonConfig.borderWidthSm,
               color: widget.themeData.commonConfig.dividerColorBase,
             ),
           )

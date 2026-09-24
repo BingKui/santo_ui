@@ -101,7 +101,9 @@ class SantoPhotoItemConfig extends SantoBasicItemConfig {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(commonConfig.radiusXs)),
-          border: Border.all(color: Color(0xFFE8EAEC), width: 0.5)),
+          border: Border.all(
+              color: commonConfig.dividerColorBase,
+              width: commonConfig.borderWidthSm)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         child: FadeInImage.assetNetwork(
@@ -116,8 +118,10 @@ class SantoPhotoItemConfig extends SantoBasicItemConfig {
   @override
   Widget buildDetailWidget(BuildContext context,
       List<SantoBasicGroupConfig> allConfig, int groupId, int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -136,7 +140,7 @@ class SantoPhotoItemConfig extends SantoBasicItemConfig {
                 onLongPress?.call();
               },
               child: Container(
-                color: Colors.white,
+                color: commonConfig.fillBase,
                 child: PhotoView(
                   backgroundDecoration:
                       BoxDecoration(color: themeData!.pageBackgroundColor),

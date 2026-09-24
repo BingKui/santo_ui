@@ -6,6 +6,7 @@ import 'package:santo_ui/src/components/chat/santo_chat_message_menu.dart'
 import 'package:santo_ui/src/components/chat/santo_chat_quote_view.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ const int kSantoChatEmojiRows = 4;
 
 /// 表情面板里表情的展示字号
 const double kSantoChatEmojiFontSize = 24;
+
+/// 引用/编辑条右侧关闭按钮的图标边长,比 iconSizeMd(16) 大一档
+const double kSantoChatBannerCloseSize = 20;
 
 /// 按「每页 [rows] 排 × 每排 [columns] 个」把条目切页
 List<List<T>> _paginate<T>(List<T> items, int columns, int rows) {
@@ -304,9 +308,10 @@ class _SantoChatInputState extends State<SantoChatInput> {
                               ? widget.onCancelEdit
                               : widget.onCancelReply,
                           child: SantoIcon(
-                            SantoIcons.xmark,
-                            size: config.commonConfig.iconSizeMd,
-                            color: config.commonConfig.colorTextSecondary,
+                            SantoSolidIcons.xmarkCircle,
+                            solid: true,
+                            size: kSantoChatBannerCloseSize,
+                            color: config.commonConfig.brandError,
                           ),
                         ),
                       ],

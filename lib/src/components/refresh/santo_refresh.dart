@@ -570,7 +570,7 @@ class _SantoRefreshState extends State<SantoRefresh>
             height: 18,
             child: _state == SantoRefreshState.refreshing
                 ? CircularProgressIndicator(
-                    strokeWidth: 2,
+                    strokeWidth: commonConfig.borderWidthLg,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       commonConfig.brandPrimary,
                     ),
@@ -649,10 +649,10 @@ class _SantoRefreshState extends State<SantoRefresh>
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: 14,
-            height: 14,
+            width: commonConfig.iconSizeSm,
+            height: commonConfig.iconSizeSm,
             child: CircularProgressIndicator(
-              strokeWidth: 2,
+              strokeWidth: commonConfig.borderWidthLg,
               valueColor: AlwaysStoppedAnimation<Color>(
                 commonConfig.brandPrimary,
               ),

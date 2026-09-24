@@ -1,6 +1,10 @@
 
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
+
+/// 轨道淡底透明度(品牌色淡底)
+const double _kTrackOpacity = 0.12;
 
 /// 绘制 SantoProgressChart 进度条
 class SantoProgressChartPainter extends CustomPainter {
@@ -10,11 +14,11 @@ class SantoProgressChartPainter extends CustomPainter {
   /// 动画
   final Animation<double>? animation;
 
-  /// 背景色
-  final Color backgroundColor;
+  /// 背景色,不传取主题 brandPrimary 淡色
+  final Color? backgroundColor;
 
-  /// 进度条颜色数组
-  final List<Color> colors;
+  /// 进度条颜色数组(多色时按渐变绘制),不传取主题 brandPrimary
+  final List<Color>? colors;
 
   /// 圆角大小
   final double radius;
@@ -25,19 +29,26 @@ class SantoProgressChartPainter extends CustomPainter {
   SantoProgressChartPainter(
       {this.value = 0.2,
       this.animation,
-      this.colors = const [Color(0xFF1545FD), Color(0xFF1677FF)],
-      this.backgroundColor = const Color(0x7A90C9FF),
+      this.colors,
+      this.backgroundColor,
       this.radius = 4,
       this.alwaysShowRadius = true})
       : super(repaint: animation){
-    assert(colors.isNotEmpty, 'colors must not be empty');
+    assert(colors == null || colors!.isNotEmpty, 'colors must not be empty');
   }
 
   @override
   void paint(Canvas canvas, Size size) {
+    final SantoCommonConfig commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final List<Color> resolvedColors =
+        colors ?? <Color>[commonConfig.brandPrimary, commonConfig.brandPrimary];
+    final Color resolvedBackgroundColor =
+        backgroundColor ?? commonConfig.brandPrimary.withOpacity(_kTrackOpacity);
+
     final double curValue = animation?.value ?? this.value;
     Paint backgroundPaint = Paint()
-      ..color = this.backgroundColor
+      ..color = resolvedBackgroundColor
       ..style = PaintingStyle.fill;
 
     Rect backgroundRect = Rect.fromLTWH(0, 0, size.width, size.height);
@@ -57,17 +68,17 @@ class SantoProgressChartPainter extends CustomPainter {
             1 == curValue && false == this.alwaysShowRadius ? 0 : this.radius),
         topRight: Radius.circular(
             1 == curValue && false == this.alwaysShowRadius ? 0 : this.radius));
-    final bool isNotSingleColor = colors.length > 1;
+    final bool isNotSingleColor = resolvedColors.length > 1;
     Paint progressBarPaint = Paint();
     if (isNotSingleColor) {
       progressBarPaint.shader = LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               tileMode: TileMode.clamp,
-              colors: colors)
+              colors: resolvedColors)
           .createShader(progressBarRect);
     } else {
-      progressBarPaint.color = colors[0];
+      progressBarPaint.color = resolvedColors[0];
     }
 
     canvas.drawRRect(progressBarRRect, progressBarPaint);

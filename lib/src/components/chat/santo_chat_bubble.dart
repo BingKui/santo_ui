@@ -3,7 +3,6 @@ import 'package:santo_ui/src/components/chat/model/santo_chat_message.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_quote_view.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_reaction.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
-import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
@@ -80,6 +79,16 @@ class SantoChatBubble extends StatelessWidget {
   /// 点击引用块回调
   final VoidCallback? onQuoteTap;
 
+  /// 已读回执,由服务端下发,只在发送方展示在气泡下方
+  ///
+  /// @since v1.5.1
+  final SantoChatReadReceipt? readReceipt;
+
+  /// 点击已读回执(打开已读/未读人员列表)
+  ///
+  /// @since v1.5.1
+  final VoidCallback? onReadReceiptTap;
+
   /// 内容自带容器(如文档卡片):为 true 时不画气泡底色与内边距,状态、头像、菜单照常
   ///
   /// @since v1.5.0
@@ -109,6 +118,8 @@ class SantoChatBubble extends StatelessWidget {
     this.onRetry,
     this.onQuoteTap,
     this.bare = false,
+    this.readReceipt,
+    this.onReadReceiptTap,
   }) : super(key: key);
 
   @override
@@ -193,11 +204,12 @@ class SantoChatBubble extends StatelessWidget {
       );
     }
 
-    // 失败警示单独放在非头像一侧,发送中/已发送/已送达/已读贴头像一侧
+    // 失败警示单独放在非头像一侧
     final bool failed = status == SantoChatMessageStatus.failed;
     final Widget? failedHint =
         isMine && failed ? _buildRetryHint(config) : null;
-    final Widget? statusIcon = failed ? null : _buildStatus(config);
+    // 已读/未读回执只有发送方有,展示在气泡下方、贴头像一侧
+    final Widget? receiptText = _buildReceiptText(config);
 
     final Widget body = Column(
       crossAxisAlignment:
@@ -233,6 +245,14 @@ class SantoChatBubble extends StatelessWidget {
             );
           },
         ),
+        if (receiptText != null)
+          Align(
+            alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(top: config.commonConfig.vSpacingXs / 2),
+              child: receiptText,
+            ),
+          ),
         if (reactions.isNotEmpty)
           Align(
             alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
@@ -266,8 +286,9 @@ class SantoChatBubble extends StatelessWidget {
             Flexible(child: body),
             if (isMine) ...<Widget>[
               SizedBox(width: config.commonConfig.hSpacingSm),
-              ?statusIcon,
-              if (hasAvatar) avatarWidget,
+              // 与对方一侧一致:同组消息不带头像时也占住头像宽度,
+              // 一组消息的气泡与下方回执才能对齐成一条竖线
+              if (hasAvatar) avatarWidget else SizedBox(width: avatarSize),
             ],
           ],
         ),
@@ -289,33 +310,55 @@ class SantoChatBubble extends StatelessWidget {
     );
   }
 
-  /// 发送中/已发送/已送达/已读的状态图标;失败不在这里展示,返回 null
-  Widget? _buildStatus(SantoChatConfig config) {
-    final Color hintColor = config.commonConfig.colorTextHint;
-    final double size = config.commonConfig.iconSizeSm;
+  /// 发送方的已读/未读回执文案:有回执时优先用回执,否则按发送状态给文案
+  ///
+  /// 只有发送方(我方)的消息展示,对方的消息返回 null;
+  /// 还没读完(未读/还有 N 人未读)时取主题色,已读完取次级文字色。
+  Widget? _buildReceiptText(SantoChatConfig config) {
+    if (!isMine) return null;
+    final bool hasReceipt = readReceipt != null && !readReceipt!.isEmpty;
+    final String text = hasReceipt ? readReceipt!.label : _statusLabel();
+    if (text.isEmpty) return null;
+    final bool unread = hasReceipt
+        ? readReceipt!.unreadCount > 0
+        : status == SantoChatMessageStatus.delivered;
+    final Widget label = Text(
+      text,
+      style: TextStyle(
+        fontSize: config.commonConfig.fontSizeCaptionSm,
+        color: unread
+            ? config.commonConfig.brandPrimary
+            : config.commonConfig.colorTextSecondary,
+      ),
+    );
+    if (onReadReceiptTap == null) return label;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onReadReceiptTap,
+      child: label,
+    );
+  }
 
+  /// 发送状态文案,失败由警示图标承担,返回空串
+  String _statusLabel() {
     switch (status) {
-      case SantoChatMessageStatus.failed:
-        return null;
       case SantoChatMessageStatus.sending:
-        return SantoIcon(SantoIcons.clock, size: size, color: hintColor);
+        return '发送中';
       case SantoChatMessageStatus.sent:
-        return SantoIcon(SantoIcons.check, size: size, color: hintColor);
+        return '已发送';
       case SantoChatMessageStatus.delivered:
-        return SantoIcon(SantoIcons.doubleCheck, size: size, color: hintColor);
+        return '未读';
       case SantoChatMessageStatus.read:
-        return SantoIcon(
-          SantoIcons.doubleCheck,
-          size: size,
-          color: config.myBubbleColor,
-        );
+        return '已读';
+      case SantoChatMessageStatus.failed:
+        return '';
     }
   }
 
   /// 发送失败的警示图标:传了 [onRetry] 时点它重发
   Widget _buildRetryHint(SantoChatConfig config) {
     final Widget icon = SantoIcon(
-      SantoSolidIcons.warningSquare,
+      SantoSolidIcons.warningCircle,
       solid: true,
       size: config.commonConfig.iconSizeMd,
       color: config.commonConfig.brandError,

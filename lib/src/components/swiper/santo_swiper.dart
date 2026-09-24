@@ -2,13 +2,10 @@ import 'dart:async';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
-/// 轮播圆角
-const double kSantoSwiperRadius = 12;
-
 /// 轮播图组件
 ///
 /// 支持自动播放、指示器（圆点/数字）、无限循环、自定义高度和间距。
-/// 圆角由外层容器统一裁切(12px),内容整页铺满即可。
+/// 圆角由外层容器统一裁切(主题 radiusMd),内容整页铺满即可。
 ///
 /// 使用示例：
 /// ```dart
@@ -207,11 +204,13 @@ class _SantoSwiperState extends State<SantoSwiper> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SizedBox(
       height: widget.height,
       // 圆角由外层容器裁切,内容整页铺满
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(kSantoSwiperRadius)),
+        borderRadius: BorderRadius.all(Radius.circular(commonConfig.radiusMd)),
         child: Stack(
           children: [
             // 轮播内容
@@ -266,7 +265,9 @@ class _SantoSwiperState extends State<SantoSwiper> {
           width: isActive ? 16 : 8,
           height: 8,
           decoration: BoxDecoration(
-            color: isActive ? _brandPrimary : Colors.white.withAlpha(180),
+            color: isActive
+                ? _brandPrimary
+                : commonConfig.fillBase.withAlpha(180),
             borderRadius: BorderRadius.circular(commonConfig.radiusXs),
           ),
         );
@@ -281,13 +282,13 @@ class _SantoSwiperState extends State<SantoSwiper> {
       padding: EdgeInsets.symmetric(
           horizontal: commonConfig.hSpacingSm, vertical: commonConfig.vSpacingXs),
       decoration: BoxDecoration(
-        color: Colors.black.withAlpha(100),
+        color: commonConfig.fillBaseInverse.withAlpha(100),
         borderRadius: BorderRadius.circular(commonConfig.radiusXs),
       ),
       child: Text(
         '${_currentPage + 1} / $_realPageCount',
         style: TextStyle(
-          color: Colors.white,
+          color: commonConfig.colorTextBaseInverse,
           fontSize: commonConfig.fontSizeCaption,
           fontWeight: FontWeight.w500,
         ),

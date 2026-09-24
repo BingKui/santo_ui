@@ -8,10 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 
-/// Color of the 'magnifier' lens border.
-const Color _kHighlighterBorder = Color(0xFFE8EAEC);
-const Color _kDefaultBackground = Color(0xFFFFFFFF);
+// 轮盘背景色与放大镜分割线色不再写死:未显式传入时由主题
+// commonConfig 的 fillBase / dividerColorBase 兜底。
 // Eyeballed values comparing with a native picker to produce the right
 // curvatures and densities.
 const double _kDefaultDiameterRatio = 3;
@@ -46,10 +46,9 @@ class SantoPicker extends StatefulWidget {
   /// The [diameterRatio] and [itemExtent] arguments must not be null. The
   /// [itemExtent] must be greater than zero.
   ///
-  /// The [backgroundColor] defaults to light gray. It can be set to null to
-  /// disable the background painting entirely; this is mildly more efficient
-  /// than using [Colors.transparent]. Also, if it has transparency, no gradient
-  /// effect will be rendered.
+  /// The [backgroundColor] defaults to the theme `commonConfig.fillBase`. It
+  /// can be set to a transparent color to disable the background painting
+  /// entirely; if it has transparency, no gradient effect will be rendered.
   ///
   /// The [scrollController] argument can be used to specify a custom
   /// [FixedExtentScrollController] for programmatically reading or changing
@@ -62,8 +61,8 @@ class SantoPicker extends StatefulWidget {
   SantoPicker({
     Key? key,
     this.diameterRatio = _kDefaultDiameterRatio,
-    this.backgroundColor = _kDefaultBackground,
-    this.lineColor = _kHighlighterBorder,
+    this.backgroundColor,
+    this.lineColor,
     this.offAxisFraction = 0.0,
     this.useMagnifier = false,
     this.magnification = 1.0,
@@ -97,14 +96,14 @@ class SantoPicker extends StatefulWidget {
   ///
   /// The [itemExtent] argument must be non-null and positive.
   ///
-  /// The [backgroundColor] defaults to light gray. It can be set to null to
-  /// disable the background painting entirely; this is mildly more efficient
-  /// than using [Colors.transparent].
+  /// The [backgroundColor] defaults to the theme `commonConfig.fillBase`. It
+  /// can be set to a transparent color to disable the background painting
+  /// entirely.
   SantoPicker.builder({
     Key? key,
     this.diameterRatio = _kDefaultDiameterRatio,
-    this.backgroundColor = _kDefaultBackground,
-    this.lineColor = _kHighlighterBorder,
+    this.backgroundColor,
+    this.lineColor,
     this.offAxisFraction = 0.0,
     this.useMagnifier = false,
     this.magnification = 1.0,
@@ -134,16 +133,15 @@ class SantoPicker extends StatefulWidget {
 
   /// Background color behind the children.
   ///
-  /// Defaults to a gray color in the iOS color palette.
-  ///
-  /// This can be set to null to disable the background painting entirely; this
-  /// is mildly more efficient than using [Colors.transparent].
+  /// Defaults to null and falls back to the theme `commonConfig.fillBase` when
+  /// building. Pass a transparent color to disable the background painting
+  /// entirely.
   ///
   /// Any alpha value less 255 (fully opaque) will cause the removal of the
   /// wheel list edge fade gradient from rendering of the widget.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
-  ///分割线颜色
+  /// 分割线颜色,未指定时取主题 `commonConfig.dividerColorBase`
   final Color? lineColor;
 
   /// {@macro flutter.rendering.wheelList.offAxisFraction}
@@ -191,6 +189,20 @@ class _CupertinoPickerState extends State<SantoPicker> {
   int? _lastHapticIndex;
   FixedExtentScrollController? _controller;
 
+  /// 轮盘底色:未显式指定时取主题组件底色
+  Color get _backgroundColor =>
+      widget.backgroundColor ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase;
+
+  /// 放大镜上下分割线色:未显式指定时取主题分割线色
+  Color get _lineColor =>
+      widget.lineColor ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.dividerColorBase;
+
+  /// 放大镜上下分割线宽度
+  double get _lineWidth =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig.borderWidthSm;
+
   @override
   void initState() {
     super.initState();
@@ -234,9 +246,9 @@ class _CupertinoPickerState extends State<SantoPicker> {
     // have to just do a color blend. And a due to the way we are layering
     // the magnifier and the gradient on the background, using a transparent
     // background color makes the picker look odd.
-    if (widget.backgroundColor.alpha < 255) return Container();
+    if (_backgroundColor.alpha < 255) return Container();
 
-    final Color widgetBackgroundColor = widget.backgroundColor;
+    final Color widgetBackgroundColor = _backgroundColor;
     return Positioned.fill(
       child: IgnorePointer(
         child: Container(
@@ -274,8 +286,8 @@ class _CupertinoPickerState extends State<SantoPicker> {
   /// Makes the magnifier lens look so that the colors are normal through
   /// the lens and partially grayed out around it.
   Widget _buildMagnifierScreen() {
-    final Color foreground = widget.backgroundColor.withAlpha(
-        (widget.backgroundColor.alpha * _kForegroundScreenOpacityFraction)
+    final Color foreground = _backgroundColor.withAlpha(
+        (_backgroundColor.alpha * _kForegroundScreenOpacityFraction)
             .toInt());
 
     return IgnorePointer(
@@ -291,10 +303,8 @@ class _CupertinoPickerState extends State<SantoPicker> {
               border: Border(
                 left: BorderSide.none,
                 right: BorderSide.none,
-                top: BorderSide(
-                    width: 0.5, color: widget.lineColor ?? _kHighlighterBorder),
-                bottom: BorderSide(
-                    width: 0.5, color: widget.lineColor ?? _kHighlighterBorder),
+                top: BorderSide(width: _lineWidth, color: _lineColor),
+                bottom: BorderSide(width: _lineWidth, color: _lineColor),
               ),
             ),
             constraints: BoxConstraints.expand(
@@ -312,8 +322,8 @@ class _CupertinoPickerState extends State<SantoPicker> {
   }
 
   Widget _buildUnderMagnifierScreen() {
-    final Color foreground = widget.backgroundColor.withAlpha(
-        (widget.backgroundColor.alpha * _kForegroundScreenOpacityFraction)
+    final Color foreground = _backgroundColor.withAlpha(
+        (_backgroundColor.alpha * _kForegroundScreenOpacityFraction)
             .toInt());
 
     return Column(
@@ -333,7 +343,7 @@ class _CupertinoPickerState extends State<SantoPicker> {
   Widget _addBackgroundToChild(Widget child) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: widget.backgroundColor,
+        color: _backgroundColor,
       ),
       child: child,
     );
@@ -370,7 +380,7 @@ class _CupertinoPickerState extends State<SantoPicker> {
     );
     // Adds the appropriate opacity under the magnifier if the background
     // color is transparent.
-    if (widget.backgroundColor.alpha < 255) {
+    if (_backgroundColor.alpha < 255) {
       result = Stack(
         children: <Widget>[
           _buildUnderMagnifierScreen(),

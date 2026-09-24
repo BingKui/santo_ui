@@ -2,21 +2,6 @@ import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// 步进器圆角
-const double kSantoStepperRadius = 12;
-
-/// 贴外框左侧的圆角(减号按钮)
-const BorderRadius _leftEdgeRadius = BorderRadius.only(
-  topLeft: Radius.circular(kSantoStepperRadius),
-  bottomLeft: Radius.circular(kSantoStepperRadius),
-);
-
-/// 贴外框右侧的圆角(加号按钮)
-const BorderRadius _rightEdgeRadius = BorderRadius.only(
-  topRight: Radius.circular(kSantoStepperRadius),
-  bottomRight: Radius.circular(kSantoStepperRadius),
-);
-
 /// 步进器尺寸档位
 enum SantoStepperSize {
   /// 小号:高 24
@@ -51,7 +36,7 @@ class _StepperSizePreset {
   });
 }
 
-/// 各档位尺寸预设,字号从主题配置取值
+/// 各档位尺寸预设,字号与图标尺寸从主题配置取值
 _StepperSizePreset get _smallPreset => _StepperSizePreset(
     height: 24,
     inputWidth: 40,
@@ -59,7 +44,10 @@ _StepperSizePreset get _smallPreset => _StepperSizePreset(
         .getConfig()
         .commonConfig
         .fontSizeCaption,
-    iconSize: 14);
+    iconSize: SantoThemeConfigurator.instance
+        .getConfig()
+        .commonConfig
+        .iconSizeSm);
 _StepperSizePreset get _normalPreset => _StepperSizePreset(
     height: 32,
     inputWidth: 50,
@@ -239,14 +227,28 @@ class _SantoStepperState extends State<SantoStepper> {
     final Color disColor = widget.disabledColor ?? _dividerColor.withAlpha(100);
     final Color txtColor = widget.textColor ?? _textBase;
     final _StepperSizePreset preset = widget._preset;
+    final double radius = commonConfig.radiusMd;
+    // 贴外框左侧的圆角(减号按钮)
+    final BorderRadius leftEdgeRadius = BorderRadius.only(
+      topLeft: Radius.circular(radius),
+      bottomLeft: Radius.circular(radius),
+    );
+    // 贴外框右侧的圆角(加号按钮)
+    final BorderRadius rightEdgeRadius = BorderRadius.only(
+      topRight: Radius.circular(radius),
+      bottomRight: Radius.circular(radius),
+    );
 
     // 外圈整体一个描边,内部三段不画描边(参考分页简易版)
     return Container(
       height: widget.height,
       decoration: BoxDecoration(
         color: _fillBase,
-        borderRadius: BorderRadius.all(Radius.circular(kSantoStepperRadius)),
-        border: Border.all(color: _borderColor, width: 0.5),
+        borderRadius: BorderRadius.all(Radius.circular(radius)),
+        border: Border.all(
+          color: _borderColor,
+          width: commonConfig.borderWidthSm,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -258,10 +260,10 @@ class _SantoStepperState extends State<SantoStepper> {
             enabled: _canDecrease,
             color: btnColor,
             disabledColor: disColor,
-            borderRadius: _leftEdgeRadius,
+            borderRadius: leftEdgeRadius,
             onTap: _decrease,
           ),
-          _buildDivider(),
+          _buildDivider(commonConfig.borderWidthSm),
           // 数值区:无底色、无描边
           Container(
             width: widget.width,
@@ -289,14 +291,14 @@ class _SantoStepperState extends State<SantoStepper> {
               onSubmitted: _onInputSubmitted,
             ),
           ),
-          _buildDivider(),
+          _buildDivider(commonConfig.borderWidthSm),
           // 加号:贴外框右侧承担圆角
           _buildButton(
             icon: Icons.add,
             enabled: _canIncrease,
             color: btnColor,
             disabledColor: disColor,
-            borderRadius: _rightEdgeRadius,
+            borderRadius: rightEdgeRadius,
             onTap: _increase,
           ),
         ],
@@ -305,8 +307,8 @@ class _SantoStepperState extends State<SantoStepper> {
   }
 
   /// 项与项之间的分割线
-  Widget _buildDivider() {
-    return Container(width: 0.5, color: _dividerColor);
+  Widget _buildDivider(double width) {
+    return Container(width: width, color: _dividerColor);
   }
 
   Widget _buildButton({

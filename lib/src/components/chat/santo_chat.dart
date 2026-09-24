@@ -161,6 +161,31 @@ class SantoChat extends StatelessWidget {
   /// 点击文档卡片,由业务方校验权限后打开文档
   final ValueChanged<SantoChatDocMessage>? onDocTap;
 
+  /// 点击审批卡片(打开审批详情)
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatApprovalMessage>? onApprovalTap;
+
+  /// 点击审批卡片的「通过」
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatApprovalMessage>? onApprove;
+
+  /// 点击审批卡片的「驳回」
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatApprovalMessage>? onReject;
+
+  /// 点击通知卡片
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatNoticeMessage>? onNoticeTap;
+
+  /// 点击已读回执(我方消息气泡下方的「已读/未读」)
+  ///
+  /// @since v1.5.1
+  final ValueChanged<SantoChatMessage>? onReadReceiptTap;
+
   const SantoChat({
     Key? key,
     required this.messages,
@@ -207,6 +232,11 @@ class SantoChat extends StatelessWidget {
     this.onQuoteTap,
     this.onRetry,
     this.onDocTap,
+    this.onApprovalTap,
+    this.onApprove,
+    this.onReject,
+    this.onNoticeTap,
+    this.onReadReceiptTap,
   }) : super(key: key);
 
   @override
@@ -250,6 +280,11 @@ class SantoChat extends StatelessWidget {
               onQuoteTap: onQuoteTap,
               onRetry: onRetry,
               onDocTap: onDocTap,
+              onApprovalTap: onApprovalTap,
+              onApprove: onApprove,
+              onReject: onReject,
+              onNoticeTap: onNoticeTap,
+              onReadReceiptTap: onReadReceiptTap,
             ),
           ),
           if (selectionMode)

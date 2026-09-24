@@ -68,12 +68,14 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: commonConfig.fillBase,
       appBar: SantoAppBar(
         title: SantoIntl.of(context).localizedResource.allPics,
       ),
-      body: Container(color: Colors.white, child: _body()),
+      body: Container(color: commonConfig.fillBase, child: _body()),
     );
   }
 
@@ -117,7 +119,7 @@ class _SantoGallerySummaryPageState extends State<SantoGallerySummaryPage> {
           child: Text(
             '${groupConfig.title}(${groupConfig.configList?.length ?? 0})',
             style: TextStyle(
-                color: Color(0xFF17233D),
+                color: commonConfig.colorTextBase,
                 fontSize: commonConfig.fontSizeHead,
                 fontWeight: FontWeight.w500),
           ),

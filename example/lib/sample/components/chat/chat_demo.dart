@@ -90,6 +90,7 @@ class _ChatDemoState extends State<ChatDemo> {
         author: _me,
         text: '好的,我今天更新一版 [赞]',
         status: SantoChatMessageStatus.read,
+        readReceipt: const SantoChatReadReceipt(readCount: 1),
         createdAt: yesterday.subtract(const Duration(hours: 2)),
       ),
       SantoChatImageMessage(
@@ -127,6 +128,15 @@ class _ChatDemoState extends State<ChatDemo> {
         text: '这条改过一遍',
         isEdited: true,
         status: SantoChatMessageStatus.delivered,
+        readReceipt: const SantoChatReadReceipt(
+          readCount: 2,
+          unreadCount: 1,
+          readMembers: <SantoChatAuthor>[
+            SantoChatAuthor(id: 'u1', name: '张三'),
+            SantoChatAuthor(id: 'u2', name: '李四'),
+          ],
+          unreadMembers: <SantoChatAuthor>[SantoChatAuthor(id: 'u3', name: '王五')],
+        ),
         createdAt: now.subtract(const Duration(minutes: 10)),
       ),
       SantoChatTextMessage(
@@ -145,6 +155,33 @@ class _ChatDemoState extends State<ChatDemo> {
         content: '这是评估结论,记得看一下',
         status: SantoChatMessageStatus.read,
         createdAt: now.subtract(const Duration(minutes: 2)),
+      ),
+      SantoChatCustomMessage(
+        id: 'm10',
+        author: _li,
+        status: SantoChatMessageStatus.read,
+        createdAt: now.subtract(const Duration(seconds: 30)),
+        builder: (BuildContext context) => const DemoApprovalCard(),
+      ),
+      SantoChatApprovalMessage(
+        id: 'm11',
+        author: _zhang,
+        taskId: 'task_1001',
+        taskNo: 'SP20260924001',
+        title: '双十一大促扩容申请',
+        flowName: '资源申请审批流',
+        applicatorName: '张三',
+        currentNodeName: '技术负责人审批',
+        canApprove: true,
+        createdAt: now,
+      ),
+      SantoChatNoticeMessage(
+        id: 'm12',
+        author: _li,
+        title: '你被 @ 了',
+        content: '李四在「产品讨论组」提到了你',
+        noticeType: SantoChatNoticeType.mention,
+        createdAt: now.add(const Duration(seconds: 20)),
       ),
     ];
   }
@@ -182,6 +219,7 @@ class _ChatDemoState extends State<ChatDemo> {
         quote: message.quote,
         reactions: nextReactions,
         isEdited: nextEdited,
+        readReceipt: message.readReceipt,
       );
     }
     if (message is SantoChatImageMessage) {
@@ -260,6 +298,65 @@ class _ChatDemoState extends State<ChatDemo> {
         isEdited: nextEdited,
       );
     }
+    if (message is SantoChatApprovalMessage) {
+      return SantoChatApprovalMessage(
+        id: message.id,
+        author: message.author!,
+        taskId: message.taskId,
+        title: message.title,
+        approvalStatus: message.approvalStatus,
+        taskNo: message.taskNo,
+        flowName: message.flowName,
+        applicatorName: message.applicatorName,
+        currentNodeName: message.currentNodeName,
+        canApprove: message.canApprove,
+        createdAt: message.createdAt,
+        status: nextStatus,
+        quote: message.quote,
+        reactions: nextReactions,
+        isEdited: nextEdited,
+      );
+    }
+    if (message is SantoChatNoticeMessage) {
+      return SantoChatNoticeMessage(
+        id: message.id,
+        author: message.author!,
+        title: message.title,
+        content: message.content,
+        noticeType: message.noticeType,
+        read: message.read,
+        targetId: message.targetId,
+        createdAt: message.createdAt,
+        status: nextStatus,
+        quote: message.quote,
+        reactions: nextReactions,
+        isEdited: nextEdited,
+      );
+    }
+    if (message is SantoChatEmojiMessage) {
+      return SantoChatEmojiMessage(
+        id: message.id,
+        author: message.author!,
+        symbol: message.symbol,
+        createdAt: message.createdAt,
+        status: nextStatus,
+        quote: message.quote,
+        reactions: nextReactions,
+        isEdited: nextEdited,
+      );
+    }
+    if (message is SantoChatCustomMessage) {
+      return SantoChatCustomMessage(
+        id: message.id,
+        author: message.author!,
+        builder: message.builder,
+        createdAt: message.createdAt,
+        status: nextStatus,
+        quote: message.quote,
+        reactions: nextReactions,
+        isEdited: nextEdited,
+      );
+    }
     return message;
   }
 
@@ -287,6 +384,10 @@ class _ChatDemoState extends State<ChatDemo> {
     if (message is SantoChatVoiceMessage) return '[语音]';
     if (message is SantoChatFileMessage) return '[文件] ${message.name}';
     if (message is SantoChatDocMessage) return '[文档] ${message.title}';
+    if (message is SantoChatApprovalMessage) return '[审批] ${message.title}';
+    if (message is SantoChatNoticeMessage) return '[通知] ${message.title}';
+    if (message is SantoChatEmojiMessage) return message.symbol;
+    if (message is SantoChatCustomMessage) return '[自定义消息]';
     return '';
   }
 
@@ -493,13 +594,11 @@ class _ChatDemoState extends State<ChatDemo> {
       playingMessageId: _playingVoiceId,
       replyTo: _replyTo,
       editingText: _editing?.text,
-      header: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        color: const Color(0xFFFFF7E6),
-        child: Text(
-          '群公告:周五前完成第三页数据核对',
-          style: TextStyle(fontSize: 12, color: Colors.orange[800]),
-        ),
+      // 群公告直接复用通知条组件,不手写容器
+      header: SantoNotice(
+        content: '群公告:周五前完成第三页数据核对',
+        noticeStyle: NoticeStyles.normalNoticeWithArrow,
+        onNoticeTap: () => SantoToast.show('查看群公告', context),
       ),
       hasMore: _hasMore,
       loadingMore: _loadingMore,
@@ -536,6 +635,92 @@ class _ChatDemoState extends State<ChatDemo> {
           SantoToast.show('重发 ${message.id}', context),
       onDocTap: (SantoChatDocMessage message) =>
           SantoToast.show('打开文档 ${message.title}', context),
+      onApprovalTap: (SantoChatApprovalMessage message) =>
+          SantoToast.show('打开审批 ${message.taskNo}', context),
+      onApprove: (SantoChatApprovalMessage message) =>
+          SantoToast.show('通过 ${message.taskId}', context),
+      onReject: (SantoChatApprovalMessage message) =>
+          SantoToast.show('驳回 ${message.taskId}', context),
+      onNoticeTap: (SantoChatNoticeMessage message) =>
+          SantoToast.show('打开通知 ${message.title}', context),
+      // 点气泡下方的「已读/未读」打开人员列表
+      onReadReceiptTap: (SantoChatMessage message) =>
+          SantoChatReadReceiptSheet.show(
+        context: context,
+        receipt: message.readReceipt ?? const SantoChatReadReceipt(),
+      ),
+    );
+  }
+}
+
+/// 自定义消息的演示内容:一张审批卡片(自带白底与描边,所以不套气泡)
+class DemoApprovalCard extends StatelessWidget {
+  const DemoApprovalCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 240),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.black12),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'AP-20260924-001',
+                  style: TextStyle(color: Colors.black45, fontSize: 11),
+                ),
+              ),
+              SantoTag(text: '审批中', state: SantoTagState.running),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            '大促容量扩容申请',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            '申请人:李四',
+            style: TextStyle(color: Colors.black54, fontSize: 12),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: SantoButton(
+                  text: '通过',
+                  type: SantoButtonType.primary,
+                  size: SantoButtonSize.small,
+                  autoInsertSpace: false,
+                  block: true,
+                  onTap: () => SantoToast.show('已通过', context),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: SantoButton(
+                  text: '驳回',
+                  type: SantoButtonType.primary,
+                  danger: true,
+                  size: SantoButtonSize.small,
+                  autoInsertSpace: false,
+                  block: true,
+                  onTap: () => SantoToast.show('已驳回', context),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -100,10 +100,10 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
     return SantoMultiColumnPickerUtil.getTotalColumnCount(widget.entity);
   }
 
-  /// 未选中状态颜色，默认 Color(0Xff4a4e59)
+  /// 未选中状态颜色,取主题 colorTextBase
   late Color _normalColor;
 
-  /// 选中状态颜色，默认 Color(0xFF52C41A)
+  /// 选中状态颜色,取主题 brandPrimary
   late Color _selectedColor;
 
   @override
@@ -120,7 +120,7 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.transparent,
-        height: widget.maxHeight + 48,
+        height: widget.maxHeight + widget.themeData!.titleHeight,
         child: SantoPickerClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(widget.themeData!.cornerRadius),
@@ -285,7 +285,7 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
     }
 
     return Container(
-      color: const Color(0xFFE8EAEC),
+      color: SantoThemeConfigurator.instance.getConfig().commonConfig.dividerColorBase,
       height: widget.maxHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -505,9 +505,11 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
   }
 
   Color _getSelectBgColorByColumnIndex(int listIndex) {
-    Color deepSelectBgColor = Color(0xFFF5F5F5);
-    Color middleSelectBgColor = Colors.white;
-    Color lightSelectBgColor = Colors.white;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    Color deepSelectBgColor = commonConfig.fillBody;
+    Color middleSelectBgColor = commonConfig.fillBase;
+    Color lightSelectBgColor = commonConfig.fillBase;
     if (_columnCount == 1) {
       return lightSelectBgColor;
     } else if (_columnCount == 2) {
@@ -529,9 +531,11 @@ class _SantoSelectionGroupViewState extends State<SantoMultiColumnPicker> {
   }
 
   Color getBgColorByColumnIndex(int listIndex) {
-    Color deepNormalBgColor = Color(0xFFE8EAEC);
-    Color middleNormalBgColor = Color(0xFFF5F5F5);
-    Color lightNormalBgColor = Colors.white;
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    Color deepNormalBgColor = commonConfig.dividerColorBase;
+    Color middleNormalBgColor = commonConfig.fillBody;
+    Color lightNormalBgColor = commonConfig.fillBase;
     if (_columnCount == 1) {
       return lightNormalBgColor;
     } else if (_columnCount == 2) {

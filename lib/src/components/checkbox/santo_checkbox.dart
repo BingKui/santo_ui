@@ -220,7 +220,7 @@ class SantoCheckboxState extends State<SantoCheckbox> {
   static const double cardBadgeHeightFactor = 0.4;
 
   /// 卡片模式内容区上下内边距(减去边框宽度后距卡片外沿 16)
-  static const double cardPaddingVertical = 16 - 1.5;
+  static const double cardPaddingVertical = 16 - 1;
 
   /// 当前勾选状态;分组内由分组维护
   bool checked = false;
@@ -400,7 +400,7 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     final subTitleStyle = (widget.subTitleStyle ??
             TextStyle(
                 fontSize: _commonConfig.fontSizeBase,
-                color: Color(0xFF808695)))
+                color: _commonConfig.colorTextSecondary))
         .copyWith(
       color: _disabled
           ? _commonConfig.colorTextDisabled
@@ -430,7 +430,7 @@ class SantoCheckboxState extends State<SantoCheckbox> {
       decoration: BoxDecoration(
         color: widget.backgroundColor ?? _commonConfig.fillBase,
         border: Border.all(
-          width: 1.5,
+          width: 1,
           // 未选中用分割线色描边,保证白色页面上卡片可见
           color: checked ? selectColor : _commonConfig.dividerColorBase,
         ),
@@ -492,7 +492,7 @@ class SantoCheckboxState extends State<SantoCheckbox> {
     final titleStyle = (widget.titleStyle ??
             TextStyle(
                 fontSize: _commonConfig.fontSizeSubHead,
-                color: Color(0xFF17233D)))
+                color: _commonConfig.colorTextBase))
         .copyWith(
       color: _disabled
           ? _commonConfig.colorTextDisabled

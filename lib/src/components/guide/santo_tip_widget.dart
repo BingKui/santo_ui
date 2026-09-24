@@ -82,8 +82,9 @@ class SantoTipInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
-    Color borderColor =
-        mode == GuideMode.force ? Colors.transparent : Color(0xFFCCCCCC);
+    Color borderColor = mode == GuideMode.force
+        ? Colors.transparent
+        : commonConfig.colorTextHint;
     if (direction == GuideDirection.bottomLeft ||
         direction == GuideDirection.bottomRight) {
       return Column(
@@ -183,10 +184,12 @@ class SantoTipInfoWidget extends StatelessWidget {
               color: Color(0x15000000))
         ],
         borderRadius: BorderRadius.circular(commonConfig.radiusXs),
-        color: Colors.white,
+        color: commonConfig.fillBase,
         border: mode == GuideMode.force
             ? null
-            : Border.all(color: Color(0xFFCCCCCC), width: 0.5),
+            : Border.all(
+                color: commonConfig.colorTextHint,
+                width: commonConfig.borderWidthSm),
       ),
       width: width,
       padding: EdgeInsets.only(
@@ -233,7 +236,7 @@ class SantoTipInfoWidget extends StatelessWidget {
               "${info.title}",
               style: TextStyle(
                   fontSize: commonConfig.fontSizeBase,
-                  color: Color(0XFF17233D),
+                  color: commonConfig.colorTextBase,
                   fontWeight: FontWeight.w500),
             ),
           ),
@@ -247,7 +250,8 @@ class SantoTipInfoWidget extends StatelessWidget {
                     onTap: () {
                       onClose!();
                     },
-                    child: SantoIcon(SantoIcons.xmark, color: Colors.black),
+                    child: SantoIcon(SantoIcons.xmark,
+                        color: commonConfig.colorTextBase),
                   ),
           ),
         ],
@@ -264,7 +268,7 @@ class SantoTipInfoWidget extends StatelessWidget {
       child: Text('${info.message}',
           style: TextStyle(
               fontSize: commonConfig.fontSizeBase,
-              color: Color(0xFF808695),
+              color: commonConfig.colorTextSecondary,
               height: 1.3),
           maxLines: 3),
     );
@@ -295,7 +299,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                         child: Text(
                           '${SantoIntl.of(context).localizedResource.skip} (${currentStepIndex + 1}/$stepCount)',
                           style: TextStyle(
-                              color: Color(0xFF808695),
+                              color: commonConfig.colorTextSecondary,
                               fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
@@ -332,7 +336,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                                   ? SantoIntl.of(context).localizedResource.known
                                   : SantoIntl.of(context).localizedResource.next),
                           style: TextStyle(
-                              color: Colors.white,
+                              color: commonConfig.colorTextBaseInverse,
                               fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
@@ -370,7 +374,7 @@ class SantoTipInfoWidget extends StatelessWidget {
                         child: Text(
                           '${SantoIntl.of(context).localizedResource.skip} (${currentStepIndex + 1}/$stepCount)',
                           style: TextStyle(
-                              color: Color(0xFF808695),
+                              color: commonConfig.colorTextSecondary,
                               fontSize: commonConfig.fontSizeBase),
                         ),
                       ),
@@ -417,26 +421,26 @@ class SantoTipInfoWidget extends StatelessWidget {
 /// 绘制箭头
 ///
 class CustomTrianglePainter extends CustomPainter {
-  Color color;
-  Color borderColor;
+  Color? color;
+  Color? borderColor;
   Direction direction;
 
   CustomTrianglePainter(
-      {this.color = Colors.white,
-      this.borderColor = const Color(0XFFCCCCCC),
-      required this.direction});
+      {this.color, this.borderColor, required this.direction});
 
   @override
   void paint(Canvas canvas, Size size) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Path path = Path();
     Paint paint = Paint();
     paint.strokeWidth = 2.0;
-    paint.color = color;
+    paint.color = color ?? commonConfig.fillBase;
     paint.style = PaintingStyle.fill;
     Paint paintBorder = Paint();
     Path pathBorder = Path();
     paintBorder.strokeWidth = 0.5;
-    paintBorder.color = borderColor;
+    paintBorder.color = borderColor ?? commonConfig.colorTextHint;
     paintBorder.style = PaintingStyle.stroke;
 
     switch (direction) {

@@ -52,9 +52,8 @@ class IndexBar extends StatefulWidget {
       this.itemHeight = 16,
       this.color = Colors.transparent,
       this.currentTag = '',
-      this.touchDownColor = const Color(0xffeeeeee),
-      this.textStyle =
-          const TextStyle(fontSize: 12.0, color: Color(0xFF101D37))});
+      this.touchDownColor,
+      this.textStyle});
 
   /// index data.
   final List<String> data;
@@ -72,10 +71,11 @@ class IndexBar extends StatefulWidget {
   final String currentTag;
 
   /// IndexBar touch down color.
-  final Color touchDownColor;
+  /// 按下态底色,不传取主题 dividerColorBase
+  final Color? touchDownColor;
 
-  /// IndexBar text style.
-  final TextStyle textStyle;
+  /// IndexBar text style,不传取主题字号与文字色
+  final TextStyle? textStyle;
 
   /// Item touch callback.
   final IndexBarTouchCallback onTouch;
@@ -122,7 +122,8 @@ class _IndexBar extends StatefulWidget {
   final TextStyle? textStyle;
 
   /// 按下字母的圆角底色
-  final Color touchDownColor;
+  /// 按下态底色,不传取主题 dividerColorBase
+  final Color? touchDownColor;
 
   /// 当前选中的字母(常驻高亮,跟随列表滚动所在分组)
   final String currentTag;
@@ -137,7 +138,7 @@ class _IndexBar extends StatefulWidget {
       this.width = 30,
       this.itemHeight = 16,
       this.textStyle,
-      this.touchDownColor = const Color(0xffeeeeee),
+      this.touchDownColor,
       this.currentTag = ''})
       : super(key: key);
 
@@ -203,7 +204,8 @@ class _IndexBarState extends State<_IndexBar> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: active
-                        ? widget.touchDownColor
+                        ? (widget.touchDownColor ??
+                            commonConfig.dividerColorBase)
                         : commonConfig.brandPrimary,
                   ),
                   child: Text(
@@ -211,18 +213,28 @@ class _IndexBarState extends State<_IndexBar> {
                     textAlign: TextAlign.center,
                     style: active
                         ? TextStyle(
-                            fontSize: widget.textStyle?.fontSize ?? 12.0,
+                            fontSize: widget.textStyle?.fontSize ??
+                                commonConfig.fontSizeCaption,
                             color: commonConfig.brandPrimary,
                             fontWeight: FontWeight.w600,
                           )
                         : TextStyle(
-                            fontSize: widget.textStyle?.fontSize ?? 12.0,
-                            color: Colors.white,
+                            fontSize: widget.textStyle?.fontSize ??
+                                commonConfig.fontSizeCaption,
+                            color: commonConfig.colorTextBaseInverse,
                             fontWeight: FontWeight.w500,
                           ),
                   ),
                 )
-              : Text(v, textAlign: TextAlign.center, style: widget.textStyle),
+              : Text(
+                  v,
+                  textAlign: TextAlign.center,
+                  style: widget.textStyle ??
+                      TextStyle(
+                        fontSize: commonConfig.fontSizeCaption,
+                        color: commonConfig.colorTextBase,
+                      ),
+                ),
         ),
       ));
     }

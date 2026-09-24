@@ -13,6 +13,7 @@ group:
 
 - 默认样式:纯色背景(默认白色,可自定义),顶部左右圆角,底部贴边
 - 悬浮样式:透明毛玻璃圆角容器,与屏幕边缘保持 gap 间距,每个标签项为大圆角胶囊
+- 选中态:底色中性浅灰,选中图标与文字取主题色 `brandPrimary`
 
 ## 二、描述
 
@@ -41,8 +42,8 @@ group:
 | gap | double | floating 与屏幕边缘距离 | 否 | 12 |
 | containerRadius | double | floating 容器圆角 | 否 | 28 |
 | itemRadius | double | floating 标签项圆角 | 否 | 20 |
-| itemSelectedBgColor | Color? | floating 样式选中项背景色,默认主色 | 否 | null |
-| selectedTextColor | Color? | 选中文字颜色(同时作为选中图标着色,图标自带 color 时以图标为准),默认主色(docked)/白色(floating) | 否 | null |
+| itemSelectedBgColor | Color? | floating 样式选中项背景色,默认中性浅灰 | 否 | null |
+| selectedTextColor | Color? | 选中文字颜色(同时作为选中图标着色,图标自带 color 时以图标为准),默认主题色 | 否 | null |
 | unselectedTextColor | Color? | 未选中文字颜色(同时作为未选中图标着色),默认次要文字色 | 否 | null |
 | selectedTextStyle | TextStyle? | 选中文字样式,覆盖默认字号/字重/颜色,颜色缺省时回退 selectedTextColor | 否 | null |
 | unselectedTextStyle | TextStyle? | 未选中文字样式,覆盖默认字号/字重/颜色,颜色缺省时回退 unselectedTextColor | 否 | null |
@@ -73,6 +74,10 @@ SantoMenuBar(
 ```
 
 ## 版本变更
+
+### v1.5.1
+- **变更**: `itemSelectedBgColor` 默认值由主色改为中性浅灰 `0xFFF0F0F0`(仅 floating 生效)
+- **变更**: `selectedTextColor` 在 floating 样式下的默认值由白色改为主色,两种样式的选中图标与文字现在统一取主题色
 
 ### v1.2.0
 - **新增**: `selectedTextStyle` / `unselectedTextStyle` 参数,自定义选中/未选中文字的字号、字重、颜色

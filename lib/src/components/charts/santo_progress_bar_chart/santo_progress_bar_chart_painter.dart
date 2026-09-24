@@ -1,3 +1,4 @@
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
 
@@ -69,8 +70,13 @@ class ChartAxis {
   /// 0/刻度偏移量
   double leadingSpace = 30;
 
-  /// x,y 轴文本样式
-  TextStyle textStyle = TextStyle(color: Color(0x99999999), fontSize: 12);
+  /// x,y 轴文本样式,默认取主题 chartAxisTextColor / fontSizeCaption
+  TextStyle textStyle = TextStyle(
+      color: SantoThemeConfigurator.instance
+          .getConfig()
+          .commonConfig
+          .chartAxisTextColor,
+      fontSize: 12);
 
   /// 倾斜坐标轴文本，避免文本距离过近，目前仅针对X轴文本有效
   final bool inclineText;
@@ -81,9 +87,6 @@ class ChartAxis {
     this.inclineText = false,
   });
 }
-
-const _showBarValueTextStyle =
-    TextStyle(color: Color(0xff222222), fontSize: 12);
 
 /// 数据图表的数据源
 /// 可对数据的数值、展示文本、选中状态的文字以及柱形的样式进行设置
@@ -103,8 +106,8 @@ class SantoProgressBarItem {
   /// 展示柱形的值
   final String? showBarValueText;
 
-  /// 展示柱形值文本样式
-  final TextStyle showBarValueTextStyle;
+  /// 展示柱形值文本样式,不传取主题 chartAxisColor / fontSizeCaption
+  final TextStyle? showBarValueTextStyle;
 
   ///
   late double percentage;
@@ -121,23 +124,22 @@ class SantoProgressBarItem {
       this.hintValue,
       this.selectedHintText,
       this.showBarValueText,
-      this.showBarValueTextStyle = _showBarValueTextStyle});
+      this.showBarValueTextStyle});
 }
-
-const List<Color> _defaultColor = [Color(0xff1545FD), Color(0xff1677FF)];
-const List<Color> _defaultHintColor = [Color(0xffEAF4FE), Color(0xffEAF4FE)];
 
 /// SantoProgressBarBundle 数据图表的数据集
 /// 每一个bundle对应一组数据
 class SantoProgressBarBundle {
   final List<SantoProgressBarItem> barList;
-  final List<Color> colors;
-  final List<Color> hintColors;
+
+  /// 柱形渐变色,不传取主题 brandPrimary
+  final List<Color>? colors;
+
+  /// 参考值柱形渐变色,不传取主题 brandPrimary 淡色
+  final List<Color>? hintColors;
 
   SantoProgressBarBundle(
-      {required this.barList,
-      this.colors = _defaultColor,
-      this.hintColors = _defaultHintColor});
+      {required this.barList, this.colors, this.hintColors});
 }
 
 /// 数据图表的绘制类
@@ -171,14 +173,39 @@ class SantoProgressBarChartPainter extends CustomPainter {
   final OnBarItemClickInterceptor? onBarItemClickInterceptor;
 
   /// 选中柱状图时条形文案颜色
-  final Color selectedHintTextColor;
+  /// 选中柱状图时条形文案颜色,不传取主题 colorTextBaseInverse
+  final Color? selectedHintTextColor;
 
   /// 选中柱状图时条形文案背景颜色
-  final Color selectedHintTextBackgroundColor;
+  /// 选中柱状图时条形文案背景色,不传取主题 fillBaseInverse
+  final Color? selectedHintTextBackgroundColor;
   final SantoProgressBarItem? selectedBarItem;
   final SantoProgressBarChartSelectCallback? santoProgressBarChartSelectCallback;
 
-  Color unselectedColor = Color(0xffDAEDFE);
+  /// 未选中柱形色,不传取主题 brandPrimary 淡色
+  Color? unselectedColor;
+
+  SantoCommonConfig get commonConfig =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig;
+
+  /// 柱形渐变色:未显式指定时用主题品牌色
+  List<Color> _resolveBarColors(SantoProgressBarBundle bundle) =>
+      bundle.colors ?? <Color>[commonConfig.brandPrimary, commonConfig.brandPrimary];
+
+  /// 参考值柱形渐变色:未显式指定时用品牌色淡底
+  List<Color> _resolveHintColors(SantoProgressBarBundle bundle) =>
+      bundle.hintColors ??
+      <Color>[
+        commonConfig.brandPrimary.withOpacity(0.12),
+        commonConfig.brandPrimary.withOpacity(0.12),
+      ];
+
+  /// 未选中柱形色:未显式指定时用品牌色淡底
+  List<Color> get _resolvedUnselectedColors {
+    final Color color =
+        unselectedColor ?? commonConfig.brandPrimary.withOpacity(0.12);
+    return <Color>[color, color];
+  }
 
   /// 内容区域
   Rect contentRect = Rect.zero;
@@ -208,8 +235,8 @@ class SantoProgressBarChartPainter extends CustomPainter {
       this.drawY = true,
       this.drawBar = true,
       this.onBarItemClickInterceptor,
-      this.selectedHintTextColor = Colors.white,
-      this.selectedHintTextBackgroundColor = const Color(0xcc000000),
+      this.selectedHintTextColor,
+      this.selectedHintTextBackgroundColor,
       this.selectedBarItem,
       this.santoProgressBarChartSelectCallback});
 
@@ -402,18 +429,18 @@ class SantoProgressBarChartPainter extends CustomPainter {
     if (AxisStyle.axisStyleSolid == this.xAxis.axisStyle) {
       Offset xLineStart = xAxisRect.topLeft;
       Offset xLineEnd = xAxisRect.topRight;
-      Paint xAxisPaint = Paint()..color = Color(0xff222222);
+      Paint xAxisPaint = Paint()..color = commonConfig.chartAxisColor;
       canvas.drawLine(xLineStart, xLineEnd, xAxisPaint);
     } else if (AxisStyle.axisStyleDot == this.xAxis.axisStyle) {
       Offset xLineStart = xAxisRect.topLeft;
       Offset xLineEnd = xAxisRect.topRight;
-      _drawDashLineOn(canvas, xLineStart, xLineEnd, Color(0xff222222));
+      _drawDashLineOn(canvas, xLineStart, xLineEnd, commonConfig.chartAxisColor);
     }
 
     if (BarChartStyle.horizontal == this.barChartStyle) {
       int xAxisItemCount = this.xAxis.axisItemList.length;
       double perWidth = xAxisRect.width / xAxisItemCount;
-      Paint markLinkePaint = Paint()..color = Color(0xff222222);
+      Paint markLinkePaint = Paint()..color = commonConfig.chartAxisColor;
 
       for (int xAxisItemIndex = 0;
           xAxisItemIndex < xAxisItemCount;
@@ -436,7 +463,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
         TextPainter textPainter = TextPainter(
             text: TextSpan(
                 text: axisItem.showText,
-                style: TextStyle(fontSize: 12, color: Color(0xff999999))),
+                style: TextStyle(fontSize: commonConfig.fontSizeCaption, color: commonConfig.chartAxisTextColor)),
             textDirection: TextDirection.ltr)
           ..layout(maxWidth: double.infinity, minWidth: 0);
 
@@ -454,7 +481,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
         }
       }
     } else if (BarChartStyle.vertical == this.barChartStyle) {
-      Paint markLinkePaint = Paint()..color = Color(0xff222222);
+      Paint markLinkePaint = Paint()..color = commonConfig.chartAxisColor;
       this.barItemEnumerator((int barBundleIndex,
           SantoProgressBarBundle barBundle,
           int barGroupIndex,
@@ -470,7 +497,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
           TextPainter textPainter = TextPainter(
               text: TextSpan(
                   text: axisItem.showText,
-                  style: TextStyle(fontSize: 12, color: Color(0xff999999))),
+                  style: TextStyle(fontSize: commonConfig.fontSizeCaption, color: commonConfig.chartAxisTextColor)),
               textDirection: TextDirection.ltr)
             ..layout(maxWidth: double.infinity, minWidth: 0);
 
@@ -490,12 +517,12 @@ class SantoProgressBarChartPainter extends CustomPainter {
     if (AxisStyle.axisStyleSolid == this.yAxis.axisStyle) {
       Offset yLineStart = yAxisRect.bottomRight;
       Offset yLineEnd = yAxisRect.topRight;
-      Paint yAxisPaint = Paint()..color = Color(0xff222222);
+      Paint yAxisPaint = Paint()..color = commonConfig.chartAxisColor;
       canvas.drawLine(yLineStart, yLineEnd, yAxisPaint);
     } else if (AxisStyle.axisStyleDot == this.xAxis.axisStyle) {
       Offset yLineStart = yAxisRect.bottomRight;
       Offset yLineEnd = yAxisRect.topRight;
-      _drawDashLineOn(canvas, yLineStart, yLineEnd, Color(0xff222222));
+      _drawDashLineOn(canvas, yLineStart, yLineEnd, commonConfig.chartAxisColor);
     }
     if (BarChartStyle.horizontal == this.barChartStyle) {
       // 绘制Y轴文字内容
@@ -518,7 +545,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
         TextPainter(
             text: TextSpan(
                 text: axisItem.showText,
-                style: TextStyle(fontSize: 12, color: Color(0xff999999))),
+                style: TextStyle(fontSize: commonConfig.fontSizeCaption, color: commonConfig.chartAxisTextColor)),
             textDirection: TextDirection.ltr)
           ..layout(maxWidth: double.infinity, minWidth: 0)
           ..paint(canvas, textRect.topLeft);
@@ -546,7 +573,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
         TextPainter(
             text: TextSpan(
                 text: axisItem.showText,
-                style: TextStyle(fontSize: 12, color: Color(0xff999999))),
+                style: TextStyle(fontSize: commonConfig.fontSizeCaption, color: commonConfig.chartAxisTextColor)),
             textDirection: TextDirection.ltr)
           ..layout(maxWidth: double.infinity, minWidth: 0)
           ..paint(canvas, textRect.topLeft);
@@ -586,7 +613,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 tileMode: TileMode.clamp,
-                colors: barBundle.hintColors)
+                colors: _resolveHintColors(barBundle))
             .createShader(barItem.barHintRect!);
 
         Paint hintBarPaint = Paint()
@@ -610,7 +637,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   tileMode: TileMode.clamp,
-                  colors: barBundle.colors)
+                  colors: _resolveBarColors(barBundle))
               .createShader(barItem.barRect!);
         } else {
           // 未选中需要置灰的柱形
@@ -618,7 +645,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   tileMode: TileMode.clamp,
-                  colors: <Color>[this.unselectedColor, this.unselectedColor])
+                  colors: _resolvedUnselectedColors)
               .createShader(barItem.barRect!);
         }
         Paint barPaint = Paint()
@@ -631,14 +658,14 @@ class SantoProgressBarChartPainter extends CustomPainter {
         if (this.selectedBarItem!.barRect == barItem.barRect) {
           // 选中柱形的虚线以及 HintText
           this._drawDashLineOn(canvas, barItem.barRect!.bottomCenter,
-              Offset(barItem.barRect!.bottomCenter.dx, 0), Color(0xff222222));
+              Offset(barItem.barRect!.bottomCenter.dx, 0), commonConfig.chartAxisColor);
         }
       } else {
         Shader shader = LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 tileMode: TileMode.clamp,
-                colors: barBundle.colors)
+                colors: _resolveBarColors(barBundle))
             .createShader(barItem.barRect!);
         Paint barPaint = Paint()
           ..shader = shader
@@ -658,7 +685,10 @@ class SantoProgressBarChartPainter extends CustomPainter {
         TextPainter textPainter = TextPainter(
             text: TextSpan(
                 text: barItem.showBarValueText!,
-                style: barItem.showBarValueTextStyle),
+                style: barItem.showBarValueTextStyle ??
+                    TextStyle(
+                        fontSize: commonConfig.fontSizeCaption,
+                        color: commonConfig.chartAxisColor)),
             textDirection: TextDirection.ltr)
           ..layout(maxWidth: double.infinity, minWidth: 0);
         double textWidth = textPainter.size.width;
@@ -677,7 +707,10 @@ class SantoProgressBarChartPainter extends CustomPainter {
               text: selectedBarItem!.selectedHintText ??
                   (selectedBarItem!.text ?? ''),
               style:
-                  TextStyle(fontSize: 12, color: this.selectedHintTextColor)),
+                  TextStyle(
+                      fontSize: commonConfig.fontSizeCaption,
+                      color: this.selectedHintTextColor ??
+                          commonConfig.colorTextBaseInverse)),
           textDirection: TextDirection.ltr)
         ..layout(maxWidth: double.infinity, minWidth: 0);
       double textWidth = selectedBarTextPainter.size.width;
@@ -705,7 +738,8 @@ class SantoProgressBarChartPainter extends CustomPainter {
 
       // 画选中文字背景
       Paint selectTextBgPaint = Paint()
-        ..color = this.selectedHintTextBackgroundColor
+        ..color = (this.selectedHintTextBackgroundColor ??
+            commonConfig.fillBaseInverse)
         ..style = PaintingStyle.fill;
       RRect selectTextBgRRect = RRect.fromRectAndRadius(
           Rect.fromCenter(
@@ -732,7 +766,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 tileMode: TileMode.clamp,
-                colors: barBundle.hintColors)
+                colors: _resolveHintColors(barBundle))
             .createShader(barItem.barHintRect!);
         Paint hintBarPaint = Paint()
           ..shader = hintShader
@@ -757,7 +791,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               tileMode: TileMode.clamp,
-              colors: barBundle.colors)
+              colors: _resolveBarColors(barBundle))
               .createShader(barItem.barRect!);
         } else {
           // 未选中需要置灰的柱形
@@ -765,7 +799,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               tileMode: TileMode.clamp,
-              colors: <Color>[this.unselectedColor, this.unselectedColor])
+              colors: _resolvedUnselectedColors)
               .createShader(barItem.barRect!);
         }
         Paint barPaint = Paint()
@@ -781,14 +815,14 @@ class SantoProgressBarChartPainter extends CustomPainter {
               canvas,
               barItem.barRect!.centerLeft,
               Offset(this.xAxisRect.right, barItem.barRect!.centerLeft.dy),
-              Color(0xff222222));
+              commonConfig.chartAxisColor);
         }
       } else {
         Shader shader = LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
             tileMode: TileMode.clamp,
-            colors: barBundle.colors)
+            colors: _resolveBarColors(barBundle))
             .createShader(barItem.barRect!);
         Paint barPaint = Paint()
           ..shader = shader
@@ -800,7 +834,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
         canvas.drawRRect(barRRect, barPaint);
       }
       // 绘制柱状图上的数值
-      TextStyle textStyle = TextStyle(color: Colors.white, fontSize: 12);
+      TextStyle textStyle = TextStyle(color: commonConfig.colorTextBaseInverse, fontSize: commonConfig.fontSizeCaption);
       this.barItemEnumerator((int barBundleIndex,
           SantoProgressBarBundle barBundle,
           int barGroupIndex,
@@ -825,7 +859,10 @@ class SantoProgressBarChartPainter extends CustomPainter {
               text: selectedBarItem!.selectedHintText ??
                   (selectedBarItem!.text ?? ''),
               style:
-              TextStyle(fontSize: 12, color: this.selectedHintTextColor)),
+              TextStyle(
+                      fontSize: commonConfig.fontSizeCaption,
+                      color: this.selectedHintTextColor ??
+                          commonConfig.colorTextBaseInverse)),
           textDirection: TextDirection.ltr)
         ..layout(maxWidth: double.infinity, minWidth: 0);
       double textWidth = selectedBarTextPainter.size.width;
@@ -853,7 +890,8 @@ class SantoProgressBarChartPainter extends CustomPainter {
 
       // 画选中文字背景
       Paint selectTextBgPaint = Paint()
-        ..color = this.selectedHintTextBackgroundColor
+        ..color = (this.selectedHintTextBackgroundColor ??
+            commonConfig.fillBaseInverse)
         ..style = PaintingStyle.fill;
       RRect selectTextBgRRect = RRect.fromRectAndRadius(
           Rect.fromCenter(

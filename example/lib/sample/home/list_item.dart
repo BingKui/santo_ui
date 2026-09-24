@@ -56,33 +56,42 @@ class _ListItemState extends State<ListItem> with AutomaticKeepAliveClientMixin 
         onTap: widget.onPressed,
         child: Container(
             width: double.infinity,
-            padding: EdgeInsets.only(left: 20),
-            child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SantoLine(
-                height: 14,
-                color: Colors.transparent,
-              ),
-              Wrap(children: [
-                Text(
-                  widget.title,
-                  style: TextStyle(
-                      color: widget.titleColor ?? Color(0xFF17233D),
-                      fontSize: widget.titleFontSize ?? 14),
+            padding: EdgeInsets.only(
+                left: 20, right: widget.rightWidget == null ? 0 : 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SantoLine(
+                      height: 14,
+                      color: Colors.transparent,
+                    ),
+                    Wrap(children: [
+                      Text(
+                        widget.title,
+                        style: TextStyle(
+                            color: widget.titleColor ?? Color(0xFF17233D),
+                            fontSize: widget.titleFontSize ?? 14),
+                      ),
+                    ]),
+                    Padding(padding: EdgeInsets.all(2)),
+                    Text(
+                      widget.describe,
+                      style:
+                          TextStyle(color: widget.describeColor, fontSize: 12),
+                    ),
+                    SantoLine(
+                      height: 14,
+                      color: Colors.transparent,
+                    )
+                  ],
+                  ),
                 ),
-              ]),
-              Padding(padding: EdgeInsets.all(2)),
-              Text(
-                widget.describe,
-                style: TextStyle(color: widget.describeColor, fontSize: 12),
-              ),
-              SantoLine(
-                height: 14,
-                color: Colors.transparent,
-              )
-            ],
+                if (widget.rightWidget != null) widget.rightWidget!,
+              ],
             ),
         ),
       ),

@@ -146,19 +146,21 @@ class _SantoRangeSelectionGroupWidgetState
   }
 
   Widget _listWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     Widget? rangeWidget;
 
     if (_firstList.isNotEmpty && _secondList.isEmpty) {
       /// 1、仅有一级的情况
       /// 1.2 一级多选 || 存在自定义范围的情况
-      rangeWidget = _createNewTagAndRangeWidget(_firstList, Colors.white);
+      rangeWidget = _createNewTagAndRangeWidget(_firstList);
     } else if (_firstList.isNotEmpty && _secondList.isNotEmpty) {
       /// 2、有二级的情况
-      rangeWidget = _createNewTagAndRangeWidget(_firstList, Colors.white);
+      rangeWidget = _createNewTagAndRangeWidget(_firstList);
     }
 
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       width: MediaQuery.of(context).size.width,
       constraints: _hasCalendarItem(widget.entity)
           ? BoxConstraints(
@@ -171,8 +173,9 @@ class _SantoRangeSelectionGroupWidgetState
     );
   }
 
-  Widget _createNewTagAndRangeWidget(
-      List<SantoSelectionEntity> firstList, Color white) {
+  Widget _createNewTagAndRangeWidget(List<SantoSelectionEntity> firstList) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (firstList.isNotEmpty &&
         SantoSelectionUtil.getTotalLevel(widget.entity) == 1) {
       return Column(
@@ -186,7 +189,7 @@ class _SantoRangeSelectionGroupWidgetState
             ),
           ),
           SantoLine(
-            height: 0.5,
+            height: commonConfig.borderWidthSm,
           ),
           _bottomWidget()
         ],
@@ -211,7 +214,7 @@ class _SantoRangeSelectionGroupWidgetState
             child: tabContent,
           ),
           SantoLine(
-            height: 0.5,
+            height: commonConfig.borderWidthSm,
           ),
           _bottomWidget()
         ],
@@ -245,16 +248,19 @@ class _SantoRangeSelectionGroupWidgetState
 
     int tagWidth;
 
+    /// 左右各留 hSpacingLg,故减去 2 倍横向留白
+    final double horizontalPadding = commonConfig.hSpacingLg * 2;
+
     ///如果指定展示列，则按照指定列展示，否则动态计算宽度。最大不超过四列。
     if (widget.rowCount == null) {
       int oneCountTagWidth =
-          (_screenWidth - 40 - 12 * (1 - 1)) ~/ 1;
+          (_screenWidth - horizontalPadding - 12 * (1 - 1)) ~/ 1;
       int twoCountTagWidth =
-          (_screenWidth - 40 - 12 * (2 - 1)) ~/ 2;
+          (_screenWidth - horizontalPadding - 12 * (2 - 1)) ~/ 2;
       int threeCountTagWidth =
-          (_screenWidth - 40 - 12 * (3 - 1)) ~/ 3;
+          (_screenWidth - horizontalPadding - 12 * (3 - 1)) ~/ 3;
       int fourCountTagWidth =
-          (_screenWidth - 40 - 12 * (4 - 1)) ~/ 4;
+          (_screenWidth - horizontalPadding - 12 * (4 - 1)) ~/ 4;
       if (maxWidthSize.width > twoCountTagWidth) {
         tagWidth = oneCountTagWidth;
       } else if (threeCountTagWidth < maxWidthSize.width &&
@@ -268,7 +274,7 @@ class _SantoRangeSelectionGroupWidgetState
       }
     } else {
       tagWidth = (_screenWidth -
-              40 -
+              horizontalPadding -
               12 * (widget.rowCount! - 1)) ~/
           widget.rowCount!;
     }
@@ -384,7 +390,7 @@ class _SantoRangeSelectionGroupWidgetState
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       padding: EdgeInsets.fromLTRB(
           commonConfig.hSpacingSm,
           commonConfig.vSpacingSm,

@@ -141,7 +141,7 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 选中标签的文字样式,默认取标签主题配置
   final TextStyle? selectedTagTextStyle;
 
-  /// 未选中标签底色,默认 0xFFF5F5F5
+  /// 未选中标签底色,默认取主题 fillBody
   final Color? tagBackgroundColor;
 
   /// 选中标签底色,默认品牌色
@@ -279,7 +279,7 @@ class SantoTagsPicker extends CommonTagsPicker {
           verticalSpacing: commonConfig.gapMd,
           tagTextStyle: tagTextStyle,
           selectedTagTextStyle: selectedTagTextStyle,
-          tagBackgroundColor: tagBackgroundColor ?? const Color(0xFFF5F5F5),
+          tagBackgroundColor: tagBackgroundColor ?? commonConfig.fillBody,
           selectedTagBackgroundColor:
               selectedTagBackgroundColor ?? commonConfig.brandPrimary,
           onChanged: (indexes) => _handleTagChanged(indexes, onUpdate),
@@ -372,7 +372,7 @@ class SantoTagsPicker extends CommonTagsPicker {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       // 底边留白交给底部提交按钮,避免与按钮的间距翻倍
       padding: EdgeInsets.symmetric(horizontal: commonConfig.gapMd),
       child: SantoInputText(

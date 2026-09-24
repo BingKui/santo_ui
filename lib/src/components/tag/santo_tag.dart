@@ -27,9 +27,6 @@ enum SantoTagState {
   succeed,
 }
 
-/// 主题未配置 tagTextStyle 字号时的兜底字号
-const double _kFallbackFontSize = 12;
-
 /// 默认纵向内边距,横向取主题 hSpacingSm
 const double _kDefaultPaddingVertical = 2;
 
@@ -38,9 +35,6 @@ const double _kSelectedBackgroundOpacity = 0.12;
 
 /// 删除图标与文字的间距
 const double _kDeleteIconGap = 4;
-
-/// 标签组内标签的默认纵向间距
-const double _kDefaultVerticalSpacing = 10;
 
 /// 标签控制器,用于在外部主动增删标签组里的标签
 ///
@@ -180,8 +174,8 @@ class SantoTag extends StatefulWidget {
   /// 边框颜色,默认取状态色([state] 非 null)或主题品牌色
   final Color? borderColor;
 
-  /// 边框宽度,默认 1
-  final double borderWidth;
+  /// 边框宽度,不传时取主题 borderWidthMd
+  final double? borderWidth;
 
   /// 标签圆角,不传时单标签取主题 tagRadius、标签组取主题 tagRadius 或 [shape]
   final BorderRadius? borderRadius;
@@ -291,7 +285,7 @@ class SantoTag extends StatefulWidget {
     this.textColor,
     this.bordered = false,
     this.borderColor,
-    this.borderWidth = 1,
+    this.borderWidth,
     this.borderRadius,
     this.padding,
     this.height,
@@ -460,7 +454,7 @@ class _SantoTagState extends State<SantoTag> {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     final SantoTagConfig config = _resolveConfig();
-    final Color? stateColor = _stateColor(widget.state);
+    final Color? stateColor = _stateColor(commonConfig, widget.state);
     final bool selected = widget.selectable && _selected;
     final bool chipped = widget.selectable || widget.deletable;
 
@@ -492,8 +486,9 @@ class _SantoTagState extends State<SantoTag> {
       foreground = commonConfig.colorTextBaseInverse;
     }
 
-    final double fontSize =
-        widget.fontSize ?? config.tagTextStyle.fontSize ?? _kFallbackFontSize;
+    final double fontSize = widget.fontSize ??
+        config.tagTextStyle.fontSize ??
+        commonConfig.fontSizeCaption;
     final double height = widget.height ?? config.tagHeight;
     final BorderRadius radius = widget.borderRadius ??
         BorderRadius.all(Radius.circular(config.tagRadius));
@@ -532,7 +527,7 @@ class _SantoTagState extends State<SantoTag> {
         border: widget.bordered
             ? Border.all(
                 color: widget.borderColor ?? foreground,
-                width: widget.borderWidth,
+                width: widget.borderWidth ?? commonConfig.borderWidthMd,
               )
             : null,
       ),
@@ -587,7 +582,7 @@ class _SantoTagState extends State<SantoTag> {
     if (widget.softWrap) {
       content = Wrap(
         spacing: widget.spacing,
-        runSpacing: widget.verticalSpacing ?? _kDefaultVerticalSpacing,
+        runSpacing: widget.verticalSpacing ?? commonConfig.gapSm,
         children: items,
       );
     } else {
@@ -718,18 +713,18 @@ class _SantoTagState extends State<SantoTag> {
     );
   }
 
-  static Color? _stateColor(SantoTagState? state) {
+  static Color? _stateColor(SantoCommonConfig commonConfig, SantoTagState? state) {
     switch (state) {
       case SantoTagState.invalidate:
-        return const Color(0xFF808695);
+        return commonConfig.colorTextSecondary;
       case SantoTagState.running:
-        return const Color(0xFF1677FF);
+        return commonConfig.brandPrimary;
       case SantoTagState.failed:
-        return const Color(0xFFFF4D4F);
+        return commonConfig.brandError;
       case SantoTagState.succeed:
-        return const Color(0xFF52C41A);
+        return commonConfig.brandSuccess;
       case SantoTagState.waiting:
-        return const Color(0xFFFAAD14);
+        return commonConfig.brandWarning;
       case null:
         return null;
     }

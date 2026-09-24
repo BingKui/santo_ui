@@ -5,8 +5,6 @@ import 'package:santo_ui/src/components/picker/santo_picker_cliprrect.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
-import 'base/santo_picker_constants.dart';
-
 /// 可以自定义实现 item Widget样式，更灵活
 /// [isSelect] 是否被选中
 /// [column] 第几列
@@ -205,7 +203,8 @@ class _SantoMultiDataPickerState extends State<SantoMultiDataPicker> {
   //选择的内容widget
   Widget _configMultiDataPickerWidget() {
     return Container(
-        height: widget.themeData?.pickerHeight ?? pickerHeight,
+        height: widget.themeData?.pickerHeight ??
+          SantoThemeConfigurator.instance.getConfig().pickerConfig.pickerHeight,
         color: widget.themeData?.backgroundColor,
         child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -329,7 +328,9 @@ class MyPicker extends StatefulWidget {
   final ScrollBehavior? scrollBehavior;
 
   final FixedExtentScrollController? controller;
-  final Color backgroundColor;
+
+  /// 轮盘底色,未指定时取主题 fillBase
+  final Color? backgroundColor;
   final Color? lineColor;
 
   MyPicker({
@@ -339,7 +340,7 @@ class MyPicker extends StatefulWidget {
     this.scrollBehavior,
     this.itemExtent = 45,
     this.controller,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.lineColor,
   }) : super(key: key);
 
@@ -360,7 +361,8 @@ class _MyPickerState extends State<MyPicker> {
           key: widget.key,
           scrollController: widget.controller,
           itemExtent: widget.itemExtent,
-          backgroundColor: widget.backgroundColor,
+          backgroundColor: widget.backgroundColor ??
+              SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase,
           lineColor: widget.lineColor,
           onSelectedItemChanged: (index) {
             if (widget.changed != null) {
@@ -459,7 +461,7 @@ class SantoDefaultMultiDataPickerDelegate implements SantoMultiDataPickerDelegat
 
   @override
   double rowHeightForComponent(int component) {
-    return pickerItemHeight;
+    return SantoThemeConfigurator.instance.getConfig().pickerConfig.itemHeight;
   }
 
   @override

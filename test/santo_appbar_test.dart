@@ -3,11 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/navbar/santo_appbar.dart';
-import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
+import 'package:santo_ui/src/theme/base/santo_default_config_utils.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
 import 'package:santo_ui/src/theme/configs/santo_appbar_config.dart';
 
 void main() {
+  final commonConfig = SantoDefaultConfigUtils.defaultCommonConfig;
+  final appBarConfig = SantoDefaultConfigUtils.defaultAppBarConfig;
+
   Widget buildApp(Color? backgroundColor) {
     return MaterialApp(
       home: Scaffold(
@@ -38,7 +41,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final titleStyle = tester.widget<Text>(find.text('页面标题')).style;
-    expect(titleStyle!.color, SantoAppBarTheme.darkTextColor,
+    expect(titleStyle!.color, commonConfig.colorTextBaseInverse,
         reason: '深色背景未自定义颜色时标题默认白色');
     final actionStyle = tester.widget<Text>(find.text('操作')).style;
     expect(actionStyle!.color, Colors.green, reason: '自定义颜色应保留');
@@ -49,10 +52,10 @@ void main() {
     await tester.pumpAndSettle();
 
     final titleStyle = tester.widget<Text>(find.text('页面标题')).style;
-    expect(titleStyle!.color, SantoAppBarTheme.darkTextColor,
+    expect(titleStyle!.color, commonConfig.colorTextBaseInverse,
         reason: '深色导航栏上标题应为浅色');
     final actionStyle = tester.widget<Text>(find.text('操作')).style;
-    expect(actionStyle!.color, SantoAppBarTheme.darkTextColor,
+    expect(actionStyle!.color, commonConfig.colorTextBaseInverse,
         reason: '深色导航栏上右侧文字操作应为浅色');
   });
 
@@ -61,9 +64,9 @@ void main() {
     await tester.pumpAndSettle();
 
     final titleStyle = tester.widget<Text>(find.text('页面标题')).style;
-    expect(titleStyle!.color, SantoAppBarTheme.lightTextColor);
+    expect(titleStyle!.color, commonConfig.colorTextBase);
     final actionStyle = tester.widget<Text>(find.text('操作')).style;
-    expect(actionStyle!.color, SantoAppBarTheme.lightTextColor);
+    expect(actionStyle!.color, commonConfig.colorTextBase);
   });
 
   testWidgets('浅色背景:自定义白色标题被强制回退为黑色', (tester) async {
@@ -82,7 +85,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final titleStyle = tester.widget<Text>(find.text('页面标题')).style;
-    expect(titleStyle!.color, SantoAppBarTheme.lightTextColor,
+    expect(titleStyle!.color, commonConfig.colorTextBase,
         reason: '浅色模式不允许白色内容,应回退为黑色');
   });
 
@@ -168,7 +171,7 @@ void main() {
     final double actionGap =
         tester.getRect(actions.at(1)).left - tester.getRect(actions.at(0)).right;
 
-    expect(leadingGap, SantoAppBarTheme.leadingSpacing);
+    expect(leadingGap, appBarConfig.leadingSpacing);
     expect(actionGap, leadingGap, reason: '右侧操作区间距应与左侧一致');
     expect(tester.getRect(leads.at(0)).left, 15,
         reason: '左侧操作区距屏幕边缘 15');

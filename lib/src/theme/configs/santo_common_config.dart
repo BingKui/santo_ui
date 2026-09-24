@@ -56,6 +56,24 @@ class SantoCommonConfig extends SantoBaseConfig {
     Color? fillMask,
     Color? borderColorBase,
     Color? dividerColorBase,
+    Color? brandPrimaryBg,
+    Color? brandSuccessBg,
+    Color? brandWarningBg,
+    Color? brandErrorBg,
+    Color? fillBaseInverse,
+    Color? appBarDarkBackgroundColor,
+    List<Color>? chartPalette,
+    Color? loadingPillBackgroundColor,
+    Color? popoverBackgroundColor,
+    Color? tooltipBackgroundColor,
+    Color? toastBackgroundColor,
+    Color? chartAxisColor,
+    Color? chartAxisTextColor,
+    Color? chartGridColor,
+    Color? shadowColor,
+    List<BoxShadow>? shadowSm,
+    List<BoxShadow>? shadowMd,
+    List<BoxShadow>? shadowLg,
     double? fontSizeBebas,
     double? fontSizeHeadLg,
     double? fontSizeBase,
@@ -114,6 +132,24 @@ class SantoCommonConfig extends SantoBaseConfig {
         _fillMask = fillMask,
         _borderColorBase = borderColorBase,
         _dividerColorBase = dividerColorBase,
+        _brandPrimaryBg = brandPrimaryBg,
+        _brandSuccessBg = brandSuccessBg,
+        _brandWarningBg = brandWarningBg,
+        _brandErrorBg = brandErrorBg,
+        _fillBaseInverse = fillBaseInverse,
+        _appBarDarkBackgroundColor = appBarDarkBackgroundColor,
+        _chartPalette = chartPalette,
+        _loadingPillBackgroundColor = loadingPillBackgroundColor,
+        _popoverBackgroundColor = popoverBackgroundColor,
+        _tooltipBackgroundColor = tooltipBackgroundColor,
+        _toastBackgroundColor = toastBackgroundColor,
+        _chartAxisColor = chartAxisColor,
+        _chartAxisTextColor = chartAxisTextColor,
+        _chartGridColor = chartGridColor,
+        _shadowColor = shadowColor,
+        _shadowSm = shadowSm,
+        _shadowMd = shadowMd,
+        _shadowLg = shadowLg,
         _fontSizeBebas = fontSizeBebas,
         _fontSizeHeadLg = fontSizeHeadLg,
         _fontSizeBase = fontSizeBase,
@@ -174,6 +210,24 @@ class SantoCommonConfig extends SantoBaseConfig {
     Color? fillMask,
     Color? borderColorBase,
     Color? dividerColorBase,
+    Color? brandPrimaryBg,
+    Color? brandSuccessBg,
+    Color? brandWarningBg,
+    Color? brandErrorBg,
+    Color? fillBaseInverse,
+    Color? appBarDarkBackgroundColor,
+    List<Color>? chartPalette,
+    Color? loadingPillBackgroundColor,
+    Color? popoverBackgroundColor,
+    Color? tooltipBackgroundColor,
+    Color? toastBackgroundColor,
+    Color? chartAxisColor,
+    Color? chartAxisTextColor,
+    Color? chartGridColor,
+    Color? shadowColor,
+    List<BoxShadow>? shadowSm,
+    List<BoxShadow>? shadowMd,
+    List<BoxShadow>? shadowLg,
     double? fontSizeBebas,
     double? fontSizeHeadLg,
     double? fontSizeBase,
@@ -232,6 +286,24 @@ class SantoCommonConfig extends SantoBaseConfig {
         _fillMask = fillMask,
         _borderColorBase = borderColorBase,
         _dividerColorBase = dividerColorBase,
+        _brandPrimaryBg = brandPrimaryBg,
+        _brandSuccessBg = brandSuccessBg,
+        _brandWarningBg = brandWarningBg,
+        _brandErrorBg = brandErrorBg,
+        _fillBaseInverse = fillBaseInverse,
+        _appBarDarkBackgroundColor = appBarDarkBackgroundColor,
+        _chartPalette = chartPalette,
+        _loadingPillBackgroundColor = loadingPillBackgroundColor,
+        _popoverBackgroundColor = popoverBackgroundColor,
+        _tooltipBackgroundColor = tooltipBackgroundColor,
+        _toastBackgroundColor = toastBackgroundColor,
+        _chartAxisColor = chartAxisColor,
+        _chartAxisTextColor = chartAxisTextColor,
+        _chartGridColor = chartGridColor,
+        _shadowColor = shadowColor,
+        _shadowSm = shadowSm,
+        _shadowMd = shadowMd,
+        _shadowLg = shadowLg,
         _fontSizeBebas = fontSizeBebas,
         _fontSizeHeadLg = fontSizeHeadLg,
         _fontSizeBase = fontSizeBase,
@@ -362,6 +434,74 @@ class SantoCommonConfig extends SantoBaseConfig {
   /// 分割线色
   /// 默认为 Color(0xFFE8EAEC)
   Color? _dividerColorBase;
+
+  /// 品牌色淡底(通知栏/状态标签/iPrimaryBg)
+  /// 默认为 Color(0xFFE6F4FF)
+  Color? _brandPrimaryBg;
+
+  /// 成功色淡底
+  /// 默认为 Color(0xFFF6FFED)
+  Color? _brandSuccessBg;
+
+  /// 警告色淡底
+  /// 默认为 Color(0xFFFFFBE6)
+  Color? _brandWarningBg;
+
+  /// 失败色淡底
+  /// 默认为 Color(0xFFFFF2F0)
+  Color? _brandErrorBg;
+
+  /// 反色组件底(大图查看等深色场景)
+  /// 默认为 Color(0xFF000000)
+  Color? _fillBaseInverse;
+
+  /// AppBar 深色变体背景色
+  /// 默认为 Color(0xFF2E313B)
+  Color? _appBarDarkBackgroundColor;
+
+  /// 图表分类色板(多系列图表按序取色)
+  List<Color>? _chartPalette;
+
+  /// Loading 浮层黑胶囊底色
+  /// 默认为 Color(0xFF1A1A1A)
+  Color? _loadingPillBackgroundColor;
+
+  /// Popover 浮层底色
+  /// 默认为 Color(0xFF1A1A1A)
+  Color? _popoverBackgroundColor;
+
+  /// Tooltip 浮层底色
+  /// 默认为 Color(0xFF1A1A1A)
+  Color? _tooltipBackgroundColor;
+
+  /// Toast 浮层底色
+  /// 默认为 Color(0xFF17233D)
+  Color? _toastBackgroundColor;
+
+  /// 图表轴线/虚线色
+  /// 默认为 Color(0xFF222222)
+  Color? _chartAxisColor;
+
+  /// 图表坐标轴刻度文本色
+  /// 默认为 Color(0xFF999999)
+  Color? _chartAxisTextColor;
+
+  /// 图表网格/多边形轴色
+  /// 默认为 Color(0xFFCCCCCC)
+  Color? _chartGridColor;
+
+  /// 阴影颜色
+  /// 默认为 Color(0x14000000)
+  Color? _shadowColor;
+
+  /// 小阴影预设
+  List<BoxShadow>? _shadowSm;
+
+  /// 中阴影预设
+  List<BoxShadow>? _shadowMd;
+
+  /// 大阴影预设
+  List<BoxShadow>? _shadowLg;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// 尺寸 /////////////////////////////////////
@@ -566,6 +706,74 @@ class SantoCommonConfig extends SantoBaseConfig {
       _dividerColorBase ??
       SantoDefaultConfigUtils.defaultCommonConfig.dividerColorBase;
 
+  Color get brandPrimaryBg =>
+      _brandPrimaryBg ??
+      SantoDefaultConfigUtils.defaultCommonConfig.brandPrimaryBg;
+
+  Color get brandSuccessBg =>
+      _brandSuccessBg ??
+      SantoDefaultConfigUtils.defaultCommonConfig.brandSuccessBg;
+
+  Color get brandWarningBg =>
+      _brandWarningBg ??
+      SantoDefaultConfigUtils.defaultCommonConfig.brandWarningBg;
+
+  Color get brandErrorBg =>
+      _brandErrorBg ??
+      SantoDefaultConfigUtils.defaultCommonConfig.brandErrorBg;
+
+  Color get fillBaseInverse =>
+      _fillBaseInverse ??
+      SantoDefaultConfigUtils.defaultCommonConfig.fillBaseInverse;
+
+  Color get appBarDarkBackgroundColor =>
+      _appBarDarkBackgroundColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.appBarDarkBackgroundColor;
+
+  List<Color> get chartPalette =>
+      _chartPalette ??
+      SantoDefaultConfigUtils.defaultCommonConfig.chartPalette;
+
+  Color get loadingPillBackgroundColor =>
+      _loadingPillBackgroundColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.loadingPillBackgroundColor;
+
+  Color get popoverBackgroundColor =>
+      _popoverBackgroundColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.popoverBackgroundColor;
+
+  Color get tooltipBackgroundColor =>
+      _tooltipBackgroundColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.tooltipBackgroundColor;
+
+  Color get toastBackgroundColor =>
+      _toastBackgroundColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.toastBackgroundColor;
+
+  Color get chartAxisColor =>
+      _chartAxisColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.chartAxisColor;
+
+  Color get chartAxisTextColor =>
+      _chartAxisTextColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.chartAxisTextColor;
+
+  Color get chartGridColor =>
+      _chartGridColor ??
+      SantoDefaultConfigUtils.defaultCommonConfig.chartGridColor;
+
+  Color get shadowColor =>
+      _shadowColor ?? SantoDefaultConfigUtils.defaultCommonConfig.shadowColor;
+
+  List<BoxShadow> get shadowSm =>
+      _shadowSm ?? SantoDefaultConfigUtils.defaultCommonConfig.shadowSm;
+
+  List<BoxShadow> get shadowMd =>
+      _shadowMd ?? SantoDefaultConfigUtils.defaultCommonConfig.shadowMd;
+
+  List<BoxShadow> get shadowLg =>
+      _shadowLg ?? SantoDefaultConfigUtils.defaultCommonConfig.shadowLg;
+
   double get fontSizeBebas =>
       _fontSizeBebas ?? SantoDefaultConfigUtils.defaultCommonConfig.fontSizeBebas;
 
@@ -713,6 +921,24 @@ class SantoCommonConfig extends SantoBaseConfig {
     _brandImportantValue ??= commonConfig._brandImportantValue;
     _borderColorBase ??= commonConfig._borderColorBase;
     _dividerColorBase ??= commonConfig._dividerColorBase;
+    _brandPrimaryBg ??= commonConfig._brandPrimaryBg;
+    _brandSuccessBg ??= commonConfig._brandSuccessBg;
+    _brandWarningBg ??= commonConfig._brandWarningBg;
+    _brandErrorBg ??= commonConfig._brandErrorBg;
+    _fillBaseInverse ??= commonConfig._fillBaseInverse;
+    _appBarDarkBackgroundColor ??= commonConfig._appBarDarkBackgroundColor;
+    _chartPalette ??= commonConfig._chartPalette;
+    _loadingPillBackgroundColor ??= commonConfig._loadingPillBackgroundColor;
+    _popoverBackgroundColor ??= commonConfig._popoverBackgroundColor;
+    _tooltipBackgroundColor ??= commonConfig._tooltipBackgroundColor;
+    _toastBackgroundColor ??= commonConfig._toastBackgroundColor;
+    _chartAxisColor ??= commonConfig._chartAxisColor;
+    _chartAxisTextColor ??= commonConfig._chartAxisTextColor;
+    _chartGridColor ??= commonConfig._chartGridColor;
+    _shadowColor ??= commonConfig._shadowColor;
+    _shadowSm ??= commonConfig._shadowSm;
+    _shadowMd ??= commonConfig._shadowMd;
+    _shadowLg ??= commonConfig._shadowLg;
     _fontSizeBebas ??= commonConfig._fontSizeBebas;
     _fontSizeHeadLg ??= commonConfig._fontSizeHeadLg;
     _fontSizeBase ??= commonConfig._fontSizeBase;

@@ -44,8 +44,8 @@ class SantoCard extends StatelessWidget {
   /// 背景色,默认取主题 `fillBase`(白)
   final Color? color;
 
-  /// 阴影颜色,默认 Color(0xFFE8EAEC)
-  final Color shadowColor;
+  /// 阴影颜色,默认取主题 `dividerColorBase`
+  final Color? shadowColor;
 
   /// 阴影偏移量,默认 Offset.zero
   final Offset offset;
@@ -55,8 +55,8 @@ class SantoCard extends StatelessWidget {
   /// 有标题或元信息且未显式传值时,内容会自动取主题 `hSpacingMd` / `vSpacingMd`
   final EdgeInsetsGeometry padding;
 
-  /// 圆角,默认 12
-  final double circular;
+  /// 圆角,默认取主题 `radiusMd`
+  final double? circular;
 
   /// 阴影模糊程度,默认 5
   final double blurRadius;
@@ -64,8 +64,8 @@ class SantoCard extends StatelessWidget {
   /// 阴影扩散程度,默认 0
   final double spreadRadius;
 
-  /// 边框宽度,默认 0.5;传 0 去掉边框
-  final double borderWidth;
+  /// 边框宽度,默认取主题 `borderWidthSm`;传 0 去掉边框
+  final double? borderWidth;
 
   const SantoCard({
     super.key,
@@ -75,19 +75,21 @@ class SantoCard extends StatelessWidget {
     this.extra,
     this.meta,
     this.color,
-    this.shadowColor = const Color(0xFFE8EAEC),
+    this.shadowColor,
     this.padding = EdgeInsets.zero,
-    this.circular = 12.0,
+    this.circular,
     this.blurRadius = 5.0,
     this.spreadRadius = 0,
     this.offset = Offset.zero,
-    this.borderWidth = 0.5,
+    this.borderWidth,
   });
 
   @override
   Widget build(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final double effectiveBorderWidth =
+        borderWidth ?? commonConfig.borderWidthSm;
     final Widget? headerTitle = titleWidget ??
         (title == null
             ? null
@@ -126,16 +128,17 @@ class SantoCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: color ?? commonConfig.fillBase,
-        borderRadius: BorderRadius.all(Radius.circular(circular)),
-        border: borderWidth > 0
+        borderRadius: BorderRadius.all(
+            Radius.circular(circular ?? commonConfig.radiusMd)),
+        border: effectiveBorderWidth > 0
             ? Border.all(
                 color: commonConfig.dividerColorBase,
-                width: borderWidth,
+                width: effectiveBorderWidth,
               )
             : Border.all(style: BorderStyle.none),
         boxShadow: [
           BoxShadow(
-            color: shadowColor,
+            color: shadowColor ?? commonConfig.dividerColorBase,
             offset: offset,
             blurRadius: blurRadius,
             spreadRadius: spreadRadius,

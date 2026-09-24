@@ -107,6 +107,8 @@ class _CommonPickerState extends State<CommonTagsPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoPickerClipRRect(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(SantoThemeConfigurator.instance
@@ -119,7 +121,7 @@ class _CommonPickerState extends State<CommonTagsPicker> {
             .cornerRadius),
       ),
       child: Container(
-          color: Colors.white,
+          color: commonConfig.fillBase,
           // 底部安全区:白色背景铺到屏幕底部(包含安全区),内容在其上方避让,
           // 与 SantoFloatingPanel 的处理一致
           child: Padding(

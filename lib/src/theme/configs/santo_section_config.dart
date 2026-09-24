@@ -11,9 +11,6 @@ import 'package:flutter/material.dart';
 const EdgeInsets kSantoSectionContentPadding = EdgeInsets.all(10);
 const EdgeInsets kSantoSectionFooterPadding = EdgeInsets.fromLTRB(16, 12, 16, 16);
 const double kSantoSectionRadius = 12;
-const Color kSantoSectionBorderColor = Color(0xFFDCDEE2);
-const double kSantoSectionBorderWidth = 0.5;
-const Color kSantoSectionDividerColor = Color(0xFFE8EAEC);
 
 /// SantoSection 的配置文件 全局配置
 class SantoSectionConfig extends SantoBaseConfig {
@@ -69,14 +66,13 @@ class SantoSectionConfig extends SantoBaseConfig {
 
   EdgeInsets get footerPadding => _footerPadding ?? kSantoSectionFooterPadding;
 
-  Color get backgroundColor => _backgroundColor ?? Colors.white;
+  Color get backgroundColor => _backgroundColor ?? commonConfig.fillBase;
 
-  Color get borderColor => _borderColor ?? kSantoSectionBorderColor;
+  Color get borderColor => _borderColor ?? commonConfig.borderColorBase;
 
-  double get borderWidth => _borderWidth ?? kSantoSectionBorderWidth;
+  double get borderWidth => _borderWidth ?? commonConfig.borderWidthSm;
 
-
-  Color get dividerColor => _dividerColor ?? kSantoSectionDividerColor;
+  Color get dividerColor => _dividerColor ?? commonConfig.dividerColorBase;
 
   SantoTextStyle get titleTextStyle =>
       _titleTextStyle ??

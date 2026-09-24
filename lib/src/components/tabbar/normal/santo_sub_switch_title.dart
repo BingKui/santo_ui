@@ -82,7 +82,7 @@ class _SantoSubSwitchTitleState extends State<SantoSubSwitchTitle>
       Text tx = Text(name);
       return Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: commonConfig.fillBase,
           shape: BoxShape.rectangle,
         ),
         padding: widget.padding ??

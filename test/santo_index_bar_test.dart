@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santo_ui/src/components/selectcity/santo_az_listview.dart';
 import 'package:santo_ui/src/components/selectcity/santo_select_city_model.dart';
+import 'package:santo_ui/src/theme/base/santo_default_config_utils.dart';
 
 void main() {
+  final commonConfig = SantoDefaultConfigUtils.defaultCommonConfig;
+
   Future<List<SantoSelectCityModel>> buildData() async {
     return [
       SantoSelectCityModel(name: '北京')
@@ -41,11 +44,13 @@ void main() {
     await tester.pumpAndSettle();
 
     final b = letterText(tester, 'B');
-    expect(b.style!.color, Colors.white, reason: '默认选中的第一个字母应为白字');
+    expect(b.style!.color, commonConfig.colorTextBaseInverse,
+        reason: '默认选中的第一个字母应为白字');
     expect(b.style!.fontWeight, FontWeight.w500);
 
     final h = letterText(tester, 'H');
-    expect(h.style!.color, const Color(0xFF101D37), reason: '未选中字母保持默认色');
+    expect(h.style!.color, commonConfig.colorTextBase,
+        reason: '未选中字母取主题文字色');
   });
 
   testWidgets('按下其他字母时该字母高亮,松手后选中态跟随列表分组', (tester) async {

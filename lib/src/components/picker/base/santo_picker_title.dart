@@ -50,7 +50,7 @@ class SantoPickerTitle extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            height: themeData!.titleHeight - 0.5,
+            height: themeData!.titleHeight - commonConfig.borderWidthSm,
             padding: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +88,7 @@ class SantoPickerTitle extends StatelessWidget {
           Divider(
             color: themeData!.dividerColor,
             indent: 0.0,
-            height: 0.5,
+            height: commonConfig.borderWidthSm,
           ),
         ],
       ),

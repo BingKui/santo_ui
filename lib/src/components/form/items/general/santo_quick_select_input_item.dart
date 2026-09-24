@@ -2,9 +2,13 @@ import 'package:santo_ui/src/components/form/base/santo_form_item_type.dart';
 import 'package:santo_ui/src/components/form/utils/santo_form_util.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/theme/configs/santo_form_config.dart';
 import 'package:santo_ui/src/constants/santo_fonts_constants.dart';
 import 'package:flutter/material.dart';
+
+/// 快捷选择按钮选中态的底色透明度(品牌色淡底)
+const double _kSelectedButtonOpacity = 0.12;
 
 ///
 /// 快速选择类型录入项
@@ -345,7 +349,8 @@ class QuickButtonsState extends State<QuickButtonsWidget> {
             commonConfig.hSpacingXs, 0, commonConfig.hSpacingXs, 0),
         child: TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(getButtonColor(index)),
+            backgroundColor:
+                MaterialStateProperty.all(getButtonColor(commonConfig, index)),
             overlayColor: MaterialStateProperty.all(Colors.transparent),
             padding: MaterialStateProperty.all(
                 EdgeInsets.all(commonConfig.vSpacingSm)),
@@ -353,7 +358,7 @@ class QuickButtonsState extends State<QuickButtonsWidget> {
           child: Text(
             str,
             style: TextStyle(
-              color: getBtnTextColor(index),
+              color: getBtnTextColor(commonConfig, index),
               fontSize: SantoFonts.f12,
             ),
           ),
@@ -393,50 +398,50 @@ class QuickButtonsState extends State<QuickButtonsWidget> {
     return result;
   }
 
-  Color getButtonColor(int index) {
+  Color getButtonColor(SantoCommonConfig commonConfig, int index) {
     if (widget.btnsTxt != null && widget.btnsTxt!.isEmpty) {
-      return Color(0xFFF5F5F5);
+      return commonConfig.fillBody;
     }
 
     /// 这个按钮不可点击
     if (widget.enableBtnList != null &&
         index < widget.enableBtnList!.length &&
         !widget.enableBtnList![index]) {
-      return Color(0xFFF5F5F5);
+      return commonConfig.fillBody;
     }
 
     if (widget.selectBtnList != null &&
         index < widget.selectBtnList!.length &&
         widget.selectBtnList![index]) {
-      return Color(0x1F1677FF);
+      return commonConfig.brandPrimary.withOpacity(_kSelectedButtonOpacity);
     } else {
-      return Color(0xFFF5F5F5);
+      return commonConfig.fillBody;
     }
   }
 
-  Color getBtnTextColor(int index) {
+  Color getBtnTextColor(SantoCommonConfig commonConfig, int index) {
     if (widget.btnsTxt != null && widget.btnsTxt!.isEmpty) {
-      return Color(0xFF17233D);
+      return commonConfig.colorTextBase;
     }
 
     /// 这个按钮不可点击
     if (widget.enableBtnList != null &&
         index < widget.enableBtnList!.length &&
         !widget.enableBtnList![index]) {
-      return Color(0xFF808695);
+      return commonConfig.colorTextSecondary;
     }
 
     if (widget.selectBtnList == null ||
         widget.selectBtnList!.length != widget.btnsTxt!.length) {
-      return Color(0xFF17233D);
+      return commonConfig.colorTextBase;
     }
 
     if (widget.selectBtnList != null &&
         index < widget.selectBtnList!.length &&
         widget.selectBtnList![index]) {
-      return Color(0xFF1677FF);
+      return commonConfig.brandPrimary;
     } else {
-      return Color(0xFF17233D);
+      return commonConfig.colorTextBase;
     }
   }
 }

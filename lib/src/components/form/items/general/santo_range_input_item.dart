@@ -191,117 +191,123 @@ class SantoRangeInputFormItemState extends State<SantoRangeInputFormItem> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: 50,
-                        ),
-                        child: TextField(
-                          keyboardType:
-                              SantoFormUtil.getInputType(widget.inputType),
-                          enabled: widget.isEdit,
-                          maxLines: 1,
-                          maxLength: widget.leftMaxCount,
-                          style: SantoFormUtil.getIsEditTextStyle(
-                              widget.themeData!, widget.isEdit),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle:
-                                SantoFormUtil.getHintTextStyle(widget.themeData!),
-                            hintText: widget.hintMin ??
-                                SantoIntl.of(context).localizedResource.min,
-                            counterText: "",
-                            contentPadding: EdgeInsets.all(0),
-                            isDense: true,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
+                // 右侧范围输入区可收缩,空间不足时优先压缩输入框而非溢出
+                Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 50,
                           ),
-                          textAlign: TextAlign.end,
-                          controller: _minController,
-                          onChanged: (text) {
-                            SantoFormUtil.notifyInputChanged(
-                                widget.onMinChanged, text);
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                        padding:
-                            EdgeInsets.only(left: commonConfig.hSpacingXs),
-                        child: Text(
-                          widget.minUnit ?? "",
-                          style: TextStyle(
-                            color: Color(0xFF17233D),
-                            fontSize: SantoFonts.f16,
+                          child: TextField(
+                            keyboardType:
+                                SantoFormUtil.getInputType(widget.inputType),
+                            enabled: widget.isEdit,
+                            maxLines: 1,
+                            maxLength: widget.leftMaxCount,
+                            style: SantoFormUtil.getIsEditTextStyle(
+                                widget.themeData!, widget.isEdit),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintStyle: SantoFormUtil.getHintTextStyle(
+                                  widget.themeData!),
+                              hintMaxLines: 1,
+                              hintText: widget.hintMin ??
+                                  SantoIntl.of(context).localizedResource.min,
+                              counterText: "",
+                              contentPadding: EdgeInsets.all(0),
+                              isDense: true,
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                            ),
+                            textAlign: TextAlign.end,
+                            controller: _minController,
+                            onChanged: (text) {
+                              SantoFormUtil.notifyInputChanged(
+                                  widget.onMinChanged, text);
+                            },
                           ),
-                        )),
-                    Container(
-                        padding: EdgeInsets.only(
-                            left: commonConfig.hSpacingLg,
-                            right: commonConfig.hSpacingXs),
-                        child: Text(
-                          "—",
-                          style: TextStyle(
-                            color: Color(0xFF17233D),
-                            fontSize: SantoFonts.f16,
-                          ),
-                        )),
-                    Container(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: 50,
-                        ),
-                        child: TextField(
-                          keyboardType:
-                              SantoFormUtil.getInputType(widget.inputType),
-                          enabled: widget.isEdit,
-                          maxLines: 1,
-                          maxLength: widget.rightMaxCount,
-                          style: SantoFormUtil.getIsEditTextStyle(
-                              widget.themeData!, widget.isEdit),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle:
-                                SantoFormUtil.getHintTextStyle(widget.themeData!),
-                            hintText: widget.hintMax ??
-                                SantoIntl.of(context).localizedResource.max,
-                            counterText: "",
-                            contentPadding: EdgeInsets.all(0),
-                            isDense: true,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
-                          ),
-                          textAlign: TextAlign.end,
-                          controller: _maxController,
-                          onChanged: (text) {
-                            SantoFormUtil.notifyInputChanged(
-                                widget.onMaxChanged, text);
-                          },
                         ),
                       ),
-                    ),
-                    Container(
-                        padding:
-                            EdgeInsets.only(left: commonConfig.hSpacingXs),
-                        child: Text(
-                          widget.maxUnit ?? "",
-                          style: TextStyle(
-                            color: Color(0xFF17233D),
-                            fontSize: SantoFonts.f16,
+                      Container(
+                          padding:
+                              EdgeInsets.only(left: commonConfig.hSpacingXs),
+                          child: Text(
+                            widget.minUnit ?? "",
+                            style: TextStyle(
+                              color: commonConfig.colorTextBase,
+                              fontSize: SantoFonts.f16,
+                            ),
+                          )),
+                      Container(
+                          padding: EdgeInsets.only(
+                              left: commonConfig.hSpacingLg,
+                              right: commonConfig.hSpacingXs),
+                          child: Text(
+                            "—",
+                            style: TextStyle(
+                              color: commonConfig.colorTextBase,
+                              fontSize: SantoFonts.f16,
+                            ),
+                          )),
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 50,
                           ),
-                        )),
-                  ],
+                          child: TextField(
+                            keyboardType:
+                                SantoFormUtil.getInputType(widget.inputType),
+                            enabled: widget.isEdit,
+                            maxLines: 1,
+                            maxLength: widget.rightMaxCount,
+                            style: SantoFormUtil.getIsEditTextStyle(
+                                widget.themeData!, widget.isEdit),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintStyle: SantoFormUtil.getHintTextStyle(
+                                  widget.themeData!),
+                              hintMaxLines: 1,
+                              hintText: widget.hintMax ??
+                                  SantoIntl.of(context).localizedResource.max,
+                              counterText: "",
+                              contentPadding: EdgeInsets.all(0),
+                              isDense: true,
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                            ),
+                            textAlign: TextAlign.end,
+                            controller: _maxController,
+                            onChanged: (text) {
+                              SantoFormUtil.notifyInputChanged(
+                                  widget.onMaxChanged, text);
+                            },
+                          ),
+                        ),
+                      ),
+                      Container(
+                          padding:
+                              EdgeInsets.only(left: commonConfig.hSpacingXs),
+                          child: Text(
+                            widget.maxUnit ?? "",
+                            style: TextStyle(
+                              color: commonConfig.colorTextBase,
+                              fontSize: SantoFonts.f16,
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -33,11 +33,11 @@ class SantoProgressBarChart extends StatefulWidget {
   /// 柱状图方向，默认 BarChartStyle.vertical
   final BarChartStyle barChartStyle;
 
-  /// 选中柱状图时条形文案颜色，默认 Colors.white
-  final Color selectedHintTextColor;
+  /// 选中柱状图时条形文案颜色，不传取主题 colorTextBaseInverse
+  final Color? selectedHintTextColor;
 
-  /// 选中柱状图时条形文案背景颜色，默认 Colors.black
-  final Color selectedHintTextBackgroundColor;
+  /// 选中柱状图时条形文案背景颜色，不传取主题 fillBaseInverse
+  final Color? selectedHintTextBackgroundColor;
 
   /// 是否可点击回调
   final OnBarItemClickInterceptor? onBarItemClickInterceptor;
@@ -60,8 +60,8 @@ class SantoProgressBarChart extends StatefulWidget {
       this.barGroupSpace = 30,
       this.singleBarWidth = 30,
       this.barMaxValue = 0,
-      this.selectedHintTextColor = Colors.white,
-      this.selectedHintTextBackgroundColor = Colors.black,
+      this.selectedHintTextColor,
+      this.selectedHintTextBackgroundColor,
       this.onBarItemClickInterceptor,
       this.barChartSelectCallback,
       this.height = 300})

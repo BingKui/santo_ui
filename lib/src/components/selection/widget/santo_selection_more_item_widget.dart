@@ -140,7 +140,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
               Padding(
                 padding: EdgeInsets.only(
                     top: commonConfig.vSpacingLg,
-                    right: _isVisibleMore() ? 40 : 0),
+                    right: _isVisibleMore() ? commonConfig.gapXxl : 0),
                 child: _buildTitleWidget(),
               ),
               //自定义输入框
@@ -366,8 +366,8 @@ class __MoreArrowState extends State<_MoreArrow> {
               style: widget.themeData?.moreTextStyle.generateTextStyle(),
             ),
             Container(
-              height: 16,
-              width: 16,
+              height: commonConfig.iconSizeMd,
+              width: commonConfig.iconSizeMd,
               padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
               child: icon,
             )
@@ -511,7 +511,7 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
       return SantoSelectionDateRangeItemWidget(
           item: widget.rangeEntity,
           isNeedTitle: false,
-          showTextSize: 14,
+          showTextSize: widget.themeData.commonConfig.fontSizeBase,
           dateFormat: datetimePickerDateFormat,
           minTextEditingController: minController,
           maxTextEditingController: maxController,
@@ -559,10 +559,7 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
           focusNode: focusNode,
           textAlign: TextAlign.center,
           controller: textEditingController,
-          cursorColor: SantoThemeConfigurator.instance
-              .getConfig()
-              .commonConfig
-              .brandPrimary,
+          cursorColor: themeData.commonConfig.brandPrimary,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           style: widget.themeData.inputTextStyle.generateTextStyle(),
           decoration: InputDecoration(
@@ -572,13 +569,13 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
                   borderRadius:
                       BorderRadius.circular(widget.themeData.tagRadius),
                   borderSide: BorderSide(
-                      width: 1,
+                      width: widget.themeData.commonConfig.borderWidthMd,
                       color: widget.themeData.commonConfig.borderColorBase)),
               focusedBorder: UnderlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(widget.themeData.tagRadius),
                   borderSide: BorderSide(
-                      width: 1,
+                      width: widget.themeData.commonConfig.borderWidthMd,
                       color: widget.themeData.commonConfig.borderColorBase))),
         ),
       ),
@@ -672,7 +669,8 @@ class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
                           : widget.themeData.optionTextStyle
                               .generateTextStyle()),
                 ),
-                SantoIcon(SantoIcons.navArrowRight, size: 16)
+                SantoIcon(SantoIcons.navArrowRight,
+                    size: commonConfig.iconSizeMd)
               ],
             ),
           ),

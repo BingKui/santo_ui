@@ -117,8 +117,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
   /// 标签行间距
   double _spacing = 12;
 
-  /// 行边距
-  double _padding = 20;
+  /// 行边距,与标签区左右留白保持一致,见 build 中的主题令牌
 
   @override
   void initState() {
@@ -157,7 +156,7 @@ class __FilterCommonTypeWidgetState extends State<_FilterCommonTypeWidget> {
     try {
       _tagWidth = (widget.parentWidth -
               _spacing * (widget.preLineTagSize - 1) -
-              _padding * 2) /
+              commonConfig.hSpacingLg * 2) /
           widget.preLineTagSize;
       //保留小数点后3位
       _tagWidth = double.parse(_tagWidth
@@ -401,8 +400,8 @@ class __MoreArrowState extends State<_MoreArrow> {
             Text(SantoIntl.of(context).localizedResource.more,
                 style: widget.themeData.moreTextStyle.generateTextStyle()),
             Container(
-              height: 16,
-              width: 16,
+              height: commonConfig.iconSizeMd,
+              width: commonConfig.iconSizeMd,
               padding: EdgeInsets.only(left: commonConfig.hSpacingXs),
               child: icon,
             )
@@ -563,6 +562,8 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -573,8 +574,8 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
           padding: EdgeInsets.only(left: 2),
         ),
         Container(
-          color: Color(0xffDCDEE2),
-          height: 1,
+          color: commonConfig.borderColorBase,
+          height: commonConfig.borderWidthMd,
           width: 8,
         ),
         Padding(
@@ -595,8 +596,9 @@ class __MoreRangeWidgetState extends State<_MoreRangeWidget> {
   ) {
     return Container(
       decoration: BoxDecoration(
-          color: Color(0xFFF9F9F9),
-          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+          color: themeData.commonConfig.fillBody,
+          borderRadius: BorderRadius.all(
+              Radius.circular(themeData.commonConfig.radiusXs))),
       height: 32,
       width: width,
       child: Center(
@@ -701,7 +703,8 @@ class _FilterLayerTypeWidgetState extends State<FilterLayerTypeWidget> {
                           : widget.themeData.optionTextStyle
                               .generateTextStyle()),
                 ),
-                SantoIcon(SantoIcons.navArrowRight, size: 16)
+                SantoIcon(SantoIcons.navArrowRight,
+                    size: commonConfig.iconSizeMd)
               ],
             ),
           ),

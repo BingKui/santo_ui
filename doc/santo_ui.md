@@ -24,7 +24,7 @@ Santo 是一套企业级 Flutter 组件库,提供 70+ 组件,覆盖表单、导�
 - **数据展示**:Table 表格、Tree 树形控件、Collapse 折叠面板、Statistic 统计数值、Swiper 轮播图、Masonry 瀑布流、Skeleton 骨架屏、Gallery 大图预览
 - **操作反馈**:ActionSheet 动作面板、Drawer 抽屉、BottomDrawer 底部弹窗、FloatingPanel 浮层面板、Popover 气泡弹出框、Tooltip 工具提示、Fab 悬浮按钮、ActionBar 底部操作栏
 - **选择器**:Picker 选择器、Cascader 级联选择器、DatePicker 日期选择器、TagsPicker 标签选择器、Selection 筛选器
-- **其他**:BackTop 返回顶部、TimeCounter 计时器、Calendar 日历、Highlight 高亮、NoticeBar 通知栏、Guide 引导、Appraise 评价、Share 分享
+- **其他**:BackTop 返回顶部、TimeCounter 计时器、Calendar 日历、Highlight 高亮、Notice 通知栏、Guide 引导、Appraise 评价、Share 分享
 
 ### 设计令牌
 

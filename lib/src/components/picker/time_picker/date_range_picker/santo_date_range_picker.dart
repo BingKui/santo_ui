@@ -147,7 +147,8 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final String? barrierLabel;
 
   @override
-  Color get barrierColor => Colors.black54;
+  Color get barrierColor =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillMask;
 
   AnimationController? _animationController;
 

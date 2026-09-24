@@ -1,7 +1,6 @@
 
 
 import 'package:santo_ui/src/components/line/santo_line.dart';
-import 'package:santo_ui/src/components/picker/base/santo_picker_constants.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/santo_picker_cliprrect.dart';
@@ -76,6 +75,8 @@ class SantoMultiSelectListPicker<T extends SantoMultiSelectBottomPickerItem> ext
 class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> extends State<SantoMultiSelectListPicker<T>> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return SantoPickerClipRRect(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(SantoThemeConfigurator.instance
@@ -88,7 +89,7 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
             .cornerRadius),
       ),
       child: Container(
-        color: Colors.white,
+        color: commonConfig.fillBase,
         child: Stack(
           children: <Widget>[
             Column(
@@ -120,7 +121,10 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
                 ),
                 LimitedBox(
                     maxWidth: double.infinity,
-                    maxHeight: pickerHeight,
+                    maxHeight: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .pickerConfig
+                        .pickerHeight,
                     child: ListView.builder(
                         shrinkWrap: true,
                         itemBuilder: (context, index) =>
@@ -176,10 +180,10 @@ class MultiSelectDialogWidgetState<T extends SantoMultiSelectBottomPickerItem> e
                       child: widget.items[index].isChecked
                           ? SantoIcon(SantoSolidIcons.checkCircle,
                               solid: true,
-                              size: 16,
+                              size: commonConfig.iconSizeMd,
                               color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary)
                           : SantoIcon(SantoIcons.circle,
-                              size: 16, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextDisabled)),
+                              size: commonConfig.iconSizeMd, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextDisabled)),
                 ],
               ),
             ),

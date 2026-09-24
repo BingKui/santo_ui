@@ -61,7 +61,7 @@ class SantoSelectionCommonItemWidget extends StatelessWidget {
           child: SantoIcon(
             item.isSelected ? SantoSolidIcons.checkCircle : SantoIcons.circle,
             solid: item.isSelected,
-            size: 16,
+            size: commonConfig.iconSizeMd,
             color: item.isSelected
                 ? commonConfig.brandPrimary
                 : commonConfig.colorTextDisabled,

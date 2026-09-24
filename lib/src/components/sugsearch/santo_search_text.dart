@@ -28,8 +28,8 @@ class SantoSearchText extends StatefulWidget {
   /// 用于设置搜索框前端的 Icon
   final Widget? prefixIcon;
 
-  /// 包裹搜索框的容器背景色
-  final Color outSideColor;
+  /// 包裹搜索框的容器背景色，不传时取主题 fillBase
+  final Color? outSideColor;
 
   /// 搜索框内部的颜色
   final Color innerColor;
@@ -43,8 +43,9 @@ class SantoSearchText extends StatefulWidget {
   /// 输入框最大高度，默认 60
   final double maxHeight;
 
-  ///内部搜索框之外的 Padding。设置该字段会导致显示区域变小。
-  final EdgeInsets innerPadding;
+  ///内部搜索框之外的 Padding。不传时取主题 vSpacingSm(上下) / hSpacingLg(左右)。
+  ///设置该字段会导致显示区域变小。
+  final EdgeInsets? innerPadding;
 
   ///普通状态的 border
   final BoxBorder? normalBorder;
@@ -52,8 +53,8 @@ class SantoSearchText extends StatefulWidget {
   /// 激活状态的 Border， 默认和 border 一致
   final BoxBorder? activeBorder;
 
-  /// 输入框圆角
-  final BorderRadius borderRadius;
+  /// 输入框圆角，不传时取主题 radiusMd
+  final BorderRadius? borderRadius;
 
   /// 右侧操作 widget
   final Widget? action;
@@ -104,13 +105,12 @@ class SantoSearchText extends StatefulWidget {
     this.onActionTap,
     this.action,
     this.maxHeight = 60,
-    this.innerPadding =
-        const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-    this.outSideColor = Colors.white,
+    this.innerPadding,
+    this.outSideColor,
     this.innerColor = const Color(0xfff8f8f8),
     this.normalBorder,
     this.activeBorder,
-    this.borderRadius = const BorderRadius.all(const Radius.circular(12.0)),
+    this.borderRadius,
     this.focusNode,
     this.autoFocus = false,
     this.textInputAction,
@@ -149,7 +149,10 @@ class _SearchTextState extends State<SantoSearchText> {
     textEditingController = widget.controller ?? TextEditingController();
     border = widget.normalBorder ??
         Border.all(
-          width: 1.0,
+          width: SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .borderWidthMd,
           color: widget.innerColor,
         );
 
@@ -177,13 +180,20 @@ class _SearchTextState extends State<SantoSearchText> {
   Widget build(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final EdgeInsets innerPadding = widget.innerPadding ??
+        EdgeInsets.symmetric(
+            vertical: commonConfig.vSpacingSm,
+            horizontal: commonConfig.hSpacingLg);
+    final BorderRadius borderRadius = widget.borderRadius ??
+        BorderRadius.all(Radius.circular(commonConfig.radiusMd));
+    final Color outSideColor = widget.outSideColor ?? commonConfig.fillBase;
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: widget.maxHeight,
       ),
       child: Container(
-        padding: widget.innerPadding,
-        color: widget.outSideColor,
+        padding: innerPadding,
+        color: outSideColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -193,7 +203,7 @@ class _SearchTextState extends State<SantoSearchText> {
                   color: widget.innerColor,
                   border: border,
                   // 边界半径（`borderRadius`）属性，对此容器框的角进行舍入。
-                  borderRadius: widget.borderRadius,
+                  borderRadius: borderRadius,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -203,7 +213,8 @@ class _SearchTextState extends State<SantoSearchText> {
                           padding:
                               EdgeInsets.only(left: commonConfig.hSpacingMd),
                           child: Center(
-                            child: SantoIcon(SantoIcons.search, size: 16),
+                            child: SantoIcon(SantoIcons.search,
+                                size: commonConfig.iconSizeMd),
                           ),
                         ),
                     Expanded(
@@ -215,22 +226,16 @@ class _SearchTextState extends State<SantoSearchText> {
                           controller: textEditingController,
                           keyboardType: widget.textInputType,
                           inputFormatters: widget.inputFormatters,
-                          cursorColor: SantoThemeConfigurator.instance
-                              .getConfig()
-                              .commonConfig
-                              .brandPrimary,
+                          cursorColor: commonConfig.brandPrimary,
                           cursorWidth: 2.0,
                           style: widget.textStyle ??
                               TextStyle(
                                   textBaseline: TextBaseline.alphabetic,
-                                  color: SantoThemeConfigurator.instance
-                                      .getConfig()
-                                      .commonConfig
-                                      .colorTextBase,
+                                  color: commonConfig.colorTextBase,
                                   fontSize: commonConfig.fontSizeSubHead),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderRadius: widget.borderRadius,
+                                borderRadius: borderRadius,
                                 borderSide: BorderSide.none),
                             contentPadding: EdgeInsets.only(
                                 left: commonConfig.hSpacingSm,
@@ -245,7 +250,7 @@ class _SearchTextState extends State<SantoSearchText> {
                                   fontSize: commonConfig.fontSizeSubHead,
                                   height: 1,
                                   textBaseline: TextBaseline.alphabetic,
-                                  color: Color(0xff808695),
+                                  color: commonConfig.colorTextSecondary,
                                 ),
                             hintText: widget.hintText ?? SantoIntl.of(context).localizedResource.inputSearchTip,
                             counterText: '',
@@ -307,10 +312,7 @@ class _SearchTextState extends State<SantoSearchText> {
                       child: Text(
                         SantoIntl.of(context).localizedResource.cancel,
                         style: TextStyle(
-                            color: SantoThemeConfigurator.instance
-                                .getConfig()
-                                .commonConfig
-                                .colorTextBase,
+                            color: commonConfig.colorTextBase,
                             fontSize: commonConfig.fontSizeSubHead,
                             height: 1),
                       ),

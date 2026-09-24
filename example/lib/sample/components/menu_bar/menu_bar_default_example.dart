@@ -36,7 +36,6 @@ class _MenuBarDefaultExampleState extends State<MenuBarDefaultExample> {
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
         onChanged: (i) => setState(() => _index = i),
-        selectedTextColor: const Color(0xFF1677FF),
         items: [
           SantoMenuBarItem(
             text: '首页',

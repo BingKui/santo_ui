@@ -18,10 +18,10 @@ class SantoSwipeCellAction {
   /// 点击回调
   final VoidCallback? onPressed;
 
-  /// 按钮背景色,默认主题灰
+  /// 按钮背景色,不传时取主题 colorTextHint
   final Color? backgroundColor;
 
-  /// 文字颜色,默认白色
+  /// 文字颜色,不传时取主题反色文字
   final Color? textColor;
 
   /// 自定义按钮内容,设置后 [label] 失效
@@ -30,8 +30,8 @@ class SantoSwipeCellAction {
   /// 单个按钮宽度
   final double width;
 
-  /// 按钮圆角
-  final double radius;
+  /// 按钮圆角,不传时取主题 radiusMd
+  final double? radius;
 
   const SantoSwipeCellAction({
     required this.label,
@@ -40,7 +40,7 @@ class SantoSwipeCellAction {
     this.textColor,
     this.child,
     this.width = 72,
-    this.radius = 12,
+    this.radius,
   });
 }
 
@@ -278,11 +278,11 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(action.radius),
+      borderRadius: BorderRadius.circular(action.radius ?? commonConfig.radiusMd),
       child: SizedBox(
         width: action.width,
         child: Material(
-          color: action.backgroundColor ?? const Color(0xFFCCCCCC),
+          color: action.backgroundColor ?? commonConfig.colorTextHint,
           child: InkWell(
             onTap: () {
               action.onPressed?.call();
@@ -293,7 +293,8 @@ class _SantoSwipeCellState extends State<SantoSwipeCell>
                   Text(
                     action.label,
                     style: TextStyle(
-                      color: action.textColor ?? Colors.white,
+                      color:
+                          action.textColor ?? commonConfig.colorTextBaseInverse,
                       fontSize: commonConfig.fontSizeBase,
                     ),
                     maxLines: 1,

@@ -161,7 +161,11 @@ class _SantoPopoverOverlayState extends State<_SantoPopoverOverlay> {
   Offset? _popoverPosition;
 
   Color get _backgroundColor =>
-      widget.backgroundColor ?? const Color(0xFF1A1A1A);
+      widget.backgroundColor ??
+      SantoThemeConfigurator.instance
+          .getConfig()
+          .commonConfig
+          .popoverBackgroundColor;
 
   @override
   void initState() {

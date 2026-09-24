@@ -21,7 +21,9 @@ class SantoMultiColumnListWidget extends StatefulWidget {
   int? focusedIndex = -1;
   List<SantoPickerEntity>? items;
   Color normalColor;
-  Color selectedColor;
+
+  /// 选中态颜色,不传由 item 回退到主题 brandPrimary
+  Color? selectedColor;
   Color? backgroundColor;
   Color? selectedBackgroundColor;
   int flex;
@@ -33,7 +35,7 @@ class SantoMultiColumnListWidget extends StatefulWidget {
   SantoMultiColumnListWidget({
     required this.items,
     this.normalColor = const Color(0Xff4a4e59),
-    this.selectedColor = const Color(0xff41bc6a),
+    this.selectedColor,
     this.maxHeight = 0,
     this.backgroundColor,
     this.selectedBackgroundColor,

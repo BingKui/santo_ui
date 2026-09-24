@@ -313,13 +313,15 @@ class _SantoSkeletonState extends State<SantoSkeleton>
     if (obj.style.type == SantoSkeletonObjType.spacer) {
       return const SizedBox.shrink();
     }
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     double radius;
     switch (obj.style.type) {
       case SantoSkeletonObjType.circle:
         radius = obj.style.radius ?? 999;
         break;
       case SantoSkeletonObjType.rect:
-        radius = obj.style.radius ?? 12;
+        radius = obj.style.radius ?? commonConfig.radiusMd;
         break;
       default:
         radius = obj.style.radius ?? 4;
@@ -380,7 +382,8 @@ class _SantoSkeletonState extends State<SantoSkeleton>
                 return LinearGradient(
                   colors: [
                     Colors.transparent,
-                    Colors.white.withAlpha(0xB3),
+                    SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase
+                        .withAlpha(0xB3),
                     Colors.transparent,
                   ],
                 ).createShader(bounds.shift(Offset(dx, 0)));

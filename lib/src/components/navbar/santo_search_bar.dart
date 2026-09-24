@@ -1,6 +1,5 @@
 import 'package:bindings_compatible/bindings_compatible.dart';
 import 'package:santo_ui/santo_ui.dart';
-import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -111,7 +110,7 @@ class SantoSearchAppbar extends PreferredSize {
       );
 
   @override
-  Size get preferredSize => Size.fromHeight(SantoAppBarTheme.appBarHeight);
+  Size get preferredSize => Size.fromHeight(themeData!.appBarHeight);
 
   Widget build(BuildContext context) {
     useWidgetsBinding().addPostFrameCallback((item) {
@@ -207,27 +206,21 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
 
     valueNotifier = ValueNotifier(false);
     _focusNode.addListener(_handleFocusChangeListenerTick);
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (widget.themeData?.systemOverlayStyle.statusBarBrightness == Brightness.dark) {
-      _defaultDividerColor = Colors.white.withOpacity(0.2);
-      _defaultHintTextColor = Colors.white.withOpacity(0.4);
-      _defaultInputTextColor = Colors.white;
-      _defaultCancelTextColor = Colors.white;
-      _defaultClearIconColor = Colors.white.withOpacity(0.4);
+      // 深色底的描边/提示/清空图标用反色文字的透明变体
+      _defaultDividerColor = commonConfig.colorTextBaseInverse.withOpacity(0.2);
+      _defaultHintTextColor = commonConfig.colorTextBaseInverse.withOpacity(0.4);
+      _defaultInputTextColor = commonConfig.colorTextBaseInverse;
+      _defaultCancelTextColor = commonConfig.colorTextBaseInverse;
+      _defaultClearIconColor = commonConfig.colorTextBaseInverse.withOpacity(0.4);
     } else {
-      _defaultDividerColor = SantoThemeConfigurator.instance
-          .getConfig()
-          .commonConfig
-          .dividerColorBase;
-      _defaultHintTextColor =
-          SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextHint;
-      _defaultInputTextColor = SantoThemeConfigurator.instance
-          .getConfig()
-          .commonConfig
-          .colorTextSecondary;
-      _defaultCancelTextColor =
-          SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase;
-      _defaultClearIconColor =
-          SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextHint;
+      _defaultDividerColor = commonConfig.dividerColorBase;
+      _defaultHintTextColor = commonConfig.colorTextHint;
+      _defaultInputTextColor = commonConfig.colorTextSecondary;
+      _defaultCancelTextColor = commonConfig.colorTextBase;
+      _defaultClearIconColor = commonConfig.colorTextHint;
     }
   }
 
@@ -287,10 +280,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
                     // 控制器属性，控制正在编辑的文本。
                     controller: _controller,
                     // 光标颜色属性，绘制光标时使用的颜色。
-                    cursorColor: SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .brandPrimary,
+                    cursorColor: commonConfig.brandPrimary,
                     // 光标宽度属性，光标的厚度，默认是2.0。
                     cursorWidth: 2.0,
                     // 样式属性，用于正在编辑的文本的样式。
@@ -406,7 +396,7 @@ class __SearchInputWidgetState extends State<_SearchInputWidget> {
         child: Text(
           widget.leading,
           style: TextStyle(
-              color: Colors.white,
+              color: commonConfig.colorTextBaseInverse,
               height: 1,
               fontSize: commonConfig.fontSizeSubHead),
         ),

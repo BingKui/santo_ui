@@ -149,12 +149,15 @@ class SantoFormUtil {
   }
 
   static Widget getRequireIcon(bool isRequire) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       padding:
           isRequire ? EdgeInsets.only(right: 2) : EdgeInsets.only(right: 0),
       child: isRequire
           ? SantoIcon(SantoIcons.asterisk,
-                  size: 8, color: const Color(0xFFFF4D4F))
+                  size: commonConfig.iconSizeXxs,
+                  color: commonConfig.brandError)
           : null,
     );
   }

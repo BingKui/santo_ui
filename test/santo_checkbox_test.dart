@@ -129,8 +129,8 @@ void main() {
 
     final card = tester.getRect(find.byType(SantoCheckbox));
     final badge = tester.getRect(find.byType(SantoIcon));
-    // 卡片左右上下各有 1.5 的边框,内容区高度为 82 - 3
-    expect(badge.height, closeTo((card.height - 3) * 0.4, 0.5));
+    // 卡片左右上下各有 1 的边框,内容区高度为 82 - 2
+    expect(badge.height, closeTo((card.height - 2) * 0.4, 0.5));
     // 居右居中,不超出卡片
     expect(badge.right, lessThan(card.right));
     expect(badge.center.dy, closeTo(card.center.dy, 0.5));

@@ -116,6 +116,8 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
   }
 
   Widget _listWidget() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     List<Widget> widgets = [];
 
     if (!SantoTools.isEmpty(_firstList) &&
@@ -215,7 +217,7 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
       alignment: Alignment.bottomCenter,
       children: <Widget>[
         Container(
-          color: Colors.white,
+          color: commonConfig.fillBase,
           constraints: BoxConstraints(maxHeight: widget.maxContentHeight),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,8 +236,8 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
                       begin: FractionalOffset.topCenter,
                       end: FractionalOffset.bottomCenter,
                       colors: [
-                        Colors.white.withOpacity(0),
-                        Colors.white,
+                        commonConfig.fillBase.withOpacity(0),
+                        commonConfig.fillBase,
                       ],
                       stops: [0, 1.0],
                     ),
@@ -257,7 +259,7 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
           color: widget.themeData.commonConfig.dividerColorBase,
         ),
         Container(
-          color: Colors.white,
+          color: commonConfig.fillBase,
           padding: EdgeInsets.fromLTRB(
               commonConfig.hSpacingSm,
               commonConfig.vSpacingSm,
@@ -275,7 +277,7 @@ class _SantoSelectionGroupViewState extends State<SantoListSelectionGroupWidget>
                         height: 24,
                         width: 24,
                         child: SantoIcon(SantoIcons.refresh,
-                            size: 24, color: SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextBase),
+                            size: 24, color: commonConfig.colorTextBase),
                       ),
                       Text(
                         SantoIntl.of(context).localizedResource.reset,

@@ -146,8 +146,8 @@ class SantoChatConfig extends SantoBaseConfig {
   Color get backgroundColor => _backgroundColor ?? commonConfig.fillBody;
 
   /// 我方气泡背景色:主题色加透明度派生,浅底配深色文字,对齐 DevOpsMobile
-  Color get myBubbleColor => _myBubbleColor ??
-      commonConfig.brandPrimary.withOpacity(kSantoChatMyBubbleOpacity);
+  Color get myBubbleColor =>
+      _myBubbleColor ?? commonConfig.brandPrimary.withOpacity(kSantoChatMyBubbleOpacity);
 
   Color get otherBubbleColor => _otherBubbleColor ?? commonConfig.fillBase;
 

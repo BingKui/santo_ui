@@ -28,9 +28,6 @@ const double _kSmallStrokeWidth = 2;
 const double _kMediumStrokeWidth = 2.5;
 const double _kLargeStrokeWidth = 3.5;
 
-/// 浮层黑胶囊底色(不与尺寸/主题挂钩,保持既有视觉)
-const Color _kPillBackgroundColor = Color(0xFF1A1A1A);
-
 /// 统一的加载组件,对标 antd Spin
 ///
 /// 三种用法:
@@ -362,7 +359,7 @@ class _LoadingPill extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * 2 / 3,
         ),
         decoration: BoxDecoration(
-          color: _kPillBackgroundColor,
+          color: commonConfig.loadingPillBackgroundColor,
           borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         ),
         child: Row(

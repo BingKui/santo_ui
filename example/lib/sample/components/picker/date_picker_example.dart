@@ -183,7 +183,7 @@ class DatePickerExamplePage extends StatelessWidget {
     format = 'HH时:mm分';
     SantoPickerTitleConfig timePickerTheme = SantoPickerTitleConfig(
         title: SantoPickerTitleConfig.Default.title,
-        showTitle: pickerShowTitleDefault,
+        showTitle: true,
         titleContent: "选择时间范围");
     SantoDateRangePicker.showDatePicker(context,
         minDateTime: DateTime.parse(MIN_DATETIME),

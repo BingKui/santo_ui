@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:santo_ui/src/components/charts/broken_line/santo_line_data.dart';
 import 'package:santo_ui/src/components/charts/broken_line/santo_line_painter.dart';
 import 'package:santo_ui/src/components/charts/broken_line/santo_line_y_painter.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 /// 适用于需要折线图，曲线图的场景
@@ -259,12 +260,28 @@ class SantoBrokenLineState extends State<SantoBrokenLine> {
             padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
             child: Center(child: Text(content)),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Color(0xFFDDDDDD), width: 0.5),
-              borderRadius: BorderRadius.circular(12.0),
+              color: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .fillBase,
+              border: Border.all(
+                  color: SantoThemeConfigurator.instance
+                      .getConfig()
+                      .commonConfig
+                      .borderColorBase,
+                  width: SantoThemeConfigurator
+                      .instance.getConfig().commonConfig.borderWidthSm),
+              borderRadius: BorderRadius.circular(
+                  SantoThemeConfigurator.instance
+                      .getConfig()
+                      .commonConfig
+                      .radiusMd),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.6),
+                  color: SantoThemeConfigurator.instance
+                      .getConfig()
+                      .commonConfig
+                      .fillMask,
                   offset: Offset(0.0, 2.0), //阴影xy轴偏移量
                   blurRadius: 4.0, //阴影模糊程度
                 )

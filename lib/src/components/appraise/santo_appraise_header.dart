@@ -52,7 +52,7 @@ class SantoAppraiseHeader extends StatelessWidget {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       padding: headPadding ??
           EdgeInsets.only(
               top: commonConfig.vSpacingLg, bottom: commonConfig.vSpacingLg),
@@ -60,10 +60,7 @@ class SantoAppraiseHeader extends StatelessWidget {
         title,
         maxLines: maxLines,
         style: TextStyle(
-          color: SantoThemeConfigurator.instance
-              .getConfig()
-              .commonConfig
-              .colorTextBase,
+          color: commonConfig.colorTextBase,
           fontSize: commonConfig.fontSizeHead,
           fontWeight: FontWeight.w500,
         ),
@@ -75,7 +72,7 @@ class SantoAppraiseHeader extends StatelessWidget {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
-      color: Colors.white,
+      color: commonConfig.fillBase,
       height: 38 + maxLines * 22.0,
       child: Padding(
         padding: headPadding ??
@@ -97,10 +94,7 @@ class SantoAppraiseHeader extends StatelessWidget {
                   title,
                   maxLines: maxLines,
                   style: TextStyle(
-                    color: SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .colorTextBase,
+                    color: commonConfig.colorTextBase,
                     fontSize: commonConfig.fontSizeHead,
                     height: 1,
                     fontWeight: FontWeight.w500,

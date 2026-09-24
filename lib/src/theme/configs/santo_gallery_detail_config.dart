@@ -1,4 +1,3 @@
-import 'package:santo_ui/src/components/navbar/santo_appbar_theme.dart';
 import 'package:santo_ui/src/theme/base/santo_base_config.dart';
 import 'package:santo_ui/src/theme/base/santo_default_config_utils.dart';
 import 'package:santo_ui/src/theme/base/santo_text_style.dart';
@@ -47,18 +46,19 @@ class SantoGalleryDetailConfig extends SantoBaseConfig {
     String configId = GLOBAL_CONFIG_ID,
   }) : super(configId: configId) {
     _appbarTitleStyle = SantoTextStyle(color: commonConfig.colorTextBaseInverse);
-    _appbarActionStyle = SantoTextStyle(color: SantoAppBarTheme.lightTextColor);
-    _appbarBackgroundColor = Colors.black;
+    _appbarActionStyle = SantoTextStyle(color: commonConfig.colorTextBase);
+    _appbarBackgroundColor = commonConfig.fillBaseInverse;
     _appbarConfig = SantoAppBarConfig.dark();
-    _tabBarUnSelectedLabelStyle = SantoTextStyle(color: Color(0XFFCCCCCC));
+    _tabBarUnSelectedLabelStyle =
+        SantoTextStyle(color: commonConfig.colorTextHint);
     _tabBarLabelStyle = SantoTextStyle(color: commonConfig.colorTextBaseInverse);
-    _tabBarBackgroundColor = Colors.black;
-    _pageBackgroundColor = Colors.black;
-    _bottomBackgroundColor = Color(0X88000000);
+    _tabBarBackgroundColor = commonConfig.fillBaseInverse;
+    _pageBackgroundColor = commonConfig.fillBaseInverse;
+    _bottomBackgroundColor = commonConfig.fillMask;
     _titleStyle = SantoTextStyle(color: commonConfig.colorTextBaseInverse);
-    _contentStyle = SantoTextStyle(color: Color(0xFFCCCCCC));
+    _contentStyle = SantoTextStyle(color: commonConfig.colorTextHint);
     _actionStyle = SantoTextStyle(color: commonConfig.colorTextBaseInverse);
-    _iconColor = Colors.white;
+    _iconColor = commonConfig.colorTextBaseInverse;
   }
 
   /// 白色主题
@@ -97,7 +97,7 @@ class SantoGalleryDetailConfig extends SantoBaseConfig {
   ///
   /// SantoTextStyle(
   ///   color: AppBarBrightness(brightness).textColor,
-  ///   fontSize: SantoAppBarTheme.actionFontSize,
+  ///   fontSize: SantoCommonConfig.fontSizeBase,
   ///   fontWeight: FontWeight.w600,
   /// )
   SantoTextStyle? _appbarActionStyle;

@@ -112,9 +112,11 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
 
   ///右侧是二级列表
   Widget _buildRightSlide(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Container(
       width: 300,
-      color: Colors.white,
+      color: commonConfig.fillBase,
       child: Padding(
         padding: EdgeInsets.only(top: 0),
         child: SafeArea(
@@ -130,10 +132,7 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
                 leading: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
-                    color: SantoThemeConfigurator.instance
-                        .getConfig()
-                        .commonConfig
-                        .colorTextBase,
+                    color: commonConfig.colorTextBase,
                   ),
                   onPressed: () {
                     SantoSelectionUtil.resetSelectionDatas(widget.entityData);
@@ -145,18 +144,12 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
                   },
                 ),
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
-                backgroundColor: Colors.white,
+                backgroundColor: commonConfig.fillBase,
                 title: Text(
                   SantoIntl.of(context).localizedResource.selectTitle(widget.entityData.title),
                   style: TextStyle(
-                      color: SantoThemeConfigurator.instance
-                          .getConfig()
-                          .commonConfig
-                          .colorTextBase,
-                      fontSize: SantoThemeConfigurator.instance
-                          .getConfig()
-                          .commonConfig
-                          .fontSizeSubHead,
+                      color: commonConfig.colorTextBase,
+                      fontSize: commonConfig.fontSizeSubHead,
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -172,6 +165,8 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
   }
 
   Widget _buildSelectionListView() {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -180,14 +175,14 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
           Expanded(
             flex: 2,
             child: Container(
-              color: Color(0xfff8F8F8),
+              color: commonConfig.fillBody,
               child: _buildLeftListView(),
             ),
           ),
           Expanded(
             flex: 3,
             child: Container(
-              color: Colors.white,
+              color: commonConfig.fillBase,
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 0),
                 itemBuilder: (context, index) {
@@ -305,6 +300,8 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
   }
 
   Widget _buildLeftItem(int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     //如果房山 被选中了或者房山处于正在选择的状态 则加粗
     TextStyle textStyle =
         widget.themeData.flayerNormalTextStyle.generateTextStyle();
@@ -342,13 +339,11 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
     return Container(
       alignment: Alignment.centerLeft,
       height: 48,
-      color: index == _currentIndex ? Colors.white : Color(0xff8F8F8F),
+      color: index == _currentIndex
+          ? commonConfig.fillBase
+          : commonConfig.colorTextSecondary,
       child: Padding(
-        padding: EdgeInsets.only(
-            left: SantoThemeConfigurator.instance
-                .getConfig()
-                .commonConfig
-                .hSpacingLg),
+        padding: EdgeInsets.only(left: commonConfig.hSpacingLg),
         child: Text(
           name,
           maxLines: 2,
@@ -360,6 +355,8 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
   }
 
   Widget _buildRightItem(int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     bool isSingle = (_currentFirstEntity?.children[index].filterType ==
             SantoSelectionFilterType.radio) ||
         (_currentFirstEntity?.children[index].filterType ==
@@ -402,17 +399,11 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
       child: Container(
         alignment: isSingle ? Alignment.centerLeft : Alignment.centerLeft,
         height: 48,
-        color: Colors.white,
+        color: commonConfig.fillBase,
         child: Padding(
           padding: EdgeInsets.only(
-              left: SantoThemeConfigurator.instance
-                  .getConfig()
-                  .commonConfig
-                  .hSpacingLg,
-              right: SantoThemeConfigurator.instance
-                  .getConfig()
-                  .commonConfig
-                  .hSpacingLg),
+              left: commonConfig.hSpacingLg,
+              right: commonConfig.hSpacingLg),
           child: isSingle
               ? _buildRightSingleItem(_currentFirstEntity?.children[index])
               : _buildRightMultiItem(_currentFirstEntity?.children[index]),
@@ -451,6 +442,8 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
     if (entity == null) {
       return const SizedBox.shrink();
     } else {
+      final commonConfig =
+          SantoThemeConfigurator.instance.getConfig().commonConfig;
       return Row(
         children: <Widget>[
           Expanded(
@@ -462,15 +455,15 @@ class _SantoLayerMoreSelectionPageState extends State<SantoLayerMoreSelectionPag
             ),
           ),
           Container(
-            height: 16,
-            width: 16,
+            height: commonConfig.iconSizeMd,
+            width: commonConfig.iconSizeMd,
             child: SantoIcon(
               entity.isSelected ? SantoSolidIcons.checkCircle : SantoIcons.circle,
               solid: entity.isSelected,
-              size: 16,
+              size: commonConfig.iconSizeMd,
               color: entity.isSelected
-                  ? SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary
-                  : SantoThemeConfigurator.instance.getConfig().commonConfig.colorTextDisabled,
+                  ? commonConfig.brandPrimary
+                  : commonConfig.colorTextDisabled,
             ),
           )
         ],

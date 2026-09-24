@@ -53,7 +53,6 @@ class _MenuBarControlledExampleState extends State<MenuBarControlledExample> {
       bottomNavigationBar: SantoMenuBar(
         currentIndex: _index,
         onChanged: (index) => setState(() => _index = index),
-        selectedTextColor: const Color(0xFF1677FF),
         showMoreMenu: true,
         moreMenu: SantoMenuBarMoreMenu(
           title: '更多',

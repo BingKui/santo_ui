@@ -126,10 +126,14 @@ class _SantoExpansionElementState extends State<SantoExpandableGroup>
       _controller.value = 1.0;
     }
 
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     if (_isExpanded) {
-      _arrowIcon = SantoIcon(SantoIcons.navArrowDown, size: 12);
+      _arrowIcon =
+          SantoIcon(SantoIcons.navArrowDown, size: commonConfig.iconSizeXs);
     } else {
-      _arrowIcon = SantoIcon(SantoIcons.navArrowUp, size: 12);
+      _arrowIcon =
+          SantoIcon(SantoIcons.navArrowUp, size: commonConfig.iconSizeXs);
     }
   }
 

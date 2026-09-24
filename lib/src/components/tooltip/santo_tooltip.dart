@@ -52,11 +52,11 @@ class SantoTooltip extends StatefulWidget {
   /// 自定义 widget
   final Widget? widget;
 
-  /// 容器内边距，默认为 EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15)
-  final EdgeInsets paddingInsets;
+  /// 容器内边距，不传时取主题 hSpacingLg / vSpacingMd
+  final EdgeInsets? paddingInsets;
 
-  /// 容器圆角，默认为 4
-  final double radius;
+  /// 容器圆角,不传时取主题 radiusMd
+  final double? radius;
 
   /// 是否能多行显，默认 false，单行显示
   final bool canWrap;
@@ -82,9 +82,8 @@ class SantoTooltip extends StatefulWidget {
       this.offset = 0,
       this.popDirection = SantoPopupDirection.bottom,
       this.widget,
-      this.paddingInsets =
-          const EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15),
-      this.radius = 12,
+      this.paddingInsets,
+      this.radius,
       this.borderColor,
       this.canWrap = false,
       this.spaceMargin = 20,
@@ -98,12 +97,12 @@ class SantoTooltip extends StatefulWidget {
   /// [popDirection] 箭头的方向
   /// [arrowHeight] 箭头的高度，默认 6
   /// [textStyle] 文本样式
-  /// [backgroundColor] Tooltip 的背景颜色，默认 Color(0xFF1A1A1A)
+  /// [backgroundColor] Tooltip 的背景颜色，不传取主题 tooltipBackgroundColor
   /// [hasCloseIcon] 是否显示关闭图标，默认为 false，不显示
   /// [offset] 距离 targetView 垂直方向的偏移量
   /// [widget] 自定义 pop 视图
-  /// [paddingInsets] 容器内边距，默认为 EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15)
-  /// [radius] 容器圆角，默认为 4
+  /// [paddingInsets] 容器内边距，默认取主题 hSpacingLg / vSpacingMd
+  /// [radius] 容器圆角，默认取主题 radiusMd
   /// [borderColor] 边框颜色，默认为 Colors.transparent
   /// [borderWidth] 边框宽度，默认为 1
   /// [canWrap] 是否能多行显，默认 false，单行显示
@@ -114,15 +113,13 @@ class SantoTooltip extends StatefulWidget {
   static void show(context, String? text, GlobalKey popKey,
       {SantoPopupDirection popDirection = SantoPopupDirection.bottom,
       double arrowHeight = 6.0,
-      TextStyle? textStyle =
-          const TextStyle(fontSize: 16, color: Color(0xFFFFFFFF)),
-      Color? backgroundColor = const Color(0xFF1A1A1A),
+      TextStyle? textStyle,
+      Color? backgroundColor,
       bool hasCloseIcon = false,
       double offset = 0,
       Widget? widget,
-      EdgeInsets paddingInsets =
-          const EdgeInsets.only(left: 20, top: 15, right: 20, bottom: 15),
-      double radius = 12,
+      EdgeInsets? paddingInsets,
+      double? radius,
       Color? borderColor = Colors.transparent,
       double borderWidth = 1,
       bool canWrap = false,
@@ -168,7 +165,11 @@ class _SantoTooltipState extends State<SantoTooltip> {
 
   /// 关闭图标跟随文字色:深色气泡上取白色,白底弹层上取深色
   Color get _closeIconColor =>
-      widget.textStyle?.color ?? const Color(0xFFFFFFFF);
+      widget.textStyle?.color ??
+      SantoThemeConfigurator.instance
+          .getConfig()
+          .commonConfig
+          .colorTextBaseInverse;
 
   /// 屏幕的尺寸
   late Size _screenSize;
@@ -200,8 +201,12 @@ class _SantoTooltipState extends State<SantoTooltip> {
     this._showRect = _getWidgetGlobalRect(widget.popKey);
     this._screenSize =PlatformDispatcher.instance.views.first.physicalSize/ PlatformDispatcher.instance.views.first.devicePixelRatio;
     _borderColor = (widget.borderColor ?? Colors.transparent).withAlpha(255);
-    _backgroundColor =
-        (widget.backgroundColor ?? Colors.transparent).withAlpha(255);
+    _backgroundColor = (widget.backgroundColor ??
+            SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .tooltipBackgroundColor)
+        .withAlpha(255);
     _popDirection = widget.popDirection;
     _calculateOffset();
   }
@@ -319,6 +324,12 @@ class _SantoTooltipState extends State<SantoTooltip> {
   Widget _buildPopWidget(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
+    // 未指定文字样式时取主题字号与反色文字,深色气泡上可读
+    final TextStyle resolvedTextStyle = widget.textStyle ??
+        TextStyle(
+          fontSize: commonConfig.fontSizeSubHead,
+          color: commonConfig.colorTextBaseInverse,
+        );
     // 状态栏高度
     double statusBarHeight = MediaQueryData.fromView(View.of(context)).padding.top;
     return Positioned(
@@ -327,11 +338,19 @@ class _SantoTooltipState extends State<SantoTooltip> {
         top: _popDirection == SantoPopupDirection.bottom ? _top : null,
         bottom: _popDirection == SantoPopupDirection.top ? _bottom : null,
         child: Container(
-            padding: widget.paddingInsets,
+            padding: widget.paddingInsets ??
+                EdgeInsets.only(
+                  left: commonConfig.hSpacingLg,
+                  top: commonConfig.vSpacingMd,
+                  right: commonConfig.hSpacingLg,
+                  bottom: commonConfig.vSpacingMd,
+                ),
             decoration: BoxDecoration(
                 color: _backgroundColor,
-                border: Border.all(color: _borderColor, width: 0.5),
-                borderRadius: BorderRadius.circular(widget.radius)),
+                border: Border.all(
+                    color: _borderColor, width: commonConfig.borderWidthSm),
+                borderRadius: BorderRadius.circular(
+                    widget.radius ?? commonConfig.radiusMd)),
             constraints: BoxConstraints(
                 maxWidth: _expandedRight
                     ? _screenSize.width - _left
@@ -345,7 +364,8 @@ class _SantoTooltipState extends State<SantoTooltip> {
                         ? RichText(
                             text: TextSpan(children: <InlineSpan>[
                             TextSpan(
-                                text: widget.text, style: widget.textStyle),
+                                text: widget.text,
+                                style: resolvedTextStyle),
                             widget.isShowCloseIcon
                                 ? WidgetSpan(
                                     alignment: PlaceholderAlignment.middle,
@@ -366,7 +386,7 @@ class _SantoTooltipState extends State<SantoTooltip> {
                                   widget.text ?? '',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: widget.textStyle,
+                                  style: resolvedTextStyle,
                                 ),
                               ),
                               widget.isShowCloseIcon
@@ -498,8 +518,8 @@ class SantoPopupListWindow {
     TextStyle textStyle = TextStyle(
         color: commonConfig.colorTextBase, fontSize: commonConfig.fontSizeSubHead);
     double arrowHeight = 6.0;
-    Color borderColor = Color(0xffCCCCCC);
-    Color backgroundColor = Colors.white;
+    Color borderColor = commonConfig.colorTextHint;
+    Color backgroundColor = commonConfig.fillBase;
     double offset = 4;
     double spaceMargin = -10;
     double minWidth = 100;
@@ -582,8 +602,8 @@ class SantoPopupListWindow {
     double minWidth = 100;
     double maxWidth = 150;
     double maxHeight = 200;
-    Color borderColor = SantoThemeConfigurator.instance.getConfig().commonConfig.dividerColorBase;
-    Color backgroundColor = Colors.white;
+    Color borderColor = commonConfig.dividerColorBase;
+    Color backgroundColor = commonConfig.fillBase;
     TextStyle textStyle = TextStyle(
         color: commonConfig.colorTextBase, fontSize: commonConfig.fontSizeBase);
     bool hasCloseIcon = true;

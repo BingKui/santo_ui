@@ -387,7 +387,7 @@ class _SantoActionSheetSelectedItemListState<T>
             : SantoIntl.of(context).localizedResource.selectedList;
     TextStyle titleStyle = TextStyle(
         fontSize: commonConfig.fontSizeHead,
-        color: Color(0xff17233D),
+        color: commonConfig.colorTextBase,
         fontWeight: FontWeight.w500,
         decoration: TextDecoration.none);
     Widget topTitle = Expanded(
@@ -415,7 +415,7 @@ class _SantoActionSheetSelectedItemListState<T>
                 textAlign: TextAlign.right,
                 style: TextStyle(
                     fontSize: commonConfig.fontSizeSubHead,
-                    color: Color(0xff808695),
+                    color: commonConfig.colorTextSecondary,
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.none))),
       );
@@ -426,14 +426,15 @@ class _SantoActionSheetSelectedItemListState<T>
     Widget itemIcon;
     if (widget.itemWidget.itemIconImage != null) {
       itemIcon = Container(
-          color: Colors.white,
+          color: commonConfig.fillBase,
           height: 50,
           width: 45,
           padding: EdgeInsets.only(
               left: commonConfig.hSpacingLg, right: commonConfig.hSpacingSm),
           child: widget.itemWidget.itemIconImage);
     } else {
-      itemIcon = Container(color: Colors.white, width: 20);
+      itemIcon = Container(
+          color: commonConfig.fillBase, width: commonConfig.hSpacingLg);
     }
 
     // 视图的高度
@@ -453,7 +454,7 @@ class _SantoActionSheetSelectedItemListState<T>
                 onTap: () {},
                 child: Container(
                     decoration: ShapeDecoration(
-                      color: Colors.white,
+                      color: commonConfig.fillBase,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           topLeft:
@@ -469,9 +470,9 @@ class _SantoActionSheetSelectedItemListState<T>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: topWidgetList),
                       Divider(
-                        height: 0.5,
+                        height: commonConfig.borderWidthSm,
                         indent: 0,
-                        color: Color(0xFFE8EAEC),
+                        color: commonConfig.dividerColorBase,
                       ),
                       Expanded(
                         child: ListView.builder(
@@ -481,7 +482,7 @@ class _SantoActionSheetSelectedItemListState<T>
                             // 是否展示左侧的图标
                             bool shouldHideIcon = false;
                             // 获取标题
-                            Widget content = Container(color: Colors.white);
+                            Widget content = Container(color: commonConfig.fillBase);
                             if (index < widget.itemWidget.items.length) {
                               var item = widget.itemTitleBuilder(
                                   index, widget.itemWidget.items[index]);
@@ -490,7 +491,7 @@ class _SantoActionSheetSelectedItemListState<T>
                                   item,
                                   style: TextStyle(
                                       fontSize: commonConfig.fontSizeSubHead,
-                                      color: Color(0xff17233D),
+                                      color: commonConfig.colorTextBase,
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.none),
                                 );
@@ -505,7 +506,7 @@ class _SantoActionSheetSelectedItemListState<T>
                                 Container(
                                   constraints:
                                       const BoxConstraints(minHeight: 50.0),
-                                  color: Colors.white,
+                                  color: commonConfig.fillBase,
                                   child: Row(
                                     children: <Widget>[
                                       Offstage(
@@ -523,7 +524,7 @@ class _SantoActionSheetSelectedItemListState<T>
                                             this._onDeleteItemAction(index);
                                           },
                                           child: Container(
-                                              color: Colors.white,
+                                              color: commonConfig.fillBase,
                                               width: 45,
                                               padding: EdgeInsets.only(
                                                   left: commonConfig.hSpacingXs,

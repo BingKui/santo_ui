@@ -4,8 +4,6 @@ import 'package:santo_ui/src/components/line/santo_line.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
-const double _kItemSidePadding = 5;
-
 /// 描述: 横向步骤条,是一种常见的导航形式，它具有导航通用的属性：告知用户”我在哪/我能去哪“，
 /// 步骤数目就相当于告知用户--能去哪或者说流程将要经历什么。
 /// 通用组件步骤条分为三个状态：完成态/进行态/等待态，三种状态在样式上均加以区分
@@ -48,9 +46,11 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
   }
 
   Color _getStepContentTextColor(int index) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return index > _currentIndex
-        ? const Color(0xFFCCCCCC)
-        : const Color(0xFF17233D);
+        ? commonConfig.colorTextHint
+        : commonConfig.colorTextBase;
   }
 
   void _handleStepStateListenerTick() {
@@ -168,13 +168,15 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
   }
 
   Widget _applyLineItem(int index, bool isLeft) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Expanded(
       child: Container(
         alignment: Alignment.center,
         child: SantoLine(
           height: 1,
-          leftInset: isLeft ? 0 : _kItemSidePadding,
-          rightInset: isLeft ? _kItemSidePadding : 0,
+          leftInset: isLeft ? 0 : commonConfig.hSpacingXs,
+          rightInset: isLeft ? commonConfig.hSpacingXs : 0,
           color: _getLineColor(index, isLeft),
         ),
       ),
@@ -187,7 +189,8 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
     } else if (_currentIndex == index && isLeft) {
       return _primary;
     }
-    return const Color(0xFFE7E7E7);
+    return SantoThemeConfigurator
+          .instance.getConfig().commonConfig.dividerColorBase;
   }
 
   Widget _getIndexIcon(int index) {
@@ -208,8 +211,8 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
     return Container(
       margin: EdgeInsets.only(
           top: commonConfig.vSpacingXs,
-          left: _kItemSidePadding,
-          right: _kItemSidePadding),
+          left: commonConfig.hSpacingXs,
+          right: commonConfig.hSpacingXs),
       child: Text(
         step.stepContentText ?? '',
         maxLines: 1,
@@ -254,8 +257,6 @@ class SantoHorizontalStepsState extends State<SantoHorizontalSteps> {
   }
 }
 
-const Color _kStepWaitColor = Color(0xFFCCCCCC);
-
 enum _StepDotType {
   /// 等待态:灰圈 + 序号
   wait,
@@ -286,6 +287,10 @@ class _StepDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final Color waitColor = commonConfig.colorTextHint;
+    final Color inverseColor = commonConfig.colorTextBaseInverse;
     switch (type) {
       case _StepDotType.wait:
         return Container(
@@ -294,14 +299,14 @@ class _StepDot extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: _kStepWaitColor, width: 1.5),
+            border: Border.all(color: waitColor, width: 1.5),
           ),
           child: Text(
             '$number',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 11,
               height: 1,
-              color: _kStepWaitColor,
+              color: waitColor,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -320,9 +325,9 @@ class _StepDot extends StatelessWidget {
                 width: 2,
                 height: 2,
                 margin: EdgeInsets.only(left: i == 0 ? 0 : 2),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: inverseColor,
                 ),
               ),
             ),
@@ -334,10 +339,10 @@ class _StepDot extends StatelessWidget {
           height: 20,
           alignment: Alignment.center,
           decoration: BoxDecoration(shape: BoxShape.circle, color: activeColor),
-          child: const SantoIcon(
+          child: SantoIcon(
             SantoIcons.check,
             size: 11,
-            color: Colors.white,
+            color: inverseColor,
           ),
         );
     }

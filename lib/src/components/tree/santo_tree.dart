@@ -203,7 +203,7 @@ class _SantoTreeState extends State<SantoTree> {
                         child: Icon(
                           Icons.chevron_right,
                           size: 18,
-                          color: const Color(0xFF808695),
+                          color: commonConfig.colorTextSecondary,
                         ),
                       ),
                     ),
@@ -223,17 +223,17 @@ class _SantoTreeState extends State<SantoTree> {
                   border: Border.all(
                     color: isSelected
                         ? _activeColor
-                        : const Color(0xFFDCDEE2),
+                        : commonConfig.borderColorBase,
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(commonConfig.radiusXs),
                   color: isSelected ? _activeColor : Colors.transparent,
                 ),
                 child: isSelected
-                    ? const Icon(
+                    ? Icon(
                         Icons.check,
-                        size: 14,
-                        color: Colors.white,
+                        size: commonConfig.iconSizeSm,
+                        color: commonConfig.colorTextBaseInverse,
                       )
                     : null,
               ),
@@ -245,7 +245,8 @@ class _SantoTreeState extends State<SantoTree> {
               child: Icon(
                 node.icon,
                 size: 18,
-                color: isSelected ? _activeColor : const Color(0xFF515A6E),
+                color:
+                    isSelected ? _activeColor : commonConfig.colorTextImportant,
               ),
             ),
           // 节点文本
@@ -257,9 +258,7 @@ class _SantoTreeState extends State<SantoTree> {
                 node.label,
                 style: TextStyle(
                   fontSize: commonConfig.fontSizeBase,
-                  color: isSelected
-                      ? _activeColor
-                      : const Color(0xFF17233D),
+                  color: isSelected ? _activeColor : commonConfig.colorTextBase,
                   fontWeight:
                       isSelected ? FontWeight.w500 : FontWeight.normal,
                 ),

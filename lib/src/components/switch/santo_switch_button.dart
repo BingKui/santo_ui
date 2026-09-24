@@ -27,10 +27,10 @@ class SantoSwitchButton extends StatefulWidget {
   ///选中时轨道颜色,默认主题 brandPrimary
   final Color? activeColor;
 
-  ///未选中时轨道颜色,默认 #FAFAFA
+  ///未选中时轨道颜色,默认主题 fillBody
   final Color? inactiveColor;
 
-  ///滑块颜色,默认白色
+  ///滑块颜色,默认主题 fillBase
   final Color? thumbColor;
 
   ///开启文案,与 [closeText] 任一传入即展示文案(轨道自动加宽)
@@ -65,17 +65,17 @@ class _SantoSwitchButtonState extends State<SantoSwitchButton> {
   @override
   Widget build(BuildContext context) {
     return SantoBaseSwitchButton(
-      borderColor: widget.borderColor ?? const Color(0xffeeeeee),
+      borderColor: widget.borderColor ?? _commonConfig.dividerColorBase,
       value: widget.value,
       enabled: widget.enabled,
       loading: widget.loading,
       size: widget.size,
       trackOnColor: widget.activeColor ?? _commonConfig.brandPrimary,
-      trackOffColor: widget.inactiveColor ?? const Color(0xFFF5F5F5),
-      thumbColor: widget.thumbColor ?? Colors.white,
+      trackOffColor: widget.inactiveColor,
+      thumbColor: widget.thumbColor,
       openText: widget.openText,
       closeText: widget.closeText,
-      openTextColor: Colors.white,
+      openTextColor: _commonConfig.colorTextBaseInverse,
       closeTextColor: _commonConfig.colorTextSecondary,
       onChanged: widget.onChanged,
     );

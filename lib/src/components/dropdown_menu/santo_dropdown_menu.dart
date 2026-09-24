@@ -115,7 +115,7 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
                 _displayText,
                 style: TextStyle(
                   fontSize: commonConfig.fontSizeBase,
-                  color: _isActive ? _activeColor : const Color(0xFF17233D),
+                  color: _isActive ? _activeColor : commonConfig.colorTextBase,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -128,7 +128,8 @@ class _SantoDropdownMenuItemState extends State<SantoDropdownMenuItem>
               child: Icon(
                 Icons.keyboard_arrow_down,
                 size: 18,
-                color: _isActive ? _activeColor : const Color(0xFF808695),
+                color:
+                    _isActive ? _activeColor : commonConfig.colorTextSecondary,
               ),
             ),
           ],
@@ -253,17 +254,19 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
 
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         // 菜单栏
         Container(
           height: 48,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Color(0xFFE8EAEC),
-                width: 0.5,
+                color: commonConfig.dividerColorBase,
+                width: commonConfig.borderWidthSm,
               ),
             ),
           ),
@@ -309,7 +312,7 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
     // 默认列表内容
     return Container(
       constraints: const BoxConstraints(maxHeight: 300),
-      color: Colors.white,
+      color: commonConfig.fillBase,
       child: ListView.builder(
         shrinkWrap: true,
         padding: EdgeInsets.zero,
@@ -335,7 +338,7 @@ class _SantoDropdownMenuState extends State<SantoDropdownMenu>
                         fontSize: commonConfig.fontSizeBase,
                         color: isSelected
                             ? _activeColor
-                            : const Color(0xFF17233D),
+                            : commonConfig.colorTextBase,
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_drawing/path_drawing.dart';
@@ -29,7 +30,8 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
   final double markerMargin;
 
   ///背景多边形轴颜色，默认 Color(0xFFCCCCCC)
-  final Color axisLineColor;
+  ///多边形轴/网格颜色,不传取主题 [SantoCommonConfig.chartGridColor]
+  final Color? axisLineColor;
 
   ///是否展示中间十字交叉线，默认 false
   final bool crossedAxisLine;
@@ -47,44 +49,20 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
   final List<Offset>? offset;
 
   ///The default preset chart styles ordered in priority of usage.
-  static const List<SantoRadarChartStyle> defaultRadarChartStyles = [
-    SantoRadarChartStyle(
-      strokeColor: Color(0xff0984f9),
-      areaColor: Color(0x1a2196F3),
-      dotted: true,
-      dotColor: Color(0xff0984f9),
-    ),
-    SantoRadarChartStyle(
-      strokeColor: Color(0xff01d57d),
-      areaColor: Color(0x1a01d57d),
-      dotted: true,
-      dotColor: Color(0xff01d57d),
-    ),
-    SantoRadarChartStyle(
-      strokeColor: Color(0xfffac958),
-      areaColor: Color(0x1afac958),
-      dotted: true,
-      dotColor: Color(0xfffac958),
-    ),
-    SantoRadarChartStyle(
-      strokeColor: Color(0xff6edeee),
-      areaColor: Color(0x1a6edeee),
-      dotted: true,
-      dotColor: Color(0xff6edeee),
-    ),
-    SantoRadarChartStyle(
-      strokeColor: Color(0xfff79631),
-      areaColor: Color(0x1af79631),
-      dotted: true,
-      dotColor: Color(0xfff79631),
-    ),
-    SantoRadarChartStyle(
-      strokeColor: Color(0xfff7779c),
-      areaColor: Color(0x1af7779c),
-      dotted: true,
-      dotColor: Color(0xfff7779c),
-    ),
-  ];
+  ///
+  ///配色取自主题 [SantoCommonConfig.chartPalette]，多系列按序取色。
+  static List<SantoRadarChartStyle> get defaultRadarChartStyles {
+    final List<Color> palette =
+        SantoThemeConfigurator.instance.getConfig().commonConfig.chartPalette;
+    return palette
+        .map((Color color) => SantoRadarChartStyle(
+              strokeColor: color,
+              areaColor: color.withOpacity(0.1),
+              dotted: true,
+              dotColor: color,
+            ))
+        .toList();
+  }
 
   SantoRadarChart({
     Key? key,
@@ -97,7 +75,7 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
     this.markerMargin = 4,
     this.sidesCount = 5,
     this.offset,
-    this.axisLineColor = const Color(0xFFCCCCCC),
+    this.axisLineColor,
     this.crossedAxisLine = false,
     this.animateProgress = 1.0,
     this.rotateAngle = 0,
@@ -127,6 +105,7 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
     this.rotateAngle = 0,
     this.crossedAxisLine = false,
     this.offset,
+    this.axisLineColor,
     required List<String> tagNames,
     required List<List<double>> data,
   })  : assert(sidesCount >= 3),
@@ -134,7 +113,6 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
         assert(minValue < maxValue),
         assert(data.length <= defaultRadarChartStyles.length),
         this.animateProgress = 1.0,
-        this.axisLineColor = const Color(0xFFCCCCCC),
         this.provider = DefaultRadarProvider(data),
         super(
             key: key,
@@ -151,7 +129,10 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: Color(0xFF17233D),
+                        color: SantoThemeConfigurator.instance
+                            .getConfig()
+                            .commonConfig
+                            .colorTextBase,
                         fontSize: 12,
                         fontWeight: FontWeight.w600),
                   ),
@@ -159,6 +140,9 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
               }
               return children;
             }());
+
+  SantoCommonConfig get _commonConfig =>
+      SantoThemeConfigurator.instance.getConfig().commonConfig;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -169,7 +153,7 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
       maxValue: maxValue,
       levelCount: levelCount,
       provider: provider,
-      axisLineColor: axisLineColor,
+      axisLineColor: axisLineColor ?? _commonConfig.chartGridColor,
       crossedAxisLine: crossedAxisLine,
       animateProgress: animateProgress,
       rotateAngle: rotateAngle,
@@ -185,7 +169,7 @@ class SantoRadarChart extends MultiChildRenderObjectWidget {
       ..sideCount = sidesCount
       ..maxValue = maxValue
       ..levelCount = levelCount
-      ..axisLineColor = axisLineColor
+      ..axisLineColor = axisLineColor ?? _commonConfig.chartGridColor
       ..crossedAxisLine = crossedAxisLine
       ..animateProgress = animateProgress
       ..rotateAngle = rotateAngle
@@ -797,11 +781,16 @@ class DefaultRadarProvider extends SantoRadarChartDataProvider {
   @override
   SantoRadarChartStyle getRadarStyle(int radarIndex) {
     if (radarIndex >= SantoRadarChart.defaultRadarChartStyles.length) {
+      final Color color = SantoThemeConfigurator.instance
+          .getConfig()
+          .commonConfig
+          .chartPalette
+          .first;
       return SantoRadarChartStyle(
-        strokeColor: Color(0xff0984f9),
-        areaColor: Color(0x1a2196F3),
+        strokeColor: color,
+        areaColor: color.withOpacity(0.1),
         dotted: true,
-        dotColor: Color(0xff0984f9),
+        dotColor: color,
       );
     }
     return SantoRadarChart.defaultRadarChartStyles[radarIndex];

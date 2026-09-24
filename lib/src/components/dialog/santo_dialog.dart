@@ -249,11 +249,12 @@ class SantoDialog extends StatelessWidget {
   /// [isShowOperateWidget] 为 false 时不展示底部提交按钮。
   ///
   /// @changed v1.1.0 原 `SantoScrollableTextDialog`
+  /// @changed textColor 改为可空,不传时取主题 colorTextImportant
   factory SantoDialog.richText({
     Key? key,
     String? title,
     required String contentText,
-    Color textColor = const Color(0xFF515A6E),
+    Color? textColor,
     double textFontSize = 16,
     String? submitText,
     Color? submitBgColor,
@@ -390,6 +391,7 @@ class SantoDialog extends StatelessWidget {
   /// [getCustomChannelTitle] 与 [getCustomChannelWidget] 按下标提供。
   ///
   /// @changed v1.1.0 原 `SantoShareDialog`;面板形态的分享请继续使用 `SantoShare`
+  /// @changed shareTextColor 改为可空,不传时取主题 colorTextSecondary
   factory SantoDialog.share({
     Key? key,
     String? title,
@@ -399,8 +401,8 @@ class SantoDialog extends StatelessWidget {
     SantoDialogShareItemClick? onChannelTap,
     SantoDialogShareCustomTitle? getCustomChannelTitle,
     SantoDialogShareCustomIcon? getCustomChannelWidget,
-    Color shareTextColor = const Color(0xFF808695),
-    Color separatorLineColor = const Color(0xFFF0F0F0),
+    Color? shareTextColor,
+    Color? separatorLineColor,
     bool closable = true,
     VoidCallback? onClose,
     double? width,
@@ -1314,7 +1316,7 @@ class _RichTextDialog extends StatelessWidget {
   const _RichTextDialog({
     this.title,
     required this.contentText,
-    this.textColor = const Color(0xFF515A6E),
+    this.textColor,
     this.textFontSize = 16,
     this.submitText,
     this.submitBgColor,
@@ -1330,7 +1332,7 @@ class _RichTextDialog extends StatelessWidget {
 
   final String? title;
   final String contentText;
-  final Color textColor;
+  final Color? textColor;
   final double textFontSize;
   final String? submitText;
   final Color? submitBgColor;
@@ -1381,7 +1383,7 @@ class _RichTextDialog extends StatelessWidget {
                       linksCallback: linksCallback,
                       defaultStyle: TextStyle(
                         fontSize: textFontSize,
-                        color: textColor,
+                        color: textColor ?? commonConfig.colorTextImportant,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -1595,7 +1597,7 @@ class _SingleSelectDialogState extends State<_SingleSelectDialog> {
                   child: SantoIcon(
                     checked ? SantoSolidIcons.checkCircle : SantoIcons.circle,
                     solid: checked,
-                    size: 16,
+                    size: commonConfig.iconSizeMd,
                     color: checked
                         ? commonConfig.brandPrimary
                         : commonConfig.colorTextDisabled,
@@ -1787,7 +1789,7 @@ class _MultiSelectDialogState extends State<_MultiSelectDialog> {
                   child: SantoIcon(
                     checked ? SantoSolidIcons.checkCircle : SantoIcons.circle,
                     solid: checked,
-                    size: 16,
+                    size: commonConfig.iconSizeMd,
                     color: checked
                         ? commonConfig.brandPrimary
                         : commonConfig.colorTextDisabled,
@@ -1853,8 +1855,8 @@ class _ShareDialog extends StatelessWidget {
     this.onChannelTap,
     this.getCustomChannelTitle,
     this.getCustomChannelWidget,
-    this.shareTextColor = const Color(0xFF808695),
-    this.separatorLineColor = const Color(0xFFF0F0F0),
+    this.shareTextColor,
+    this.separatorLineColor,
     this.closable = true,
     this.onClose,
     this.width,
@@ -1868,8 +1870,10 @@ class _ShareDialog extends StatelessWidget {
   final SantoDialogShareItemClick? onChannelTap;
   final SantoDialogShareCustomTitle? getCustomChannelTitle;
   final SantoDialogShareCustomIcon? getCustomChannelWidget;
-  final Color shareTextColor;
-  final Color separatorLineColor;
+  final Color? shareTextColor;
+
+  /// 分隔线颜色,不传取主题 dividerColorBase
+  final Color? separatorLineColor;
   final bool closable;
   final VoidCallback? onClose;
   final double? width;
@@ -1933,7 +1937,9 @@ class _ShareDialog extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Container(color: separatorLineColor, height: 1),
+          Container(
+              color: separatorLineColor ?? commonConfig.dividerColorBase,
+              height: 1),
           Container(
             color: config.backgroundColor,
             padding: EdgeInsets.only(
@@ -1942,7 +1948,8 @@ class _ShareDialog extends StatelessWidget {
               separatorText ??
                   SantoIntl.of(context).localizedResource.shareWayTip,
               style: TextStyle(
-                  fontSize: commonConfig.fontSizeCaption, color: shareTextColor),
+                  fontSize: commonConfig.fontSizeCaption,
+                  color: shareTextColor ?? commonConfig.colorTextSecondary),
             ),
           ),
         ],
@@ -2015,7 +2022,8 @@ class _ShareDialog extends StatelessWidget {
             channelTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: commonConfig.fontSizeCaption, color: shareTextColor),
+                fontSize: commonConfig.fontSizeCaption,
+                color: shareTextColor ?? commonConfig.colorTextSecondary),
           ),
         ],
       ),

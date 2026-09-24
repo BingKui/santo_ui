@@ -75,10 +75,13 @@ class SantoSidebar extends StatelessWidget {
       SantoThemeConfigurator.instance.getConfig().commonConfig.brandPrimary;
 
   Color get _inactiveColor =>
-      inactiveColor ?? const Color(0xFF515A6E);
+      inactiveColor ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig
+          .colorTextImportant;
 
   Color get _backgroundColor =>
-      backgroundColor ?? const Color(0xFFF5F5F5);
+      backgroundColor ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillBody;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +113,7 @@ class SantoSidebar extends StatelessWidget {
       child: Container(
         height: itemHeight,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.white : _backgroundColor,
+          color: isSelected ? commonConfig.fillBase : _backgroundColor,
         ),
         child: Row(
           children: [

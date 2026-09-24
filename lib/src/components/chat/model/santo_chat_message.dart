@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 /// 消息发送状态
 enum SantoChatMessageStatus {
@@ -16,6 +16,73 @@ enum SantoChatMessageStatus {
 
   /// 发送失败
   failed,
+}
+
+/// 审批单状态,用于 [SantoChatApprovalMessage]
+///
+/// @since v1.5.1
+enum SantoChatApprovalStatus {
+  /// 审批中
+  pending,
+
+  /// 已通过
+  approved,
+
+  /// 已驳回
+  rejected,
+
+  /// 已取消
+  cancelled;
+
+  /// 服务端字符串转枚举,未知值按 [cancelled] 处理
+  static SantoChatApprovalStatus fromName(String? name) {
+    switch (name) {
+      case 'pending':
+        return SantoChatApprovalStatus.pending;
+      case 'approved':
+        return SantoChatApprovalStatus.approved;
+      case 'rejected':
+        return SantoChatApprovalStatus.rejected;
+      default:
+        return SantoChatApprovalStatus.cancelled;
+    }
+  }
+}
+
+/// 通知类型,用于 [SantoChatNoticeMessage],决定卡片图标与配色
+///
+/// @since v1.5.1
+enum SantoChatNoticeType {
+  /// 审批通知
+  approval,
+
+  /// 被 @ 的通知
+  mention,
+
+  /// 会话消息通知
+  message,
+
+  /// 任务执行结果通知
+  task,
+
+  /// 其他通知
+  other;
+
+  /// 服务端字符串转枚举
+  static SantoChatNoticeType fromName(String? name) {
+    switch (name) {
+      case 'approval':
+        return SantoChatNoticeType.approval;
+      case 'imMention':
+        return SantoChatNoticeType.mention;
+      case 'imMessage':
+        return SantoChatNoticeType.message;
+      case 'taskExecuteResult':
+        return SantoChatNoticeType.task;
+      default:
+        return SantoChatNoticeType.other;
+    }
+  }
 }
 
 /// 会话参与者
@@ -125,6 +192,49 @@ class SantoChatReaction {
   });
 }
 
+/// 已读回执
+///
+/// 只用于发送方的消息,按 [label] 展示:单聊是「已读 / 未读」,
+/// 群聊是「N人未读 / 全部已读」(对标钉钉);人员列表由服务端按需下发,
+/// 点击文案后可以把它交给 `SantoChatReadReceiptSheet.show` 展示。
+///
+/// @since v1.5.1
+@immutable
+class SantoChatReadReceipt {
+  /// 已读人数
+  final int readCount;
+
+  /// 未读人数
+  final int unreadCount;
+
+  /// 已读人员,不传时只展示人数
+  final List<SantoChatAuthor>? readMembers;
+
+  /// 未读人员,不传时只展示人数
+  final List<SantoChatAuthor>? unreadMembers;
+
+  const SantoChatReadReceipt({
+    this.readCount = 0,
+    this.unreadCount = 0,
+    this.readMembers,
+    this.unreadMembers,
+  });
+
+  /// 两个人数都为 0,没有可展示的信息
+  bool get isEmpty => readCount <= 0 && unreadCount <= 0;
+
+  /// 回执文案:单聊「已读 / 未读」,群聊「N人未读 / 全部已读」
+  String get label {
+    if (readCount + unreadCount <= 1) {
+      if (readCount > 0) return '已读';
+      if (unreadCount > 0) return '未读';
+      return '';
+    }
+    if (unreadCount <= 0) return '全部已读';
+    return '$unreadCount人未读';
+  }
+}
+
 /// 消息基类
 ///
 /// 系统消息没有发送者,[author] 为 null。
@@ -150,6 +260,16 @@ abstract class SantoChatMessage {
   /// 是否被编辑过,展示「已编辑」标记
   final bool isEdited;
 
+  /// 是否已撤回,为 true 时消息本体不再渲染(撤回提示由服务端下发的系统消息展示)
+  ///
+  /// @since v1.5.1
+  final bool recalled;
+
+  /// 已读回执(群聊的已读/未读人数),由服务端下发,只在发送方展示
+  ///
+  /// @since v1.5.1
+  final SantoChatReadReceipt? readReceipt;
+
   const SantoChatMessage({
     required this.id,
     this.author,
@@ -158,6 +278,8 @@ abstract class SantoChatMessage {
     this.quote,
     this.reactions = const <SantoChatReaction>[],
     this.isEdited = false,
+    this.recalled = false,
+    this.readReceipt,
   });
 
   /// 判断该消息是否由 [userId] 发出
@@ -182,6 +304,8 @@ class SantoChatTextMessage extends SantoChatMessage {
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
     bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
   }) : super(
           id: id,
           author: author,
@@ -190,6 +314,8 @@ class SantoChatTextMessage extends SantoChatMessage {
           quote: quote,
           reactions: reactions,
           isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
         );
 }
 
@@ -223,6 +349,8 @@ class SantoChatImageMessage extends SantoChatMessage {
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
     bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
   }) : super(
           id: id,
           author: author,
@@ -231,6 +359,8 @@ class SantoChatImageMessage extends SantoChatMessage {
           quote: quote,
           reactions: reactions,
           isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
         );
 }
 
@@ -264,6 +394,8 @@ class SantoChatVideoMessage extends SantoChatMessage {
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
     bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
   }) : super(
           id: id,
           author: author,
@@ -272,6 +404,8 @@ class SantoChatVideoMessage extends SantoChatMessage {
           quote: quote,
           reactions: reactions,
           isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
         );
 }
 
@@ -297,6 +431,8 @@ class SantoChatVoiceMessage extends SantoChatMessage {
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
     bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
   }) : super(
           id: id,
           author: author,
@@ -305,6 +441,8 @@ class SantoChatVoiceMessage extends SantoChatMessage {
           quote: quote,
           reactions: reactions,
           isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
         );
 }
 
@@ -330,6 +468,8 @@ class SantoChatFileMessage extends SantoChatMessage {
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
     bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
   }) : super(
           id: id,
           author: author,
@@ -338,6 +478,8 @@ class SantoChatFileMessage extends SantoChatMessage {
           quote: quote,
           reactions: reactions,
           isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
         );
 }
 
@@ -373,6 +515,8 @@ class SantoChatDocMessage extends SantoChatMessage {
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
     bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
   }) : super(
           id: id,
           author: author,
@@ -381,6 +525,187 @@ class SantoChatDocMessage extends SantoChatMessage {
           quote: quote,
           reactions: reactions,
           isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
+        );
+}
+
+/// 自定义消息
+///
+/// 内容由业务方通过 [builder] 自行渲染(如审批卡片),组件只负责左右分栏、头像、
+/// 昵称、时间与发送状态。内容自带容器,走**裸气泡**(不画气泡底色与内边距),
+/// 因此不必再包一层卡片。
+class SantoChatCustomMessage extends SantoChatMessage {
+  /// 内容构建器,返回的 Widget 自带容器
+  final Widget Function(BuildContext context) builder;
+
+  const SantoChatCustomMessage({
+    required String id,
+    required SantoChatAuthor author,
+    required this.builder,
+    DateTime? createdAt,
+    SantoChatMessageStatus status = SantoChatMessageStatus.sent,
+    SantoChatQuote? quote,
+    List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
+  }) : super(
+          id: id,
+          author: author,
+          createdAt: createdAt,
+          status: status,
+          quote: quote,
+          reactions: reactions,
+          isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
+        );
+}
+
+/// 审批消息
+///
+/// 消息体是一张审批卡片,可带通过 / 驳回操作,状态取 [approvalStatus]
+/// (与基类的发送状态 [status] 无关)。
+///
+/// @since v1.5.1
+class SantoChatApprovalMessage extends SantoChatMessage {
+  /// 审批任务 id,业务回调里用它定位审批单
+  final String taskId;
+
+  /// 审批标题
+  final String title;
+
+  /// 审批单状态
+  final SantoChatApprovalStatus approvalStatus;
+
+  /// 审批单号
+  final String? taskNo;
+
+  /// 审批流名称
+  final String? flowName;
+
+  /// 申请人
+  final String? applicatorName;
+
+  /// 当前节点名称
+  final String? currentNodeName;
+
+  /// 是否可审批,为 true 且状态是 [SantoChatApprovalStatus.pending] 时展示操作按钮
+  final bool canApprove;
+
+  const SantoChatApprovalMessage({
+    required String id,
+    required SantoChatAuthor author,
+    required this.taskId,
+    required this.title,
+    this.approvalStatus = SantoChatApprovalStatus.pending,
+    this.taskNo,
+    this.flowName,
+    this.applicatorName,
+    this.currentNodeName,
+    this.canApprove = false,
+    DateTime? createdAt,
+    SantoChatMessageStatus status = SantoChatMessageStatus.sent,
+    SantoChatQuote? quote,
+    List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
+  }) : super(
+          id: id,
+          author: author,
+          createdAt: createdAt,
+          status: status,
+          quote: quote,
+          reactions: reactions,
+          isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
+        );
+}
+
+/// 通知消息
+///
+/// 消息体是一张通知卡片(类型图标 + 标题 + 正文 + 时间),
+/// 也可以直接当通知中心的列表项使用 [SantoChatNoticeCard]。
+///
+/// @since v1.5.1
+class SantoChatNoticeMessage extends SantoChatMessage {
+  /// 通知标题
+  final String title;
+
+  /// 通知正文
+  final String content;
+
+  /// 通知类型,决定卡片图标与配色
+  final SantoChatNoticeType noticeType;
+
+  /// 是否已读,未读时标题前展示红点
+  final bool read;
+
+  /// 业务跳转标识,点击时原样回调给业务
+  final String? targetId;
+
+  const SantoChatNoticeMessage({
+    required String id,
+    required SantoChatAuthor author,
+    required this.title,
+    required this.content,
+    this.noticeType = SantoChatNoticeType.other,
+    this.read = false,
+    this.targetId,
+    DateTime? createdAt,
+    SantoChatMessageStatus status = SantoChatMessageStatus.sent,
+    SantoChatQuote? quote,
+    List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
+  }) : super(
+          id: id,
+          author: author,
+          createdAt: createdAt,
+          status: status,
+          quote: quote,
+          reactions: reactions,
+          isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
+        );
+}
+
+/// 表情消息:单个大表情
+///
+/// [symbol] 既可以是 Unicode 表情(`👍`),也可以是注册过图片的表情名
+/// (写 `[表情名]`,由 [SantoChatEmojiRegistry] 决定渲染成图片还是字符)。
+///
+/// @since v1.5.1
+class SantoChatEmojiMessage extends SantoChatMessage {
+  /// Unicode 表情或 `[表情名]` token
+  final String symbol;
+
+  const SantoChatEmojiMessage({
+    required String id,
+    required SantoChatAuthor author,
+    required this.symbol,
+    DateTime? createdAt,
+    SantoChatMessageStatus status = SantoChatMessageStatus.sent,
+    SantoChatQuote? quote,
+    List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
+    bool recalled = false,
+    SantoChatReadReceipt? readReceipt,
+  }) : super(
+          id: id,
+          author: author,
+          createdAt: createdAt,
+          status: status,
+          quote: quote,
+          reactions: reactions,
+          isEdited: isEdited,
+          recalled: recalled,
+          readReceipt: readReceipt,
         );
 }
 

@@ -56,7 +56,7 @@ class SantoToast {
     BuildContext context, {
     Duration? duration,
     Color? backgroundColor,
-    TextStyle textStyle = const TextStyle(fontSize: 16, color: Colors.white),
+    TextStyle? textStyle,
     double? radius,
     Widget? preIcon,
     double? verticalOffset,
@@ -218,6 +218,12 @@ class ToastChild extends StatelessWidget {
   Widget build(BuildContext context) {
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
+    // 未指定时取主题字号与反色文字,保证在深色底上可读
+    final TextStyle resolvedTextStyle = textStyle ??
+        TextStyle(
+          fontSize: commonConfig.fontSizeSubHead,
+          color: commonConfig.colorTextBaseInverse,
+        );
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Container(
@@ -226,7 +232,7 @@ class ToastChild extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Container(
           decoration: BoxDecoration(
-            color: backgroundColor ?? const Color(0xFF17233D),
+            color: backgroundColor ?? commonConfig.toastBackgroundColor,
             borderRadius: BorderRadius.circular(radius ?? commonConfig.radiusXs),
           ),
           margin: EdgeInsets.symmetric(horizontal: commonConfig.hSpacingLg),
@@ -236,7 +242,7 @@ class ToastChild extends StatelessWidget {
           child: RichText(
             text: TextSpan(children: <InlineSpan>[
               leadingSpan,
-              TextSpan(text: msg, style: textStyle),
+              TextSpan(text: msg, style: resolvedTextStyle),
             ]),
           ),
         ),

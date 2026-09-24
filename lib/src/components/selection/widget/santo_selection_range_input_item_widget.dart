@@ -170,12 +170,12 @@ class _SantoSelectionRangeItemWidgetState
           hintText: (isMax ? SantoIntl.of(context).localizedResource.maxValue : SantoIntl.of(context).localizedResource.minValue),
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-            width: 1,
+            width: widget.themeData.commonConfig.borderWidthMd,
             color: widget.themeData.commonConfig.dividerColorBase,
           )),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-            width: 1,
+            width: widget.themeData.commonConfig.borderWidthMd,
             color: widget.themeData.commonConfig.dividerColorBase,
           )),
           contentPadding: EdgeInsets.all(0),

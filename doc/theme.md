@@ -18,9 +18,35 @@ order: 3
 | 令牌 | 默认值 | 说明 |
 | --- | --- | --- |
 | `brandPrimary` | `0xFF1677FF` | 品牌色 |
+| `brandPrimaryTap` | `0x191677FF` | 品牌色按下态 |
+| `brandSuccess / Warning / Error` | `0xFF52C41A` / `0xFFFAAD14` / `0xFFFF4D4F` | 成功 / 警告 / 失败色 |
+| `brandImportant / brandImportantValue` | `0xFFFF4D4F` / `0xFFFF5722` | 红点色 / 重要数值色 |
+| `brandAuxiliary` | `0xFF2DB7F5` | 辅助色(iInfo) |
+| `brandPrimaryBg / SuccessBg / WarningBg / ErrorBg` | `0xFFE6F4FF` / `0xFFF6FFED` / `0xFFFFFBE6` / `0xFFFFF2F0` | 语义色淡底(通知栏 / 状态标签) |
+| `colorTextBase / Important / Secondary` | `0xFF17233D` / `0xFF515A6E` / `0xFF808695` | 标题 / 正文 / 描述文字色 |
+| `colorTextDisabled / Hint / BaseInverse / Link` | `0xFFC5C8CE` / `0xFFCCCCCC` / `0xFFFFFFFF` / 跟随品牌色 | 禁用 / 提示 / 反色 / 链接文字色 |
+| `fillBase / fillBody / fillMask` | `0xFFFFFFFF` / `0xFFF5F5F5` / `0x99000000` | 组件底 / 页面底 / 遮罩 |
+| `borderColorBase / dividerColorBase` | `0xFFDCDEE2` / `0xFFE8EAEC` | 边框色 / 分割线色 |
+| `fillBaseInverse` | `0xFF000000` | 反色组件底(大图查看等深色场景) |
+| `appBarDarkBackgroundColor` | `0xFF2E313B` | AppBar 深色变体背景色 |
+| `chartPalette` | 6 色分类色板 | 多系列图表按序取色 |
+| `chartAxisColor / chartAxisTextColor / chartGridColor` | `0xFF222222` / `0xFF999999` / `0xFFCCCCCC` | 图表轴线 / 刻度文字 / 网格色 |
+| `shadowColor` | `0x14000000` | 阴影颜色 |
+| `shadowSm / shadowMd / shadowLg` | 见下 | 小 / 中 / 大阴影预设(`List<BoxShadow>`) |
 | `radiusXs / Sm / Md / Lg` | 12 | 圆角 |
+| `borderWidthSm / Md / Lg` | 0.5 / 1 / 2 | 边框宽度 |
+| `fontSizeHeadLg / Head / SubHead / Base / Caption / CaptionSm` | 22 / 18 / 16 / 14 / 12 / 10 | 字号 |
 | `gapXs / gapSm / gapMd / gapLg / gapXl / gapXxl` | 5 / 10 / 15 / 20 / 20 / 40 | 规范间距(按 `iDefaultGap`(5) 倍数推导) |
 | `hSpacing* / vSpacing*` | 5 / 10 / 15 / 20 / 20 / 40 | 横向 / 纵向间距 |
+| `iconSizeXxs / Xs / Sm / Md / Lg` | 8 / 12 / 14 / 16 / 32 | 图标尺寸 |
+
+阴影预设默认值:
+
+| 令牌 | 默认值 |
+| --- | --- |
+| `shadowSm` | `BoxShadow(color: 0x14000000, blurRadius: 2, offset: (0, 1))` |
+| `shadowMd` | `BoxShadow(color: 0x1A000000, blurRadius: 8, offset: (0, 2))` |
+| `shadowLg` | `BoxShadow(color: 0x1F000000, blurRadius: 24, offset: (0, 4))` |
 
 #### 适用什么场景？
 

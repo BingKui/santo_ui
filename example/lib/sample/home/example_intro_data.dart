@@ -532,15 +532,15 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
       ExampleIntroPoint('搜索栏', '可嵌入搜索输入框与左侧类型下拉'),
     ],
   ),
-  'noticebar': ExampleIntroData(
-    title: 'NoticeBar 通知栏',
+  'notice': ExampleIntroData(
+    title: 'Notice 通知栏',
     description: '通知栏在页面顶部提示重要信息。',
-    widgets: <String>['SantoNoticeBar', 'SantoNoticeBarWithButton'],
+    widgets: <String>['SantoNotice'],
     whenToUseDesc: '需要在不打断操作的前提下展示一条需要被看到的信息时使用。',
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('滚动通知', '文案过长时横向滚动展示'),
-      ExampleIntroPoint('带按钮', '通知右侧给出操作入口'),
-      ExampleIntroPoint('状态样式', '按成功、警告、错误切换配色'),
+      ExampleIntroPoint('带按钮', '通知右侧给出操作入口,左侧可带标签'),
+      ExampleIntroPoint('状态样式', '按成功、警告、错误切换配色,取色跟随主题'),
       ExampleIntroPoint('关闭', '可配置是否展示关闭按钮'),
     ],
   ),

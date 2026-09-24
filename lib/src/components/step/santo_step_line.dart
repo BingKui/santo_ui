@@ -91,8 +91,8 @@ class SantoStepLine extends StatefulWidget {
   /// 边框包裹的widget
   final Widget contentWidget;
 
-  /// 线的宽度
-  final double lineWidth;
+  /// 线的宽度，不传时取主题 borderWidthLg(2)
+  final double? lineWidth;
 
   /// icon距离顶部的padding
   final double iconTopPadding;
@@ -123,7 +123,7 @@ class SantoStepLine extends StatefulWidget {
     required this.contentWidget,
     this.isGrey = false,
     this.lineColor,
-    this.lineWidth = 2,
+    this.lineWidth,
     this.iconTopPadding = 0,
     this.isDashLine = false,
     this.dashLength = 4,
@@ -143,11 +143,13 @@ class SantoStepLine extends StatefulWidget {
 class _SantoStepLineState extends State<SantoStepLine> {
   @override
   Widget build(BuildContext context) {
+    final commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Stack(
       children: <Widget>[
         CustomPaint(
           painter: _SantoStepLinePainter(
-            paintWidth: widget.lineWidth,
+            paintWidth: widget.lineWidth ?? commonConfig.borderWidthLg,
             iconTopPadding: widget.iconTopPadding,
             lineColor: _buildLineColor(),
             isDash: widget.isDashLine,
@@ -192,7 +194,11 @@ class _SantoStepLineState extends State<SantoStepLine> {
       }
     } else {
       if (widget.isGrey) {
-        return [widget.normalColor ?? const Color(0xffeeeeee)];
+        return [widget.normalColor ??
+            SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .dividerColorBase];
       }
       return [
         widget.highlightColor ??
@@ -203,7 +209,11 @@ class _SantoStepLineState extends State<SantoStepLine> {
 
   Widget _buildGreyCircle() {
     return _buildColorCircleWidget(
-        widget.normalColor ?? const Color(0xffeeeeee));
+        widget.normalColor ??
+            SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .dividerColorBase);
   }
 
   Widget _buildHighLightCircle() {

@@ -1,6 +1,7 @@
 import 'package:santo_ui/src/components/picker/multi_range_picker/bean/santo_multi_column_picker_entity.dart';
 import 'package:santo_ui/src/components/picker/multi_range_picker/santo_multi_column_picker_util.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
+import 'package:santo_ui/src/theme/configs/santo_common_config.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
 import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/material.dart';
 class SantoMultiRangePickerCommonItem extends StatelessWidget {
   final SantoPickerEntity item;
   final Color normalColor;
-  final Color selectColor;
+
+  /// 选中态颜色,不传取主题 brandPrimary
+  final Color? selectColor;
   final Color? backgroundColor;
   final Color? selectedBackgroundColor;
   final bool? isCurrentFocused;
@@ -22,7 +25,7 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
   SantoMultiRangePickerCommonItem({
     required this.item,
     this.normalColor = const Color(0Xff4a4e59),
-    this.selectColor = const Color(0xff41bc6a),
+    this.selectColor,
     this.backgroundColor,
     this.isFirstLevel = false,
     this.isMoreSelectionListType = false,
@@ -43,9 +46,12 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
           width: 21,
           child: item.isSelected
               ? SantoIcon(SantoSolidIcons.checkCircle,
-                  solid: true, size: 16, color: commonConfig.brandPrimary)
+                  solid: true,
+                  size: commonConfig.iconSizeMd,
+                  color: commonConfig.brandPrimary)
               : SantoIcon(SantoIcons.circle,
-                  size: 16, color: commonConfig.colorTextDisabled),
+                  size: commonConfig.iconSizeMd,
+                  color: commonConfig.colorTextDisabled),
         );
       } else {
         checkbox = Container();
@@ -80,7 +86,7 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
                       fontSize: commonConfig.fontSizeBase,
                       fontWeight: _getItemFontWeight(),
                       decoration: TextDecoration.none,
-                      color: _getItemTextColor()),
+                      color: _getItemTextColor(commonConfig)),
                 ),
               )),
               checkbox
@@ -99,12 +105,13 @@ class SantoMultiRangePickerCommonItem extends StatelessWidget {
     }
   }
 
-  Color _getItemTextColor() {
+  Color _getItemTextColor(SantoCommonConfig commonConfig) {
+    final Color resolvedSelectColor = selectColor ?? commonConfig.brandPrimary;
     Color itemColor = (item.isUnLimit() ? isCurrentFocused : item.isSelected)!
-        ? selectColor
+        ? resolvedSelectColor
         : normalColor;
     if (!item.isInLastLevel()) {
-      itemColor = isCurrentFocused! ? selectColor : normalColor;
+      itemColor = isCurrentFocused! ? resolvedSelectColor : normalColor;
     }
     return itemColor;
   }
