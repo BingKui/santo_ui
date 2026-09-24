@@ -322,7 +322,10 @@ class SantoTabBarState extends State<SantoTabBar> {
               color: commonConfig.fillBase,
               boxShadow: [
                 BoxShadow(
-                    color: Color(0x05000000),
+                    color: SantoThemeConfigurator.instance
+                        .getConfig()
+                        .commonConfig
+                        .shadowColor,
                     offset: Offset(-3, 0),
                     spreadRadius: -1)
               ],
@@ -629,7 +632,10 @@ class SantoTabBarState extends State<SantoTabBar> {
                 width: MediaQuery.of(context).size.width,
                 left: 0,
                 child: Material(
-                  color: Color(0xB3000000),
+                  color: SantoThemeConfigurator.instance
+                      .getConfig()
+                      .commonConfig
+                      .fillMask,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height -

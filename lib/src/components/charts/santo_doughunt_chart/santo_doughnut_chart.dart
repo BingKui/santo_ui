@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 /// SantoDoughnutDataItem 饼状图展示所使用的数据
@@ -52,7 +53,8 @@ class SantoDoughnut extends CustomPainter {
   final double fontSize;
 
   /// 字体颜色
-  final Color fontColor;
+  /// 文字颜色,不传取主题 colorTextBaseInverse
+  final Color? fontColor;
 
   /// 圆环宽度
   final int ringWidth;
@@ -77,7 +79,7 @@ class SantoDoughnut extends CustomPainter {
       {this.ringWidth = 50,
       required this.data,
       this.fontSize = 12,
-      this.fontColor = Colors.white,
+      this.fontColor,
       this.selectedItem,
       this.showTitleWhenSelected = false,
       this.santoDoughnutSelectCallback}) {
@@ -157,8 +159,13 @@ class SantoDoughnut extends CustomPainter {
         canvas.drawLine(
             revisedIndicatorRPoint, indicatorEndOffset, _paintIndicator);
 
-        TextStyle textStyle =
-            TextStyle(fontSize: this.fontSize, color: this.fontColor);
+        TextStyle textStyle = TextStyle(
+            fontSize: this.fontSize,
+            color: this.fontColor ??
+                SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .colorTextBaseInverse);
 
         TextPainter textPainter = TextPainter(
             text: TextSpan(text: item.title, style: textStyle),
@@ -184,7 +191,10 @@ class SantoDoughnut extends CustomPainter {
             height: textHeight + this.textVerticalPadding * 2);
         RRect rRect = RRect.fromRectAndRadius(baseRect, Radius.circular(12));
         Paint textBackgroundPaint = Paint()
-          ..color = Colors.black.withOpacity(0.7);
+          ..color = SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .fillMask;
         canvas.drawRRect(rRect, textBackgroundPaint);
 
         textPainter.paint(
@@ -197,7 +207,10 @@ class SantoDoughnut extends CustomPainter {
     // 内圈空白
     if (innerCircleRadius > 0) {
       Paint _whitePaint = Paint()
-        ..color = Colors.white
+        ..color = SantoThemeConfigurator.instance
+            .getConfig()
+            .commonConfig
+            .fillBase
         ..strokeCap = StrokeCap.round
         ..isAntiAlias = true
         ..style = PaintingStyle.fill;
@@ -279,7 +292,8 @@ class SantoDoughnutChart extends StatelessWidget {
   final double fontSize;
 
   /// 选中时展示文字颜色，默认Colors.white
-  final Color fontColor;
+  /// 文字颜色,不传取主题 colorTextBaseInverse
+  final Color? fontColor;
 
   /// 是否仅在选中时展示 title
   final bool showTitleWhenSelected;
@@ -301,7 +315,7 @@ class SantoDoughnutChart extends StatelessWidget {
       this.ringWidth = 50,
       required this.data,
       this.fontSize = 12,
-      this.fontColor = Colors.white,
+      this.fontColor,
       this.selectedItem,
       this.showTitleWhenSelected = false,
       this.selectCallback});

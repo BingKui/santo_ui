@@ -1,5 +1,6 @@
 
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomWidthUnderlineTabIndicator extends Decoration {
@@ -8,12 +9,24 @@ class CustomWidthUnderlineTabIndicator extends Decoration {
   /// The [borderSide] and [insets] arguments must not be null.
   const CustomWidthUnderlineTabIndicator({
     this.width = 24,
-    this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
+    this.borderSide,
     this.insets = EdgeInsets.zero,
   });
 
   /// The color and weight of the horizontal line drawn below the selected tab.
-  final BorderSide borderSide;
+  final BorderSide? borderSide;
+
+  /// 未显式指定时取主题 borderWidthLg / fillBase
+  BorderSide get resolvedBorderSide =>
+      borderSide ??
+      BorderSide(
+        width: SantoThemeConfigurator.instance
+            .getConfig()
+            .commonConfig
+            .borderWidthLg,
+        color:
+            SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase,
+      );
 
   /// Locates the selected tab's underline relative to the tab's boundary.
   ///
@@ -29,7 +42,8 @@ class CustomWidthUnderlineTabIndicator extends Decoration {
   Decoration? lerpFrom(Decoration? a, double t) {
     if (a is CustomWidthUnderlineTabIndicator) {
       return CustomWidthUnderlineTabIndicator(
-        borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
+        borderSide:
+            BorderSide.lerp(a.resolvedBorderSide, resolvedBorderSide, t),
         insets: EdgeInsetsGeometry.lerp(a.insets, insets, t)!,
       );
     }
@@ -40,7 +54,8 @@ class CustomWidthUnderlineTabIndicator extends Decoration {
   Decoration? lerpTo(Decoration? b, double t) {
     if (b is CustomWidthUnderlineTabIndicator) {
       return CustomWidthUnderlineTabIndicator(
-        borderSide: BorderSide.lerp(borderSide, b.borderSide, t),
+        borderSide:
+            BorderSide.lerp(resolvedBorderSide, b.resolvedBorderSide, t),
         insets: EdgeInsetsGeometry.lerp(insets, b.insets, t)!,
       );
     }
@@ -61,7 +76,7 @@ class _UnderlinePainter extends BoxPainter {
 
   final double width;
 
-  BorderSide get borderSide => decoration.borderSide;
+  BorderSide get borderSide => decoration.resolvedBorderSide;
 
   EdgeInsetsGeometry get insets => decoration.insets;
 

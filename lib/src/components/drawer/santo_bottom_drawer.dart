@@ -122,7 +122,8 @@ class SantoBottomDrawer extends StatelessWidget {
       PageRouteBuilder(
         opaque: false,
         barrierDismissible: barrierDismissible,
-        barrierColor: maskColor ?? Colors.black.withAlpha(0x66),
+        barrierColor: maskColor ??
+            SantoThemeConfigurator.instance.getConfig().commonConfig.fillMask,
         pageBuilder: (context, animation, secondaryAnimation) {
           return SantoBottomDrawer(
             title: title,

@@ -174,7 +174,10 @@ class SantoFab extends StatelessWidget {
         color: bgColor,
         boxShadow: [
           BoxShadow(
-            color: const Color(0x33000000),
+            color: SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .shadowColor,
             blurRadius: elevation * 2,
             offset: Offset.zero,
           ),
@@ -201,7 +204,10 @@ class SantoFab extends StatelessWidget {
         color: bgColor,
         boxShadow: [
           BoxShadow(
-            color: const Color(0x33000000),
+            color: SantoThemeConfigurator.instance
+                .getConfig()
+                .commonConfig
+                .shadowColor,
             blurRadius: elevation * 2,
             offset: Offset.zero,
           ),

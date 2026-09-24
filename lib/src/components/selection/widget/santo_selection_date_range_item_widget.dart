@@ -249,7 +249,10 @@ class _SantoSelectionDateRangeItemWidgetState
           closeSelectionPopupWindow();
         },
         child: Container(
-          color: Color(0xB3000000),
+          color: SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .fillMask,
           height: MediaQuery.of(context).size.height,
           alignment: Alignment.bottomCenter,
           child: SantoSelectionDatePickerAnimationWidget(

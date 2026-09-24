@@ -81,7 +81,8 @@ class _SantoMoreSelectionPageState extends State<SantoMoreSelectionPage>
     final commonConfig =
         SantoThemeConfigurator.instance.getConfig().commonConfig;
     return Scaffold(
-      backgroundColor: Color(0x660c0c0c),
+      backgroundColor:
+          SantoThemeConfigurator.instance.getConfig().commonConfig.fillMask,
       body: Row(
         children: <Widget>[
           _buildLeftSlide(context),

@@ -191,6 +191,7 @@ class SantoDefaultConfigUtils {
     popoverBackgroundColor: const Color(0xFF1A1A1A),
     tooltipBackgroundColor: const Color(0xFF1A1A1A),
     toastBackgroundColor: const Color(0xFF17233D),
+    menuBarFloatingSelectedBgColor: const Color(0xFFF0F0F0),
 
     /// 图表轴线/虚线色、坐标轴刻度文本色
     chartAxisColor: const Color(0xFF222222),

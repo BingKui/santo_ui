@@ -453,7 +453,10 @@ class SantoLinePainter extends SantoBasePainter {
 
         element.points!.forEach((pointElement) {
           int currentPointIndex = element.points!.indexOf(pointElement);
-          Color color = Colors.white;
+          Color color = SantoThemeConfigurator.instance
+              .getConfig()
+              .commonConfig
+              .fillBase;
 
           var pointPaintBg = Paint()
             ..isAntiAlias = true

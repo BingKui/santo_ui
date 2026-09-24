@@ -67,6 +67,7 @@ class SantoCommonConfig extends SantoBaseConfig {
     Color? popoverBackgroundColor,
     Color? tooltipBackgroundColor,
     Color? toastBackgroundColor,
+    Color? menuBarFloatingSelectedBgColor,
     Color? chartAxisColor,
     Color? chartAxisTextColor,
     Color? chartGridColor,
@@ -143,6 +144,7 @@ class SantoCommonConfig extends SantoBaseConfig {
         _popoverBackgroundColor = popoverBackgroundColor,
         _tooltipBackgroundColor = tooltipBackgroundColor,
         _toastBackgroundColor = toastBackgroundColor,
+        _menuBarFloatingSelectedBgColor = menuBarFloatingSelectedBgColor,
         _chartAxisColor = chartAxisColor,
         _chartAxisTextColor = chartAxisTextColor,
         _chartGridColor = chartGridColor,
@@ -221,6 +223,7 @@ class SantoCommonConfig extends SantoBaseConfig {
     Color? popoverBackgroundColor,
     Color? tooltipBackgroundColor,
     Color? toastBackgroundColor,
+    Color? menuBarFloatingSelectedBgColor,
     Color? chartAxisColor,
     Color? chartAxisTextColor,
     Color? chartGridColor,
@@ -297,6 +300,7 @@ class SantoCommonConfig extends SantoBaseConfig {
         _popoverBackgroundColor = popoverBackgroundColor,
         _tooltipBackgroundColor = tooltipBackgroundColor,
         _toastBackgroundColor = toastBackgroundColor,
+        _menuBarFloatingSelectedBgColor = menuBarFloatingSelectedBgColor,
         _chartAxisColor = chartAxisColor,
         _chartAxisTextColor = chartAxisTextColor,
         _chartGridColor = chartGridColor,
@@ -477,6 +481,10 @@ class SantoCommonConfig extends SantoBaseConfig {
   /// Toast 浮层底色
   /// 默认为 Color(0xFF17233D)
   Color? _toastBackgroundColor;
+
+  /// 悬浮 MenuBar 选中项底色
+  /// 默认为 Color(0xFFF0F0F0)
+  Color? _menuBarFloatingSelectedBgColor;
 
   /// 图表轴线/虚线色
   /// 默认为 Color(0xFF222222)
@@ -750,6 +758,11 @@ class SantoCommonConfig extends SantoBaseConfig {
       _toastBackgroundColor ??
       SantoDefaultConfigUtils.defaultCommonConfig.toastBackgroundColor;
 
+  Color get menuBarFloatingSelectedBgColor =>
+      _menuBarFloatingSelectedBgColor ??
+      SantoDefaultConfigUtils
+          .defaultCommonConfig.menuBarFloatingSelectedBgColor;
+
   Color get chartAxisColor =>
       _chartAxisColor ??
       SantoDefaultConfigUtils.defaultCommonConfig.chartAxisColor;
@@ -932,6 +945,8 @@ class SantoCommonConfig extends SantoBaseConfig {
     _popoverBackgroundColor ??= commonConfig._popoverBackgroundColor;
     _tooltipBackgroundColor ??= commonConfig._tooltipBackgroundColor;
     _toastBackgroundColor ??= commonConfig._toastBackgroundColor;
+    _menuBarFloatingSelectedBgColor ??=
+        commonConfig._menuBarFloatingSelectedBgColor;
     _chartAxisColor ??= commonConfig._chartAxisColor;
     _chartAxisTextColor ??= commonConfig._chartAxisTextColor;
     _chartGridColor ??= commonConfig._chartGridColor;

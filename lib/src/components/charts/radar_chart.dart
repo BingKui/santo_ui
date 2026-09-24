@@ -686,7 +686,8 @@ class RenderRadarChart extends RenderBox
 
       if (radarStyle.dotted) {
         for (int i = 0; i < dotPosition.length; i++) {
-          _radarPainter.color = Colors.white;
+          _radarPainter.color =
+              SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase;
           canvas.drawCircle(
               dotPosition[i], radarStyle.dotRadius + 2, _radarPainter);
           _radarPainter.color = radarStyle.dotColor ?? radarStyle.strokeColor;
@@ -699,7 +700,7 @@ class RenderRadarChart extends RenderBox
 
   void _paintOverflowIndicator(Canvas canvas) {
     TextStyle _indicatorTextStyle = TextStyle(
-      color: Color(0xFF900000),
+      color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandError,
       fontSize: 7.5,
       fontWeight: FontWeight.w800,
     );

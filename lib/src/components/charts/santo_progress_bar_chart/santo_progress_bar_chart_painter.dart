@@ -456,7 +456,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
 
         // 坐标刻度虚线
         _drawDashLineOn(canvas, Offset(currentOffset.dx, currentOffset.dy),
-            Offset(currentOffset.dx, 0), Colors.black.withOpacity(0.09));
+            Offset(currentOffset.dx, 0), commonConfig.shadowColor);
 
         // 坐标文本
         AxisItem axisItem = this.xAxis.axisItemList[xAxisItemIndex];
@@ -584,7 +584,7 @@ class SantoProgressBarChartPainter extends CustomPainter {
             yAxisItemOffset,
             Offset(yAxisItemOffset.dx + this.contentRect.width,
                 yAxisItemOffset.dy),
-            Colors.black.withOpacity(0.09));
+            commonConfig.shadowColor);
       }
     }
   }

@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/selection/controller/dropdown_menu_controller.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 /// 筛选动画展示隐藏组件
@@ -85,7 +86,10 @@ class _SantoSelectionAnimationWidgetState
       width: MediaQuery.of(context).size.width,
       left: 0,
       child: Material(
-        color: Color(0xB3000000),
+        color: SantoThemeConfigurator.instance
+            .getConfig()
+            .commonConfig
+            .fillMask,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height -

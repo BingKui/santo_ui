@@ -181,7 +181,7 @@ class SantoTipInfoWidget extends StatelessWidget {
           BoxShadow(
               blurRadius: 5.0, //阴影模糊程度
               offset: Offset(0, 2),
-              color: Color(0x15000000))
+              color: commonConfig.shadowColor)
         ],
         borderRadius: BorderRadius.circular(commonConfig.radiusXs),
         color: commonConfig.fillBase,

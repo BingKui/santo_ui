@@ -195,7 +195,10 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
             borderRadius: BorderRadius.circular(widget.radius),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withAlpha(0x1F),
+                color: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .shadowColor,
                 blurRadius: 24,
                 offset: const Offset(0, -4),
               ),
@@ -206,7 +209,12 @@ class _SantoMenuBarMoreMenuState extends State<SantoMenuBarMoreMenu> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
-              color: widget.backgroundColor ?? Colors.white.withAlpha(0xF2),
+              color: widget.backgroundColor ??
+                  SantoThemeConfigurator.instance
+                      .getConfig()
+                      .commonConfig
+                      .fillBase
+                      .withAlpha(0xF2),
               padding: EdgeInsets.fromLTRB(
                   _commonConfig.hSpacingLg,
                   _commonConfig.vSpacingLg,

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 /// 抽屉方向
@@ -112,7 +113,8 @@ class SantoDrawer extends StatefulWidget {
       PageRouteBuilder(
         opaque: false,
         barrierDismissible: barrierDismissible,
-        barrierColor: maskColor ?? Colors.black.withAlpha(0x66),
+        barrierColor: maskColor ??
+            SantoThemeConfigurator.instance.getConfig().commonConfig.fillMask,
         pageBuilder: (context, animation, secondaryAnimation) {
           return SantoDrawer(
             direction: direction,

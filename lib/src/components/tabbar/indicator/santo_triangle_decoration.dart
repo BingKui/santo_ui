@@ -4,6 +4,7 @@
 
 
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class SantoTriangleIndicator extends Decoration {
   final ShapeBorder? shape;
 
   const SantoTriangleIndicator({
-    this.color = Colors.white,
+    this.color,
     this.lineWidth = 1.0,
     this.triWidth = 15.0,
     this.triHeight = 10.0,
@@ -194,7 +195,8 @@ class _TriangleDecorationPainter extends BoxPainter {
     _path.lineTo(_vertexX + width / 2, _vertexY + height / 2);
     _path.close();
 
-    _paint..color = _decoration.color!;
+    _paint..color = _decoration.color ??
+        SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase;
     _paint..strokeWidth = _decoration.lineWidth;
 
     canvas.drawPath(_path, _paint);

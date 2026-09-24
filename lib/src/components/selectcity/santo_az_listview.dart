@@ -224,7 +224,7 @@ class _AzListViewState extends State<AzListView> {
       indexHint = widget.indexHintBuilder!(context, '$_indexBarHint');
     } else {
       indexHint = Card(
-        color: Colors.black54,
+        color: commonConfig.fillMask,
         child: Container(
           alignment: Alignment.center,
           width: 80.0,

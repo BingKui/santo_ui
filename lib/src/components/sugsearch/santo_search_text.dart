@@ -32,7 +32,8 @@ class SantoSearchText extends StatefulWidget {
   final Color? outSideColor;
 
   /// 搜索框内部的颜色
-  final Color innerColor;
+  /// 内底色,不传取主题 fillBody
+  final Color? innerColor;
 
   /// 最大展示行数
   final int maxLines;
@@ -107,7 +108,7 @@ class SantoSearchText extends StatefulWidget {
     this.maxHeight = 60,
     this.innerPadding,
     this.outSideColor,
-    this.innerColor = const Color(0xfff8f8f8),
+    this.innerColor,
     this.normalBorder,
     this.activeBorder,
     this.borderRadius,
@@ -125,6 +126,10 @@ class SantoSearchText extends StatefulWidget {
 }
 
 class _SearchTextState extends State<SantoSearchText> {
+  Color get _innerColor =>
+      widget.innerColor ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillBody;
+
   FocusNode? focusNode;
   TextEditingController? textEditingController;
   BoxBorder? border;
@@ -153,7 +158,7 @@ class _SearchTextState extends State<SantoSearchText> {
               .getConfig()
               .commonConfig
               .borderWidthMd,
-          color: widget.innerColor,
+          color: _innerColor,
         );
 
     focusNode!.addListener(_handleFocusNodeChangeListenerTick);
@@ -200,7 +205,7 @@ class _SearchTextState extends State<SantoSearchText> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: widget.innerColor,
+                  color: _innerColor,
                   border: border,
                   // 边界半径（`borderRadius`）属性，对此容器框的角进行舍入。
                   borderRadius: borderRadius,
@@ -241,7 +246,7 @@ class _SearchTextState extends State<SantoSearchText> {
                                 left: commonConfig.hSpacingSm,
                                 right: commonConfig.hSpacingXs),
                             // 填充颜色属性，填充装饰容器的颜色。
-                            fillColor: widget.innerColor,
+                            fillColor: _innerColor,
                             // 是密集属性，输入子项是否是密集形式的一部分（即使用较少的垂直空间）。
                             isDense: true,
                             filled: true,

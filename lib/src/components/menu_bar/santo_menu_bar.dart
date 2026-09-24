@@ -18,7 +18,6 @@ enum SantoMenuBarStyle {
 /// 悬浮样式选中项默认背景色:中性浅灰
 ///
 /// 品牌色只落在选中图标与文字上,底色保持中性,避免大面积色块
-const Color _kFloatingSelectedBgColor = Color(0xFFF0F0F0);
 
 /// 底部标签项
 class SantoMenuBarItem {
@@ -268,7 +267,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
     Widget bar = Container(
       height: _barHeight,
       decoration: BoxDecoration(
-        color: widget.backgroundColor ?? Colors.white,
+        color: widget.backgroundColor ?? _commonConfig.fillBase,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(widget.topRadius),
         ),
@@ -305,7 +304,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
       height: _barHeight,
       decoration: BoxDecoration(
         // 内层不透明 + 细边框
-        color: widget.backgroundColor ?? Colors.white,
+        color: widget.backgroundColor ?? _commonConfig.fillBase,
         borderRadius: BorderRadius.circular(_containerRadius),
         border: Border.all(
           color: _commonConfig.dividerColorBase,
@@ -333,7 +332,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: widget.itemSelectedBgColor ??
-                          _kFloatingSelectedBgColor,
+                          _commonConfig.menuBarFloatingSelectedBgColor,
                       borderRadius: BorderRadius.circular(_itemRadius),
                     ),
                   ),
@@ -362,7 +361,7 @@ class _SantoMenuBarState extends State<SantoMenuBar> {
           decoration: BoxDecoration(
             color: widget.backgroundColor != null
                 ? widget.backgroundColor!.withAlpha(0x0D)
-                : Colors.white.withAlpha(0x0D),
+                : _commonConfig.fillBase.withAlpha(0x0D),
             borderRadius: dockRadius,
           ),
           padding: EdgeInsets.fromLTRB(

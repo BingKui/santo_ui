@@ -360,7 +360,10 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
           shape: BoxShape.circle,
           boxShadow: <BoxShadow>[
             BoxShadow(
-              color: Colors.black.withOpacity(0.12),
+              color: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .shadowColor,
               blurRadius: config.commonConfig.gapSm,
               offset: Offset(0, config.commonConfig.vSpacingXs / 2),
             ),

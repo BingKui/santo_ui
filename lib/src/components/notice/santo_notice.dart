@@ -398,11 +398,13 @@ class NoticeStyles {
     SantoNoticeStyleType type,
     SantoNoticeRightIconKind rightIconKind,
   ) {
-    final Color color = _fallbackColor(type);
+    final SantoCommonConfig commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    final Color color = santoNoticeStyleColor(commonConfig, type);
     return NoticeStyle(
       SantoIcon(kSantoNoticeStyleIcons[type]!, size: 14, color: color),
       color,
-      _fallbackBackground(type),
+      _fallbackBackground(commonConfig, type),
       SantoIcon(
         rightIconKind == SantoNoticeRightIconKind.close
             ? SantoIcons.xmark
@@ -416,34 +418,20 @@ class NoticeStyles {
   }
 
   /// 与主题默认品牌色一致的兜底色
-  static Color _fallbackColor(SantoNoticeStyleType type) {
-    switch (type) {
-      case SantoNoticeStyleType.fail:
-        return const Color(0xFFFF4D4F);
-      case SantoNoticeStyleType.running:
-        return const Color(0xFF1677FF);
-      case SantoNoticeStyleType.succeed:
-        return const Color(0xFF52C41A);
-      case SantoNoticeStyleType.warning:
-        return const Color(0xFFFAAD14);
-      case SantoNoticeStyleType.notice:
-        return const Color(0xFF1677FF);
-    }
-  }
-
   /// 与主题默认品牌色一致的兜底浅底色
-  static Color _fallbackBackground(SantoNoticeStyleType type) {
+  static Color _fallbackBackground(
+      SantoCommonConfig commonConfig, SantoNoticeStyleType type) {
     switch (type) {
       case SantoNoticeStyleType.fail:
-        return const Color(0xFFFFF2F0);
+        return commonConfig.brandErrorBg;
       case SantoNoticeStyleType.running:
-        return const Color(0xFFE6F4FF);
+        return commonConfig.brandPrimaryBg;
       case SantoNoticeStyleType.succeed:
-        return const Color(0xFFF6FFED);
+        return commonConfig.brandSuccessBg;
       case SantoNoticeStyleType.warning:
-        return const Color(0xFFFFFBE6);
+        return commonConfig.brandWarningBg;
       case SantoNoticeStyleType.notice:
-        return const Color(0xFFE6F4FF);
+        return commonConfig.brandPrimaryBg;
     }
   }
 }

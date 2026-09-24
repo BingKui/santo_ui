@@ -120,7 +120,7 @@ class SantoLoading extends StatefulWidget {
       barrierDismissible: barrierDismissible,
       useRootNavigator: useRootNavigator,
       // 全屏模式用自己的遮罩色,避免与路由蒙层叠加变深
-      barrierColor: fullscreen ? commonConfig.fillMask : Colors.black54,
+      barrierColor: commonConfig.fillMask,
       builder: (_) => fullscreen
           ? Center(
               child: Column(

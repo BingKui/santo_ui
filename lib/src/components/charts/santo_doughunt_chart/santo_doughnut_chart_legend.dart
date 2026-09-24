@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/charts/santo_doughunt_chart/santo_doughnut_chart.dart';
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 /// 排列方式
@@ -72,7 +73,11 @@ class DoughnutChartLegend extends StatelessWidget {
         ),
         Text(
           item.title,
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+              color: SantoThemeConfigurator.instance
+                  .getConfig()
+                  .commonConfig
+                  .colorTextBase),
         ),
       ],
     );

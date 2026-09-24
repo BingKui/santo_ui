@@ -302,7 +302,7 @@ class _SantoMessageWidgetState extends State<_SantoMessageWidget>
                 borderRadius: BorderRadius.circular(commonConfig.radiusXs),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
+                    color: commonConfig.shadowMd.first.color,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),

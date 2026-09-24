@@ -367,7 +367,7 @@ class _SantoCitySelectionState extends State<SantoCitySelection> {
               width: 40.0,
               height: 40.0,
               decoration: BoxDecoration(
-                  color: Color(0x2217233D),
+                  color: commonConfig.colorTextBase.withOpacity(0.13),
                   borderRadius:
                       BorderRadius.circular(commonConfig.radiusXs)),
               child: Text(hint,

@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
 
 /// Used with [TabBar.indicator] to draw a horizontal line below the
@@ -21,15 +22,27 @@ class SantoFixedUnderlineIndicator extends Decoration {
   ///
   /// The [borderSide] and [insets] arguments must not be null.
   const SantoFixedUnderlineIndicator({
-    this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
+    this.borderSide,
     this.insets = EdgeInsets.zero,
     this.width = 1.0,
     this.thickness = 1.0,
-    this.color = Colors.white,
+    this.color,
   }) : assert(width >= 1.0);
 
   /// The color and weight of the horizontal line drawn below the selected tab.
-  final BorderSide borderSide;
+  final BorderSide? borderSide;
+
+  /// 未显式指定时取主题 borderWidthLg / fillBase
+  BorderSide get resolvedBorderSide =>
+      borderSide ??
+      BorderSide(
+        width: SantoThemeConfigurator.instance
+            .getConfig()
+            .commonConfig
+            .borderWidthLg,
+        color:
+            SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase,
+      );
 
   /// Locates the selected tab's underline relative to the tab's boundary.
   ///
@@ -40,13 +53,20 @@ class SantoFixedUnderlineIndicator extends Decoration {
 
   final double width;
   final double thickness;
-  final Color color;
+
+  /// 指示条颜色,不传取主题 fillBase
+  final Color? color;
+
+  Color get resolvedColor =>
+      color ??
+      SantoThemeConfigurator.instance.getConfig().commonConfig.fillBase;
 
   @override
   Decoration? lerpFrom(Decoration? a, double t) {
     if (a is SantoFixedUnderlineIndicator) {
       return SantoFixedUnderlineIndicator(
-        borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
+        borderSide:
+            BorderSide.lerp(a.resolvedBorderSide, resolvedBorderSide, t),
         insets: EdgeInsetsGeometry.lerp(a.insets, insets, t)!,
       );
     }
@@ -57,7 +77,8 @@ class SantoFixedUnderlineIndicator extends Decoration {
   Decoration? lerpTo(Decoration? b, double t) {
     if (b is SantoFixedUnderlineIndicator) {
       return SantoFixedUnderlineIndicator(
-        borderSide: BorderSide.lerp(borderSide, b.borderSide, t),
+        borderSide:
+            BorderSide.lerp(resolvedBorderSide, b.resolvedBorderSide, t),
         insets: EdgeInsetsGeometry.lerp(insets, b.insets, t)!,
       );
     }
@@ -76,7 +97,7 @@ class _FixedUnderlinePainter extends BoxPainter {
 
   final SantoFixedUnderlineIndicator decoration;
 
-  BorderSide get borderSide => decoration.borderSide;
+  BorderSide get borderSide => decoration.resolvedBorderSide;
 
   EdgeInsetsGeometry get insets => decoration.insets;
 
@@ -98,7 +119,7 @@ class _FixedUnderlinePainter extends BoxPainter {
     final Rect indicator =
         _indicatorRectFor(rect, textDirection).deflate(borderSide.width / 2.0);
     final Paint paint = borderSide.toPaint()..strokeCap = StrokeCap.square;
-    paint.color = decoration.color;
+    paint.color = decoration.resolvedColor;
     paint.strokeWidth = decoration.thickness;
     double padding = (indicator.width - decoration.width) / 2;
     Offset left = Offset(indicator.left + padding, indicator.top);

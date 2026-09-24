@@ -693,7 +693,7 @@ class SantoFunnelRender extends RenderFunnelChart {
 
   void _paintOverflowIndicator(Canvas canvas, Size size) {
     TextStyle _indicatorTextStyle = TextStyle(
-      color: Color(0xFF900000),
+      color: SantoThemeConfigurator.instance.getConfig().commonConfig.brandError,
       fontSize: 7.5,
       fontWeight: FontWeight.w800,
     );
@@ -732,8 +732,8 @@ abstract class SantoFunnelLayerPainter {
 
 ///漏斗图默认LayerPainter,在漏斗每层layer中间绘制文案，每层的颜色值使用Santo预设的颜色。
 class SantoDefaultFunnelLayerPainter extends SantoFunnelLayerPainter {
-  ///每层漏斗文案TextStyle
-  final TextStyle textStyle;
+  ///每层漏斗文案TextStyle,不传取主题 colorTextBaseInverse / fontSizeBase
+  final TextStyle? textStyle;
 
   ///漏斗每一层的标题文案，长度应该与[layerCount]一致。
   final List<String> titles;
@@ -741,7 +741,7 @@ class SantoDefaultFunnelLayerPainter extends SantoFunnelLayerPainter {
   TextPainter _textPainter;
 
   SantoDefaultFunnelLayerPainter({
-    this.textStyle = const TextStyle(color: Colors.white, fontSize: 14),
+    this.textStyle,
     this.titles = const <String>[],
   }) : _textPainter = TextPainter()..textDirection = TextDirection.ltr;
 
@@ -752,7 +752,15 @@ class SantoDefaultFunnelLayerPainter extends SantoFunnelLayerPainter {
       return;
     }
     //绘制每层标题
-    TextSpan span = TextSpan(text: titles[layerIndex], style: textStyle);
+    final SantoCommonConfig commonConfig =
+        SantoThemeConfigurator.instance.getConfig().commonConfig;
+    TextSpan span = TextSpan(
+        text: titles[layerIndex],
+        style: textStyle ??
+            TextStyle(
+              color: commonConfig.colorTextBaseInverse,
+              fontSize: commonConfig.fontSizeBase,
+            ));
     _textPainter
       ..text = span
       ..layout();

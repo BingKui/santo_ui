@@ -31,6 +31,10 @@ order: 3
 | `appBarDarkBackgroundColor` | `0xFF2E313B` | AppBar 深色变体背景色 |
 | `chartPalette` | 6 色分类色板 | 多系列图表按序取色 |
 | `chartAxisColor / chartAxisTextColor / chartGridColor` | `0xFF222222` / `0xFF999999` / `0xFFCCCCCC` | 图表轴线 / 刻度文字 / 网格色 |
+| `loadingPillBackgroundColor` | `0xFF1A1A1A` | Loading 浮层黑胶囊底 |
+| `popoverBackgroundColor / tooltipBackgroundColor` | `0xFF1A1A1A` | Popover / Tooltip 浮层底 |
+| `toastBackgroundColor` | `0xFF17233D` | Toast 浮层底 |
+| `menuBarFloatingSelectedBgColor` | `0xFFF0F0F0` | 悬浮 MenuBar 选中项底 |
 | `shadowColor` | `0x14000000` | 阴影颜色 |
 | `shadowSm / shadowMd / shadowLg` | 见下 | 小 / 中 / 大阴影预设(`List<BoxShadow>`) |
 | `radiusXs / Sm / Md / Lg` | 12 | 圆角 |
