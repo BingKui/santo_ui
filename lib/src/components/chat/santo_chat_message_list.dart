@@ -1,7 +1,10 @@
+import 'package:santo_ui/src/components/chat/model/santo_chat_menu_item.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_message.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_bubble.dart';
+import 'package:santo_ui/src/components/chat/santo_chat_doc.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_file.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_image.dart';
+import 'package:santo_ui/src/components/chat/santo_chat_message_menu.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_reaction.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_system_notice.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_text.dart';
@@ -80,6 +83,24 @@ class SantoChatMessageList extends StatefulWidget {
   /// 长按可选的表情回应
   final List<String> reactions;
 
+  /// 自定义长按菜单项,不传按消息类型取 [SantoChatMenuItem.defaults]
+  ///
+  /// 项里的 `quote` 会自动接到 [onReply],其余 item 通过
+  /// [onMessageMenuSelected] 回调出去
+  final List<SantoChatMenuItem> Function(
+    SantoChatMessage message,
+    bool isMine,
+  )? messageMenuItems;
+
+  /// 是否处于多选态:每条消息前展示勾选框,点整行切换选中
+  final bool selectionMode;
+
+  /// 多选态下已选中的消息 id
+  final Set<String> selectedIds;
+
+  /// 多选态下切换某条消息的选中状态
+  final ValueChanged<SantoChatMessage>? onSelectionToggle;
+
   /// 后端是否还有更早的消息
   final bool hasMore;
 
@@ -107,6 +128,10 @@ class SantoChatMessageList extends StatefulWidget {
   /// 选择表情回应
   final void Function(SantoChatMessage message, String emoji)? onReaction;
 
+  /// 选择长按菜单里的操作项
+  final void Function(SantoChatMessage message, SantoChatMenuItem item)?
+      onMessageMenuSelected;
+
   /// 点击 @提及
   final ValueChanged<SantoChatMention>? onMentionTap;
 
@@ -118,6 +143,9 @@ class SantoChatMessageList extends StatefulWidget {
 
   /// 点击发送失败的重试图标
   final ValueChanged<SantoChatMessage>? onRetry;
+
+  /// 点击文档卡片,由业务方校验权限后打开文档
+  final ValueChanged<SantoChatDocMessage>? onDocTap;
 
   const SantoChatMessageList({
     Key? key,
@@ -133,6 +161,10 @@ class SantoChatMessageList extends StatefulWidget {
     this.controller,
     this.padding,
     this.reactions = kSantoChatDefaultReactions,
+    this.messageMenuItems,
+    this.selectionMode = false,
+    this.selectedIds = const <String>{},
+    this.onSelectionToggle,
     this.hasMore = false,
     this.loadingMore = false,
     this.showScrollToBottom = true,
@@ -142,10 +174,12 @@ class SantoChatMessageList extends StatefulWidget {
     this.onMessageLongPress,
     this.onMessageDoubleTap,
     this.onReaction,
+    this.onMessageMenuSelected,
     this.onMentionTap,
     this.onLinkTap,
     this.onQuoteTap,
     this.onRetry,
+    this.onDocTap,
   }) : super(key: key);
 
   @override
@@ -180,6 +214,8 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
 
   @override
   void dispose() {
+    // 列表被移除时关掉还挂着的长按菜单,避免浮层残留在页面上
+    SantoChatMessageMenu.dismiss();
     (widget.controller ?? _internalController)?.removeListener(_handleScroll);
     _internalController?.dispose();
     super.dispose();
@@ -388,7 +424,16 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
     final bool isMine = message.isMine(widget.currentUserId);
     final bool isMedia = message is SantoChatImageMessage ||
         message is SantoChatVideoMessage;
+    // 文档卡片自带白底与描边,不再套气泡
+    final bool bare = message is SantoChatDocMessage;
     final String? playingId = widget.playingMessageId;
+    final bool selecting = widget.selectionMode;
+    final bool selected = widget.selectedIds.contains(message.id);
+    final List<String> menuReactions =
+        widget.onReaction == null ? const <String>[] : widget.reactions;
+    final List<SantoChatMenuItem> menuItems = _menuItemsFor(message, isMine);
+    final bool hasMenu =
+        !selecting && (menuReactions.isNotEmpty || menuItems.isNotEmpty);
 
     final Widget bubble = SantoChatBubble(
       author: message.author,
@@ -399,24 +444,25 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
       time: message.createdAt,
       quote: message.quote,
       status: message.status,
+      isEdited: message.isEdited,
       reactions: message.reactions,
       onReactionTap: widget.onReaction == null
           ? null
           : (SantoChatReaction reaction) =>
               widget.onReaction!(message, reaction.emoji),
       contentPadding: isMedia ? EdgeInsets.zero : null,
-      onTap: widget.onMessageTap == null
+      bare: bare,
+      onTap: selecting || widget.onMessageTap == null
           ? null
           : () => widget.onMessageTap!(message),
-      onLongPress: _canPickReaction || widget.onMessageLongPress == null
+      onLongPress: hasMenu || widget.onMessageLongPress == null
           ? null
           : () => widget.onMessageLongPress!(message),
-      onDoubleTap: widget.onMessageDoubleTap == null && !_canPickReaction
+      onDoubleTap: selecting ||
+              (widget.onMessageDoubleTap == null && menuReactions.isEmpty)
           ? null
-          : () => _handleDoubleTap(message),
-      onRetry: widget.onRetry == null
-          ? null
-          : () => widget.onRetry!(message),
+          : () => _handleDoubleTap(message, menuReactions),
+      onRetry: widget.onRetry == null ? null : () => widget.onRetry!(message),
       onQuoteTap: message.quote == null || widget.onQuoteTap == null
           ? null
           : () => widget.onQuoteTap!(message.quote!),
@@ -424,52 +470,124 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
     );
 
     Widget content = bubble;
-    if (_canPickReaction) {
-      // 用外层手势拿长按位置,才能把回应条弹在气泡附近
-      content = GestureDetector(
-        onLongPressStart: (LongPressStartDetails details) =>
-            _handleLongPress(context, message, details),
-        child: content,
+    if (hasMenu) {
+      // 整行的矩形当锚点,菜单始终贴在这条消息正上方。
+      // 注意先取一份快照:Builder 的闭包是延迟执行的,直接引用 content
+      // 会拿到赋值后的 Builder 自己,导致无限递归构建。
+      final Widget rowContent = content;
+      content = Builder(
+        builder: (BuildContext rowContext) => GestureDetector(
+          onLongPressStart: (LongPressStartDetails details) => _showMenu(
+            rowContext,
+            message,
+            isMine,
+            menuReactions: menuReactions,
+            menuItems: menuItems,
+          ),
+          child: rowContent,
+        ),
       );
     }
 
-    final Widget withSwipe = widget.onReply == null
-        ? content
-        : _SwipeToReply(
-            onReply: () => widget.onReply!(message),
-            child: content,
-          );
+    if (selecting) {
+      content = GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onSelectionToggle == null
+            ? null
+            : () => widget.onSelectionToggle!(message),
+        child: content,
+      );
+      content = Row(
+        // 勾选框相对整行上下居中
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          _SelectionIndicator(
+            selected: selected,
+            config: config,
+            onTap: widget.onSelectionToggle == null
+                ? null
+                : () => widget.onSelectionToggle!(message),
+          ),
+          SizedBox(width: config.commonConfig.hSpacingSm),
+          Expanded(child: content),
+        ],
+      );
+    } else if (widget.onReply != null) {
+      content = _SwipeToReply(
+        onReply: () => widget.onReply!(message),
+        child: content,
+      );
+    }
 
     return Padding(
       key: ValueKey<String>(message.id),
       padding: EdgeInsets.only(
         top: showTime ? 0 : config.commonConfig.vSpacingSm,
       ),
-      child: withSwipe,
+      child: content,
     );
   }
 
-  bool get _canPickReaction =>
+  bool get _canReact =>
       widget.onReaction != null && widget.reactions.isNotEmpty;
 
-  void _handleDoubleTap(SantoChatMessage message) {
+  /// 按消息类型给出长按菜单项,再按是否有对应回调过滤
+  List<SantoChatMenuItem> _menuItemsFor(
+    SantoChatMessage message,
+    bool isMine,
+  ) {
+    final List<SantoChatMenuItem> Function(SantoChatMessage, bool)? custom =
+        widget.messageMenuItems;
+    final List<SantoChatMenuItem> items = custom != null
+        ? custom(message, isMine)
+        : SantoChatMenuItem.defaults(message, isMine: isMine);
+    return <SantoChatMenuItem>[
+      for (final SantoChatMenuItem item in items)
+        if (item.key == SantoChatMenuItem.quote.key
+            ? widget.onReply != null
+            : widget.onMessageMenuSelected != null)
+          item,
+    ];
+  }
+
+  void _handleDoubleTap(
+    SantoChatMessage message,
+    List<String> menuReactions,
+  ) {
     widget.onMessageDoubleTap?.call(message);
-    if (_canPickReaction) {
-      widget.onReaction!(message, widget.reactions.first);
+    if (menuReactions.isNotEmpty) {
+      widget.onReaction!(message, menuReactions.first);
     }
   }
 
-  void _handleLongPress(
-    BuildContext context,
+  void _showMenu(
+    BuildContext rowContext,
     SantoChatMessage message,
-    LongPressStartDetails details,
-  ) {
+    bool isMine, {
+    required List<String> menuReactions,
+    required List<SantoChatMenuItem> menuItems,
+  }) {
     widget.onMessageLongPress?.call(message);
-    SantoChatReactionPicker.show(
+    final RenderObject? renderObject = rowContext.findRenderObject();
+    if (renderObject is! RenderBox || !renderObject.hasSize) return;
+    final Rect anchor =
+        renderObject.localToGlobal(Offset.zero) & renderObject.size;
+
+    SantoChatMessageMenu.show(
       context: context,
-      position: details.globalPosition,
-      emojis: widget.reactions,
-      onSelected: (String emoji) => widget.onReaction!(message, emoji),
+      anchor: anchor,
+      reactions: menuReactions,
+      onReaction: menuReactions.isEmpty
+          ? null
+          : (String emoji) => widget.onReaction!(message, emoji),
+      items: menuItems,
+      onItemSelected: (SantoChatMenuItem item) {
+        widget.onMessageMenuSelected?.call(message, item);
+        // 引用项直接接到滑动引用同一个回调,业务不用重复实现
+        if (item.key == SantoChatMenuItem.quote.key) {
+          widget.onReply?.call(message);
+        }
+      },
     );
   }
 
@@ -523,7 +641,61 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
         onTap: onTap == null ? null : (SantoChatFileMessage m) => onTap(m),
       );
     }
+    if (message is SantoChatDocMessage) {
+      final ValueChanged<SantoChatDocMessage>? onDocTap = widget.onDocTap;
+      return SantoChatDocCard(
+        message: message,
+        onTap: onDocTap == null ? null : (SantoChatDocMessage m) => onDocTap(m),
+      );
+    }
     return const SizedBox.shrink();
+  }
+}
+
+/// 多选态下的圆形勾选框
+class _SelectionIndicator extends StatelessWidget {
+  final bool selected;
+  final SantoChatConfig config;
+  final VoidCallback? onTap;
+
+  const _SelectionIndicator({
+    required this.selected,
+    required this.config,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final double size = config.avatarSize / 2 + config.commonConfig.gapXs / 2;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: SizedBox.square(
+        dimension: size,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: selected ? config.myBubbleColor : null,
+            border: Border.all(
+              color: selected
+                  ? config.myBubbleColor
+                  : config.commonConfig.borderColorBase,
+              width: config.commonConfig.borderWidthMd,
+            ),
+          ),
+          child: selected
+              ? Center(
+                  child: SantoIcon(
+                    SantoIcons.check,
+                    size: config.commonConfig.iconSizeXs,
+                    color: config.commonConfig.colorTextBaseInverse,
+                  ),
+                )
+              : null,
+        ),
+      ),
+    );
   }
 }
 

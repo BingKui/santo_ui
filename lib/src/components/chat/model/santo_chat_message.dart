@@ -5,8 +5,14 @@ enum SantoChatMessageStatus {
   /// 发送中
   sending,
 
-  /// 已发送
+  /// 已发送(对方未收到)
   sent,
+
+  /// 已送达(对方已收到未读)
+  delivered,
+
+  /// 已读
+  read,
 
   /// 发送失败
   failed,
@@ -141,6 +147,9 @@ abstract class SantoChatMessage {
   /// 表情回应
   final List<SantoChatReaction> reactions;
 
+  /// 是否被编辑过,展示「已编辑」标记
+  final bool isEdited;
+
   const SantoChatMessage({
     required this.id,
     this.author,
@@ -148,6 +157,7 @@ abstract class SantoChatMessage {
     this.status = SantoChatMessageStatus.sent,
     this.quote,
     this.reactions = const <SantoChatReaction>[],
+    this.isEdited = false,
   });
 
   /// 判断该消息是否由 [userId] 发出
@@ -171,6 +181,7 @@ class SantoChatTextMessage extends SantoChatMessage {
     SantoChatMessageStatus status = SantoChatMessageStatus.sent,
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
   }) : super(
           id: id,
           author: author,
@@ -178,6 +189,7 @@ class SantoChatTextMessage extends SantoChatMessage {
           status: status,
           quote: quote,
           reactions: reactions,
+          isEdited: isEdited,
         );
 }
 
@@ -210,6 +222,7 @@ class SantoChatImageMessage extends SantoChatMessage {
     SantoChatMessageStatus status = SantoChatMessageStatus.sent,
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
   }) : super(
           id: id,
           author: author,
@@ -217,6 +230,7 @@ class SantoChatImageMessage extends SantoChatMessage {
           status: status,
           quote: quote,
           reactions: reactions,
+          isEdited: isEdited,
         );
 }
 
@@ -249,6 +263,7 @@ class SantoChatVideoMessage extends SantoChatMessage {
     SantoChatMessageStatus status = SantoChatMessageStatus.sent,
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
   }) : super(
           id: id,
           author: author,
@@ -256,6 +271,7 @@ class SantoChatVideoMessage extends SantoChatMessage {
           status: status,
           quote: quote,
           reactions: reactions,
+          isEdited: isEdited,
         );
 }
 
@@ -280,6 +296,7 @@ class SantoChatVoiceMessage extends SantoChatMessage {
     SantoChatMessageStatus status = SantoChatMessageStatus.sent,
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
   }) : super(
           id: id,
           author: author,
@@ -287,6 +304,7 @@ class SantoChatVoiceMessage extends SantoChatMessage {
           status: status,
           quote: quote,
           reactions: reactions,
+          isEdited: isEdited,
         );
 }
 
@@ -311,6 +329,7 @@ class SantoChatFileMessage extends SantoChatMessage {
     SantoChatMessageStatus status = SantoChatMessageStatus.sent,
     SantoChatQuote? quote,
     List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
   }) : super(
           id: id,
           author: author,
@@ -318,6 +337,50 @@ class SantoChatFileMessage extends SantoChatMessage {
           status: status,
           quote: quote,
           reactions: reactions,
+          isEdited: isEdited,
+        );
+}
+
+/// 文档消息
+///
+/// 消息体是一张文档卡片,展示文档标题与附言,点击由业务方去校验权限并打开文档。
+class SantoChatDocMessage extends SantoChatMessage {
+  /// 文档标题
+  final String title;
+
+  /// 文档 ID
+  final String docId;
+
+  /// 文档所在空间 ID
+  final String? spaceId;
+
+  /// 文档地址
+  final String? url;
+
+  /// 发送时的附言,为空时不展示
+  final String? content;
+
+  const SantoChatDocMessage({
+    required String id,
+    required SantoChatAuthor author,
+    required this.title,
+    required this.docId,
+    this.spaceId,
+    this.url,
+    this.content,
+    DateTime? createdAt,
+    SantoChatMessageStatus status = SantoChatMessageStatus.sent,
+    SantoChatQuote? quote,
+    List<SantoChatReaction> reactions = const <SantoChatReaction>[],
+    bool isEdited = false,
+  }) : super(
+          id: id,
+          author: author,
+          createdAt: createdAt,
+          status: status,
+          quote: quote,
+          reactions: reactions,
+          isEdited: isEdited,
         );
 }
 

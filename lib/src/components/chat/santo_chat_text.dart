@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/chat/model/santo_chat_emoji.dart';
+import 'package:santo_ui/src/components/chat/model/santo_chat_emoji_item.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_message.dart';
 import 'package:santo_ui/src/components/image/santo_image.dart';
 import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
@@ -65,6 +66,7 @@ class _ChatTextToken {
   final int priority;
   final SantoChatMention? mention;
   final String? emojiUrl;
+  final String? emojiSymbol;
   final String? link;
 
   const _ChatTextToken({
@@ -73,6 +75,7 @@ class _ChatTextToken {
     required this.priority,
     this.mention,
     this.emojiUrl,
+    this.emojiSymbol,
     this.link,
   });
 }
@@ -115,13 +118,18 @@ class _SantoChatTextState extends State<SantoChatText> {
     }
 
     for (final RegExpMatch match in _emojiRegExp.allMatches(text)) {
-      final String? url = SantoChatEmojiRegistry.urlOf(match.group(1)!);
-      if (url == null) continue;
+      final String name = match.group(1)!;
+      // 业务注册过表情图就用图,否则回退到内置的 Unicode 表情
+      final String? url = SantoChatEmojiRegistry.urlOf(name);
+      final String? symbol =
+          url == null ? SantoChatEmoji.byName(name)?.symbol : null;
+      if (url == null && symbol == null) continue;
       tokens.add(_ChatTextToken(
         start: match.start,
         end: match.end,
         priority: 1,
         emojiUrl: url,
+        emojiSymbol: symbol,
       ));
     }
 
@@ -182,6 +190,9 @@ class _SantoChatTextState extends State<SantoChatText> {
             height: emojiSize,
           ),
         ));
+      } else if (token.emojiSymbol != null) {
+        // 内置表情:直接用 Unicode 字符,由系统字体渲染
+        spans.add(TextSpan(text: token.emojiSymbol, style: textStyle));
       } else if (token.mention != null) {
         spans.add(TextSpan(
           text: widget.text.substring(token.start, token.end),

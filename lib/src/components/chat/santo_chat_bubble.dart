@@ -4,6 +4,7 @@ import 'package:santo_ui/src/components/chat/santo_chat_quote_view.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_reaction.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
 import 'package:santo_ui/src/components/icon/santo_icons.dart';
+import 'package:santo_ui/src/components/icon/santo_solid_icons.dart';
 import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,9 @@ class SantoChatBubble extends StatelessWidget {
   /// 发送状态,仅 [SantoChatMessageStatus.failed]/[sending] 会展示状态图标
   final SantoChatMessageStatus status;
 
+  /// 是否被编辑过,展示「已编辑」标记
+  final bool isEdited;
+
   /// 表情回应,展示在气泡下方
   final List<SantoChatReaction> reactions;
 
@@ -76,6 +80,11 @@ class SantoChatBubble extends StatelessWidget {
   /// 点击引用块回调
   final VoidCallback? onQuoteTap;
 
+  /// 内容自带容器(如文档卡片):为 true 时不画气泡底色与内边距,状态、头像、菜单照常
+  ///
+  /// @since v1.5.0
+  final bool bare;
+
   const SantoChatBubble({
     Key? key,
     required this.child,
@@ -87,6 +96,7 @@ class SantoChatBubble extends StatelessWidget {
     this.time,
     this.quote,
     this.status = SantoChatMessageStatus.sent,
+    this.isEdited = false,
     this.reactions = const <SantoChatReaction>[],
     this.onReactionTap,
     this.onDoubleTap,
@@ -98,6 +108,7 @@ class SantoChatBubble extends StatelessWidget {
     this.onLongPress,
     this.onRetry,
     this.onQuoteTap,
+    this.bare = false,
   }) : super(key: key);
 
   @override
@@ -121,25 +132,54 @@ class SantoChatBubble extends StatelessWidget {
             : bubblePadding);
 
     Widget bubble = Container(
-      decoration: BoxDecoration(
-        color: backgroundColor ??
-            (isMine ? config.myBubbleColor : config.otherBubbleColor),
-        borderRadius: BorderRadius.circular(config.bubbleRadius),
-      ),
-      clipBehavior: Clip.antiAlias,
+      decoration: bare
+          ? null
+          : BoxDecoration(
+              color: backgroundColor ??
+                  (isMine ? config.myBubbleColor : config.otherBubbleColor),
+              borderRadius: BorderRadius.circular(config.bubbleRadius),
+            ),
+      clipBehavior: bare ? Clip.none : Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (quote != null)
             Padding(
-              padding: bubblePadding,
+              padding: bare ? EdgeInsets.zero : bubblePadding,
               child: SantoChatQuoteView(
                 quote: quote!,
                 onTap: onQuoteTap,
               ),
             ),
-          Padding(padding: contentInsets, child: child),
+          Padding(
+            padding: bare ? EdgeInsets.zero : contentInsets,
+            child: child,
+          ),
+          if (isEdited)
+            Padding(
+              padding: bare
+                  ? EdgeInsets.zero
+                  : EdgeInsets.fromLTRB(
+                      bubblePadding.left,
+                      bubblePadding.top / 2,
+                      bubblePadding.right,
+                      bubblePadding.bottom / 2,
+                    ),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  '已编辑',
+                  style: TextStyle(
+                    fontSize: config.commonConfig.fontSizeCaptionSm,
+                    color: (isMine
+                            ? config.myTextStyle.color
+                            : config.otherTextStyle.color)
+                        ?.withOpacity(0.6),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -152,6 +192,12 @@ class SantoChatBubble extends StatelessWidget {
         child: bubble,
       );
     }
+
+    // 失败警示单独放在非头像一侧,发送中/已发送/已送达/已读贴头像一侧
+    final bool failed = status == SantoChatMessageStatus.failed;
+    final Widget? failedHint =
+        isMine && failed ? _buildRetryHint(config) : null;
+    final Widget? statusIcon = failed ? null : _buildStatus(config);
 
     final Widget body = Column(
       crossAxisAlignment:
@@ -168,11 +214,22 @@ class SantoChatBubble extends StatelessWidget {
           ),
         LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            return ConstrainedBox(
+            final Widget constrained = ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: constraints.maxWidth * config.bubbleMaxWidthRatio,
               ),
               child: bubble,
+            );
+            if (failedHint == null) return constrained;
+            // 发送失败的警示放在非头像一侧(气泡左侧),并相对气泡上下居中
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                failedHint,
+                SizedBox(width: config.commonConfig.hSpacingSm),
+                Flexible(child: constrained),
+              ],
             );
           },
         ),
@@ -205,10 +262,11 @@ class SantoChatBubble extends StatelessWidget {
                 SizedBox(width: avatarSize),
               SizedBox(width: config.commonConfig.hSpacingSm),
             ],
+            // 发送失败的警示跟着气泡走(见上面的 LayoutBuilder)
             Flexible(child: body),
             if (isMine) ...<Widget>[
               SizedBox(width: config.commonConfig.hSpacingSm),
-              _buildStatus(config),
+              ?statusIcon,
               if (hasAvatar) avatarWidget,
             ],
           ],
@@ -231,28 +289,47 @@ class SantoChatBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildStatus(SantoChatConfig config) {
-    if (status == SantoChatMessageStatus.failed) {
-      final Widget icon = SantoIcon(
-        SantoIcons.warningTriangle,
-        size: config.commonConfig.iconSizeSm,
-        color: config.commonConfig.brandError,
-      );
-      if (onRetry == null) return icon;
-      return GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onRetry,
-        child: icon,
-      );
+  /// 发送中/已发送/已送达/已读的状态图标;失败不在这里展示,返回 null
+  Widget? _buildStatus(SantoChatConfig config) {
+    final Color hintColor = config.commonConfig.colorTextHint;
+    final double size = config.commonConfig.iconSizeSm;
+
+    switch (status) {
+      case SantoChatMessageStatus.failed:
+        return null;
+      case SantoChatMessageStatus.sending:
+        return SantoIcon(SantoIcons.clock, size: size, color: hintColor);
+      case SantoChatMessageStatus.sent:
+        return SantoIcon(SantoIcons.check, size: size, color: hintColor);
+      case SantoChatMessageStatus.delivered:
+        return SantoIcon(SantoIcons.doubleCheck, size: size, color: hintColor);
+      case SantoChatMessageStatus.read:
+        return SantoIcon(
+          SantoIcons.doubleCheck,
+          size: size,
+          color: config.myBubbleColor,
+        );
     }
-    if (status == SantoChatMessageStatus.sending) {
-      return SantoIcon(
-        SantoIcons.clock,
-        size: config.commonConfig.iconSizeSm,
-        color: config.commonConfig.colorTextHint,
-      );
-    }
-    return const SizedBox.shrink();
+  }
+
+  /// 发送失败的警示图标:传了 [onRetry] 时点它重发
+  Widget _buildRetryHint(SantoChatConfig config) {
+    final Widget icon = SantoIcon(
+      SantoSolidIcons.warningSquare,
+      solid: true,
+      size: config.commonConfig.iconSizeMd,
+      color: config.commonConfig.brandError,
+    );
+    if (onRetry == null) return icon;
+    // 图标本身很小,撑大点击区保证好点
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onRetry,
+      child: SizedBox.square(
+        dimension: config.commonConfig.iconSizeMd + config.commonConfig.vSpacingSm,
+        child: Center(child: icon),
+      ),
+    );
   }
 
   Widget? _buildAvatar(double avatarSize) {

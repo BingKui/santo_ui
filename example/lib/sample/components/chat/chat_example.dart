@@ -1,9 +1,30 @@
+import 'package:example/sample/components/chat/chat_demo.dart';
+import 'package:example/sample/components/chat/chat_room_example.dart';
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/home/example_intro.dart';
 import 'package:flutter/material.dart';
 
 /// 示例用的网络图片
-const String _kDemoImage = 'https://zos.alipayobjects.com/rmsportal/ODdgcjrvb81sCyJ.png';
+const String _kDemoImage = kChatDemoImage;
+
+/// 超过两排(15 项)的扩展菜单:面板一页放 10 项,余下的左右滑动翻页
+const List<SantoChatExtension> _manyExtensions = <SantoChatExtension>[
+  SantoChatExtension.photo,
+  SantoChatExtension.camera,
+  SantoChatExtension.file,
+  SantoChatExtension(key: 'location', label: '位置', icon: SantoIcons.pin),
+  SantoChatExtension(key: 'card', label: '名片', icon: SantoIcons.user),
+  SantoChatExtension(key: 'collect', label: '收藏', icon: SantoIcons.star),
+  SantoChatExtension(key: 'voice', label: '语音', icon: SantoIcons.microphone),
+  SantoChatExtension(key: 'video', label: '视频', icon: SantoIcons.mediaImage),
+  SantoChatExtension(key: 'phone', label: '电话', icon: SantoIcons.phone),
+  SantoChatExtension(key: 'calendar', label: '日程', icon: SantoIcons.calendar),
+  SantoChatExtension(key: 'remind', label: '提醒', icon: SantoIcons.bell),
+  SantoChatExtension(key: 'folder', label: '文件夹', icon: SantoIcons.folder),
+  SantoChatExtension(key: 'gift', label: '礼物', icon: SantoIcons.gift),
+  SantoChatExtension(key: 'packet', label: '红包', icon: SantoIcons.wallet),
+  SantoChatExtension(key: 'mail', label: '邮件', icon: SantoIcons.mail),
+];
 
 /// Chat 会话示例页面
 class ChatExample extends StatefulWidget {
@@ -16,289 +37,172 @@ class _ChatExampleState extends State<ChatExample> {
   final SantoChatAuthor _zhang = const SantoChatAuthor(id: 'u1', name: '张三');
   final SantoChatAuthor _li = const SantoChatAuthor(id: 'u2', name: '李四');
 
-  /// 可被 @ 的成员
-  final List<SantoChatMention> _members = <SantoChatMention>[
-    const SantoChatMention(id: 'u1', display: '张三'),
-    const SantoChatMention(id: 'u2', display: '李四'),
-    const SantoChatMention(id: 'all', display: '所有人'),
-  ];
+  /// 长按菜单里的自定义项
+  static const SantoChatMenuItem _favoriteItem = SantoChatMenuItem(
+    key: 'favorite',
+    label: '收藏',
+    icon: SantoIcons.star,
+  );
 
-  /// 完整会话的消息
-  late final List<SantoChatMessage> _messages = _initialMessages();
+  /// 多选演示的选中集合
+  final Set<String> _selectedIds = <String>{};
 
-  /// 表情回应,按消息 id 存放,演示不可变消息模型下的状态更新
-  final Map<String, List<SantoChatReaction>> _reactions =
-      <String, List<SantoChatReaction>>{};
-
-  /// 当前回复的消息
-  SantoChatQuote? _replyTo;
-
-  /// 对方是否正在输入
-  bool _typing = false;
-
-  /// 正在播放的语音
-  String? _playingVoiceId;
-
-  /// 是否还有更早的消息
-  bool _hasMore = true;
-
-  /// 是否正在加载更早的消息
-  bool _loadingMore = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // 表情图片由业务方注册,`[赞]` 会被渲染成图片,未注册的表情名保留原文
-    SantoChatEmojiRegistry.register('赞', _kDemoImage);
-  }
-
-  @override
-  void dispose() {
-    SantoChatEmojiRegistry.clear();
-    super.dispose();
-  }
-
-  List<SantoChatMessage> _initialMessages() {
-    final DateTime now = DateTime.now();
-    final DateTime yesterday = now.subtract(const Duration(days: 1));
-    return <SantoChatMessage>[
-      SantoChatSystemMessage(
-        id: 's1',
-        text: '张三邀请李四加入了群聊',
-        createdAt: now.subtract(const Duration(hours: 2)),
-      ),
-      SantoChatTextMessage(
-        id: 'm1',
-        author: _zhang,
-        text: '昨天的方案我看过了,整体没问题',
-        createdAt: yesterday.subtract(const Duration(hours: 3)),
-      ),
-      SantoChatTextMessage(
-        id: 'm2',
-        author: _zhang,
-        text: '只有第三页的数据要再确认一下',
-        createdAt: yesterday.subtract(const Duration(hours: 3))
-            .add(const Duration(minutes: 1)),
-      ),
-      SantoChatTextMessage(
-        id: 'm3',
-        author: _me,
-        text: '好的,我今天更新一版 [赞]',
-        createdAt: yesterday.subtract(const Duration(hours: 2)),
-      ),
-      SantoChatImageMessage(
-        id: 'm4',
-        author: _me,
-        url: _kDemoImage,
-        originalWidth: 300,
-        originalHeight: 200,
-        createdAt: now.subtract(const Duration(minutes: 40)),
-      ),
-      SantoChatTextMessage(
-        id: 'm5',
-        author: _li,
-        text: '@张三 第三页的引用数据我重新拉了一份 https://example.com/report',
-        mentions: <SantoChatMention>[
-          const SantoChatMention(id: 'u1', display: '张三'),
-        ],
-        createdAt: now.subtract(const Duration(minutes: 20)),
-      ),
-      SantoChatTextMessage(
-        id: 'm6',
-        author: _zhang,
-        text: '收到,辛苦了',
-        quote: const SantoChatQuote(
-          messageId: 'm5',
-          title: '李四',
-          preview: '@张三 第三页的引用数据我重新拉了一份',
+  /// 演示用的消息
+  List<SantoChatMessage> get _messages => <SantoChatMessage>[
+        SantoChatTextMessage(
+          id: 'd1',
+          author: _zhang,
+          text: '这条是昨天的消息',
+          createdAt: DateTime.now().subtract(const Duration(days: 1)),
         ),
-        createdAt: now.subtract(const Duration(minutes: 18)),
+        SantoChatTextMessage(
+          id: 'd2',
+          author: _zhang,
+          text: '同一个人的连续消息不重复展示头像',
+          createdAt: DateTime.now()
+              .subtract(const Duration(days: 1))
+              .add(const Duration(seconds: 30)),
+        ),
+        SantoChatTextMessage(
+          id: 'd3',
+          author: _me,
+          text: '头像与昵称会重新出现',
+          status: SantoChatMessageStatus.read,
+          createdAt: DateTime.now().subtract(const Duration(days: 1)),
+        ),
+        SantoChatTextMessage(
+          id: 'd4',
+          author: _li,
+          text: '长按这条消息可以看到菜单',
+          createdAt: DateTime.now().subtract(const Duration(minutes: 30)),
+        ),
+      ];
+
+  /// 会话画布:列表自带灰底,这里裁成与 Section 一致的圆角
+  Widget _framed({required double height, required Widget child}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs,
+      ),
+      child: SizedBox(height: height, child: child),
+    );
+  }
+
+  /// 只需要展示、不需要交互的消息列表
+  Widget _buildStaticList({
+    required double height,
+    required List<SantoChatMessage> messages,
+    ValueChanged<SantoChatMessage>? onRetry,
+    ValueChanged<SantoChatQuote>? onQuoteTap,
+    ValueChanged<SantoChatDocMessage>? onDocTap,
+    bool withMenu = false,
+    bool withManyMenu = false,
+    bool withSelection = false,
+  }) {
+    return _framed(
+      height: height,
+      child: SantoChatMessageList(
+        messages: messages,
+        currentUserId: 'me',
+        showName: true,
+        onRetry: onRetry,
+        onQuoteTap: onQuoteTap,
+        onDocTap: onDocTap,
+        selectionMode: withSelection && _selectedIds.isNotEmpty,
+        selectedIds: _selectedIds,
+        onSelectionToggle: withSelection ? _toggleSelection : null,
+        messageMenuItems: withManyMenu
+            ? _manyMenuItems
+            : (withMenu ? _menuItems : null),
+        onMessageMenuSelected: withMenu || withManyMenu
+            ? _handleMenuAction
+            : null,
+        onReply: withMenu || withManyMenu
+            ? (SantoChatMessage message) =>
+                SantoToast.show('引用 ${message.id}', context)
+            : null,
+        onReaction: withMenu || withManyMenu
+            ? (SantoChatMessage message, String emoji) =>
+                SantoToast.show('回应 $emoji', context)
+            : null,
+        onMessageTap: (SantoChatMessage message) =>
+            SantoToast.show('点击了 ${message.id}', context),
+        onMentionTap: (SantoChatMention mention) =>
+            SantoToast.show('@了 ${mention.display}', context),
+        onLinkTap: (String link) => SantoToast.show('打开 $link', context),
+      ),
+    );
+  }
+
+  /// 长按菜单项:默认项 + 自定义「收藏」
+  List<SantoChatMenuItem> _menuItems(SantoChatMessage message, bool isMine) {
+    return <SantoChatMenuItem>[
+      ...SantoChatMenuItem.defaults(message, isMine: isMine),
+      if (message is SantoChatTextMessage) _favoriteItem,
+    ];
+  }
+
+  /// 超过 10 个的长按菜单项:一排 5 个,多出的换到第三排
+  List<SantoChatMenuItem> _manyMenuItems(
+    SantoChatMessage message,
+    bool isMine,
+  ) {
+    return <SantoChatMenuItem>[
+      ...SantoChatMenuItem.defaults(message, isMine: isMine),
+      _favoriteItem,
+      const SantoChatMenuItem(
+        key: 'pin',
+        label: '置顶',
+        icon: SantoIcons.pin,
+      ),
+      const SantoChatMenuItem(
+        key: 'remind',
+        label: '提醒',
+        icon: SantoIcons.bell,
+      ),
+      const SantoChatMenuItem(
+        key: 'schedule',
+        label: '日程',
+        icon: SantoIcons.calendar,
+      ),
+      const SantoChatMenuItem(
+        key: 'translate',
+        label: '翻译',
+        icon: SantoIcons.page,
+      ),
+      const SantoChatMenuItem(
+        key: 'save',
+        label: '保存',
+        icon: SantoIcons.bookmark,
       ),
     ];
   }
 
-  /// 会话消息(把当前的表态回应合并进模型)
-  List<SantoChatMessage> get _chatMessages => <SantoChatMessage>[
-        for (final SantoChatMessage message in _messages)
-          _withReactions(message, _reactions[message.id] ?? message.reactions),
-      ];
-
-  /// 演示用:替换消息上的表情回应
-  SantoChatMessage _withReactions(
-    SantoChatMessage message,
-    List<SantoChatReaction> reactions,
-  ) {
-    if (message is SantoChatTextMessage) {
-      return SantoChatTextMessage(
-        id: message.id,
-        author: message.author!,
-        text: message.text,
-        mentions: message.mentions,
-        createdAt: message.createdAt,
-        status: message.status,
-        quote: message.quote,
-        reactions: reactions,
-      );
+  void _handleMenuAction(SantoChatMessage message, SantoChatMenuItem item) {
+    if (item.key == 'multiSelect') {
+      setState(() {
+        _selectedIds
+          ..clear()
+          ..add(message.id);
+      });
+      return;
     }
-    if (message is SantoChatImageMessage) {
-      return SantoChatImageMessage(
-        id: message.id,
-        author: message.author!,
-        url: message.url,
-        width: message.width,
-        height: message.height,
-        originalWidth: message.originalWidth,
-        originalHeight: message.originalHeight,
-        createdAt: message.createdAt,
-        status: message.status,
-        quote: message.quote,
-        reactions: reactions,
-      );
-    }
-    return message;
+    SantoToast.show('${item.label} ${message.id}', context);
   }
 
-  /// 消息摘要,用于回复条与引用块
-  String _previewOf(SantoChatMessage message) {
-    if (message is SantoChatTextMessage) return message.text;
-    if (message is SantoChatImageMessage) return '[图片]';
-    if (message is SantoChatVideoMessage) return '[视频]';
-    if (message is SantoChatVoiceMessage) return '[语音]';
-    if (message is SantoChatFileMessage) return '[文件] ${message.name}';
-    return '';
-  }
-
-  void _handleReact(SantoChatMessage message, String emoji) {
-    final List<SantoChatReaction> reactions =
-        List<SantoChatReaction>.of(_reactions[message.id] ?? message.reactions);
-    final int index = reactions.indexWhere(
-      (SantoChatReaction reaction) => reaction.emoji == emoji,
-    );
+  void _toggleSelection(SantoChatMessage message) {
     setState(() {
-      if (index < 0) {
-        reactions.add(SantoChatReaction(emoji: emoji, reactedByMe: true));
-      } else {
-        final SantoChatReaction current = reactions[index];
-        if (current.reactedByMe) {
-          if (current.count <= 1) {
-            reactions.removeAt(index);
-          } else {
-            reactions[index] = SantoChatReaction(
-              emoji: emoji,
-              count: current.count - 1,
-            );
-          }
-        } else {
-          reactions[index] = SantoChatReaction(
-            emoji: emoji,
-            count: current.count + 1,
-            reactedByMe: true,
-          );
-        }
+      if (!_selectedIds.remove(message.id)) {
+        _selectedIds.add(message.id);
       }
-      _reactions[message.id] = reactions;
     });
   }
 
-  void _handleReply(SantoChatMessage message) {
-    setState(() {
-      _replyTo = SantoChatQuote(
-        messageId: message.id,
-        title: message.author?.name ?? '系统',
-        preview: _previewOf(message),
-      );
-    });
-  }
-
-  void _handleSend(String text) {
-    setState(() {
-      _messages.add(SantoChatTextMessage(
-        id: 'me_${DateTime.now().microsecondsSinceEpoch}',
-        author: _me,
-        text: text,
-        mentions: SantoChatMention.parse(text, _members),
-        createdAt: DateTime.now(),
-      ));
-      _replyTo = null;
-      _typing = true;
-    });
-    // 模拟对方回复:先显示「正在输入」,再补一条消息
-    Future<void>.delayed(const Duration(milliseconds: 1800), () {
-      if (!mounted) return;
-      setState(() {
-        _typing = false;
-        _messages.add(SantoChatTextMessage(
-          id: 'reply_${DateTime.now().microsecondsSinceEpoch}',
-          author: _zhang,
-          text: '收到,晚点给你答复',
-          createdAt: DateTime.now(),
-        ));
-      });
-    });
-  }
-
-  void _handleLoadMore() {
-    if (_loadingMore || !_hasMore) return;
-    setState(() => _loadingMore = true);
-    Future<void>.delayed(const Duration(milliseconds: 600), () {
-      if (!mounted) return;
-      setState(() {
-        _loadingMore = false;
-        _hasMore = false;
-        _messages.insert(
-          0,
-          SantoChatTextMessage(
-            id: 'history_${DateTime.now().microsecondsSinceEpoch}',
-            author: _li,
-            text: '这是更早的历史消息',
-            createdAt: DateTime.now().subtract(const Duration(days: 2)),
-          ),
-        );
-      });
-    });
-  }
-
-  /// 会话窗口的公共配置
-  Widget _buildChat({required double height, bool withHeader = false}) {
-    return _framed(
-      height: height,
-      child: MediaQuery.removePadding(
-        context: context,
-        removeBottom: true,
-        child: SantoChat(
-          messages: _chatMessages,
-          currentUserId: 'me',
-          showName: true,
-          typingAuthor: _typing ? _zhang : null,
-          playingMessageId: _playingVoiceId,
-          replyTo: _replyTo,
-          header: withHeader
-              ? Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  color: const Color(0xFFFFF7E6),
-                  child: Text(
-                    '群公告:周五前完成第三页数据核对',
-                    style: TextStyle(fontSize: 12, color: Colors.orange[800]),
-                  ),
-                )
-              : null,
-          onSend: _handleSend,
-          onCancelReply: () => setState(() => _replyTo = null),
-          onReply: _handleReply,
-          onReaction: _handleReact,
-          onQuoteTap: (SantoChatQuote quote) =>
-              SantoToast.show('跳转到原消息 ${quote.messageId}', context),
-          onMessageTap: (SantoChatMessage message) =>
-              SantoToast.show('点击了 ${message.id}', context),
-          onMessageLongPress: (SantoChatMessage message) =>
-              SantoToast.show('长按了 ${message.id}', context),
-          onMentionTap: (SantoChatMention mention) =>
-              SantoToast.show('@了 ${mention.display}', context),
-          onLinkTap: (String link) => SantoToast.show('打开 $link', context),
-        ),
+  Widget _buildInputSlot(String icon) {
+    return SizedBox.square(
+      dimension: 32,
+      child: Center(
+        child: SantoIcon(icon, size: 22, color: const Color(0xFF808695)),
       ),
     );
   }
@@ -312,13 +216,39 @@ class _ChatExampleState extends State<ChatExample> {
         SantoSection(
           title: '完整会话',
           description:
-              'SantoChat 是消息列表与底部输入区的总装:支持滑动气泡引用回复、长按弹表情回应、发送后展示对方「正在输入」',
-          child: _buildChat(height: 460, withHeader: true),
+              'SantoChat 总装:消息状态(发送中/已发送/已送达/已读/失败)、长按菜单(表情回应+操作,可按类型自定义)、滑动引用、编辑、多选、扩展菜单与上拉加载都在这一份状态里;发送没有按钮,走输入法发送键',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _framed(
+                height: 460,
+                child: MediaQuery.removePadding(
+                  context: context,
+                  removeBottom: true,
+                  child: const ChatDemo(),
+                ),
+              ),
+              SizedBox(
+                height: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .vSpacingSm,
+              ),
+              SantoButton(
+                text: '整屏会话(验证输入法上移)',
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => ChatRoomExample(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         SantoSection(
           title: '双方消息·@与表情',
           description:
-              'text 里的 @展示名 命中 mentions 时高亮可点,http(s) 链接自动变色可点,[赞] 走业务注册的表情图,失败态气泡左侧有重试图标',
+              'text 里的 @展示名 命中 mentions 时高亮可点,http(s) 链接自动变色可点,[赞] 走业务注册的表情图;isEdited 为 true 时气泡底部展示「已编辑」',
           child: _buildStaticList(
             height: 300,
             messages: <SantoChatMessage>[
@@ -335,6 +265,8 @@ class _ChatExampleState extends State<ChatExample> {
                 mentions: <SantoChatMention>[
                   const SantoChatMention(id: 'u2', display: '李四'),
                 ],
+                status: SantoChatMessageStatus.read,
+                isEdited: true,
                 createdAt: DateTime.now().subtract(const Duration(minutes: 28)),
               ),
               SantoChatTextMessage(
@@ -344,12 +276,37 @@ class _ChatExampleState extends State<ChatExample> {
                 status: SantoChatMessageStatus.sending,
                 createdAt: DateTime.now().subtract(const Duration(minutes: 27)),
               ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '消息状态',
+          description:
+              '我方消息左侧按 status 展示:发送中时钟、已发送单勾、已送达双勾、已读双勾取主题色;failed 展示可点击的重试图标',
+          child: _buildStaticList(
+            height: 340,
+            messages: <SantoChatMessage>[
+              for (final MapEntry<String, SantoChatMessageStatus> entry
+                  in <String, SantoChatMessageStatus>{
+                '发送中': SantoChatMessageStatus.sending,
+                '已发送': SantoChatMessageStatus.sent,
+                '已送达': SantoChatMessageStatus.delivered,
+                '已读': SantoChatMessageStatus.read,
+              }.entries)
+                SantoChatTextMessage(
+                  id: entry.key,
+                  author: _me,
+                  text: entry.key,
+                  status: entry.value,
+                  createdAt: DateTime.now()
+                      .subtract(Duration(minutes: 20 - entry.value.index)),
+                ),
               SantoChatTextMessage(
-                id: 'p4',
+                id: '失败',
                 author: _me,
-                text: '这条发送失败了,点左侧图标可以重试',
+                text: '发送失败,点左侧图标重试',
                 status: SantoChatMessageStatus.failed,
-                createdAt: DateTime.now().subtract(const Duration(minutes: 26)),
+                createdAt: DateTime.now(),
               ),
             ],
             onRetry: (SantoChatMessage message) =>
@@ -359,7 +316,7 @@ class _ChatExampleState extends State<ChatExample> {
         SantoSection(
           title: '系统消息',
           description:
-              'SantoChatMessageList 里的 SantoChatSystemMessage 自动渲染成居中弱化提示,不带头像与气泡',
+              'SantoChatMessageList 里的 SantoChatSystemMessage 自动渲染成居中弱化提示,不带头像与气泡,也不参与长按菜单',
           child: _buildStaticList(
             height: 180,
             messages: <SantoChatMessage>[
@@ -380,7 +337,7 @@ class _ChatExampleState extends State<ChatExample> {
         SantoSection(
           title: '引用消息',
           description:
-              '消息带 quote 时气泡内先渲染引用块,点击引用块回调 onQuoteTap,可用 messageId 跳到原消息',
+              '消息带 quote 时气泡内先渲染引用块,我方与对方的引用块样式一致,点击回调 onQuoteTap 并按 messageId 跳回原消息',
           child: _buildStaticList(
             height: 260,
             messages: <SantoChatMessage>[
@@ -394,6 +351,7 @@ class _ChatExampleState extends State<ChatExample> {
                 id: 'q2',
                 author: _me,
                 text: '引用一下你的消息',
+                status: SantoChatMessageStatus.read,
                 quote: const SantoChatQuote(
                   messageId: 'q1',
                   title: '李四',
@@ -423,10 +381,11 @@ class _ChatExampleState extends State<ChatExample> {
               ),
               SantoChatVideoMessage(
                 id: 'v1',
-                author: _li,
+                author: _me,
                 coverUrl: _kDemoImage,
                 url: 'https://example.com/video.mp4',
                 duration: const Duration(seconds: 95),
+                status: SantoChatMessageStatus.read,
                 createdAt: DateTime.now(),
               ),
             ],
@@ -435,9 +394,10 @@ class _ChatExampleState extends State<ChatExample> {
         SantoSection(
           title: '语音与文件消息',
           description:
-              '语音消息展示波形与时长,播放态由 playingMessageId 控制;文件消息展示文件名与大小',
+              '语音消息展示波形与时长,播放态由 playingMessageId 控制,长按菜单里会多出「转文字」;文件消息展示文件名与大小',
           child: _buildStaticList(
             height: 240,
+            withMenu: true,
             messages: <SantoChatMessage>[
               SantoChatVoiceMessage(
                 id: 'a1',
@@ -446,19 +406,43 @@ class _ChatExampleState extends State<ChatExample> {
                 duration: const Duration(seconds: 12),
                 createdAt: DateTime.now(),
               ),
-              SantoChatVoiceMessage(
-                id: 'a2',
-                author: _me,
-                url: 'https://example.com/voice.m4a',
-                duration: const Duration(seconds: 48),
-                createdAt: DateTime.now(),
-              ),
               SantoChatFileMessage(
                 id: 'f1',
-                author: _zhang,
+                author: _me,
                 url: 'https://example.com/report.pdf',
                 name: '第三季度数据核对报告.pdf',
                 size: 2465792,
+                status: SantoChatMessageStatus.read,
+                createdAt: DateTime.now(),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '文档消息',
+          description:
+              '文档卡片自带白底与描边、不套气泡,展示文档标题、附言与「点击查看文档」;点击走 onDocTap,由业务方校验权限后打开',
+          child: _buildStaticList(
+            height: 260,
+            onDocTap: (SantoChatDocMessage message) =>
+                SantoToast.show('打开文档 ${message.title}', context),
+            messages: <SantoChatMessage>[
+              SantoChatDocMessage(
+                id: 'd1',
+                author: _zhang,
+                title: '双十一大促容量评估文档',
+                docId: 'doc_10086',
+                spaceId: 'space_1',
+                content: '这是评估结论,记得看一下',
+                createdAt: DateTime.now().subtract(const Duration(minutes: 8)),
+              ),
+              SantoChatDocMessage(
+                id: 'd2',
+                author: _me,
+                title: '第三季度数据核对报告(定稿)',
+                docId: 'doc_10087',
+                spaceId: 'space_1',
+                status: SantoChatMessageStatus.read,
                 createdAt: DateTime.now(),
               ),
             ],
@@ -468,72 +452,148 @@ class _ChatExampleState extends State<ChatExample> {
           title: '日期分隔与分组',
           description:
               '相邻消息间隔超过 5 分钟或跨天时插入时间,文案是「今天/昨天/月-日」+ 时分;同一发送者的连续消息只在该组第一条展示头像与昵称',
+          child: _buildStaticList(height: 320, messages: _messages),
+        ),
+        SantoSection(
+          title: '长按菜单',
+          description:
+              '长按气泡弹出浮层:顶部表情回应、下面是操作列表;默认按消息类型给项(文本有复制/编辑,语音有转文字),这里再加了一个自定义的「收藏」',
           child: _buildStaticList(
-            height: 320,
+            height: 260,
+            withMenu: true,
             messages: <SantoChatMessage>[
               SantoChatTextMessage(
-                id: 'd1',
-                author: _zhang,
-                text: '这是前天的消息',
-                createdAt: DateTime.now().subtract(const Duration(days: 2)),
-              ),
-              SantoChatTextMessage(
-                id: 'd2',
-                author: _zhang,
-                text: '同一个人的连续消息不重复展示头像',
-                createdAt: DateTime.now().subtract(const Duration(days: 2))
-                    .add(const Duration(seconds: 30)),
-              ),
-              SantoChatTextMessage(
-                id: 'd3',
-                author: _zhang,
-                text: '换到我已经是昨天了',
-                createdAt: DateTime.now().subtract(const Duration(days: 1)),
-              ),
-              SantoChatTextMessage(
-                id: 'd4',
+                id: 'menu1',
                 author: _me,
-                text: '头像与昵称会重新出现',
-                createdAt: DateTime.now().subtract(const Duration(days: 1)),
+                text: '长按我看默认项 + 收藏',
+                status: SantoChatMessageStatus.read,
+                createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
+              ),
+              SantoChatTextMessage(
+                id: 'menu2',
+                author: _zhang,
+                text: '长按对方的消息,没有编辑与删除',
+                createdAt: DateTime.now(),
               ),
             ],
           ),
         ),
         SantoSection(
-          title: '上拉加载与回到底部',
+          title: '长按菜单·超过 10 项',
           description:
-              'hasMore 为 true 时滚到顶部触发 onLoadMore 并在顶部展示加载中;不在底部时右下角出现「回到底部」按钮',
-          child: _framed(
-            height: 320,
-            child: SantoChatMessageList(
-              messages: _chatMessages,
-              currentUserId: 'me',
-              hasMore: _hasMore,
-              loadingMore: _loadingMore,
-              onLoadMore: _handleLoadMore,
-            ),
+              '菜单项按块级排列、一排 5 个:这条消息有 12 项(默认 6 项 + 自定义 6 项),多出的会换到第三排',
+          child: _buildStaticList(
+            height: 260,
+            withManyMenu: true,
+            messages: <SantoChatMessage>[
+              SantoChatTextMessage(
+                id: 'menu3',
+                author: _me,
+                text: '长按我,菜单有 12 项',
+                status: SantoChatMessageStatus.read,
+                createdAt: DateTime.now().subtract(const Duration(minutes: 3)),
+              ),
+            ],
+          ),
+        ),
+        SantoSection(
+          title: '多选',
+          description:
+              '多选态下每条消息前出现勾选框、点整行即勾选;SantoChat 会把底部输入区换成多选操作栏(已选条数 + 转发/删除 + 取消)',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _framed(
+                height: 340,
+                child: SantoChat(
+                  messages: _messages,
+                  currentUserId: 'me',
+                  showName: true,
+                  selectionMode: _selectedIds.isNotEmpty,
+                  selectedIds: _selectedIds,
+                  onSelectionToggle: _toggleSelection,
+                  onSelectionAction: (SantoChatMenuItem item) {
+                    SantoToast.show(
+                      '${item.label} ${_selectedIds.length} 条',
+                      context,
+                    );
+                    setState(_selectedIds.clear);
+                  },
+                  onCancelSelection: () => setState(_selectedIds.clear),
+                  inputHintText: '进入多选后这里会换成操作栏',
+                  onSend: (String text) {},
+                  onMessageMenuSelected: _handleMenuAction,
+                  messageMenuItems: _menuItems,
+                  onReaction: (SantoChatMessage message, String emoji) =>
+                      SantoToast.show('回应 $emoji', context),
+                  onReply: (SantoChatMessage message) =>
+                      SantoToast.show('引用 ${message.id}', context),
+                ),
+              ),
+              SizedBox(
+                height: SantoThemeConfigurator.instance
+                    .getConfig()
+                    .commonConfig
+                    .vSpacingSm,
+              ),
+              SantoButton(
+                text: '进入多选',
+                isEnable: _selectedIds.isEmpty,
+                onTap: () => setState(() => _selectedIds.add('d2')),
+              ),
+            ],
           ),
         ),
         SantoSection(
           title: '输入区',
           description:
-              'leading/trailing 是业务插槽(语音、表情),回复态在输入框上方展示引用条,底部安全区固定预留不可配置',
+              '没有发送按钮,发送走输入法发送键;点 + 收起输入法并在输入框下方展开扩展菜单(默认照片/拍摄/文件,可自定义),点输入框又收起面板唤起输入法。'
+              '面板高度固定(扩展菜单两排、表情四排),内容按网格布局、左上角起排、空位保留,一页放不下的左右滑动翻页(见最后一条)',
           child: MediaQuery.removePadding(
             context: context,
             removeBottom: true,
             child: Column(
               children: <Widget>[
                 SantoChatInput(
-                  hintText: '带插槽的输入区',
-                  replyTo: const SantoChatQuote(
-                    messageId: 'm1',
-                    title: '张三',
-                    preview: '昨天的方案我看过了',
-                  ),
+                  hintText: '带表情与扩展菜单的输入区',
                   leading: _buildInputSlot(SantoIcons.microphone),
-                  trailing: _buildInputSlot(SantoIcons.emoji),
+                  extensions: const <SantoChatExtension>[
+                    SantoChatExtension.photo,
+                    SantoChatExtension.camera,
+                    SantoChatExtension.file,
+                    SantoChatExtension(
+                      key: 'location',
+                      label: '位置',
+                      icon: SantoIcons.pin,
+                    ),
+                    SantoChatExtension(
+                      key: 'card',
+                      label: '名片',
+                      icon: SantoIcons.user,
+                    ),
+                    SantoChatExtension(
+                      key: 'collect',
+                      label: '收藏',
+                      icon: SantoIcons.star,
+                    ),
+                  ],
                   onSend: (String text) => SantoToast.show('发送:$text', context),
-                  onCancelReply: () => SantoToast.show('取消回复', context),
+                  onExtensionTap: (SantoChatExtension extension) =>
+                      SantoToast.show('选择${extension.label}', context),
+                ),
+                SantoChatInput(
+                  hintText: '扩展菜单超过 10 项(左右滑动翻页)',
+                  leading: _buildInputSlot(SantoIcons.microphone),
+                  extensions: _manyExtensions,
+                  onSend: (String text) => SantoToast.show('发送:$text', context),
+                  onExtensionTap: (SantoChatExtension extension) =>
+                      SantoToast.show('选择${extension.label}', context),
+                ),
+                SantoChatInput(
+                  hintText: '编辑态',
+                  editingText: '这条消息正在编辑',
+                  onSend: (String text) => SantoToast.show('提交编辑:$text', context),
+                  onCancelEdit: () => SantoToast.show('取消编辑', context),
                 ),
                 SantoChatInput(
                   hintText: '禁用态',
@@ -591,43 +651,5 @@ class _ChatExampleState extends State<ChatExample> {
         ),
       ],
     );
-  }
-
-  /// 演示用的会话画布:列表自带灰底,这里裁成与 Section 一致的圆角
-  Widget _framed({required double height, required Widget child}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(
-        SantoThemeConfigurator.instance.getConfig().commonConfig.radiusXs,
-      ),
-      child: SizedBox(height: height, child: child),
-    );
-  }
-
-  /// 只需要展示、不需要交互的消息列表
-  Widget _buildStaticList({
-    required double height,
-    required List<SantoChatMessage> messages,
-    ValueChanged<SantoChatMessage>? onRetry,
-    ValueChanged<SantoChatQuote>? onQuoteTap,
-  }) {
-    return _framed(
-      height: height,
-      child: SantoChatMessageList(
-        messages: messages,
-        currentUserId: 'me',
-        showName: true,
-        onRetry: onRetry,
-        onQuoteTap: onQuoteTap,
-        onMessageTap: (SantoChatMessage message) =>
-            SantoToast.show('点击了 ${message.id}', context),
-        onMentionTap: (SantoChatMention mention) =>
-            SantoToast.show('@了 ${mention.display}', context),
-        onLinkTap: (String link) => SantoToast.show('打开 $link', context),
-      ),
-    );
-  }
-
-  Widget _buildInputSlot(String icon) {
-    return SantoIcon(icon, size: 22, color: const Color(0xFF808695));
   }
 }

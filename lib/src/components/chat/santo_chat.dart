@@ -1,7 +1,11 @@
+import 'package:santo_ui/src/components/chat/model/santo_chat_emoji_item.dart';
+import 'package:santo_ui/src/components/chat/model/santo_chat_extension.dart';
+import 'package:santo_ui/src/components/chat/model/santo_chat_menu_item.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_message.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_input.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_message_list.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_reaction.dart';
+import 'package:santo_ui/src/components/chat/santo_chat_selection_bar.dart';
 import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -48,20 +52,50 @@ class SantoChat extends StatelessWidget {
   /// 输入区右侧插槽
   final Widget? inputTrailing;
 
-  /// 自定义发送按钮
-  final Widget? sendButton;
-
   /// 输入框提示文案
   final String inputHintText;
 
   /// 输入区是否可输入
   final bool inputEnabled;
 
+  /// 扩展菜单项,默认照片、拍摄、文件;传空数组则不展示 `+` 入口
+  final List<SantoChatExtension> extensions;
+
+  /// 点选扩展菜单项回调
+  final ValueChanged<SantoChatExtension>? onExtensionTap;
+
+  /// 表情面板里的表情,默认内置 32 个;传空数组则不展示表情入口
+  final List<SantoChatEmoji> emojis;
+
   /// 当前回复的消息
   final SantoChatQuote? replyTo;
 
   /// 取消回复回调
   final VoidCallback? onCancelReply;
+
+  /// 正在编辑的消息内容,不为空时输入区进入编辑态
+  final String? editingText;
+
+  /// 取消编辑回调
+  final VoidCallback? onCancelEdit;
+
+  /// 是否处于多选态,多选态下底部输入区换成多选操作栏
+  final bool selectionMode;
+
+  /// 多选态下已选中的消息 id
+  final Set<String> selectedIds;
+
+  /// 多选态下切换某条消息的选中状态
+  final ValueChanged<SantoChatMessage>? onSelectionToggle;
+
+  /// 多选操作栏的操作项,默认转发、删除
+  final List<SantoChatMenuItem> selectionActions;
+
+  /// 多选操作栏的操作回调
+  final ValueChanged<SantoChatMenuItem>? onSelectionAction;
+
+  /// 退出多选
+  final VoidCallback? onCancelSelection;
 
   /// 正在输入的对方
   final SantoChatAuthor? typingAuthor;
@@ -71,6 +105,16 @@ class SantoChat extends StatelessWidget {
 
   /// 长按可选的表情回应
   final List<String> reactions;
+
+  /// 自定义长按菜单项,不传按消息类型取 [SantoChatMenuItem.defaults]
+  final List<SantoChatMenuItem> Function(
+    SantoChatMessage message,
+    bool isMine,
+  )? messageMenuItems;
+
+  /// 选择长按菜单里的操作项
+  final void Function(SantoChatMessage message, SantoChatMenuItem item)?
+      onMessageMenuSelected;
 
   /// 是否还有更早的消息
   final bool hasMore;
@@ -114,6 +158,9 @@ class SantoChat extends StatelessWidget {
   /// 点击发送失败的重试图标
   final ValueChanged<SantoChatMessage>? onRetry;
 
+  /// 点击文档卡片,由业务方校验权限后打开文档
+  final ValueChanged<SantoChatDocMessage>? onDocTap;
+
   const SantoChat({
     Key? key,
     required this.messages,
@@ -125,14 +172,26 @@ class SantoChat extends StatelessWidget {
     this.header,
     this.inputLeading,
     this.inputTrailing,
-    this.sendButton,
     this.inputHintText = '请输入内容',
     this.inputEnabled = true,
+    this.extensions = SantoChatExtension.defaults,
+    this.onExtensionTap,
+    this.emojis = kSantoChatDefaultEmojis,
     this.replyTo,
     this.onCancelReply,
+    this.editingText,
+    this.onCancelEdit,
+    this.selectionMode = false,
+    this.selectedIds = const <String>{},
+    this.onSelectionToggle,
+    this.selectionActions = kSantoChatDefaultSelectionActions,
+    this.onSelectionAction,
+    this.onCancelSelection,
     this.typingAuthor,
     this.playingMessageId,
     this.reactions = kSantoChatDefaultReactions,
+    this.messageMenuItems,
+    this.onMessageMenuSelected,
     this.hasMore = false,
     this.loadingMore = false,
     this.showScrollToBottom = true,
@@ -147,6 +206,7 @@ class SantoChat extends StatelessWidget {
     this.onLinkTap,
     this.onQuoteTap,
     this.onRetry,
+    this.onDocTap,
   }) : super(key: key);
 
   @override
@@ -157,6 +217,7 @@ class SantoChat extends StatelessWidget {
     return Container(
       color: config.backgroundColor,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ?header,
           Expanded(
@@ -170,6 +231,10 @@ class SantoChat extends StatelessWidget {
               playingMessageId: playingMessageId,
               padding: listPadding,
               reactions: reactions,
+              messageMenuItems: messageMenuItems,
+              selectionMode: selectionMode,
+              selectedIds: selectedIds,
+              onSelectionToggle: onSelectionToggle,
               hasMore: hasMore,
               loadingMore: loadingMore,
               showScrollToBottom: showScrollToBottom,
@@ -179,22 +244,36 @@ class SantoChat extends StatelessWidget {
               onMessageLongPress: onMessageLongPress,
               onMessageDoubleTap: onMessageDoubleTap,
               onReaction: onReaction,
+              onMessageMenuSelected: onMessageMenuSelected,
               onMentionTap: onMentionTap,
               onLinkTap: onLinkTap,
               onQuoteTap: onQuoteTap,
               onRetry: onRetry,
+              onDocTap: onDocTap,
             ),
           ),
-          SantoChatInput(
-            onSend: onSend,
-            hintText: inputHintText,
-            enabled: inputEnabled,
-            leading: inputLeading,
-            trailing: inputTrailing,
-            sendButton: sendButton,
-            replyTo: replyTo,
-            onCancelReply: onCancelReply,
-          ),
+          if (selectionMode)
+            SantoChatSelectionBar(
+              selectedCount: selectedIds.length,
+              actions: selectionActions,
+              onCancel: onCancelSelection,
+              onAction: onSelectionAction,
+            )
+          else
+            SantoChatInput(
+              onSend: onSend,
+              hintText: inputHintText,
+              enabled: inputEnabled,
+              leading: inputLeading,
+              trailing: inputTrailing,
+              extensions: extensions,
+              onExtensionTap: onExtensionTap,
+              emojis: emojis,
+              replyTo: replyTo,
+              onCancelReply: onCancelReply,
+              editingText: editingText,
+              onCancelEdit: onCancelEdit,
+            ),
         ],
       ),
     );

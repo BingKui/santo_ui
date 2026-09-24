@@ -13,9 +13,6 @@ const List<String> kSantoChatDefaultReactions = <String>[
   '😢',
 ];
 
-/// 表情回应选项的边长
-const double kSantoChatReactionItemSize = 40;
-
 /// 表情回应展示:气泡下方的回应胶囊
 ///
 /// @since v1.5.0
@@ -94,116 +91,5 @@ class SantoChatReactionView extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-/// 表情回应选择条
-///
-/// 由 [SantoChatMessageList] 在长按气泡时弹出,也可以自行调用 [show]
-/// 在指定位置弹出。
-///
-/// @since v1.5.0
-class SantoChatReactionPicker {
-  SantoChatReactionPicker._();
-
-  /// 在 [position](全局坐标)附近弹出回应选择条
-  ///
-  /// 返回 [OverlayEntry],调用方可在需要时手动 `remove()` 关闭。
-  static OverlayEntry? show({
-    required BuildContext context,
-    required Offset position,
-    required ValueChanged<String> onSelected,
-    List<String> emojis = kSantoChatDefaultReactions,
-    VoidCallback? onDismiss,
-  }) {
-    if (emojis.isEmpty) return null;
-    final OverlayState overlayState = Overlay.of(context);
-    final SantoChatConfig config =
-        SantoThemeConfigurator.instance.getConfig().chatConfig;
-    final Size screen = MediaQuery.of(context).size;
-    final double itemSize = kSantoChatReactionItemSize;
-    final double horizontalPadding = config.commonConfig.hSpacingSm;
-    final double width = emojis.length * itemSize + horizontalPadding * 2;
-    final double height = itemSize + horizontalPadding * 2;
-
-    final double left = (position.dx - width / 2)
-        .clamp(horizontalPadding, screen.width - width - horizontalPadding);
-    final double top = position.dy - height - config.commonConfig.vSpacingMd < 0
-        ? position.dy + config.commonConfig.vSpacingMd
-        : position.dy - height - config.commonConfig.vSpacingMd;
-
-    late OverlayEntry entry;
-    entry = OverlayEntry(
-      builder: (BuildContext context) {
-        return Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  entry.remove();
-                  onDismiss?.call();
-                },
-              ),
-            ),
-            Positioned(
-              left: left,
-              top: top,
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: horizontalPadding,
-                    vertical: horizontalPadding,
-                  ),
-                  decoration: BoxDecoration(
-                    color: config.otherBubbleColor,
-                    borderRadius: BorderRadius.circular(config.bubbleRadius),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.12),
-                        blurRadius: config.commonConfig.gapSm,
-                        offset: Offset(0, config.commonConfig.vSpacingXs / 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      for (final String emoji in emojis)
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            entry.remove();
-                            onSelected(emoji);
-                          },
-                          child: SizedBox(
-                            width: itemSize,
-                            height: itemSize,
-                            child: Center(
-                              child: SantoChatText(
-                                emoji,
-                                emojiSize: config.commonConfig.fontSizeHead,
-                                style: config.otherTextStyle
-                                    .generateTextStyle()
-                                    .copyWith(
-                                      fontSize:
-                                          config.commonConfig.fontSizeHead,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-    overlayState.insert(entry);
-    return entry;
   }
 }
