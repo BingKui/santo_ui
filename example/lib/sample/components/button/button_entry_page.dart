@@ -414,8 +414,11 @@ class _ButtonEntryPageState extends State<ButtonEntryPage> {
 
   /// 按钮组合:原按钮面板/吸底按钮面板已删除,组合布局由调用方拼装
   Widget _buildMultipleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return SantoSpace(
+      direction: SantoSpaceDirection.vertical,
+      customSize:
+          SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SantoSection(
           title: '按钮组合',

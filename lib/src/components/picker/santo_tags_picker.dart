@@ -2,7 +2,7 @@ import 'package:santo_ui/src/components/button/santo_button.dart';
 import 'package:santo_ui/src/components/input/santo_input_text.dart';
 import 'package:santo_ui/src/components/picker/base/santo_picker_title_config.dart';
 import 'package:santo_ui/src/components/picker/santo_tags_common_picker.dart';
-import 'package:santo_ui/src/components/tag/tagview/santo_select_tag.dart';
+import 'package:santo_ui/src/components/tag/santo_tag.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:santo_ui/src/theme/santo_theme.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +39,8 @@ class SantoTagsPickerResult {
 
 /// 标签选择弹框(底部弹出)
 ///
-/// 标签区复用可选择标签组件 [SantoSelectTag],数据直接用标签文案列表,
-/// 选中结果以下标形式回调,与 [SantoSelectTag] 的 API 保持一致。
+/// 标签区复用可选择标签组件 [SantoTag],数据直接用标签文案列表,
+/// 选中结果以下标形式回调,与 [SantoTag] 的 API 保持一致。
 ///
 /// 通过参数区分形态:
 /// * [multiSelect] 多选/单选,多选时可用 [maxSelectItemCount] 限制可选个数(0 表示不限)
@@ -72,7 +72,7 @@ class SantoTagsPicker extends CommonTagsPicker {
     this.initialSelectedIndexes,
     this.crossAxisCount,
     this.layoutStyle = SantoTagsPickerLayoutStyle.average,
-    this.tagHeight = 34.0,
+    this.tagHeight = 32.0,
     this.tagTextStyle,
     this.selectedTagTextStyle,
     this.tagBackgroundColor,
@@ -130,7 +130,9 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 布局样式,默认等分
   final SantoTagsPickerLayoutStyle layoutStyle;
 
-  /// 标签高度,默认 34
+  /// 标签高度,默认 32
+  ///
+  /// @changed v1.5.0 默认值由 34 改为 32,与 SantoTag 一致
   final double tagHeight;
 
   /// 未选中标签的文字样式,默认取标签主题配置
@@ -169,7 +171,7 @@ class SantoTagsPicker extends CommonTagsPicker {
   /// 输入框内容(未传 [textEditingController] 时由组件自己记录)
   String _inputText = '';
 
-  /// 选择超限被拒绝时自增,用于重建 [SantoSelectTag] 回滚选中状态
+  /// 选择超限被拒绝时自增,用于重建 [SantoTag] 回滚选中状态
   int _tagStateEpoch = 0;
 
   /// 已选中的下标
@@ -241,7 +243,7 @@ class SantoTagsPicker extends CommonTagsPicker {
     );
   }
 
-  /// 标签区:复用可选择标签组件 [SantoSelectTag]
+  /// 标签区:复用可选择标签组件 [SantoTag]
   ///
   /// 等分布局用固定宽度排 [crossAxisCount] 列,流式布局按内容自适应宽度;
   /// 内容区四周留白与标签间距统一取 gapMd
@@ -262,11 +264,12 @@ class SantoTagsPicker extends CommonTagsPicker {
       return Container(
         padding: EdgeInsets.symmetric(
             vertical: commonConfig.gapMd, horizontal: commonConfig.gapMd),
-        child: SantoSelectTag(
+        child: SantoTag(
           // 选中状态由本组件掌管:单选收敛、超限回滚时自增 epoch 重建,
-          // 让 SantoSelectTag 回到 _selected 的选中状态
+          // 让 SantoTag 回到 _selected 的选中状态
           key: ValueKey<int>(_tagStateEpoch),
           tags: tags,
+          selectable: true,
           isSingleSelect: false,
           initTagState: _selected,
           fixWidthMode: average,

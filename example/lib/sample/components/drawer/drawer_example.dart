@@ -413,7 +413,8 @@ class DrawerExample extends StatelessWidget {
                 children: [
                   Text('状态', style: TextStyle(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 12),
-                  SantoSelectTag(
+                  SantoTag(
+                    selectable: true,
                     tags: const ['全部', '进行中', '已完成', '已取消'],
                     initTagState: const [true],
                     fixWidthMode: false,
@@ -423,7 +424,8 @@ class DrawerExample extends StatelessWidget {
                   const SizedBox(height: 24),
                   Text('类型', style: TextStyle(fontWeight: FontWeight.w600)),
                   const SizedBox(height: 12),
-                  SantoSelectTag(
+                  SantoTag(
+                    selectable: true,
                     tags: const ['全部', '类型A', '类型B', '类型C'],
                     initTagState: const [true],
                     fixWidthMode: false,

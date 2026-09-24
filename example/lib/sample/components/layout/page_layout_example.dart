@@ -575,6 +575,23 @@ class _PageLayoutRefreshExampleState extends State<PageLayoutRefreshExample> {
           description: '刷新时下拉头部出现在内容上方,不遮挡内容',
           child: _card('页面内容照常排布'),
         ),
+        SantoSection(
+          title: '内容里自带滚动的表格',
+          description:
+              '表格设了 height 时由表格自己滚动;滚到顶部继续下拉同样触发页面刷新,且表格不会被拖出越界回弹(下拉时页面内容整体下移)',
+          child: SantoTable(
+            columns: const <SantoTableColumn>[
+              SantoTableColumn(title: '名称', align: SantoTableAlign.left),
+              SantoTableColumn(title: '数量'),
+              SantoTableColumn(title: '状态'),
+            ],
+            data: List<List<dynamic>>.generate(
+              20,
+              (int index) => <dynamic>['物料 $index', '${index + 1}', '在库'],
+            ),
+            height: 300,
+          ),
+        ),
       ],
     );
   }

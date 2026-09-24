@@ -90,6 +90,11 @@ class SantoRefreshController {
 /// [child] 必须是**可滚动**内容(如 ListView / GridView / CustomScrollView),
 /// 否则下拉与触底手势无法生效
 ///
+/// 内容里自带滚动的嵌套容器(如设了 `height` 的 Table、内嵌 ListView)滚到顶部
+/// 后继续下拉时,手势由本组件接管:同样展示刷新头并触发刷新,嵌套内容保持原位
+/// (需要嵌套内容不回弹时,在内容外层用 `ScrollConfiguration` 指定
+/// `ClampingScrollPhysics`,`SantoPageLayout` 的刷新模式已内置该处理)
+///
 /// 使用示例:
 /// ```dart
 /// SantoRefresh(
@@ -197,6 +202,10 @@ class _SantoRefreshState extends State<SantoRefresh>
   /// 当前下拉距离
   double _pullExtent = 0;
 
+  /// 最近一次滚动位置中的负向部分(Bouncing 物理松手回弹期间 < 0)。
+  /// 弹性物理下列表自身会平移,平移量需从头部位移中扣除,避免内容双重位移
+  double _negativePixels = 0;
+
   /// 当前状态
   SantoRefreshState _state = SantoRefreshState.inactive;
 
@@ -204,6 +213,12 @@ class _SantoRefreshState extends State<SantoRefresh>
   /// 只在拖动阶段(dragDetails != null)赋值:回弹/惯性通知不带 dragDetails,
   /// 不能翻转本标记;松手检测与 ScrollEnd 触发据此判定是否进入刷新
   bool _pastThreshold = false;
+
+  /// 当前这轮下拉由哪个容器驱动:false 为本组件直接承载的滚动容器,
+  /// true 为内容里自带滚动的嵌套容器(如设了 `height` 的 Table)。
+  /// null 表示新一轮下拉还未定来源,松手与回弹通知只在来源一致时才收头,
+  /// 避免无关的滚动结束把刷新头收回去
+  bool? _pullFromNested;
 
   /// 是否正在加载更多
   bool _isLoadingMore = false;
@@ -309,24 +324,53 @@ class _SantoRefreshState extends State<SantoRefresh>
   }
 
   /// 滚动通知:处理下拉刷新与触底加载
+  ///
+  /// [ScrollNotification.depth] 为 0 表示通知来自本组件直接承载的滚动容器;
+  /// 大于 0 表示来自内容里自带滚动的嵌套容器(如设了 `height` 的 Table、
+  /// 内嵌的 ListView)。嵌套容器滚到顶部后继续下拉时,手势归页面所有:这些
+  /// 通知同样驱动刷新头与触发刷新,否则下拉刷新在嵌套内容上就是死手势。
+  /// 嵌套容器的横向滚动与刷新无关,直接忽略;触底加载也只认页面自身容器,
+  /// 避免嵌套列表滚到底误触发加载更多
   bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification.depth != 0) return false;
+    final bool nested = notification.depth != 0;
+    final ScrollMetrics metrics = notification.metrics;
+    if (nested && metrics.axis != Axis.vertical) return false;
+    // 新一轮下拉的来源未定(null)时两种来源都接受
+    final bool ownsPull = _pullFromNested == null || _pullFromNested == nested;
+
+    // 只跟随本组件自身容器的滚动位置:嵌套容器(Clamping)不会越界为负,
+    // 其回弹由各自的物理负责,算进来会让内容双重位移
+    if (!nested) {
+      final double negativePixels = metrics.pixels < 0 ? metrics.pixels : 0.0;
+      if (negativePixels != _negativePixels) {
+        // 回弹尾段收缩动画已结束,但平移量仍要跟随 pixels 重绘,
+        // 否则 translate 残留旧值、内容会从刷新高度漂移
+        _safeSetState(() => _negativePixels = negativePixels);
+      }
+    }
 
     final bool refreshing =
         _state == SantoRefreshState.refreshing ||
         _state == SantoRefreshState.done;
     if (widget.onRefresh != null && !refreshing) {
+      // 嵌套容器只在顶部边界时把下拉交给页面,滚到中间/底部仍是它自己滚动
+      final bool atLeadingEdge = metrics.pixels <= metrics.minScrollExtent;
       if (notification is OverscrollNotification &&
-          notification.overscroll < 0) {
+          notification.overscroll < 0 &&
+          metrics.axis == Axis.vertical &&
+          (!nested || atLeadingEdge)) {
         // Clamping 物理(默认 Android):pixels 不越界,过界量走 overscroll 通知
+        _pullFromNested = nested;
         _updatePull(_pullExtent - notification.overscroll);
         _pastThreshold = _pullExtent >= widget.triggerDistance;
       } else if (notification is ScrollUpdateNotification &&
-          notification.metrics.extentBefore == 0 &&
-          notification.metrics.pixels < 0) {
+          metrics.extentBefore == 0 &&
+          metrics.pixels < 0 &&
+          ownsPull) {
         if (notification.dragDetails != null) {
           // 拖拽中(Bouncing 物理:pixels 直接为负)
-          _updatePull(-notification.metrics.pixels);
+          _pullFromNested = nested;
+          _updatePull(-metrics.pixels);
           _pastThreshold = _pullExtent >= widget.triggerDistance;
         } else if (_pastThreshold || _pullExtent >= widget.triggerDistance) {
           // 松手瞬间:回弹 ballistic 已启动,而 ScrollEnd 要等回弹结束才发出;
@@ -335,21 +379,23 @@ class _SantoRefreshState extends State<SantoRefresh>
           _triggerRefresh();
         } else {
           // 未达阈值的回弹:跟随收起
-          _updatePull(-notification.metrics.pixels);
+          _updatePull(-metrics.pixels);
         }
       } else if (notification is ScrollEndNotification &&
-          _state != SantoRefreshState.inactive) {
+          _state != SantoRefreshState.inactive &&
+          ownsPull) {
         if (_pastThreshold || _pullExtent >= widget.triggerDistance) {
           _triggerRefresh();
         } else {
           _settleTo(0);
+          _pullFromNested = null;
           _notifyState(SantoRefreshState.inactive);
         }
         _pastThreshold = false;
       }
     }
 
-    if (_pullExtent == 0 && !refreshing) {
+    if (!nested && _pullExtent == 0 && !refreshing) {
       _handleLoadMoreIfNeeded(notification);
     }
     return false;
@@ -372,6 +418,7 @@ class _SantoRefreshState extends State<SantoRefresh>
 
     _settleController.stop();
     _pastThreshold = false;
+    _pullFromNested = null;
     _notifyState(SantoRefreshState.refreshing);
     // 高度平滑过渡到刷新高度:松手时从下拉距离收缩到 loadingBarHeight,
     // 外部主动触发时从 0 展开到 loadingBarHeight,完成后在收尾处再收到 0
@@ -471,9 +518,20 @@ class _SantoRefreshState extends State<SantoRefresh>
           child: Stack(
             children: <Widget>[
               Positioned.fill(
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: _handleScrollNotification,
-                  child: widget.child,
+                // 头部高度变化只平移内容(纯绘制不触发布局),
+                // 避免每帧改变视口高度导致列表抖动、可见内容被压缩;
+                // 扣除负向 pixels,Bouncing 物理下内容不会双重位移
+                child: Transform.translate(
+                  offset: Offset(
+                    0,
+                    widget.onRefresh != null
+                        ? _pullExtent + _negativePixels
+                        : 0.0,
+                  ),
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: _handleScrollNotification,
+                    child: widget.child,
+                  ),
                 ),
               ),
               if (_headerVisible)
@@ -492,7 +550,8 @@ class _SantoRefreshState extends State<SantoRefresh>
     );
   }
 
-  /// 刷新头部:透明背景,覆盖在列表顶部,随下拉距离露出(不挤压列表视口)
+  /// 刷新头部:透明背景,下拉时撑开顶部区域、内容整体下移(纯绘制平移,
+  /// 不挤压列表视口,因此不抖动也不遮挡内容)
   Widget _buildRefreshHeader() {
     if (widget.refreshHeader != null) {
       return widget.refreshHeader!(_state, _pullExtent);

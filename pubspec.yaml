@@ -1,6 +1,6 @@
 name: santo_ui
 description: Enterprise-grade Flutter UI library with 60+ production-ready widgets and a built-in theming system.
-version: 1.4.3
+version: 1.5.0
 repository: https://github.com/BingKui/santo_ui
 homepage: https://github.com/BingKui/santo_ui
 issue_tracker: https://github.com/BingKui/santo_ui/issues

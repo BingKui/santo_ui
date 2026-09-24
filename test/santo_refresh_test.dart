@@ -60,7 +60,7 @@ double? _refreshHeaderHeight(WidgetTester tester) {
 }
 
 void main() {
-  testWidgets('下拉刷新头部背景透明且不平移内容', (tester) async {
+  testWidgets('下拉刷新头部透明背景,内容整体下移(视口不挤压)', (tester) async {
     await tester.pumpWidget(
       _host(
         SantoRefresh(
@@ -86,8 +86,8 @@ void main() {
     expect(header.decoration, isNull, reason: '刷新区域不应有背景色,保持透明');
     expect(
       tester.getTopLeft(find.text('item 0')).dy,
-      itemTopBeforePull,
-      reason: '刷新头部不应通过平移内容腾出空间',
+      itemTopBeforePull + 60,
+      reason: '下拉时应平移内容腾出刷新区域(内容的原位置让给刷新头)',
     );
 
     await gesture.up();

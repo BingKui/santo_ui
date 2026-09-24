@@ -111,7 +111,7 @@ Santo UI ships **81** widgets, grouped into 7 categories following the example a
 | Empty | Empty state placeholder |
 | Footer | Page footer info |
 | Gallery | Large image preview |
-| Chat | Chat window: message list, bubbles, input bar and conversations |
+| Chat | Chat window: message list, bubbles, long-press menu, input bar with emoji/extension panels, doc cards and conversations |
 
 ### Feedback
 

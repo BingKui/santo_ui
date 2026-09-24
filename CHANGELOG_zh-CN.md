@@ -6,15 +6,40 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [1.5.0] - 2026-09-23
+## [1.5.0] - 2026-09-24
 
 ### 💬 Chat 会话组件
 
-- **新增**: `SantoChat`(头部 + 消息列表 + 输入区)、`SantoChatMessageList`、`SantoChatBubble`、`SantoChatInput`、`SantoChatList`
-- **新增**: 消息内容组件 `SantoChatText`(@提及、表情注册表、链接)、`SantoChatQuoteView`、`SantoChatImage`、`SantoChatVideo`、`SantoChatVoice`、`SantoChatFile`、`SantoChatSystemNotice`、`SantoChatTypingIndicator`、`SantoChatReactionView`、`SantoChatReactionPicker`
-- **新增**: 消息模型(`SantoChatMessage` 及文本/图片/视频/语音/文件/系统消息子类,以及作者、@提及、引用、表情回应)、`SantoChatConversation` 与全局 `SantoChatEmojiRegistry`
-- **新增**: 消息列表能力 —— 时间分隔、同发送者分组、滑动引用回复、长按/双击表情回应、上拉加载更早消息、回到底部按钮
+- **新增**: `SantoChat`(头部 + 消息列表 + 输入区)、`SantoChatMessageList`、`SantoChatBubble`、`SantoChatInput`、`SantoChatList`、`SantoChatSelectionBar`
+- **新增**: 消息内容组件 `SantoChatText`(@提及、表情注册表、链接)、`SantoChatQuoteView`、`SantoChatImage`、`SantoChatVideo`、`SantoChatVoice`、`SantoChatFile`、`SantoChatDocCard`、`SantoChatSystemNotice`、`SantoChatTypingIndicator`、`SantoChatReactionView`、`SantoChatMessageMenu`
+- **新增**: 消息模型(`SantoChatMessage` 及文本/图片/视频/语音/文件/文档/系统消息子类,以及作者、@提及、引用、表情回应)、`SantoChatConversation`、全局 `SantoChatEmojiRegistry`、`SantoChatMenuItem` 与 `SantoChatExtension`
+- **新增**: 消息列表能力 —— 时间分隔、同发送者分组、滑动引用回复、长按菜单(表情回应 + 按类型/自定义操作项,一排 5 个、多出换行)、上拉加载更早消息、回到底部按钮
+- **新增**: 消息状态指示器(`SantoChatMessageStatus` 增加 `delivered`/`read`,贴在我方气泡的头像一侧展示)与 `isEdited` 标记;发送失败时在**非头像一侧**(气泡左侧)展示实心警示图标(`warning-square-solid`)并相对气泡上下居中,点它通过 `onRetry` 重发
+- **新增**: 经输入区长按「编辑」修改消息;多选态每行带勾选框 + 底部操作栏(已选条数、转发/删除、取消)
+- **新增**: 输入区扩展菜单(默认照片/拍摄/文件,可自定义),在输入框下方与输入法换位;并内置表情面板(32 个,插入 `[名称]` token),两个面板共用固定高 230,内容按网格布局、左上角起排、单元格固定、空位保留:扩展菜单每页 2 排(`kSantoChatMenuItemRows`)× 5 列、表情面板每页 4 排(`kSantoChatEmojiRows`)× 8 列,超出一页的左右滑动翻页并在底部显示分页指示点
+- **新增**: 文档消息 —— `SantoChatDocMessage` 渲染成 `SantoChatDocCard`(文档标题 + 可选附言 + 「点击查看文档」),走**裸气泡**(`SantoChatBubble.bare`:不画气泡底色与内边距,卡片自带容器),点击回调 `onDocTap` 由业务方校验权限后打开文档(对标 DevOpsMobile)
 - **新增**: `SantoChatConfig` 主题配置,并注册进 `SantoAllThemeConfig` 与 `SantoDefaultConfigUtils`
+- **变更**: 输入区去掉发送按钮,改为输入法发送键提交且发送后键盘不收起,删除 `sendButton` 参数
+- **变更**: 输入框提示文案改为不换行,超出直接省略
+
+### 🔄 嵌套滚动容器上的下拉刷新
+
+- **修复**: 内容里自带滚动的容器(如设了 `height` 的 Table、内嵌 ListView)滚到顶后继续下拉时,手势被嵌套容器独占 —— 刷新头不出现、松手也不触发刷新,嵌套内容反而自己往下一段再弹回。现在嵌套容器到达顶部边界后由 SantoRefresh 接管手势,刷新头与触发逻辑与页面自身滚动容器一致;在 SantoPageLayout 刷新模式下嵌套内容保持原位,不再越界回弹
+- **修复**: 触底加载只认 SantoRefresh 直接承载的滚动容器,嵌套列表滚到底不会误触发 onLoadMore
+- **修复**: 刷新头不再是盖在首条内容上的透明浮层 —— 下拉时撑开顶部区域并整体下移内容(纯绘制平移,视口高度不变),区域内始终承载刷新头内容,不再与列表内容重叠
+
+### 🏷️ 标签收敛为一个 SantoTag
+
+- **变更(破坏性)**: 删除 `SantoSelectTag` 与 `SantoDeleteTag`,能力全部并入唯一入口 `SantoTag`;`SantoDeleteTagController` 更名为 `SantoTagController`(方法不变)
+- **新增**: `SantoTag` 支持标签组 —— 传 `tags`(或 `controller`)即按组渲染,保留原 `SantoSelectTag` 的 `spacing`、`verticalSpacing`、`softWrap`、`fixWidthMode`、`tagWidth`、`tagHeight`、`tagTextStyle`、`selectedTagTextStyle`、`tagBackgroundColor`、`selectedTagBackgroundColor`、`alignment`、`themeData`
+- **新增**: `selectable` / `deletable` 开关。单标签用 `initSelected` + `onSelectedChange`,`onDelete`;标签组用 `isSingleSelect` / `initTagState` / `onChanged` 与 `onTagDelete` / `controller`
+- **新增**: `height` 参数,文字在高度内垂直居中
+- **变更**: `SantoTag` 由 StatelessWidget 改为 StatefulWidget(仅供内部状态,API 不变);`text` 由必填改为可空,因为同一组件也负责标签组
+- **变更**: 默认值改取主题 —— 高度 32(`tagHeight`)、字号 12(`tagTextStyle`,原 11)、圆角 12(`tagRadius`)、左右内边距 `hSpacingSm`(10,原固定 4);`padding` 改为可空以便覆盖
+- **变更**: `SantoTagConfig.tagHeight` 默认值由 34 改为 32,`SantoTagsPicker.tagHeight` 默认值由 34 改为 32
+- **变更**: `SantoDeleteTag.backgroundColor` 映射为 `tagBackgroundColor`,`SantoDeleteTag.horizontalSpacing` 映射为 `spacing`;原外层白底与 `padding` 参数删除,交由外部容器控制
+- **修复**: 可删除的标签组不再强制定宽 `tagWidth`(加上删除图标后文案只剩 35px 左右的省略号);现在按内容自适应,显式传 `tagWidth` 才定宽
+- **修复**: 标签组内标签固定单行省略,不再在固定高度里换行溢出
 
 ## [1.4.3] - 2026-09-23
 

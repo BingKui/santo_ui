@@ -5,6 +5,24 @@ import 'package:santo_ui/santo_ui.dart';
 /// 主题默认的内容区间距 commonConfig.gapMd(规范 iGapAllMiddle)
 const double kContentGap = 15;
 
+/// 表格自己滚动的内部列表(纵向可滚动)
+ScrollableState _tableScroll(WidgetTester tester) => tester.state<ScrollableState>(
+      find.descendant(
+        of: find.byType(SantoTable),
+        matching: find.byType(Scrollable),
+      ),
+    );
+
+const List<SantoTableColumn> kTableColumns = <SantoTableColumn>[
+  SantoTableColumn(title: '名称', width: 200),
+  SantoTableColumn(title: '金额', width: 200),
+];
+
+final List<List<dynamic>> kTableData = List<List<dynamic>>.generate(
+  20,
+  (int index) => <dynamic>['订单 $index', '¥$index'],
+);
+
 void main() {
   testWidgets('PageLayout 用 title 构建导航栏', (tester) async {
     await tester.pumpWidget(const MaterialApp(
@@ -259,6 +277,7 @@ void main() {
 
     final position =
         tester.state<ScrollableState>(find.byType(Scrollable)).position;
+    expect(refreshCount, 1, reason: '第一次下拉应触发刷新');
     expect(position.pixels, 0,
         reason: '松手回弹后滚动位置必须归零;若残留负值,刷新头会反复弹出(页面一直抖)');
   });
@@ -290,6 +309,88 @@ void main() {
 
     expect(during, before,
         reason: '刷新头应为覆盖式(平移内容),不能每帧挤压列表视口(抖动/内容被压缩的根源)');
+  });
+
+  testWidgets('PageLayout enableRefresh:内容里的表格(自带滚动)下拉触发刷新且内容不位移',
+      (tester) async {
+    int refreshCount = 0;
+    await tester.pumpWidget(MaterialApp(
+      home: SantoPageLayout(
+        title: '下拉刷新',
+        enableRefresh: true,
+        onRefresh: () async {
+          refreshCount++;
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+        },
+        children: <Widget>[
+          SantoTable(
+            columns: kTableColumns,
+            data: kTableData,
+            height: 300,
+          ),
+        ],
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(SantoTable)),
+    );
+    for (int step = 0; step < 8; step += 1) {
+      await gesture.moveBy(const Offset(0, 20));
+      await tester.pump();
+    }
+
+    expect(find.text('松手刷新'), findsOneWidget, reason: '下拉应展示刷新头');
+    expect(_tableScroll(tester).position.pixels, 0,
+        reason: '下拉刷新时嵌套表格内容不应被拖出位移(否则会自己回弹一下)');
+
+    await gesture.up();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(refreshCount, 1, reason: '嵌套表格顶部下拉松手应触发刷新');
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pumpAndSettle();
+    expect(_tableScroll(tester).position.pixels, 0, reason: '刷新结束后表格应停在原位');
+  });
+
+  testWidgets('PageLayout enableRefresh:嵌套表格滚到中间时下拉只滚表格,不触发刷新',
+      (tester) async {
+    int refreshCount = 0;
+    await tester.pumpWidget(MaterialApp(
+      home: SantoPageLayout(
+        title: '下拉刷新',
+        enableRefresh: true,
+        onRefresh: () async {
+          refreshCount++;
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+        },
+        children: <Widget>[
+          SantoTable(columns: kTableColumns, data: kTableData, height: 300),
+        ],
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final Offset center = tester.getCenter(find.byType(SantoTable));
+    // 先把表格滚下去
+    final ScrollableState tableScroll = _tableScroll(tester);
+    tableScroll.position.jumpTo(200);
+    await tester.pump();
+
+    final gesture = await tester.startGesture(center);
+    for (int step = 0; step < 4; step += 1) {
+      await gesture.moveBy(const Offset(0, 20));
+      await tester.pump();
+    }
+    await gesture.up();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle();
+
+    expect(refreshCount, 0, reason: '表格没滚到顶部时,下拉只应滚表格');
+    expect(_tableScroll(tester).position.pixels, lessThan(200),
+        reason: '下拉应先让表格内容回滚');
   });
 
   testWidgets('PageLayout 传 header 且不传导航栏:内容不再重复避让状态栏', (tester) async {

@@ -72,7 +72,7 @@ class _SoftGuideExampleState extends State<SoftGuideExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                 Text(
-                  'SantoSelectTagWidget',
+                  'SantoTag',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -82,7 +82,8 @@ class _SoftGuideExampleState extends State<SoftGuideExample> {
                 SizedBox(
                   height: 10,
                 ),
-                SantoSelectTag(
+                SantoTag(
+                    selectable: true,
                     key: intro.keys[1],
                     tags: nameList,
                     tagWidth: (MediaQuery.of(context).size.width - 40 - 24) / 3,

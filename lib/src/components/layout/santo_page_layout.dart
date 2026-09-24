@@ -111,7 +111,10 @@ class SantoPageLayout extends StatelessWidget {
   /// 是否支持下拉刷新,默认 false
   ///
   /// 开启后内置滚动容器由 [SantoRefresh] 承载,[onRefresh] 必须同时提供;
-  /// [scrollable] 为 false 时内容自带滚动组件,也可开启,由内容承接刷新手势
+  /// [scrollable] 为 false 时内容自带滚动组件,也可开启,由内容承接刷新手势。
+  /// 内容里自带滚动的容器(如设了 `height` 的 Table、内嵌 ListView)滚到顶部后
+  /// 继续下拉时,手势同样归页面所有:展示刷新头并触发刷新,且嵌套内容不在边界处
+  /// 越界回弹(不会在下拉时被拖出一条空白再弹回)
   ///
   /// @since v1.2.0
   final bool enableRefresh;
@@ -250,6 +253,31 @@ class SantoPageLayout extends StatelessWidget {
               ),
             );
           } else {
+            Widget scrollContent = MediaQuery(
+              // 同非滚动态:顶部避让由 contentPadding / header 承担
+              data: media.copyWith(padding: media.padding.copyWith(top: 0)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _buildBlocks(gap),
+                  SantoBottomSafeArea(
+                    safeArea: false,
+                    extra: bottomAreaInset,
+                  ),
+                ],
+              ),
+            );
+            if (enableRefresh) {
+              // 刷新模式下内容里自带滚动的容器(如设了 height 的 Table、内嵌
+              // ListView)不在边界处越界回弹:下拉手势统一由 [SantoRefresh]
+              // 接管,嵌套内容保持原位,不会在下拉时被拖出一条空白再弹回
+              scrollContent = ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  physics: const ClampingScrollPhysics(),
+                ),
+                child: scrollContent,
+              );
+            }
             scrollArea = SingleChildScrollView(
               controller: scrollController,
               // 内容不满一屏时 ClampingScrollPhysics 不接受拖动,
@@ -262,20 +290,7 @@ class SantoPageLayout extends StatelessWidget {
                           .getScrollPhysics(context))
                   : null,
               padding: contentPadding,
-              child: MediaQuery(
-                // 同非滚动态:顶部避让由 contentPadding / header 承担
-                data: media.copyWith(padding: media.padding.copyWith(top: 0)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildBlocks(gap),
-                    SantoBottomSafeArea(
-                      safeArea: false,
-                      extra: bottomAreaInset,
-                    ),
-                  ],
-                ),
-              ),
+              child: scrollContent,
             );
           }
           if (enableRefresh) {

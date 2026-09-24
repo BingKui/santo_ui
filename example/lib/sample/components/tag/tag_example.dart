@@ -19,8 +19,8 @@ class _TagExampleState extends State<TagExample> {
     '标签信息标签信息标签信息标签信息'
   ];
 
-  late final SantoDeleteTagController _deleteTagController =
-      SantoDeleteTagController(initTags: List<String>.of(_tagList));
+  late final SantoTagController _tagController =
+      SantoTagController(initTags: List<String>.of(_tagList));
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class _TagExampleState extends State<TagExample> {
         ExampleIntro('tag'),
         _buildBasicSection(),
         _buildColorfulSection(),
+        _buildSingleInteractiveSection(),
         _buildSelectTagSections(),
         _buildDeleteTagSection(),
         _buildCustomCloseTagSection(),
@@ -44,7 +45,7 @@ class _TagExampleState extends State<TagExample> {
   Widget _buildBasicSection() {
     return SantoSection(
       title: '基础用法',
-      description: '默认主题色底反白文字，文字 11 号；bordered 生成描边标签',
+      description: '默认主题色底反白文字，高 32、文字 12 号，与选择标签一致；bordered 生成描边标签',
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
@@ -102,14 +103,60 @@ class _TagExampleState extends State<TagExample> {
     );
   }
 
+  /// 单标签的选中与删除
+  Widget _buildSingleInteractiveSection() {
+    return SantoSection(
+      title: '单标签·选中与删除',
+      description: 'selectable 开启后点击切换选中态，initSelected 设初始选中，'
+          'onSelectedChange 收回调；deletable 开启后右侧展示删除图标',
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: <Widget>[
+          SantoTag(
+            text: '可选中',
+            selectable: true,
+            onSelectedChange: (selected) => SantoToast.show(
+                '选中态：$selected', context),
+          ),
+          SantoTag(
+            text: '初始选中',
+            selectable: true,
+            initSelected: true,
+            onSelectedChange: (selected) => SantoToast.show(
+                '选中态：$selected', context),
+          ),
+          SantoTag(
+            text: '可删除',
+            deletable: true,
+            onDelete: () => SantoToast.show('点击了删除', context),
+          ),
+          SantoTag(
+            text: '选删合一',
+            selectable: true,
+            initSelected: true,
+            deletable: true,
+            onDelete: () => SantoToast.show('点击了删除', context),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// 可选择标签:单选 / 多选 / 流式 / 横向滑动
   Widget _buildSelectTagSections() {
-    return Column(
+    return SantoSpace(
+      direction: SantoSpaceDirection.vertical,
+      customSize:
+          SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SantoSection(
           title: '选择标签·单选',
           description: '默认单选，initTagState 设初始选中，onChanged 返回下标',
-          child: SantoSelectTag(
+          child: SantoTag(
+            selectable: true,
             tags: _tagList,
             spacing: 12,
             tagWidth: _getTagWidth(context),
@@ -122,7 +169,8 @@ class _TagExampleState extends State<TagExample> {
         SantoSection(
           title: '选择标签·多选',
           description: 'isSingleSelect 为 false 支持多选并初始化多项选中',
-          child: SantoSelectTag(
+          child: SantoTag(
+            selectable: true,
             isSingleSelect: false,
             tags: _tagList,
             spacing: 12,
@@ -136,7 +184,8 @@ class _TagExampleState extends State<TagExample> {
         SantoSection(
           title: '流式布局',
           description: 'fixWidthMode 为 false 时标签宽度自适应并流式换行',
-          child: SantoSelectTag(
+          child: SantoTag(
+            selectable: true,
             tags: [
               '标签',
               '选中标签',
@@ -156,7 +205,8 @@ class _TagExampleState extends State<TagExample> {
         SantoSection(
           title: '横向滑动·等宽',
           description: 'tagWidth 固定等宽，softWrap 为 false 时横向滑动',
-          child: SantoSelectTag(
+          child: SantoTag(
+            selectable: true,
             tags: _tagList,
             tagWidth: _getTagWidth(context),
             softWrap: false,
@@ -168,7 +218,8 @@ class _TagExampleState extends State<TagExample> {
         SantoSection(
           title: '横向滑动·自适应',
           description: '流式标签横向滑动，宽度受最小宽度配置约束',
-          child: SantoSelectTag(
+          child: SantoTag(
+            selectable: true,
             tags: _tagList,
             tagWidth: _getTagWidth(context),
             softWrap: false,
@@ -191,8 +242,9 @@ class _TagExampleState extends State<TagExample> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SantoDeleteTag(
-            controller: _deleteTagController,
+          SantoTag(
+            controller: _tagController,
+            deletable: true,
             onTagDelete: (tags, tag, index) {
               SantoToast.show(
                   '剩余的标签为：${tags.toString()},删除了的标签为：$tag  ,删除的标签index为$index',
@@ -213,8 +265,9 @@ class _TagExampleState extends State<TagExample> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SantoDeleteTag(
-            controller: _deleteTagController,
+          SantoTag(
+            controller: _tagController,
+            deletable: true,
             tagTextStyle: TextStyle(color: Colors.blue, fontSize: 20),
             deleteIconSize: Size(16, 16),
             onTagDelete: (tags, tag, index) {
@@ -224,10 +277,11 @@ class _TagExampleState extends State<TagExample> {
             },
           ),
           SizedBox(height: 16),
-          SantoDeleteTag(
-            controller: _deleteTagController,
+          SantoTag(
+            controller: _tagController,
+            deletable: true,
             tagTextStyle: TextStyle(color: Colors.yellow),
-            backgroundColor: Colors.blue,
+            tagBackgroundColor: Colors.blue,
             deleteIconColor: Colors.red,
             softWrap: false,
             onTagDelete: (tags, tag, index) {
@@ -244,13 +298,13 @@ class _TagExampleState extends State<TagExample> {
                 child: Icon(Icons.add),
                 type: SantoButtonType.text,
                 insertPadding: const EdgeInsets.all(12),
-                onTap: () => _deleteTagController.addTag('增加的tag'),
+                onTap: () => _tagController.addTag('增加的tag'),
               ),
               SantoButton(
                 child: Icon(Icons.delete_forever),
                 type: SantoButtonType.text,
                 insertPadding: const EdgeInsets.all(12),
-                onTap: () => _deleteTagController.deleteForIndex(0),
+                onTap: () => _tagController.deleteForIndex(0),
               )
             ],
           ),

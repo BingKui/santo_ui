@@ -105,10 +105,6 @@ export 'src/components/selectcity/santo_select_city_model.dart';
 //搜索
 export 'src/components/sugsearch/santo_search_text.dart';
 
-//标签
-export 'src/components/tag/tagview/santo_select_tag.dart';
-export 'src/components/tag/tagview/santo_delete_tag.dart';
-
 // form 相关
 export 'src/components/form/items/group/element_expand_widget.dart';
 export 'src/components/form/base/input_item_interface.dart';

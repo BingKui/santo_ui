@@ -6,15 +6,40 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
-## [1.5.0] - 2026-09-23
+## [1.5.0] - 2026-09-24
 
 ### 💬 Chat conversation widgets
 
-- **Added**: `SantoChat` (header + message list + input bar), `SantoChatMessageList`, `SantoChatBubble`, `SantoChatInput` and `SantoChatList`
-- **Added**: message content widgets `SantoChatText` (`@` mentions, emoji registry, links), `SantoChatQuoteView`, `SantoChatImage`, `SantoChatVideo`, `SantoChatVoice`, `SantoChatFile`, `SantoChatSystemNotice`, `SantoChatTypingIndicator`, `SantoChatReactionView` and `SantoChatReactionPicker`
-- **Added**: message models (`SantoChatMessage` with text/image/video/voice/file/system variants, plus author, mention, quote and reaction), `SantoChatConversation` and the global `SantoChatEmojiRegistry`
-- **Added**: message list features — date separators, sender grouping, swipe to reply, long-press/double-tap reactions, pull-up history loading and a scroll-to-bottom button
+- **Added**: `SantoChat` (header + message list + input bar), `SantoChatMessageList`, `SantoChatBubble`, `SantoChatInput`, `SantoChatList` and `SantoChatSelectionBar`
+- **Added**: message content widgets `SantoChatText` (`@` mentions, emoji registry, links), `SantoChatQuoteView`, `SantoChatImage`, `SantoChatVideo`, `SantoChatVoice`, `SantoChatFile`, `SantoChatDocCard`, `SantoChatSystemNotice`, `SantoChatTypingIndicator`, `SantoChatReactionView` and `SantoChatMessageMenu`
+- **Added**: message models (`SantoChatMessage` with text/image/video/voice/file/doc/system variants, plus author, mention, quote and reaction), `SantoChatConversation`, the global `SantoChatEmojiRegistry`, `SantoChatMenuItem` and `SantoChatExtension`
+- **Added**: message list features — date separators, sender grouping, swipe to reply, a long-press menu (reactions plus per-type and custom actions, wrapping 5 per row), pull-up history loading and a scroll-to-bottom button
+- **Added**: message status indicators (`delivered` / `read` added to `SantoChatMessageStatus`, drawn on the avatar side of outgoing bubbles) and the `isEdited` flag; when a message fails, a solid warning icon (`warning-square-solid`) is drawn on the opposite (non-avatar) side of the bubble, vertically centered against it, and tapping it retries via `onRetry`
+- **Added**: message editing through the input bar, and multi-select with a checkbox per row plus a bottom action bar
+- **Added**: input bar extension menu (photo / camera / file by default, customizable) that swaps with the keyboard below the input row, plus a built-in emoji panel (32 emojis, `[name]` tokens) sharing the same fixed 230 panel height — both panels are top-left grids with fixed cells and kept empty slots, paged 2 rows (`kSantoChatMenuItemRows`) × 5 columns for the extension menu and 4 rows (`kSantoChatEmojiRows`) × 8 columns for emojis, overflowing pages reached by swiping left/right with a page indicator at the bottom
+- **Added**: document messages — `SantoChatDocMessage` renders as a `SantoChatDocCard` (doc title, optional note, 「点击查看文档」 hint) inside a **bare bubble** (`SantoChatBubble.bare`: no bubble background or padding, the card brings its own container); tapping it calls `onDocTap` so the host app can check permissions and open the doc (mirrors DevOpsMobile)
 - **Added**: `SantoChatConfig` theme config, registered in `SantoAllThemeConfig` and `SantoDefaultConfigUtils`
+- **Changed**: the input bar no longer renders a send button — sending goes through the IME send key, and the keyboard stays up between messages; the `sendButton` parameter was removed
+- **Changed**: the input hint no longer wraps — it is single line and ellipsizes
+
+### 🔄 Pull-to-refresh over nested scrollables
+
+- **Fixed**: pull-to-refresh no longer dies when the content contains its own scrollable (e.g. a `SantoTable` with `height`, or a nested `ListView`) — `SantoRefresh` takes the gesture over once the nested container reaches its leading edge, shows the refresh header and triggers the refresh; on `SantoPageLayout` the nested content now stays put instead of rubber-banding down and back
+- **Fixed**: load-more is only driven by the scrollable `SantoRefresh` directly hosts, so a nested list reaching its end no longer triggers `onLoadMore`
+- **Fixed**: the refresh header is no longer a transparent overlay floating over the first row — pulling opens the top area and shifts the content down (paint-only translation, viewport height unchanged), so the area always carries the header content instead of overlapping the list
+
+### 🏷️ One SantoTag for every tag
+
+- **Changed (breaking)**: `SantoSelectTag` and `SantoDeleteTag` are gone — both are merged into `SantoTag`, the single tag entry point. `SantoDeleteTagController` is renamed `SantoTagController` (same methods)
+- **Added**: tag group support on `SantoTag` — pass `tags` (or a `controller`) and the widget lays out a group of tags, keeping the old `SantoSelectTag` parameters: `spacing`, `verticalSpacing`, `softWrap`, `fixWidthMode`, `tagWidth`, `tagHeight`, `tagTextStyle`, `selectedTagTextStyle`, `tagBackgroundColor`, `selectedTagBackgroundColor`, `alignment`, `themeData`
+- **Added**: `selectable` / `deletable` switches. Single tag: `initSelected` + `onSelectedChange`, and `onDelete`. Tag group: `isSingleSelect` / `initTagState` / `onChanged`, and `onTagDelete` / `controller`
+- **Added**: `height` on `SantoTag` — the text is centred vertically within it
+- **Changed**: `SantoTag` is now a `StatefulWidget` (internal state only, the API is unchanged) and `text` is optional, since the same widget also renders tag groups
+- **Changed**: defaults now come from the theme — `height` 32 (`tagHeight`), `fontSize` 12 (`tagTextStyle`, was 11), `borderRadius` 12 (`tagRadius`), horizontal padding `hSpacingSm` (10, was a fixed 4); `padding` is now nullable so a value can override it
+- **Changed**: `SantoTagConfig.tagHeight` default 34 → 32, and `SantoTagsPicker.tagHeight` default 34 → 32
+- **Changed**: `SantoDeleteTag.backgroundColor` → `SantoTag.tagBackgroundColor`, `SantoDeleteTag.horizontalSpacing` → `SantoTag.spacing`; the old white wrapper and `padding` of `SantoDeleteTag` were dropped (handle it with the surrounding container)
+- **Fixed**: a deletable tag group no longer forces the fixed `tagWidth`, which left the label only ~35px wide (ellipsis-only) once the delete icon was in place — such groups size to their content unless `tagWidth` is passed explicitly
+- **Fixed**: a tag group is now single-line and ellipsised instead of wrapping inside its fixed height
 
 ## [1.4.3] - 2026-09-23
 

@@ -23,30 +23,17 @@ import 'package:example/sample/components/form/items_example/title_select_exampl
 import 'package:example/sample/components/form/items_example/general_item_example.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class AllFormItemStyleExamplePage extends StatelessWidget {
   final String _title;
-  bool hideAppBar = false;
 
   AllFormItemStyleExamplePage([this._title = 'Form 表单']);
 
   @override
   Widget build(BuildContext context) {
-    if (this.hideAppBar) {
-      return this.getBodyWidget(context);
-    }
     return SantoPageLayout(
-        appBar: SantoAppBar(
-          title: _title,
-        ),
-        scrollable: false,
-      children: <Widget>[
-        this.getBodyWidget(context),
-      ]);
-  }
-
-  Widget getBodyWidget(BuildContext context) {
-    return ListView(
+      appBar: SantoAppBar(
+        title: _title,
+      ),
       children: <Widget>[
         ExampleIntro('form'),
 

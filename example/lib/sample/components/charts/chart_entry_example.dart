@@ -56,7 +56,11 @@ class _FunnelChartExampleState extends State<FunnelChartExample> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+      child: SantoSpace(
+        direction: SantoSpaceDirection.vertical,
+        customSize:
+            SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // 漏斗形态:单侧与双侧
           SantoSection(
@@ -505,7 +509,11 @@ class _RadarChartExampleState extends State<RadarChartExample>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SantoSpace(
+      direction: SantoSpaceDirection.vertical,
+      customSize:
+          SantoThemeConfigurator.instance.getConfig().commonConfig.gapMd,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         // 雷达图绘制与顶点标签
         SantoSection(

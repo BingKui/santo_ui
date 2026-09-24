@@ -459,7 +459,7 @@ class SantoDefaultConfigUtils {
     tagBackgroundColor: defaultCommonConfig.fillBody,
     selectedTagBackgroundColor: defaultCommonConfig.brandPrimary,
     tagRadius: defaultCommonConfig.radiusXs,
-    tagHeight: 34.0,
+    tagHeight: 32.0,
     tagWidth: 75.0,
     tagMinWidth: 75.0,
   );

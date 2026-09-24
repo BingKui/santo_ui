@@ -901,7 +901,7 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
   'tag': ExampleIntroData(
     title: 'Tag 标签',
     description: '标签用于标记内容的分类或状态。',
-    widgets: <String>['SantoTag', 'SantoSelectTag', 'SantoDeleteTag'],
+    widgets: <String>['SantoTag'],
     whenToUseDesc: '需要对内容做标记、归类,或展示一个可操作的关键词时使用。',
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('基础标签', '自适应宽度的普通标签'),
