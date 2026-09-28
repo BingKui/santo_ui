@@ -16,7 +16,7 @@ enum SantoAvatarShape {
 /// 头像组件
 ///
 /// 支持三种模式：
-/// - 图片模式：通过 [imageUrl] 显示网络图片
+/// - 图片模式：通过 [imageUrl] 显示网络图片或应用内置资产图
 /// - 文字模式：通过 [text] 显示文字（通常为用户名首字）
 /// - 图标模式：通过 [icon] 显示图标
 ///
@@ -132,11 +132,16 @@ class SantoAvatar extends StatelessWidget {
 
   /// [imageUrl] 解析为 ImageProvider
   ///
-  /// 支持 http(s) 网络图，以及 Data URI / 纯 base64（头像接口会直接下发
-  /// base64 字符串）；解析不出图片时返回 null，由调用处降级为文字 / 图标头像。
+  /// 支持三种来源：
+  /// 1. `assets/` 开头的应用内置资产图（角色固定头像等）；
+  /// 2. http(s) 网络图；
+  /// 3. Data URI / 纯 base64（头像接口会直接下发 base64 字符串）。
+  ///
+  /// 解析不出图片时返回 null，由调用处降级为文字 / 图标头像。
   ImageProvider? _imageProvider() {
     final String raw = imageUrl?.trim() ?? '';
     if (raw.isEmpty) return null;
+    if (raw.startsWith('assets/')) return AssetImage(raw);
     if (raw.startsWith('http://') || raw.startsWith('https://')) {
       return NetworkImage(raw);
     }
