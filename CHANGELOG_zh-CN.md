@@ -6,6 +6,15 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.2.0] - 2026-09-28
+
+### 💬 Chat @ 提及与头像
+
+- **新增**: @ 提及输入——`SantoChatInput.mentions` / `SantoChat.mentions` 传入 `SantoChatMention` 候选;输入 `@` 在输入框上方唤起候选面板,继续输入按前缀过滤,点选成员插入 `@展示名 `,发出的文本按提及规则渲染为可点击
+- **变更**: 聊天头像改为圆角方形(消息气泡与会话列表),不再是正圆
+- **变更**: 滑动引用的提示图标换用 `chat-bubble`
+- **变更**: `SantoChatList` 会话行增加背景色——默认白底,置顶会话灰底
+
 ## [2.1.0] - 2026-09-28
 
 ### 💬 聊天发送栏改版

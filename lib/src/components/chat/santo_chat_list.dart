@@ -85,7 +85,11 @@ class SantoChatList extends StatelessWidget {
       onTap: onTap == null ? null : () => onTap!(conversation),
       onLongPress:
           onLongPress == null ? null : () => onLongPress!(conversation),
-      child: Padding(
+      child: Container(
+        // 默认白底,置顶会话灰底突出显示
+        color: conversation.pinned
+            ? config.commonConfig.fillBody
+            : config.commonConfig.fillBase,
         padding: EdgeInsets.symmetric(
           horizontal: config.commonConfig.hSpacingMd,
           vertical: config.commonConfig.vSpacingSm,
@@ -155,6 +159,7 @@ class SantoChatList extends StatelessWidget {
       imageUrl: conversation.avatarUrl,
       text: conversation.title.isEmpty ? null : conversation.title.substring(0, 1),
       size: kSantoChatListAvatarSize,
+      shape: SantoAvatarShape.round,
     );
     if (!conversation.muted) return avatar;
 

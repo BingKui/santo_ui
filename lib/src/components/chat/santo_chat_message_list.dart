@@ -848,7 +848,7 @@ class _SwipeToReplyState extends State<_SwipeToReply> {
                   child: Opacity(
                     opacity: progress,
                     child: SantoIcon(
-                      SantoIcons.reply,
+                      SantoIcons.chatBubble,
                       size: config.commonConfig.iconSizeMd,
                       color: config.commonConfig.colorTextSecondary,
                     ),

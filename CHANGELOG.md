@@ -6,6 +6,15 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] - 2026-09-28
+
+### 💬 Chat mentions & avatars
+
+- **Added**: @ mention composing — `SantoChatInput.mentions` / `SantoChat.mentions` take `SantoChatMention` candidates; typing `@` opens a suggestion panel above the input field, further typing prefix-filters it, and picking a member inserts `@display ` so the sent text renders as a tappable mention
+- **Changed**: chat avatars are rounded squares now (message bubbles and the conversation list) instead of circles
+- **Changed**: the swipe-to-reply hint icon uses `chat-bubble`
+- **Changed**: `SantoChatList` rows get a background — white by default, grey for pinned conversations
+
 ## [2.1.0] - 2026-09-28
 
 ### 💬 Chat input bar redesign

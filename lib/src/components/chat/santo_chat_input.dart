@@ -134,6 +134,10 @@ class SantoChatInput extends StatefulWidget {
   /// 外部把它置为 [SantoChatPanel.none] 时面板立即收起(如点击聊天列表)
   final ValueNotifier<SantoChatPanel>? panelNotifier;
 
+  /// 可 @ 的成员候选,非空时输入 `@` 唤起候选面板;
+  /// 选中后以 `@展示名 ` 插入文本,与消息渲染的 mention 解析规则一致
+  final List<SantoChatMention> mentions;
+
   const SantoChatInput({
     Key? key,
     this.controller,
@@ -153,6 +157,7 @@ class SantoChatInput extends StatefulWidget {
     this.editingText,
     this.onCancelEdit,
     this.panelNotifier,
+    this.mentions = const <SantoChatMention>[],
   }) : super(key: key);
 
   @override
@@ -261,12 +266,78 @@ class _SantoChatInputState extends State<SantoChatInput> {
     // 先收起输入法,再在输入框下方展开面板,两者在同一位置换位
     _focusNode.unfocus();
     _setPanel(panel);
+    _setMentionFragment(null);
   }
 
   void _closePanel() {
     if (_panel != SantoChatPanel.none) {
       _setPanel(SantoChatPanel.none);
     }
+    _setMentionFragment(null);
+  }
+
+  /// @ 候选面板:当前光标前正在输入的 @ 片段,null 表示不展示
+  String? _mentionFragment;
+
+  /// 按 @ 后的片段前缀过滤出的候选成员
+  List<SantoChatMention> get _filteredMentions {
+    final String? fragment = _mentionFragment;
+    if (fragment == null) return const <SantoChatMention>[];
+    final String query = fragment.toLowerCase();
+    return widget.mentions
+        .where(
+          (SantoChatMention mention) =>
+              mention.display.toLowerCase().startsWith(query),
+        )
+        .toList();
+  }
+
+  /// 根据光标前的文本判断是否正在输入 @ 片段,决定候选面板开合
+  void _updateMentionFragment() {
+    if (widget.mentions.isEmpty || !widget.enabled) {
+      _setMentionFragment(null);
+      return;
+    }
+    final TextSelection selection = _controller.value.selection;
+    if (!selection.isValid || !selection.isCollapsed) {
+      _setMentionFragment(null);
+      return;
+    }
+    final String before = _controller.text.substring(0, selection.baseOffset);
+    final int at = before.lastIndexOf('@');
+    if (at < 0) {
+      _setMentionFragment(null);
+      return;
+    }
+    final String fragment = before.substring(at + 1);
+    if (fragment.contains(RegExp(r'\s'))) {
+      _setMentionFragment(null);
+      return;
+    }
+    _setMentionFragment(fragment);
+  }
+
+  void _setMentionFragment(String? fragment) {
+    if (_mentionFragment == fragment) return;
+    setState(() => _mentionFragment = fragment);
+  }
+
+  /// 选中候选:把光标前的 `@片段` 替换成 `@展示名 `
+  void _insertMention(SantoChatMention mention) {
+    final TextSelection selection = _controller.value.selection;
+    final String text = _controller.text;
+    final String before = text.substring(0, selection.baseOffset);
+    final int at = before.lastIndexOf('@');
+    if (at < 0) return;
+    final String token = '@${mention.display} ';
+    final String newText =
+        before.substring(0, at) + token + text.substring(selection.baseOffset);
+    _controller.value = TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: at + token.length),
+    );
+    _setMentionFragment(null);
+    widget.onChanged?.call(newText);
   }
 
   /// 把表情 token 插到光标处,插完保持面板展开继续选
@@ -291,6 +362,7 @@ class _SantoChatInputState extends State<SantoChatInput> {
     if (text.isEmpty) return;
     widget.onSend?.call(text);
     _controller.clear();
+    _setMentionFragment(null);
   }
 
   @override
@@ -327,6 +399,11 @@ class _SantoChatInputState extends State<SantoChatInput> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    if (_filteredMentions.isNotEmpty)
+                      _MentionPanel(
+                        mentions: _filteredMentions,
+                        onTap: _insertMention,
+                      ),
                     if (banner != null)
                       Padding(
                         padding: EdgeInsets.only(
@@ -384,7 +461,10 @@ class _SantoChatInputState extends State<SantoChatInput> {
                               // 发送后不收起键盘,连续发送时键盘不闪
                               onEditingComplete: () {},
                               onTap: _closePanel,
-                              onChanged: widget.onChanged,
+                              onChanged: (String text) {
+                                _updateMentionFragment();
+                                widget.onChanged?.call(text);
+                              },
                               cursorColor: config.myBubbleColor,
                               style: config.inputTextStyle.generateTextStyle(),
                               decoration: InputDecoration(
@@ -701,6 +781,56 @@ class _ExtensionPanelState extends State<_ExtensionPanel> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// @ 候选面板:输入 `@` 后浮在输入框上方,点选成员把 mention 插进文本
+class _MentionPanel extends StatelessWidget {
+  final List<SantoChatMention> mentions;
+  final ValueChanged<SantoChatMention> onTap;
+
+  const _MentionPanel({required this.mentions, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final SantoChatConfig config =
+        SantoThemeConfigurator.instance.getConfig().chatConfig;
+
+    return Container(
+      constraints: const BoxConstraints(maxHeight: 180),
+      margin: EdgeInsets.only(bottom: config.commonConfig.vSpacingXs),
+      decoration: BoxDecoration(
+        color: config.commonConfig.fillBase,
+        borderRadius: BorderRadius.circular(config.commonConfig.radiusMd),
+      ),
+      child: ListView.builder(
+        shrinkWrap: true,
+        padding: EdgeInsets.symmetric(
+          vertical: config.commonConfig.vSpacingXs,
+        ),
+        itemCount: mentions.length,
+        itemBuilder: (BuildContext context, int index) {
+          final SantoChatMention mention = mentions[index];
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => onTap(mention),
+            child: Container(
+              height: 40,
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(
+                horizontal: config.commonConfig.hSpacingMd,
+              ),
+              child: Text(
+                '@${mention.display}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: config.inputTextStyle.generateTextStyle(),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

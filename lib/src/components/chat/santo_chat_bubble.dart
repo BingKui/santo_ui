@@ -384,6 +384,7 @@ class SantoChatBubble extends StatelessWidget {
       imageUrl: author.avatarUrl,
       text: author.name.isEmpty ? null : author.name.substring(0, 1),
       size: avatarSize,
+      shape: SantoAvatarShape.round,
     );
   }
 }
