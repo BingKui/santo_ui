@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
 
@@ -86,13 +89,14 @@ class SantoAvatar extends StatelessWidget {
     //       );
 
     Widget content;
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
+    final ImageProvider? provider = _imageProvider();
+    if (provider != null) {
       content = ClipPath(
         clipper: shape == SantoAvatarShape.circle
             ? _CircleClipper()
             : _RoundRectClipper(effectiveRadius),
-        child: Image.network(
-          imageUrl!,
+        child: Image(
+          image: provider,
           width: size,
           height: size,
           fit: BoxFit.cover,
@@ -124,6 +128,29 @@ class SantoAvatar extends StatelessWidget {
       height: size,
       child: content,
     );
+  }
+
+  /// [imageUrl] 解析为 ImageProvider
+  ///
+  /// 支持 http(s) 网络图，以及 Data URI / 纯 base64（头像接口会直接下发
+  /// base64 字符串）；解析不出图片时返回 null，由调用处降级为文字 / 图标头像。
+  ImageProvider? _imageProvider() {
+    final String raw = imageUrl?.trim() ?? '';
+    if (raw.isEmpty) return null;
+    if (raw.startsWith('http://') || raw.startsWith('https://')) {
+      return NetworkImage(raw);
+    }
+    // Data URI 取逗号之后的 base64 主体，纯 base64 直接解码
+    final String payload = raw.startsWith('data:') && raw.contains(',')
+        ? raw.substring(raw.indexOf(',') + 1)
+        : raw;
+    try {
+      final Uint8List bytes =
+          base64Decode(payload.replaceAll(RegExp(r'\s'), ''));
+      return bytes.isEmpty ? null : MemoryImage(bytes);
+    } on FormatException {
+      return null;
+    }
   }
 
   /// 构建带背景色的容器

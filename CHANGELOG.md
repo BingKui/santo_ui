@@ -6,6 +6,17 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.2.2] - 2026-09-28
+
+### 👥 Group avatar grid
+
+- **Added**: `SantoGroupAvatar` (with `SantoGroupAvatarItem`) — tiles member avatars into a grid for group conversations (WeChat-style): no members falls back to a group icon, a single member fills the whole cell, 2–4 members take 2 columns and 5–9 take 3, capped at `maxCount`. Distinct from the overlapping-stack `SantoAvatarGroup`
+- **Added**: `SantoChatConversation.isGroup` / `memberAvatars`; `SantoChatList` now renders the grid for group conversations and falls back to a group icon while member data is unavailable (the conversation list endpoint does not return members, so hosts fetch the conversation detail to fill them in)
+
+### 🖼️ Avatar image sources
+
+- **Fixed**: `SantoAvatar` only ever used `Image.network`, so Data-URI / raw-base64 avatars (how some backends serve them — DevOpsMobile for one) silently fell back to the text avatar. The widget now resolves the source itself: `http(s)` → `NetworkImage`, Data URI / raw base64 → `MemoryImage`, and anything undecodable still falls back to the text / icon avatar
+
 ## [2.2.1] - 2026-09-28
 
 ### 💬 Chat input passthrough

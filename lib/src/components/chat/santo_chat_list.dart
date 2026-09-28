@@ -1,4 +1,5 @@
 import 'package:santo_ui/src/components/avatar/santo_avatar.dart';
+import 'package:santo_ui/src/components/avatar/santo_group_avatar.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_conversation.dart';
 import 'package:santo_ui/src/components/empty/santo_empty.dart';
 import 'package:santo_ui/src/components/icon/santo_icon.dart';
@@ -155,12 +156,22 @@ class SantoChatList extends StatelessWidget {
   }
 
   Widget _buildAvatar(SantoChatConfig config, SantoChatConversation conversation) {
-    final Widget avatar = SantoAvatar(
-      imageUrl: conversation.avatarUrl,
-      text: conversation.title.isEmpty ? null : conversation.title.substring(0, 1),
-      size: kSantoChatListAvatarSize,
-      shape: SantoAvatarShape.round,
-    );
+    // 群聊平铺成员九宫格（成员未就绪时由 SantoGroupAvatar 回退群图标）；
+    // 私聊走单人头像，取不到图片时回退昵称首字
+    final Widget avatar =
+        conversation.isGroup || conversation.memberAvatars.isNotEmpty
+        ? SantoGroupAvatar(
+            items: conversation.memberAvatars,
+            size: kSantoChatListAvatarSize,
+          )
+        : SantoAvatar(
+            imageUrl: conversation.avatarUrl,
+            text: conversation.title.isEmpty
+                ? null
+                : conversation.title.substring(0, 1),
+            size: kSantoChatListAvatarSize,
+            shape: SantoAvatarShape.round,
+          );
     if (!conversation.muted) return avatar;
 
     return Stack(

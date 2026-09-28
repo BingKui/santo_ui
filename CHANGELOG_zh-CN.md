@@ -6,6 +6,17 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.2.2] - 2026-09-28
+
+### 👥 群头像九宫格
+
+- **新增**: `SantoGroupAvatar`(配套 `SantoGroupAvatarItem`)—— 群聊头像平铺成员九宫格(微信群头像同款):无成员回退群图标、单个成员整格、2~4 个成员 2 列、5~9 个成员 3 列,最多展示 `maxCount` 个。与「重叠堆叠」的 `SantoAvatarGroup` 是两个组件
+- **新增**: `SantoChatConversation.isGroup` / `memberAvatars`;`SantoChatList` 群聊渲染九宫格,成员数据缺失时回退群图标(会话列表接口不返回成员,由业务拉会话详情补全)
+
+### 🖼️ 头像图片来源
+
+- **修复**: `SantoAvatar` 此前只走 `Image.network`,Data URI / 纯 base64 头像(部分后端就是这么下发的,如 DevOpsMobile)会静默降级成文字头像。现在由组件自行解析来源:`http(s)` → `NetworkImage`,Data URI / 纯 base64 → `MemoryImage`,解析不出仍按原逻辑降级为文字 / 图标头像
+
 ## [2.2.1] - 2026-09-28
 
 ### 💬 Chat 输入区透传

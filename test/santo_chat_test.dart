@@ -2052,6 +2052,61 @@ void main() {
       expect(find.text('暂无会话'), findsOneWidget);
     });
 
+    testWidgets('群聊渲染成员九宫格，成员未就绪回退群图标', (tester) async {
+      await tester.pumpWidget(_host(
+        SantoChatList(
+          conversations: <SantoChatConversation>[
+            // 成员数据未就绪（列表接口不返回 members）
+            const SantoChatConversation(
+              id: 'g1',
+              title: '产品群',
+              preview: '你好',
+              isGroup: true,
+            ),
+            const SantoChatConversation(
+              id: 'g2',
+              title: '研发群',
+              preview: '收到',
+              isGroup: true,
+              memberAvatars: <SantoGroupAvatarItem>[
+                SantoGroupAvatarItem(text: '张'),
+                SantoGroupAvatarItem(text: '李'),
+              ],
+            ),
+          ],
+        ),
+        height: 200,
+      ));
+
+      expect(find.byType(SantoGroupAvatar), findsNWidgets(2));
+      // 无成员的群聊回退群图标
+      expect(_iconNamed(SantoIcons.group), findsOneWidget);
+      // 有成员的群聊平铺：外框 48 → 2 列 → 单元格 21
+      final List<SantoAvatar> avatars =
+          tester.widgetList<SantoAvatar>(find.byType(SantoAvatar)).toList();
+      expect(avatars.length, 2);
+      for (final SantoAvatar avatar in avatars) {
+        expect(avatar.size, 21);
+      }
+      expect(find.text('张'), findsOneWidget);
+    });
+
+    testWidgets('私聊仍走单人头像', (tester) async {
+      await tester.pumpWidget(_host(
+        SantoChatList(
+          conversations: <SantoChatConversation>[
+            const SantoChatConversation(id: 'c1', title: '张三', preview: '你好'),
+          ],
+        ),
+        height: 120,
+      ));
+      expect(find.byType(SantoGroupAvatar), findsNothing);
+      final SantoAvatar avatar =
+          tester.widget<SantoAvatar>(find.byType(SantoAvatar));
+      expect(avatar.size, kSantoChatListAvatarSize);
+      expect(avatar.text, '张');
+    });
+
     testWidgets('点击与长按回调', (tester) async {
       SantoChatConversation? tapped;
       SantoChatConversation? longPressed;

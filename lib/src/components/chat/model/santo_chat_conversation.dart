@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:santo_ui/src/components/avatar/santo_group_avatar.dart';
 
 /// 会话(会话列表里的一行)
 ///
@@ -29,6 +30,19 @@ class SantoChatConversation {
   /// 是否免打扰,开启后未读只显示红点
   final bool muted;
 
+  /// 是否群聊;群聊在 [memberAvatars] 为空时回退为群图标头像
+  ///
+  /// @since v2.2.2
+  final bool isGroup;
+
+  /// 群聊成员头像,用于平铺九宫格群头像
+  ///
+  /// 会话列表接口一般不返回成员,由业务按需拉取会话详情补全;
+  /// 非空且多于一个成员时,[SantoChatList] 交给 [SantoGroupAvatar] 渲染
+  ///
+  /// @since v2.2.2
+  final List<SantoGroupAvatarItem> memberAvatars;
+
   const SantoChatConversation({
     required this.id,
     required this.title,
@@ -38,6 +52,8 @@ class SantoChatConversation {
     this.unreadCount = 0,
     this.pinned = false,
     this.muted = false,
+    this.isGroup = false,
+    this.memberAvatars = const <SantoGroupAvatarItem>[],
   });
 
   /// 未读数超过 99 时展示 `99+`

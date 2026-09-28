@@ -242,6 +242,7 @@ export 'src/components/badge/santo_badge.dart';
 
 //头像
 export 'src/components/avatar/santo_avatar.dart';
+export 'src/components/avatar/santo_group_avatar.dart';
 
 //单元格
 export 'src/components/cell/santo_cell.dart';
