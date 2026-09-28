@@ -5,6 +5,7 @@ import 'package:santo_ui/src/components/drawer/santo_bottom_drawer.dart';
 import 'package:santo_ui/src/l10n/santo_intl.dart';
 import 'package:flutter/material.dart';
 import 'package:santo_ui/src/components/appraise/santo_appraise_interface.dart';
+import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 
 /// 描述: 评价组件bottom picker
 ///
@@ -44,7 +45,13 @@ class SantoAppraiseBottomPicker {
       showCloseButton: false,
       barrierDismissible: barrierDismissible,
       maskColor: barrierColor,
-      contentPadding: EdgeInsets.zero,
+      // 提交按钮下方留出主题间距,安全区仍由抽屉统一处理
+      contentPadding: EdgeInsets.only(
+        bottom: SantoThemeConfigurator.instance
+            .getConfig()
+            .commonConfig
+            .vSpacingMd,
+      ),
       child: SingleChildScrollView(
         child: SantoAppraise(
           title: title,

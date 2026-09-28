@@ -134,6 +134,7 @@ class SantoChatConfig extends SantoBaseConfig {
   /// 输入区背景色
   Color? _inputBackgroundColor;
 
+
   /// 输入框文字样式
   SantoTextStyle? _inputTextStyle;
 

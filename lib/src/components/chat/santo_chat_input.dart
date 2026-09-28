@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:santo_ui/src/components/chat/model/santo_chat_emoji_item.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_extension.dart';
 import 'package:santo_ui/src/components/chat/model/santo_chat_message.dart';
@@ -16,6 +18,9 @@ const double kSantoChatExtensionItemSize = 56;
 
 /// 扩展面板入口的图标边长
 const double kSantoChatExtensionIconSize = 26;
+
+/// 输入框两侧工具按钮(表情/更多)的图标大小,随 40 高的输入框放大
+const double kSantoChatInputToolIconSize = 30;
 
 /// 输入区面板(表情面板与扩展菜单)的固定高度
 ///
@@ -48,15 +53,12 @@ List<List<T>> _paginate<T>(List<T> items, int columns, int rows) {
   final int perPage = columns * rows;
   return <List<T>>[
     for (int i = 0; i < items.length; i += perPage)
-      items.sublist(
-        i,
-        i + perPage < items.length ? i + perPage : items.length,
-      ),
+      items.sublist(i, i + perPage < items.length ? i + perPage : items.length),
   ];
 }
 
 /// 输入区展开的面板
-enum _SantoChatInputPanel {
+enum SantoChatPanel {
   /// 没有面板(输入法或普通状态)
   none,
 
@@ -128,6 +130,10 @@ class SantoChatInput extends StatefulWidget {
   /// 取消编辑回调
   final VoidCallback? onCancelEdit;
 
+  /// 面板开合状态通知器:输入区写入当前面板,外部可监听;
+  /// 外部把它置为 [SantoChatPanel.none] 时面板立即收起(如点击聊天列表)
+  final ValueNotifier<SantoChatPanel>? panelNotifier;
+
   const SantoChatInput({
     Key? key,
     this.controller,
@@ -146,6 +152,7 @@ class SantoChatInput extends StatefulWidget {
     this.emojis = kSantoChatDefaultEmojis,
     this.editingText,
     this.onCancelEdit,
+    this.panelNotifier,
   }) : super(key: key);
 
   @override
@@ -157,7 +164,7 @@ class _SantoChatInputState extends State<SantoChatInput> {
   FocusNode? _internalFocusNode;
 
   /// 当前展开的面板
-  _SantoChatInputPanel _panel = _SantoChatInputPanel.none;
+  SantoChatPanel _panel = SantoChatPanel.none;
 
   TextEditingController get _controller =>
       widget.controller ?? (_internalController ??= TextEditingController());
@@ -165,8 +172,7 @@ class _SantoChatInputState extends State<SantoChatInput> {
   FocusNode get _focusNode =>
       widget.focusNode ?? (_internalFocusNode ??= FocusNode());
 
-  bool get _showExtensions =>
-      widget.extensions.isNotEmpty && widget.enabled;
+  bool get _showExtensions => widget.extensions.isNotEmpty && widget.enabled;
 
   bool get _showEmojis => widget.emojis.isNotEmpty && widget.enabled;
 
@@ -174,6 +180,7 @@ class _SantoChatInputState extends State<SantoChatInput> {
   void initState() {
     super.initState();
     _focusNode.addListener(_handleFocusChange);
+    _panelNotifier?.addListener(_handleExternalPanelChange);
     // 挂载时就已经处于编辑态:预填内容,但不抢焦点
     final String? editingText = widget.editingText;
     if (editingText != null) {
@@ -187,8 +194,9 @@ class _SantoChatInputState extends State<SantoChatInput> {
   void didUpdateWidget(covariant SantoChatInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.focusNode != widget.focusNode) {
-      (oldWidget.focusNode ?? _internalFocusNode)
-          ?.removeListener(_handleFocusChange);
+      (oldWidget.focusNode ?? _internalFocusNode)?.removeListener(
+        _handleFocusChange,
+      );
       _focusNode.addListener(_handleFocusChange);
     }
     if (widget.editingText != null &&
@@ -199,10 +207,31 @@ class _SantoChatInputState extends State<SantoChatInput> {
 
   @override
   void dispose() {
-    (widget.focusNode ?? _internalFocusNode)?.removeListener(_handleFocusChange);
+    (widget.focusNode ?? _internalFocusNode)?.removeListener(
+      _handleFocusChange,
+    );
+    _panelNotifier?.removeListener(_handleExternalPanelChange);
     _internalFocusNode?.dispose();
     _internalController?.dispose();
     super.dispose();
+  }
+
+  ValueNotifier<SantoChatPanel>? get _panelNotifier =>
+      widget.panelNotifier;
+
+  /// 外部把通知器置为 none 时收起面板(如点击聊天列表)
+  void _handleExternalPanelChange() {
+    final SantoChatPanel value = _panelNotifier!.value;
+    if (value != _panel && mounted) {
+      setState(() => _panel = value);
+    }
+  }
+
+  /// 更新面板状态并同步给外部通知器
+  void _setPanel(SantoChatPanel panel) {
+    if (_panel == panel) return;
+    setState(() => _panel = panel);
+    _panelNotifier?.value = panel;
   }
 
   /// 编辑态:把待编辑内容填进输入框并聚焦,同时收起面板
@@ -210,7 +239,7 @@ class _SantoChatInputState extends State<SantoChatInput> {
     _controller
       ..text = text
       ..selection = TextSelection.collapsed(offset: text.length);
-    setState(() => _panel = _SantoChatInputPanel.none);
+    _setPanel(SantoChatPanel.none);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _focusNode.requestFocus();
     });
@@ -218,25 +247,25 @@ class _SantoChatInputState extends State<SantoChatInput> {
 
   /// 唤起输入法时收起面板,保证面板与输入法不会同时出现
   void _handleFocusChange() {
-    if (_focusNode.hasFocus && _panel != _SantoChatInputPanel.none) {
-      setState(() => _panel = _SantoChatInputPanel.none);
+    if (_focusNode.hasFocus && _panel != SantoChatPanel.none) {
+      _setPanel(SantoChatPanel.none);
     }
   }
 
   /// 点工具栏按钮:同一按钮再点收起,点另一个按钮直接换面板
-  void _togglePanel(_SantoChatInputPanel panel) {
+  void _togglePanel(SantoChatPanel panel) {
     if (_panel == panel) {
-      setState(() => _panel = _SantoChatInputPanel.none);
+      _setPanel(SantoChatPanel.none);
       return;
     }
     // 先收起输入法,再在输入框下方展开面板,两者在同一位置换位
     _focusNode.unfocus();
-    setState(() => _panel = panel);
+    _setPanel(panel);
   }
 
   void _closePanel() {
-    if (_panel != _SantoChatInputPanel.none) {
-      setState(() => _panel = _SantoChatInputPanel.none);
+    if (_panel != SantoChatPanel.none) {
+      _setPanel(SantoChatPanel.none);
     }
   }
 
@@ -266,143 +295,151 @@ class _SantoChatInputState extends State<SantoChatInput> {
 
   @override
   Widget build(BuildContext context) {
-    final SantoChatConfig config =
-        SantoThemeConfigurator.instance.getConfig().chatConfig;
+    final SantoChatConfig config = SantoThemeConfigurator.instance
+        .getConfig()
+        .chatConfig;
     final bool editing = widget.editingText != null;
     final SantoChatQuote? banner = editing
         ? SantoChatQuote(title: '编辑消息', preview: widget.editingText!)
         : widget.replyTo;
 
-    return Container(
-      color: config.inputBackgroundColor,
-      child: Column(
-        // 撑满宽度:分割线、面板都要占满整行,否则会被居中或缩成 0 宽
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            height: config.commonConfig.borderWidthSm,
-            color: config.commonConfig.dividerColorBase,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: config.commonConfig.hSpacingMd,
-              vertical: config.commonConfig.vSpacingSm,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                if (banner != null)
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: config.commonConfig.vSpacingSm,
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(child: SantoChatQuoteView(quote: banner)),
-                        SizedBox(width: config.commonConfig.hSpacingSm),
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: editing
-                              ? widget.onCancelEdit
-                              : widget.onCancelReply,
-                          child: SantoIcon(
-                            SantoSolidIcons.xmarkCircle,
-                            solid: true,
-                            size: kSantoChatBannerCloseSize,
-                            color: config.commonConfig.brandError,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+    // 毛玻璃:对齐 MenuBar 悬浮样式,灰 5% 底 + 背景模糊
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          color: config.backgroundColor.withAlpha(0xD9),
+          child: Column(
+            // 撑满宽度:分割线、面板都要占满整行,否则会被居中或缩成 0 宽
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                height: config.commonConfig.borderWidthSm,
+                color: config.commonConfig.dividerColorBase,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: config.commonConfig.hSpacingMd,
+                  vertical: config.commonConfig.vSpacingSm,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    if (widget.leading != null) ...<Widget>[
-                      widget.leading!,
-                      SizedBox(width: config.commonConfig.hSpacingSm),
-                    ],
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: config.commonConfig.hSpacingSm,
-                          vertical: config.commonConfig.vSpacingXs,
+                    if (banner != null)
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: config.commonConfig.vSpacingSm,
                         ),
-                        decoration: BoxDecoration(
-                          color: config.backgroundColor,
-                          borderRadius: BorderRadius.circular(
-                            config.commonConfig.radiusMd,
-                          ),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(child: SantoChatQuoteView(quote: banner)),
+                            SizedBox(width: config.commonConfig.hSpacingSm),
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: editing
+                                  ? widget.onCancelEdit
+                                  : widget.onCancelReply,
+                              child: SantoIcon(
+                                SantoSolidIcons.xmarkCircle,
+                                solid: true,
+                                size: kSantoChatBannerCloseSize,
+                                color: config.commonConfig.brandError,
+                              ),
+                            ),
+                          ],
                         ),
-                        child: TextField(
-                          controller: _controller,
-                          focusNode: _focusNode,
-                          enabled: widget.enabled,
-                          minLines: 1,
-                          maxLines: widget.maxLines,
-                          textInputAction: TextInputAction.send,
-                          onSubmitted: (_) => _handleSend(),
-                          // 发送后不收起键盘,连续发送时键盘不闪
-                          onEditingComplete: () {},
-                          onTap: _closePanel,
-                          onChanged: widget.onChanged,
-                          cursorColor: config.myBubbleColor,
-                          style: config.inputTextStyle.generateTextStyle(),
-                          decoration: InputDecoration(
-                            isDense: true,
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.zero,
-                            // 提示文案不换行,超出直接省略
-                            hint: Text(
-                              widget.hintText,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: config.inputHintTextStyle
-                                  .generateTextStyle(),
+                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        if (widget.leading != null) ...<Widget>[
+                          widget.leading!,
+                          SizedBox(width: config.commonConfig.hSpacingSm),
+                        ],
+                        Expanded(
+                          child: Container(
+                            // 输入框最小高度对齐库内输入框标准,文字垂直居中
+                            constraints: const BoxConstraints(minHeight: 40),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: config.commonConfig.hSpacingSm,
+                              vertical: config.commonConfig.vSpacingXs,
+                            ),
+                            decoration: BoxDecoration(
+                              color: config.inputBackgroundColor,
+                              borderRadius: BorderRadius.circular(
+                                config.commonConfig.radiusMd,
+                              ),
+                            ),
+                            child: TextField(
+                              controller: _controller,
+                              focusNode: _focusNode,
+                              enabled: widget.enabled,
+                              minLines: 1,
+                              maxLines: widget.maxLines,
+                              textInputAction: TextInputAction.send,
+                              onSubmitted: (_) => _handleSend(),
+                              // 发送后不收起键盘,连续发送时键盘不闪
+                              onEditingComplete: () {},
+                              onTap: _closePanel,
+                              onChanged: widget.onChanged,
+                              cursorColor: config.myBubbleColor,
+                              style: config.inputTextStyle.generateTextStyle(),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.zero,
+                                // 提示文案不换行,超出直接省略
+                                hint: Text(
+                                  widget.hintText,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: config.inputHintTextStyle
+                                      .generateTextStyle(),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        if (widget.trailing != null) ...<Widget>[
+                          SizedBox(width: config.commonConfig.hSpacingSm),
+                          widget.trailing!,
+                        ],
+                        if (_showEmojis) ...<Widget>[
+                          SizedBox(width: config.commonConfig.hSpacingSm),
+                          _InputToolButton(
+                            icon: SantoIcons.emoji,
+                            onTap: () =>
+                                _togglePanel(SantoChatPanel.emoji),
+                          ),
+                        ],
+                        if (_showExtensions) ...<Widget>[
+                          SizedBox(width: config.commonConfig.hSpacingSm),
+                          _InputToolButton(
+                            icon: SantoIcons.plusCircle,
+                            onTap: () =>
+                                _togglePanel(SantoChatPanel.extension),
+                          ),
+                        ],
+                      ],
                     ),
-                    if (widget.trailing != null) ...<Widget>[
-                      SizedBox(width: config.commonConfig.hSpacingSm),
-                      widget.trailing!,
-                    ],
-                    if (_showEmojis) ...<Widget>[
-                      SizedBox(width: config.commonConfig.hSpacingSm),
-                      _InputToolButton(
-                        icon: SantoIcons.emoji,
-                        highlight: _panel == _SantoChatInputPanel.emoji,
-                        onTap: () =>
-                            _togglePanel(_SantoChatInputPanel.emoji),
-                      ),
-                    ],
-                    if (_showExtensions) ...<Widget>[
-                      SizedBox(width: config.commonConfig.hSpacingSm),
-                      _InputToolButton(
-                        icon: SantoIcons.plus,
-                        highlight: _panel == _SantoChatInputPanel.extension,
-                        onTap: () =>
-                            _togglePanel(_SantoChatInputPanel.extension),
-                      ),
-                    ],
                   ],
                 ),
-              ],
-            ),
+              ),
+              if (_panel == SantoChatPanel.emoji)
+                _EmojiPanel(emojis: widget.emojis, onTap: _insertEmoji),
+              if (_panel == SantoChatPanel.extension)
+                _ExtensionPanel(
+                  extensions: widget.extensions,
+                  onTap: widget.onExtensionTap,
+                ),
+              // 底部安全区固定预留,不可配置
+              SizedBox(height: MediaQuery.paddingOf(context).bottom),
+            ],
           ),
-          if (_panel == _SantoChatInputPanel.emoji)
-            _EmojiPanel(emojis: widget.emojis, onTap: _insertEmoji),
-          if (_panel == _SantoChatInputPanel.extension)
-            _ExtensionPanel(
-              extensions: widget.extensions,
-              onTap: widget.onExtensionTap,
-            ),
-          // 底部安全区固定预留,不可配置
-          SizedBox(height: MediaQuery.paddingOf(context).bottom),
-        ],
+        ),
       ),
     );
   }
@@ -411,19 +448,18 @@ class _SantoChatInputState extends State<SantoChatInput> {
 /// 输入区工具栏按钮:32×32 点击区 + 22 图标,展开对应面板时取主题色
 class _InputToolButton extends StatelessWidget {
   final String icon;
-  final bool highlight;
   final VoidCallback? onTap;
 
   const _InputToolButton({
     required this.icon,
-    this.highlight = false,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final SantoChatConfig config =
-        SantoThemeConfigurator.instance.getConfig().chatConfig;
+    final SantoChatConfig config = SantoThemeConfigurator.instance
+        .getConfig()
+        .chatConfig;
     final double size = config.commonConfig.iconSizeLg;
 
     return GestureDetector(
@@ -434,10 +470,8 @@ class _InputToolButton extends StatelessWidget {
         child: Center(
           child: SantoIcon(
             icon,
-            size: kSantoChatExtensionIconSize,
-            color: highlight
-                ? config.myBubbleColor
-                : config.commonConfig.colorTextSecondary,
+            size: kSantoChatInputToolIconSize,
+            color: config.commonConfig.colorTextBase,
           ),
         ),
       ),
@@ -459,8 +493,9 @@ class _PanelFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SantoChatConfig config =
-        SantoThemeConfigurator.instance.getConfig().chatConfig;
+    final SantoChatConfig config = SantoThemeConfigurator.instance
+        .getConfig()
+        .chatConfig;
 
     return SizedBox(
       height: kSantoChatPanelHeight,
@@ -472,10 +507,7 @@ class _PanelFrame extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: PageView(
-                onPageChanged: onPageChanged,
-                children: pages,
-              ),
+              child: PageView(onPageChanged: onPageChanged, children: pages),
             ),
             if (pages.length > 1)
               Padding(
@@ -524,8 +556,9 @@ class _EmojiPanelState extends State<_EmojiPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final SantoChatConfig config =
-        SantoThemeConfigurator.instance.getConfig().chatConfig;
+    final SantoChatConfig config = SantoThemeConfigurator.instance
+        .getConfig()
+        .chatConfig;
 
     return _PanelFrame(
       page: _page,
@@ -539,7 +572,8 @@ class _EmojiPanelState extends State<_EmojiPanel> {
           LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               // 与扩展菜单同一套网格:排满可用高度、左上角起排、空位保留
-              final double rowHeight = (constraints.maxHeight -
+              final double rowHeight =
+                  (constraints.maxHeight -
                       config.commonConfig.vSpacingMd *
                           (kSantoChatEmojiRows - 1)) /
                   kSantoChatEmojiRows;
@@ -556,8 +590,9 @@ class _EmojiPanelState extends State<_EmojiPanel> {
                   final SantoChatEmoji emoji = page[index];
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap:
-                        widget.onTap == null ? null : () => widget.onTap!(emoji),
+                    onTap: widget.onTap == null
+                        ? null
+                        : () => widget.onTap!(emoji),
                     child: Center(
                       child: Text(
                         emoji.symbol,
@@ -592,8 +627,9 @@ class _ExtensionPanelState extends State<_ExtensionPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final SantoChatConfig config =
-        SantoThemeConfigurator.instance.getConfig().chatConfig;
+    final SantoChatConfig config = SantoThemeConfigurator.instance
+        .getConfig()
+        .chatConfig;
 
     return _PanelFrame(
       page: _page,
@@ -607,7 +643,8 @@ class _ExtensionPanelState extends State<_ExtensionPanel> {
           LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               // 铺满可用高度,单元格固定;不足一页的空位保留、不回流
-              final double rowHeight = (constraints.maxHeight -
+              final double rowHeight =
+                  (constraints.maxHeight -
                       config.commonConfig.vSpacingMd *
                           (kSantoChatMenuItemRows - 1)) /
                   kSantoChatMenuItemRows;
@@ -643,10 +680,8 @@ class _ExtensionPanelState extends State<_ExtensionPanel> {
             height: kSantoChatExtensionItemSize,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: config.backgroundColor,
-              borderRadius: BorderRadius.circular(
-                config.commonConfig.radiusMd,
-              ),
+              color: config.commonConfig.fillBase,
+              borderRadius: BorderRadius.circular(config.commonConfig.radiusMd),
             ),
             child: SantoIcon(
               extension.icon,

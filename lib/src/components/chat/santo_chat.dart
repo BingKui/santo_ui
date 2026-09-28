@@ -6,6 +6,7 @@ import 'package:santo_ui/src/components/chat/santo_chat_input.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_message_list.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_reaction.dart';
 import 'package:santo_ui/src/components/chat/santo_chat_selection_bar.dart';
+import 'package:santo_ui/src/components/popup/santo_measure_size.dart';
 import 'package:santo_ui/src/theme/configs/santo_chat_config.dart';
 import 'package:santo_ui/src/theme/santo_theme_configurator.dart';
 import 'package:flutter/material.dart';
@@ -249,68 +250,174 @@ class SantoChat extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          ?header,
+          if (header != null)
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                config.commonConfig.vSpacingXs,
+                config.commonConfig.vSpacingXs,
+                config.commonConfig.vSpacingXs,
+                0,
+              ),
+              child: header!,
+            ),
           Expanded(
-            child: SantoChatMessageList(
-              messages: messages,
-              currentUserId: currentUserId,
-              showAvatar: showAvatar,
-              showName: showName,
-              empty: empty,
-              typingAuthor: typingAuthor,
-              playingMessageId: playingMessageId,
-              padding: listPadding,
-              reactions: reactions,
-              messageMenuItems: messageMenuItems,
-              selectionMode: selectionMode,
-              selectedIds: selectedIds,
-              onSelectionToggle: onSelectionToggle,
-              hasMore: hasMore,
-              loadingMore: loadingMore,
-              showScrollToBottom: showScrollToBottom,
-              onLoadMore: onLoadMore,
-              onReply: onReply,
-              onMessageTap: onMessageTap,
-              onMessageLongPress: onMessageLongPress,
-              onMessageDoubleTap: onMessageDoubleTap,
-              onReaction: onReaction,
-              onMessageMenuSelected: onMessageMenuSelected,
-              onMentionTap: onMentionTap,
-              onLinkTap: onLinkTap,
-              onQuoteTap: onQuoteTap,
-              onRetry: onRetry,
-              onDocTap: onDocTap,
-              onApprovalTap: onApprovalTap,
-              onApprove: onApprove,
-              onReject: onReject,
-              onNoticeTap: onNoticeTap,
-              onReadReceiptTap: onReadReceiptTap,
+            child: _SantoChatBodyOverlay(
+              barBuilder: (ValueNotifier<SantoChatPanel> panelNotifier) =>
+                  selectionMode
+                      ? SantoChatSelectionBar(
+                          selectedCount: selectedIds.length,
+                          actions: selectionActions,
+                          onCancel: onCancelSelection,
+                          onAction: onSelectionAction,
+                        )
+                      : SantoChatInput(
+                          onSend: onSend,
+                          hintText: inputHintText,
+                          enabled: inputEnabled,
+                          leading: inputLeading,
+                          trailing: inputTrailing,
+                          extensions: extensions,
+                          onExtensionTap: onExtensionTap,
+                          emojis: emojis,
+                          replyTo: replyTo,
+                          onCancelReply: onCancelReply,
+                          editingText: editingText,
+                          onCancelEdit: onCancelEdit,
+                          panelNotifier: panelNotifier,
+                        ),
+              messageListBuilder:
+                  (double barHeight, ScrollController? controller) =>
+                      SantoChatMessageList(
+                messages: messages,
+                currentUserId: currentUserId,
+                showAvatar: showAvatar,
+                showName: showName,
+                empty: empty,
+                typingAuthor: typingAuthor,
+                playingMessageId: playingMessageId,
+                padding: listPadding,
+                controller: controller,
+                bottomOverlayHeight: barHeight,
+                reactions: reactions,
+                messageMenuItems: messageMenuItems,
+                selectionMode: selectionMode,
+                selectedIds: selectedIds,
+                onSelectionToggle: onSelectionToggle,
+                hasMore: hasMore,
+                loadingMore: loadingMore,
+                showScrollToBottom: showScrollToBottom,
+                onLoadMore: onLoadMore,
+                onReply: onReply,
+                onMessageTap: onMessageTap,
+                onMessageLongPress: onMessageLongPress,
+                onMessageDoubleTap: onMessageDoubleTap,
+                onReaction: onReaction,
+                onMessageMenuSelected: onMessageMenuSelected,
+                onMentionTap: onMentionTap,
+                onLinkTap: onLinkTap,
+                onQuoteTap: onQuoteTap,
+                onRetry: onRetry,
+                onDocTap: onDocTap,
+                onApprovalTap: onApprovalTap,
+                onApprove: onApprove,
+                onReject: onReject,
+                onNoticeTap: onNoticeTap,
+                onReadReceiptTap: onReadReceiptTap,
+              ),
             ),
           ),
-          if (selectionMode)
-            SantoChatSelectionBar(
-              selectedCount: selectedIds.length,
-              actions: selectionActions,
-              onCancel: onCancelSelection,
-              onAction: onSelectionAction,
-            )
-          else
-            SantoChatInput(
-              onSend: onSend,
-              hintText: inputHintText,
-              enabled: inputEnabled,
-              leading: inputLeading,
-              trailing: inputTrailing,
-              extensions: extensions,
-              onExtensionTap: onExtensionTap,
-              emojis: emojis,
-              replyTo: replyTo,
-              onCancelReply: onCancelReply,
-              editingText: editingText,
-              onCancelEdit: onCancelEdit,
-            ),
         ],
       ),
+    );
+  }
+}
+
+/// 发送栏浮层:消息列表垫底延伸到发送栏下方,发送栏毛玻璃叠在上面;
+/// 动态量发送栏高度(面板展开/多选栏会变),给列表做底部避让。
+/// 面板开合经 [SantoChatPanel] 通知器同步:更多菜单展开时聊天区滚到最新,
+/// 面板开着时点击聊天列表立即收起
+class _SantoChatBodyOverlay extends StatefulWidget {
+  final Widget Function(ValueNotifier<SantoChatPanel> panelNotifier) barBuilder;
+  final Widget Function(double barHeight, ScrollController? controller)
+      messageListBuilder;
+
+  const _SantoChatBodyOverlay({
+    Key? key,
+    required this.barBuilder,
+    required this.messageListBuilder,
+  }) : super(key: key);
+
+  @override
+  State<_SantoChatBodyOverlay> createState() => _SantoChatBodyOverlayState();
+}
+
+class _SantoChatBodyOverlayState extends State<_SantoChatBodyOverlay> {
+  double _barHeight = 0;
+
+  // 可空懒加载而非 late final:热重载不会重跑 initState,late final 会炸
+  ScrollController? _listController;
+  ValueNotifier<SantoChatPanel>? _panelNotifier;
+
+  ScrollController get _listControllerRef =>
+      _listController ??= ScrollController();
+
+  ValueNotifier<SantoChatPanel> get _panelNotifierRef =>
+      _panelNotifier ??= ValueNotifier<SantoChatPanel>(SantoChatPanel.none);
+
+  @override
+  void initState() {
+    super.initState();
+    _panelNotifierRef.addListener(_handlePanelChanged);
+  }
+
+  @override
+  void dispose() {
+    _panelNotifierRef.removeListener(_handlePanelChanged);
+    _panelNotifier?.dispose();
+    _listController?.dispose();
+    super.dispose();
+  }
+
+  /// 更多菜单展开时,把聊天区滚到最新一侧(reverse 列表的底部即 offset 0)
+  void _handlePanelChanged() {
+    if (_panelNotifier!.value != SantoChatPanel.extension) return;
+    if (!(_listController?.hasClients ?? false)) return;
+    _listController!.animateTo(
+      0,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _onBarMeasured(Size size) {
+    if ((size.height - _barHeight).abs() > 0.5) {
+      setState(() => _barHeight = size.height);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Positioned.fill(
+          child: Listener(
+            onPointerDown: (_) {
+              // 面板开着时点击聊天列表,立即收起面板
+              if (_panelNotifierRef.value != SantoChatPanel.none) {
+                _panelNotifierRef.value = SantoChatPanel.none;
+              }
+            },
+            child: widget.messageListBuilder(_barHeight, _listControllerRef),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: MeasureSize(
+            onChanged: _onBarMeasured,
+            child: widget.barBuilder(_panelNotifierRef),
+          ),
+        ),
+      ],
     );
   }
 }

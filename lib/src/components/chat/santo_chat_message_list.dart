@@ -83,6 +83,10 @@ class SantoChatMessageList extends StatefulWidget {
   /// 列表内边距
   final EdgeInsetsGeometry? padding;
 
+  /// 底部被悬浮组件(如毛玻璃发送栏)覆盖的高度;
+  /// 不传 [padding] 时会加进默认底部内边距,并抬高「回到底部」按钮,默认 0
+  final double bottomOverlayHeight;
+
   /// 长按可选的表情回应
   final List<String> reactions;
 
@@ -188,6 +192,7 @@ class SantoChatMessageList extends StatefulWidget {
     this.playingMessageId,
     this.controller,
     this.padding,
+    this.bottomOverlayHeight = 0,
     this.reactions = kSantoChatDefaultReactions,
     this.messageMenuItems,
     this.selectionMode = false,
@@ -323,15 +328,19 @@ class _SantoChatMessageListState extends State<SantoChatMessageList> {
             controller: _controller,
             reverse: widget.reverse,
             padding: widget.padding ??
-                EdgeInsets.symmetric(
-                  vertical: config.commonConfig.vSpacingMd,
+                EdgeInsets.fromLTRB(
+                  config.commonConfig.vSpacingXs,
+                  config.commonConfig.vSpacingMd,
+                  config.commonConfig.vSpacingXs,
+                  config.commonConfig.vSpacingMd + widget.bottomOverlayHeight,
                 ),
             children: children,
           ),
           if (widget.showScrollToBottom && _showScrollToBottom)
             Positioned(
               right: config.commonConfig.hSpacingMd,
-              bottom: config.commonConfig.vSpacingMd,
+              bottom:
+                  config.commonConfig.vSpacingMd + widget.bottomOverlayHeight,
               child: _buildScrollToBottomButton(config),
             ),
         ],

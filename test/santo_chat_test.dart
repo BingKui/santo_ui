@@ -1504,7 +1504,7 @@ void main() {
       ));
 
       expect(tester.widget<TextField>(find.byType(TextField)).enabled, isFalse);
-      expect(_iconNamed(SantoIcons.plus), findsNothing);
+      expect(_iconNamed(SantoIcons.plusCircle), findsNothing);
       expect(sent, isEmpty);
     });
 
@@ -1516,13 +1516,13 @@ void main() {
 
       expect(find.text('照片'), findsNothing);
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
       expect(find.text('照片'), findsOneWidget);
       expect(find.text('拍摄'), findsOneWidget);
       expect(find.text('文件'), findsOneWidget);
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
       expect(find.text('照片'), findsNothing);
     });
@@ -1545,7 +1545,7 @@ void main() {
         height: 320,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
       expect(find.text('位置'), findsOneWidget);
 
@@ -1560,7 +1560,7 @@ void main() {
         height: 320,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
       expect(find.text('照片'), findsOneWidget);
 
@@ -1577,7 +1577,7 @@ void main() {
         ),
         height: 120,
       ));
-      expect(_iconNamed(SantoIcons.plus), findsNothing);
+      expect(_iconNamed(SantoIcons.plusCircle), findsNothing);
     });
 
     testWidgets('扩展面板高度固定,入口平铺一排 5 个且超出换行左对齐', (tester) async {
@@ -1599,7 +1599,7 @@ void main() {
         height: 400,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
 
       final Finder panel = find.byWidgetPredicate((Widget widget) =>
@@ -1643,7 +1643,7 @@ void main() {
         height: 400,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
 
       // 一排 5 个、两排一页:12 项分两页,第 11 项(扩展7)才翻到第二页
@@ -1703,7 +1703,7 @@ void main() {
         height: 400,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
 
       // 首项仍然贴住面板内边距(文案在图标宽度内居中,整体不居中)
@@ -1752,7 +1752,7 @@ void main() {
         height: 400,
       ));
 
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
 
       final Finder panel = find.byWidgetPredicate((Widget widget) =>
@@ -1793,14 +1793,14 @@ void main() {
       expect(tester.getSize(panel()).height, kSantoChatPanelHeight);
 
       // 切到扩展面板:表情面板收起,高度不变
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
       expect(find.text('😊'), findsNothing);
       expect(find.text('照片'), findsOneWidget);
       expect(tester.getSize(panel()).height, kSantoChatPanelHeight);
 
       // 再点同一个按钮收起
-      await tester.tap(_iconNamed(SantoIcons.plus));
+      await tester.tap(_iconNamed(SantoIcons.plusCircle));
       await tester.pumpAndSettle();
       expect(find.text('照片'), findsNothing);
     });

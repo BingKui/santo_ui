@@ -6,6 +6,22 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.1.0] - 2026-09-28
+
+### 💬 聊天发送栏改版
+
+- **变更**: header(如群公告)上、左、右各加 5 间距
+- **变更**: 消息项增加左右 5 内边距(外部传 `padding` 时以传入值为准)
+- **变更**: 输入框最小高度 40、文字垂直居中;两侧工具图标(表情/更多)随之放大到 30
+- **变更**: 「更多」入口换用 `plus-circle` 图标;工具按钮面板展开时不再变色
+- **新增**: 发送栏毛玻璃——`BackdropFilter` blur 10 + 会话灰 85% 透明底,对齐 MenuBar 悬浮样式;消息列表延伸到发送栏下方,最新消息隐约透出
+- **新增**: `SantoChatPanel` 枚举与 `SantoChatInput.panelNotifier`——面板状态(none/表情/更多)与宿主共享;展开「更多」面板时聊天区滚动到最新消息,面板开着时点击聊天列表立即收起
+- **新增**: `SantoChatMessageList.bottomOverlayHeight`——底部悬浮层的避让高度,同时抬高「回到底部」按钮
+
+### 🏙️ 评价底部弹窗间距
+
+- **变更**: `SantoAppraiseBottomPicker` 提交按钮下方增加主题间距(安全区仍由底部抽屉统一处理)
+
 ## [2.0.0] - 2026-09-24
 
 ### 🎨 所有样式令牌收进主题

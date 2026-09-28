@@ -6,6 +6,22 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] - 2026-09-28
+
+### 💬 Chat input bar redesign
+
+- **Changed**: the header (e.g. the group notice) gets a 5-px inset on top/left/right
+- **Changed**: message items get a 5-px horizontal inset (the list `padding` override still wins)
+- **Changed**: the input field box is at least 40 tall with vertically centred text; the toolbar icons (emoji / more) grow to 30 to match
+- **Changed**: the "more" entry uses the `plus-circle` icon; toolbar buttons no longer change colour when their panel opens
+- **Added**: the send bar is a frosted-glass layer — `BackdropFilter` blur 10 over a translucent grey tint (85 % alpha), modelled on the MenuBar floating style; the message list now extends underneath it so the latest messages faintly show through
+- **Added**: `SantoChatPanel` enum and `SantoChatInput.panelNotifier` — the panel state (none / emoji / extension) is shared with the host; opening the "more" panel scrolls the chat to the newest message, and tapping the message list while a panel is open collapses it immediately
+- **Added**: `SantoChatMessageList.bottomOverlayHeight` — bottom clearance for floating overlays, also lifting the scroll-to-bottom button
+
+### 🏙️ Appraise bottom picker spacing
+
+- **Changed**: `SantoAppraiseBottomPicker` adds the theme spacing below the submit button (safe area is still handled by the bottom drawer)
+
 ## [2.0.0] - 2026-09-24
 
 ### 🎨 Every style token lives in the theme
