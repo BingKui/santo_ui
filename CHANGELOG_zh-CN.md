@@ -6,6 +6,12 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.2.1] - 2026-09-28
+
+### 💬 Chat 输入区透传
+
+- **修复**: `SantoChat` 补齐 `controller` / `focusNode` / `mentions` 到输入区的透传 —— 2.2.0 文档里写的 `SantoChat.mentions` 此前并不存在;现在宿主用组合件即可拿到输入框控制器(自行实现 @ 提及、聚焦恢复),不必再手工拼装 `SantoChatInput`
+
 ## [2.2.0] - 2026-09-28
 
 ### 💬 Chat @ 提及与头像

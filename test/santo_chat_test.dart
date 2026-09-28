@@ -2106,5 +2106,41 @@ void main() {
       await tester.pump();
       expect(sent, <String>['收到']);
     });
+
+    testWidgets('SantoChat 透传输入框控制器、焦点与 @ 候选', (tester) async {
+      final TextEditingController inputController = TextEditingController();
+      final FocusNode inputFocusNode = FocusNode();
+      addTearDown(inputController.dispose);
+      addTearDown(inputFocusNode.dispose);
+
+      await tester.pumpWidget(_host(
+        SantoChat(
+          messages: const <SantoChatMessage>[],
+          currentUserId: 'me',
+          controller: inputController,
+          focusNode: inputFocusNode,
+          mentions: const <SantoChatMention>[
+            SantoChatMention(id: 'u1', display: '张三'),
+          ],
+        ),
+        height: 400,
+      ));
+
+      // 控制器与焦点确实透传给了输入区
+      final SantoChatInput input =
+          tester.widget<SantoChatInput>(find.byType(SantoChatInput));
+      expect(input.controller, same(inputController));
+      expect(input.focusNode, same(inputFocusNode));
+
+      // 输入 `@` 弹出候选面板,点选后按 `@展示名 ` 写回外部控制器
+      await tester.tap(find.byType(TextField));
+      await tester.enterText(find.byType(TextField), '@');
+      await tester.pump();
+      expect(find.text('@张三'), findsOneWidget);
+
+      await tester.tap(find.text('@张三'));
+      await tester.pump();
+      expect(inputController.text, '@张三 ');
+    });
   });
 }

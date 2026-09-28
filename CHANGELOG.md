@@ -6,6 +6,12 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.2.1] - 2026-09-28
+
+### 💬 Chat input passthrough
+
+- **Fixed**: `SantoChat` now forwards `controller`, `focusNode` and `mentions` to its input bar, so the `SantoChat.mentions` documented in 2.2.0 actually exists, and hosts that need the input's text controller (custom @ mention, focus restore) can use the composite instead of assembling `SantoChatInput` by hand
+
 ## [2.2.0] - 2026-09-28
 
 ### 💬 Chat mentions & avatars

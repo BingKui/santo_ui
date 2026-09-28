@@ -59,6 +59,18 @@ class SantoChat extends StatelessWidget {
   /// 输入区是否可输入
   final bool inputEnabled;
 
+  /// 输入框文本控制器,透传给输入区;不传时由输入区内部创建
+  ///
+  /// 业务侧需要感知输入内容(如自行实现 @ 提及、选人后改写输入框)时传入
+  ///
+  /// @since v2.2.1
+  final TextEditingController? controller;
+
+  /// 输入框焦点控制器,透传给输入区
+  ///
+  /// @since v2.2.1
+  final FocusNode? focusNode;
+
   /// 扩展菜单项,默认照片、拍摄、文件;传空数组则不展示 `+` 入口
   final List<SantoChatExtension> extensions;
 
@@ -67,6 +79,11 @@ class SantoChat extends StatelessWidget {
 
   /// 表情面板里的表情,默认内置 32 个;传空数组则不展示表情入口
   final List<SantoChatEmoji> emojis;
+
+  /// 可 @ 的成员候选,透传给输入区;非空时输入 `@` 唤起候选面板
+  ///
+  /// @since v2.2.1
+  final List<SantoChatMention> mentions;
 
   /// 当前回复的消息
   final SantoChatQuote? replyTo;
@@ -200,9 +217,12 @@ class SantoChat extends StatelessWidget {
     this.inputTrailing,
     this.inputHintText = '请输入内容',
     this.inputEnabled = true,
+    this.controller,
+    this.focusNode,
     this.extensions = SantoChatExtension.defaults,
     this.onExtensionTap,
     this.emojis = kSantoChatDefaultEmojis,
+    this.mentions = const <SantoChatMention>[],
     this.replyTo,
     this.onCancelReply,
     this.editingText,
@@ -271,6 +291,8 @@ class SantoChat extends StatelessWidget {
                           onAction: onSelectionAction,
                         )
                       : SantoChatInput(
+                          controller: controller,
+                          focusNode: focusNode,
                           onSend: onSend,
                           hintText: inputHintText,
                           enabled: inputEnabled,
@@ -279,6 +301,7 @@ class SantoChat extends StatelessWidget {
                           extensions: extensions,
                           onExtensionTap: onExtensionTap,
                           emojis: emojis,
+                          mentions: mentions,
                           replyTo: replyTo,
                           onCancelReply: onCancelReply,
                           editingText: editingText,
