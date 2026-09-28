@@ -1,7 +1,9 @@
 import 'package:santo_ui/santo_ui.dart';
 import 'package:example/sample/home/example_intro.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_basic_example.dart';
+import 'package:example/sample/components/floating_panel/floating_panel_close_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_controlled_example.dart';
+import 'package:example/sample/components/floating_panel/floating_panel_header_bottom_example.dart';
 import 'package:example/sample/components/floating_panel/floating_panel_header_example.dart';
 import 'package:example/sample/home/list_item.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,17 @@ class FloatingPanelExample extends StatelessWidget {
             title: '自定义标头与多锚点',
             describe: 'header 插槽整块可拖,三档锚点吸附',
             onPressed: () => _push(context, const FloatingPanelHeaderExample()),
+          ),
+          ListItem(
+            title: '标头右侧关闭',
+            describe: 'header 放标题 + 关闭图标,点击收起到最小锚点',
+            onPressed: () => _push(context, const FloatingPanelCloseExample()),
+          ),
+          ListItem(
+            title: '标头底部插槽',
+            describe: 'title/desc + headerBottom 放筛选标签等任意组件',
+            onPressed: () =>
+                _push(context, const FloatingPanelHeaderBottomExample()),
           ),
           ListItem(
             title: '受控高度与开关',

@@ -38,7 +38,29 @@ class SantoFloatingPanel extends StatefulWidget {
   final Widget child;
 
   /// 面板标头,展示在把手条下方,与把手条同属拖拽区域
+  ///
+  /// 传入时优先于 [title] / [desc],由调用方自行排版(如右侧关闭按钮)
   final Widget? header;
+
+  /// 标头标题,展示在把手条下方;未传 [header] 且 [title] / [desc] 非空时
+  /// 渲染默认标头(标题 + 描述),样式与 SantoBottomDrawer 一致
+  ///
+  /// @since v2.2.3
+  final String? title;
+
+  /// 标题下方的描述文案,仅在默认标头下生效
+  ///
+  /// @since v2.2.3
+  final String? desc;
+
+  /// 标头底部的插槽,展示在 header/title/desc 之下、内容区之上
+  ///
+  /// 用法同 PageLayout 的 header(AppBar.bottom 位置语义):不做内边距,
+  /// 直接撑满宽度,可放 TabBar、筛选标签、按钮组等任意组件;
+  /// 与把手条/标头同属拖拽区域
+  ///
+  /// @since v2.2.3
+  final Widget? headerBottom;
 
   /// 受控高度(px,不含底部安全区);不传则由内部维护
   final double? height;
@@ -75,6 +97,9 @@ class SantoFloatingPanel extends StatefulWidget {
     Key? key,
     required this.child,
     this.header,
+    this.title,
+    this.desc,
+    this.headerBottom,
     this.height,
     this.anchors,
     this.duration = const Duration(milliseconds: 300),
@@ -330,11 +355,23 @@ class _SantoFloatingPanelState extends State<SantoFloatingPanel>
     double maxHeight,
     double currentHeight,
   ) {
-    if (!widget.draggable && widget.header == null) return null;
+    // header 优先;未传 header 且 title/desc 非空时渲染默认标头
+    final Widget? header =
+        widget.header ?? ((widget.title == null && widget.desc == null)
+            ? null
+            : _buildDefaultHeader());
+
+    if (!widget.draggable && header == null && widget.headerBottom == null) {
+      return null;
+    }
 
     Widget area = Column(
       mainAxisSize: MainAxisSize.min,
-      children: [if (widget.draggable) _buildDragBar(), ?widget.header],
+      children: [
+        if (widget.draggable) _buildDragBar(),
+        ?header,
+        ?widget.headerBottom,
+      ],
     );
 
     if (!widget.draggable) return area;
@@ -347,6 +384,40 @@ class _SantoFloatingPanelState extends State<SantoFloatingPanel>
           _updateGestureDrag(details.delta.dy, minHeight, maxHeight),
       onVerticalDragEnd: (_) => _settle(anchors),
       child: area,
+    );
+  }
+
+  /// 默认标头:标题 + 描述,样式对齐 SantoBottomDrawer 的 header
+  Widget _buildDefaultHeader() {
+    final config = _commonConfig;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(config.hSpacingLg, 0, config.hSpacingLg,
+          config.vSpacingSm),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.title != null)
+            Text(
+              widget.title!,
+              style: TextStyle(
+                fontSize: config.fontSizeHead,
+                fontWeight: FontWeight.w500,
+                color: config.colorTextBase,
+              ),
+            ),
+          if (widget.desc != null) ...[
+            SizedBox(height: config.vSpacingXs),
+            Text(
+              widget.desc!,
+              style: TextStyle(
+                fontSize: config.fontSizeCaption,
+                color: config.colorTextSecondary,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 

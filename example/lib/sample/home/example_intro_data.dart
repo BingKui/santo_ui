@@ -345,6 +345,8 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
     whenToUse: <ExampleIntroPoint>[
       ExampleIntroPoint('基础用法', '拖动把手或内容区调整高度,松手吸附到最近锚点'),
       ExampleIntroPoint('自定义标头', 'header 插槽与把手同属拖拽区域'),
+      ExampleIntroPoint('标头右侧关闭', 'header 放标题 + 关闭图标,点击收起到最小锚点'),
+      ExampleIntroPoint('标头底部插槽', 'title/desc + headerBottom 放筛选标签等任意组件'),
       ExampleIntroPoint('受控高度', 'height 由外部驱动,拖动结束回传吸附高度'),
       ExampleIntroPoint('多档锚点', 'anchors 传入多档高度,在档位间吸附'),
     ],

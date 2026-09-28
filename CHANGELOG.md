@@ -6,6 +6,17 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.2.3] - 2026-09-28
+
+### 🖼️ Avatar image sources
+
+- **Added**: `SantoAvatar.imageUrl` now accepts app-bundled asset paths (`assets/...`) in addition to `http(s)` URLs and Data-URI / base64, enabling role-fixed default avatars that ship with the host app
+
+### 📋 Floating panel header
+
+- **Added**: `SantoFloatingPanel.title` / `desc` — when `header` is not provided, a default header (title + description, styled like `SantoBottomDrawer`) renders below the drag bar; passing `header` still takes precedence for custom layouts such as a right-side close button
+- **Added**: `SantoFloatingPanel.headerBottom` — a slot below the header (AppBar `bottom` position semantics, same usage as PageLayout's `header`): no built-in padding, full width, accepts any widget (TabBar, filter tags, button rows); it joins the drag area together with the drag bar and header
+
 ## [2.2.2] - 2026-09-28
 
 ### 👥 Group avatar grid

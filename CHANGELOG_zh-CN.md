@@ -6,6 +6,17 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.2.3] - 2026-09-28
+
+### 🖼️ 头像图片来源
+
+- **新增**: `SantoAvatar.imageUrl` 在 `http(s)` 与 Data URI / base64 之外,支持应用内置资产路径(`assets/...`),便于业务侧使用随包分发的角色固定头像
+
+### 📋 浮层面板标头
+
+- **新增**: `SantoFloatingPanel.title` / `desc` —— 未传 `header` 且 title/desc 非空时,在把手条下方渲染默认标头(标题 + 描述,样式与 `SantoBottomDrawer` 一致);传入 `header` 仍以 header 为准,便于自行排版右侧关闭按钮等布局
+- **新增**: `SantoFloatingPanel.headerBottom` 标头底部插槽(位置语义同 AppBar 的 `bottom`,用法同 PageLayout 的 `header`)——不做内边距、撑满宽度,可放 TabBar、筛选标签、按钮组等任意组件;与把手条/标头同属拖拽区域
+
 ## [2.2.2] - 2026-09-28
 
 ### 👥 群头像九宫格

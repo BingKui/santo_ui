@@ -31,13 +31,17 @@ group:
 - draggable 为 false 时不可拖拽,但仍可通过 height 受控
 - contentDraggable 控制是否可通过拖拽内容区改变高度
 - magnetic 为 false 时不吸附,面板会停在释放位置
+- 首个锚点(最小高度)须不小于标头整体高度(把手条 + header/title/desc + headerBottom),否则内容区被压成 0 会报 RenderFlex overflow
 
 ## 三、构造函数及参数说明
 
 | 参数名 | 参数类型 | 描述 | 是否必填 | 默认值 |
 | --- | --- | --- | --- | --- |
 | child | Widget | 面板内容 | 是 | - |
-| header | Widget? | 面板标头 | 否 | null |
+| header | Widget? | 面板标头,传入时优先于 title/desc | 否 | null |
+| title | String? | 标头标题,未传 header 且 title/desc 非空时渲染默认标头 | 否 | null |
+| desc | String? | 标题下方的描述文案,仅在默认标头下生效 | 否 | null |
+| headerBottom | Widget? | 标头底部插槽,展示在标头之下、内容区之上,用法同 PageLayout 的 header | 否 | null |
 | height | double? | 受控高度(px) | 否 | null(内部维护) |
 | anchors | List\<double\>? | 锚点高度列表 | 否 | null([100, 可用高度*0.6]) |
 | duration | Duration | 高度变化动画时长 | 否 | 300ms |
@@ -107,3 +111,36 @@ SantoFloatingPanel(
   child: FreeDragContent(),
 )
 ```
+
+### 标题与描述
+
+```dart
+SantoFloatingPanel(
+  title: '筛选条件',
+  desc: '按更新时间排序',
+  child: FilterList(),
+)
+```
+
+传入 `header` 时以 header 为准,title/desc 不生效。
+
+### 标头底部插槽
+
+```dart
+SantoFloatingPanel(
+  title: '筛选条件',
+  desc: '按标签筛选下方内容',
+  headerBottom: Wrap( // 筛选标签、TabBar 等任意组件
+    children: [/* ... */],
+  ),
+  child: FilterList(),
+)
+```
+
+`headerBottom` 不做内边距、撑满宽度,与把手条/标头同属拖拽区域。
+
+## 版本变更
+
+### v2.2.3
+- **新增**: `title` / `desc` 参数,未传 `header` 且 title/desc 非空时渲染默认标头(标题 + 描述),样式与 SantoBottomDrawer 一致
+- **新增**: `headerBottom` 插槽,展示在标头之下、内容区之上,可放 TabBar、筛选标签等任意组件(用法同 PageLayout 的 header)

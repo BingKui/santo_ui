@@ -178,6 +178,7 @@ class SantoChatReadReceiptSheet extends StatelessWidget {
                     imageUrl: member.avatarUrl,
                     text: member.name.isEmpty ? null : member.name.substring(0, 1),
                     size: kSantoChatReceiptAvatarSize,
+                    shape: SantoAvatarShape.round,
                   ),
                   SizedBox(width: config.commonConfig.hSpacingSm),
                   Expanded(
