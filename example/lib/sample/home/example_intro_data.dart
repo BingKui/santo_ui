@@ -961,6 +961,19 @@ const Map<String, ExampleIntroData> kExampleIntroData = <String, ExampleIntroDat
       ExampleIntroPoint('结束回调', '倒计时结束回调给业务'),
     ],
   ),
+  'timeline': ExampleIntroData(
+    title: 'Timeline 时间轴',
+    description: '时间轴按时间顺序展示一系列节点。',
+    widgets: <String>['SantoTimeline', 'SantoTimelineItem'],
+    whenToUseDesc: '需要把一组信息按时间先后排成一条视觉连线时使用。',
+    whenToUse: <ExampleIntroPoint>[
+      ExampleIntroPoint('基础用法', '节点自上而下排列,轴线在左侧'),
+      ExampleIntroPoint('时间标题', '标题与内容分列轴线两侧'),
+      ExampleIntroPoint('节点外观', '颜色、空心实心与自定义节点可配'),
+      ExampleIntroPoint('加载中', '进行中的节点展示加载指示器'),
+      ExampleIntroPoint('排布模式', '左右交替、倒序与横向排布'),
+    ],
+  ),
   'toast': ExampleIntroData(
     title: 'Toast 轻提示',
     description: '轻提示用一句话说明操作结果。',

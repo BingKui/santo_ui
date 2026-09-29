@@ -40,7 +40,6 @@ group:
 | child | Widget? | 标题内容,为 null 时渲染整条分割线 | 否 | null |
 | titlePlacement | SantoDividerTitlePlacement | 标题位置(start/center/end) | 否 | center |
 | plain | bool | 标题是否使用弱化样式 | 否 | false |
-| titleMargin | double? | start/end 位置时标题与边缘的距离 | 否 | null(12) |
 | size | SantoDividerSize | 水平分割线的上下间距 | 否 | medium |
 | spacing | double? | 自定义上下间距,优先于 `size`;传 0 可完全去掉上下留白 | 否 | null |
 | color | Color? | 分割线颜色 | 否 | null(主题分割线颜色) |
@@ -109,6 +108,11 @@ SantoDivider(size: SantoDividerSize.large, spacing: 6)
 ```
 
 ## 五、版本变更
+
+### v2.3.0
+
+- **变更**: `titlePlacement` 为 `start` / `end` 时标题行改为与 `SantoSection` 标题行同款——标题近侧贴边留一段约 5% 宽的分割线,远侧分割线撑满剩余宽度(原先是空 margin + 单侧分割线)
+- **删除**: `titleMargin` 参数(标题贴边距离改由 5% 线段承担,不再可配)
 
 ### v1.3.0
 

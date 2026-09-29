@@ -81,6 +81,7 @@ import 'package:example/sample/components/fab/fab_example.dart';
 import 'package:example/sample/components/message/message_example.dart';
 import 'package:example/sample/components/refresh/refresh_example.dart';
 import 'package:example/sample/components/time_counter/time_counter_example.dart';
+import 'package:example/sample/components/timeline/timeline_example.dart';
 import 'package:example/sample/components/table/table_example.dart';
 import 'package:example/sample/components/segmented/segmented_example.dart';
 import 'package:example/sample/components/statistic/statistic_example.dart';
@@ -254,6 +255,7 @@ class CardDataConfig {
       _item("Progress 进度条", "线性/环形进度", ProgressExample()),
       _item("TimeCounter 计时器", "倒计时/正计时", TimeCounterExample()),
       _item("Empty 空状态", "空数据提示", EmptyExample()),
+      _item("Timeline 时间轴", "按时间顺序展示节点", TimelineExample()),
       _item("Footer 页脚", "页面底部信息", FooterExample()),
       _item("Gallery 图片浏览", "大图预览", GalleryExample()),
       _item("Chat 聊天", "消息列表/气泡/输入区/会话列表", ChatExample()),

@@ -6,6 +6,17 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/),版本遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [2.3.0] - 2026-09-29
+
+### Divider 标题行
+
+- **变更**: `SantoDivider` 的 `titlePlacement` 为 `start` / `end` 时,标题行改为与 `SantoSection` 标题行同款——标题近侧贴边留一段约 5% 宽的分割线,远侧分割线撑满剩余宽度(原先是空 margin + 单侧分割线)
+- **删除**: `titleMargin` 参数(贴边距离改由 5% 线段承担,不再可配)
+
+### 🕒 时间轴组件
+
+- **新增**: `SantoTimeline` 时间轴组件(对标 antd Timeline)—— 纵向三种排布(轴线在左 / 左右交替 / 轴线在右)与横向三种排布(内容在轴线下方 / 上下交替 / 内容在轴线上方);节点支持标题与内容分列轴线两侧(`title` / `titleSpan`)、主题语义色(`color`:blue / red / green / gray)与自定义色(`dotColor`)、自定义节点(`icon`)、加载中的幽灵节点(`loading`,指向它的那段轴线转虚线)、空心 / 实心样式(`variant`)、整体倒序(`reverse`)与单节点侧位覆盖(`placement`);组件文档见 [doc/components/timeline/santo_timeline.md](doc/components/timeline/santo_timeline.md)
+
 ## [2.2.3] - 2026-09-28
 
 ### 🖼️ 头像图片来源

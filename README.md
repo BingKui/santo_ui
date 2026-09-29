@@ -21,7 +21,7 @@ The `SantoIcon` widget is powered by **[Iconoir](https://github.com/iconoir-icon
 
 ## Components
 
-Santo UI ships **81** widgets, grouped into 7 categories following the example app menu.
+Santo UI ships **85** widgets, grouped into 7 categories following the example app menu.
 
 ### General
 
@@ -111,6 +111,7 @@ Santo UI ships **81** widgets, grouped into 7 categories following the example a
 | Progress | Linear / circular progress |
 | TimeCounter | Countdown / count-up timer |
 | Empty | Empty state placeholder |
+| Timeline | Order nodes by time |
 | Footer | Page footer info |
 | Gallery | Large image preview |
 | Chat | Chat window: message list, bubbles, long-press menu, input bar with emoji/extension panels, text/image/voice/file/doc/approval/notice/emoji messages and conversations |

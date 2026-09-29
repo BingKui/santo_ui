@@ -6,6 +6,17 @@ All notable changes are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] - 2026-09-29
+
+### Divider title rows
+
+- **Changed**: `SantoDivider` with `titlePlacement: start/end` now renders its title row like the `SantoSection` title — a short edge line segment (~5% width) on the title's near side plus a full-width line on the far side, instead of an empty margin with a single-side line
+- **Removed**: `titleMargin` parameter (the near-edge distance is now taken by the 5% line segment)
+
+### 🕒 Timeline
+
+- **Added**: `SantoTimeline` (an antd Timeline port) — vertical layouts (axis at the start / alternating sides / axis at the end) and horizontal layouts (content below / alternating / above the axis); items support a title beside the content (`title` / `titleSpan`), theme semantic colours (`color`: blue / red / green / gray) or custom colours (`dotColor`), custom nodes (`icon`), a loading ghost node (`loading`, with the rail leading into it dashed), outlined / filled dots (`variant`), reversed order (`reverse`) and a per-item side override (`placement`); see [the component docs](doc/components/timeline/santo_timeline.md)
+
 ## [2.2.3] - 2026-09-28
 
 ### 🖼️ Avatar image sources

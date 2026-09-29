@@ -211,6 +211,9 @@ export 'src/components/descriptions/santo_descriptions.dart';
 export 'src/components/step/santo_step_line.dart';
 export 'src/components/step/santo_horizontal_steps.dart';
 
+//时间轴
+export 'src/components/timeline/santo_timeline.dart';
+
 //标签
 export 'src/components/tag/santo_tag.dart';
 

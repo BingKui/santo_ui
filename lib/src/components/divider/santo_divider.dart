@@ -65,9 +65,6 @@ class SantoDivider extends StatelessWidget {
   /// 标题是否使用弱化样式（参考 antd plain），默认 false
   final bool plain;
 
-  /// start/end 位置时，标题与最近边缘的距离，默认 12
-  final double? titleMargin;
-
   /// 水平分割线的上下间距，默认[SantoDividerSize.medium]
   final SantoDividerSize size;
 
@@ -95,7 +92,6 @@ class SantoDivider extends StatelessWidget {
     this.child,
     this.titlePlacement = SantoDividerTitlePlacement.center,
     this.plain = false,
-    this.titleMargin,
     this.size = SantoDividerSize.medium,
     this.spacing,
     this.color,
@@ -156,7 +152,6 @@ class SantoDivider extends StatelessWidget {
       );
     }
 
-    final margin = titleMargin ?? _titleHorizontalPadding;
     final title = DefaultTextStyle.merge(
       style: TextStyle(
         fontSize: commonConfig.fontSizeBase,
@@ -171,28 +166,10 @@ class SantoDivider extends StatelessWidget {
     Widget result;
     switch (titlePlacement) {
       case SantoDividerTitlePlacement.start:
-        result = Row(
-          children: [
-            SizedBox(width: margin),
-            title,
-            SizedBox(width: _titleHorizontalPadding),
-            Expanded(
-              child: SizedBox(height: thickness, child: _buildLine(lineColor)),
-            ),
-          ],
-        );
+        result = _buildTitleRow(title: title, edgeLineAtStart: true, lineColor: lineColor);
         break;
       case SantoDividerTitlePlacement.end:
-        result = Row(
-          children: [
-            Expanded(
-              child: SizedBox(height: thickness, child: _buildLine(lineColor)),
-            ),
-            SizedBox(width: _titleHorizontalPadding),
-            title,
-            SizedBox(width: margin),
-          ],
-        );
+        result = _buildTitleRow(title: title, edgeLineAtStart: false, lineColor: lineColor);
         break;
       case SantoDividerTitlePlacement.center:
         result = Row(
@@ -216,6 +193,47 @@ class SantoDivider extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: _verticalSpacing),
       child: SizedBox(height: commonConfig.vSpacingLg, child: result),
+    );
+  }
+
+  /// start/end 标题行,与 SantoSection 标题行同款:
+  /// 标题近侧留一段约 5% 宽的分割线贴边,远侧分割线撑满剩余宽度,
+  /// 两侧间距与 Section 一致取 8
+  Widget _buildTitleRow({
+    required Widget title,
+    required bool edgeLineAtStart,
+    required Color lineColor,
+  }) {
+    const double gap = 8;
+    final Widget fullLine = Expanded(
+      child: SizedBox(height: thickness, child: _buildLine(lineColor)),
+    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final Widget edgeLine = SizedBox(
+          width: constraints.maxWidth * 0.05,
+          height: thickness,
+          child: _buildLine(lineColor),
+        );
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: edgeLineAtStart
+              ? <Widget>[
+                  edgeLine,
+                  const SizedBox(width: gap),
+                  title,
+                  const SizedBox(width: gap),
+                  fullLine,
+                ]
+              : <Widget>[
+                  fullLine,
+                  const SizedBox(width: gap),
+                  title,
+                  const SizedBox(width: gap),
+                  edgeLine,
+                ],
+        );
+      },
     );
   }
 
